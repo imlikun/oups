@@ -166,41 +166,23 @@
       overflow: hidden;
     }
     .hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-    .hero-video {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; z-index: 0; display: none;
-    }
-    .hero-video.ready { display: block; }
-    .hero-canvas {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0; display: block;
-    }
-    .hero-canvas.hidden { display: none; }
-    .hero-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.15) 65%, rgba(0,0,0,0.35) 100%);
-      transition: background 0.5s ease;
-    }
-    body.light .hero-overlay {
-      background: linear-gradient(180deg, rgba(245,245,247,0.45) 0%, rgba(245,245,247,0.15) 35%, rgba(245,245,247,0.15) 65%, rgba(245,245,247,0.45) 100%);
-    }
     .hero-orb {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      width: 800px; height: 800px; border-radius: 50%;
+      width: 700px; height: 700px; border-radius: 50%;
       background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      opacity: 0.35; animation: orbPulse 8s ease-in-out infinite;
-      filter: blur(60px); z-index: 2;
+      opacity: 0.22; animation: orbPulse 10s ease-in-out infinite;
+      filter: blur(80px); z-index: 0;
     }
     .hero-orb-2 {
-      position: absolute; top: 55%; left: 48%; transform: translate(-50%,-50%);
-      width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(94,92,230,0.08) 0%, transparent 70%);
-      opacity: 0.3; animation: orbPulse 10s ease-in-out 2s infinite;
-      filter: blur(50px); z-index: 2;
+      position: absolute; top: 52%; left: 48%; transform: translate(-50%,-50%);
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(94,92,230,0.06) 0%, transparent 70%);
+      opacity: 0.2; animation: orbPulse 12s ease-in-out 3s infinite;
+      filter: blur(60px); z-index: 0;
     }
     @keyframes orbPulse {
-      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.35; }
-      50% { transform: translate(-50%,-50%) scale(1.18); opacity: 0.15; }
+      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.22; }
+      50% { transform: translate(-50%,-50%) scale(1.2); opacity: 0.1; }
     }
     .hero-label {
       font-size: 17px; font-weight: 500; color: var(--accent);
@@ -211,7 +193,6 @@
       font-size: clamp(56px,10vw,120px); font-weight: 700;
       letter-spacing: -0.03em; line-height: 1; margin-bottom: 12px; position: relative; z-index: 3;
       opacity: 0; animation: fadeUp 0.8s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
-      /* 渐变文字 + 发光描边，与 Canvas 涟漪/穿梭效果配合 */
       background: linear-gradient(135deg, #40aaff 0%, #a78bfa 40%, #5e5ce6 70%, #30c8b8 100%);
       background-clip: text; -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -235,23 +216,6 @@
     .hero-meta {
       font-size: 15px; color: var(--text-tertiary); position: relative; z-index: 3;
       opacity: 0; animation: fadeUp 0.8s 1.0s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-    .hero-effect-toggle {
-      position: absolute; bottom: 40px; right: 32px; z-index: 10;
-      display: flex; gap: 4px;
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 24px; padding: 3px;
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      opacity: 0; animation: fadeUp 0.8s 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-    .hero-effect-btn {
-      padding: 6px 14px; border-radius: 20px; border: none; cursor: pointer;
-      font-size: 12px; font-weight: 500; font-family: inherit;
-      background: transparent; color: var(--text-tertiary);
-      transition: all 0.3s ease; white-space: nowrap;
-    }
-    .hero-effect-btn.active {
-      background: var(--accent); color: #fff; box-shadow: 0 2px 8px var(--accent-glow);
     }
     .hero-scroll {
       position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
@@ -800,9 +764,8 @@
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
-      .hero-orb, .hero-scroll-dot, .hero-canvas { animation: none; }
+      .hero-orb, .hero-scroll-dot { animation: none; }
       .hero-label, .hero-name, .hero-title, .hero-meta, .hero-scroll { animation: none; opacity: 1; }
-      .hero-canvas { display: none !important; }
     }
   </style>
 </head>
@@ -825,8 +788,6 @@
   <!-- Hero -->
   <section class="hero" id="hero">
     <div class="hero-bg">
-      <canvas class="hero-canvas" id="heroCanvas"></canvas>
-      <div class="hero-overlay"></div>
       <div class="hero-orb"></div>
       <div class="hero-orb-2"></div>
     </div>
@@ -835,11 +796,6 @@
       <h1 class="hero-name">李坤</h1>
       <p class="hero-title">策划经理 · 8年地产营销经验</p>
       <p class="hero-meta">保利堂悦 8开8罄 · 保利和府区域销冠 · 大平层精准圈层营销</p>
-    </div>
-    <!-- 效果切换按钮 -->
-    <div class="hero-effect-toggle" id="effectToggle">
-      <button class="hero-effect-btn" data-mode="ripple">涟漪</button>
-      <button class="hero-effect-btn active" data-mode="warp">穿梭</button>
     </div>
     <div class="hero-scroll">
       <div class="hero-scroll-mouse"><div class="hero-scroll-dot"></div></div>
@@ -1273,420 +1229,6 @@
           var y = (e.clientY / window.innerHeight - 0.5) * 40;
           orbs[0].style.transform = 'translate(calc(-50% + ' + x + 'px), calc(-50% + ' + y + 'px))';
           orbs[1].style.transform = 'translate(calc(-50% + ' + (x * -0.6) + 'px), calc(-50% + ' + (y * -0.6) + 'px))';
-        });
-      }
-
-      // ===== Hero Canvas: 水面涟漪 + 光隧道穿梭 双模式 =====
-      var heroCanvas = document.getElementById('heroCanvas');
-      var canvasCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
-      var canvasAnimId = null;
-      var canvasMode = 'warp'; // 'ripple' | 'warp'
-      var canvasTime = 0;
-      var heroW, heroH, cx, cy, isLight, maxDim;
-
-      // ========== 涟漪调色板 ==========
-      var rippleColors = [
-        [64, 170, 255],    // sky blue
-        [140, 180, 255],   // soft blue
-        [94, 92, 230],     // purple
-        [41, 151, 255],    // apple blue
-        [180, 140, 255],   // lavender
-        [100, 210, 220],   // cyan-teal
-        [48, 200, 180],    // teal
-        [80, 190, 240],    // light blue
-      ];
-
-      // ========== 涟漪数据：Master Ripple 系统 ==========
-      // 3 个主导涟漪，各自独立扩散 → 全屏 → 重生 → 循环
-      var rippleGroups = [];
-
-      function createRippleGroup() {
-        var diag = Math.sqrt(heroW * heroW + heroH * heroH);
-        var color = rippleColors[Math.floor(Math.random() * rippleColors.length)];
-        var ringCount = 2 + Math.floor(Math.random() * 3); // 2-4 ring layers
-        var rings = [];
-        for (var r = 0; r < ringCount; r++) {
-          rings.push({
-            offset: r * (16 + Math.random() * 22),
-            lw: (r === 0 ? 2.0 : 1.2) - r * 0.3,
-            opacity: 0.60 - r * 0.14,
-          });
-        }
-        return {
-          cx: Math.random() * heroW,
-          cy: Math.random() * heroH,
-          baseRadius: 0,
-          maxRadius: diag * 1.05, // 确保覆盖整个屏幕
-          speed: 0.75 + Math.random() * 0.55,
-          color: color,
-          rings: rings,
-          alphaMul: 0.75 + Math.random() * 0.25,
-        };
-      }
-
-      function initRippleGroups() {
-        rippleGroups = [];
-        for (var i = 0; i < 3; i++) {
-          var g = createRippleGroup();
-          // 错开初始半径让它们不在同一阶段
-          g.baseRadius = (i / 3) * g.maxRadius * 0.85;
-          rippleGroups.push(g);
-        }
-      }
-
-      function drawRipples(time) {
-        var ctx = canvasCtx;
-        ctx.clearRect(0, 0, heroW, heroH);
-        var diag = Math.sqrt(heroW * heroW + heroH * heroH);
-
-        // ---- 全屏环境光底 ----
-        var envGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, diag);
-        envGlow.addColorStop(0, isLight ? 'rgba(0,113,227,0.06)' : 'rgba(41,151,255,0.08)');
-        envGlow.addColorStop(0.4, isLight ? 'rgba(94,92,230,0.02)' : 'rgba(94,92,230,0.03)');
-        envGlow.addColorStop(0.7, 'rgba(0,0,0,0)');
-        envGlow.addColorStop(1, isLight ? 'rgba(245,245,247,0.01)' : 'rgba(0,0,0,0.08)');
-        ctx.fillStyle = envGlow;
-        ctx.fillRect(0, 0, heroW, heroH);
-
-        // ---- 遍历所有涟漪组 ----
-        for (var gIdx = 0; gIdx < rippleGroups.length; gIdx++) {
-          var g = rippleGroups[gIdx];
-
-          // 扩散
-          g.baseRadius += g.speed;
-
-          // 超出最大半径 → 重生
-          if (g.baseRadius >= g.maxRadius) {
-            var newG = createRippleGroup();
-            g.cx = newG.cx;
-            g.cy = newG.cy;
-            g.maxRadius = newG.maxRadius;
-            g.speed = newG.speed;
-            g.color = newG.color;
-            g.rings = newG.rings;
-            g.alphaMul = newG.alphaMul;
-            g.baseRadius = 0;
-          }
-
-          var prog = g.baseRadius / g.maxRadius;
-
-          // 只为可见的环绘制（半径 > 0）
-          for (var rIdx = 0; rIdx < g.rings.length; rIdx++) {
-            var ring = g.rings[rIdx];
-            var r = g.baseRadius - ring.offset;
-            if (r <= 0) continue; // 还没出现，跳过
-
-            // 透明度曲线：从中心向外先亮后渐隐
-            var rProg = r / g.maxRadius;
-            var alpha;
-            if (rProg < 0.02) {
-              alpha = ring.opacity * (rProg / 0.02); // 快速淡入
-            } else if (rProg < 0.55) {
-              alpha = ring.opacity * (1 - (rProg - 0.02) * 0.3); // 缓慢衰减
-            } else {
-              alpha = ring.opacity * 0.84 * (1 - (rProg - 0.55) / 0.45); // 加速淡出
-            }
-            alpha *= g.alphaMul;
-            alpha = Math.max(0.015, Math.min(alpha, 0.75));
-
-            var c = g.color;
-            var lw = ring.lw * (1 - rProg * 0.4);
-            if (lw < 0.3) lw = 0.3;
-
-            // 光环绘制（带柔光）
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(g.cx, g.cy, r, 0, Math.PI * 2);
-
-            // 外层光晕
-            ctx.strokeStyle = 'hsla(' +
-              ((c[0] * 0.7 + c[1] * 0.8) % 360) + ',75%,' +
-              (isLight ? '55%' : '65%') + ',' + (alpha * 0.2).toFixed(3) + ')';
-            ctx.lineWidth = lw * 4.5;
-            ctx.shadowColor = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + (alpha * 0.3).toFixed(3) + ')';
-            ctx.shadowBlur = lw * 10;
-            ctx.stroke();
-
-            // 主环
-            ctx.beginPath();
-            ctx.arc(g.cx, g.cy, r, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + alpha.toFixed(3) + ')';
-            ctx.lineWidth = lw;
-            ctx.shadowColor = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.45)';
-            ctx.shadowBlur = lw * 4;
-            ctx.stroke();
-            ctx.restore();
-          }
-
-          // 涟漪源点发光
-          if (g.baseRadius > 8) {
-            var srcGlow = ctx.createRadialGradient(g.cx, g.cy, 0, g.cx, g.cy, g.baseRadius * 0.15);
-            srcGlow.addColorStop(0, 'rgba(' + g.color[0] + ',' + g.color[1] + ',' + g.color[2] + ',0.15)');
-            srcGlow.addColorStop(0.5, 'rgba(' + g.color[0] + ',' + g.color[1] + ',' + g.color[2] + ',0.05)');
-            srcGlow.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = srcGlow;
-            ctx.fillRect(g.cx - g.baseRadius * 0.12, g.cy - g.baseRadius * 0.12, g.baseRadius * 0.24, g.baseRadius * 0.24);
-          }
-        }
-      }
-
-      function updateCanvasState() {
-        if (!heroCanvas) return;
-        heroW = heroCanvas.clientWidth;
-        heroH = heroCanvas.clientHeight;
-        cx = heroW / 2;
-        cy = heroH * 0.44;
-        maxDim = Math.max(heroW, heroH);
-      }
-
-      function resizeCanvas() {
-        if (!heroCanvas) return;
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        var w = heroCanvas.parentElement.clientWidth;
-        var h = heroCanvas.parentElement.clientHeight;
-        heroCanvas.width = w * dpr;
-        heroCanvas.height = h * dpr;
-        heroCanvas.style.width = w + 'px';
-        heroCanvas.style.height = h + 'px';
-        if (canvasCtx) canvasCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        updateCanvasState();
-      }
-
-      // ========== 穿梭数据 ==========
-      var warpParticles = [];
-      var warpStreaks = [];
-
-      // ================================================================
-      //  时空穿梭模式 — 高速穿越光隧道
-      // ================================================================
-      function createWarpParticles() {
-        warpParticles = [];
-        warpStreaks = [];
-
-        // 速度光线（从中心向外放射到屏幕边缘）
-        var streakCount = 30;
-        var diag = Math.sqrt(heroW * heroW + heroH * heroH);
-        for (var i = 0; i < streakCount; i++) {
-          warpStreaks.push({
-            angle: (i / streakCount) * Math.PI * 2 + Math.random() * 0.1,
-            length: diag * (0.7 + Math.random() * 0.3),
-            width: 1.5 + Math.random() * 3.0,
-            alpha: 0.12 + Math.random() * 0.16,
-            speedOffset: Math.random() * 0.3,
-            hue: 195 + Math.random() * 45,
-          });
-        }
-
-        // 流动粒子（覆盖全屏范围，增加密度）
-        for (var j = 0; j < 420; j++) {
-          var angle = Math.random() * Math.PI * 2;
-          var dist = diag * (0.02 + Math.random() * 0.98);
-          warpParticles.push({
-            baseAngle: angle,
-            dist: dist,
-            speed: 0.5 + Math.random() * 4.5,
-            size: Math.random() * 2.2 + 0.4,
-            alpha: Math.random() * 0.55 + 0.25,
-            hue: 195 + Math.random() * 70,
-            trailLen: 14 + Math.floor(Math.random() * 20),
-            trail: [],
-            initDist: dist,
-          });
-        }
-      }
-
-      function drawWarp(time) {
-        var ctx = canvasCtx;
-        ctx.clearRect(0, 0, heroW, heroH);
-        var rotation = time * 0.55; // 稍快旋转
-        var pulse = 1 + Math.sin(time * 1.8) * 0.15; // 中心脉冲
-
-        var diag = Math.sqrt(heroW * heroW + heroH * heroH);
-        // ---- 中心超亮光点（隧道尽头，带脉冲） ----
-        var coreR = diag * 0.12 * pulse;
-        var coreBloom = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR * 1.8);
-        coreBloom.addColorStop(0, isLight ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.55)');
-        coreBloom.addColorStop(0.1, isLight ? 'rgba(200,225,255,0.25)' : 'rgba(160,210,255,0.30)');
-        coreBloom.addColorStop(0.35, isLight ? 'rgba(100,150,255,0.10)' : 'rgba(80,140,255,0.12)');
-        coreBloom.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = coreBloom;
-        ctx.fillRect(cx - coreR, cy - coreR, coreR * 2, coreR * 2);
-
-        // ---- 全屏中心光晕 ----
-        var bigGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, diag);
-        bigGlow.addColorStop(0, isLight ? 'rgba(0,113,227,0.08)' : 'rgba(41,151,255,0.10)');
-        bigGlow.addColorStop(0.3, isLight ? 'rgba(94,92,230,0.04)' : 'rgba(94,92,230,0.05)');
-        bigGlow.addColorStop(0.6, 'rgba(0,0,0,0)');
-        bigGlow.addColorStop(1, isLight ? 'rgba(245,245,247,0.02)' : 'rgba(0,0,0,0.10)');
-        ctx.fillStyle = bigGlow;
-        ctx.fillRect(0, 0, heroW, heroH);
-
-        ctx.save();
-        ctx.globalCompositeOperation = 'lighter';
-
-        // ---- 放射状速度线 ----
-        for (var s = 0; s < warpStreaks.length; s++) {
-          var st = warpStreaks[s];
-          var sAngle = st.angle + rotation * (0.15 + st.speedOffset);
-          var endX = cx + Math.cos(sAngle) * st.length;
-          var endY = cy + Math.sin(sAngle) * st.length;
-
-          // 线条从中心附近开始，向外延伸
-          var startDist = maxDim * 0.02;
-          var sx = cx + Math.cos(sAngle) * startDist;
-          var sy = cy + Math.sin(sAngle) * startDist;
-
-          var streakGrad = ctx.createLinearGradient(sx, sy, endX, endY);
-          var h = st.hue;
-          streakGrad.addColorStop(0, 'rgba(' +
-            Math.floor(200 + h * 0.2) + ',' +
-            Math.floor(200 + h * 0.15) + ',255,' + (st.alpha * 1.5).toFixed(3) + ')');
-          streakGrad.addColorStop(0.4, 'rgba(' +
-            Math.floor(100 + h * 0.5) + ',' +
-            Math.floor(160 + h * 0.3) + ',255,' + st.alpha.toFixed(3) + ')');
-          streakGrad.addColorStop(1, 'rgba(0,0,0,0)');
-
-          ctx.beginPath();
-          ctx.moveTo(sx, sy);
-          ctx.lineTo(endX, endY);
-          ctx.strokeStyle = streakGrad;
-          ctx.lineWidth = st.width;
-          ctx.shadowColor = 'rgba(100,180,255,0.3)';
-          ctx.shadowBlur = 3;
-          ctx.stroke();
-        }
-
-        // ---- 流动粒子 ----
-        for (var k = 0; k < warpParticles.length; k++) {
-          var p = warpParticles[k];
-          // 越靠近中心速度越快（重力加速效应）
-          var distRatio = p.dist / diag;
-          var accel = 1 + (1 - distRatio) * 3.5;
-          p.dist -= p.speed * accel;
-
-          if (p.dist < 1.5) {
-            p.dist = diag * (0.90 + Math.random() * 0.15);
-            p.baseAngle = Math.random() * Math.PI * 2;
-            p.speed = 0.6 + Math.random() * 4.5;
-            p.trail = [];
-            p.alpha = Math.random() * 0.55 + 0.25;
-            p.hue = 195 + Math.random() * 70;
-          }
-
-          var angle = p.baseAngle + rotation * distRatio * 0.6;
-          var px = cx + Math.cos(angle) * p.dist;
-          var py = cy + Math.sin(angle) * p.dist;
-
-          p.trail.push({ x: px, y: py });
-          if (p.trail.length > p.trailLen) p.trail.shift();
-
-          // 轨迹线（从外向内渐亮，显著可见）
-          if (p.trail.length > 2) {
-            ctx.beginPath();
-            ctx.moveTo(p.trail[0].x, p.trail[0].y);
-            for (var t = 1; t < p.trail.length; t++) {
-              ctx.lineTo(p.trail[t].x, p.trail[t].y);
-            }
-            var tAlpha = p.alpha * (0.5 + (1 - distRatio) * 0.3);
-            ctx.strokeStyle = 'hsla(' +
-              Math.floor(p.hue) + ',90%,' +
-              (isLight ? '60%' : '75%') + ',' + tAlpha.toFixed(3) + ')';
-            ctx.lineWidth = p.size * 0.8;
-            ctx.shadowBlur = 4;
-            ctx.shadowColor = 'hsla(' + Math.floor(p.hue) + ',80%,70%,0.4)';
-            ctx.stroke();
-          }
-
-          // 粒子点（靠近中心更亮）
-          ctx.beginPath();
-          ctx.arc(px, py, p.size * (0.8 + (1 - distRatio) * 0.8), 0, Math.PI * 2);
-          var particleAlpha = p.alpha * (0.6 + distRatio * 0.4);
-          ctx.fillStyle = 'hsla(' +
-            Math.floor(p.hue) + ',70%,' +
-            (isLight ? '60%' : '80%') + ',' + particleAlpha.toFixed(3) + ')';
-          ctx.shadowColor = 'hsla(' + Math.floor(p.hue) + ',80%,70%,0.5)';
-          ctx.shadowBlur = p.size * 6;
-          ctx.fill();
-        }
-
-        ctx.restore();
-      }
-
-      // ================================================================
-      //  主循环
-      // ================================================================
-      function animate(timeStamp) {
-        if (!heroCanvas) { canvasAnimId = requestAnimationFrame(animate); return; }
-        canvasTime = (timeStamp || 0) * 0.001;
-
-        try {
-          if (canvasMode === 'ripple') {
-            drawRipples(canvasTime);
-          } else {
-            drawWarp(canvasTime);
-          }
-        } catch(e) {
-          // 静默吞掉绘制错误，保持循环运行
-        }
-
-        canvasAnimId = requestAnimationFrame(animate);
-      }
-
-      // ================================================================
-      //  启动
-      // ================================================================
-      if (canvasCtx) {
-        isLight = body.classList.contains('light');
-        resizeCanvas();
-        updateCanvasState();
-        createWarpParticles();
-        initRippleGroups();
-        canvasAnimId = requestAnimationFrame(animate);
-
-        // resize 响应
-        window.addEventListener('resize', function() {
-          resizeCanvas();
-          if (canvasMode === 'warp') createWarpParticles();
-        });
-
-        // 主题切换
-        themeToggle.addEventListener('click', function() {
-          isLight = body.classList.contains('light');
-          if (canvasMode === 'warp') createWarpParticles();
-        });
-
-        // 效果切换按钮 — 强化版
-        var effectBtns = document.querySelectorAll('.hero-effect-btn');
-        effectBtns.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var mode = this.getAttribute('data-mode');
-            if (mode === canvasMode) return;
-
-            // 1. 确保 Canvas 尺寸有效
-            resizeCanvas();
-
-            // 2. 切换模式
-            canvasMode = mode;
-            effectBtns.forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-
-            // 3. 清理旧状态
-            rippleGroups = [];
-            warpParticles = [];
-            warpStreaks = [];
-
-            // 4. 为新模式生成初始数据
-            if (mode === 'warp') {
-              createWarpParticles();
-            } else {
-              initRippleGroups();
-            }
-
-            // 5. 如果动画循环意外停止，重新启动
-            if (!canvasAnimId) {
-              canvasAnimId = requestAnimationFrame(animate);
-            }
-          });
         });
       }
 
