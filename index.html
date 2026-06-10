@@ -838,8 +838,8 @@
     </div>
     <!-- 效果切换按钮 -->
     <div class="hero-effect-toggle" id="effectToggle">
-      <button class="hero-effect-btn active" data-mode="ripple">涟漪</button>
-      <button class="hero-effect-btn" data-mode="warp">穿梭</button>
+      <button class="hero-effect-btn" data-mode="ripple">涟漪</button>
+      <button class="hero-effect-btn active" data-mode="warp">穿梭</button>
     </div>
     <div class="hero-scroll">
       <div class="hero-scroll-mouse"><div class="hero-scroll-dot"></div></div>
@@ -1280,7 +1280,7 @@
       var heroCanvas = document.getElementById('heroCanvas');
       var canvasCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
       var canvasAnimId = null;
-      var canvasMode = 'ripple'; // 'ripple' | 'warp'
+      var canvasMode = 'warp'; // 'ripple' | 'warp'
       var canvasTime = 0;
       var heroW, heroH, cx, cy, isLight, maxDim;
 
