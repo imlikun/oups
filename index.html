@@ -37,6 +37,7 @@
       --glass-highlight: rgba(255,255,255,0.04);
       --glass-shine: rgba(255,255,255,0.02);
       --glass-border-strong: rgba(255,255,255,0.12);
+      --section-alt: rgba(255,255,255,0.01);
     }
 
     body.light {
@@ -69,6 +70,7 @@
       --glass-highlight: rgba(255,255,255,0.3);
       --glass-shine: rgba(255,255,255,0.08);
       --glass-border-strong: rgba(0,0,0,0.1);
+      --section-alt: rgba(0,0,0,0.02);
     }
 
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
@@ -144,6 +146,9 @@
 
     /* Sections */
     .section { padding: 40px 24px; }
+    .section:nth-child(even) {
+      background: var(--section-alt);
+    }
     .section-inner { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; }
     .section-label {
       font-size: 14px; font-weight: 500; color: var(--accent);
@@ -356,6 +361,43 @@
     }
     .card-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; position: relative; z-index: 1; }
     .card-desc { font-size: 14px; color: var(--text-tertiary); line-height: 1.6; position: relative; z-index: 1; }
+
+    /* Mini Timeline — Bento card inline experience view */
+    .mini-timeline {
+      display: flex; gap: 0; position: relative; z-index: 1;
+      margin: 16px 0; padding: 0;
+    }
+    .mini-tl-item {
+      display: flex; flex-direction: column; align-items: flex-start;
+      flex: 1; position: relative; padding-right: 8px;
+    }
+    .mini-tl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border);
+      border: 2px solid var(--card-bg);
+      box-shadow: 0 0 0 1px var(--border);
+      margin-bottom: 6px; flex-shrink: 0;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .mini-tl-dot.active {
+      background: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 10px var(--accent-glow);
+    }
+    .mini-tl-line {
+      position: absolute; top: 4px; left: 4px; right: 8px;
+      height: 1px; background: var(--border); z-index: -1;
+    }
+    .mini-tl-body { padding-top: 2px; }
+    .mini-tl-org {
+      font-size: 13px; font-weight: 600; color: var(--text-primary);
+      line-height: 1.3; letter-spacing: -0.01em;
+    }
+    .mini-tl-role {
+      font-size: 11px; color: var(--text-tertiary); line-height: 1.3;
+    }
+    .mini-tl-date {
+      font-size: 10.5px; color: var(--text-tertiary); opacity: 0.7; line-height: 1.3;
+      font-variant-numeric: tabular-nums;
+    }
 
     /* About card */
     .about-card { padding: 48px 40px; }
@@ -744,11 +786,16 @@
       .portfolio-preview { grid-template-columns: 1fr; }
       .journal-entry { flex-direction: column; gap: 4px; }
       .journal-date { min-width: auto; }
+      .mini-timeline { flex-wrap: wrap; gap: 12px 0; }
+      .mini-tl-item { flex: 0 0 50%; min-width: 50%; }
+      .mini-tl-line { display: none; }
+      .mini-tl-dot { margin-bottom: 4px; }
     }
 
     @media (max-width: 480px) {
       .bento { grid-template-columns: 1fr; }
       .span-2, .span-3, .span-4 { grid-column: span 1; }
+      .mini-tl-item { flex: 0 0 100%; min-width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -839,11 +886,48 @@
           </div>
           <div class="card-label">职业经历</div>
           <div class="card-title">工作经历</div>
-          <div class="card-subtitle">御策行 · 保利和润 · 百达行 · 开发区经发集团</div>
-          <div class="card-desc">
-            从人才市场运营到头部房企策划统筹，深耕淮安市场，历经保利堂悦、国联和府、国联里院等多个标杆项目。
+          <div class="card-subtitle">从人才市场运营到头部房企策划统筹，深耕淮安8年</div>
+
+          <!-- Mini Timeline -->
+          <div class="mini-timeline">
+            <div class="mini-tl-item">
+              <div class="mini-tl-dot active"></div>
+              <div class="mini-tl-line"></div>
+              <div class="mini-tl-body">
+                <div class="mini-tl-org">御策行</div>
+                <div class="mini-tl-role">项目企划</div>
+                <div class="mini-tl-date">2023 — 至今</div>
+              </div>
+            </div>
+            <div class="mini-tl-item">
+              <div class="mini-tl-dot"></div>
+              <div class="mini-tl-line"></div>
+              <div class="mini-tl-body">
+                <div class="mini-tl-org">保利和润</div>
+                <div class="mini-tl-role">项目统筹</div>
+                <div class="mini-tl-date">2021 — 2023</div>
+              </div>
+            </div>
+            <div class="mini-tl-item">
+              <div class="mini-tl-dot"></div>
+              <div class="mini-tl-line"></div>
+              <div class="mini-tl-body">
+                <div class="mini-tl-org">百达行</div>
+                <div class="mini-tl-role">策划</div>
+                <div class="mini-tl-date">2019 — 2021</div>
+              </div>
+            </div>
+            <div class="mini-tl-item">
+              <div class="mini-tl-dot"></div>
+              <div class="mini-tl-body">
+                <div class="mini-tl-org">经发集团</div>
+                <div class="mini-tl-role">运营</div>
+                <div class="mini-tl-date">2017 — 2019</div>
+              </div>
+            </div>
           </div>
-          <div class="tag-row">
+
+          <div class="tag-row" style="margin-top:auto;">
             <span class="tag">保利系项目</span>
             <span class="tag">项目统筹</span>
             <span class="tag">全周期操盘</span>
@@ -1699,9 +1783,10 @@
               </div>\
               <div class="modal-timeline-org">淮安开发区经济发展集团</div>\
               <ul class="modal-bullets">\
-                <li>负责开发区经发集团与淮安市开发区人社局合作共建人才市场的运营</li>\
-                <li>人力资源市场及人社系统维护，企业信息审核、账户开立、展位安排</li>\
+                <li>负责开发区经发集团与淮安市开发区人社局合作共建人才市场的运营工作</li>\
+                <li>负责人力资源市场以及人社局人社系统维护，参与活动企业信息审核、账户开立、展位安排</li>\
                 <li>统计分析企业招聘结果及来访求职人员信息分布</li>\
+                <li>整合人力资源公司资源，负责恩来干部学院工作人员招聘工作</li>\
               </ul>\
             </div>\
           '
