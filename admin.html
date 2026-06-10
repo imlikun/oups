@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>内容管理 — 李坤的创意探索</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #6e6e73;
+      --text-meta: #999;
+      --border: #e5e5ea;
+      --accent: #0071e3;
+      --accent-hover: #0060c0;
+      --danger: #ff3b30;
+      --success: #34c759;
+      --warning: #ff9500;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "SF Pro Display", "Helvetica Neue", sans-serif;
+      background: var(--bg); color: var(--text);
+      font-size: 14px; line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Login */
+    .login-overlay {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center; z-index: 999;
+    }
+    .login-overlay.hidden { display: none; }
+    .login-card {
+      background: var(--surface); border-radius: 16px; padding: 40px;
+      width: 380px; max-width: 90vw; box-shadow: var(--shadow); text-align: center;
+    }
+    .login-card h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .login-card p { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+    .login-card input {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--border);
+      border-radius: 10px; font-size: 15px; font-family: inherit;
+      outline: none; margin-bottom: 16px; text-align: center;
+    }
+    .login-card input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.1); }
+    .login-card .btn {
+      width: 100%; padding: 12px; background: var(--accent); color: #fff;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+    }
+    .login-card .btn:hover { background: var(--accent-hover); }
+    .login-error { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; }
+
+    /* Layout */
+    .app { display: none; min-height: 100vh; }
+    .app.active { display: flex; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px; background: var(--surface); border-right: 1px solid var(--border);
+      padding: 20px; display: flex; flex-direction: column; gap: 8px;
+      position: fixed; top: 0; left: 0; bottom: 0;
+    }
+    .sidebar-logo {
+      font-size: 16px; font-weight: 600; padding: 8px 12px; margin-bottom: 16px;
+    }
+    .sidebar-link {
+      padding: 10px 12px; border-radius: 8px; cursor: pointer;
+      font-size: 14px; color: var(--text-secondary); transition: all 0.15s;
+      display: flex; align-items: center; gap: 10px; border: none; background: none;
+      font-family: inherit; text-align: left; width: 100%;
+    }
+    .sidebar-link:hover { background: #f0f0f2; color: var(--text); }
+    .sidebar-link.active { background: #e8f0fe; color: var(--accent); font-weight: 500; }
+    .sidebar-link.danger { color: var(--danger); }
+    .sidebar-link.danger:hover { background: #ffeaea; }
+
+    /* Main Content */
+    .main {
+      margin-left: 240px; flex: 1; padding: 32px 40px; max-width: 1200px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface); border-radius: 12px;
+      border: 1px solid var(--border); overflow: hidden;
+    }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-card {
+      background: var(--surface); border-radius: 10px; padding: 18px 20px;
+      border: 1px solid var(--border);
+    }
+    .stat-label { font-size: 12px; color: var(--text-meta); margin-bottom: 6px; }
+    .stat-value { font-size: 28px; font-weight: 600; }
+
+    /* Article List */
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; flex-wrap: wrap; gap: 12px;
+    }
+    .filter-tabs { display: flex; gap: 4px; background: var(--bg); border-radius: 8px; padding: 3px; }
+    .filter-tab {
+      padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer;
+      font-size: 13px; font-family: inherit; background: transparent;
+      color: var(--text-secondary);
+    }
+    .filter-tab.active { background: var(--surface); color: var(--text); font-weight: 500; box-shadow: var(--shadow-sm); }
+
+    .btn {
+      padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 500; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { background: #f5f5f7; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; border-radius: 6px; }
+    .btn-danger-text { background: none; border: none; color: var(--danger); cursor: pointer; font-family: inherit; font-size: 12px; }
+    .btn-danger-text:hover { text-decoration: underline; }
+
+    .article-table { width: 100%; border-collapse: collapse; }
+    .article-table th {
+      text-align: left; font-size: 11px; font-weight: 500; color: var(--text-meta);
+      text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .article-table tr { cursor: pointer; transition: background 0.1s; }
+    .article-table tr:hover { background: #fafafa; }
+    .article-table .title-cell { font-weight: 500; color: var(--text); }
+    .status-badge {
+      font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 500;
+      display: inline-block;
+    }
+    .status-badge.published { background: #e3f9e9; color: #1a7a3a; }
+    .status-badge.draft { background: #fff3e0; color: #b06000; }
+
+    /* Editor */
+    .editor { display: none; }
+    .editor.active { display: block; }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block; font-size: 13px; font-weight: 500; color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-hint { font-size: 12px; color: var(--text-meta); margin-top: 4px; }
+    .form-input {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.15s;
+    }
+    .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.08); }
+    textarea.form-input { min-height: 300px; resize: vertical; font-size: 14px; line-height: 1.6; font-family: "SF Mono", "Menlo", monospace; }
+    select.form-input { cursor: pointer; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .editor-actions {
+      display: flex; gap: 10px; margin-top: 8px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Preview Panel */
+    .preview-toggle {
+      display: flex; gap: 4px; background: var(--bg); border-radius: 8px; padding: 3px;
+      margin-bottom: 16px;
+    }
+    .preview-btn {
+      padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer;
+      font-size: 13px; font-family: inherit; background: transparent;
+      color: var(--text-secondary);
+    }
+    .preview-btn.active { background: var(--surface); color: var(--text); font-weight: 500; box-shadow: var(--shadow-sm); }
+    .preview-content {
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      padding: 24px; min-height: 200px; font-size: 15px; line-height: 1.8;
+      display: none;
+    }
+    .preview-content.active { display: block; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      background: #1a1a1a; color: #fff; padding: 12px 24px;
+      border-radius: 10px; font-size: 14px; z-index: 999;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <h1>内容管理后台</h1>
+    <p>请输入管理密码</p>
+    <input type="password" id="passwordInput" placeholder="密码" autofocus>
+    <button class="btn" onclick="login()">登录</button>
+    <p class="login-error" id="loginError">密码错误</p>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <nav class="sidebar">
+    <div class="sidebar-logo">内容管理</div>
+    <button class="sidebar-link active" data-view="list" onclick="switchView('list')">文章列表</button>
+    <button class="sidebar-link" data-view="editor" onclick="newArticle()">写文章</button>
+    <button class="sidebar-link" onclick="exportData()">导出数据</button>
+    <div style="flex:1"></div>
+    <button class="sidebar-link danger" onclick="logout()">退出登录</button>
+  </nav>
+
+  <div class="main" id="mainContent">
+    <!-- Article List View -->
+    <div id="listView">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="toolbar">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all" onclick="setFilter('all', this)">全部</button>
+          <button class="filter-tab" data-filter="published" onclick="setFilter('published', this)">已发布</button>
+          <button class="filter-tab" data-filter="draft" onclick="setFilter('draft', this)">草稿</button>
+          <button class="filter-tab" data-filter="frontend" onclick="setFilter('frontend', this)">前端开发</button>
+          <button class="filter-tab" data-filter="video" onclick="setFilter('video', this)">视频剪辑</button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-outline btn-sm" onclick="exportData()">导出 JSON</button>
+          <button class="btn btn-primary" onclick="newArticle()">新文章</button>
+        </div>
+      </div>
+      <div class="card" style="overflow-x:auto;">
+        <table class="article-table">
+          <thead><tr>
+            <th>标题</th><th>分类</th><th>状态</th><th>日期</th><th>操作</th>
+          </tr></thead>
+          <tbody id="articleTableBody"></tbody>
+        </table>
+        <div id="emptyList" style="display:none;text-align:center;padding:40px;color:var(--text-meta);">
+          暂无文章，点击「新文章」开始创作
+        </div>
+      </div>
+    </div>
+
+    <!-- Editor View -->
+    <div class="editor" id="editorView">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:600;" id="editorTitle">新建文章</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-outline" onclick="switchView('list')">取消</button>
+          <button class="btn btn-outline" onclick="saveDraft()">保存草稿</button>
+          <button class="btn btn-primary" onclick="publishArticle()">发布</button>
+        </div>
+      </div>
+      <div class="card" style="padding:28px;">
+        <div class="form-row">
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label">文章标题</label>
+            <input type="text" class="form-input" id="editTitle" placeholder="输入文章标题...">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">分类</label>
+            <select class="form-input" id="editCategory">
+              <option value="frontend">前端开发</option>
+              <option value="video">视频剪辑</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">状态</label>
+            <select class="form-input" id="editStatus">
+              <option value="draft">草稿</option>
+              <option value="published">已发布</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">特色图片 URL</label>
+            <input type="text" class="form-input" id="editImage" placeholder="https://... 或留空">
+          </div>
+          <div class="form-group">
+            <label class="form-label">视频链接(B站/YouTube)</label>
+            <input type="text" class="form-input" id="editVideo" placeholder="https://... 或留空">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">摘要</label>
+          <input type="text" class="form-input" id="editExcerpt" placeholder="简短的文章摘要...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">标签（逗号分隔）</label>
+          <input type="text" class="form-input" id="editTags" placeholder="HTML, CSS, JavaScript">
+        </div>
+        <div class="form-group">
+          <label class="form-label">文章内容（Markdown）</label>
+          <div class="preview-toggle">
+            <button class="preview-btn active" onclick="togglePreview('edit')">编辑</button>
+            <button class="preview-btn" onclick="togglePreview('preview')">预览</button>
+          </div>
+          <textarea class="form-input" id="editContent" placeholder="使用 Markdown 语法编写文章内容..."></textarea>
+          <div class="preview-content" id="previewContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  var appData = null; // Full content.json
+  var editingId = null;
+  var currentFilter = 'all';
+  var adminPassword = 'admin123';
+
+  // ========== Auth ==========
+  function loadData() {
+    return fetch('content.json?' + Date.now())
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(d) {
+        appData = d;
+        adminPassword = (d.site && d.site.password) || 'admin123';
+        // Merge localStorage overrides
+        var saved = localStorage.getItem('admin_content_override');
+        if (saved) {
+          try {
+            var overrides = JSON.parse(saved);
+            if (overrides.articles) appData.articles = overrides.articles;
+            if (overrides.projects) appData.projects = overrides.projects;
+          } catch(e) {}
+        }
+      })
+      .catch(function(e) { alert('加载数据失败: ' + e.message); });
+  }
+
+  function login() {
+    var pwd = document.getElementById('passwordInput').value.trim();
+    if (pwd === adminPassword) {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      document.getElementById('app').classList.add('active');
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('loginError').style.display = 'none';
+      loadData().then(function() { renderList(); });
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+
+  document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') login();
+  });
+
+  function logout() {
+    document.getElementById('loginOverlay').classList.remove('hidden');
+    document.getElementById('app').classList.remove('active');
+  }
+
+  // ========== Toast ==========
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2000);
+  }
+
+  // ========== Save ==========
+  function persistData() {
+    localStorage.setItem('admin_content_override', JSON.stringify({
+      articles: appData.articles,
+      projects: appData.projects
+    }));
+  }
+
+  function exportData() {
+    var blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'content.json';
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('数据已导出');
+  }
+
+  // ========== List ==========
+  function setFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    renderList();
+  }
+
+  function renderList() {
+    var articles = appData.articles || [];
+    var filtered = articles;
+    if (currentFilter === 'published') filtered = articles.filter(function(a) { return a.status === 'published'; });
+    else if (currentFilter === 'draft') filtered = articles.filter(function(a) { return a.status === 'draft'; });
+    else if (currentFilter === 'frontend' || currentFilter === 'video') filtered = articles.filter(function(a) { return a.category === currentFilter; });
+
+    // Stats
+    document.getElementById('statsGrid').innerHTML =
+      '<div class="stat-card"><div class="stat-label">文章总数</div><div class="stat-value">' + articles.length + '</div></div>' +
+      '<div class="stat-card"><div class="stat-label">已发布</div><div class="stat-value">' + articles.filter(function(a) { return a.status === 'published'; }).length + '</div></div>' +
+      '<div class="stat-card"><div class="stat-label">草稿</div><div class="stat-value">' + articles.filter(function(a) { return a.status === 'draft'; }).length + '</div></div>' +
+      '<div class="stat-card"><div class="stat-label">精选</div><div class="stat-value">' + articles.filter(function(a) { return a.featured; }).length + '</div></div>';
+
+    // Table
+    var tbody = document.getElementById('articleTableBody');
+    var emptyEl = document.getElementById('emptyList');
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      emptyEl.style.display = 'block';
+    } else {
+      emptyEl.style.display = 'none';
+      tbody.innerHTML = filtered.map(function(a) {
+        return '<tr onclick="editArticle(\'' + a.id + '\')">' +
+          '<td class="title-cell">' + (a.featured ? '★ ' : '') + (a.title || '无标题') + '</td>' +
+          '<td>' + (a.category === 'frontend' ? '前端开发' : '视频剪辑') + '</td>' +
+          '<td><span class="status-badge ' + a.status + '">' + (a.status === 'published' ? '已发布' : '草稿') + '</span></td>' +
+          '<td style="color:var(--text-meta);">' + (a.date || '') + '</td>' +
+          '<td><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editArticle(\'' + a.id + '\')" style="margin-right:4px;">编辑</button>' +
+          '<button class="btn-danger-text" onclick="event.stopPropagation();deleteArticle(\'' + a.id + '\')">删除</button></td>' +
+          '</tr>';
+      }).join('');
+    }
+  }
+
+  function deleteArticle(id) {
+    if (!confirm('确定删除这篇文章？此操作不可撤销。')) return;
+    appData.articles = (appData.articles || []).filter(function(a) { return a.id !== id; });
+    persistData();
+    renderList();
+    showToast('文章已删除');
+  }
+
+  // ========== Editor ==========
+  function switchView(view) {
+    document.getElementById('listView').style.display = view === 'list' ? 'block' : 'none';
+    document.getElementById('editorView').style.display = view === 'editor' ? 'block' : 'none';
+    document.getElementById('editorView').classList.toggle('active', view === 'editor');
+    // Update sidebar active
+    document.querySelectorAll('.sidebar-link[data-view]').forEach(function(l) {
+      l.classList.toggle('active', l.getAttribute('data-view') === view);
+    });
+  }
+
+  function newArticle() {
+    editingId = null;
+    document.getElementById('editorTitle').textContent = '新建文章';
+    document.getElementById('editTitle').value = '';
+    document.getElementById('editCategory').value = 'frontend';
+    document.getElementById('editStatus').value = 'draft';
+    document.getElementById('editImage').value = '';
+    document.getElementById('editVideo').value = '';
+    document.getElementById('editExcerpt').value = '';
+    document.getElementById('editTags').value = '';
+    document.getElementById('editContent').value = '';
+    document.getElementById('previewContent').innerHTML = '';
+    document.getElementById('previewContent').classList.remove('active');
+    document.getElementById('editContent').style.display = 'block';
+    document.querySelectorAll('.preview-btn').forEach(function(b, i) {
+      b.classList.toggle('active', i === 0);
+    });
+    switchView('editor');
+  }
+
+  function editArticle(id) {
+    var article = (appData.articles || []).find(function(a) { return a.id === id; });
+    if (!article) return;
+    editingId = id;
+    document.getElementById('editorTitle').textContent = '编辑文章';
+    document.getElementById('editTitle').value = article.title || '';
+    document.getElementById('editCategory').value = article.category || 'frontend';
+    document.getElementById('editStatus').value = article.status || 'draft';
+    document.getElementById('editImage').value = article.image || '';
+    document.getElementById('editVideo').value = article.videoUrl || '';
+    document.getElementById('editExcerpt').value = article.excerpt || '';
+    document.getElementById('editTags').value = (article.tags || []).join(', ');
+    document.getElementById('editContent').value = article.content || '';
+    document.getElementById('previewContent').innerHTML = '';
+    document.getElementById('previewContent').classList.remove('active');
+    document.getElementById('editContent').style.display = 'block';
+    document.querySelectorAll('.preview-btn').forEach(function(b, i) {
+      b.classList.toggle('active', i === 0);
+    });
+    switchView('editor');
+  }
+
+  function togglePreview(mode) {
+    var btns = document.querySelectorAll('.preview-btn');
+    btns.forEach(function(b, i) {
+      b.classList.toggle('active', (mode === 'edit' && i === 0) || (mode === 'preview' && i === 1));
+    });
+    var textarea = document.getElementById('editContent');
+    var preview = document.getElementById('previewContent');
+    if (mode === 'preview') {
+      preview.innerHTML = simpleMd(textarea.value);
+      preview.classList.add('active');
+      textarea.style.display = 'none';
+    } else {
+      preview.classList.remove('active');
+      textarea.style.display = 'block';
+    }
+  }
+
+  function simpleMd(text) {
+    if (!text) return '<p style="color:#999;">预览为空</p>';
+    var html = text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, function(_, lang, code) {
+      return '<pre style="background:#f5f5f7;padding:16px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.6;"><code>' + code.trim() + '</code></pre>';
+    });
+    html = html.replace(/`([^`]+)`/g, '<code style="background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:0.9em;">$1</code>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/^### (.+)$/gm, '<h3 style="font-size:18px;font-weight:600;margin:28px 0 12px;">$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2 style="font-size:22px;font-weight:600;margin:36px 0 16px;">$1</h2>');
+    html = html.replace(/^&gt; (.+)$/gm, '<blockquote style="border-left:3px solid #0071e3;padding:8px 0 8px 20px;margin:16px 0;color:#666;font-style:italic;">$1</blockquote>');
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#0071e3;">$1</a>');
+    html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/((?:<li>[\s\S]*?<\/li>\n?)+)/g, '<ul style="margin:0 0 16px 24px;line-height:2;">$1</ul>');
+    html = html.replace(/\n\n/g, '</p><p>');
+    html = '<p style="margin-bottom:16px;">' + html + '</p>';
+    html = html.replace(/<p>\s*<\/p>/g, '');
+    html = html.replace(/<p><(h[23]|pre|ul|blockquote)>/g, '<$1>');
+    html = html.replace(/<\/(h[23]|pre|ul|blockquote)><\/p>/g, '</$1>');
+    return html;
+  }
+
+  function saveArticle(status) {
+    var title = document.getElementById('editTitle').value.trim();
+    if (!title) { showToast('请输入文章标题'); return; }
+    var slug = title.replace(/[^a-zA-Z0-9\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '').toLowerCase();
+    if (!slug) slug = 'article-' + Date.now();
+
+    var now = new Date();
+    var dateStr = now.getFullYear() + '-' +
+      String(now.getMonth() + 1).padStart(2, '0') + '-' +
+      String(now.getDate()).padStart(2, '0');
+
+    var article = {
+      id: editingId || ('article-' + Date.now()),
+      title: title,
+      slug: slug,
+      category: document.getElementById('editCategory').value,
+      featured: false,
+      image: document.getElementById('editImage').value.trim(),
+      excerpt: document.getElementById('editExcerpt').value.trim(),
+      content: document.getElementById('editContent').value,
+      tags: document.getElementById('editTags').value.split(',').map(function(t) { return t.trim(); }).filter(Boolean),
+      videoUrl: document.getElementById('editVideo').value.trim(),
+      date: editingId ? ((appData.articles || []).find(function(a) { return a.id === editingId; }) || {}).date || dateStr : dateStr,
+      status: status
+    };
+
+    if (editingId) {
+      var idx = (appData.articles || []).findIndex(function(a) { return a.id === editingId; });
+      if (idx >= 0) {
+        appData.articles[idx] = article;
+      } else {
+        appData.articles.push(article);
+      }
+    } else {
+      appData.articles = appData.articles || [];
+      appData.articles.unshift(article);
+    }
+
+    persistData();
+    showToast(status === 'published' ? '文章已发布' : '草稿已保存');
+    switchView('list');
+    renderList();
+  }
+
+  function publishArticle() { saveArticle('published'); }
+  function saveDraft() { saveArticle('draft'); }
+
+  // ========== Init ==========
+  // Auto-load on page load
+  loadData().then(function() {
+    var savedPwd = sessionStorage.getItem('admin_logged_in');
+    if (savedPwd === adminPassword) {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      document.getElementById('app').classList.add('active');
+      renderList();
+    }
+  });
+
+  // Expose to window for onclick handlers
+  window.login = login;
+  window.logout = logout;
+  window.switchView = switchView;
+  window.setFilter = setFilter;
+  window.newArticle = newArticle;
+  window.editArticle = editArticle;
+  window.deleteArticle = deleteArticle;
+  window.togglePreview = togglePreview;
+  window.publishArticle = publishArticle;
+  window.saveDraft = saveDraft;
+  window.exportData = exportData;
+})();
+</script>
+
+</body>
+</html>

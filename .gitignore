@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# WorkBuddy internal
+.workbuddy/
+
+# Temp files
+*.pyc
+__pycache__/
+
+# Node (if added later)
+node_modules/
