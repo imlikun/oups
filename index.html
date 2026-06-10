@@ -160,85 +160,55 @@
     }
 
     /* Hero */
-    .hero {
-      min-height: 100dvh; display: flex; align-items: center;
-      justify-content: center; text-align: center; position: relative;
-      overflow: hidden;
+    .hero-section {
+      min-height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 0 80px; position: relative; overflow: hidden;
     }
-    .hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-    .hero-orb {
+    .hero-bg-orb {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
       width: 700px; height: 700px; border-radius: 50%;
       background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      opacity: 0.22; animation: orbPulse 10s ease-in-out infinite;
-      filter: blur(80px); z-index: 0;
+      opacity: 0.22; filter: blur(80px); pointer-events: none; z-index: 0;
     }
-    .hero-orb-2 {
-      position: absolute; top: 52%; left: 48%; transform: translate(-50%,-50%);
+    .hero-bg-orb-2 {
+      position: absolute; top: 55%; left: 48%; transform: translate(-50%,-50%);
       width: 500px; height: 500px; border-radius: 50%;
       background: radial-gradient(circle, rgba(94,92,230,0.06) 0%, transparent 70%);
-      opacity: 0.2; animation: orbPulse 12s ease-in-out 3s infinite;
-      filter: blur(60px); z-index: 0;
+      opacity: 0.2; filter: blur(60px); pointer-events: none; z-index: 0;
     }
-    @keyframes orbPulse {
-      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.22; }
-      50% { transform: translate(-50%,-50%) scale(1.2); opacity: 0.1; }
-    }
+    .hero-content { position: relative; z-index: 1; text-align: center; }
     .hero-label {
-      font-size: 17px; font-weight: 500; color: var(--accent);
-      letter-spacing: 0.15em; margin-bottom: 24px; position: relative; z-index: 3;
-      opacity: 0; animation: fadeUp 0.8s 0.2s cubic-bezier(0.16,1,0.3,1) forwards;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.2em;
+      color: var(--accent); margin-bottom: 24px;
     }
     .hero-name {
-      font-size: clamp(56px,10vw,120px); font-weight: 700;
-      letter-spacing: -0.03em; line-height: 1; margin-bottom: 12px; position: relative; z-index: 3;
-      opacity: 0; animation: fadeUp 0.8s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
-      background: linear-gradient(135deg, #40aaff 0%, #a78bfa 40%, #5e5ce6 70%, #30c8b8 100%);
-      background-clip: text; -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 0.5px rgba(255,255,255,0.15);
-      filter: drop-shadow(0 0 40px rgba(64,170,255,0.45)) drop-shadow(0 0 100px rgba(94,92,230,0.25)) drop-shadow(0 0 8px rgba(48,200,180,0.35));
-      -webkit-filter: drop-shadow(0 0 40px rgba(64,170,255,0.45)) drop-shadow(0 0 100px rgba(94,92,230,0.25)) drop-shadow(0 0 8px rgba(48,200,180,0.35));
+      font-size: clamp(56px,10vw,96px); font-weight: 700;
+      letter-spacing: -0.035em; line-height: 1;
+      margin-bottom: 16px;
     }
-    body.light .hero-name {
-      background: linear-gradient(135deg, #0071e3 0%, #7b61ff 40%, #5856d6 70%, #00a896 100%);
-      background-clip: text; -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 0.5px rgba(0,0,0,0.08);
-      filter: drop-shadow(0 0 40px rgba(0,113,227,0.35)) drop-shadow(0 0 100px rgba(120,100,255,0.2)) drop-shadow(0 0 8px rgba(0,168,150,0.25));
-      -webkit-filter: drop-shadow(0 0 40px rgba(0,113,227,0.35)) drop-shadow(0 0 100px rgba(120,100,255,0.2)) drop-shadow(0 0 8px rgba(0,168,150,0.25));
+    .hero-tagline {
+      font-size: 18px; color: var(--text-secondary); margin-bottom: 8px;
     }
-    .hero-title {
-      font-size: 21px; font-weight: 400; color: var(--text-secondary);
-      letter-spacing: 0.02em; margin-bottom: 8px; position: relative; z-index: 3;
-      opacity: 0; animation: fadeUp 0.8s 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+    .hero-meta { font-size: 15px; color: var(--text-tertiary); }
+
+    .hero-bento {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      max-width: 700px; margin: 40px auto 0; position: relative; z-index: 1;
     }
-    .hero-meta {
-      font-size: 15px; color: var(--text-tertiary); position: relative; z-index: 3;
-      opacity: 0; animation: fadeUp 0.8s 1.0s cubic-bezier(0.16,1,0.3,1) forwards;
+    .hero-stat {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px 16px; text-align: center;
     }
-    .hero-scroll {
-      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-      opacity: 0; animation: fadeUp 0.8s 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    .hero-stat-value {
+      font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--text-primary);
     }
-    .hero-scroll-mouse {
-      width: 24px; height: 38px; border: 2px solid var(--text-tertiary);
-      border-radius: 12px; display: flex; justify-content: center; padding-top: 8px;
-      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    }
-    .hero-scroll-dot {
-      width: 3px; height: 8px; background: var(--text-secondary);
-      border-radius: 2px; animation: scrollDot 1.6s ease-in-out infinite;
-    }
-    @keyframes scrollDot {
-      0% { transform: translateY(0); opacity: 1; }
-      50% { transform: translateY(10px); opacity: 0.3; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .hero-stat-label { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; font-weight: 500; }
+
 
     /* ---- Liquid Glass Cards ---- */
     .bento {
@@ -764,8 +734,20 @@
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
-      .hero-orb, .hero-scroll-dot { animation: none; }
+      .hero-bg-orb, .hero-scroll-dot { animation: none; }
       .hero-label, .hero-name, .hero-title, .hero-meta, .hero-scroll { animation: none; opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-section { padding: 80px 0 60px; }
+      .hero-bento { grid-template-columns: repeat(2, 1fr); }
+      .hero-name { font-size: clamp(40px, 8vw, 64px); }
+    }
+    @media (max-width: 480px) {
+      .hero-section { padding: 60px 0 40px; min-height: 100dvh; }
+      .hero-bento { grid-template-columns: 1fr; }
+      .hero-stat { padding: 16px 12px; }
+      .hero-name { font-size: clamp(32px, 12vw, 48px); }
     }
   </style>
 </head>
@@ -786,19 +768,32 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero" id="hero">
-    <div class="hero-bg">
-      <div class="hero-orb"></div>
-      <div class="hero-orb-2"></div>
-    </div>
-    <div class="section-inner">
-      <p class="hero-label">房地产营销策划</p>
+  <section class="hero-section" id="hero">
+    <div class="hero-bg-orb"></div>
+    <div class="hero-bg-orb-2"></div>
+    <div class="hero-content reveal">
+      <p class="hero-label">房地产营销策划 · 营销部副经理</p>
       <h1 class="hero-name">李坤</h1>
-      <p class="hero-title">策划经理 · 8年地产营销经验</p>
-      <p class="hero-meta">保利堂悦 8开8罄 · 保利和府区域销冠 · 大平层精准圈层营销</p>
-    </div>
-    <div class="hero-scroll">
-      <div class="hero-scroll-mouse"><div class="hero-scroll-dot"></div></div>
+      <p class="hero-tagline">8年深耕淮安 · 保利系标杆操盘 · 全周期营销管理</p>
+      <p class="hero-meta">保利堂悦 8开8罄 · 保利和府两年全市销冠 · 大平层精准圈层营销 · 项目重启盘活</p>
+      <div class="hero-bento">
+        <div class="hero-stat">
+          <div class="hero-stat-value">82.97亿</div>
+          <div class="hero-stat-label">操盘货值总额</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">4</div>
+          <div class="hero-stat-label">项目统筹管理</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">8开8罄</div>
+          <div class="hero-stat-label">标杆战绩</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">淮安</div>
+          <div class="hero-stat-label">📍 所在地 · 13275171596</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1222,7 +1217,7 @@
       document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
 
       // Hero orb parallax
-      var orbs = document.querySelectorAll('.hero-orb, .hero-orb-2');
+      var orbs = document.querySelectorAll('.hero-bg-orb, .hero-bg-orb-2');
       if (orbs.length && !window.matchMedia('(pointer: coarse)').matches) {
         document.addEventListener('mousemove', function(e) {
           var x = (e.clientX / window.innerWidth - 0.5) * 40;
