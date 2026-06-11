@@ -858,7 +858,11 @@
       for (var r = 0; r < recommend.length; r++) {
         var ra = recommend[r];
         recHtml += '<a href="article.html?id=' + ra.id + '" class="rec-card">';
-        recHtml += '<div class="rec-card-img">' + (cat === 'frontend' ? '🌐' : cat === 'video' ? '🎬' : ra.category === 'frontend' ? '🌐' : '🎬') + '</div>';
+        if (ra.image) {
+          recHtml += '<div class="rec-card-img" style="background:url(' + ra.image + ') center/cover"></div>';
+        } else {
+          recHtml += '<div class="rec-card-img">' + (ra.category === 'frontend' ? '🌐' : '🎬') + '</div>';
+        }
         recHtml += '<div class="rec-card-body">';
         recHtml += '<div class="rec-card-cat">' + catLabel(ra.category) + '</div>';
         recHtml += '<div class="rec-card-title">' + ra.title + '</div>';

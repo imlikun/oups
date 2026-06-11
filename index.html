@@ -14,6 +14,7 @@
       --text-secondary: #a1a1a6;
       --text-tertiary: #6e6e73;
       --accent: #2997ff;
+      --accent-glass: rgba(41,151,255,0.12);
       --accent-glow: rgba(41,151,255,0.15);
       --accent-strong: rgba(41,151,255,0.25);
       --border: rgba(255,255,255,0.08);
@@ -47,6 +48,7 @@
       --text-secondary: #6e6e73;
       --text-tertiary: #86868b;
       --accent: #0071e3;
+      --accent-glass: rgba(0,113,227,0.08);
       --accent-glow: rgba(0,113,227,0.12);
       --accent-strong: rgba(0,113,227,0.2);
       --border: rgba(0,0,0,0.06);
@@ -770,6 +772,35 @@
     .skill-tag-item{padding:8px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--card-border);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all 0.25s ease;cursor:default;}
     .skill-tag-item:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-1px);}
     .skill-tag-item.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+    /* 案例展示 */
+    .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:40px;}
+    .case-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);background:var(--card-bg);border:1px solid var(--card-border);}
+    .case-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.2);border-color:var(--accent);}
+    .case-preview{height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+    .case-preview.neuroflow{background:linear-gradient(135deg,#080b16 0%,#1a2340 50%,#0d1525 100%);}
+    .case-preview.yunlan{background:linear-gradient(135deg,#fafaf9 0%,#f0ede8 100%);}
+    .case-preview-inner{text-align:center;padding:24px;}
+    .case-preview-inner .cp-logo{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:10px;}
+    .neuroflow .cp-logo{background:linear-gradient(135deg,#5b8def,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .yunlan .cp-logo{color:#1e3a5f;}
+    .case-preview-inner .cp-badge{display:inline-block;padding:4px 14px;border-radius:14px;font-size:11px;font-weight:600;margin-bottom:16px;}
+    .neuroflow .cp-badge{background:rgba(91,141,239,0.15);color:#5b8def;}
+    .yunlan .cp-badge{background:rgba(196,163,90,0.15);color:#c4a35a;}
+    .case-preview-inner .cp-title{font-size:15px;font-weight:600;margin-bottom:4px;}
+    .neuroflow .cp-title{color:#e8ecf1;}
+    .yunlan .cp-title{color:#1a1a1a;}
+    .case-preview-inner .cp-sub{font-size:12px;}
+    .neuroflow .cp-sub{color:#8892a8;}
+    .yunlan .cp-sub{color:#6b6b6b;}
+    .case-info{padding:24px 28px;}
+    .case-info h4{font-size:17px;font-weight:600;margin-bottom:6px;color:var(--text-primary);}
+    .case-info p{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;}
+    .case-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+    .case-tag{font-size:11px;padding:4px 10px;border-radius:10px;background:var(--accent-glass);color:var(--accent);}
+    .case-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;padding:8px 20px;border-radius:20px;background:var(--accent-glass);transition:all 0.25s ease;}
+    .case-btn:hover{background:var(--accent);color:#fff;gap:10px;}
+    @media (max-width:768px){.cases-grid{grid-template-columns:1fr;}}
   </style>
 
   <!-- OG / Social -->
@@ -786,6 +817,7 @@
   <nav class="nav" id="nav">
     <ul class="nav-links">
       <li><a href="#creative">创意</a></li>
+      <li><a href="#cases">案例</a></li>
       <li><a href="#bento">职业</a></li>
       <li><a href="#learning">学习</a></li>
       <li><a href="#contact">联系</a></li>
@@ -840,6 +872,67 @@
 
       <div class="bento" id="creativeBento">
         <!-- 由 content.json 动态加载 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 案例展示 ====== -->
+  <section class="section" id="cases">
+    <div class="section-inner">
+      <p class="section-label reveal">案例展示</p>
+      <h2 class="section-headline reveal reveal-delay-1">
+        企业官网设计作品
+      </h2>
+      <p class="section-sub reveal reveal-delay-2" style="max-width:560px;color:var(--text-secondary);font-size:15px;line-height:1.7;margin-top:12px;">
+        从 AI 科技到传统企业，用设计语言诠释品牌价值。
+      </p>
+
+      <div class="cases-grid reveal reveal-delay-3">
+        <!-- NeuroFlow -->
+        <a href="neuroflow/index.html" class="case-card" target="_blank">
+          <div class="case-preview neuroflow">
+            <div class="case-preview-inner">
+              <div class="cp-logo">NeuroFlow</div>
+              <div class="cp-badge">企业级 AI SaaS</div>
+              <div class="cp-title">用 AI 把数据变成决策力</div>
+              <div class="cp-sub">500+ 企业 · 2.3 亿日均调用</div>
+            </div>
+          </div>
+          <div class="case-info">
+            <h4>NeuroFlow — AI 智能决策平台</h4>
+            <p>面向 B2B 企业客户的 AI SaaS 官网，深色科技风，强调数据说服力与可信赖感。</p>
+            <div class="case-tags">
+              <span class="case-tag">AI / SaaS</span>
+              <span class="case-tag">深色模式</span>
+              <span class="case-tag">数据驱动</span>
+              <span class="case-tag">B2B</span>
+            </div>
+            <span class="case-btn">查看网站 →</span>
+          </div>
+        </a>
+
+        <!-- 云澜集团 -->
+        <a href="yunlan/index.html" class="case-card" target="_blank">
+          <div class="case-preview yunlan">
+            <div class="case-preview-inner">
+              <div class="cp-logo">云澜集团</div>
+              <div class="cp-badge">城市建设 · 资产管理</div>
+              <div class="cp-title">以远见构筑未来</div>
+              <div class="cp-sub">820 亿资产 · 28 年深耕</div>
+            </div>
+          </div>
+          <div class="case-info">
+            <h4>云澜集团 — 高端地产控股集团</h4>
+            <p>面向投资者与合作伙伴的企业官网，克制典雅的灰白基调，传递稳重与实力。</p>
+            <div class="case-tags">
+              <span class="case-tag">企业官网</span>
+              <span class="case-tag">地产</span>
+              <span class="case-tag">轻奢</span>
+              <span class="case-tag">投资者关系</span>
+            </div>
+            <span class="case-btn">查看网站 →</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -1079,19 +1172,19 @@
                 <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
               </div>
               <div class="roadmap-item">
-                <span class="ri-icon">⚛️</span>
-                <span class="ri-label">React / Vue 框架</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
+                <span class="ri-icon">🤖</span>
+                <span class="ri-label">AI &amp; Vue</span>
+                <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
               </div>
               <div class="roadmap-item">
                 <span class="ri-icon">🔧</span>
-                <span class="ri-label">工程化 & 工具链</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
+                <span class="ri-label">工程化 &amp; 工具链</span>
+                <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
               </div>
               <div class="roadmap-item">
                 <span class="ri-icon">🚀</span>
                 <span class="ri-label">第一个上线项目</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
+                <span class="ri-status status-badge status-done"><span class="status-dot"></span>完成</span>
               </div>
             </div>
             <div class="roadmap-col">

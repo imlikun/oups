@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云澜集团 — 全球领先的城市建设与资产管理集团</title>
+<meta name="description" content="云澜控股集团成立于 1998 年，业务覆盖地产开发、商业运营、文旅投资、科技园区四大板块。总资产规模超 820 亿。">
+<style>
+:root {
+  --bg: #fafaf9;
+  --bg-alt: #f5f4f1;
+  --text: #1a1a1a;
+  --text-secondary: #6b6b6b;
+  --text-muted: #999;
+  --accent: #1e3a5f;
+  --accent-light: #3b6ba0;
+  --gold: #c4a35a;
+  --border: #e8e4df;
+  --radius-lg: 8px;
+  --transition: 0.3s ease;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Nav */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(250,250,249,0.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1280px; margin:0 auto; padding:0 48px; display:flex; align-items:center; justify-content:space-between; height:68px; }
+.nav-logo { font-size:20px; font-weight:700; letter-spacing:2px; color:var(--accent); }
+.nav-links { display:flex; gap:40px; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:var(--transition); }
+.nav-links a:hover { color:var(--accent); }
+
+/* Hero */
+.hero { height:100vh; min-height:700px; display:flex; align-items:center; justify-content:center; text-align:center; background:linear-gradient(180deg,#fafaf9 0%,#f0ede8 100%); position:relative; overflow:hidden; }
+.hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.hero-content { position:relative; z-index:1; padding:0 24px; }
+.hero-eyebrow { font-size:13px; letter-spacing:6px; color:var(--gold); font-weight:500; margin-bottom:32px; text-transform:uppercase; }
+.hero h1 { font-size:clamp(32px,5vw,56px); font-weight:300; letter-spacing:4px; line-height:1.4; color:var(--accent); margin-bottom:24px; }
+.hero h1 strong { font-weight:700; }
+.hero p { color:var(--text-secondary); font-size:17px; max-width:560px; margin:0 auto 48px; letter-spacing:1px; line-height:1.8; }
+.hero-scroll { position:absolute; bottom:48px; left:50%; transform:translateX(-50%); color:var(--text-muted); font-size:12px; letter-spacing:2px; animation:float 2s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-8px)} }
+
+/* Section */
+.section { padding:100px 0; }
+.section-inner { max-width:1280px; margin:0 auto; padding:0 48px; }
+.section-label { font-size:12px; letter-spacing:4px; color:var(--gold); font-weight:600; text-transform:uppercase; margin-bottom:16px; }
+.section-title { font-size:32px; font-weight:300; letter-spacing:2px; color:var(--accent); margin-bottom:16px; line-height:1.3; }
+.section-title strong { font-weight:700; }
+.section-sub { color:var(--text-secondary); font-size:15px; line-height:1.8; max-width:520px; }
+.section-header { margin-bottom:64px; }
+
+/* Stats */
+.stats { background:var(--bg-alt); }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); }
+.stat-item { padding:56px 32px; text-align:center; border-right:1px solid var(--border); }
+.stat-item:last-child { border-right:none; }
+.stat-number { font-size:42px; font-weight:700; color:var(--accent); letter-spacing:-1px; margin-bottom:8px; }
+.stat-number span { color:var(--gold); }
+.stat-label { color:var(--text-muted); font-size:13px; letter-spacing:1px; }
+
+/* Business */
+.biz-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+.biz-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; transition:var(--transition); }
+.biz-card:hover { box-shadow:0 8px 32px rgba(0,0,0,0.06); transform:translateY(-4px); }
+.biz-card-image { height:200px; display:flex; align-items:center; justify-content:center; font-size:48px; }
+.biz-card-image.i1 { background:linear-gradient(135deg,#e8e0d5,#d5cbb8); }
+.biz-card-image.i2 { background:linear-gradient(135deg,#dce8f0,#c4d5e0); }
+.biz-card-image.i3 { background:linear-gradient(135deg,#e0e8d5,#c8d5b8); }
+.biz-card-body { padding:28px; }
+.biz-card-body h3 { font-size:20px; font-weight:600; margin-bottom:10px; color:var(--accent); }
+.biz-card-body p { color:var(--text-secondary); font-size:14px; line-height:1.7; }
+
+/* Projects */
+.projects-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:40px; }
+.project-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; transition:var(--transition); }
+.project-card:hover { box-shadow:0 8px 32px rgba(0,0,0,0.06); }
+.project-image { height:280px; display:flex; align-items:center; justify-content:center; font-size:64px; }
+.project-image.p1 { background:linear-gradient(135deg,#2c3e50,#34495e); color:rgba(255,255,255,0.3); }
+.project-image.p2 { background:linear-gradient(135deg,#3a4a3f,#4a5a4f); color:rgba(255,255,255,0.3); }
+.project-body { padding:32px; }
+.project-body .tag { display:inline-block; background:rgba(196,163,90,0.1); color:var(--gold); padding:4px 12px; border-radius:2px; font-size:11px; letter-spacing:1px; margin-bottom:12px; }
+.project-body h4 { font-size:22px; font-weight:600; margin-bottom:8px; color:var(--accent); }
+.project-body .meta { color:var(--text-muted); font-size:13px; }
+.project-body p { color:var(--text-secondary); font-size:14px; margin-top:12px; line-height:1.7; }
+
+/* Dual Cards */
+.dual-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:32px; }
+.dual-card { padding:48px; border-radius:var(--radius-lg); transition:var(--transition); }
+.dual-card:hover { transform:translateY(-4px); }
+.dual-card.investor { background:linear-gradient(135deg,#1e3a5f,#2c5282); color:#fff; }
+.dual-card.career { background:linear-gradient(135deg,#f5f4f1,#ede8e0); border:1px solid var(--border); }
+.dual-card h3 { font-size:24px; font-weight:600; margin-bottom:12px; }
+.dual-card.investor h3 { color:#fff; }
+.dual-card.career h3 { color:var(--accent); }
+.dual-card p { font-size:14px; line-height:1.7; margin-bottom:24px; }
+.dual-card.investor p { color:rgba(255,255,255,0.7); }
+.dual-card.career p { color:var(--text-secondary); }
+.dual-link { display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; text-decoration:none; transition:var(--transition); }
+.dual-card.investor .dual-link { color:var(--gold); }
+.dual-card.career .dual-link { color:var(--accent); }
+.dual-link:hover { gap:12px; }
+
+/* Footer */
+.footer { background:#1a1a1a; color:rgba(255,255,255,0.5); padding:80px 0 40px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1fr; gap:40px; }
+.footer h4 { color:#fff; font-size:14px; font-weight:600; margin-bottom:20px; }
+.footer a { color:rgba(255,255,255,0.5); text-decoration:none; font-size:13px; display:block; margin-bottom:10px; transition:var(--transition); }
+.footer a:hover { color:#fff; }
+.footer-brand { font-size:20px; font-weight:700; color:#fff; letter-spacing:2px; margin-bottom:16px; }
+.footer-brand p { font-size:13px; line-height:1.8; margin-top:12px; }
+.footer-bottom { margin-top:60px; padding-top:30px; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; font-size:12px; flex-wrap:wrap; gap:16px; }
+
+@media (max-width:900px) {
+  .stats-grid { grid-template-columns:repeat(2,1fr); }
+  .stat-item:nth-child(2) { border-right:none; }
+  .biz-grid { grid-template-columns:1fr; }
+  .projects-grid { grid-template-columns:1fr; }
+  .dual-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:repeat(2,1fr); }
+  .nav-links { display:none; }
+}
+@media (max-width:600px) {
+  .section-inner,.nav-inner { padding:0 24px; }
+  .hero h1 { letter-spacing:2px; }
+  .stats-grid { grid-template-columns:1fr; }
+  .stat-item { border-right:none; border-bottom:1px solid var(--border); }
+  .footer-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">云澜集团</div>
+    <div class="nav-links">
+      <a href="#business">业务板块</a>
+      <a href="#projects">代表项目</a>
+      <a href="#investors">投资者关系</a>
+      <a href="#careers">人才招聘</a>
+      <a href="#contact">联系我们</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Yunlan Holding Group</div>
+    <h1>以<strong>远见</strong>构筑未来</h1>
+    <p>云澜控股集团成立于 1998 年，深耕城市建设与资产管理领域二十八载，以卓越品质和前瞻视野，持续创造城市价值。</p>
+  </div>
+  <div class="hero-scroll">SCROLL ↓</div>
+</section>
+
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number"><span>¥</span>820亿</div>
+      <div class="stat-label">总资产管理规模</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">28<small style="font-size:24px">年</small></div>
+      <div class="stat-label">行业深耕历程</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">36<small style="font-size:24px">城</small></div>
+      <div class="stat-label">全国业务布局</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">200+</div>
+      <div class="stat-label">累计开发项目</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="business">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-label">业务板块</p>
+      <h2 class="section-title">多元布局，<strong>协同发展</strong></h2>
+      <p class="section-sub">四轮驱动的业务矩阵，构建完整的城市运营生态闭环。</p>
+    </div>
+    <div class="biz-grid">
+      <div class="biz-card">
+        <div class="biz-card-image i1">🏢</div>
+        <div class="biz-card-body">
+          <h3>地产开发</h3>
+          <p>高端住宅、城市综合体、TOD 综合开发，累计交付面积超 5000 万㎡，持续引领人居品质升级。</p>
+        </div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-card-image i2">🏪</div>
+        <div class="biz-card-body">
+          <h3>商业运营</h3>
+          <p>自持商业面积超 300 万㎡，涵盖购物中心、写字楼、酒店三大业态，年客流量超 2 亿人次。</p>
+        </div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-card-image i3">🌿</div>
+        <div class="biz-card-body">
+          <h3>文旅投资</h3>
+          <p>布局度假目的地、主题乐园、康养社区三大产品线，已运营项目年接待游客超 1500 万人次。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects" style="background:var(--bg-alt);">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-label">代表项目</p>
+      <h2 class="section-title">标杆作品，<strong>城市名片</strong></h2>
+      <p class="section-sub">每一个项目，都是对城市未来的深度参与和郑重承诺。</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-image p1">🏙️</div>
+        <div class="project-body">
+          <span class="tag">城市综合体</span>
+          <h4>云澜中心 · 上海</h4>
+          <span class="meta">总建面 68 万㎡ | 2024 年竣工</span>
+          <p>浦东核心区位超甲级写字楼集群，LEED 铂金认证，入驻世界 500 强企业 23 家。</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-image p2">🌊</div>
+        <div class="project-body">
+          <span class="tag">文旅度假</span>
+          <h4>澜湾度假区 · 三亚</h4>
+          <span class="meta">占地 1200 亩 | 2023 年开业</span>
+          <p>汇集奢华酒店、海洋主题乐园、滨海艺术中心，年接待游客超 500 万人次。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="investors">
+  <div class="section-inner">
+    <div class="dual-grid">
+      <div class="dual-card investor">
+        <h3>投资者关系</h3>
+        <p>定期报告、财务日历、ESG 成果与分析师覆盖，为股东提供透明的信息披露与持续的回报。</p>
+        <a href="#" class="dual-link">查看最新年报 →</a>
+      </div>
+      <div class="dual-card career" id="careers">
+        <h3>人才招聘</h3>
+        <p>我们寻找志同道合的伙伴，共同定义行业的下一篇章。开放 120+ 岗位，覆盖全国 20 城。</p>
+        <a href="#" class="dual-link">浏览开放岗位 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" id="contact">
+  <div class="section-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">云澜集团</div>
+        <p>全球领先的城市建设与资产管理集团。<br>成立于 1998 年，总部设于中国上海。</p>
+      </div>
+      <div>
+        <h4>业务板块</h4>
+        <a href="#">地产开发</a>
+        <a href="#">商业运营</a>
+        <a href="#">文旅投资</a>
+        <a href="#">科技园区</a>
+      </div>
+      <div>
+        <h4>投资者</h4>
+        <a href="#">财务报告</a>
+        <a href="#">公司治理</a>
+        <a href="#">ESG 成果</a>
+        <a href="#">公告与通函</a>
+      </div>
+      <div>
+        <h4>新闻中心</h4>
+        <a href="#">集团动态</a>
+        <a href="#">媒体报道</a>
+        <a href="#">行业洞察</a>
+        <a href="#">视频中心</a>
+      </div>
+      <div>
+        <h4>联系我们</h4>
+        <a href="#">投资者咨询</a>
+        <a href="#">媒体联络</a>
+        <a href="#">合作洽谈</a>
+        <a href="#">信访举报</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 云澜控股集团有限公司. All rights reserved.</span>
+      <span>沪ICP备XXXXXXXX号 | 沪公网安备 XXXXXXXXXXXX号</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
