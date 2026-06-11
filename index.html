@@ -145,7 +145,7 @@
     body.light .theme-toggle .icon-moon { display: none; }
 
     /* Sections */
-    .section { padding: 40px 24px; }
+    .section { padding: 80px 24px; }
     .section:nth-child(even) {
       background: var(--section-alt);
     }
@@ -186,6 +186,9 @@
       font-size: clamp(56px,10vw,96px); font-weight: 700;
       letter-spacing: -0.035em; line-height: 1;
       margin-bottom: 16px;
+      background: var(--hero-name-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .hero-tagline {
       font-size: 18px; color: var(--text-secondary); margin-bottom: 8px;
@@ -749,15 +752,41 @@
       .hero-stat { padding: 16px 12px; }
       .hero-name { font-size: clamp(32px, 12vw, 48px); }
     }
+
+    .back-to-top {
+      position:fixed;bottom:32px;right:32px;z-index:1000;
+      width:44px;height:44px;border-radius:50%;
+      background:var(--card-bg);border:1px solid var(--card-border);
+      color:var(--text-secondary);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      opacity:0;visibility:hidden;transform:translateY(10px);
+      transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0);}
+    .back-to-top:hover{color:var(--text-primary);transform:translateY(-2px);}
+
+    .skill-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+    .skill-tag-item{padding:8px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--card-border);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all 0.25s ease;cursor:default;}
+    .skill-tag-item:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-1px);}
+    .skill-tag-item.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
   </style>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="李坤 — 房地产营销策划经理 · 跨界创意探索">
+  <meta property="og:description" content="8年深耕淮安 · 保利系标杆操盘 · 前端开发 &amp; 视频剪辑">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.appin.site/">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <meta name="description" content="李坤的个人网站 — 房地产营销策划经理，8年淮安市场经验，跨界前端开发与视频剪辑。">
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
 
   <nav class="nav" id="nav">
     <ul class="nav-links">
-      <li><a href="#bento">职业</a></li>
       <li><a href="#creative">创意</a></li>
+      <li><a href="#bento">职业</a></li>
       <li><a href="#learning">学习</a></li>
       <li><a href="#contact">联系</a></li>
     </ul>
@@ -793,6 +822,24 @@
           <div class="hero-stat-value">淮安</div>
           <div class="hero-stat-label">📍 所在地 · 13275171596</div>
         </div>
+      </div>
+    </div>
+  </section>
+  <!-- ====== 创意探索 ====== -->
+  <section class="section" id="creative">
+    <div class="section-inner">
+      <div class="section-divider reveal">
+        <span>创意探索</span>
+      </div>
+      <h2 class="section-headline reveal reveal-delay-1" style="font-size:clamp(24px,4vw,44px);margin-bottom:32px;">
+        跨界学习，持续进化。
+      </h2>
+      <p style="font-size:15px;color:var(--text-secondary);margin-bottom:36px;margin-top:-20px;" class="reveal reveal-delay-1">
+        在房地产营销策划之外，我正在探索前端开发与视频剪辑领域，用代码和镜头拓展表达边界。
+      </p>
+
+      <div class="bento" id="creativeBento">
+        <!-- 由 content.json 动态加载 -->
       </div>
     </div>
   </section>
@@ -914,27 +961,15 @@
           <div class="card-desc">
             覆盖营销策划全链条 — 从前期定位、方案撰写到活动执行、新媒体运营。
           </div>
-          <div class="card-skills">
-            <div class="card-skill">
-              <span class="card-skill-name">方案策划</span>
-              <div class="card-skill-track"><div class="card-skill-fill" style="width:95%"></div></div>
-              <span class="card-skill-val">95%</span>
-            </div>
-            <div class="card-skill">
-              <span class="card-skill-name">圈层营销</span>
-              <div class="card-skill-track"><div class="card-skill-fill" style="width:92%"></div></div>
-              <span class="card-skill-val">92%</span>
-            </div>
-            <div class="card-skill">
-              <span class="card-skill-name">数据分析</span>
-              <div class="card-skill-track"><div class="card-skill-fill" style="width:90%"></div></div>
-              <span class="card-skill-val">90%</span>
-            </div>
-            <div class="card-skill">
-              <span class="card-skill-name">项目统筹</span>
-              <div class="card-skill-track"><div class="card-skill-fill" style="width:92%"></div></div>
-              <span class="card-skill-val">92%</span>
-            </div>
+          <div class="skill-tags" style="position:relative;z-index:1;margin-top:12px;">
+            <span class="skill-tag-item primary">方案策划</span>
+            <span class="skill-tag-item primary">圈层营销</span>
+            <span class="skill-tag-item primary">项目统筹</span>
+            <span class="skill-tag-item">市场调研</span>
+            <span class="skill-tag-item">数据分析</span>
+            <span class="skill-tag-item">价格策略</span>
+            <span class="skill-tag-item">新媒体运营</span>
+            <span class="skill-tag-item">案场包装</span>
           </div>
           <div class="tag-row">
             <span class="tag">营销方案策划</span>
@@ -1006,25 +1041,6 @@
           </div>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- ====== 创意探索 ====== -->
-  <section class="section" id="creative">
-    <div class="section-inner">
-      <div class="section-divider reveal">
-        <span>创意探索</span>
-      </div>
-      <h2 class="section-headline reveal reveal-delay-1" style="font-size:clamp(24px,4vw,44px);margin-bottom:32px;">
-        跨界学习，持续进化。
-      </h2>
-      <p style="font-size:15px;color:var(--text-secondary);margin-bottom:36px;margin-top:-20px;" class="reveal reveal-delay-1">
-        在房地产营销策划之外，我正在探索前端开发与视频剪辑领域，用代码和镜头拓展表达边界。
-      </p>
-
-      <div class="bento" id="creativeBento">
-        <!-- 由 content.json 动态加载 -->
       </div>
     </div>
   </section>
@@ -1368,32 +1384,19 @@
             <div class="skills-grid">\
               <div class="skill-category">\
                 <h4>策划能力</h4>\
-                <div class="skill-bar-item"><span>营销方案撰写</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%;"></div></div></div>\
-                <div class="skill-bar-item"><span>市场调研分析</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%;"></div></div></div>\
-                <div class="skill-bar-item"><span>项目统筹管理</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%;"></div></div></div>\
-                <div class="skill-bar-item"><span>价格策略制定</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%;"></div></div></div>\
-                <div class="skill-bar-item"><span>地块可研报告</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%;"></div></div></div>\
+                <div class="skill-tags"><span class="skill-tag-item primary">营销方案撰写</span><span class="skill-tag-item primary">市场调研分析</span><span class="skill-tag-item primary">项目统筹管理</span><span class="skill-tag-item">价格策略制定</span><span class="skill-tag-item">地块可研报告</span></div>\
               </div>\
               <div class="skill-category">\
                 <h4>营销推广</h4>\
-                <div class="skill-bar-item"><span>圈层营销</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%;"></div></div></div>\
-                <div class="skill-bar-item"><span>活动组织执行</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%;"></div></div></div>\
-                <div class="skill-bar-item"><span>新媒体运营</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%;"></div></div></div>\
-                <div class="skill-bar-item"><span>线上推广投放</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%;"></div></div></div>\
-                <div class="skill-bar-item"><span>案场包装体系</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%;"></div></div></div>\
+                <div class="skill-tags"><span class="skill-tag-item primary">圈层营销</span><span class="skill-tag-item primary">活动组织执行</span><span class="skill-tag-item">新媒体运营</span><span class="skill-tag-item">线上推广投放</span><span class="skill-tag-item">案场包装体系</span></div>\
               </div>\
               <div class="skill-category">\
                 <h4>数据分析</h4>\
-                <div class="skill-bar-item"><span>数据分析能力</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%;"></div></div></div>\
-                <div class="skill-bar-item"><span>客群定位研究</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%;"></div></div></div>\
-                <div class="skill-bar-item"><span>竞品动态追踪</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%;"></div></div></div>\
-                <div class="skill-bar-item"><span>费用预决算</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:86%;"></div></div></div>\
+                <div class="skill-tags"><span class="skill-tag-item">数据分析能力</span><span class="skill-tag-item">客群定位研究</span><span class="skill-tag-item">竞品动态追踪</span><span class="skill-tag-item">费用预决算</span></div>\
               </div>\
               <div class="skill-category">\
                 <h4>工具能力</h4>\
-                <div class="skill-bar-item"><span>H5/小游戏工具</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%;"></div></div></div>\
-                <div class="skill-bar-item"><span>短视频创作</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%;"></div></div></div>\
-                <div class="skill-bar-item"><span>微信公众号</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%;"></div></div></div>\
+                <div class="skill-tags"><span class="skill-tag-item">H5/小游戏工具</span><span class="skill-tag-item">短视频创作</span><span class="skill-tag-item">微信公众号</span></div>\
               </div>\
             </div>\
           '
@@ -1843,6 +1846,14 @@
       // Load content on page init
       loadDynamicContent();
 
-  </script>
+  
+      var btt=document.getElementById('backToTop');
+      if(btt){window.addEventListener('scroll',function(){window.scrollY>600?btt.classList.add('visible'):btt.classList.remove('visible')},{passive:true});
+      btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});}
+</script>
+
+  <button id="backToTop" class="back-to-top" aria-label="回到顶部">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </body>
 </html>
