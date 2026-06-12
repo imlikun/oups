@@ -248,6 +248,27 @@
       "videoUrl": "",
       "date": "2026-04-08",
       "status": "published"
+    },
+    {
+      "id": "article-14",
+      "title": "TrendRadar：全网热点一键推送到微信的 AI 舆情雷达",
+      "slug": "trendradar-ai-hot-push",
+      "category": "tools",
+      "featured": true,
+      "image": "uploads/trendradar-header.png",
+      "excerpt": "TrendRadar 就像一个「AI 私人编辑」——每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到微信/钉钉/飞书上。",
+      "content": "## 一句话说明\n\nTrendRadar 就像一个「AI 私人编辑」——它每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到你的微信/钉钉/飞书上。你不用再一个个 App 去刷，打开聊天窗口就能看完当天最重要的新闻。\n\n## 这是什么？\n\n想象你订了一份「私人报纸」：\n\n- ❌ 传统方式：每天买 35 份报纸，每份翻一遍，信息量爆炸但真正想看的只有 3 条\n- ✅ TrendRadar：一个编辑帮你盯着这 35 份报纸，只剪下你感兴趣的那几条，装进信封送到你桌上\n\n## 项目基本信息\n\n| 项目 | 信息 |\n| --- | --- |\n| 名称 | TrendRadar（趋势雷达） |\n| GitHub | https://github.com/sansan0/TrendRadar |\n| Star | 59.3k+ |\n| 许可证 | GPL-3.0 |\n| 当前版本 | v6.9.1（主程序）/ MCP v4.1.0 |\n\n## 核心能力\n\n### 1. 全网热点聚合\n\n默认监控 11 个平台：微博、抖音、知乎、B站热搜、今日头条、百度热搜、华尔街见闻、财联社、澎湃新闻、凤凰网、贴吧。基于 newsnow 数据源，可扩展到 35+ 个平台。\n\n### 2. 三种智能推送模式\n\n| 模式 | 工作方式 | 适合谁 |\n| --- | --- | --- |\n| daily（当日汇总） | 推送当天所有匹配新闻 | 管理者/普通人 |\n| current（当前榜单） | 推送当前榜单上的匹配新闻 | 自媒体/创作者 |\n| incremental（增量监控） | 只推新增的，绝不重复 | 投资者/交易员 |\n\n### 3. 精准关键词筛选\n\n6 种筛选语法：\n\n- 普通词：基础匹配，包含任一即捕获\n- `+词汇`：必须词，必须同时包含\n- `!词汇`：过滤词，排除干扰\n- `@数字`：数量限制\n- `/pattern/`：正则表达式\n- `=文本`：备注显示名称\n\n### 4. AI 分析简报（v5.0.0+）\n\n让 AI 先读完所有新闻，生成一份深度分析报告，包含：\n\n1. **核心热点态势**——今天最热门的几个话题\n2. **舆论风向争议**——有争议的观点和讨论\n3. **异动与弱信号**——还没上热搜但值得关注的信息\n4. **研判策略建议**——基于以上分析的行动建议\n\n支持 100+ AI 提供商（DeepSeek、OpenAI、Gemini、Claude、Ollama 本地等）。\n\n### 5. MCP 对话分析（v3.0.0+）\n\n基于 MCP 协议，可以在 Claude Desktop、Cherry Studio 等 AI 客户端里直接和 TrendRadar 对话分析，支持 21+ 种智能分析工具。\n\n## 安装部署\n\n### 方案一：GitHub Actions（30秒部署）\n\n1. Fork 仓库\n2. 配置 Secrets（WEWORK_WEBHOOK_URL 等）\n3. 手动运行一次 workflow 测试\n4. ⚠️ 每 7 天需要「签到」一次续期\n\n### 方案二：Docker 部署（推荐）\n\n```bash\n# 1. 克隆项目\ngit clone https://github.com/sansan0/TrendRadar.git\ncd TrendRadar\n\n# 2. 配置推送渠道和关键词\nnano docker/.env\nnano config/frequency_words.txt\n\n# 3. 启动\ndocker compose up -d\n\n# 4. 查看状态\ndocker exec -it trendradar python manage.py status\n```\n\n## 推送渠道\n\n支持 9+ 渠道：企业微信、个人微信、飞书、钉钉、Telegram、邮件、ntfy、Bark、Slack。\n\n企业微信配置最简单：进入群聊 → 消息推送 → 添加机器人 → 复制 Webhook 地址 → 配置到 `WEWORK_WEBHOOK_URL`。\n\n## 关键链接\n\n- 📦 GitHub 仓库：https://github.com/sansan0/TrendRadar\n- 🎛️ 在线配置编辑器：https://sansan0.github.io/TrendRadar/\n- 🐳 Docker 镜像：wantcat/trendradar\n\n---\n\n> 💡 如果你每天要刷多个 App 看热点，或者需要追踪特定关键词（品牌/行业/竞品），这个项目可以帮你省大量时间。",
+      "tags": [
+        "AI",
+        "舆情监控",
+        "开源",
+        "自动化",
+        "GitHub",
+        "工具"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-12",
+      "status": "published"
     }
   ],
   "projects": [
