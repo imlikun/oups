@@ -233,9 +233,8 @@
           <button class="filter-tab active" data-filter="all" onclick="setFilter('all', this)">全部</button>
           <button class="filter-tab" data-filter="published" onclick="setFilter('published', this)">已发布</button>
           <button class="filter-tab" data-filter="draft" onclick="setFilter('draft', this)">草稿</button>
-          <button class="filter-tab" data-filter="frontend" onclick="setFilter('frontend', this)">前端开发</button>
+          <button class="filter-tab" data-filter="craft" onclick="setFilter('craft', this)">技艺录</button>
           <button class="filter-tab" data-filter="video" onclick="setFilter('video', this)">视频剪辑</button>
-          <button class="filter-tab" data-filter="tools" onclick="setFilter('tools', this)">工具推荐</button>
         </div>
         <div style="display:flex;gap:8px;">
           <button class="btn btn-outline btn-sm" onclick="exportData()">导出 JSON</button>
@@ -276,9 +275,8 @@
           <div class="form-group">
             <label class="form-label">分类</label>
             <select class="form-input" id="editCategory">
-              <option value="frontend">前端开发</option>
+              <option value="craft">技艺录</option>
               <option value="video">视频剪辑</option>
-              <option value="tools">工具推荐</option>
             </select>
           </div>
           <div class="form-group">
@@ -411,7 +409,7 @@
     var filtered = articles;
     if (currentFilter === 'published') filtered = articles.filter(function(a) { return a.status === 'published'; });
     else if (currentFilter === 'draft') filtered = articles.filter(function(a) { return a.status === 'draft'; });
-    else if (currentFilter === 'frontend' || currentFilter === 'video') filtered = articles.filter(function(a) { return a.category === currentFilter; });
+    else if (currentFilter === 'craft' || currentFilter === 'video') filtered = articles.filter(function(a) { return a.category === currentFilter; });
 
     // Stats
     document.getElementById('statsGrid').innerHTML =
@@ -431,7 +429,7 @@
       tbody.innerHTML = filtered.map(function(a) {
         return '<tr onclick="editArticle(\'' + a.id + '\')">' +
           '<td class="title-cell">' + (a.featured ? '★ ' : '') + (a.title || '无标题') + '</td>' +
-          '<td>' + (a.category === 'frontend' ? '前端开发' : a.category === 'video' ? '视频剪辑' : a.category === 'tools' ? '工具推荐' : a.category || '未分类') + '</td>' +
+          '<td>' + (a.category === 'craft' ? '技艺录' : a.category === 'video' ? '视频剪辑' : a.category || '未分类') + '</td>' +
           '<td><span class="status-badge ' + a.status + '">' + (a.status === 'published' ? '已发布' : '草稿') + '</span></td>' +
           '<td style="color:var(--text-meta);">' + (a.date || '') + '</td>' +
           '<td><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editArticle(\'' + a.id + '\')" style="margin-right:4px;">编辑</button>' +
@@ -464,7 +462,7 @@
     editingId = null;
     document.getElementById('editorTitle').textContent = '新建文章';
     document.getElementById('editTitle').value = '';
-    document.getElementById('editCategory').value = 'frontend';
+    document.getElementById('editCategory').value = 'craft';
     document.getElementById('editStatus').value = 'draft';
     document.getElementById('editImage').value = '';
     document.getElementById('editVideo').value = '';
@@ -486,7 +484,7 @@
     editingId = id;
     document.getElementById('editorTitle').textContent = '编辑文章';
     document.getElementById('editTitle').value = article.title || '';
-    document.getElementById('editCategory').value = article.category || 'frontend';
+    document.getElementById('editCategory').value = article.category || 'craft';
     document.getElementById('editStatus').value = article.status || 'draft';
     document.getElementById('editImage').value = article.image || '';
     document.getElementById('editVideo').value = article.videoUrl || '';

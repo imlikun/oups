@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技艺录 — 李坤的技术探索</title>
+<meta name="description" content="从 HTML/CSS 到 AI 工具链——李坤的技术学习与实践记录。">
+<style>
+:root {
+  --bg: #fbfbf9;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.08);
+  --border: rgba(0,0,0,0.06);
+  --card-bg: #fff;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Nav */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(251,251,249,0.88); backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1200px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.nav-logo { font-size:18px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.5px; }
+.nav-links { display:flex; gap:24px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* Hero */
+.hero { padding:120px 32px 60px; text-align:center; max-width:720px; margin:0 auto; }
+.hero-badge { display:inline-block; padding:4px 16px; border-radius:20px; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:600; letter-spacing:1px; margin-bottom:20px; }
+.hero h1 { font-size:clamp(28px,5vw,48px); font-weight:700; letter-spacing:-1px; margin-bottom:16px; }
+.hero p { color:var(--text-secondary); font-size:16px; max-width:480px; margin:0 auto; }
+.hero-stats { display:flex; gap:40px; justify-content:center; margin-top:32px; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:32px; font-weight:700; color:var(--accent); }
+.hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+
+/* Article Grid */
+.articles { max-width:1200px; margin:0 auto; padding:0 32px 80px; }
+.articles-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.article-card { background:var(--card-bg); border-radius:16px; overflow:hidden; border:1px solid var(--border); transition:all 0.3s ease; text-decoration:none; color:inherit; display:block; }
+.article-card:hover { transform:translateY(-4px); box-shadow:var(--card-shadow); }
+.article-card-image { height:200px; background-size:cover; background-position:center; position:relative; }
+.article-card-image .cat-tag { position:absolute; top:12px; left:12px; padding:3px 10px; border-radius:10px; background:rgba(255,255,255,0.9); font-size:11px; font-weight:600; color:var(--accent); backdrop-filter:blur(8px); }
+.article-card-image.fallback { display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #e8edf5, #f0f4fa); font-size:40px; }
+.article-card-body { padding:20px; }
+.article-card-body h3 { font-size:16px; font-weight:600; margin-bottom:8px; line-height:1.4; }
+.article-card-body p { font-size:13px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px; }
+.article-card-meta { display:flex; gap:16px; align-items:center; font-size:12px; color:var(--text-muted); }
+.article-card-meta .date {  }
+.article-card-meta .tags { display:flex; gap:4px; flex-wrap:wrap; flex:1; justify-content:flex-end; }
+.article-card-meta .tags span { padding:2px 6px; border-radius:4px; background:var(--accent-light); color:var(--accent); font-size:10px; }
+
+/* Highlight card */
+.article-card.featured { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; }
+.article-card.featured .article-card-image { height:100%; min-height:320px; }
+.article-card.featured .article-card-body { padding:40px; display:flex; flex-direction:column; justify-content:center; }
+.article-card.featured .article-card-body h3 { font-size:22px; }
+
+/* Empty */
+.empty { text-align:center; padding:80px 32px; color:var(--text-muted); }
+.empty h3 { font-size:20px; margin-bottom:8px; color:var(--text-secondary); }
+
+/* Footer */
+.footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+@media (max-width:900px) {
+  .articles-grid { grid-template-columns:repeat(2,1fr); }
+  .article-card.featured { grid-template-columns:1fr; }
+  .article-card.featured .article-card-image { min-height:200px; }
+}
+@media (max-width:600px) {
+  .articles-grid { grid-template-columns:1fr; }
+  .nav-inner { padding:0 16px; }
+  .articles { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">← 李坤</a>
+    <div class="nav-links">
+      <a href="../index.html">首页</a>
+      <a href="index.html" class="active">技艺录</a>
+      <a href="../video-lab/index.html">视频剪辑</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-badge">CRAFT</div>
+  <h1>技艺录</h1>
+  <p>从一行 HTML 到 AI 工具链——记录每一次动手、每一次思考、每一个造出的东西。</p>
+  <div class="hero-stats" id="heroStats"></div>
+</section>
+
+<section class="articles">
+  <div class="articles-grid" id="articlesGrid"></div>
+  <div class="empty" id="empty" style="display:none"><h3>暂无文章</h3><p>技艺录还在积累中，敬请期待。</p></div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="../index.html">返回首页</a></p>
+</footer>
+
+<script>
+(function() {
+  var grid = document.getElementById('articlesGrid');
+  var empty = document.getElementById('empty');
+  var statsEl = document.getElementById('heroStats');
+
+  function formatDate(d) {
+    if (!d) return '';
+    var date = new Date(d);
+    return date.getFullYear() + '.' + (date.getMonth()+1) + '.' + date.getDate();
+  }
+
+  function render(articles) {
+    var craftArts = articles.filter(function(a) {
+      return a.category === 'craft' && a.status === 'published';
+    });
+
+    // Sort by date desc
+    craftArts.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
+
+    if (craftArts.length === 0) {
+      empty.style.display = 'block';
+      grid.innerHTML = '';
+      statsEl.innerHTML = '';
+      return;
+    }
+    empty.style.display = 'none';
+
+    // Stats
+    var tagSet = {};
+    craftArts.forEach(function(a) {(a.tags||[]).forEach(function(t){tagSet[t]=1;})});
+    statsEl.innerHTML = '<div class="hero-stat"><div class="num">' + craftArts.length + '</div><div class="label">篇文章</div></div>' +
+      '<div class="hero-stat"><div class="num">' + Object.keys(tagSet).length + '</div><div class="label">个技术标签</div></div>';
+
+    var html = '';
+    for (var i = 0; i < craftArts.length; i++) {
+      var a = craftArts[i];
+      var isFeatured = (a.featured || i === 0);
+      var cardClass = isFeatured ? 'article-card featured' : 'article-card';
+      var tagStr = '';
+      if (a.tags) {
+        for (var t = 0; t < Math.min(a.tags.length, 3); t++) {
+          tagStr += '<span>' + a.tags[t] + '</span>';
+        }
+        if (a.tags.length > 3) tagStr += '<span>+' + (a.tags.length-3) + '</span>';
+      }
+
+      html += '<a href="../article.html?id=' + a.id + '" class="' + cardClass + '">';
+      if (a.image) {
+        html += '<div class="article-card-image" style="background-image:url(../' + a.image + ')">';
+        html += '<span class="cat-tag">技艺录</span></div>';
+      } else {
+        html += '<div class="article-card-image fallback"><span class="cat-tag">技艺录</span>🛠️</div>';
+      }
+      html += '<div class="article-card-body">';
+      html += '<h3>' + a.title + '</h3>';
+      html += '<p>' + (a.excerpt || '').substring(0, 120) + (a.excerpt && a.excerpt.length > 120 ? '...' : '') + '</p>';
+      html += '<div class="article-card-meta">';
+      html += '<span class="date">' + formatDate(a.date) + '</span>';
+      html += '<span class="tags">' + tagStr + '</span>';
+      html += '</div></div></a>';
+    }
+
+    grid.innerHTML = html;
+  }
+
+  fetch('../content.json?' + Date.now())
+    .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+    .then(function(data) { render(data.articles || []); })
+    .catch(function() { empty.style.display = 'block'; empty.querySelector('h3').textContent = '加载失败'; });
+})();
+</script>
+</body>
+</html>

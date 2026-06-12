@@ -452,7 +452,7 @@
     <a href="index.html" class="nav-logo">李坤的创意探索</a>
     <ul class="nav-links">
       <li><a href="index.html">首页</a></li>
-      <li><a href="article.html?cat=frontend">前端开发</a></li>
+      <li><a href="article.html?cat=craft">技艺录</a></li>
       <li><a href="article.html?cat=video">视频剪辑</a></li>
       <li><a href="index.html#learning">学习历程</a></li>
     </ul>
@@ -475,9 +475,8 @@
   <!-- 筛选标签 -->
   <div class="cat-tabs" id="catTabs">
     <a class="cat-tab active" data-cat="all">全部</a>
-    <a class="cat-tab" data-cat="frontend">前端开发</a>
+    <a class="cat-tab" data-cat="craft">技艺录</a>
     <a class="cat-tab" data-cat="video">视频剪辑</a>
-    <a class="cat-tab" data-cat="tools">工具推荐</a>
   </div>
 
   <!-- 双栏内容 -->
@@ -555,11 +554,11 @@
   var relatedSection = document.getElementById('relatedSection');
 
   function catLabel(cat) {
-    return cat === 'frontend' ? '前端开发' : cat === 'video' ? '视频剪辑' : cat;
+    return cat === 'craft' ? '技艺录' : cat === 'video' ? '视频剪辑' : cat;
   }
 
   function catColor(cat) {
-    return cat === 'frontend' ? '#0071e3' : cat === 'video' ? '#e37400' : '#666';
+    return cat === 'craft' ? '#0071e3' : cat === 'video' ? '#e37400' : '#666';
   }
 
   function formatDate(dateStr) {
@@ -632,7 +631,7 @@
     var catEl = document.getElementById('articleCat');
     catEl.textContent = catLabel(article.category);
     catEl.style.color = catColor(article.category);
-    catEl.style.background = article.category === 'frontend'
+    catEl.style.background = article.category === 'craft'
       ? 'rgba(0,113,227,0.06)'
       : 'rgba(227,116,0,0.06)';
 
@@ -715,9 +714,9 @@
   function renderCategoryList(cat, all) {
     var label = cat === 'all' ? '全部文章' : catLabel(cat);
     var descriptions = {
-      frontend: '从 HTML/CSS 基础到 JavaScript 框架，记录前端学习过程中的思考与实践。',
+      craft: '从 HTML/CSS 基础到 AI 工具链，记录技术学习与工具使用的心得。',
       video: '用镜头语言表达创意，视频剪辑的学习笔记与作品分享。',
-      all: '探索前端开发与视频剪辑，用代码和镜头拓展表达边界。'
+      all: '技艺录探索与影像创作——跨界学习，持续进化。'
     };
 
     // Update breadcrumb
@@ -729,7 +728,7 @@
     // Nav active state
     var navLinks = document.querySelectorAll('.nav-links a');
     navLinks.forEach(function(a) { a.classList.remove('active'); });
-    if (cat === 'frontend') navLinks[1].classList.add('active');
+    if (cat === 'craft') navLinks[1].classList.add('active');
     if (cat === 'video') navLinks[2].classList.add('active');
 
     // Filter: all or specific category
@@ -775,7 +774,7 @@
       var isFeatured = art.featured || (i < 2 && cat === 'all');
       var views = art.views || Math.floor(Math.random() * 800 + 200);
       var likes = Math.floor(Math.random() * 120 + 10);
-      var catIcon = art.category === 'frontend' ? '🌐' : '🎬';
+      var catIcon = art.category === 'craft' ? '🛠️' : '🎬';
 
       if (isBig) {
         // ===== Big featured card =====
@@ -862,7 +861,7 @@
         if (ra.image) {
           recHtml += '<div class="rec-card-img" style="background:url(' + ra.image + ') center/cover"></div>';
         } else {
-          recHtml += '<div class="rec-card-img">' + (ra.category === 'frontend' ? '🌐' : '🎬') + '</div>';
+          recHtml += '<div class="rec-card-img">' + (ra.category === 'craft' ? '🛠️' : '🎬') + '</div>';
         }
         recHtml += '<div class="rec-card-body">';
         recHtml += '<div class="rec-card-cat">' + catLabel(ra.category) + '</div>';
