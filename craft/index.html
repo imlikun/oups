@@ -7,15 +7,15 @@
 <meta name="description" content="从 HTML/CSS 到 AI 工具链——李坤的技术学习与实践记录。">
 <style>
 :root {
-  --bg: #fbfbf9;
+  --bg: #f7f7f5;
   --text: #1a1a1a;
   --text-secondary: #555;
   --text-muted: #999;
   --accent: #1a6ff5;
   --accent-light: rgba(26,111,245,0.08);
-  --border: rgba(0,0,0,0.06);
+  --border: rgba(0,0,0,0.07);
   --card-bg: #fff;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
+  --radius: 14px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -25,45 +25,83 @@ body {
   -webkit-font-smoothing:antialiased;
 }
 
-/* Nav */
-.nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(251,251,249,0.88); backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
-.nav-inner { max-width:1200px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:60px; }
-.nav-logo { font-size:18px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.5px; }
-.nav-links { display:flex; gap:24px; align-items:center; }
-.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(247,247,245,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500;
+  transition:color 0.2s; position:relative; }
 .nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:2px; background:var(--accent); border-radius:1px; }
 
-/* Hero */
-.hero { padding:120px 32px 60px; text-align:center; max-width:720px; margin:0 auto; }
-.hero-badge { display:inline-block; padding:4px 16px; border-radius:20px; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:600; letter-spacing:1px; margin-bottom:20px; }
-.hero h1 { font-size:clamp(28px,5vw,48px); font-weight:700; letter-spacing:-1px; margin-bottom:16px; }
-.hero p { color:var(--text-secondary); font-size:16px; max-width:480px; margin:0 auto; }
-.hero-stats { display:flex; gap:40px; justify-content:center; margin-top:32px; }
+/* ---- Hero ---- */
+.hero { max-width:1120px; margin:0 auto; padding:130px 32px 48px; }
+.hero-inner { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+.hero-left { flex:1; min-width:260px; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em;
+  margin-bottom:18px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(30px,4.5vw,46px); font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:14px; }
+.hero h1 em { font-style:normal; color:var(--accent); }
+.hero-desc { color:var(--text-secondary); font-size:15px; max-width:440px; line-height:1.65; }
+.hero-right { display:flex; gap:32px; }
 .hero-stat { text-align:center; }
-.hero-stat .num { font-size:32px; font-weight:700; color:var(--accent); }
-.hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+.hero-stat .num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
+.hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:2px; }
 
-/* Article Grid */
-.articles { max-width:1200px; margin:0 auto; padding:0 32px 80px; }
-.articles-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-.article-card { background:var(--card-bg); border-radius:16px; overflow:hidden; border:1px solid var(--border); transition:all 0.3s ease; text-decoration:none; color:inherit; display:block; }
-.article-card:hover { transform:translateY(-4px); box-shadow:var(--card-shadow); }
-.article-card-image { height:200px; background-size:cover; background-position:center; position:relative; }
-.article-card-image .cat-tag { position:absolute; top:12px; left:12px; padding:3px 10px; border-radius:10px; background:rgba(255,255,255,0.9); font-size:11px; font-weight:600; color:var(--accent); backdrop-filter:blur(8px); }
-.article-card-image.fallback { display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #e8edf5, #f0f4fa); font-size:40px; }
-.article-card-body { padding:20px; }
-.article-card-body h3 { font-size:16px; font-weight:600; margin-bottom:8px; line-height:1.4; }
-.article-card-body p { font-size:13px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px; }
-.article-card-meta { display:flex; gap:16px; align-items:center; font-size:12px; color:var(--text-muted); }
-.article-card-meta .date {  }
-.article-card-meta .tags { display:flex; gap:4px; flex-wrap:wrap; flex:1; justify-content:flex-end; }
-.article-card-meta .tags span { padding:2px 6px; border-radius:4px; background:var(--accent-light); color:var(--accent); font-size:10px; }
+/* ---- Article List ---- */
+.list-wrap { max-width:1120px; margin:0 auto; padding:0 32px 80px; }
+.list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+.list-header h2 { font-size:15px; font-weight:600; color:var(--text); letter-spacing:0.02em; }
+.list-header h2 span { color:var(--text-muted); font-weight:400; }
+.list-filter { display:flex; gap:6px; }
+.list-filter button { padding:6px 14px; border-radius:8px; border:1px solid var(--border); background:transparent;
+  font-size:13px; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; font-family:inherit; }
+.list-filter button:hover, .list-filter button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* Highlight card */
-.article-card.featured { grid-column:1 / -1; display:grid; grid-template-columns:1fr 1fr; }
-.article-card.featured .article-card-image { height:100%; min-height:320px; }
-.article-card.featured .article-card-body { padding:40px; display:flex; flex-direction:column; justify-content:center; }
-.article-card.featured .article-card-body h3 { font-size:22px; }
+/* Article Item — List Style */
+.article-item { display:flex; gap:24px; padding:24px 0; border-bottom:1px solid var(--border);
+  text-decoration:none; color:inherit; transition:background 0.2s; border-radius:10px; margin:0 -12px; padding-left:12px; padding-right:12px; }
+.article-item:hover { background:rgba(0,0,0,0.015); }
+.article-item:last-child { border-bottom:none; }
+
+.article-thumb { flex-shrink:0; width:260px; height:170px; border-radius:12px; overflow:hidden;
+  position:relative; background:linear-gradient(135deg,#eef1f6,#e4e9f2); }
+.article-thumb img, .article-thumb .thumb-img { width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+.article-item:hover .thumb-img { transform:scale(1.04); }
+.article-thumb .cat-tag { position:absolute; top:10px; left:10px; padding:3px 10px; border-radius:8px;
+  background:rgba(255,255,255,0.92); font-size:11px; font-weight:600; color:var(--accent);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+.article-thumb.fallback { display:flex; align-items:center; justify-content:center; font-size:48px; }
+
+.article-info { flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:8px; }
+.article-info .ai-date { font-size:12px; color:var(--text-muted); font-weight:500; }
+.article-info h3 { font-size:18px; font-weight:600; line-height:1.45; color:var(--text);
+  transition:color 0.2s; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.article-item:hover h3 { color:var(--accent); }
+.article-info .ai-excerpt { font-size:13.5px; color:var(--text-secondary); line-height:1.65;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.article-info .ai-meta { display:flex; align-items:center; gap:12px; font-size:12px; color:var(--text-muted); margin-top:auto; }
+.article-info .ai-meta .ai-tags { display:flex; gap:5px; flex-wrap:wrap; }
+.article-info .ai-meta .ai-tags span { padding:2px 8px; border-radius:6px; background:var(--accent-light);
+  color:var(--accent); font-size:11px; font-weight:500; }
+
+/* Featured Article (first one) */
+.article-item.featured { flex-direction:column; gap:0; padding:0; border-bottom:1px solid var(--border);
+  margin-bottom:8px; padding-bottom:28px; }
+.article-item.featured .article-thumb { width:100%; height:380px; border-radius:var(--radius); }
+.article-item.featured .article-info { padding:20px 4px 0; gap:10px; }
+.article-item.featured .article-info h3 { font-size:24px; -webkit-line-clamp:3; }
+.article-item.featured .article-info .ai-excerpt { font-size:14.5px; -webkit-line-clamp:3; }
 
 /* Empty */
 .empty { text-align:center; padding:80px 32px; color:var(--text-muted); }
@@ -73,23 +111,31 @@ body {
 .footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px; }
 .footer a { color:var(--accent); text-decoration:none; }
 
+/* Reveal animation */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease,transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
 @media (max-width:900px) {
-  .articles-grid { grid-template-columns:repeat(2,1fr); }
-  .article-card.featured { grid-template-columns:1fr; }
-  .article-card.featured .article-card-image { min-height:200px; }
+  .hero-inner { flex-direction:column; gap:24px; }
+  .article-item { flex-direction:column; gap:14px; }
+  .article-thumb { width:100%; height:200px; }
+  .article-item.featured .article-thumb { height:220px; }
 }
 @media (max-width:600px) {
-  .articles-grid { grid-template-columns:1fr; }
   .nav-inner { padding:0 16px; }
-  .articles { padding:0 16px 60px; }
+  .hero { padding:110px 16px 32px; }
+  .list-wrap { padding:0 16px 60px; }
+  .hero-right { gap:20px; }
+  .list-filter { display:none; }
+  .article-item.featured .article-info h3 { font-size:19px; }
 }
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="../index.html" class="nav-logo">← 李坤</a>
+    <a href="../index.html" class="nav-logo">← 李坤 <span>/ 技艺录</span></a>
     <div class="nav-links">
       <a href="../index.html">首页</a>
       <a href="index.html" class="active">技艺录</a>
@@ -98,15 +144,23 @@ body {
   </div>
 </nav>
 
-<section class="hero" id="hero">
-  <div class="hero-badge">CRAFT</div>
-  <h1>技艺录</h1>
-  <p>从一行 HTML 到 AI 工具链——记录每一次动手、每一次思考、每一个造出的东西。</p>
-  <div class="hero-stats" id="heroStats"></div>
+<section class="hero reveal">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="dot"></span>CRAFT</div>
+      <h1>技艺录</h1>
+      <p class="hero-desc">从一行 HTML 到 AI 工具链——记录每一次动手、每一次思考、每一个造出的东西。</p>
+    </div>
+    <div class="hero-right" id="heroStats"></div>
+  </div>
 </section>
 
-<section class="articles">
-  <div class="articles-grid" id="articlesGrid"></div>
+<section class="list-wrap">
+  <div class="list-header reveal">
+    <h2>全部文章 <span id="articleCount"></span></h2>
+    <div class="list-filter" id="listFilter"></div>
+  </div>
+  <div id="articlesList"></div>
   <div class="empty" id="empty" style="display:none"><h3>暂无文章</h3><p>技艺录还在积累中，敬请期待。</p></div>
 </section>
 
@@ -116,9 +170,12 @@ body {
 
 <script>
 (function() {
-  var grid = document.getElementById('articlesGrid');
-  var empty = document.getElementById('empty');
+  var listEl = document.getElementById('articlesList');
+  var emptyEl = document.getElementById('empty');
+  var countEl = document.getElementById('articleCount');
   var statsEl = document.getElementById('heroStats');
+  var filterEl = document.getElementById('listFilter');
+  var currentFilter = 'all';
 
   function formatDate(d) {
     if (!d) return '';
@@ -126,64 +183,119 @@ body {
     return date.getFullYear() + '.' + (date.getMonth()+1) + '.' + date.getDate();
   }
 
-  function render(articles) {
+  function render(articles, filter) {
     var craftArts = articles.filter(function(a) {
       return a.category === 'craft' && a.status === 'published';
     });
+
+    // Tag filter
+    if (filter && filter !== 'all') {
+      craftArts = craftArts.filter(function(a) {
+        return (a.tags || []).indexOf(filter) !== -1;
+      });
+    }
 
     // Sort by date desc
     craftArts.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
 
     if (craftArts.length === 0) {
-      empty.style.display = 'block';
-      grid.innerHTML = '';
-      statsEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      listEl.innerHTML = '';
+      countEl.textContent = '';
       return;
     }
-    empty.style.display = 'none';
+    emptyEl.style.display = 'none';
+    countEl.textContent = '(' + craftArts.length + ')';
 
     // Stats
     var tagSet = {};
     craftArts.forEach(function(a) {(a.tags||[]).forEach(function(t){tagSet[t]=1;})});
-    statsEl.innerHTML = '<div class="hero-stat"><div class="num">' + craftArts.length + '</div><div class="label">篇文章</div></div>' +
+    statsEl.innerHTML =
+      '<div class="hero-stat"><div class="num">' + craftArts.length + '</div><div class="label">篇文章</div></div>' +
       '<div class="hero-stat"><div class="num">' + Object.keys(tagSet).length + '</div><div class="label">个技术标签</div></div>';
 
+    // Build filter buttons
+    var allTags = Object.keys(tagSet);
+    if (allTags.length > 0 && filterEl.children.length === 0) {
+      var ft = '<button class="' + (currentFilter==='all'?'active':'') + '" onclick="window._craftFilter(\'all\')">全部</button>';
+      for (var i = 0; i < Math.min(allTags.length, 5); i++) {
+        ft += '<button class="' + (currentFilter===allTags[i]?'active':'') + '" onclick="window._craftFilter(\'' + allTags[i] + '\')">' + allTags[i] + '</button>';
+      }
+      filterEl.innerHTML = ft;
+    }
+
+    // Render list
     var html = '';
     for (var i = 0; i < craftArts.length; i++) {
       var a = craftArts[i];
-      var isFeatured = (a.featured || i === 0);
-      var cardClass = isFeatured ? 'article-card featured' : 'article-card';
+      var isFeatured = (i === 0);
+      var cls = isFeatured ? 'article-item featured reveal' : 'article-item reveal reveal-delay-' + Math.min(i, 4);
+
       var tagStr = '';
       if (a.tags) {
         for (var t = 0; t < Math.min(a.tags.length, 3); t++) {
           tagStr += '<span>' + a.tags[t] + '</span>';
         }
-        if (a.tags.length > 3) tagStr += '<span>+' + (a.tags.length-3) + '</span>';
       }
 
-      html += '<a href="../article.html?id=' + a.id + '" class="' + cardClass + '">';
+      var thumbHtml = '';
       if (a.image) {
-        html += '<div class="article-card-image" style="background-image:url(../' + a.image + ')">';
-        html += '<span class="cat-tag">技艺录</span></div>';
+        thumbHtml = '<div class="article-thumb"><img class="thumb-img" src="../' + a.image + '" alt="' + a.title + '" loading="lazy"><span class="cat-tag">技艺录</span></div>';
       } else {
-        html += '<div class="article-card-image fallback"><span class="cat-tag">技艺录</span>🛠️</div>';
+        thumbHtml = '<div class="article-thumb fallback"><span class="cat-tag">技艺录</span>🛠️</div>';
       }
-      html += '<div class="article-card-body">';
+
+      html += '<a href="../article.html?id=' + a.id + '" class="' + cls + '">';
+      html += thumbHtml;
+      html += '<div class="article-info">';
+      html += '<div class="ai-date">' + formatDate(a.date) + '</div>';
       html += '<h3>' + a.title + '</h3>';
-      html += '<p>' + (a.excerpt || '').substring(0, 120) + (a.excerpt && a.excerpt.length > 120 ? '...' : '') + '</p>';
-      html += '<div class="article-card-meta">';
-      html += '<span class="date">' + formatDate(a.date) + '</span>';
-      html += '<span class="tags">' + tagStr + '</span>';
-      html += '</div></div></a>';
+      html += '<div class="ai-excerpt">' + (a.excerpt || '') + '</div>';
+      html += '<div class="ai-meta"><div class="ai-tags">' + tagStr + '</div></div>';
+      html += '</div></a>';
     }
 
-    grid.innerHTML = html;
+    listEl.innerHTML = html;
+
+    // Re-observe reveal elements
+    if (typeof observeAll === 'function') observeAll();
   }
+
+  // Expose filter function
+  window._craftFilter = function(tag) {
+    currentFilter = tag;
+    // Re-render with current data
+    if (window._craftData) render(window._craftData, tag);
+  };
 
   fetch('../content.json?' + Date.now())
     .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
-    .then(function(data) { render(data.articles || []); })
-    .catch(function() { empty.style.display = 'block'; empty.querySelector('h3').textContent = '加载失败'; });
+    .then(function(data) {
+      window._craftData = data.articles || [];
+      render(window._craftData, 'all');
+    })
+    .catch(function() {
+      emptyEl.style.display = 'block';
+      emptyEl.querySelector('h3').textContent = '加载失败';
+      statsEl.innerHTML = '';
+    });
+
+  // Nav scroll shadow
+  window.addEventListener('scroll', function() {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Reveal on pageshow (bfcache)
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+      setTimeout(function() {
+        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+          var rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add('visible');
+        });
+      }, 60);
+    }
+  });
 })();
 </script>
 </body>
