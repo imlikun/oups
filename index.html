@@ -260,7 +260,141 @@
     .span-4 { grid-column: span 4; }
 
     /* Accent edge glows */
-    .edge-1 { box-shadow: inset 0 -2px 8px -4px var(--glow-1); }
+    /* ---- Creative Section — Channel Row Layout ---- */
+    .creative-rows {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .creative-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      position: relative; overflow: hidden;
+      transition: background 0.4s, border-color 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .creative-row::before {
+      content: ''; position: absolute; top: 0; left: 20px; right: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+      opacity: 0.5;
+    }
+    .creative-row::after {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(ellipse at 25% 25%, var(--glass-shine) 0%, transparent 50%);
+      opacity: 0.3; pointer-events: none;
+    }
+    .creative-row:hover {
+      background: var(--card-hover);
+      border-color: var(--glass-border-strong);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .creative-channel {
+      display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 1;
+    }
+    .creative-channel .card-icon {
+      width: 40px; height: 40px; border-radius: 11px;
+      margin-bottom: 4px;
+    }
+    .creative-channel .card-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--text-tertiary); margin: 0;
+    }
+    .creative-channel .card-title {
+      font-size: 20px; font-weight: 600; letter-spacing: -0.015em;
+      line-height: 1.2; margin: 0;
+    }
+    .creative-channel .card-desc {
+      font-size: 13px; color: var(--text-secondary);
+      line-height: 1.5; margin: 0;
+    }
+    .creative-channel .channel-stat {
+      font-size: 12px; color: var(--text-tertiary); font-weight: 500;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .creative-channel .channel-stat-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); opacity: 0.7;
+    }
+    .creative-channel .channel-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 13px; font-weight: 500; color: var(--accent);
+      text-decoration: none; margin-top: 4px;
+      transition: gap 0.2s;
+    }
+    .creative-channel .channel-link:hover { gap: 8px; }
+
+    .creative-content {
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; z-index: 1; min-width: 0;
+    }
+    .creative-article-list {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .creative-article-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      transition: background 0.2s;
+      border-radius: 6px;
+      margin: 0 -6px; padding-left: 6px; padding-right: 6px;
+    }
+    .creative-article-item:last-child { border-bottom: none; }
+    .creative-article-item:hover {
+      background: var(--accent-glass);
+    }
+    .creative-article-item .art-arrow {
+      color: var(--accent); font-size: 10px; flex-shrink: 0;
+      opacity: 0.6; transition: opacity 0.2s, transform 0.2s;
+    }
+    .creative-article-item:hover .art-arrow {
+      opacity: 1; transform: translateX(2px);
+    }
+    .creative-article-item .art-title {
+      flex: 1; font-size: 13px; color: var(--text-secondary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: color 0.2s;
+    }
+    .creative-article-item:hover .art-title {
+      color: var(--text-primary);
+    }
+    .creative-article-item .art-date {
+      font-size: 11px; color: var(--text-tertiary);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .creative-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .creative-tags .tag {
+      font-size: 11px; padding: 3px 10px;
+      background: var(--tag-bg);
+      border-radius: 100px; color: var(--text-tertiary);
+      border: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .creative-row {
+        grid-template-columns: 1fr;
+        gap: 16px; padding: 20px;
+      }
+      .creative-channel {
+        flex-direction: row; align-items: center; gap: 12px;
+        flex-wrap: wrap;
+      }
+      .creative-channel .card-icon { margin: 0; }
+      .creative-channel .channel-text { flex: 1; min-width: 0; }
+      .creative-channel .card-title { font-size: 17px; }
+      .creative-channel .card-desc { display: none; }
+      .creative-channel .channel-stat { display: none; }
+    }
     .edge-2 { box-shadow: inset 0 -2px 8px -4px var(--glow-2); }
     .edge-3 { box-shadow: inset 0 -2px 8px -4px var(--glow-3); }
     .edge-4 { box-shadow: inset 0 -2px 8px -4px var(--glow-4); }
@@ -870,8 +1004,91 @@
         在房地产营销策划之外，探索技术与影像，用代码和镜头拓展表达边界。
       </p>
 
-      <div class="bento" id="creativeBento">
-        <!-- 由 content.json 动态加载 -->
+      <div class="creative-rows" id="creativeBento">
+
+        <!-- 技艺录 -->
+        <div class="creative-row edge-1 reveal reveal-delay-2 visible">
+          <div class="creative-channel">
+            <div class="card-icon icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="channel-text">
+              <div class="card-label">技艺录</div>
+              <div class="card-title">技艺录</div>
+              <div class="card-desc">从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。</div>
+              <div class="channel-stat"><span class="channel-stat-dot"></span>8 篇文章</div>
+            </div>
+            <a class="channel-link" href="craft/index.html">查看全部 →</a>
+          </div>
+          <div class="creative-content">
+            <div class="creative-article-list">
+              <a class="creative-article-item" href="article.html?id=13">
+                <span class="art-arrow">→</span>
+                <span class="art-title">最速曲线：全栈工程师的系统性蜕变</span>
+                <span class="art-date">2026-04-26</span>
+              </a>
+              <a class="creative-article-item" href="article.html?id=1">
+                <span class="art-arrow">→</span>
+                <span class="art-title">HTML 语义化：从 div 到语义化标签</span>
+                <span class="art-date">2025-12-20</span>
+              </a>
+              <a class="creative-article-item" href="article.html?id=2">
+                <span class="art-arrow">→</span>
+                <span class="art-title">CSS 布局革命：Flexbox 与 Grid 实战</span>
+                <span class="art-date">2025-12-28</span>
+              </a>
+            </div>
+            <div class="creative-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">AI</span>
+              <span class="tag">Vue</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 视频剪辑 -->
+        <div class="creative-row edge-5 reveal reveal-delay-3 visible">
+          <div class="creative-channel">
+            <div class="card-icon icon-purple">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <div class="channel-text">
+              <div class="card-label">视频剪辑</div>
+              <div class="card-title">视频剪辑</div>
+              <div class="card-desc">素材整理、剪辑节奏、转场特效、调色与音频处理。</div>
+              <div class="channel-stat"><span class="channel-stat-dot"></span>4 篇文章</div>
+            </div>
+            <a class="channel-link" href="video-lab/index.html">查看全部 →</a>
+          </div>
+          <div class="creative-content">
+            <div class="creative-article-list">
+              <a class="creative-article-item" href="article.html?id=9">
+                <span class="art-arrow">→</span>
+                <span class="art-title">剪辑思维：从观看到创作的转变</span>
+                <span class="art-date">2026-02-10</span>
+              </a>
+              <a class="creative-article-item" href="article.html?id=10">
+                <span class="art-arrow">→</span>
+                <span class="art-title">音频处理：让声音更有质感</span>
+                <span class="art-date">2026-02-15</span>
+              </a>
+              <a class="creative-article-item" href="article.html?id=11">
+                <span class="art-arrow">→</span>
+                <span class="art-title">调色基础：用色彩讲述情绪</span>
+                <span class="art-date">2026-03-01</span>
+              </a>
+            </div>
+            <div class="creative-tags">
+              <span class="tag">剪辑思维</span>
+              <span class="tag">音频处理</span>
+              <span class="tag">调色</span>
+              <span class="tag">转场</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1326,8 +1543,20 @@
       }, { rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
       function observeAll() { document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) { observer.observe(el); }); }
       observeAll();
-      // Fix: re-observe on browser back (pageshow with persisted)
-      window.addEventListener('pageshow', function(e) { if (e.persisted) { observeAll(); loadDynamicContent(); }});
+      // Fix: 浏览器返回时（BFCache 恢复），只处理 reveal 动画，不重新加载内容
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          // BFCache 恢复了页面，强制显示视口中的 reveal 元素
+          setTimeout(function() {
+            document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
+              var rect = el.getBoundingClientRect();
+              if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+              }
+            });
+          }, 60);
+        }
+      });
 
       // Hero orb parallax
       var orbs = document.querySelectorAll('.hero-bg-orb, .hero-bg-orb-2');
@@ -1803,7 +2032,7 @@
             renderBentoCards(articles, projects);
           })
           .catch(function() {
-            // 静默失败，保持静态内容不变
+            // fetch 失败（本地 file:// 协议等）→ 保持静态 HTML 内容，不做任何操作
           });
       }
 
@@ -1813,12 +2042,12 @@
 
         var categories = [
           { key: 'craft', label: '技艺录', icon: 'icon-blue',
-            iconSvg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-            desc: '从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。编程、工具、动手造——持续精进。',
+            iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+            desc: '从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。',
             link: 'craft/index.html' },
           { key: 'video', label: '视频剪辑', icon: 'icon-purple',
-            iconSvg: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
-            desc: '学习视频剪辑全流程——素材整理、剪辑节奏、转场特效、调色与音频处理。用镜头语言讲故事。',
+            iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+            desc: '素材整理、剪辑节奏、转场特效、调色与音频处理。',
             link: 'video-lab/index.html' }
         ];
 
@@ -1830,51 +2059,60 @@
           var catArticles = articles.filter(function(a) {
             return a.category === cat.key && a.status === 'published';
           }).slice(0, 3);
-          var catProjects = projects.filter(function(p) {
-            return p.category === cat.key;
-          }).slice(0, 2);
+          var allCatArticles = articles.filter(function(a) {
+            return a.category === cat.key && a.status === 'published';
+          });
 
-          html += '<a href="' + cat.link + '" class="bento-card span-2 ' + edgeClasses[c] + ' reveal reveal-delay-2" style="text-decoration:none;color:inherit;display:block;">';
+          html += '<div class="creative-row ' + edgeClasses[c] + ' reveal reveal-delay-' + (c + 2) + ' visible">';
+
+          // Left: Channel info
+          html += '<div class="creative-channel">';
           html += '<div class="card-icon ' + cat.icon + '">' + cat.iconSvg + '</div>';
+          html += '<div class="channel-text">';
           html += '<div class="card-label">' + cat.label.toUpperCase() + '</div>';
           html += '<div class="card-title">' + cat.label + '</div>';
-          html += '<div class="card-desc" style="margin-bottom:16px;">' + cat.desc + '</div>';
+          html += '<div class="card-desc">' + cat.desc + '</div>';
+          html += '<div class="channel-stat"><span class="channel-stat-dot"></span>' + allCatArticles.length + ' 篇文章</div>';
+          html += '</div>';
+          html += '<a class="channel-link" href="' + cat.link + '">查看全部 →</a>';
+          html += '</div>';
 
-          // Articles mini-list
+          // Right: Content
+          html += '<div class="creative-content">';
+
           if (catArticles.length > 0) {
-            html += '<div style="margin-bottom:12px;position:relative;z-index:1;">';
-            html += '<div style="font-size:11px;color:var(--text-tertiary);margin-bottom:8px;letter-spacing:0.03em;">最新文章</div>';
+            html += '<div class="creative-article-list">';
             for (var a = 0; a < catArticles.length; a++) {
               var art = catArticles[a];
-              html += '<a href="article.html?id=' + art.id + '" style="display:flex;align-items:center;gap:8px;padding:6px 0;text-decoration:none;color:var(--text-secondary);font-size:13px;border-bottom:1px solid var(--border);" onclick="event.stopPropagation();">';
-              html += '<span style="color:var(--accent);font-size:10px;">→</span>';
-              html += '<span style="flex:1;">' + art.title + '</span>';
-              html += '<span style="font-size:11px;color:var(--text-tertiary);white-space:nowrap;">' + (art.date || '') + '</span>';
+              html += '<a class="creative-article-item" href="article.html?id=' + art.id + '">';
+              html += '<span class="art-arrow">→</span>';
+              html += '<span class="art-title">' + art.title + '</span>';
+              html += '<span class="art-date">' + (art.date || '') + '</span>';
               html += '</a>';
             }
-            var viewAllUrl = cat.link;
-            html += '<a href="' + viewAllUrl + '" style="display:inline-block;margin-top:8px;font-size:12px;color:var(--accent);text-decoration:none;" onclick="event.stopPropagation();">查看全部 →</a>';
             html += '</div>';
+
+            // Tags
+            var allTags = [];
+            for (var t = 0; t < allCatArticles.length; t++) {
+              var tgs = allCatArticles[t].tags || [];
+              for (var tg = 0; tg < tgs.length; tg++) {
+                if (allTags.indexOf(tgs[tg]) === -1) allTags.push(tgs[tg]);
+              }
+            }
+            if (allTags.length > 0) {
+              html += '<div class="creative-tags">';
+              for (var tt = 0; tt < Math.min(allTags.length, 6); tt++) {
+                html += '<span class="tag">' + allTags[tt] + '</span>';
+              }
+              html += '</div>';
+            }
+          } else {
+            html += '<div style="font-size:13px;color:var(--text-tertiary);padding:12px 0;">暂无文章，敬请期待...</div>';
           }
 
-          // Tags
-          var allTags = [];
-          for (var t = 0; t < catArticles.length; t++) {
-            var tgs = catArticles[t].tags || [];
-            for (var tg = 0; tg < tgs.length; tg++) {
-              if (allTags.indexOf(tgs[tg]) === -1) allTags.push(tgs[tg]);
-            }
-          }
-          if (allTags.length > 0) {
-            html += '<div class="tag-row">';
-            for (var tt = 0; tt < Math.min(allTags.length, 5); tt++) {
-              html += '<span class="tag">' + allTags[tt] + '</span>';
-            }
-            html += '</div>';
-          }
-
-          html += '<div class="card-expand-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>';
-          html += '</a>';
+          html += '</div>'; // .creative-content
+          html += '</div>'; // .creative-row
         }
 
         bento.innerHTML = html;
