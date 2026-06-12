@@ -774,12 +774,13 @@
     .skill-tag-item.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
 
     /* 案例展示 */
-    .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:40px;}
+    .cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;margin-bottom:0;}
     .case-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);background:var(--card-bg);border:1px solid var(--card-border);}
     .case-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.2);border-color:var(--accent);}
-    .case-preview{height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+    .case-preview{height:220px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
     .case-preview.neuroflow{background:linear-gradient(135deg,#faf8f5 0%,#f2ede6 50%,#fce4de 100%);}
     .case-preview.yunlan{background:linear-gradient(135deg,#fafaf9 0%,#f0ede8 100%);}
+    .case-preview.pandapro{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#16213e 100%);}
     .case-preview-inner{text-align:center;padding:24px;}
     .case-preview-inner .cp-logo{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:10px;}
     .neuroflow .cp-logo{color:#1c2333;}
@@ -793,14 +794,19 @@
     .case-preview-inner .cp-sub{font-size:12px;}
     .neuroflow .cp-sub{color:#5c6370;}
     .yunlan .cp-sub{color:#6b6b6b;}
-    .case-info{padding:24px 28px;}
-    .case-info h4{font-size:17px;font-weight:600;margin-bottom:6px;color:var(--text-primary);}
-    .case-info p{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;}
-    .case-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-    .case-tag{font-size:11px;padding:4px 10px;border-radius:10px;background:var(--accent-glass);color:var(--accent);}
-    .case-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;padding:8px 20px;border-radius:20px;background:var(--accent-glass);transition:all 0.25s ease;}
+    .pandapro .cp-logo{color:#e8ecf1;}
+    .pandapro .cp-badge{background:rgba(41,151,255,0.15);color:#2997ff;}
+    .pandapro .cp-title{color:#e8ecf1;}
+    .pandapro .cp-sub{color:#8892a8;}
+    .case-info{padding:20px 22px;}
+    .case-info h4{font-size:15px;font-weight:600;margin-bottom:4px;color:var(--text-primary);}
+    .case-info p{font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;}
+    .case-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+    .case-tag{font-size:10px;padding:3px 8px;border-radius:8px;background:var(--accent-glass);color:var(--accent);}
+    .case-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;padding:6px 16px;border-radius:16px;background:var(--accent-glass);transition:all 0.25s ease;}
     .case-btn:hover{background:var(--accent);color:#fff;gap:10px;}
-    @media (max-width:768px){.cases-grid{grid-template-columns:1fr;}}
+    @media (max-width:900px){.cases-grid{grid-template-columns:repeat(2,1fr);}}
+    @media (max-width:600px){.cases-grid{grid-template-columns:1fr;}}
   </style>
 
   <!-- OG / Social -->
@@ -877,7 +883,7 @@
   </section>
 
   <!-- ====== 案例展示 ====== -->
-  <section class="section" id="cases">
+  <section class="section" id="cases" style="padding-bottom:40px;">
     <div class="section-inner">
       <p class="section-label reveal">案例展示</p>
       <h2 class="section-headline reveal reveal-delay-1">
@@ -929,6 +935,29 @@
               <span class="case-tag">地产</span>
               <span class="case-tag">轻奢</span>
               <span class="case-tag">投资者关系</span>
+            </div>
+            <span class="case-btn">查看网站 →</span>
+          </div>
+        </a>
+
+        <!-- Pandapro -->
+        <a href="article.html?cat=frontend" class="case-card" target="_blank">
+          <div class="case-preview pandapro">
+            <div class="case-preview-inner">
+              <div class="cp-logo">Pandapro</div>
+              <div class="cp-badge">内容平台 · 阅读</div>
+              <div class="cp-title">沉浸式文章浏览体验</div>
+              <div class="cp-sub">13 篇文章 · 横向卡片布局</div>
+            </div>
+          </div>
+          <div class="case-info">
+            <h4>Pandapro — 文章列表页</h4>
+            <p>横向卡片 + 大图交替布局，深色主题阅读体验，支持分类筛选与文章详情页。</p>
+            <div class="case-tags">
+              <span class="case-tag">内容平台</span>
+              <span class="case-tag">深色模式</span>
+              <span class="case-tag">文章列表</span>
+              <span class="case-tag">响应式</span>
             </div>
             <span class="case-btn">查看网站 →</span>
           </div>
