@@ -136,6 +136,19 @@
     .article-content a { color: var(--accent); text-decoration: none; }
     .article-content a:hover { text-decoration: underline; }
 
+    /* Video Embed */
+    .article-video-embed {
+      margin: 0 0 28px; border-radius: 12px; overflow: hidden;
+      background: #000; position: relative;
+    }
+    .article-video-embed .video-inner {
+      position: relative; width: 100%; height: 0; padding-bottom: 56.25%;
+    }
+    .article-video-embed iframe {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      border: none;
+    }
+
     /* Tags */
     .article-tags {
       display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px;
@@ -520,6 +533,7 @@
     <h1 class="article-title" id="articleTitle"></h1>
     <div class="article-meta" id="articleMeta"></div>
     <hr class="article-divider">
+    <div class="article-video-embed" id="videoEmbed" style="display:none"><div class="video-inner"><iframe id="videoIframe" src="" allowfullscreen></iframe></div></div>
     <div class="article-content" id="articleBody"></div>
     <div class="article-tags" id="articleTags"></div>
   </div>
@@ -645,6 +659,16 @@
     metaHtml += '<span class="dot"></span>';
     metaHtml += '<span class="views">' + (article.views || Math.floor(Math.random() * 500 + 200)) + ' 阅读</span>';
     document.getElementById('articleMeta').innerHTML = metaHtml;
+
+    // Video embed (B站 iframe)
+    var videoEmbed = document.getElementById('videoEmbed');
+    if (article.videoUrl) {
+      var bvidMatch = article.videoUrl.match(/bvid=([^&]+)/);
+      if (bvidMatch && bvidMatch[1]) {
+        document.getElementById('videoIframe').src = 'https://player.bilibili.com/player.html?bvid=' + bvidMatch[1] + '&page=1&high_quality=1&autoplay=0';
+        videoEmbed.style.display = 'block';
+      }
+    }
 
     // Body
     document.getElementById('articleBody').innerHTML = simpleMarkdown(article.content);

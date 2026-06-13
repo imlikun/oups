@@ -6,30 +6,58 @@
 <title>视频剪辑 — 李坤的影像探索</title>
 <meta name="description" content="从剪辑软件到镜头叙事——李坤的视频剪辑学习与实践记录。">
 <style>
+/* ========== Theme Vars ========== */
 :root {
   --bg: #0f0f12;
-  --bg-card: #1a1a20;
+  --bg-elevated: #16161a;
   --text: #e8e6e3;
   --text-secondary: #a09e9b;
   --text-muted: #6b6a68;
   --accent: #f09030;
   --accent-light: rgba(240,144,48,0.12);
+  --accent-strong: rgba(240,144,48,0.2);
   --border: rgba(255,255,255,0.06);
+  --card-bg: #1a1a20;
+  --card-hover: #202028;
+  --nav-bg: rgba(15,15,18,0.92);
+  --tag-bg: rgba(240,144,48,0.1);
+  --video-overlay: rgba(15,15,18,0.7);
 }
+
+body.light {
+  --bg: #f5f5f7;
+  --bg-elevated: #ffffff;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --accent: #d47820;
+  --accent-light: rgba(212,120,32,0.08);
+  --accent-strong: rgba(212,120,32,0.15);
+  --border: rgba(0,0,0,0.08);
+  --card-bg: #ffffff;
+  --card-hover: #fafafa;
+  --nav-bg: rgba(245,245,247,0.92);
+  --tag-bg: rgba(212,120,32,0.08);
+  --video-overlay: rgba(245,245,247,0.55);
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
   font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
   background:var(--bg); color:var(--text); line-height:1.7;
   -webkit-font-smoothing:antialiased;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
+/* ---- Nav ---- */
 .nav { position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(15,15,18,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border); }
-.nav.scrolled { box-shadow:0 1px 12px rgba(0,0,0,0.3); }
+  background:var(--nav-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition: background 0.4s, border-color 0.4s; }
+.nav.scrolled { box-shadow:0 1px 12px rgba(0,0,0,0.08); }
 .nav-inner { max-width:1100px; margin:0 auto; padding:0 32px;
   display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-left { display:flex; align-items:center; gap:14px; }
 .nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
 .nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
 .nav-links { display:flex; gap:28px; align-items:center; }
@@ -39,9 +67,23 @@ body {
 .nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
   height:2px; background:var(--accent); border-radius:1px; }
 
+/* Theme Toggle */
+.theme-toggle { width:36px; height:36px; border-radius:50%;
+  border:1px solid var(--border); background:transparent; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text-secondary); transition:background 0.2s,border-color 0.2s,color 0.2s,transform 0.2s;
+  flex-shrink:0; }
+.theme-toggle:hover { background:var(--accent-light); color:var(--text); transform:scale(1.08); }
+.theme-toggle:active { transform:scale(0.94); }
+body.light .icon-moon { display:block; }
+body.light .icon-sun { display:none; }
+body:not(.light) .icon-moon { display:none; }
+body:not(.light) .icon-sun { display:block; }
+
+/* ---- Hero ---- */
 .hero { padding:130px 32px 60px; text-align:center; max-width:720px; margin:0 auto; position:relative; }
 .hero::before { content:''; position:absolute; top:50px; left:50%; transform:translateX(-50%); width:360px; height:360px;
-  background:radial-gradient(circle, rgba(240,144,48,0.06) 0%, transparent 70%); pointer-events:none; }
+  background:radial-gradient(circle, var(--accent-light) 0%, transparent 70%); pointer-events:none; }
 .hero-badge { position:relative; display:inline-flex; align-items:center; gap:6px; padding:5px 16px;
   border-radius:20px; background:var(--accent-light); color:var(--accent); font-size:11px;
   font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
@@ -53,10 +95,10 @@ body {
 .hero-stat .num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
 .hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:2px; }
 
-/* Timeline — alternating left/right via 3-col grid */
-.timeline { max-width:900px; margin:0 auto; padding:0 32px 80px; position:relative; }
+/* ---- Timeline — alternating left/right via 3-col grid ---- */
+.timeline { max-width:960px; margin:0 auto; padding:0 32px 80px; position:relative; }
 .timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:1px;
-  background:linear-gradient(180deg, transparent 0%, rgba(240,144,48,0.18) 10%, rgba(240,144,48,0.18) 90%, transparent 100%);
+  background:linear-gradient(180deg, transparent 0%, var(--accent-strong) 10%, var(--accent-strong) 90%, transparent 100%);
   transform:translateX(-50%); }
 
 .timeline-item { display:grid; grid-template-columns:1fr 40px 1fr; gap:0; margin-bottom:40px; position:relative; }
@@ -68,19 +110,20 @@ body {
 .timeline-item .slot-left { justify-content:flex-end; padding-right:28px; }
 .timeline-item .slot-right { justify-content:flex-start; padding-left:28px; }
 
-.timeline-card { background:var(--bg-card); border-radius:14px; overflow:hidden;
+/* ---- Standard Card ---- */
+.timeline-card { background:var(--card-bg); border-radius:14px; overflow:hidden;
   border:1px solid var(--border); text-decoration:none; color:inherit; display:block;
-  max-width:400px; width:100%; transition:all 0.35s cubic-bezier(0.16,1,0.3,1); }
+  max-width:420px; width:100%; transition:all 0.35s cubic-bezier(0.16,1,0.3,1); }
 .timeline-card:hover { border-color:var(--accent); transform:translateY(-4px);
-  box-shadow:0 12px 40px rgba(240,144,48,0.08); }
+  box-shadow:0 12px 40px rgba(0,0,0,0.1); }
 .timeline-card-image { height:185px; background-size:cover; background-position:center; position:relative; }
 .timeline-card-image .play-hint { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:52px; height:52px; border-radius:50%; background:rgba(240,144,48,0.85);
+  width:52px; height:52px; border-radius:50%; background:var(--accent);
   display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; }
 .timeline-card:hover .play-hint { opacity:1; }
 .play-hint svg { width:20px; height:20px; fill:white; margin-left:3px; }
 .timeline-card-image.fallback { display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(135deg, #1a1a25, #252530); font-size:44px; }
+  background:linear-gradient(135deg, var(--bg-elevated), var(--card-bg)); font-size:44px; }
 .timeline-card-body { padding:18px 20px; }
 .timeline-card-body h3 { font-size:16px; font-weight:600; margin-bottom:8px; line-height:1.4; }
 .timeline-card-body p { font-size:13px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px;
@@ -88,12 +131,19 @@ body {
 .timeline-card-meta { display:flex; justify-content:space-between; align-items:center;
   font-size:12px; color:var(--text-muted); }
 .timeline-card-meta .tags { display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
-.timeline-card-meta .tags span { padding:2px 8px; border-radius:6px; background:var(--accent-light);
+.timeline-card-meta .tags span { padding:2px 8px; border-radius:6px; background:var(--tag-bg);
   color:var(--accent); font-size:10px; font-weight:500; }
+
+/* ---- Video Embedded Card — wider, with real player ---- */
+.timeline-card.video-card { max-width:560px; }
+.timeline-card.video-card .video-wrapper { position:relative; width:100%; height:0; padding-bottom:56.25%; background:#000; }
+.timeline-card.video-card .video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none;
+  border-radius:14px 14px 0 0; }
 
 .empty { text-align:center; padding:80px 32px; color:var(--text-muted); }
 .empty h3 { font-size:20px; margin-bottom:8px; color:var(--text-secondary); }
-.footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px; }
+.footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px;
+  transition: border-color 0.4s; }
 .footer a { color:var(--accent); text-decoration:none; }
 
 @media (max-width:768px) {
@@ -103,7 +153,9 @@ body {
   .timeline-item .slot-right { grid-column:2; padding-left:20px; padding-right:0; }
   .timeline-item .timeline-dot { padding-top:18px; }
   .timeline-card { max-width:none; }
+  .timeline-card.video-card { max-width:none; }
   .timeline-card-image { height:170px; }
+  .timeline-card.video-card .video-wrapper { padding-bottom:56.25%; }
 }
 @media (max-width:600px) {
   .nav-inner { padding:0 16px; }
@@ -116,7 +168,13 @@ body {
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">← 李坤 <span>/ 视频剪辑</span></a>
+    <div class="nav-left">
+      <button class="theme-toggle" id="themeToggle" aria-label="切换深色/浅色模式">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="/" class="nav-logo">← 李坤 <span>/ 视频剪辑</span></a>
+    </div>
     <div class="nav-links">
       <a href="/">首页</a>
       <a href="/craft/">技艺录</a>
@@ -136,11 +194,14 @@ body {
 </section>
 
 <section class="timeline" id="timeline">
-  <!-- 静态后备内容 -->
+
+  <!-- #1: 影视飓风剪辑课 — 内嵌B站视频播放器 -->
   <div class="timeline-item">
     <div class="slot slot-left">
-      <a href="/article.html?id=article-15" class="timeline-card">
-        <div class="timeline-card-image" style="background-image:url(/uploads/ysjf-course2-cover.jpg);background-size:cover;background-position:center;"><div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+      <a href="/article.html?id=article-15" class="timeline-card video-card">
+        <div class="video-wrapper">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV1VfEe6iERt&page=1&high_quality=1&autoplay=0" loading="lazy" allowfullscreen></iframe>
+        </div>
         <div class="timeline-card-body">
           <h3>【影视飓风】剪辑课第二课素材 — MacBook Neo 介绍</h3>
           <p>「影视飓风」剪辑课的作业，主要内容是介绍 MacBook Neo。</p>
@@ -152,12 +213,13 @@ body {
     <div class="slot slot-right"></div>
   </div>
 
+  <!-- #2 -->
   <div class="timeline-item">
     <div class="slot slot-left"></div>
     <div class="timeline-dot"><div class="dot"></div></div>
     <div class="slot slot-right">
       <a href="/article.html?id=article-3" class="timeline-card">
-        <div class="timeline-card-image" style="background:linear-gradient(135deg,#1a1a25,#252530);display:flex;align-items:center;justify-content:center;font-size:44px;">🎥<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-image fallback">🎥<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
         <div class="timeline-card-body">
           <h3>淮安里运河夜景航拍——我的第一个视频剪辑练习</h3>
           <p>用无人机拍摄家乡的夜晚，从素材整理到成片输出的完整流程。</p>
@@ -167,12 +229,11 @@ body {
     </div>
   </div>
 
+  <!-- #3 -->
   <div class="timeline-item">
-    <div class="slot slot-left"></div>
-    <div class="timeline-dot"><div class="dot"></div></div>
-    <div class="slot slot-right">
+    <div class="slot slot-left">
       <a href="/article.html?id=article-5" class="timeline-card">
-        <div class="timeline-card-image" style="background:linear-gradient(135deg,#252530,#1a1a25);display:flex;align-items:center;justify-content:center;font-size:44px;">🎨<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-image fallback">🎨<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
         <div class="timeline-card-body">
           <h3>用 DaVinci Resolve 调色的五个实用技巧</h3>
           <p>从一级校色到风格化调色，快速提升画面质感的实用方法。</p>
@@ -180,12 +241,17 @@ body {
         </div>
       </a>
     </div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right"></div>
   </div>
 
+  <!-- #4 -->
   <div class="timeline-item">
-    <div class="slot slot-left">
+    <div class="slot slot-left"></div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right">
       <a href="/article.html?id=article-7" class="timeline-card">
-        <div class="timeline-card-image" style="background:linear-gradient(135deg,#1a1a25,#252530);display:flex;align-items:center;justify-content:center;font-size:44px;">✂️<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-image fallback">✂️<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
         <div class="timeline-card-body">
           <h3>剪映 vs DaVinci Resolve：新手应该选哪个？</h3>
           <p>对比两款剪辑工具的优势与适用场景，帮你找到最适合的入门工具。</p>
@@ -193,16 +259,13 @@ body {
         </div>
       </a>
     </div>
-    <div class="timeline-dot"><div class="dot"></div></div>
-    <div class="slot slot-right"></div>
   </div>
 
+  <!-- #5 -->
   <div class="timeline-item">
-    <div class="slot slot-left"></div>
-    <div class="timeline-dot"><div class="dot"></div></div>
-    <div class="slot slot-right">
+    <div class="slot slot-left">
       <a href="/article.html?id=article-9" class="timeline-card">
-        <div class="timeline-card-image" style="background:linear-gradient(135deg,#252530,#1a1a25);display:flex;align-items:center;justify-content:center;font-size:44px;">📺<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-image fallback">📺<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
         <div class="timeline-card-body">
           <h3>B 站 UP 主必备：用 OBS + DaVinci 做高质量编程教程</h3>
           <p>录制、剪辑、输出一条龙的教程制作工作流。</p>
@@ -210,7 +273,10 @@ body {
         </div>
       </a>
     </div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right"></div>
   </div>
+
 </section>
 
 <footer class="footer">
@@ -219,12 +285,32 @@ body {
 
 <script>
 (function() {
+  var body = document.body;
+  var themeToggle = document.getElementById('themeToggle');
   var timeline = document.getElementById('timeline');
 
+  // ---- Theme ----
+  var saved = localStorage.getItem('theme');
+  if (saved === 'light' || (saved === null && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+    body.classList.add('light');
+  }
+  themeToggle.addEventListener('click', function() {
+    body.classList.toggle('light');
+    localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+  });
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
+    if (localStorage.getItem('theme') === null) body.classList.toggle('light', e.matches);
+  });
+
+  // ---- Data Loading ----
   function formatDate(d) {
     if (!d) return '';
     var date = new Date(d);
     return date.getFullYear() + '.' + (date.getMonth()+1) + '.' + date.getDate();
+  }
+
+  function hasVideoUrl(a) {
+    return a.videoUrl && a.videoUrl.indexOf('bilibili') !== -1;
   }
 
   function render(articles) {
@@ -253,12 +339,23 @@ body {
       var tagStr = '';
       if (a.tags) for (var t = 0; t < Math.min(a.tags.length, 3); t++) tagStr += '<span>' + a.tags[t] + '</span>';
 
-      var cardHtml = '<a href="/article.html?id=' + a.id + '" class="timeline-card">';
-      if (a.image) {
+      var cardHtml = '';
+      if (hasVideoUrl(a)) {
+        // B站视频：内嵌 iframe 播放器
+        var bvid = '';
+        var match = a.videoUrl.match(/bvid=([^&]+)/);
+        if (match) bvid = match[1];
+        cardHtml = '<a href="/article.html?id=' + a.id + '" class="timeline-card video-card">';
+        cardHtml += '<div class="video-wrapper">';
+        cardHtml += '<iframe src="https://player.bilibili.com/player.html?bvid=' + bvid + '&page=1&high_quality=1&autoplay=0" loading="lazy" allowfullscreen></iframe>';
+        cardHtml += '</div>';
+      } else if (a.image) {
+        cardHtml = '<a href="/article.html?id=' + a.id + '" class="timeline-card">';
         cardHtml += '<div class="timeline-card-image" style="background-image:url(/' + a.image + ')">';
         cardHtml += '<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>';
         cardHtml += '</div>';
       } else {
+        cardHtml = '<a href="/article.html?id=' + a.id + '" class="timeline-card">';
         cardHtml += '<div class="timeline-card-image fallback">🎬<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>';
       }
       cardHtml += '<div class="timeline-card-body">';
@@ -290,6 +387,7 @@ body {
     .then(function(data) { render(data.articles || []); })
     .catch(function() { /* keep static content */ });
 
+  // Scroll nav shadow
   window.addEventListener('scroll', function() {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
   });
