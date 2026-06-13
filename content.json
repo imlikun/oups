@@ -250,6 +250,25 @@
       "status": "published"
     },
     {
+      "id": "article-15",
+      "title": "【影视飓风】剪辑课第二课素材 — MacBook Neo 介绍",
+      "slug": "ysjf-course2-macbook-neo",
+      "category": "video",
+      "featured": true,
+      "image": "uploads/ysjf-course2-cover.jpg",
+      "excerpt": "「影视飓风」剪辑课的作业，主要内容是介绍 MacBook Neo。从素材整理到剪辑节奏，记录整个创作过程。",
+      "content": "## 项目背景\n\n这是「影视飓风」剪辑课第二课的作业。课程提供了原始素材，要求在限定时间内完成一条完整的视频剪辑。\n\n本次作业的主题是 **MacBook Neo 产品介绍**，需要将功能亮点和设计语言通过剪辑节奏呈现出来。\n\n## 技术要点\n\n- **画面节奏**：与背景音乐节拍同步，强调产品切换的流畅感\n- **产品特写**：MacBook Neo 的外观细节与功能介绍交替剪辑\n- **文字叠层**：关键卖点用文字动画增强信息传达\n- **结尾收束**：渐出效果配合品牌 logo 收尾\n\n## 学习收获\n\n通过这次剪辑练习，最大的收获是对 **节奏感** 的理解——好的剪辑不是堆素材，而是让观众在正确的节奏中接收信息。影视飓风的课程非常注重实操，从素材到成片的完整流程让我对剪辑工作流有了更系统的认识。",
+      "tags": [
+        "影视飓风",
+        "剪辑课",
+        "作业",
+        "MacBook Neo"
+      ],
+      "videoUrl": "https://player.bilibili.com/player.html?bvid=BV1VfEe6iERt",
+      "date": "2026-06-11",
+      "status": "published"
+    },
+    {
       "id": "article-14",
       "title": "TrendRadar：全网热点一键推送到微信的 AI 舆情雷达",
       "slug": "trendradar-ai-hot-push",
