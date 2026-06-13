@@ -24,10 +24,9 @@ body {
   -webkit-font-smoothing:antialiased;
 }
 
-/* ---- Nav ---- */
 .nav { position:fixed; top:0; left:0; right:0; z-index:100;
   background:rgba(15,15,18,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+  border-bottom:1px solid var(--border); }
 .nav.scrolled { box-shadow:0 1px 12px rgba(0,0,0,0.3); }
 .nav-inner { max-width:1100px; margin:0 auto; padding:0 32px;
   display:flex; align-items:center; justify-content:space-between; height:58px; }
@@ -40,7 +39,6 @@ body {
 .nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
   height:2px; background:var(--accent); border-radius:1px; }
 
-/* ---- Hero ---- */
 .hero { padding:130px 32px 60px; text-align:center; max-width:720px; margin:0 auto; position:relative; }
 .hero::before { content:''; position:absolute; top:50px; left:50%; transform:translateX(-50%); width:360px; height:360px;
   background:radial-gradient(circle, rgba(240,144,48,0.06) 0%, transparent 70%); pointer-events:none; }
@@ -55,29 +53,27 @@ body {
 .hero-stat .num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
 .hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:2px; }
 
-/* ---- Timeline ---- */
-.timeline { max-width:960px; margin:0 auto; padding:0 32px 80px; position:relative; }
+/* Timeline — alternating left/right via 3-col grid */
+.timeline { max-width:900px; margin:0 auto; padding:0 32px 80px; position:relative; }
 .timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:1px;
-  background:linear-gradient(180deg, transparent 0%, rgba(240,144,48,0.15) 10%, rgba(240,144,48,0.15) 90%, transparent 100%);
+  background:linear-gradient(180deg, transparent 0%, rgba(240,144,48,0.18) 10%, rgba(240,144,48,0.18) 90%, transparent 100%);
   transform:translateX(-50%); }
 
-.timeline-item { display:flex; align-items:flex-start; position:relative; margin-bottom:40px; }
-.timeline-item .col { flex:1; min-width:0; display:flex; }
-.timeline-item .col.left { justify-content:flex-end; padding-right:36px; }
-.timeline-item .col.right { justify-content:flex-start; padding-left:36px; }
+.timeline-item { display:grid; grid-template-columns:1fr 40px 1fr; gap:0; margin-bottom:40px; position:relative; }
+.timeline-item .timeline-dot { display:flex; align-items:flex-start; justify-content:center; padding-top:22px; position:relative; z-index:2; }
+.timeline-item .timeline-dot .dot { width:12px; height:12px; background:var(--accent); border-radius:50%;
+  box-shadow:0 0 16px rgba(240,144,48,0.45); flex-shrink:0; }
 
-.timeline-dot-wrap { position:absolute; left:50%; top:0; transform:translateX(-50%); z-index:2; }
-.timeline-dot-wrap .dot { width:13px; height:13px; background:var(--accent); border-radius:50%;
-  box-shadow:0 0 16px rgba(240,144,48,0.45); margin-top:24px; }
-.timeline-dot-wrap .line-extend { width:1px; height:28px; background:var(--accent); opacity:0.4;
-  margin:0 auto; }
+.timeline-item .slot { display:flex; }
+.timeline-item .slot-left { justify-content:flex-end; padding-right:28px; }
+.timeline-item .slot-right { justify-content:flex-start; padding-left:28px; }
 
 .timeline-card { background:var(--bg-card); border-radius:14px; overflow:hidden;
   border:1px solid var(--border); text-decoration:none; color:inherit; display:block;
-  max-width:420px; width:100%; transition:all 0.35s cubic-bezier(0.16,1,0.3,1); }
+  max-width:400px; width:100%; transition:all 0.35s cubic-bezier(0.16,1,0.3,1); }
 .timeline-card:hover { border-color:var(--accent); transform:translateY(-4px);
   box-shadow:0 12px 40px rgba(240,144,48,0.08); }
-.timeline-card-image { height:190px; background-size:cover; background-position:center; position:relative; }
+.timeline-card-image { height:185px; background-size:cover; background-position:center; position:relative; }
 .timeline-card-image .play-hint { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
   width:52px; height:52px; border-radius:50%; background:rgba(240,144,48,0.85);
   display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; }
@@ -95,38 +91,17 @@ body {
 .timeline-card-meta .tags span { padding:2px 8px; border-radius:6px; background:var(--accent-light);
   color:var(--accent); font-size:10px; font-weight:500; }
 
-/* Even items: card on right */
-.timeline-item:nth-child(even) .col.left { justify-content:flex-start; padding-right:0; padding-left:36px; order:2; }
-.timeline-item:nth-child(even) .col.right { justify-content:flex-end; padding-left:0; padding-right:36px; order:0; }
-.timeline-item:nth-child(even) .timeline-dot-wrap { order:1; }
-.timeline-item:nth-child(even) .col.left .timeline-card { order:1; }
-
-/* Reveal animation */
-.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease; }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.timeline-item:nth-child(odd) .timeline-card.reveal { transform:translateX(-20px) translateY(10px); }
-.timeline-item:nth-child(even) .timeline-card.reveal { transform:translateX(20px) translateY(10px); }
-.timeline-item .timeline-card.reveal.visible { transform:translateX(0) translateY(0); }
-
-/* Empty */
 .empty { text-align:center; padding:80px 32px; color:var(--text-muted); }
 .empty h3 { font-size:20px; margin-bottom:8px; color:var(--text-secondary); }
-
-/* Footer */
 .footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px; }
 .footer a { color:var(--accent); text-decoration:none; }
 
-/* ---- Mobile ---- */
 @media (max-width:768px) {
-  .timeline::before { left:24px; }
-  .timeline-item { flex-direction:row; margin-bottom:28px; }
-  .timeline-item .col.left, .timeline-item .col.right { padding:0; justify-content:flex-start; }
-  .timeline-item .col { width:auto; }
-  .timeline-item .col.left { display:none; }
-  .timeline-item .col.right { flex:1; padding-left:32px; }
-  .timeline-item:nth-child(even) .col.left { display:none; }
-  .timeline-item:nth-child(even) .col.right { flex:1; padding-left:32px; order:0; }
-  .timeline-dot-wrap { left:24px; }
+  .timeline::before { left:20px; }
+  .timeline-item { grid-template-columns:40px 1fr; }
+  .timeline-item .slot-left { display:none; }
+  .timeline-item .slot-right { grid-column:2; padding-left:20px; padding-right:0; }
+  .timeline-item .timeline-dot { padding-top:18px; }
   .timeline-card { max-width:none; }
   .timeline-card-image { height:170px; }
 }
@@ -141,35 +116,95 @@ body {
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="../index.html" class="nav-logo">← 李坤 <span>/ 视频剪辑</span></a>
+    <a href="/" class="nav-logo">← 李坤 <span>/ 视频剪辑</span></a>
     <div class="nav-links">
-      <a href="../index.html">首页</a>
-      <a href="../craft/index.html">技艺录</a>
-      <a href="index.html" class="active">视频剪辑</a>
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/video-lab/" class="active">视频剪辑</a>
     </div>
   </div>
 </nav>
 
-<section class="hero reveal">
+<section class="hero">
   <div class="hero-badge"><span class="dot"></span>VIDEO LAB</div>
   <h1>视频剪辑</h1>
   <p>每一帧都是表达——用镜头记录、用剪辑叙事，从工具操作到创作思维。</p>
-  <div class="hero-stats" id="heroStats"></div>
+  <div class="hero-stats" id="heroStats">
+    <div class="hero-stat"><div class="num">6</div><div class="label">篇文章</div></div>
+    <div class="hero-stat"><div class="num">5</div><div class="label">个技巧标签</div></div>
+  </div>
 </section>
 
 <section class="timeline" id="timeline">
-  <div class="empty" id="empty" style="display:none"><h3>暂无作品</h3><p>视频剪辑探索还在路上，敬请期待。</p></div>
+  <!-- 静态后备内容 -->
+  <div class="timeline-item">
+    <div class="slot slot-left">
+      <a href="/article.html?id=article-3" class="timeline-card">
+        <div class="timeline-card-image" style="background:linear-gradient(135deg,#1a1a25,#252530);display:flex;align-items:center;justify-content:center;font-size:44px;">🎥<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-body">
+          <h3>淮安里运河夜景航拍——我的第一个视频剪辑练习</h3>
+          <p>用无人机拍摄家乡的夜晚，从素材整理到成片输出的完整流程。</p>
+          <div class="timeline-card-meta"><span>2026.05.28</span><span class="tags"><span>航拍</span><span>剪辑入门</span></span></div>
+        </div>
+      </a>
+    </div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right"></div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="slot slot-left"></div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right">
+      <a href="/article.html?id=article-5" class="timeline-card">
+        <div class="timeline-card-image" style="background:linear-gradient(135deg,#252530,#1a1a25);display:flex;align-items:center;justify-content:center;font-size:44px;">🎨<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-body">
+          <h3>用 DaVinci Resolve 调色的五个实用技巧</h3>
+          <p>从一级校色到风格化调色，快速提升画面质感的实用方法。</p>
+          <div class="timeline-card-meta"><span>2026.05.22</span><span class="tags"><span>调色</span><span>DaVinci</span></span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="slot slot-left">
+      <a href="/article.html?id=article-7" class="timeline-card">
+        <div class="timeline-card-image" style="background:linear-gradient(135deg,#1a1a25,#252530);display:flex;align-items:center;justify-content:center;font-size:44px;">✂️<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-body">
+          <h3>剪映 vs DaVinci Resolve：新手应该选哪个？</h3>
+          <p>对比两款剪辑工具的优势与适用场景，帮你找到最适合的入门工具。</p>
+          <div class="timeline-card-meta"><span>2026.05.15</span><span class="tags"><span>工具对比</span><span>入门</span></span></div>
+        </div>
+      </a>
+    </div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right"></div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="slot slot-left"></div>
+    <div class="timeline-dot"><div class="dot"></div></div>
+    <div class="slot slot-right">
+      <a href="/article.html?id=article-9" class="timeline-card">
+        <div class="timeline-card-image" style="background:linear-gradient(135deg,#252530,#1a1a25);display:flex;align-items:center;justify-content:center;font-size:44px;">📺<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+        <div class="timeline-card-body">
+          <h3>B 站 UP 主必备：用 OBS + DaVinci 做高质量编程教程</h3>
+          <p>录制、剪辑、输出一条龙的教程制作工作流。</p>
+          <div class="timeline-card-meta"><span>2026.05.10</span><span class="tags"><span>OBS</span><span>教程</span></span></div>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
 
 <footer class="footer">
-  <p>© 2026 李坤 · <a href="../index.html">返回首页</a></p>
+  <p>© 2026 李坤 · <a href="/">返回首页</a></p>
 </footer>
 
 <script>
 (function() {
   var timeline = document.getElementById('timeline');
-  var empty = document.getElementById('empty');
-  var statsEl = document.getElementById('heroStats');
 
   function formatDate(d) {
     if (!d) return '';
@@ -183,44 +218,33 @@ body {
     });
     videoArts.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
 
-    if (videoArts.length === 0) {
-      empty.style.display = 'block';
-      statsEl.innerHTML = '';
-      // Remove existing items
-      var items = timeline.querySelectorAll('.timeline-item');
-      items.forEach(function(el) { el.remove(); });
-      return;
-    }
-    empty.style.display = 'none';
+    if (videoArts.length === 0) return;
 
+    // Update stats
     var tagSet = {};
     videoArts.forEach(function(a) {(a.tags||[]).forEach(function(t){tagSet[t]=1;})});
-    statsEl.innerHTML =
+    document.getElementById('heroStats').innerHTML =
       '<div class="hero-stat"><div class="num">' + videoArts.length + '</div><div class="label">篇文章</div></div>' +
       '<div class="hero-stat"><div class="num">' + Object.keys(tagSet).length + '</div><div class="label">个技巧标签</div></div>';
 
-    // Remove existing items
-    var items = timeline.querySelectorAll('.timeline-item');
-    items.forEach(function(el) { el.remove(); });
+    // Remove old items
+    var oldItems = timeline.querySelectorAll('.timeline-item');
+    oldItems.forEach(function(el) { el.remove(); });
 
     var html = '';
     for (var i = 0; i < videoArts.length; i++) {
       var a = videoArts[i];
       var isEven = (i % 2 === 1);
       var tagStr = '';
-      if (a.tags) {
-        for (var t = 0; t < Math.min(a.tags.length, 3); t++) {
-          tagStr += '<span>' + a.tags[t] + '</span>';
-        }
-      }
+      if (a.tags) for (var t = 0; t < Math.min(a.tags.length, 3); t++) tagStr += '<span>' + a.tags[t] + '</span>';
 
-      var cardHtml = '<a href="../article.html?id=' + a.id + '" class="timeline-card reveal">';
+      var cardHtml = '<a href="/article.html?id=' + a.id + '" class="timeline-card">';
       if (a.image) {
-        cardHtml += '<div class="timeline-card-image" style="background-image:url(../' + a.image + ')">';
+        cardHtml += '<div class="timeline-card-image" style="background-image:url(/' + a.image + ')">';
         cardHtml += '<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>';
         cardHtml += '</div>';
       } else {
-        cardHtml += '<div class="timeline-card-image fallback">🎬</div>';
+        cardHtml += '<div class="timeline-card-image fallback">🎬<div class="play-hint"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>';
       }
       cardHtml += '<div class="timeline-card-body">';
       cardHtml += '<h3>' + a.title + '</h3>';
@@ -232,55 +256,27 @@ body {
 
       html += '<div class="timeline-item">';
       if (isEven) {
-        // Even: empty left, dot center, card right
-        html += '<div class="col left"></div>';
-        html += '<div class="timeline-dot-wrap"><div class="dot"></div></div>';
-        html += '<div class="col right">' + cardHtml + '</div>';
+        html += '<div class="slot slot-left"></div>';
+        html += '<div class="timeline-dot"><div class="dot"></div></div>';
+        html += '<div class="slot slot-right">' + cardHtml + '</div>';
       } else {
-        // Odd: card left, dot center, empty right
-        html += '<div class="col left">' + cardHtml + '</div>';
-        html += '<div class="timeline-dot-wrap"><div class="dot"></div></div>';
-        html += '<div class="col right"></div>';
+        html += '<div class="slot slot-left">' + cardHtml + '</div>';
+        html += '<div class="timeline-dot"><div class="dot"></div></div>';
+        html += '<div class="slot slot-right"></div>';
       }
       html += '</div>';
     }
 
-    empty.insertAdjacentHTML('afterend', html);
-    observeReveals();
+    timeline.innerHTML = html;
   }
 
-  // IntersectionObserver for reveal
-  function observeReveals() {
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) { obs.observe(el); });
-  }
-
-  fetch('../content.json?' + Date.now())
+  fetch('/content.json?' + Date.now())
     .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
     .then(function(data) { render(data.articles || []); })
-    .catch(function() { empty.style.display = 'block'; empty.querySelector('h3').textContent = '加载失败'; });
+    .catch(function() { /* keep static content */ });
 
-  // Nav scroll shadow
   window.addEventListener('scroll', function() {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
-  });
-
-  // Reveal on pageshow (bfcache)
-  window.addEventListener('pageshow', function(e) {
-    if (e.persisted) {
-      setTimeout(function() {
-        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
-          var rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add('visible');
-        });
-      }, 60);
-    }
   });
 })();
 </script>

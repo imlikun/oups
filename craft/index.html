@@ -28,7 +28,7 @@ body {
 /* ---- Nav ---- */
 .nav { position:fixed; top:0; left:0; right:0; z-index:100;
   background:rgba(247,247,245,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+  border-bottom:1px solid var(--border); }
 .nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
 .nav-inner { max-width:1120px; margin:0 auto; padding:0 32px;
   display:flex; align-items:center; justify-content:space-between; height:58px; }
@@ -62,12 +62,8 @@ body {
 .list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
 .list-header h2 { font-size:15px; font-weight:600; color:var(--text); letter-spacing:0.02em; }
 .list-header h2 span { color:var(--text-muted); font-weight:400; }
-.list-filter { display:flex; gap:6px; }
-.list-filter button { padding:6px 14px; border-radius:8px; border:1px solid var(--border); background:transparent;
-  font-size:13px; color:var(--text-secondary); cursor:pointer; transition:all 0.2s; font-family:inherit; }
-.list-filter button:hover, .list-filter button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* Article Item — List Style */
+/* Article Item */
 .article-item { display:flex; gap:24px; padding:24px 0; border-bottom:1px solid var(--border);
   text-decoration:none; color:inherit; transition:background 0.2s; border-radius:10px; margin:0 -12px; padding-left:12px; padding-right:12px; }
 .article-item:hover { background:rgba(0,0,0,0.015); }
@@ -95,7 +91,7 @@ body {
 .article-info .ai-meta .ai-tags span { padding:2px 8px; border-radius:6px; background:var(--accent-light);
   color:var(--accent); font-size:11px; font-weight:500; }
 
-/* Featured Article (first one) */
+/* Featured Article (first) */
 .article-item.featured { flex-direction:column; gap:0; padding:0; border-bottom:1px solid var(--border);
   margin-bottom:8px; padding-bottom:28px; }
 .article-item.featured .article-thumb { width:100%; height:380px; border-radius:var(--radius); }
@@ -103,15 +99,12 @@ body {
 .article-item.featured .article-info h3 { font-size:24px; -webkit-line-clamp:3; }
 .article-item.featured .article-info .ai-excerpt { font-size:14.5px; -webkit-line-clamp:3; }
 
-/* Empty */
 .empty { text-align:center; padding:80px 32px; color:var(--text-muted); }
 .empty h3 { font-size:20px; margin-bottom:8px; color:var(--text-secondary); }
 
-/* Footer */
 .footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px; }
 .footer a { color:var(--accent); text-decoration:none; }
 
-/* Reveal animation */
 .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease,transform 0.5s ease; }
 .reveal.visible { opacity:1; transform:translateY(0); }
 
@@ -126,7 +119,6 @@ body {
   .hero { padding:110px 16px 32px; }
   .list-wrap { padding:0 16px 60px; }
   .hero-right { gap:20px; }
-  .list-filter { display:none; }
   .article-item.featured .article-info h3 { font-size:19px; }
 }
 </style>
@@ -135,47 +127,103 @@ body {
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="../index.html" class="nav-logo">← 李坤 <span>/ 技艺录</span></a>
+    <a href="/" class="nav-logo">← 李坤 <span>/ 技艺录</span></a>
     <div class="nav-links">
-      <a href="../index.html">首页</a>
-      <a href="index.html" class="active">技艺录</a>
-      <a href="../video-lab/index.html">视频剪辑</a>
+      <a href="/">首页</a>
+      <a href="/craft/" class="active">技艺录</a>
+      <a href="/video-lab/">视频剪辑</a>
     </div>
   </div>
 </nav>
 
-<section class="hero reveal">
+<section class="hero">
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-badge"><span class="dot"></span>CRAFT</div>
       <h1>技艺录</h1>
       <p class="hero-desc">从一行 HTML 到 AI 工具链——记录每一次动手、每一次思考、每一个造出的东西。</p>
     </div>
-    <div class="hero-right" id="heroStats"></div>
+    <div class="hero-right" id="heroStats">
+      <div class="hero-stat"><div class="num">9</div><div class="label">篇文章</div></div>
+      <div class="hero-stat"><div class="num">8</div><div class="label">个技术标签</div></div>
+    </div>
   </div>
 </section>
 
 <section class="list-wrap">
-  <div class="list-header reveal">
-    <h2>全部文章 <span id="articleCount"></span></h2>
-    <div class="list-filter" id="listFilter"></div>
+  <div class="list-header" id="listHeader">
+    <h2>全部文章 <span>(9)</span></h2>
   </div>
-  <div id="articlesList"></div>
-  <div class="empty" id="empty" style="display:none"><h3>暂无文章</h3><p>技艺录还在积累中，敬请期待。</p></div>
+  <div id="articlesList">
+    <!-- 静态后备内容 -->
+    <a href="/article.html?id=article-14" class="article-item featured">
+      <div class="article-thumb"><div class="thumb-img" style="background:linear-gradient(135deg,#1a6ff5,#4dabf7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:48px;">📡</div><span class="cat-tag">技艺录</span></div>
+      <div class="article-info">
+        <div class="ai-date">2026.06.12</div>
+        <h3>TrendRadar：全网热点一键推送到微信的 AI 舆情雷达</h3>
+        <div class="ai-excerpt">基于 AI 的全网热点监测与推送工具，让信息收集不再靠人工刷新。</div>
+        <div class="ai-meta"><div class="ai-tags"><span>AI</span><span>工具</span></div></div>
+      </div>
+    </a>
+    <a href="/article.html?id=article-1" class="article-item">
+      <div class="article-thumb"><div class="thumb-img" style="background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;">🖥️</div><span class="cat-tag">技艺录</span></div>
+      <div class="article-info">
+        <div class="ai-date">2026.06.01</div>
+        <h3>我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页</h3>
+        <div class="ai-excerpt">从零开始，用纯前端技术搭建一个具有液态玻璃视觉效果和 Canvas 粒子动画的交互式简历页面。</div>
+        <div class="ai-meta"><div class="ai-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></div>
+      </div>
+    </a>
+    <a href="/article.html?id=article-2" class="article-item">
+      <div class="article-thumb"><div class="thumb-img" style="background:linear-gradient(135deg,#11998e,#38ef7d);display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;">⚛️</div><span class="cat-tag">技艺录</span></div>
+      <div class="article-info">
+        <div class="ai-date">2026.06.03</div>
+        <h3>React 学习笔记：从 Class 组件到 Hooks 的思维转变</h3>
+        <div class="ai-excerpt">刚开始学 React 时最困惑的就是函数式组件和 Hooks 的设计哲学。</div>
+        <div class="ai-meta"><div class="ai-tags"><span>React</span><span>JavaScript</span></div></div>
+      </div>
+    </a>
+    <a href="/article.html?id=article-4" class="article-item">
+      <div class="article-thumb"><div class="thumb-img" style="background:linear-gradient(135deg,#ee0979,#ff6a00);display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;">📐</div><span class="cat-tag">技艺录</span></div>
+      <div class="article-info">
+        <div class="ai-date">2026.05.25</div>
+        <h3>CSS Grid 实战：用 Bento Grid 做不规则卡片布局</h3>
+        <div class="ai-excerpt">深入 CSS Grid 的不规则布局技巧，打造杂志般的信息层级。</div>
+        <div class="ai-meta"><div class="ai-tags"><span>CSS</span><span>Grid</span></div></div>
+      </div>
+    </a>
+    <a href="/article.html?id=article-6" class="article-item">
+      <div class="article-thumb"><div class="thumb-img" style="background:linear-gradient(135deg,#fc5c7d,#6a82fb);display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;">📜</div><span class="cat-tag">技艺录</span></div>
+      <div class="article-info">
+        <div class="ai-date">2026.05.18</div>
+        <h3>JavaScript 异步编程：从回调地狱到 async/await</h3>
+        <div class="ai-excerpt">梳理 JavaScript 异步编程的演进之路，从 callback 到 Promise 到 async/await。</div>
+        <div class="ai-meta"><div class="ai-tags"><span>JavaScript</span><span>异步</span></div></div>
+      </div>
+    </a>
+    <a href="/article.html?id=article-8" class="article-item">
+      <div class="article-thumb"><div class="thumb-img" style="background:linear-gradient(135deg,#4facfe,#00f2fe);display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;">🔷</div><span class="cat-tag">技艺录</span></div>
+      <div class="article-info">
+        <div class="ai-date">2026.05.15</div>
+        <h3>TypeScript 入门：给 JavaScript 项目加上类型安全</h3>
+        <div class="ai-excerpt">TypeScript 初体验，如何逐步给 JS 项目加上类型约束。</div>
+        <div class="ai-meta"><div class="ai-tags"><span>TypeScript</span><span>JavaScript</span></div></div>
+      </div>
+    </a>
+  </div>
 </section>
 
 <footer class="footer">
-  <p>© 2026 李坤 · <a href="../index.html">返回首页</a></p>
+  <p>© 2026 李坤 · <a href="/">返回首页</a></p>
 </footer>
 
 <script>
 (function() {
   var listEl = document.getElementById('articlesList');
   var emptyEl = document.getElementById('empty');
-  var countEl = document.getElementById('articleCount');
   var statsEl = document.getElementById('heroStats');
-  var filterEl = document.getElementById('listFilter');
-  var currentFilter = 'all';
+  var listHeader = document.getElementById('listHeader');
+  var staticArticles = listEl.querySelectorAll('.article-item');
 
   function formatDate(d) {
     if (!d) return '';
@@ -183,69 +231,38 @@ body {
     return date.getFullYear() + '.' + (date.getMonth()+1) + '.' + date.getDate();
   }
 
-  function render(articles, filter) {
+  function render(articles) {
     var craftArts = articles.filter(function(a) {
       return a.category === 'craft' && a.status === 'published';
     });
-
-    // Tag filter
-    if (filter && filter !== 'all') {
-      craftArts = craftArts.filter(function(a) {
-        return (a.tags || []).indexOf(filter) !== -1;
-      });
-    }
-
-    // Sort by date desc
     craftArts.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
 
-    if (craftArts.length === 0) {
-      emptyEl.style.display = 'block';
-      listEl.innerHTML = '';
-      countEl.textContent = '';
-      return;
-    }
-    emptyEl.style.display = 'none';
-    countEl.textContent = '(' + craftArts.length + ')';
+    if (craftArts.length === 0) return;
 
-    // Stats
+    // Update stats
     var tagSet = {};
     craftArts.forEach(function(a) {(a.tags||[]).forEach(function(t){tagSet[t]=1;})});
     statsEl.innerHTML =
       '<div class="hero-stat"><div class="num">' + craftArts.length + '</div><div class="label">篇文章</div></div>' +
       '<div class="hero-stat"><div class="num">' + Object.keys(tagSet).length + '</div><div class="label">个技术标签</div></div>';
+    listHeader.querySelector('span').textContent = '(' + craftArts.length + ')';
 
-    // Build filter buttons
-    var allTags = Object.keys(tagSet);
-    if (allTags.length > 0 && filterEl.children.length === 0) {
-      var ft = '<button class="' + (currentFilter==='all'?'active':'') + '" onclick="window._craftFilter(\'all\')">全部</button>';
-      for (var i = 0; i < Math.min(allTags.length, 5); i++) {
-        ft += '<button class="' + (currentFilter===allTags[i]?'active':'') + '" onclick="window._craftFilter(\'' + allTags[i] + '\')">' + allTags[i] + '</button>';
-      }
-      filterEl.innerHTML = ft;
-    }
-
-    // Render list
+    // Build article list
     var html = '';
     for (var i = 0; i < craftArts.length; i++) {
       var a = craftArts[i];
-      var isFeatured = (i === 0);
-      var cls = isFeatured ? 'article-item featured reveal' : 'article-item reveal reveal-delay-' + Math.min(i, 4);
-
+      var cls = (i === 0) ? 'article-item featured' : 'article-item';
       var tagStr = '';
-      if (a.tags) {
-        for (var t = 0; t < Math.min(a.tags.length, 3); t++) {
-          tagStr += '<span>' + a.tags[t] + '</span>';
-        }
-      }
+      if (a.tags) for (var t = 0; t < Math.min(a.tags.length, 3); t++) tagStr += '<span>' + a.tags[t] + '</span>';
 
-      var thumbHtml = '';
+      var thumbHtml;
       if (a.image) {
-        thumbHtml = '<div class="article-thumb"><img class="thumb-img" src="../' + a.image + '" alt="' + a.title + '" loading="lazy"><span class="cat-tag">技艺录</span></div>';
+        thumbHtml = '<div class="article-thumb"><img class="thumb-img" src="/' + a.image + '" alt="' + a.title + '" loading="lazy"><span class="cat-tag">技艺录</span></div>';
       } else {
         thumbHtml = '<div class="article-thumb fallback"><span class="cat-tag">技艺录</span>🛠️</div>';
       }
 
-      html += '<a href="../article.html?id=' + a.id + '" class="' + cls + '">';
+      html += '<a href="/article.html?id=' + a.id + '" class="' + cls + '">';
       html += thumbHtml;
       html += '<div class="article-info">';
       html += '<div class="ai-date">' + formatDate(a.date) + '</div>';
@@ -256,45 +273,16 @@ body {
     }
 
     listEl.innerHTML = html;
-
-    // Re-observe reveal elements
-    if (typeof observeAll === 'function') observeAll();
   }
 
-  // Expose filter function
-  window._craftFilter = function(tag) {
-    currentFilter = tag;
-    // Re-render with current data
-    if (window._craftData) render(window._craftData, tag);
-  };
-
-  fetch('../content.json?' + Date.now())
+  // Try fetch to enhance content
+  fetch('/content.json?' + Date.now())
     .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
-    .then(function(data) {
-      window._craftData = data.articles || [];
-      render(window._craftData, 'all');
-    })
-    .catch(function() {
-      emptyEl.style.display = 'block';
-      emptyEl.querySelector('h3').textContent = '加载失败';
-      statsEl.innerHTML = '';
-    });
+    .then(function(data) { render(data.articles || []); })
+    .catch(function() { /* keep static content */ });
 
-  // Nav scroll shadow
   window.addEventListener('scroll', function() {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
-  });
-
-  // Reveal on pageshow (bfcache)
-  window.addEventListener('pageshow', function(e) {
-    if (e.persisted) {
-      setTimeout(function() {
-        document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
-          var rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add('visible');
-        });
-      }, 60);
-    }
   });
 })();
 </script>
