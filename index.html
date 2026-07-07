@@ -7,6 +7,8 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
     :root {
       --bg: #000000;
       --bg-elevated: #0d0d0d;
@@ -839,6 +841,12 @@
     }
     .nav-links a:hover::after,.nav-links a.active::after{transform:translateX(-50%) scaleX(1);}
 
+    /* 键盘焦点可见性（无障碍） */
+    a:focus-visible, button:focus-visible, .case-card:focus-visible, .explore-card:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px;
+    }
+    .hamburger:focus-visible { outline-offset: 2px; }
+
     @media (max-width: 768px) {
       .bento { grid-template-columns: repeat(2, 1fr); }
       .span-2, .span-3, .span-4 { grid-column: span 2; }
@@ -901,6 +909,7 @@
       .modal-close-btn::after { font-size: 28px; }
     }
     @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; transition: none; }
     }
   </style>
@@ -922,15 +931,15 @@
       <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
-    <button class="hamburger" id="hamburger" aria-label="菜单">
+    <button class="hamburger" id="hamburger" aria-label="菜单" aria-expanded="false" aria-controls="navLinksMenu">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinksMenu">
       <li><a href="#bento">职业</a></li>
       <li><a href="#explore">探索</a></li>
       <li><a href="#cases">作品</a></li>
-      <li><a href="/ai-radar/" target="_blank">AI新闻</a></li>
-      <li><a href="/pxid2/" target="_blank">PXID2</a></li>
+      <li><a href="/ai-radar/" target="_blank" rel="noopener noreferrer">AI新闻</a></li>
+      <li><a href="/pxid2/" target="_blank" rel="noopener noreferrer">PXID2</a></li>
       <li><a href="#contact" style="color:var(--accent);font-weight:500;">联系我</a></li>
     </ul>
     <a class="github-link" id="githubLink" href="https://github.com/imlikun" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -1348,6 +1357,7 @@
           hamburger.classList.toggle('open', open);
           navLinksEl.classList.toggle('open', open);
           navOverlay.classList.toggle('visible', open);
+          hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
           document.body.style.overflow = open ? 'hidden' : '';
         }
         hamburger.addEventListener('click', function() { toggleMenu(!navLinksEl.classList.contains('open')); });
@@ -1358,33 +1368,29 @@
         });
       }
 
-      // Scroll progress + back to top
+      // Scroll progress + back to top + nav hide/show + scroll spy (single passive listener)
       var backToTop = document.getElementById('backToTop');
-      window.addEventListener('scroll', function() {
-        var docH = document.documentElement.scrollHeight - window.innerHeight;
-        progressBar.style.width = docH > 0 ? (window.scrollY / docH * 100) + '%' : '0%';
-        backToTop.classList.toggle('visible', window.scrollY > 400);
-      });
-      backToTop.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // Nav hide/show + scroll spy
       var lastScroll = 0;
       var sections = document.querySelectorAll('.section, .pillars-section');
       var navLinks = document.querySelectorAll('.nav-links a');
       window.addEventListener('scroll', function() {
         var s = window.scrollY;
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = docH > 0 ? (s / docH * 100) + '%' : '0%';
+        backToTop.classList.toggle('visible', s > 400);
         nav.classList.toggle('hidden', s > 100 && s > lastScroll);
         lastScroll = s;
         var currentId = '';
-        var midViewport = window.scrollY + window.innerHeight * 0.35;
+        var midViewport = s + window.innerHeight * 0.35;
         sections.forEach(function(sec) {
           if (sec.offsetTop <= midViewport) { currentId = sec.id || ''; }
         });
         navLinks.forEach(function(link) {
           link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
         });
+      }, { passive: true });
+      backToTop.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
       // Reveal

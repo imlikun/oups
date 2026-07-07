@@ -42,6 +42,9 @@ body {
 .nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
   height:2px; background:var(--accent); border-radius:1px; }
 
+/* 键盘焦点可见性（无障碍） */
+a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
+
 /* ---- Hero ---- */
 .hero { max-width:1120px; margin:0 auto; padding:130px 32px 48px; }
 .hero-inner { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; flex-wrap:wrap; }
@@ -99,9 +102,11 @@ body {
   .hero { padding:100px 20px 32px; }
   .hero-right { gap:20px; }
   .list-wrap { padding:0 20px 60px; }
-  .nav-inner { padding:0 20px; }
-  .nav-links { gap:8px; flex-wrap:wrap; justify-content:center; }
-  .nav-links a { font-size:12px; }
+  .nav-inner { padding:0 20px; height:auto; flex-wrap:wrap; }
+  .nav-links { gap:18px; flex-wrap:nowrap; justify-content:flex-start; width:100%;
+    overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:4px; scrollbar-width:none; }
+  .nav-links::-webkit-scrollbar { display:none; }
+  .nav-links a { font-size:13px; white-space:nowrap; }
   .article-item .item-title { font-size:16px; }
 }
 
@@ -124,7 +129,7 @@ body {
       <a href="/" >首页</a>
       <a href="/craft/" >技艺录</a>
       <a href="/video-lab/" >视频剪辑</a>
-      <a href="/notes/" class="active">随笔</a>
+      <a href="/notes/" class="active" aria-current="page">随笔</a>
       <a href="/daily-digest/" >每日阅读</a>
     </div>
   </div>

@@ -67,6 +67,9 @@ body {
 .nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
   height:2px; background:var(--accent); border-radius:1px; }
 
+/* 键盘焦点可见性（无障碍） */
+a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
+
 /* Theme Toggle */
 .theme-toggle { width:36px; height:36px; border-radius:50%;
   border:1px solid var(--border); background:transparent; cursor:pointer;
@@ -159,9 +162,11 @@ body:not(.light) .icon-sun { display:block; }
   .timeline-card.video-card .video-wrapper { padding-bottom:56.25%; }
 }
 @media (max-width:600px) {
-  .nav-inner { padding:0 16px; }
-  .nav-links { gap:8px; flex-wrap:wrap; justify-content:center; }
-  .nav-links a { font-size:12px; }
+  .nav-inner { padding:0 16px; height:auto; flex-wrap:wrap; }
+  .nav-links { gap:18px; flex-wrap:nowrap; justify-content:flex-start; width:100%;
+    overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:4px; scrollbar-width:none; }
+  .nav-links::-webkit-scrollbar { display:none; }
+  .nav-links a { font-size:13px; white-space:nowrap; }
   .timeline { padding:0 16px 60px; }
   .hero { padding:110px 16px 40px; }
 }
@@ -181,7 +186,7 @@ body:not(.light) .icon-sun { display:block; }
     <div class="nav-links">
       <a href="/">首页</a>
       <a href="/craft/">技艺录</a>
-      <a href="/video-lab/" class="active">视频剪辑</a>
+      <a href="/video-lab/" class="active" aria-current="page">视频剪辑</a>
       <a href="/notes/">随笔</a>
       <a href="/daily-digest/">每日阅读</a>
     </div>

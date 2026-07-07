@@ -42,6 +42,9 @@ body {
 .nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
   height:2px; background:var(--accent); border-radius:1px; }
 
+/* 键盘焦点可见性（无障碍） */
+a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
+
 /* ---- Hero ---- */
 .hero { max-width:1120px; margin:0 auto; padding:130px 32px 48px; }
 .hero-inner { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; flex-wrap:wrap; }
@@ -125,9 +128,11 @@ body {
   .digest-preview { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width:600px) {
-  .nav-inner { padding:0 16px; }
-  .nav-links { gap:8px; flex-wrap:wrap; justify-content:center; }
-  .nav-links a { font-size:12px; }
+  .nav-inner { padding:0 16px; height:auto; flex-wrap:wrap; }
+  .nav-links { gap:18px; flex-wrap:nowrap; justify-content:flex-start; width:100%;
+    overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:4px; scrollbar-width:none; }
+  .nav-links::-webkit-scrollbar { display:none; }
+  .nav-links a { font-size:13px; white-space:nowrap; }
   .hero { padding:110px 16px 32px; }
   .list-wrap { padding:0 16px 60px; }
   .digest-item { padding:18px 16px; }
@@ -147,7 +152,7 @@ body {
       <a href="/craft/">技艺录</a>
       <a href="/video-lab/">视频剪辑</a>
       <a href="/notes/">随笔</a>
-      <a href="/daily-digest/" class="active">每日阅读</a>
+      <a href="/daily-digest/" class="active" aria-current="page">每日阅读</a>
     </div>
   </div>
 </nav>
