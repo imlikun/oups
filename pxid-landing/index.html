@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PXID – Smart Mobility OEM/ODM Manufacturer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:#0A0C0F; color:#E0E0E0; line-height:1.5; overflow-x:hidden; }
+        :root {
+            --dark-bg:#0A0C0F;
+            --card-bg:#14161A;
+            --brand-blue:#0059FF;
+            --brand-green:#00E676;
+            --text-primary:#E0E0E0;
+            --text-secondary:#9AA0AB;
+            --border-subtle:rgba(255,255,255,0.06);
+        }
+        .container { max-width:1280px; margin:0 auto; padding:0 24px; }
+
+        /* 语言切换 */
+        .lang-switch { position:fixed; top:20px; right:20px; z-index:200; background:var(--card-bg); border:1px solid var(--border-subtle); color:#fff; padding:8px 16px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:600; }
+        .lang-switch:hover { background:var(--brand-blue); }
+
+        /* 导航 */
+        .navbar { position:fixed; top:0; left:0; width:100%; z-index:100; background:rgba(10,12,15,0.85); backdrop-filter:blur(16px); border-bottom:1px solid var(--border-subtle); }
+        .navbar .container { display:flex; align-items:center; justify-content:space-between; height:72px; }
+        .logo { font-size:28px; font-weight:700; color:#fff; } .logo span { color:var(--brand-blue); }
+        .nav-links { display:flex; gap:32px; align-items:center; }
+        .nav-links a { color:#ccc; text-decoration:none; font-weight:500; font-size:15px; transition:color 0.2s; }
+        .nav-links a:hover { color:#fff; }
+        .btn-primary { background:var(--brand-blue); color:#fff; padding:10px 22px; border-radius:8px; font-weight:600; text-decoration:none; display:inline-block; transition:0.25s; }
+        .btn-primary:hover { background:#0044cc; }
+        .btn-outline { border:1px solid rgba(255,255,255,0.3); color:#fff; padding:10px 22px; border-radius:8px; font-weight:600; background:transparent; text-decoration:none; transition:0.25s; }
+        .btn-outline:hover { border-color:#fff; background:rgba(255,255,255,0.05); }
+        .menu-toggle { display:none; background:none; border:none; color:#fff; font-size:24px; }
+
+        /* 语言显示 */
+        .lang-en, .lang-zh { display:none; }
+        body[data-lang="en"] .lang-en { display:block; }
+        body[data-lang="zh"] .lang-zh { display:block; }
+        body[data-lang="en"] .lang-en-inline { display:inline; }
+        body[data-lang="zh"] .lang-zh-inline { display:inline; }
+        body[data-lang="en"] .lang-en-flex { display:flex; }
+        body[data-lang="zh"] .lang-zh-flex { display:flex; }
+
+        /* ======== 模块1：英雄区 - 视频+Slogan+产品范围 ======== */
+        .hero { position:relative; height:100vh; min-height:600px; display:flex; align-items:center; overflow:hidden; }
+        .hero-video { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+        .hero-fallback { position:absolute; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at 30% 40%, #0a1a2f 0%, #04070a 90%); z-index:-1; }
+        .hero-overlay { position:absolute; inset:0; background:none; z-index:1; }
+        .hero-content { transition:opacity 5s ease-in 2s; }
+        .hero-content { position:relative; z-index:2; max-width:750px; }
+        .hero-badge { display:inline-block; background:var(--brand-blue); color:#fff; padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; margin-bottom:20px; letter-spacing:0.5px; }
+        .hero h1 { font-size:clamp(36px,6vw,56px); font-weight:700; line-height:1.2; margin-bottom:20px; color:#fff; }
+        .hero h1 span { color:var(--brand-blue); }
+        .hero .product-tags { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
+        .hero .product-tags span { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#d0d5dd; padding:8px 16px; border-radius:20px; font-size:14px; }
+        .hero-buttons { display:flex; gap:16px; flex-wrap:wrap; }
+
+        /* ======== 模块2：信任数据条（制造硬实力，紧贴英雄区） ======== */
+        .trust-strip { background:rgba(20,22,26,0.98); backdrop-filter:blur(12px); border-bottom:1px solid var(--border-subtle); padding:28px 0; }
+        .trust-items { display:flex; align-items:center; justify-content:center; gap:48px; flex-wrap:wrap; }
+        .trust-item { text-align:center; }
+        .trust-item .num { font-size:32px; font-weight:700; color:var(--brand-blue); }
+        .trust-item .label { font-size:13px; color:var(--text-secondary); margin-top:4px; }
+        .trust-item i { color:var(--brand-green); margin-right:4px; }
+
+        /* 通用区块 */
+        .section { padding:80px 0; }
+        .section-header { text-align:center; margin-bottom:48px; }
+        .section-title { font-size:36px; font-weight:700; margin-bottom:12px; color:#fff; }
+        .section-sub { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto; }
+
+        /* ======== 模块3：我们能制造什么 - 产品范围 ======== */
+        .category-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+        .category-card { background:var(--card-bg); border-radius:16px; padding:32px; border:1px solid var(--border-subtle); transition:0.3s; }
+        .category-card:hover { border-color:var(--brand-blue); }
+        .category-card i { font-size:36px; color:var(--brand-blue); margin-bottom:16px; }
+        .category-card h3 { color:#fff; font-size:20px; margin-bottom:12px; }
+        .category-card p { color:var(--text-secondary); margin-bottom:16px; }
+        .category-card .models { display:flex; flex-wrap:wrap; gap:8px; }
+        .category-card .models span { background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); color:var(--text-secondary); padding:4px 12px; border-radius:12px; font-size:12px; }
+
+        /* ======== 模块4：制造能力深度展示 ======== */
+        .capability-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+        .capability-card { background:var(--card-bg); border-radius:16px; padding:32px; border:1px solid var(--border-subtle); }
+        .capability-card .icon-circle { width:48px; height:48px; border-radius:50%; background:rgba(0,89,255,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+        .capability-card .icon-circle i { color:var(--brand-blue); font-size:20px; }
+        .capability-card h4 { color:#fff; margin-bottom:8px; }
+        .capability-card p { color:var(--text-secondary); font-size:14px; }
+
+        /* ======== 模块5：合作模式 ======== */
+        .service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:24px; }
+        .service-card { background:var(--card-bg); border-radius:16px; padding:32px; border:1px solid var(--border-subtle); text-align:center; transition:0.3s; }
+        .service-card:hover { border-color:var(--brand-blue); }
+        .service-card i { font-size:32px; color:var(--brand-blue); margin-bottom:16px; }
+        .service-card h3 { color:#fff; margin-bottom:12px; font-size:20px; }
+        .service-card p { color:var(--text-secondary); }
+
+        /* ======== 模块6：认证与合规 ======== */
+        .cert-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
+        .cert-item { background:var(--card-bg); padding:16px 28px; border-radius:12px; border:1px solid var(--border-subtle); text-align:center; min-width:100px; }
+        .cert-item .cert-name { color:#fff; font-weight:700; font-size:18px; }
+        .cert-item .cert-desc { color:var(--text-secondary); font-size:12px; margin-top:4px; }
+
+        /* ======== 模块7：客户证言 ======== */
+        .testimonial { background:var(--card-bg); border-radius:20px; padding:48px; text-align:center; max-width:700px; margin:0 auto; border:1px solid var(--border-subtle); }
+        .testimonial .quote { font-size:20px; font-style:italic; color:#d0d5dd; margin-bottom:20px; }
+        .testimonial .author { color:var(--text-secondary); }
+
+        /* ======== 模块8：底部CTA ======== */
+        .bottom-cta { background:linear-gradient(135deg, rgba(0,89,255,0.1), rgba(0,89,255,0.02)); border:1px solid rgba(0,89,255,0.2); border-radius:24px; padding:60px 30px; text-align:center; margin:60px 0; }
+        .bottom-cta h2 { font-size:32px; color:#fff; margin-bottom:16px; }
+
+        /* 页脚 */
+        .footer { background:#04060a; padding:60px 0 30px; border-top:1px solid var(--border-subtle); }
+        .footer-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:40px; margin-bottom:40px; }
+        .footer-col h4 { color:#fff; margin-bottom:16px; } .footer-col a { display:block; color:#7a8290; text-decoration:none; margin-bottom:8px; font-size:14px; }
+        .footer-bottom { text-align:center; color:#5a626e; font-size:13px; }
+
+        /* 移动端 */
+        @media(max-width:768px){
+            .nav-links { display:none; }
+            .menu-toggle { display:block; }
+            .hero { height:70vh; min-height:450px; }
+            .hero h1 { font-size:28px; }
+            .hero .product-tags span { font-size:12px; padding:6px 12px; }
+            .hero-buttons { flex-direction:column; }
+            .trust-items { flex-wrap:nowrap; overflow-x:auto; gap:24px; justify-content:flex-start; }
+            .trust-item { flex-shrink:0; }
+            .section-title { font-size:28px; }
+        }
+    </style>
+</head>
+<body data-lang="en">
+    <button class="lang-switch" onclick="toggleLang()"><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">PX<span>ID</span></div>
+            <div class="nav-links">
+                <a href="index.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                <a href="products.html"><span class="lang-en">Products</span><span class="lang-zh">产品</span></a>
+                <a href="odm-services.html"><span class="lang-en">OEM/ODM</span><span class="lang-zh">OEM/ODM</span></a>
+                <a href="about.html"><span class="lang-en">About</span><span class="lang-zh">关于</span></a>
+                <a href="contact.html" class="btn-primary"><span class="lang-en">Get a Quote</span><span class="lang-zh">获取报价</span></a>
+            </div>
+            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- ========== 模块1：英雄区 - 视频 + Slogan + 产品范围标签 ========== -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto"
+               poster="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect fill='%230a1a2f' width='800' height='600'/></svg>">
+            <source src="https://www.appin.site/pxid-landing/PXID-F2.mp4" type="video/mp4">
+        </video>
+        <div class="hero-fallback"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge"><span class="lang-en">OEM/ODM Manufacturer Since 2011</span><span class="lang-zh">OEM/ODM制造服务商 · 始于2011</span></div>
+                <h1>
+                    <span class="lang-en">We Engineer <span>Smart Mobility</span> For Your Brand</span>
+                    <span class="lang-zh">为您的品牌<span>智造</span>出行产品</span>
+                </h1>
+                <div class="product-tags">
+                    <span><i class="fas fa-bolt"></i> <span class="lang-en">E-Scooters</span><span class="lang-zh">电动滑板车</span></span>
+                    <span><i class="fas fa-bicycle"></i> <span class="lang-en">E-Bikes</span><span class="lang-zh">电动自行车</span></span>
+                    <span><i class="fas fa-motorcycle"></i> <span class="lang-en">E-Motorcycles</span><span class="lang-zh">电动摩托车</span></span>
+                    <span><i class="fas fa-robot"></i> <span class="lang-en">Smart Mobility</span><span class="lang-zh">智能出行</span></span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="contact.html" class="btn-primary"><i class="fas fa-envelope"></i> <span class="lang-en">Start Your Project</span><span class="lang-zh">启动您的项目</span></a>
+                    <a href="#capabilities" class="btn-outline"><i class="fas fa-arrow-down"></i> <span class="lang-en">Our Capabilities</span><span class="lang-zh">制造能力</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 模块2：信任数据条 ========== -->
+    <div class="trust-strip">
+        <div class="container trust-items">
+            <div class="trust-item">
+                <div class="num">13+</div>
+                <div class="label lang-en">Years OEM/ODM</div><div class="label lang-zh">年OEM/ODM经验</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">25,000</div>
+                <div class="label lang-en">m² Factory</div><div class="label lang-zh">平方米工厂</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">30+</div>
+                <div class="label lang-en">Export Countries</div><div class="label lang-zh">出口国家</div>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-check-circle"></i> ISO 9001
+                <div class="label lang-en">Certified</div><div class="label lang-zh">认证</div>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-check-circle"></i> CE / UL
+                <div class="label lang-en">Compliant</div><div class="label lang-zh">合规</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 模块3：我们能制造什么 - 产品范围 ========== -->
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">What We Manufacture</span><span class="lang-zh">制造范围</span></h2>
+            <p class="section-sub"><span class="lang-en">Full‑category electric mobility products, ready for your brand customization.</span><span class="lang-zh">全品类电动出行产品，为您的品牌定制。</span></p>
+        </div>
+        <div class="category-grid">
+            <div class="category-card">
+                <i class="fas fa-bolt"></i>
+                <h3 class="lang-en">E‑Scooters</h3><h3 class="lang-zh">电动滑板车</h3>
+                <p class="lang-en">High‑speed city scooters, commuter models, sharing fleet versions.</p>
+                <p class="lang-zh">高速城市滑板车、通勤款、共享车队版。</p>
+                <div class="models"><span>Arrow Series</span><span>Commuter Line</span><span>Sharing Spec</span></div>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-bicycle"></i>
+                <h3 class="lang-en">E‑Bikes</h3><h3 class="lang-zh">电动自行车</h3>
+                <p class="lang-en">Fat‑tire, folding, city, and mountain e‑bikes with smart connectivity.</p>
+                <p class="lang-zh">胖胎、折叠、城市、山地电助力自行车，智能互联。</p>
+                <div class="models"><span>Antelope Series</span><span>Folding Line</span><span>MTB Spec</span></div>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-motorcycle"></i>
+                <h3 class="lang-en">E‑Motorcycles</h3><h3 class="lang-zh">电动摩托车</h3>
+                <p class="lang-en">High‑performance e‑moto for fleet operators and delivery services.</p>
+                <p class="lang-zh">高性能电动摩托车，面向车队运营商和配送服务。</p>
+                <div class="models"><span>Volt Series</span><span>Delivery Spec</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 模块4：制造能力深度展示 ========== -->
+    <div class="container section" id="capabilities">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Why Partner With Us</span><span class="lang-zh">为什么选择我们</span></h2>
+            <p class="section-sub"><span class="lang-en">25,000m² integrated facility covering the entire product lifecycle.</span><span class="lang-zh">25000平方米一体化工厂，覆盖产品全生命周期。</span></p>
+        </div>
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-drafting-compass"></i></div>
+                <h4 class="lang-en">In‑House R&D</h4><h4 class="lang-zh">自有研发</h4>
+                <p class="lang-en">Industrial design, mechanical engineering, electronic and software teams under one roof.</p>
+                <p class="lang-zh">工业设计、机械工程、电子和软件团队一体化协作。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-toolbox"></i></div>
+                <h4 class="lang-en">Tooling & Prototyping</h4><h4 class="lang-zh">模具与打样</h4>
+                <p class="lang-en">In‑house mold making. 14‑day prototype delivery for new projects.</p>
+                <p class="lang-zh">自有模具制造，新项目14天交付原型样品。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-robot"></i></div>
+                <h4 class="lang-en">Automated Assembly</h4><h4 class="lang-zh">自动化产线</h4>
+                <p class="lang-en">Dedicated assembly lines with smart diagnostic stations. 20,000+ unit annual capacity.</p>
+                <p class="lang-zh">专用产线配智能诊断站，年产超2万台。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-flask"></i></div>
+                <h4 class="lang-en">Testing & Compliance</h4><h4 class="lang-zh">测试与认证</h4>
+                <p class="lang-en">48‑point QC inspection. CE, UL, RoHS, BSCI. In‑house testing lab for battery and waterproof.</p>
+                <p class="lang-zh">48项质检、自有电池和防水测试实验室。CE/UL/RoHS/BSCI合规。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-paint-brush"></i></div>
+                <h4 class="lang-en">Custom Branding</h4><h4 class="lang-zh">品牌定制</h4>
+                <p class="lang-en">Custom colors, frame branding, packaging design, and user manual localization.</p>
+                <p class="lang-zh">定制颜色、车身品牌标识、包装设计和说明书本地化。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-shipping-fast"></i></div>
+                <h4 class="lang-en">Global Logistics</h4><h4 class="lang-zh">全球物流</h4>
+                <p class="lang-en">FOB Shenzhen. 30‑45 day delivery to EU/US. 48h spare parts dispatch.</p>
+                <p class="lang-zh">FOB深圳，欧美30-45天交付，48小时配件发货。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 模块5：合作模式 ========== -->
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">How We Work Together</span><span class="lang-zh">合作模式</span></h2>
+            <p class="section-sub"><span class="lang-en">Flexible partnership models tailored to your business needs.</span><span class="lang-zh">灵活的合作模式，匹配您的业务需求。</span></p>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <i class="fas fa-cogs"></i>
+                <h3 class="lang-en">OEM Manufacturing</h3><h3 class="lang-zh">OEM 贴牌制造</h3>
+                <p class="lang-en">You provide the design, we handle tooling, production, and quality. MOQ from 50 units.</p>
+                <p class="lang-zh">您提供设计，我们负责模具、生产和品控。50台起订。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-pencil-ruler"></i>
+                <h3 class="lang-en">ODM Solutions</h3><h3 class="lang-zh">ODM 研发方案</h3>
+                <p class="lang-en">We design and engineer products under your brand. You focus on sales and distribution.</p>
+                <p class="lang-zh">我们为您的品牌设计开发产品，您专注销售和分销。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-handshake"></i>
+                <h3 class="lang-en">Joint Development</h3><h3 class="lang-zh">联合开发</h3>
+                <p class="lang-en">Co‑create exclusive models with shared IP. Ideal for regional distributors.</p>
+                <p class="lang-zh">共创独家车型，共享知识产权。适合区域经销商。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 模块6：认证与合规 ========== -->
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Certifications</span><span class="lang-zh">国际认证</span></h2>
+            <p class="section-sub"><span class="lang-en">Products compliant with major international standards for EU and US markets.</span><span class="lang-zh">产品符合欧盟和美国主要国际标准。</span></p>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-item"><div class="cert-name">CE</div><div class="cert-desc lang-en">EU Market</div><div class="cert-desc lang-zh">欧盟市场</div></div>
+            <div class="cert-item"><div class="cert-name">UL</div><div class="cert-desc lang-en">US Safety</div><div class="cert-desc lang-zh">美国安全</div></div>
+            <div class="cert-item"><div class="cert-name">RoHS</div><div class="cert-desc lang-en">Environmental</div><div class="cert-desc lang-zh">环保合规</div></div>
+            <div class="cert-item"><div class="cert-name">ISO 9001</div><div class="cert-desc lang-en">Quality Mgmt</div><div class="cert-desc lang-zh">质量管理</div></div>
+            <div class="cert-item"><div class="cert-name">BSCI</div><div class="cert-desc lang-en">Social Compliance</div><div class="cert-desc lang-zh">社会责任</div></div>
+        </div>
+    </div>
+
+    <!-- ========== 模块7：客户证言 ========== -->
+    <div class="container section">
+        <div class="testimonial">
+            <div class="quote lang-en">"PXID handled everything from design to certification. We launched our e‑bike line in 4 months. Their OTA system is a game‑changer for after‑sales."</div>
+            <div class="quote lang-zh">"PXID处理了从设计到认证的所有环节。我们在4个月内推出了电动自行车产品线。他们的OTA系统彻底改变了售后模式。"</div>
+            <div class="author">— Marco, <span class="lang-en">Distributor, Italy</span><span class="lang-zh">意大利经销商</span></div>
+        </div>
+    </div>
+
+    <!-- ========== 模块8：底部CTA ========== -->
+    <div class="container bottom-cta">
+        <h2 class="lang-en">Ready to Build Your Product Line?</h2>
+        <h2 class="lang-zh">准备打造您的产品线了吗？</h2>
+        <p style="color:var(--text-secondary); margin-bottom:24px; max-width:500px; margin-left:auto; margin-right:auto;" class="lang-en">Tell us your market and product idea. We'll handle the rest — from engineering to delivery.</p>
+        <p style="color:var(--text-secondary); margin-bottom:24px; max-width:500px; margin-left:auto; margin-right:auto;" class="lang-zh">告诉我们您的市场和产品构想，其余交给我们——从工程到交付。</p>
+        <a href="contact.html" class="btn-primary" style="font-size:18px; padding:14px 36px;"><i class="fas fa-paper-plane"></i> <span class="lang-en">Start Your Project</span><span class="lang-zh">启动项目</span></a>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h4 class="lang-en">Products</h4><h4 class="lang-zh">产品</h4><a href="#">E‑Scooters</a><a href="#">E‑Bikes</a><a href="#">E‑Motorcycles</a></div>
+                <div class="footer-col"><h4 class="lang-en">Services</h4><h4 class="lang-zh">服务</h4><a href="#">OEM</a><a href="#">ODM</a><a href="#">Quality Control</a></div>
+                <div class="footer-col"><h4 class="lang-en">Company</h4><h4 class="lang-zh">公司</h4><a href="#">About</a><a href="#">Contact</a></div>
+                <div class="footer-col"><h4 class="lang-en">Support</h4><h4 class="lang-zh">支持</h4><a href="#">Downloads</a><a href="#">FAQs</a></div>
+            </div>
+            <div class="footer-bottom">© 2026 PXID – Smart Mobility OEM/ODM Manufacturer. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        function setLang(lang){ document.body.setAttribute('data-lang',lang); localStorage.setItem('pxid-lang',lang); }
+        function toggleLang(){ const c=document.body.getAttribute('data-lang'); setLang(c==='en'?'zh':'en'); }
+        (function(){ const s=localStorage.getItem('pxid-lang')||'en'; setLang(s); })();
+        /* Hero content fade-out: 5s ease-in, starts after 2s delay */
+        (function(){ setTimeout(function(){ var el=document.querySelector('.hero-content'); if(el)el.style.opacity='0'; },2000); })();
+    </script>
+</body>
+</html>

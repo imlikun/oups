@@ -1,0 +1,24 @@
+# ============================================
+# PXID Static Site - Apache .htaccess
+# Upload to www.appin.site root directory
+# ============================================
+
+# Force index.html as directory index
+DirectoryIndex index.html
+
+RewriteEngine On
+
+# Add trailing slash to directories
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+[^/])$ $1/ [R=301,L]
+
+# Ensure .html is served as text/html
+AddType text/html .html
+
+# Cache static assets (Next.js chunks, fonts, images)
+<FilesMatch "\.(js|css|woff2|png|jpg|jpeg|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes

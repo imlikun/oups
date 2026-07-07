@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多平台内容分发实操教程：一次编辑同步发布到微信公众号、知乎、B站等10+平台</title>
+<meta name="description" content="MultiPost 是一个开源免费的浏览器扩展，核心功能就一句话：写一次内容，一键发布到所有社交平台。支持 27+ 个平台处理器，2,700+ Stars，完全免费、无需登录。">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%); pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px; position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08)); border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7; overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; white-space:pre; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> 效率工具 · 浏览器扩展</div>
+    <h1>多平台内容分发实操教程：<em>一次编辑</em>同步发布到 10+ 平台</h1>
+    <p class="hero-desc">写一次内容，一键发布到所有社交平台。告别复制粘贴，告别多平台来回切换。开源免费，<em>2,700+ Stars</em>。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-06-25</span><span class="sep"></span>
+      <span>7 个章节</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">27+</div><div class="label">平台处理器</div></div>
+      <div class="hero-stat"><div class="num">2.7K+</div><div class="label">GitHub Stars</div></div>
+      <div class="hero-stat"><div class="num">免费</div><div class="label">无需登录/API Key</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">📤</div>
+    <div class="summary-text">
+      <h3>核心摘要</h3>
+      <p>MultiPost 是一个开源免费的浏览器扩展，由 leaperone 团队开发维护。支持知乎、微博、小红书、抖音、B站等 20+ 国内平台，以及 YouTube、Bluesky 等国际平台。</p>
+      <div class="key-points">
+        <span>一键多平台发布</span><span>27+ 平台处理器</span><span>RESTful API</span><span>Plasmo 框架</span><span>完全免费开源</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-wrap">
+<div class="article-body">
+
+<div class="section-img">
+  <img src="/uploads/multipost-cover.jpg" alt="MultiPost 多平台发布">
+  <div class="caption">△ MultiPost — 一次编辑，一键发布到所有社交平台</div>
+</div>
+
+<h2>一、这是什么？</h2>
+
+<p>MultiPost 是一个开源免费的浏览器扩展，核心功能就一句话：<strong>写一次内容，一键发布到所有社交平台。</strong>告别复制粘贴，告别多平台来回切换。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>GitHub</td><td><a href="https://github.com/leaperone/MultiPost-Extension" target="_blank">github.com/leaperone/MultiPost-Extension</a></td></tr>
+<tr><td>Stars</td><td>2,700+</td></tr>
+<tr><td>版本</td><td>v1.4.3（2026年6月最新）</td></tr>
+<tr><td>提交</td><td>295 Commits</td></tr>
+<tr><td>平台支持</td><td>27+ 个平台处理器</td></tr>
+<tr><td>费用</td><td>完全免费、无需登录、无需 API Key</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>二、核心功能</h2>
+
+<h3>1. 多平台一键发布</h3>
+
+<p>支持的平台分为国内和国际两组：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>平台</th><th>类型</th></tr></thead>
+<tbody>
+<tr><td>知乎</td><td>问答社区</td></tr>
+<tr><td>微博</td><td>微博客</td></tr>
+<tr><td>小红书</td><td>生活方式分享</td></tr>
+<tr><td>抖音</td><td>短视频</td></tr>
+<tr><td>B站 (Bilibili)</td><td>视频平台</td></tr>
+<tr><td>微信视频号</td><td>短视频</td></tr>
+<tr><td>百家号</td><td>内容平台</td></tr>
+<tr><td>东方财富</td><td>财经平台</td></tr>
+<tr><td>什么值得买</td><td>消费决策</td></tr>
+<tr><td>开源中国</td><td>开发者社区</td></tr>
+<tr><td>InfoQ</td><td>技术媒体</td></tr>
+<tr><td>人人都是产品经理</td><td>产品社区</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>国际平台（7+）</strong>：YouTube、Bluesky、Threads、雪球、WordPress、支付宝生活号等。</p>
+
+<h3>2. 双 API 接口</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>接口类型</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>扩展 API</td><td>在自己的 Web 应用中调用 MultiPost 发布</td></tr>
+<tr><td>RESTful API</td><td>在脚本或服务器中批量调用发布</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3. 安全机制</h3>
+<ul>
+  <li>全量媒体附件检查</li>
+  <li>标题/正文必填校验</li>
+  <li>视频上传确认门控</li>
+  <li>破损图片自动阻止</li>
+  <li>发布完成后自动关闭页面（可调延迟时间）</li>
+</ul>
+
+<h2>三、技术架构</h2>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>技术</th></tr></thead>
+<tbody>
+<tr><td>前端框架</td><td>React（JSX transform）</td></tr>
+<tr><td>构建工具</td><td>Plasmo（浏览器扩展专用框架）</td></tr>
+<tr><td>编译器</td><td>SWC</td></tr>
+<tr><td>语言</td><td>TypeScript</td></tr>
+<tr><td>CSS 方案</td><td>Tailwind CSS + PostCSS</td></tr>
+<tr><td>包管理</td><td>pnpm (workspace)</td></tr>
+<tr><td>代码质量</td><td>Biome</td></tr>
+<tr><td>Git 规范</td><td>Husky + commitlint</td></tr>
+<tr><td>国际化</td><td>locales 目录（i18n 多语言）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>四、怎么用？</h2>
+
+<h3>方式一：浏览器扩展（最简单）</h3>
+<p>Chrome 用户：Chrome Web Store；Edge 用户：Edge Add-ons。安装后在任意平台打开编辑器，写好内容，选择目标平台，一键发布。</p>
+
+<h3>方式二：在线编辑器</h3>
+<p>访问 <a href="https://md.multipost.app" target="_blank">md.multipost.app</a>，在线编辑 Markdown 内容并一键发布到多平台。</p>
+
+<h3>方式三：开发者集成</h3>
+<div class="code-block">// 通过扩展 API 发布
+const result = await chrome.runtime.sendMessage({
+  action: 'publish',
+  platforms: ['weibo', 'zhihu', 'xiaohongshu'],
+  content: {
+    title: '文章标题',
+    body: '文章正文...',
+    images: ['image1.jpg', 'image2.jpg']
+  }
+});</div>
+
+<h2>五、适合谁用？</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>人群</th><th>使用场景</th></tr></thead>
+<tbody>
+<tr><td>自媒体运营者</td><td>同一内容分发到多个平台，提高效率</td></tr>
+<tr><td>内容创作者</td><td>一次写作，全平台覆盖</td></tr>
+<tr><td>营销团队</td><td>批量发布营销内容到各渠道</td></tr>
+<tr><td>个人博主</td><td>节省跨平台发布的时间</td></tr>
+<tr><td>开发者</td><td>通过 API 自动化发布流程</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>六、优缺点</h2>
+
+<h3>✅ 优点</h3>
+<ul>
+  <li><strong>真正免费</strong> — 无需付费、无需注册、无需 API Key</li>
+  <li><strong>平台覆盖广</strong> — 27 个处理器，主流平台基本全覆盖</li>
+  <li><strong>零门槛</strong> — 浏览器装个扩展就能用</li>
+  <li><strong>开源透明</strong> — 代码完全开放，可以自己改</li>
+  <li><strong>活跃维护</strong> — 2026 年 6 月仍在密集更新</li>
+  <li><strong>开发者友好</strong> — 提供 RESTful API 和扩展 API</li>
+</ul>
+
+<h3>⚠️ 注意事项</h3>
+<ul>
+  <li>各平台的 DOM 结构可能因更新而变化，需要持续维护适配</li>
+  <li>某些平台可能有反自动化机制</li>
+  <li>大量平台同时发布时建议分批操作，避免触发风控</li>
+  <li>视频类平台（抖音/B站/视频号）可能需要额外配置</li>
+</ul>
+
+<h2>七、一句话总结</h2>
+
+<div class="pull-quote"><p>如果你需要在 3 个以上平台发相同或类似的内容，MultiPost 能帮你省掉大量"复制→切换→粘贴→发布"的重复劳动。免费开源，装上就用。</p></div>
+
+<div class="tag-cloud">
+  <a href="/article.html?cat=craft">技艺录</a>
+  <a href="#">浏览器扩展</a>
+  <a href="#">多平台发布</a>
+  <a href="#">社交媒体</a>
+  <a href="#">效率工具</a>
+  <a href="#">开源</a>
+</div>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+</div>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · 技艺录 — <a href="/craft/">查看更多文章</a></p>
+</footer>
+
+</body>
+</html>

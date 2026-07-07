@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物APP UI 预览</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        /* 返回首页按钮 */
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(15,15,16,0.88);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(234,77,77,0.35);
+            border-radius: 50px;
+            color: #ea4d4d;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+        }
+        .back-home:hover {
+            background: rgba(234,77,77,0.12);
+            border-color: rgba(234,77,77,0.6);
+            transform: translateX(-4px);
+            box-shadow: 0 6px 30px rgba(234,77,77,0.15);
+        }
+        .back-home i { font-size: 15px; }
+        @media (max-width: 768px) {
+            .back-home { top: 12px; left: 12px; padding: 8px 16px; font-size: 13px; }
+        }
+        body {
+            background: #0f0f10;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px;
+            justify-content: center;
+        }
+        .phone-frame {
+            width: 375px;
+            background: #1a1a1d;
+            border-radius: 40px;
+            padding: 15px 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            position: relative;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 812px; /* iPhone X ratio */
+            overflow-y: auto;
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+        .phone-frame::-webkit-scrollbar { display: none; }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 5px 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        /* General Card Styles */
+        .card {
+            background: #2b2b30;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+        .red-text { color: #ea4d4d; }
+        .green-text { color: #4caf50; }
+        .grey-text { color: #999; font-size: 12px; }
+        .flex-row { display: flex; align-items: center; justify-content: space-between; }
+        .flex-col { display: flex; flex-direction: column; }
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0 5px;
+            border-top: 1px solid #2b2b30;
+            margin-top: auto;
+            color: #666;
+            font-size: 12px;
+        }
+        .bottom-nav .item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
+        .bottom-nav .item.active { color: #ea4d4d; }
+        .bottom-nav .item i { font-size: 20px; }
+
+        /* Page 1: Home */
+        .p1-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .p1-header .left { display: flex; align-items: center; gap: 10px; }
+        .p1-header .left .avatar { width: 35px; height: 35px; background: #ffa500; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .p1-header .right button { background: #2b2b30; color: #ea4d4d; border: none; padding: 6px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        
+        .greeting-area { margin-bottom: 10px; }
+        .greeting-area h2 { font-size: 20px; margin-bottom: 4px; }
+        
+        .hero-card {
+            background: linear-gradient(135deg, #4a1e1e, #8a2020);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            margin-bottom: 12px;
+            height: 180px;
+            overflow: hidden;
+        }
+        .hero-card .canvas-placeholder {
+            position: absolute;
+            top: 20px; left: 20px;
+            width: 120px; height: 120px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-weight: 300;
+        }
+        .hero-card .pet-info { position: absolute; right: 20px; bottom: 20px; text-align: right; }
+        .hero-card .pet-info h3 { font-size: 18px; margin-bottom: 2px; }
+        .hero-card .pet-info p { font-size: 12px; color: rgba(255,255,255,0.7); }
+        
+        .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid-item { background: #2b2b30; border-radius: 16px; padding: 15px; min-height: 90px; position: relative; }
+        .grid-item .label { font-size: 12px; color: #aaa; margin-bottom: 5px; }
+        .grid-item .value { font-size: 24px; font-weight: bold; }
+        .grid-item .sub { font-size: 11px; margin-top: 2px; }
+        .progress-small { width: 60px; height: 4px; background: #3e3e42; border-radius: 4px; position: absolute; right: 15px; bottom: 15px; }
+        .progress-small .fill { height: 100%; border-radius: 4px; }
+        
+        .reminder-bar { background: #2b2b30; border-radius: 20px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; margin-top: 5px; margin-bottom: 15px; }
+        .reminder-bar .text { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+
+        /* Page 2: Profile */
+        .p2-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .p2-header span { color: #ea4d4d; font-size: 14px; }
+        .profile-pet-img {
+            height: 180px;
+            background: #2b2b30;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .profile-pet-img img { width: 70%; object-fit: contain; }
+        .p2-name { font-size: 24px; font-weight: bold; margin-bottom: 2px; }
+        .p2-breed { font-size: 13px; color: #aaa; margin-bottom: 15px; }
+        .grid-2x2-sm { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid-item-sm { background: #2b2b30; border-radius: 16px; padding: 15px; }
+        .grid-item-sm .lbl { font-size: 11px; color: #aaa; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;}
+        .grid-item-sm .val { font-size: 15px; font-weight: 500;}
+        
+        .record-section { background: #2b2b30; border-radius: 16px; padding: 15px; margin-top: 12px; }
+        .record-list { margin-top: 10px; font-size: 13px; }
+        .record-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .record-item .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+        /* Page 3: Vaccination */
+        .p3-header { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; }
+        .p3-header h1 { font-size: 18px; }
+        .stats-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .stat-card { flex: 1; background: #2b2b30; border-radius: 12px; padding: 15px 0; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .stat-card .num { font-size: 24px; font-weight: bold; }
+        
+        .pet-switcher { background: #2b2b30; border-radius: 20px; padding: 8px 15px; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 15px; font-size: 13px; }
+        .vaccine-item { background: #2b2b30; border-radius: 16px; padding: 15px; margin-bottom: 10px; }
+        .vaccine-item .top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .vaccine-item .top .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .vaccine-item .details { font-size: 12px; color: #aaa; line-height: 1.5; }
+        .vaccine-item .status { font-size: 11px; font-weight: 500; margin-top: 5px; }
+
+        /* Page 4: Add Pet */
+        .p4-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .p4-header span { color: #ea4d4d; font-size: 14px; }
+        
+        .upload-area { height: 140px; background: #2b2b30; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #aaa; margin-bottom: 15px; gap: 10px; }
+        .upload-area .icon-circle { width: 60px; height: 60px; background: #1a1a1d; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        
+        .form-list { background: #2b2b30; border-radius: 16px; padding: 0 15px; margin-bottom: 15px; }
+        .form-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #3e3e42; font-size: 14px; }
+        .form-item:last-child { border-bottom: none; }
+        .form-item .val { color: #aaa; }
+        .save-btn { width: 100%; background: #8a2020; color: white; border: none; padding: 15px; border-radius: 20px; font-size: 16px; font-weight: bold; margin-top: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="back-home"><i class="fas fa-arrow-left"></i> 返回首页</a>
+
+    <!-- 页面 1：首页 -->
+    <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span></div>
+        <div class="p1-header">
+            <div class="left">
+                <div class="avatar"><i class="fas fa-paw" style="color:white;"></i></div>
+                <span><b>豆豆</b> <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
+            </div>
+            <div class="right"><button>+ 添加</button></div>
+        </div>
+
+        <div class="greeting-area">
+            <h2>下午好，看看毛孩</h2>
+            <div class="grey-text" style="margin-top:2px;"><i class="far fa-smile"></i> 今天也很棒</div>
+        </div>
+
+        <div class="hero-card">
+            <div class="canvas-placeholder">
+                <i class="fas fa-paint-brush" style="font-size: 30px; color: #ccc; margin-bottom: 10px;"></i>
+                <span>生成中</span>
+            </div>
+            <div class="pet-info">
+                <h3>豆豆 · 金毛 <i class="fas fa-mars"></i></h3>
+                <p>2岁3个月 · 28.5 kg</p>
+            </div>
+        </div>
+
+        <div class="grid-2x2">
+            <div class="grid-item">
+                <div class="label"><i class="fas fa-weight-scale"></i> 今日体重</div>
+                <div class="value red-text">28.5</div>
+                <div class="sub green-text"><i class="fas fa-arrow-up"></i> 0.3 kg 健康</div>
+            </div>
+            <div class="grid-item">
+                <div class="label"><i class="fas fa-syringe"></i> 疫苗已接种</div>
+                <div class="value" style="color:#7a67ee;">3/4</div>
+                <div class="sub" style="color:#aaa;">9/15</div>
+            </div>
+            <div class="grid-item">
+                <div class="label"><i class="fas fa-utensils"></i> 今日摄入</div>
+                <div class="value green-text">350</div>
+                <div class="sub" style="color:#aaa;">kcal</div>
+            </div>
+            <div class="grid-item">
+                <div class="label"><i class="fas fa-ruler-vertical"></i> 成长里程碑</div>
+                <div style="font-size:14px; margin-top:5px;">身高 58cm</div>
+                <div style="font-size:12px; color:#aaa;">体长 85cm</div>
+                <div class="progress-small"><div class="fill red-text" style="background:#ea4d4d; width:40%;"></div></div>
+                <div class="progress-small" style="bottom: 5px;"><div class="fill green-text" style="background:#4caf50; width:70%;"></div></div>
+            </div>
+        </div>
+
+        <div class="reminder-bar">
+            <div class="text"><i class="fas fa-bell" style="color:#ea4d4d;"></i> 距下次体检还有 15 天</div>
+            <i class="fas fa-chevron-right" style="color:#ea4d4d;"></i>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="item active"><i class="fas fa-house"></i><span>首页</span></div>
+            <div class="item"><i class="fas fa-clipboard-list"></i><span>记录</span></div>
+            <div class="item"><i class="fas fa-bell"></i><span>提醒</span></div>
+            <div class="item"><i class="fas fa-user"></i><span>我的</span></div>
+        </div>
+    </div>
+
+    <!-- 页面 2：宠物档案 -->
+    <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span></div>
+        <div class="p2-header">
+            <span><i class="fas fa-chevron-left"></i> 返回</span>
+            <span>编辑</span>
+        </div>
+
+        <div class="profile-pet-img">
+            <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Dog">
+        </div>
+
+        <div class="p2-name">豆豆</div>
+        <div class="p2-breed">金毛寻回犬 · 2岁3个月</div>
+
+        <div class="grid-2x2-sm">
+            <div class="grid-item-sm">
+                <div class="lbl"><i class="fas fa-cake-candles" style="color:#fff;"></i> 出生日期</div>
+                <div class="val">2024年3月15日</div>
+            </div>
+            <div class="grid-item-sm">
+                <div class="lbl"><i class="fas fa-comment" style="color:#fff;"></i> 昵称</div>
+                <div class="val">小豆子</div>
+            </div>
+            <div class="grid-item-sm">
+                <div class="lbl"><i class="fas fa-weight-scale" style="color:#fff;"></i> 最新体重</div>
+                <div class="val green-text">28.5 kg</div>
+            </div>
+            <div class="grid-item-sm">
+                <div class="lbl"><i class="fas fa-worm" style="color:#ea4d4d;"></i> 驱虫状态</div>
+                <div class="val green-text">已完成 <i class="fas fa-check-circle" style="font-size:12px;"></i></div>
+            </div>
+        </div>
+
+        <div class="record-section">
+            <div class="flex-row">
+                <span style="font-size:14px; font-weight:bold;"><i class="fas fa-clipboard"></i> 成长记录</span>
+                <span style="color:#ea4d4d; font-size:12px;">查看全部 <i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="record-list">
+                <div class="record-item"><div class="dot" style="background:#ea4d4d;"></div> 疫苗第三针 · 6月12日</div>
+                <div class="record-item"><div class="dot" style="background:#aaa;"></div> 体内驱虫 · 6月1日</div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="item"><i class="fas fa-house"></i><span>首页</span></div>
+            <div class="item active"><i class="fas fa-clipboard-list"></i><span>记录</span></div>
+            <div class="item"><i class="fas fa-bell"></i><span>提醒</span></div>
+            <div class="item"><i class="fas fa-user"></i><span>我的</span></div>
+        </div>
+    </div>
+
+    <!-- 页面 3：疫苗记录 -->
+    <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span></div>
+        <div class="p3-header">
+            <span style="color:#ea4d4d;"><i class="fas fa-chevron-left"></i> 返回</span>
+            <h1>疫苗记录</h1>
+            <span style="color:#ea4d4d;"><i class="fas fa-plus"></i></span>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="num green-text">3</div>
+                <span class="grey-text">已完成</span>
+            </div>
+            <div class="stat-card">
+                <div class="num red-text">1</div>
+                <span class="grey-text">即将到期</span>
+            </div>
+            <div class="stat-card">
+                <div class="num" style="color:#4a90e2;">2</div>
+                <span class="grey-text">待接种</span>
+            </div>
+        </div>
+
+        <div class="pet-switcher">
+            <i class="fas fa-paw" style="color: white; background: #ea4d4d; border-radius: 50%; padding: 4px;"></i>
+            豆豆 · 金毛
+            <span style="color:#ea4d4d;">切换宠物 <i class="fas fa-chevron-right" style="font-size:10px;"></i></span>
+        </div>
+
+        <div style="font-size:14px; margin-bottom: 10px;">接种历史</div>
+
+        <div class="vaccine-item">
+            <div class="top"><div class="dot" style="background:#4caf50;"></div> <b>狂犬病疫苗 第三针</b></div>
+            <div class="details">接种: 2024-09-20 | 有效期: 1年</div>
+            <div class="status green-text">已完成</div>
+        </div>
+
+        <div class="vaccine-item">
+            <div class="top"><div class="dot" style="background:#ea4d4d;"></div> <b>犬瘟热疫苗 第二针</b></div>
+            <div class="details">接种: 2024-11-15 | 有效期: 1年</div>
+            <div class="status red-text">即将到期</div>
+        </div>
+
+        <div class="vaccine-item">
+            <div class="top"><div class="dot" style="background:#4caf50;"></div> <b>细小病毒疫苗 第一针</b></div>
+            <div class="details">接种: 2024-03-30 | 有效期: 1年</div>
+            <div class="status green-text">已完成</div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="item"><i class="fas fa-house"></i><span>首页</span></div>
+            <div class="item"><i class="fas fa-clipboard-list"></i><span>记录</span></div>
+            <div class="item active"><i class="fas fa-bell"></i><span>提醒</span></div>
+            <div class="item"><i class="fas fa-user"></i><span>我的</span></div>
+        </div>
+    </div>
+
+    <!-- 页面 4：添加宠物 -->
+    <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span></div>
+        <div class="p4-header">
+            <span>取消</span>
+            <span><b>添加宠物</b></span>
+            <span>保存</span>
+        </div>
+
+        <div class="upload-area">
+            <div class="icon-circle"><i class="fas fa-camera"></i></div>
+            <span style="font-size: 12px;">点击上传宠物照片</span>
+        </div>
+
+        <div class="form-list">
+            <div class="form-item"><span>姓名</span> <span class="val">请输入</span></div>
+            <div class="form-item"><span>昵称</span> <span class="val">请输入</span></div>
+            <div class="form-item"><span>性别</span> <span class="val">请选择 <i class="fas fa-chevron-right" style="font-size: 10px;"></i></span></div>
+            <div class="form-item"><span>种类</span> <span class="val">请选择 <i class="fas fa-chevron-right" style="font-size: 10px;"></i></span></div>
+            <div class="form-item"><span>品种</span> <span class="val">请输入品种</span></div>
+            <div class="form-item"><span><i class="fas fa-cake-candles"></i> 出生日期</span> <span class="val">请选择日期</span></div>
+            <div class="form-item"><span><i class="fas fa-house"></i> 到家日期</span> <span class="val">请选择日期</span></div>
+        </div>
+
+        <button class="save-btn">保存</button>
+
+        <div class="bottom-nav">
+            <div class="item active"><i class="fas fa-house"></i><span>首页</span></div>
+            <div class="item"><i class="fas fa-clipboard-list"></i><span>记录</span></div>
+            <div class="item"><i class="fas fa-bell"></i><span>提醒</span></div>
+            <div class="item"><i class="fas fa-user"></i><span>我的</span></div>
+        </div>
+    </div>
+
+</body>
+</html>

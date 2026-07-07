@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体</title>
+<meta name="description" content="不是玩具桌宠，是真正能干活的开源 AI 工作站——桌面 AI 伙伴、无人值守 Agent、企业级知识库、11 个 IM 渠道、Rust 自研原生工具引擎，永久免费。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+.hero { position:relative; padding:0; height:400px; display:flex; align-items:center; justify-content:center;
+  overflow:hidden; margin-bottom:0; }
+.hero-bg { position:absolute; inset:0; background:url('/uploads/nomifun-cover.png') center/cover no-repeat; }
+.hero-overlay { position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(10,10,30,0.65) 0%, rgba(10,10,30,0.82) 100%); }
+.hero-content { position:relative; z-index:1; text-align:center; max-width:700px; padding:0 24px; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.9); font-size:11px; font-weight:600;
+  letter-spacing:0.08em; margin-bottom:20px; backdrop-filter:blur(10px); }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:#54b4ff; }
+.hero h1 { font-size:clamp(22px,4vw,38px); font-weight:700; letter-spacing:-1px; line-height:1.2;
+  color:#fff; text-shadow:0 2px 20px rgba(0,0,0,0.3); margin-bottom:14px; }
+.hero-desc { color:rgba(255,255,255,0.78); font-size:16px; line-height:1.65; }
+.hero-meta { margin-top:20px; display:flex; justify-content:center; align-items:center; gap:14px;
+  font-size:13px; color:rgba(255,255,255,0.55); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,0.3); }
+
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:40px 28px 100px; gap:60px; position:relative; }
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start;
+  max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase;
+  letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:26px; font-weight:700; margin:56px 0 20px; color:#111; letter-spacing:-0.6px; position:relative; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body h4 { font-size:15px; font-weight:600; margin:24px 0 8px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.04em; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:6px; line-height:1.85; color:#333; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+
+.pull-quote { margin:36px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+
+.info-box { margin:28px 0; padding:20px 24px; background:#f8f9fb; border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; }
+.info-box p { margin-bottom:0; font-size:14px; }
+
+.highlight-box { margin:28px 0; padding:22px 28px; background:linear-gradient(135deg,rgba(26,111,245,0.03),rgba(26,111,245,0.07)); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#222; }
+
+.table-wrap { margin:28px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:#f1f3f5; }
+.table-wrap th { padding:12px 16px; text-align:left; font-weight:600; font-size:12px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:12px 16px; border-bottom:1px solid var(--border); color:#333; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:rgba(26,111,245,0.02); }
+
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7; overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; }
+.code-block .comment { color:#6c7086; }
+.code-block .cmd { color:#89b4fa; }
+
+.checklist { list-style:none; margin:20px 0 32px; }
+.checklist li { padding:10px 16px; margin-bottom:8px; border-radius:8px; background:#f9fafb; display:flex; align-items:flex-start; gap:10px; font-size:14px; border:1px solid var(--border); }
+.checklist li::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:700; flex-shrink:0; margin-top:2px; }
+
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { height:320px; }
+  .hero h1 { font-size:22px; }
+}
+@media (max-width:600px) {
+  .hero { height:260px; }
+  .hero h1 { font-size:20px; }
+  .hero-desc { font-size:14px; }
+  .article-body h2 { font-size:22px; }
+  .page { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> AI 工具详解</div>
+    <h1>NomiFun：永久免费的AI全能工作站<br>开源桌宠+办公外挂合体</h1>
+    <p class="hero-desc">不是玩具桌宠，是真正能干活的开源 AI 工作站。永久免费，数据全在本地。</p>
+    <div class="hero-meta">
+      <span>GitHub Trending</span><span class="dot"></span>
+      <span>muri</span><span class="dot"></span>
+      <span>2026-07-01</span>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+  <aside class="toc-sidebar" id="toc">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、这是什么？</a></li>
+      <li><a href="#s2">二、核心功能</a></li>
+      <li><a href="#s3">三、技术架构</a></li>
+      <li><a href="#s4">四、怎么用？</a></li>
+      <li><a href="#s5">五、为什么比直接上传PDF强？</a></li>
+      <li><a href="#s6">六、与同类工具的差异</a></li>
+      <li><a href="#s7">七、适用人群</a></li>
+      <li><a href="#s8">八、注意事项</a></li>
+      <li><a href="#s9">九、项目信息汇总</a></li>
+      <li><a href="#s10">十、总结</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+
+    <div class="pull-quote">
+      <p>桌宠只是外壳，真正的价值是这个开源 AI 工作站的底层架构和无人值守自动化能力。</p>
+    </div>
+
+    <h2 id="s1">一、这是什么？</h2>
+
+    <p><strong>NomiFun</strong> 是一款完全开源的本地优先 AI 超级工作站。你下载一个桌面应用，就能拥有：</p>
+
+    <ul>
+      <li>🐾 <strong>桌面 AI 伙伴</strong>（自定义形象，桌宠既视感）</li>
+      <li>🤖 <strong>无人值守 Agent</strong>（挂机自动跑任务，断了自动重试）</li>
+      <li>📚 <strong>企业级知识库</strong>（读写分离，网页抓取，数据自由导出）</li>
+      <li>🌐 <strong>11 个 IM 渠道</strong>（微信/钉钉/飞书/Slack 都能连）</li>
+      <li>🔧 <strong>原生工具引擎</strong>（Rust 自研，省 Token，直接控制电脑）</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>一句话：</strong>不是玩具桌宠，是真正能干活的开源 AI 工作站。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项目</th><th>信息</th></tr></thead>
+        <tbody>
+          <tr><td>仓库地址</td><td><a href="https://github.com/nomifun/nomifun-tauri" target="_blank">github.com/nomifun/nomifun-tauri</a></td></tr>
+          <tr><td>官网</td><td><a href="https://www.nomifun.com" target="_blank">www.nomifun.com</a></td></tr>
+          <tr><td>开源协议</td><td>Apache-2.0（可商用）</td></tr>
+          <tr><td>当前版本</td><td>v0.1.12（2026年7月1日）</td></tr>
+          <tr><td>提交数</td><td>294 次 Commits</td></tr>
+          <tr><td>技术栈</td><td>Tauri 2 + React 19 + Rust 2024</td></tr>
+          <tr><td>作者</td><td>muri（单人业余项目 + Claude Opus 4.8 协作）</td></tr>
+          <tr><td>免费声明</td><td>永久免费、无广告、无会员、无付费墙、个人&企业可用</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s2">二、核心功能（9大模块）</h2>
+
+    <h3>1. 🔒 安全基础：数据全在你硬盘上</h3>
+    <p>所有数据存本地 SQLite，唯一出站请求是你配置的 LLM API 调用。无云账号、无遥测、无订阅。代码完全开源可审计。</p>
+
+    <h3>2. 🐾 AI 伙伴系统：一个大脑，多张面孔</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>能力</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>内置同伴</td><td>Mochi（年糕兔）、Ink（琥珀眼猫）、Bolt（悬浮机器人），全部手绘代码生成</td></tr>
+          <tr><td>自定义形象</td><td>上传任意图片作为伙伴外观（亲人照片、宠物均可）</td></tr>
+          <tr><td>共享记忆</td><td>所有伙伴共享记忆中枢</td></tr>
+          <tr><td>独立技能</td><td>每个伙伴隔离的技能库</td></tr>
+          <tr><td>技能进化</td><td>从工具调用序列自动挖掘可复用技能，生成 SKILL.md，用户确认后启用</td></tr>
+          <tr><td>技能赠送</td><td>一个伙伴的技能可赠送给另一个伙伴</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>3. 🤖 无人值守自动化（AutoWork + IDMM）</h3>
+    <p>这是核心差异点——让 NomiFun 在你离开电脑后依然工作：</p>
+    <ul>
+      <li><strong>需求看板</strong>：待处理 → 进行中 → 完成/失败/待审查</li>
+      <li><strong>AutoWork</strong>：自动认领任务 → 执行 → 循环轮转</li>
+      <li><strong>IDMM 监督</strong>：Rule 层自动重试/退避；Sidecar model 层处理决策卡点</li>
+      <li><strong>Lease sweeper</strong>：每 60 秒清扫孤儿任务</li>
+      <li><strong>Boot resume</strong>：重启后恢复工作</li>
+      <li><strong>完成通知</strong>：飞书/Slack/HTTP webhook</li>
+    </ul>
+
+    <h3>4. 📚 统一知识库管理</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>能力</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>Markdown 目录</td><td>用户策划的知识目录，挂载到会话工作空间</td></tr>
+          <tr><td>Live URL 快照</td><td>网页转知识条目，SSRF 防护 + 无头浏览器处理 JS 页面</td></tr>
+          <tr><td>飞书源</td><td>Feishu 作为知识源已实现</td></tr>
+          <tr><td>安全写回</td><td>Disabled / Staged / Direct 三级，IM 写入始终进 _inbox 审查暂存区</td></tr>
+          <tr><td>一次配置处处用</td><td>知识库、技能、Agent、MCP、模型统一配置后任意会话复用</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5. 🖥️ 原生工具引擎（Rust 自研）</h3>
+    <p>这是架构亮点——不是包装 OpenAI 的工具调用，也不是套 Playwright：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>实现方式</th><th>动作数</th></tr></thead>
+        <tbody>
+          <tr><td>Browser</td><td>自研进程内 Rust CDP 引擎，直接驱动 Chromium</td><td>~32</td></tr>
+          <tr><td>Computer</td><td>屏幕捕获 + 输入合成，macOS AX / Windows UIA / Linux AT-SPI</td><td>~21</td></tr>
+          <tr><td>内置工具</td><td>Read、Write、Bash、Grep、Glob、Lsp、Terminal</td><td>9 项</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>无 Playwright、无 Node 子进程</strong>，极省资源。</p>
+
+    <h3>6. 🌐 开放能力生态（MCP + REST）</h3>
+    <ul>
+      <li><strong>151 项能力</strong>通过三大门面暴露</li>
+      <li>/mcp — 全量 Remote 能力面（MCP Streamable-HTTP）</li>
+      <li>/mcp-agent — 精选 do-work 子集</li>
+      <li>/v1 — REST + OpenAPI 3.1 + SSE 流式响应</li>
+      <li>Claude Code / Codex / Cursor 等直接对接</li>
+    </ul>
+
+    <h3>7. 💬 11 个 IM 渠道</h3>
+    <p>Telegram · 飞书 · 钉钉 · 微信 · Discord · Slack · Matrix · Mattermost · Twitch · Nostr · QQ Bot</p>
+    <p>企业微信进行中。一个伙伴绑定一个机器人，聊天即操控电脑。</p>
+
+    <h3>8. 📱 WebUI 远程控制</h3>
+    <p>局域网/VPN 下手机或平板扫码连接（一次 Token，5 分钟 TTL），获得与桌面完全一致的体验。</p>
+
+    <h3>9. 🧩 模型支持</h3>
+    <p><strong>4 原生后端</strong>：Anthropic、OpenAI 兼容、Amazon Bedrock、Google Vertex。OpenAI 兼容可覆盖 26+ 提供商（DeepSeek、Gemini、Qwen、Kimi、Mistral、Ollama、vLLM 等）。<strong>17 ACP 直连代理</strong>：Claude Code、Codex CLI、Gemini CLI、Qwen、Goose、Cursor、Copilot、CodeBuddy 等。</p>
+
+    <h2 id="s3">三、技术架构一览</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>层级</th><th>技术</th></tr></thead>
+        <tbody>
+          <tr><td>桌面框架</td><td>Tauri 2（无 Electron，无 Node）</td></tr>
+          <tr><td>前端 UI</td><td>React 19 + Vite（桌面和 Web 共享同一套 SPA）</td></tr>
+          <tr><td>后端</td><td>Rust 2024，44+ crate</td></tr>
+          <tr><td>包管理</td><td>Bun ≥ 1.3.13</td></tr>
+          <tr><td>数据存储</td><td>SQLite 单一数据源</td></tr>
+          <tr><td>浏览器引擎</td><td>自研 in-process Rust CDP 引擎</td></tr>
+          <tr><td>Web 服务器</td><td>axum</td></tr>
+          <tr><td>测试</td><td>nextest 1773 passed / 0 failed</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>仓库结构</strong>：44 个 Rust crate 分三层——agent/（15 个）、backend/（29 个）、shared/（2 个）。</p>
+
+    <h2 id="s4">四、怎么用？（小白版）</h2>
+
+    <h3>方式一：下载安装包（推荐）</h3>
+    <p>下载地址：<a href="https://github.com/nomifun/nomifun-tauri/releases/" target="_blank">github.com/nomifun/nomifun-tauri/releases/</a></p>
+
+    <h3>方式二：从源码构建</h3>
+    <div class="code-block">
+      <span class="comment"># 前置条件：安装 Rust（stable）、Bun（≥ 1.3.13）</span><br>
+      git clone https://github.com/nomifun/nomifun-tauri.git<br>
+      cd nomifun-tauri<br>
+      bun install<br><br>
+      <span class="comment"># 开发模式（热重载）</span><br>
+      bun run dev<br><br>
+      <span class="comment"># 构建安装包</span><br>
+      bun run build
+    </div>
+
+    <h3>方式三：Docker 自托管</h3>
+    <div class="code-block">
+      docker compose up -d --build<br>
+      <span class="comment"># 打开 http://&lt;server-ip&gt;:8787</span>
+    </div>
+
+    <h3>配置步骤</h3>
+    <ul>
+      <li><strong>安装后打开 NomiFun</strong>，首次启动进入伙伴选择页</li>
+      <li><strong>配置模型</strong>：在模型管理页添加 API Key（Anthropic / OpenAI / DeepSeek 等任选）</li>
+      <li><strong>启航</strong>：选择伙伴角色或自定义形象，进入会话即可使用</li>
+    </ul>
+
+    <h2 id="s5">五、为什么比"直接上传 PDF 给 ChatGPT"强？</h2>
+    <p>NomiFun 解决的三个核心问题：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>痛点</th><th>传统方式</th><th>NomiFun</th></tr></thead>
+        <tbody>
+          <tr><td>Token 成本高</td><td>每次提问传全文</td><td>知识库常驻核心框架，按需调用</td></tr>
+          <tr><td>AI 幻觉</td><td>大模型自由发挥</td><td>所有回答锚定知识库原文</td></tr>
+          <tr><td>数据安全</td><td>上传到第三方云端</td><td>所有数据本地 SQLite 存储</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s6">六、与同类工具的差异</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>NomiFun</th><th>ChatGPT Desktop</th><th>Cursor</th><th>Claude Code</th></tr></thead>
+        <tbody>
+          <tr><td>开源</td><td>✅ Apache-2.0</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>本地数据</td><td>✅ SQLite</td><td>❌ 云端</td><td>❌</td><td>⚠️ 部分</td></tr>
+          <tr><td>免费商用</td><td>✅</td><td>⚠️</td><td>✅</td><td>⚠️</td></tr>
+          <tr><td>桌宠伙伴</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>无人值守</td><td>✅ AutoWork</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>IM 渠道</td><td>✅ 11 个</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>知识库</td><td>✅ 读写分离</td><td>⚠️</td><td>❌</td><td>⚠️</td></tr>
+          <tr><td>原生浏览器</td><td>✅ Rust 自研</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>计算机控制</td><td>✅ 三大平台</td><td>❌</td><td>❌</td><td>❌</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s7">七、适用人群</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>人群</th><th>怎么用</th></tr></thead>
+        <tbody>
+          <tr><td>开发者</td><td>搭建个人编码知识库，Claude Code/Cursor 集成</td></tr>
+          <tr><td>企业团队</td><td>统一内部规范、运维文档、团队知识库</td></tr>
+          <tr><td>产品/运营</td><td>产品 PRD、行业白皮书转为专属知识库</td></tr>
+          <tr><td>科研学习者</td><td>批量整理文献，AI 辅助论文写作</td></tr>
+          <tr><td>重度 AI 用户</td><td>替代多工具碎片化方案，一站搞定</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s8">八、注意事项</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>问题</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>版本阶段</td><td>pre-1.0，由单人业余维护，迭代速度不稳定</td></tr>
+          <tr><td>无预构建包</td><td>当前从源码安装或 Docker 运行（Releases 页含部分构建包）</td></tr>
+          <tr><td>扫描版 PDF</td><td>不支持扫描版/图片 PDF，需先 OCR</td></tr>
+          <tr><td>DRM 文档</td><td>带加密保护的文档无法提取</td></tr>
+          <tr><td>硬件要求</td><td>建议 8G 以上内存，Chromium 浏览器引擎需 CPU 资源</td></tr>
+          <tr><td>版权提醒</td><td>生成的 Skill 包若基于受版权书籍，不可公开分发，仅限本地使用</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s9">九、项目信息汇总</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项目</th><th>信息</th></tr></thead>
+        <tbody>
+          <tr><td>仓库地址</td><td><a href="https://github.com/nomifun/nomifun-tauri" target="_blank">github.com/nomifun/nomifun-tauri</a></td></tr>
+          <tr><td>官网</td><td><a href="https://www.nomifun.com" target="_blank">www.nomifun.com</a></td></tr>
+          <tr><td>下载页</td><td><a href="https://github.com/nomifun/nomifun-tauri/releases/" target="_blank">github.com/nomifun/nomifun-tauri/releases/</a></td></tr>
+          <tr><td>开源协议</td><td>Apache-2.0</td></tr>
+          <tr><td>当前版本</td><td>v0.1.12（294 commits，11 releases）</td></tr>
+          <tr><td>技术栈</td><td>Tauri 2 + React 19 + Rust 2024 + Bun</td></tr>
+          <tr><td>模型支持</td><td>26+ 提供商，17 ACP 代理</td></tr>
+          <tr><td>IM 渠道</td><td>11 个已上线 + 企业微信进行中</td></tr>
+          <tr><td>Rust Crate</td><td>44+ 个，测试 1773 passed</td></tr>
+          <tr><td>作者</td><td>muri（单人 + Claude Opus 4.8 协作）</td></tr>
+          <tr><td>免费声明</td><td>永久免费、无广告、个人和企业均可使用</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s10">十、总结</h2>
+
+    <p>NomiFun 的核心差异点：</p>
+    <ol>
+      <li><strong>不是包装 AI API 的套壳工具</strong>——自研 Rust 浏览器引擎、原生计算机控制、IM 渠道网关，技术深度远超同类</li>
+      <li><strong>不是封闭的 SaaS</strong>——Apache-2.0 完全开源，SQLite 本地存储，数据主权在你手里</li>
+      <li><strong>不是一次性工具</strong>——AutoWork 无人值守 + IDMM 监督 + 需求看板，挂了也能跑</li>
+    </ol>
+
+    <p>适合追求数据安全、需要长期复用的重度 AI 用户，尤其是开发者、企业团队、科研人员。</p>
+
+    <div class="highlight-box">
+      <p><strong>一句话：</strong>桌宠只是外壳，真正的价值是这个开源 AI 工作站的底层架构和无人值守自动化能力。</p>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="/article.html?cat=craft">NomiFun</a>
+      <a href="/article.html?cat=craft">AI</a>
+      <a href="/article.html?cat=craft">开源</a>
+      <a href="/article.html?cat=craft">桌宠</a>
+      <a href="/article.html?cat=craft">自动化</a>
+      <a href="/article.html?cat=craft">知识库</a>
+      <a href="/article.html?cat=craft">GitHub</a>
+    </div>
+
+    <a href="/craft/" class="back-link">返回技艺录</a>
+
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var tocLinks = document.querySelectorAll('.toc-list a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({id:id, el:el, link:a});
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length-1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¥188万撬动全球：一份写给总经理的海外营销破局方案 — 李坤的随笔</title>
+<meta name="description" content="五大战区、三个Go/No-Go检查点、¥188万年度预算——一份可以直接给总经理看的海外营销年度计划。">
+<style>
+:root {
+  --bg: #f9f8f6;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #999;
+  --accent: #c87a1e;
+  --accent-light: rgba(200,122,30,0.1);
+  --accent-soft: rgba(200,122,30,0.06);
+  --border: rgba(0,0,0,0.08);
+  --card-bg: #fff;
+  --radius: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(249,248,246,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:820px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
+.nav-links { display:flex; gap:24px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* ---- Hero ---- */
+.hero { position:relative; min-height:420px; display:flex; align-items:center; justify-content:center;
+  overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(180deg, rgba(249,248,246,0.3) 0%, rgba(249,248,246,0.85) 70%, var(--bg) 100%); }
+.hero-content { position:relative; z-index:1; max-width:800px; padding:120px 32px 48px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:rgba(255,255,255,0.9); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em;
+  margin-bottom:20px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(28px,4.5vw,42px); font-weight:700; letter-spacing:-1px; line-height:1.2; margin-bottom:16px; }
+.hero-meta { display:flex; align-items:center; justify-content:center; gap:20px; font-size:13px; color:var(--text-muted); }
+.hero-meta span { display:flex; align-items:center; gap:4px; }
+
+/* ---- TOC ---- */
+.toc-wrap { max-width:820px; margin:0 auto; padding:12px 32px 32px; }
+.toc { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; }
+.toc-title { font-size:13px; font-weight:600; color:var(--text-muted); letter-spacing:0.05em; margin-bottom:14px; text-transform:uppercase; }
+.toc-list { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; list-style:none; }
+.toc-list li a { display:flex; align-items:baseline; gap:8px; color:var(--text-secondary); text-decoration:none; font-size:14px; padding:4px 0; transition:color 0.2s; }
+.toc-list li a:hover { color:var(--accent); }
+.toc-list li .num { color:var(--accent); font-weight:600; font-size:12px; min-width:20px; }
+
+/* ---- Content ---- */
+.content { max-width:820px; margin:0 auto; padding:0 32px 80px; }
+.content section { margin-bottom:48px; }
+.content h2 { font-size:24px; font-weight:700; letter-spacing:-0.3px; margin-bottom:20px; padding-top:8px;
+  border-top:2px solid var(--accent-light); padding-top:28px; }
+.content h2:first-child { border-top:none; padding-top:0; }
+.content h2 .sec-num { color:var(--accent); font-size:16px; font-weight:600; margin-right:8px; }
+.content h3 { font-size:18px; font-weight:600; margin:24px 0 12px; }
+.content p { margin-bottom:16px; font-size:16px; color:var(--text); }
+.content ul, .content ol { margin:12px 0 20px 20px; }
+.content li { margin-bottom:8px; font-size:15px; line-height:1.7; }
+.content strong { font-weight:600; }
+.content blockquote { border-left:3px solid var(--accent); padding:12px 20px; margin:20px 0;
+  background:var(--accent-soft); border-radius:0 8px 8px 0; font-size:15px; color:var(--text); }
+.content blockquote p { margin-bottom:0; }
+
+/* Tables */
+.table-wrap { overflow-x:auto; margin:20px 0; border-radius:10px; border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:14px; background:var(--card-bg); }
+th { background:var(--accent-light); color:var(--accent); font-weight:600; padding:12px 16px; text-align:left; white-space:nowrap; }
+td { padding:12px 16px; border-top:1px solid var(--border); line-height:1.6; }
+tr:hover td { background:var(--accent-soft); }
+
+/* Code blocks */
+pre { background:#2a2a2a; color:#e0e0e0; padding:20px 24px; border-radius:10px; overflow-x:auto;
+  margin:20px 0; font-size:13px; line-height:1.6; font-family:'SF Mono','Fira Code',monospace; }
+pre code { color:inherit; }
+
+/* Info boxes */
+.info-box { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  padding:20px 24px; margin:20px 0; }
+.info-box-title { font-size:14px; font-weight:600; color:var(--accent); margin-bottom:10px; }
+
+/* Highlight box */
+.highlight-box { background:linear-gradient(135deg, var(--accent-light), var(--accent-soft));
+  border-radius:var(--radius); padding:24px 28px; margin:24px 0; border:1px solid rgba(200,122,30,0.15); }
+.highlight-box p { margin-bottom:0; font-size:16px; }
+
+/* Summary card */
+.summary-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  padding:28px 32px; margin:32px 0; box-shadow:0 2px 12px rgba(0,0,0,0.03); }
+.summary-card h3 { font-size:16px; font-weight:600; color:var(--accent); margin-bottom:16px; }
+.summary-card .key-points { list-style:none; margin:0; padding:0; }
+.summary-card .key-points li { padding:8px 0 8px 28px; position:relative; font-size:15px; line-height:1.6; }
+.summary-card .key-points li::before { content:'✓'; position:absolute; left:0; top:8px; color:var(--accent);
+  font-weight:700; font-size:14px; }
+
+/* Stat cards */
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:24px 0; }
+.stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.stat-card .stat-num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
+.stat-card .stat-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+
+/* Tag cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:32px 0; padding-top:24px; border-top:1px solid var(--border); }
+.tag-cloud span { padding:5px 14px; border-radius:20px; background:var(--accent-soft); color:var(--accent);
+  font-size:13px; font-weight:500; }
+
+/* Footer */
+.footer { max-width:820px; margin:0 auto; padding:32px; border-top:1px solid var(--border);
+  text-align:center; color:var(--text-muted); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Mobile */
+@media (max-width:640px) {
+  .hero { min-height:340px; }
+  .hero-content { padding:100px 20px 32px; }
+  .nav-inner { padding:0 20px; }
+  .nav-links { gap:14px; }
+  .nav-links a { font-size:13px; }
+  .toc-list { grid-template-columns:1fr; }
+  .content { padding:0 20px 60px; }
+  .content h2 { font-size:20px; }
+  .stat-row { grid-template-columns:1fr; }
+  .table-wrap { font-size:12px; }
+  th, td { padding:8px 10px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">李坤<span>· 随笔</span></a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/" class="active">随笔</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('/uploads/pxid-gm-report-cover.png')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> 随笔 · 海外营销</div>
+    <h1>¥188万撬动全球：一份写给总经理的海外营销破局方案</h1>
+    <div class="hero-meta">
+      <span>📅 2026-07-05</span>
+      <span>👤 李坤</span>
+      <span>📖 约 15 分钟</span>
+    </div>
+  </div>
+</section>
+
+<div class="toc-wrap">
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol class="toc-list">
+      <li><a href="#sec1"><span class="num">01</span> 本报告与常规方案的差异</a></li>
+      <li><a href="#sec2"><span class="num">02</span> PXID 现状速览</a></li>
+      <li><a href="#sec3"><span class="num">03</span> 五大战区 GEO 策略</a></li>
+      <li><a href="#sec4"><span class="num">04</span> 竞争格局对标</a></li>
+      <li><a href="#sec5"><span class="num">05</span> P&L 算账模型</a></li>
+      <li><a href="#sec6"><span class="num">06</span> 组织架构与编制</a></li>
+      <li><a href="#sec7"><span class="num">07</span> 三个 Go/No-Go 检查点</a></li>
+      <li><a href="#sec8"><span class="num">08</span> 测量体系</a></li>
+      <li><a href="#sec9"><span class="num">09</span> 核心风险与应对</a></li>
+      <li><a href="#sec10"><span class="num">10</span> 总经理 FAQ</a></li>
+      <li><a href="#sec11"><span class="num">11</span> 决策清单</a></li>
+    </ol>
+  </div>
+</div>
+
+<article class="content">
+
+<div class="summary-card">
+  <h3>核心要点</h3>
+  <ul class="key-points">
+    <li>年度预算 ¥188 万，保守预计签约 6 家客户、营收 ¥1,200 万，投产比 1:6.4</li>
+    <li>五大战区独立策略：欧盟 35%、美国 30%、东南亚 15%、中东 10%、南美+澳洲+印度 10%</li>
+    <li>三个 Go/No-Go 检查点 + 一条止损红线，确保方向不对随时叫停</li>
+    <li>核心壁垒：「中国研发 × 印度制造 = 0% 反倾销税」</li>
+    <li>新增 4 个岗位：海外营销经理、英语 BD、数字营销专员、内容运营</li>
+  </ul>
+</div>
+
+<section id="sec1">
+<h2><span class="sec-num">01</span>本报告与常规方案的差异</h2>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>常规执行方案（v1.0）</th><th>总经理汇报版（v2.0）</th></tr></thead>
+<tbody>
+<tr><td>核心问题</td><td>做什么</td><td>花多少钱 / 赚多少 / 要多少人 / 有什么风险</td></tr>
+<tr><td>预算</td><td>按渠道分配</td><td>按战区分配 + 月度现金流 + ROI 预估</td></tr>
+<tr><td>团队</td><td>没讲</td><td>组织架构 + 编制表 + 招聘节奏</td></tr>
+<tr><td>GEO</td><td>国家列表</td><td>五大战区独立方案 + 合规 + 定价 + 渠道模型</td></tr>
+<tr><td>竞争</td><td>竞品名字</td><td>竞品价格带 / 渠道 / 营销打法对标</td></tr>
+<tr><td>里程碑</td><td>按月列任务</td><td>三个 Go/No-Go 检查点 + 止损线</td></tr>
+<tr><td>测量</td><td>没讲</td><td>完整 Dashboard + 归因模型 + 报告节奏</td></tr>
+<tr><td>P&L</td><td>没讲</td><td>线索单价 / 客户获取成本 / 首年盈亏</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="sec2">
+<h2><span class="sec-num">02</span>PXID 现状速览（总经理视角）</h2>
+
+<h3>我们是谁 · 一句话定位</h3>
+<blockquote><p>"年产能 20 万台的电动两轮车 ODM 全流程制造商，印度工厂零反倾销税，200+ 国际专利。"</p></blockquote>
+
+<h3>核心资产</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>资产</th><th>数据</th><th>市场价值</th></tr></thead>
+<tbody>
+<tr><td>年产能</td><td>20 万台</td><td>规模成本优势</td></tr>
+<tr><td>印度工厂</td><td>已投产</td><td>对美对欧零反倾销，成本优势 20-30%</td></tr>
+<tr><td>认证</td><td>UL / PSE / CCC / CE</td><td>多市场准入无壁垒</td></tr>
+<tr><td>全流程自产</td><td>模具→涂装→装配</td><td>交期可控，品控可控</td></tr>
+<tr><td>50+ 品牌客户</td><td>合作案例可背书</td><td>信任度高</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>核心短板</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>短板</th><th>影响</th><th>本计划如何解决</th></tr></thead>
+<tbody>
+<tr><td>海外品牌知名度几乎为零</td><td>客户主动搜索不到我们</td><td>12 个月品牌声量建设 + SEO</td></tr>
+<tr><td>销售渠道依赖被动询盘</td><td>获客不稳定</td><td>LinkedIn 主动 BD + 展会 + 邮件自动化</td></tr>
+<tr><td>产品线分散，缺乏市场针对性</td><td>每个市场都想做但都不深</td><td>GEO 战区策略，分市场聚焦 SKU</td></tr>
+<tr><td>缺乏海外营销团队</td><td>没人干活</td><td>组织架构 + 外包混合方案</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="sec3">
+<h2><span class="sec-num">03</span>五大战区 GEO 策略（核心升级）</h2>
+
+<pre><code>                    PXID 全球五大战区
+                ┌───────────────────┐
+                │   总部（中国）      │
+                │   营销指挥中心      │
+                └───────┬───────────┘
+         ┌─────────────┼─────────────┐
+         │             │             │
+    ┌───┴───┐    ┌───┴───┐    ┌───┴───┐
+    │ 战区1  │    │ 战区2  │    │ 战区3  │
+    │  欧盟  │    │  美国  │    │ 东南亚 │
+    └───┬───┘    └───┬───┘    └───┬───┘
+        │             │             │
+    ┌───┴───┐    ┌───┴───┐    ┌───┴───┐
+    │ 战区4  │    │ 战区5  │    │  (弹性)│
+    │  中东  │    │ 南美+  │    │  印度  │
+    └───────┘    └───┬───┘    └───────┘
+                     │  澳洲</code></pre>
+
+<h3>战区 1：欧盟（最高优先级）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>策略</th></tr></thead>
+<tbody>
+<tr><td>目标国家</td><td>德国（HQ）、荷兰（物流枢纽）、法国、意大利、北欧</td></tr>
+<tr><td>产品线</td><td>250W 城市通勤 e-bike / 货运 e-bike / 折叠 e-bike</td></tr>
+<tr><td>合规路径</td><td>CE 标志 / EN 15194 / 欧盟电池法规（已具备）</td></tr>
+<tr><td>定价策略</td><td>中高端定位。FOB $380-550，零售端 $1,200-2,500</td></tr>
+<tr><td>渠道模型</td><td>① 本地品牌商 ODM ② 经销商批发 ③ 亚马逊 EU 卖家的 Private Label</td></tr>
+<tr><td>关键展会</td><td>Eurobike（法兰克福）/ EICMA（米兰）/ The Battery Show（斯图加特）</td></tr>
+<tr><td>旺季</td><td>3-5 月（春季开骑）+ 9-10 月（秋季备货）</td></tr>
+<tr><td>关键信息</td><td><strong>"Made in India, 0% anti-dumping duty"</strong> — 对欧洲客户最强有力的卖点</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>战区 2：美国（高优先级 · 关税是最大变量）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>策略</th></tr></thead>
+<tbody>
+<tr><td>目标地区</td><td>加州（通勤+户外）/ 德州（越野）/ 纽约（最后一公里）</td></tr>
+<tr><td>产品线</td><td>胖胎 e-bike / 越野 e-bike / 电动滑板车 / 电动摩托车</td></tr>
+<tr><td>定价策略</td><td>中端走量。FOB $350-500，零售端 $900-1,800</td></tr>
+<tr><td>渠道模型</td><td>① 美国本土品牌 ODM ② 独立站 DTC 品牌卖家 ③ 经销商网络</td></tr>
+<tr><td>关键信息</td><td>"India manufacturing, zero anti-dumping" — 比越南/柬埔寨供应链更稳定</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">
+<div class="info-box-title">⚠️ 美国风险预警</div>
+<p>美国对华电动车关税仍在加征（25-37.5%），印度工厂是核心解决方案。2025-2026 年有超过 200 个新品牌涌入美国 e-bike 市场，竞争极度激烈。<strong>我们的切入策略：不做 DTC，专注给美国品牌做 ODM 后盾。</strong></p>
+</div>
+
+<h3>战区 3：东南亚（高增长 · 量大利薄）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>策略</th></tr></thead>
+<tbody>
+<tr><td>目标国家</td><td>印尼（最大市场）、越南（增长最快）、泰国（摩托车置换）、菲律宾</td></tr>
+<tr><td>产品线</td><td>电动摩托车（换电款）/ 电动滑板车 / 老年代步车</td></tr>
+<tr><td>定价策略</td><td>低毛利走量。FOB $200-350，品牌端 $400-800</td></tr>
+<tr><td>渠道模型</td><td>① 本地组装厂（CKD 出口）② 代理/分销商 ③ 电商平台</td></tr>
+<tr><td>关键信息</td><td>"中国技术 + 本地组装 + 比日系便宜 40%" — 针对两轮车油转电市场</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>战区 4：中东（高客单 · 特种车型需求）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>策略</th></tr></thead>
+<tbody>
+<tr><td>目标国家</td><td>UAE（迪拜——Hub）/ 沙特 / 卡塔尔</td></tr>
+<tr><td>产品线</td><td>高端电动摩托车 / 越野 e-bike / 三轮货运车</td></tr>
+<tr><td>定价策略</td><td>高毛利。FOB $500-800，零售端 $1,500-3,000</td></tr>
+<tr><td>渠道模型</td><td>① 王室/政府采购 ② 景区别墅物业 ③ 本地高端经销商</td></tr>
+<tr><td>关键信息</td><td>"高端定制 + 快速交付 + 沙漠版配置" — 满足中东户外需求</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>战区 5：南美 + 澳洲 + 印度（弹性布局）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>国家</th><th>进入策略</th><th>注意</th></tr></thead>
+<tbody>
+<tr><td>巴西</td><td>通过印度工厂出口，避开关税</td><td>MERCOSUR 认证周期长（6-12 个月）</td></tr>
+<tr><td>墨西哥</td><td>近岸制造需求，美国跳板</td><td>很多美国品牌在墨西哥组装</td></tr>
+<tr><td>澳大利亚</td><td>中高端 e-bike + 山地车</td><td>骑行文化浓厚，市场小而精</td></tr>
+<tr><td>印度本土</td><td>利用印度工厂做本地销售</td><td>价格要打到 ¥15,000-25,000 INR 区间</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>GEO 投入分配比例</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>战区</th><th>预算占比</th><th>战略目标</th><th>盈利预期</th></tr></thead>
+<tbody>
+<tr><td>🇪🇺 欧盟</td><td>35%</td><td>品牌建立 + 签约 6-8 家品牌商</td><td>M8 开始盈利</td></tr>
+<tr><td>🇺🇸 美国</td><td>30%</td><td>签约 4-6 家品牌商/私牌卖家</td><td>M10 开始盈利</td></tr>
+<tr><td>🌏 东南亚</td><td>15%</td><td>签约 3-5 家分销商</td><td>M6 开始盈利</td></tr>
+<tr><td>🏜️ 中东</td><td>10%</td><td>签 2-3 家高端经销商</td><td>M12 预期盈利</td></tr>
+<tr><td>🌎 南美+澳洲+印度</td><td>10%</td><td>市场测试 + 调研</td><td>第二年</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="sec4">
+<h2><span class="sec-num">04</span>竞争格局对标（总经理必看）</h2>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>竞争维度</th><th>PXID</th><th>国内其他 ODM</th><th>越南/柬埔寨工厂</th><th>欧洲本地工厂</th></tr></thead>
+<tbody>
+<tr><td>成本</td><td>★★★★ 印度工厂零关税</td><td>★★★ 国内出口被加税</td><td>★★★★ 关税优势</td><td>★★ 高成本</td></tr>
+<tr><td>交期</td><td>★★★★ 全流程自产</td><td>★★★★ 规模大</td><td>★★★ 产能有限</td><td>★★ 排产慢</td></tr>
+<tr><td>合规</td><td>★★★★ UL/PSE/CE 已拿下</td><td>★★★ 需单做</td><td>★★★ 部分缺认</td><td>★★★★★ 本地认证</td></tr>
+<tr><td>灵活度</td><td>★★★★★ ODM 定制能力强</td><td>★★★ 大厂流程僵</td><td>★★★ 团队小</td><td>★★★ 保守</td></tr>
+<tr><td>品牌</td><td>★★ 海外知名度低</td><td>★★ 海外知名度低</td><td>★ 更无名</td><td>★★★★★ 品牌溢价</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight-box">
+<p><strong>差异化定位：</strong>"PXID = 中国制造效率 × 印度零关税壁垒 × 品牌级品质。"</p>
+</div>
+</section>
+
+<section id="sec5">
+<h2><span class="sec-num">05</span>P&L 算账模型（核心 · 总经理必过）</h2>
+
+<h3>年度预算总表</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>支出项</th><th>月度平均</th><th>年度总额</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>海外营销经理 × 1</td><td>¥25,000</td><td>¥300,000</td><td>全职，负责策略+执行</td></tr>
+<tr><td>数字营销专员 × 1</td><td>¥15,000</td><td>¥180,000</td><td>Google Ads + 社媒运营</td></tr>
+<tr><td>内容创作 × 1（可外包）</td><td>¥10,000</td><td>¥120,000</td><td>英文博主+视频</td></tr>
+<tr><td>销售 BD（英语） × 1</td><td>¥20,000</td><td>¥240,000</td><td>LinkedIn BD + 展会跟进</td></tr>
+<tr><td>Google Ads</td><td>$3,000/mo</td><td>≈ ¥260,000</td><td>搜索广告</td></tr>
+<tr><td>LinkedIn Ads</td><td>$1,500/mo</td><td>≈ ¥130,000</td><td>决策人定向</td></tr>
+<tr><td>Facebook/Instagram Ads</td><td>$800/mo</td><td>≈ ¥70,000</td><td>品牌曝光</td></tr>
+<tr><td>展会（3 场）</td><td>—</td><td>≈ ¥180,000</td><td>Eurobike / CES / LA eBike</td></tr>
+<tr><td>KOL/红人合作</td><td>—</td><td>≈ ¥108,000</td><td>行业影响力</td></tr>
+<tr><td>网站优化+托管</td><td>¥3,000/mo</td><td>¥36,000</td><td>SEO + 多语言</td></tr>
+<tr><td>翻译+本地化</td><td>¥5,000/mo</td><td>¥60,000</td><td>四语种维护</td></tr>
+<tr><td>视频制作（外包）</td><td>¥8,000/mo</td><td>¥96,000</td><td>工厂+产品视频</td></tr>
+<tr><td>杂项（差旅/样品/快递）</td><td>¥8,000/mo</td><td>¥96,000</td><td>—</td></tr>
+<tr style="border-top:2px solid var(--accent);"><td><strong>合计</strong></td><td></td><td><strong>≈ ¥1,876,000</strong></td><td><strong>≈ $260,000 USD</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">
+<div class="info-box-title">ℹ️ 注意</div>
+<p>这是"打造海外营销体系的年度投资"，不是纯广告预算。第一年核心目标是建渠道、建团队、建品牌，第二年预期获客成本会大幅下降。</p>
+</div>
+
+<h3>预期收入模型</h3>
+<div class="stat-row">
+<div class="stat-card"><div class="stat-num">1:6.4</div><div class="stat-label">保守投产比</div></div>
+<div class="stat-card"><div class="stat-num">1:16</div><div class="stat-label">中性投产比</div></div>
+<div class="stat-card"><div class="stat-num">1:28.8</div><div class="stat-label">乐观投产比</div></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>场景</th><th>签约客户数</th><th>平均单客户年订单额</th><th>年营收</th><th>投产比</th></tr></thead>
+<tbody>
+<tr><td>保守</td><td>6 家</td><td>¥200 万</td><td>¥1,200 万</td><td>1:6.4</td></tr>
+<tr><td>中性</td><td>12 家</td><td>¥250 万</td><td>¥3,000 万</td><td>1:16</td></tr>
+<tr><td>乐观</td><td>18 家</td><td>¥300 万</td><td>¥5,400 万</td><td>1:28.8</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>线索到签单漏斗模型</h3>
+<pre><code>阶段                         数量          转化率
+─────────────────────────────────────────────────────
+网站访客（月）               10,000         100%
+↓
+表单提交 + 询盘               200           2.0%
+↓
+合格线索（MQL→SQL）          60            0.6%    (30% 转化)
+↓
+样品寄送 + 打样              20            0.2%    (33% 转化)
+↓
+报价谈判                     12            0.12%   (60% 转化)
+↓
+签单                         6             0.06%   (50% 转化)
+↓
+首单交付                     5             0.05%</code></pre>
+
+<p><strong>单线索成本（CPA）</strong>: ¥1,876,000 ÷ (200×12) = <strong>¥782/个</strong></p>
+<p><strong>单签单成本</strong>: 保守约 <strong>¥156,000/个</strong></p>
+</section>
+
+<section id="sec6">
+<h2><span class="sec-num">06</span>组织架构与编制计划</h2>
+
+<pre><code>海外事业部负责人（招聘中 / 现有高管兼任）
+├── 海外营销经理（本计划新增 · HQ）
+│   ├── 数字营销专员（新增 · HQ）
+│   └── 内容运营（新增 · 可外包）
+├── 海外销售经理（可从现有外销团队抽调）
+│   ├── 英语 BD（新增）
+│   ├── 德语 BD（驻欧 / 可兼职）
+│   └── 东南亚 BD（本地招聘或代理）
+└── 产品合规专员（现有或兼职）</code></pre>
+
+<h3>招聘节奏</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>时间</th><th>岗位</th><th>类型</th><th>估算成本</th><th>优先级</th></tr></thead>
+<tbody>
+<tr><td>Month 1</td><td>海外营销经理</td><td>全职</td><td>¥25K/月</td><td>P0 必招</td></tr>
+<tr><td>Month 1</td><td>英语 BD</td><td>全职</td><td>¥20K/月</td><td>P0 必招</td></tr>
+<tr><td>Month 2</td><td>数字营销专员</td><td>全职</td><td>¥15K/月</td><td>P1</td></tr>
+<tr><td>Month 2</td><td>内容运营</td><td>外包</td><td>¥10K/月</td><td>P1</td></tr>
+<tr><td>Month 4</td><td>德语 BD</td><td>兼职/代理</td><td>¥8K/月</td><td>P2</td></tr>
+<tr><td>Month 5</td><td>东南亚 BD</td><td>印尼本地招聘</td><td>¥12K/月</td><td>P2</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="sec7">
+<h2><span class="sec-num">07</span>三个 Go/No-Go 检查点</h2>
+
+<h3>检查点 1：Month 3 末（2026 年 9 月底）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>检查项</th><th>通过标准</th><th>通不过怎么办</th></tr></thead>
+<tbody>
+<tr><td>网站月访问量</td><td>≥ 3,000</td><td>加大 Google Ads 预算 30%</td></tr>
+<tr><td>询盘数量（累计）</td><td>≥ 60 封</td><td>复盘关键词/着陆页质量</td></tr>
+<tr><td>Google Ads CTR</td><td>≥ 3%</td><td>换广告文案/关键词方向</td></tr>
+<tr><td>团队到位率</td><td>≥ 50%</td><td>启动外包替代方案</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>检查点 2：Month 6 末（2026 年 12 月底）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>检查项</th><th>通过标准</th><th>通不过怎么办</th></tr></thead>
+<tbody>
+<tr><td>渠道商签约</td><td>≥ 3 家</td><td>放弃远程 BD，CEO 亲自带队展会 BD</td></tr>
+<tr><td>月均询盘</td><td>≥ 100</td><td>降低通用广告，集中投竞品品牌词</td></tr>
+<tr><td>KOL 视频播放量</td><td>≥ 20 万</td><td>换 KOL 类型</td></tr>
+<tr><td>品牌搜索量</td><td>月均 ≥ 500</td><td>加 PR 投放</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>检查点 3：Month 9 末（2027 年 3 月底）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>检查项</th><th>通过标准</th><th>通不过怎么办</th></tr></thead>
+<tbody>
+<tr><td>客户累计签约</td><td>≥ 8 家</td><td>释放 50% 付费广告预算，转投入 BD 直接出差</td></tr>
+<tr><td>月均询盘→签单转化率</td><td>≥ 1%</td><td>复盘→是报价问题还是信任问题</td></tr>
+<tr><td>印度工厂出货</td><td>≥ 2 个 ODM 项目</td><td>缩减计划，重新评估市场进入策略</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight-box">
+<p><strong>⚠️ 止损红线：</strong>若 Month 9 末累计签约客户 < 4 家 或 客均营销成本 > ¥30 万/家，建议<strong>暂缓第 4 阶段投入</strong>，转为主要维护已签约客户，复盘根本问题后再定第 2 年计划。</p>
+</div>
+</section>
+
+<section id="sec8">
+<h2><span class="sec-num">08</span>测量体系（Dashboard 定义）</h2>
+
+<h3>核心 KPI 看板（每周一上报总经理）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>类别</th><th>KPI</th><th>数据源</th><th>汇报频率</th></tr></thead>
+<tbody>
+<tr><td>流量</td><td>独立访客 / 页面浏览量 / 访客来源 Top 3</td><td>GA4</td><td>周</td></tr>
+<tr><td>获客</td><td>询盘数 / 询盘来源渠道 / CPA</td><td>HubSpot + GA4</td><td>周</td></tr>
+<tr><td>转化</td><td>MQL → SQL 转化率 / 平均响应时长</td><td>HubSpot</td><td>周</td></tr>
+<tr><td>收入</td><td>样品订单数 / 打样进度 / 报价中金额</td><td>CRM</td><td>双周</td></tr>
+<tr><td>品牌</td><td>品牌词搜索量 / 社媒互动率 / 媒体提及数</td><td>GSC + Brandwatch</td><td>月</td></tr>
+<tr><td>竞争</td><td>竞品广告动态 / 定价变化 / 新入场者</td><td>Manually</td><td>季度</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>报告节奏</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>频次</th><th>受众</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>日报（自动）</td><td>营销团队</td><td>Google Ads 实时数据 + 新询盘提醒</td></tr>
+<tr><td>周报</td><td>营销经理</td><td>流量/询盘/预算消耗/异常预警</td></tr>
+<tr><td>双周</td><td>总经理</td><td>线索进度/签约进展/预算执行/调整建议</td></tr>
+<tr><td>月度</td><td>管理层</td><td>完整 P&L 对账 / 竞争动态 / 下月计划</td></tr>
+<tr><td>季度</td><td>总经理</td><td>三阶段 Go/No-Go 检查 / 全年滚动预测</td></tr>
+</tbody>
+</table>
+</div>
+
+<blockquote><p><strong>归因模型建议：</strong>采用"首次接触 + 辅助转化"双归因。不使用"最后点击归因"——ODM 采购周期长，会严重低估 LinkedIn 和展会的作用。</p></blockquote>
+</section>
+
+<section id="sec9">
+<h2><span class="sec-num">09</span>核心风险与应对</h2>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>风险类型</th><th>概率</th><th>影响</th><th>应对方案</th></tr></thead>
+<tbody>
+<tr><td>美国/欧盟对印度产品征收新关税</td><td>中（30%）</td><td>极高</td><td>印度出口占 30%，不影响即转越南/柬埔寨备选</td></tr>
+<tr><td>竞品价格战导致 ODM 单均价下降</td><td>高（60%）</td><td>中</td><td>用全流程自产压缩成本保持毛利</td></tr>
+<tr><td>团队招聘/留人困难</td><td>中（40%）</td><td>中</td><td>核心岗位可外包给专业营销服务公司</td></tr>
+<tr><td>印度工厂产能/品控波动</td><td>低（20%）</td><td>高</td><td>中国工厂做新品打样，印度做成熟产品批量</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="sec10">
+<h2><span class="sec-num">10</span>总经理视角的 FAQ</h2>
+
+<h3>Q1: 为什么要等到 Month 1 才启动？不能现在就动？</h3>
+<p>Google Ads 可以在 48h 内上线，但<strong>没有高质量着陆页/案例/多语言版的广告 = 烧钱</strong>。前 2 个月做基建是为了避免"广告有钱花不出去，或者花出去没转化"。</p>
+
+<h3>Q2: 第一年投入 ¥188 万，第二年呢？</h3>
+<p>第二年不需要重复建网站/拍工厂视频/搭建 CRM 系统。第二年预计预算可降至 ¥80-100 万（不含团队扩编），且获客效率会更高。</p>
+
+<h3>Q3: 为什么不只做 Google Ads，要铺这么多渠道？</h3>
+<p>ODM 采购周期平均 3-6 个月，单一 Google Ads 只能触达已经"在搜"的客户。LinkedIn 触达决策者，KOL 建立品牌信任，展会做关系加速。<strong>多渠道协同</strong>：客户看到 KOL 视频 → Google 搜索品牌词 → 看到官网案例 → 从 LinkedIn 找到我们 → 发出询盘。</p>
+
+<h3>Q4: 如果只做欧美，能不能更快？</h3>
+<p>能做，但确定性风险更高。东南亚和中东是第二曲线，投入不多（25%预算），万一欧美市场出现关税突变，有退路。</p>
+
+<h3>Q5: 我怎么知道营销团队在干实事，不是在花钱？</h3>
+<p>每周报 KPI，双周直接汇报给总经理。前 6 个月盯"线索量+线索质量"，后 6 个月盯"签约数"。所有渠道支出都可以在 Dashboard 上追溯。</p>
+</section>
+
+<section id="sec11">
+<h2><span class="sec-num">11</span>总经理决策清单</h2>
+
+<h3>需要你批准的事项</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>✅</th><th>事项</th><th>预估金额</th></tr></thead>
+<tbody>
+<tr><td>☐</td><td>海外营销年度预算 ¥188 万</td><td>¥1,876,000</td></tr>
+<tr><td>☐</td><td>新增 4 个岗位</td><td>约 ¥840,000/年</td></tr>
+<tr><td>☐</td><td>3 场核心展会</td><td>¥180,000</td></tr>
+<tr><td>☐</td><td>三个 Go/No-Go 检查点机制</td><td>不花钱</td></tr>
+<tr><td>☐</td><td>止损红线：Month 9 签单 < 4 家即暂缓</td><td>事后决策</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>需要你参与的事</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>事项</th><th>时间</th></tr></thead>
+<tbody>
+<tr><td>Month 0 审核本计划 + 批准预算</td><td>7 月第一周</td></tr>
+<tr><td>Month 4 亲自参与 Eurobike 2026 展会</td><td>9-10 月</td></tr>
+<tr><td>Month 3 / Month 6 / Month 9 三次 Go/No-Go 评审</td><td>季度末</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight-box">
+<p><strong>一句话总结给总经理：</strong>今年投入 ¥188 万 + 新增 4 人，建设 PXID 完整的海外营销体系。保守预计签 6 家客户、营收 ¥1,200 万，投产比 1:6.4。中性预计签 12 家客户、营收 ¥3,000 万。三个检查点 + 一个止损红线，确保方向不对随时叫停。</p>
+</div>
+
+<div class="tag-cloud">
+<span>海外营销</span>
+<span>PXID</span>
+<span>GEO 战略</span>
+<span>ODM</span>
+<span>印度制造</span>
+<span>年度计划</span>
+<span>总经理汇报</span>
+<span>P&L</span>
+<span>Go/No-Go</span>
+</div>
+</section>
+
+</article>
+
+<div class="footer">
+  <p>© 2026 李坤 · <a href="/">appin.site</a> · <a href="/notes/">返回随笔</a></p>
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('nav');
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+});
+</script>
+</body>
+</html>

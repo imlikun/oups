@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>李坤 — 个人简历</title>
+  <title>李坤 — 营销策划 · 跨界探索</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,6 +18,7 @@
       --accent-glow: rgba(41,151,255,0.15);
       --accent-strong: rgba(41,151,255,0.25);
       --border: rgba(255,255,255,0.08);
+      --border-subtle: rgba(255,255,255,0.04);
       --card-bg: rgba(255,255,255,0.03);
       --card-hover: rgba(255,255,255,0.06);
       --card-active: rgba(255,255,255,0.09);
@@ -39,6 +40,48 @@
       --glass-shine: rgba(255,255,255,0.02);
       --glass-border-strong: rgba(255,255,255,0.12);
       --section-alt: rgba(255,255,255,0.01);
+
+      /* ====== Design Tokens ====== */
+      /* Spacing — 8px grid */
+      --space-2xs: 4px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 20px;
+      --space-xl: 24px;
+      --space-2xl: 32px;
+      --space-3xl: 48px;
+      --space-4xl: 64px;
+      --space-5xl: 80px;
+      --space-6xl: 96px;
+      /* Radius */
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --radius-2xl: 28px;
+      --radius-pill: 100px;
+      /* Font Sizes */
+      --text-2xs: 10.5px;
+      --text-xs: 11px;
+      --text-sm: 12px;
+      --text-base: 14px;
+      --text-md: 16px;
+      --text-lg: 18px;
+      --text-xl: 22px;
+      --text-2xl: 28px;
+      --text-3xl: 36px;
+      /* Shadows */
+      --shadow-card: 0 16px 48px rgba(0,0,0,0.2);
+      --shadow-elevated: 0 24px 80px rgba(0,0,0,0.3);
+      --shadow-btn: 0 4px 20px rgba(0,0,0,0.15);
+      /* Durations */
+      --dur-fast: 0.2s;
+      --dur-normal: 0.3s;
+      --dur-slow: 0.4s;
+      --ease-spring: cubic-bezier(0.16,1,0.3,1);
+      --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
     }
 
     body.light {
@@ -122,6 +165,7 @@
       color: var(--text-secondary); text-decoration: none;
       font-size: 12px; font-weight: 400; letter-spacing: 0.05em;
       transition: color 0.25s;
+      position: relative;
     }
     .nav-links a:hover { color: var(--text-primary); }
 
@@ -148,18 +192,18 @@
     body.light .theme-toggle .icon-moon { display: none; }
 
     /* Sections */
-    .section { padding: 80px 24px; }
-    .section:nth-child(even) {
-      background: var(--section-alt);
+    .section { padding: var(--space-6xl) var(--space-2xl); }
+    .section + .section {
+      border-top: 1px solid var(--border-subtle);
     }
     .section-inner { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; }
     .section-label {
-      font-size: 14px; font-weight: 500; color: var(--accent);
-      letter-spacing: 0.12em; margin-bottom: 12px;
+      font-size: var(--text-base); font-weight: 500; color: var(--accent);
+      letter-spacing: 0.12em; margin-bottom: var(--space-sm);
     }
     .section-headline {
       font-size: clamp(32px,6vw,56px); font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 36px;
+      letter-spacing: -0.025em; line-height: 1.1; margin-bottom: var(--space-3xl);
     }
 
     /* Hero */
@@ -193,45 +237,64 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .hero-tagline {
-      font-size: 18px; color: var(--text-secondary); margin-bottom: 8px;
+    .hero-slogan {
+      font-size: 18px; font-weight: 400; color: var(--text-secondary); 
+      max-width: 480px; margin: 0 auto 6px;
     }
-    .hero-meta { font-size: 15px; color: var(--text-tertiary); }
+    .hero-meta { 
+      font-size: 14px; color: var(--text-tertiary); 
+      max-width: 600px; margin: 8px auto 0;
+    }
 
-    .hero-bento {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-      max-width: 700px; margin: 40px auto 0; position: relative; z-index: 1;
+    .hero-cta {
+      display: flex; gap: var(--space-sm); justify-content: center;
+      margin-top: var(--space-2xl); position: relative; z-index: 1;
+      flex-wrap: wrap;
     }
-    .hero-stat {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 20px 16px; text-align: center;
+    .hero-cta-btn {
+      display: inline-flex; align-items: center; gap: var(--space-xs);
+      padding: var(--space-md) var(--space-2xl); border-radius: var(--radius-pill);
+      font-size: 15px; font-weight: 500; text-decoration: none;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      transition: all var(--dur-normal); letter-spacing: 0.01em;
     }
-    .hero-stat-value {
-      font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
-      color: var(--text-primary);
+    .hero-cta-primary {
+      background: var(--cta-primary-bg); color: var(--cta-primary-color);
     }
-    .hero-stat-label { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; font-weight: 500; }
+    .hero-cta-primary:hover { background: var(--cta-primary-hover-bg); transform: scale(1.03); box-shadow: var(--shadow-btn); }
+    .hero-cta-outline {
+      background: transparent; color: var(--accent); border: 1px solid var(--accent);
+    }
+    .hero-cta-outline:hover { background: var(--accent-glow); transform: scale(1.03); }
 
+    /* Stats (Data Dashboard) */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg);
+      max-width: 900px; margin: 0 auto;
+    }
+    .stat-item {
+      padding: var(--space-xl) var(--space-md); border-radius: var(--radius-md);
+      background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border); text-align: center;
+    }
+    .stat-item-value { font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); }
+    .stat-item-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
 
     /* ---- Liquid Glass Cards ---- */
     .bento {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg);
     }
     .bento-card {
       background: var(--card-bg);
       backdrop-filter: blur(24px) saturate(160%);
       -webkit-backdrop-filter: blur(24px) saturate(160%);
       border: 1px solid var(--border);
-      border-radius: 22px; padding: 32px; position: relative; overflow: hidden;
+      border-radius: var(--radius-xl); padding: var(--space-2xl); position: relative; overflow: hidden;
       cursor: pointer; display: flex; flex-direction: column;
-      transition: background 0.4s, border-color 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+      transition: background var(--dur-slow), border-color var(--dur-slow), transform var(--dur-slow) var(--ease-spring), box-shadow var(--dur-slow);
       -webkit-tap-highlight-color: transparent; user-select: none;
     }
 
-    /* Glass highlight — top edge light refraction */
     .bento-card::before {
       content: ''; position: absolute; top: 0; left: 20px; right: 20px;
       height: 1px;
@@ -240,7 +303,6 @@
     }
     .bento-card:hover::before { opacity: 0.8; }
 
-    /* Glass shine — diagonal light sweep */
     .bento-card::after {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
       background: radial-gradient(ellipse at 25% 25%, var(--glass-shine) 0%, transparent 50%);
@@ -252,7 +314,7 @@
       background: var(--card-hover);
       border-color: var(--glass-border-strong);
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,0.06);
     }
     .bento-card:active { transform: scale(0.985); }
 
@@ -260,146 +322,11 @@
     .span-3 { grid-column: span 3; }
     .span-4 { grid-column: span 4; }
 
-    /* Accent edge glows */
-    /* ---- Creative Section — Channel Row Layout ---- */
-    .creative-rows {
-      display: flex; flex-direction: column; gap: 16px;
-    }
-    .creative-row {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 20px;
-      background: var(--card-bg);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 28px;
-      position: relative; overflow: hidden;
-      transition: background 0.4s, border-color 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .creative-row::before {
-      content: ''; position: absolute; top: 0; left: 20px; right: 20px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
-      opacity: 0.5;
-    }
-    .creative-row::after {
-      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(ellipse at 25% 25%, var(--glass-shine) 0%, transparent 50%);
-      opacity: 0.3; pointer-events: none;
-    }
-    .creative-row:hover {
-      background: var(--card-hover);
-      border-color: var(--glass-border-strong);
-      transform: translateY(-3px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-    .creative-channel {
-      display: flex; flex-direction: column; gap: 10px;
-      position: relative; z-index: 1;
-    }
-    .creative-channel .card-icon {
-      width: 40px; height: 40px; border-radius: 11px;
-      margin-bottom: 4px;
-    }
-    .creative-channel .card-label {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--text-tertiary); margin: 0;
-    }
-    .creative-channel .card-title {
-      font-size: 20px; font-weight: 600; letter-spacing: -0.015em;
-      line-height: 1.2; margin: 0;
-    }
-    .creative-channel .card-desc {
-      font-size: 13px; color: var(--text-secondary);
-      line-height: 1.5; margin: 0;
-    }
-    .creative-channel .channel-stat {
-      font-size: 12px; color: var(--text-tertiary); font-weight: 500;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .creative-channel .channel-stat-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent); opacity: 0.7;
-    }
-    .creative-channel .channel-link {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 13px; font-weight: 500; color: var(--accent);
-      text-decoration: none; margin-top: 4px;
-      transition: gap 0.2s;
-    }
-    .creative-channel .channel-link:hover { gap: 8px; }
-
-    .creative-content {
-      display: flex; flex-direction: column; gap: 14px;
-      position: relative; z-index: 1; min-width: 0;
-    }
-    .creative-article-list {
-      display: flex; flex-direction: column; gap: 0;
-    }
-    .creative-article-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none; color: inherit;
-      transition: background 0.2s;
-      border-radius: 6px;
-      margin: 0 -6px; padding-left: 6px; padding-right: 6px;
-    }
-    .creative-article-item:last-child { border-bottom: none; }
-    .creative-article-item:hover {
-      background: var(--accent-glass);
-    }
-    .creative-article-item .art-arrow {
-      color: var(--accent); font-size: 10px; flex-shrink: 0;
-      opacity: 0.6; transition: opacity 0.2s, transform 0.2s;
-    }
-    .creative-article-item:hover .art-arrow {
-      opacity: 1; transform: translateX(2px);
-    }
-    .creative-article-item .art-title {
-      flex: 1; font-size: 13px; color: var(--text-secondary);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      transition: color 0.2s;
-    }
-    .creative-article-item:hover .art-title {
-      color: var(--text-primary);
-    }
-    .creative-article-item .art-date {
-      font-size: 11px; color: var(--text-tertiary);
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .creative-tags {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
-    .creative-tags .tag {
-      font-size: 11px; padding: 3px 10px;
-      background: var(--tag-bg);
-      border-radius: 100px; color: var(--text-tertiary);
-      border: 1px solid var(--border);
-    }
-
-    @media (max-width: 768px) {
-      .creative-row {
-        grid-template-columns: 1fr;
-        gap: 16px; padding: 20px;
-      }
-      .creative-channel {
-        flex-direction: row; align-items: center; gap: 12px;
-        flex-wrap: wrap;
-      }
-      .creative-channel .card-icon { margin: 0; }
-      .creative-channel .channel-text { flex: 1; min-width: 0; }
-      .creative-channel .card-title { font-size: 17px; }
-      .creative-channel .card-desc { display: none; }
-      .creative-channel .channel-stat { display: none; }
-    }
-    .edge-2 { box-shadow: inset 0 -2px 8px -4px var(--glow-2); }
-    .edge-3 { box-shadow: inset 0 -2px 8px -4px var(--glow-3); }
-    .edge-4 { box-shadow: inset 0 -2px 8px -4px var(--glow-4); }
-    .edge-5 { box-shadow: inset 0 -2px 8px -4px var(--glow-5); }
+    .edge-1 { box-shadow: inset 0 -2px var(--space-xs) -4px var(--glow-1); }
+    .edge-2 { box-shadow: inset 0 -2px var(--space-xs) -4px var(--glow-2); }
+    .edge-3 { box-shadow: inset 0 -2px var(--space-xs) -4px var(--glow-3); }
+    .edge-4 { box-shadow: inset 0 -2px var(--space-xs) -4px var(--glow-4); }
+    .edge-5 { box-shadow: inset 0 -2px var(--space-xs) -4px var(--glow-5); }
 
     .card-expand-hint {
       position: absolute; top: 20px; right: 20px; z-index: 1;
@@ -407,36 +334,37 @@
       border: 1px solid var(--border);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; transform: scale(0.8);
-      transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      opacity: 1; transform: scale(1);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
       color: var(--text-tertiary);
     }
-    .bento-card:hover .card-expand-hint { opacity: 1; transform: scale(1); }
+    .bento-card:hover .card-expand-hint { transform: scale(1.12); color: var(--text-primary); background: var(--card-hover); }
 
     .card-icon {
-      width: 44px; height: 44px; border-radius: 12px;
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; flex-shrink: 0; position: relative; z-index: 1;
+      margin-bottom: var(--space-lg); flex-shrink: 0; position: relative; z-index: 1;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     }
     .icon-blue { background: rgba(41,151,255,0.15); color: #2997ff; }
     .icon-purple { background: rgba(191,90,242,0.15); color: #bf5af2; }
+    .icon-amber { background: rgba(200,122,30,0.15); color: #c87a1e; }
     .icon-orange { background: rgba(255,159,10,0.15); color: #ff9f0a; }
     .icon-green { background: rgba(48,209,88,0.15); color: #30d158; }
     .icon-pink { background: rgba(255,55,95,0.15); color: #ff375f; }
 
     .card-label {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--text-tertiary); margin-bottom: 8px; position: relative; z-index: 1;
+      font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em;
+      color: var(--text-tertiary); margin-bottom: var(--space-xs); position: relative; z-index: 1;
     }
     .card-title {
-      font-size: 22px; font-weight: 600; letter-spacing: -0.015em;
-      margin-bottom: 8px; line-height: 1.2; position: relative; z-index: 1;
+      font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.015em;
+      margin-bottom: var(--space-xs); line-height: 1.2; position: relative; z-index: 1;
     }
-    .card-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; position: relative; z-index: 1; }
-    .card-desc { font-size: 14px; color: var(--text-tertiary); line-height: 1.6; position: relative; z-index: 1; }
+    .card-subtitle { font-size: var(--text-base); color: var(--text-secondary); margin-bottom: var(--space-sm); position: relative; z-index: 1; }
+    .card-desc { font-size: var(--text-base); color: var(--text-tertiary); line-height: 1.6; position: relative; z-index: 1; }
 
-    /* Mini Timeline — Bento card inline experience view */
+    /* Mini Timeline */
     .mini-timeline {
       display: flex; gap: 0; position: relative; z-index: 1;
       margin: 16px 0; padding: 0;
@@ -461,50 +389,27 @@
       height: 1px; background: var(--border); z-index: -1;
     }
     .mini-tl-body { padding-top: 2px; }
-    .mini-tl-org {
-      font-size: 13px; font-weight: 600; color: var(--text-primary);
-      line-height: 1.3; letter-spacing: -0.01em;
-    }
-    .mini-tl-role {
-      font-size: 11px; color: var(--text-tertiary); line-height: 1.3;
-    }
-    .mini-tl-date {
-      font-size: 10.5px; color: var(--text-tertiary); opacity: 0.7; line-height: 1.3;
-      font-variant-numeric: tabular-nums;
-    }
+    .mini-tl-org { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.3; letter-spacing: -0.01em; }
+    .mini-tl-role { font-size: 11px; color: var(--text-tertiary); line-height: 1.3; }
+    .mini-tl-date { font-size: 10.5px; color: var(--text-tertiary); opacity: 0.7; line-height: 1.3; font-variant-numeric: tabular-nums; }
 
-    /* About card */
     .about-card { padding: 48px 40px; }
-    .about-card .card-title {
-      font-size: clamp(24px,4vw,38px); font-weight: 700;
-      letter-spacing: -0.025em; max-width: 640px; line-height: 1.2;
-    }
+    .about-card .card-title { font-size: clamp(24px,4vw,38px); font-weight: 700; letter-spacing: -0.025em; max-width: 640px; line-height: 1.2; }
     .about-card .card-desc { font-size: 17px; max-width: 520px; }
 
-    /* Stat card */
-    .stat-card {
-      align-items: center; text-align: center; justify-content: center;
-      padding: 28px 20px; min-height: 160px;
-    }
-    .stat-value { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; position: relative; z-index: 1; }
+    .stat-card { align-items: center; text-align: center; justify-content: center; padding: var(--space-xl) var(--space-lg); min-height: 160px; }
+    .stat-value { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: var(--space-2xs); position: relative; z-index: 1; }
     .stat-unit { font-size: 13px; color: var(--text-tertiary); font-weight: 500; position: relative; z-index: 1; }
     .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; position: relative; z-index: 1; }
 
-    /* Job Target card */
     .target-card { justify-content: space-between; }
-    .target-row {
-      display: flex; align-items: center; gap: 12px; padding: 10px 0;
-      position: relative; z-index: 1;
-    }
+    .target-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; position: relative; z-index: 1; }
     .target-row + .target-row { border-top: 1px solid var(--border); }
-    .target-dot {
-      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-      background: var(--accent);
-    }
+    .target-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--accent); }
     .target-key { font-size: 13px; color: var(--text-tertiary); min-width: 56px; }
     .target-val { font-size: 14px; font-weight: 500; }
 
-    /* Card mini skill bars */
+    /* Card skill bars */
     .card-skills {
       display: flex; flex-direction: column; gap: 10px;
       margin-top: 12px; position: relative; z-index: 1;
@@ -514,7 +419,7 @@
     }
     .card-skill-name {
       font-size: 12px; font-weight: 500; color: var(--text-secondary);
-      min-width: 64px; flex-shrink: 0;
+      min-width: 80px; flex-shrink: 0;
     }
     .card-skill-track {
       flex: 1; height: 5px; border-radius: 3px;
@@ -530,16 +435,15 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Tags */
-    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 16px; position: relative; z-index: 1; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: auto; padding-top: var(--space-md); position: relative; z-index: 1; }
     .tag {
-      font-size: 11px; padding: 5px 12px; border-radius: 100px;
+      font-size: var(--text-xs); padding: var(--space-2xs) var(--space-sm); border-radius: var(--radius-pill);
       background: var(--tag-bg);
       backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
       color: var(--text-secondary); letter-spacing: 0.03em;
     }
 
-    /* ---- Detail Modal - Liquid Glass ---- */
+    /* Modal */
     .modal-overlay {
       position: fixed; inset: 0; z-index: 2000;
       background: var(--modal-bg);
@@ -551,173 +455,325 @@
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-
     .modal-panel {
       background: var(--card-bg);
       backdrop-filter: blur(40px) saturate(180%);
       -webkit-backdrop-filter: blur(40px) saturate(180%);
       border: 1px solid var(--modal-border);
-      border-radius: 24px; width: 100%; max-width: 780px; max-height: 85dvh;
-      overflow-y: auto; padding: 40px; position: relative;
+      border-radius: var(--radius-xl); width: 100%; max-width: 780px; max-height: 85dvh;
+      padding: 0; position: relative;
       transform: translateY(20px) scale(0.97);
-      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+      transition: transform 0.45s var(--ease-spring);
+      box-shadow: var(--shadow-elevated);
+      display: flex; flex-direction: column;
     }
+    .modal-scroll {
+      overflow-y: auto;
+      padding: var(--space-3xl);
+      flex: 1;
+      /* 圆角裁剪：让滚动内容不溢出圆角 */
+      border-radius: var(--radius-xl);
+      /* 自定义细滚动条 */
+      scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.12) transparent;
+    }
+    .modal-scroll::-webkit-scrollbar { width: 5px; }
+    .modal-scroll::-webkit-scrollbar-track { background: transparent; }
+    .modal-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.12); border-radius: 10px;
+    }
+    .modal-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
     .modal-panel::before {
       content: ''; position: absolute; top: 0; left: 30px; right: 30px; height: 1px;
       background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
       opacity: 0.5;
     }
     .modal-overlay.active .modal-panel { transform: translateY(0) scale(1); }
-    .modal-close {
-      position: sticky; top: 0; float: right;
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      background: var(--card-bg);
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      color: var(--text-secondary); z-index: 10;
-      transition: background 0.2s, color 0.2s;
+    /* 大号关闭按钮 — 右上角 */
+    .modal-close-btn {
+      position: absolute; top: 56px; right: 48px; z-index: 20;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #ff5f57;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.15s, filter 0.15s;
+      box-shadow: 0 2px 8px rgba(255,95,87,0.4);
     }
-    .modal-close:hover { background: var(--card-hover); color: var(--text-primary); }
+    .modal-close-btn::after {
+      content: '×';
+      color: #4a0000;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .modal-close-btn:hover { transform: scale(1.1); filter: brightness(0.9); }
+
+    /* 回到顶部按钮 */
+    .back-to-top {
+      position: fixed; bottom: 32px; right: 32px; z-index: 100;
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--glass-highlight);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transform: translateY(16px);
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { filter: brightness(1.1); box-shadow: 0 6px 28px rgba(0,0,0,0.2); }
+    .back-to-top svg { color: var(--text-secondary); }
+
     .modal-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+      width: 52px; height: 52px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-lg);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     }
     .modal-section-title {
-      font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;
+      font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.02em; margin-bottom: var(--space-xs);
     }
     .modal-section-sub {
-      font-size: 16px; color: var(--text-secondary); margin-bottom: 32px;
+      font-size: var(--text-md); color: var(--text-secondary); margin-bottom: var(--space-2xl);
     }
-
-    /* Modal timeline */
     .modal-timeline-item {
       padding: 24px 0; border-top: 1px solid var(--border);
     }
-    .modal-timeline-item:first-of-type { border-top: none; padding-top: 0; }
     .modal-timeline-header {
-      display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
+      display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;
     }
-    .modal-timeline-role {
-      font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
-    }
-    .modal-timeline-date {
-      font-size: 13px; color: var(--text-tertiary); font-weight: 500;
-      font-variant-numeric: tabular-nums;
-    }
+    .modal-timeline-role { font-size: 17px; font-weight: 600; }
+    .modal-timeline-date { font-size: 13px; color: var(--text-tertiary); }
     .modal-timeline-org {
-      font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;
+      font-size: 14px; color: var(--accent); font-weight: 500; margin-bottom: 12px;
     }
-    .modal-bullets { list-style: none; margin-top: 8px; }
+    .modal-bullets { list-style: none; padding: 0; }
     .modal-bullets li {
-      font-size: 14px; color: var(--text-tertiary); line-height: 1.7;
-      padding-left: 16px; position: relative; margin-bottom: 2px;
+      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+      padding-left: 16px; position: relative;
     }
     .modal-bullets li::before {
-      content: '—'; position: absolute; left: 0; top: 0;
-      color: var(--accent); font-weight: 600;
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--border);
     }
-
-    /* Modal project grid */
-    .modal-projects { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .modal-projects { display: flex; flex-direction: column; gap: 24px; }
     .modal-project-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 16px; padding: 28px; transition: background 0.3s;
+      background: var(--card-bg); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px; padding: 24px; border: 1px solid var(--border);
     }
-    .modal-project-card:hover { background: var(--card-hover); }
     .modal-project-card h4 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
     .modal-project-card .project-period {
-      font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 10px;
+      font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; font-variant-numeric: tabular-nums;
     }
-    .modal-project-card ul { list-style: none; }
-    .modal-project-card ul li {
-      font-size: 13px; color: var(--text-secondary); line-height: 1.65;
-      padding-left: 14px; position: relative; margin-bottom: 4px;
-    }
-    .modal-project-card ul li::before {
-      content: '—'; position: absolute; left: 0; top: 0;
-      color: var(--text-tertiary);
-    }
-
-    /* Skill bars in modal */
-    .skills-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-    }
-    .skill-category h4 {
-      font-size: 14px; font-weight: 600; color: var(--text-secondary);
-      margin-bottom: 14px; letter-spacing: 0.06em;
-    }
-    .skill-bar-item {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 12px; font-size: 14px;
-    }
-    .skill-bar-track {
-      flex: 1; height: 4px; border-radius: 2px;
-      background: var(--border); margin-left: 12px; overflow: hidden;
-      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-    }
-    .skill-bar-fill {
-      height: 100%; border-radius: 2px;
-      background: linear-gradient(90deg, var(--accent), #5e5ce6);
-      transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    /* Highlight block */
-    .highlight-block {
-      background: var(--card-bg);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px; margin-bottom: 16px;
-    }
-    .highlight-block h5 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-    .highlight-block p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
     .highlight-label {
-      display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
-      color: var(--accent); background: var(--accent-glow);
-      padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+      display: inline-block; padding: 3px 10px; border-radius: 6px;
+      font-size: 11px; font-weight: 600; background: var(--accent-glass); color: var(--accent);
     }
+    .modal-project-card ul { list-style: none; padding: 0; }
+    .modal-project-card li {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+      padding-left: 16px; position: relative;
+    }
+    .modal-project-card li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--border);
+    }
+    .skills-grid { display: flex; flex-direction: column; gap: 24px; }
+    .skill-category h4 { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--text-primary); }
+
+    .skill-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+    .skill-tag-item{padding:8px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--border);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all 0.25s ease;cursor:default;}
+    .skill-tag-item:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-1px);}
+    .skill-tag-item.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+    /* Pillars */
+    .pillars-section { padding: var(--space-2xl) var(--space-xl) 0; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); max-width: 1100px; margin: 0 auto; }
+    .pillar-card {
+      background: var(--card-bg); backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-2xl) var(--space-xl);
+      text-align: center; position: relative; overflow: hidden;
+      transition: background var(--dur-slow), border-color var(--dur-slow), transform var(--dur-slow) var(--ease-spring);
+    }
+    .pillar-card::before {
+      content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+      opacity: 0.5;
+    }
+    .pillar-card:hover {
+      background: var(--card-hover); border-color: var(--glass-border-strong);
+      transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    }
+    .pillar-icon { width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .pillar-title { font-size: 16px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+    .pillar-desc { font-size: 13px; color: var(--text-tertiary); line-height: 1.6; }
+    .pillar-highlight { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+
+    /* Cases Carousel */
+    .cases-carousel {
+      position: relative;
+      margin-top: var(--space-4xl);
+      margin-bottom: 0;
+    }
+    .cases-track-wrap {
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+    }
+    .cases-track {
+      display: flex;
+      gap: var(--space-xl);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    /* Each card fixed width so we can calculate slides */
+    .case-card {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      cursor: pointer; transition: all var(--dur-slow) var(--ease-spring);
+      background: var(--card-bg); border: 1px solid var(--border);
+      text-decoration: none; color: inherit; display: block;
+      flex-shrink: 0;
+      width: calc(25% - calc(3 * var(--space-xl) / 4));
+    }
+    .case-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-card);}
+    .case-preview{height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+    .case-preview.dark,
+    .case-preview.dark .cp-logo,
+    .case-preview.dark .cp-title { color: #fff !important; }
+    .case-preview.dark .cp-badge { background: rgba(255,255,255,0.18) !important; color: rgba(255,255,255,0.9) !important; border: 1px solid rgba(255,255,255,0.15); }
+    .case-preview.dark .cp-sub { color: rgba(255,255,255,0.65) !important; }
+    .case-preview.neuroflow{background:linear-gradient(135deg,#faf8f5 0%,#f2ede6 50%,#fce4de 100%);}
+    .case-preview.yunlan{background:linear-gradient(135deg,#fafaf9 0%,#f0ede8 100%);}
+    .case-preview-inner{text-align:center;padding:var(--space-xl);}
+    .case-preview-inner .cp-logo{font-size:var(--text-2xl);font-weight:700;letter-spacing:-0.5px;margin-bottom:var(--space-sm);}
+    .neuroflow .cp-logo{color:#1c2333;}
+    .yunlan .cp-logo{color:#1e3a5f;}
+    .case-preview-inner .cp-badge{display:inline-block;padding:var(--space-2xs) var(--space-md);border-radius:var(--radius-md);font-size:var(--text-xs);font-weight:600;margin-bottom:var(--space-md);}
+    .neuroflow .cp-badge{background:rgba(232,114,90,0.15);color:#e8725a;}
+    .yunlan .cp-badge{background:rgba(196,163,90,0.15);color:#c4a35a;}
+    .case-preview-inner .cp-title{font-size:15px;font-weight:600;margin-bottom:var(--space-2xs);}
+    .neuroflow .cp-title{color:#1c2333;}
+    .yunlan .cp-title{color:#1a1a1a;}
+    .case-preview-inner .cp-sub{font-size:var(--text-sm);}
+    .neuroflow .cp-sub{color:#5c6370;}
+    .yunlan .cp-sub{color:#6b6b6b;}
+    .case-info{padding:var(--space-xl) var(--space-2xl);}
+    .case-info h4{font-size:17px;font-weight:600;margin-bottom:var(--space-xs);color:var(--text-primary);}
+    .case-info p{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:var(--space-md);}
+    .case-tags{display:flex;gap:var(--space-xs);flex-wrap:wrap;margin-bottom:var(--space-md);}
+    .case-tag{font-size:var(--text-xs);padding:var(--space-2xs) var(--space-sm);border-radius:var(--radius-sm);background:var(--accent-glass);color:var(--accent);}
+    .case-btn{display:inline-flex;align-items:center;gap:var(--space-xs);font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;padding:var(--space-xs) var(--space-lg);border-radius:var(--radius-lg);background:var(--accent-glass);transition:all var(--dur-normal) ease;}
+    .case-btn:hover{background:var(--accent);color:#fff;gap:var(--space-sm);}
+
+    /* Carousel nav buttons */
+    .cases-nav {
+      display: flex; justify-content: center; gap: 12px;
+      margin-top: var(--space-2xl);
+    }
+    .cases-nav-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--border); background: var(--card-bg);
+      backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+      color: var(--text-primary); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .cases-nav-btn:hover {
+      border-color: var(--accent); color: var(--accent);
+      box-shadow: 0 4px 16px rgba(41,151,255,0.15);
+    }
+    .cases-nav-btn:disabled {
+      opacity: 0.3; cursor: not-allowed; pointer-events: none;
+    }
+    .carousel-dots {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: var(--space-lg); justify-content: center;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .carousel-dot.active {
+      width: 24px; border-radius: 4px;
+      background: var(--accent);
+    }
+
+    /* Explore */
+    .explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+    .explore-card {
+      display: flex; flex-direction: column;
+      background: var(--card-bg); backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid var(--border); border-radius: var(--radius-xl);
+      padding: var(--space-3xl) var(--space-2xl); text-decoration: none; color: inherit;
+      position: relative; overflow: hidden;
+      transition: all var(--dur-slow) var(--ease-spring);
+    }
+    .explore-card::before {
+      content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+      opacity: 0.5;
+    }
+    .explore-card:hover {
+      background: var(--card-hover); border-color: var(--glass-border-strong);
+      transform: translateY(-4px); box-shadow: var(--shadow-card);
+    }
+    .explore-icon { width: 48px; height: 48px; border-radius: var(--radius-md); margin-bottom: var(--space-lg); display: flex; align-items: center; justify-content: center; }
+    .explore-title { font-size: var(--text-xl); font-weight: 600; letter-spacing: -0.015em; margin-bottom: var(--space-xs); }
+    .explore-desc { font-size: var(--text-base); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-md); }
+    .explore-meta { font-size: var(--text-sm); color: var(--text-tertiary); display: flex; align-items: center; gap: var(--space-xs); }
+    .explore-arrow { margin-top: auto; color: var(--accent); font-size: var(--text-base); font-weight: 500; display: inline-flex; align-items: center; gap: var(--space-2xs); }
 
     /* Contact */
-    .contact-section { text-align: center; padding: 80px 0; }
+    .contact-section { text-align: center; padding: var(--space-6xl) 0; }
     .contact-avatar {
       width: 88px; height: 88px; border-radius: 50%;
       background: linear-gradient(135deg,#2997ff 0%,#5e5ce6 100%);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      margin: 0 auto 32px; display: flex; align-items: center; justify-content: center;
-      font-size: 36px; color: #fff; font-weight: 600;
+      margin: 0 auto var(--space-2xl); display: flex; align-items: center; justify-content: center;
+      font-size: var(--text-3xl); color: #fff; font-weight: 600;
       box-shadow: 0 8px 32px rgba(41,151,255,0.2);
     }
-    .contact-headline {
-      font-size: clamp(32px,6vw,52px); font-weight: 700;
-      letter-spacing: -0.025em; margin-bottom: 16px;
-    }
-    .contact-sub { font-size: 19px; color: var(--text-secondary); margin-bottom: 48px; }
-    .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .contact-headline { font-size: clamp(32px,6vw,52px); font-weight: 700; letter-spacing: -0.025em; margin-bottom: var(--space-md); }
+    .contact-sub { font-size: 19px; color: var(--text-secondary); margin-bottom: var(--space-3xl); }
+    .contact-links { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; }
     .cta-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px; border-radius: 100px; font-size: 15px;
+      display: inline-flex; align-items: center; gap: var(--space-xs);
+      padding: var(--space-md) var(--space-2xl); border-radius: var(--radius-pill); font-size: 15px;
       font-weight: 500; text-decoration: none;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      transition: all 0.25s; letter-spacing: 0.01em;
+      transition: all var(--dur-normal); letter-spacing: 0.01em;
     }
     .cta-btn-primary { background: var(--cta-primary-bg); color: var(--cta-primary-color); }
-    .cta-btn-primary:hover { background: var(--cta-primary-hover-bg); transform: scale(1.03); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-    .cta-btn-secondary {
-      background: transparent; color: var(--accent); border: 1px solid var(--accent);
-    }
+    .cta-btn-primary:hover { background: var(--cta-primary-hover-bg); transform: scale(1.03); box-shadow: var(--shadow-btn); }
+    .cta-btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
     .cta-btn-secondary:hover { background: var(--accent-glow); transform: scale(1.03); }
 
-    .footer {
-      text-align: center; padding: 48px 24px;
-      font-size: 13px; color: var(--text-tertiary);
+    .footer { text-align: center; padding: var(--space-3xl) var(--space-xl); font-size: 13px; color: var(--text-tertiary); }
+    .footer-qr-row {
+      display: flex; justify-content: center; gap: 32px;
+      margin-bottom: var(--space-2xl); flex-wrap: wrap;
     }
+    .footer-qr-card {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .footer-qr-img {
+      width: 96px; height: 96px; border-radius: 16px;
+      background: #fff; padding: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease;
+    }
+    .footer-qr-img:hover { transform: scale(1.06); }
+    .footer-qr-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+    .footer-qr-label {
+      font-size: 12px; color: var(--text-secondary); font-weight: 500;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .footer-qr-label svg { opacity: 0.6; }
 
-    /* Reveal animation */
     .reveal {
       opacity: 0; transform: translateY(40px);
       transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
@@ -730,212 +786,50 @@
     .reveal-delay-5 { transition-delay: 0.25s; }
     .reveal-delay-6 { transition-delay: 0.30s; }
 
-    /* ---- Portfolio Cards ---- */
-    .portfolio-preview {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;
-      position: relative; z-index: 1;
+    .nav-links a.active { color: var(--text-primary); font-weight: 600; }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:50%; transform:translateX(-50%) scaleX(0);
+      width:16px; height:2px; background:var(--accent);
+      border-radius:1px; transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);
     }
-    .portfolio-thumb {
-      aspect-ratio: 16 / 10; border-radius: 10px;
-      background: var(--card-bg);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border); overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .portfolio-thumb:hover { border-color: var(--glass-border-strong); transform: scale(1.03); }
-    .portfolio-thumb svg { opacity: 0.3; transition: opacity 0.3s; }
-    .portfolio-thumb:hover svg { opacity: 0.6; }
-
-    /* Status badge */
-    .status-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 100px;
-      position: relative; z-index: 1;
-    }
-    .status-learning {
-      background: rgba(41,151,255,0.12); color: #2997ff;
-      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    }
-    .status-done {
-      background: rgba(48,209,88,0.12); color: #30d158;
-      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    }
-    .status-pending {
-      background: var(--tag-bg); color: var(--text-tertiary);
-      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-    }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: currentColor;
-    }
-    .status-learning .status-dot { animation: statusPulse 1.5s ease-in-out infinite; }
-    .status-done .status-dot { background: #30d158; }
-    .status-pending .status-dot { opacity: 0.3; }
-    @keyframes statusPulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    /* ---- Learning Timeline Card ---- */
-    .learning-roadmap {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      position: relative; z-index: 1;
-    }
-    .roadmap-col h4 {
-      font-size: 16px; font-weight: 600; margin-bottom: 16px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .roadmap-col h4 .col-icon {
-      width: 28px; height: 28px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center; font-size: 14px;
-    }
-    .roadmap-col h4 .col-fe { background: rgba(41,151,255,0.15); color: #2997ff; }
-    .roadmap-col h4 .col-edit { background: rgba(191,90,242,0.15); color: #bf5af2; }
-
-    .roadmap-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 16px; border-radius: 12px;
-      background: var(--card-bg);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border); margin-bottom: 8px;
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .roadmap-item:hover { background: var(--card-hover); }
-    .roadmap-item .ri-icon {
-      font-size: 18px; width: 24px; text-align: center; flex-shrink: 0;
-    }
-    .roadmap-item .ri-label {
-      font-size: 13px; font-weight: 500; flex: 1;
-    }
-    .roadmap-item .ri-status {
-      font-size: 11px; flex-shrink: 0;
-    }
-
-    /* ---- Journal Card ---- */
-    .journal-entries {
-      position: relative; z-index: 1; margin-top: 16px;
-    }
-    .journal-entry {
-      padding: 16px 0; border-top: 1px solid var(--border);
-      display: flex; gap: 16px;
-    }
-    .journal-entry:first-of-type { border-top: none; padding-top: 0; }
-    .journal-date {
-      font-size: 12px; color: var(--text-tertiary); min-width: 72px;
-      font-variant-numeric: tabular-nums; padding-top: 2px;
-    }
-    .journal-body { flex: 1; }
-    .journal-body h5 {
-      font-size: 15px; font-weight: 600; margin-bottom: 4px;
-    }
-    .journal-body p {
-      font-size: 13px; color: var(--text-secondary); line-height: 1.65;
-    }
-
-    /* ---- Section divider ---- */
-    .section-divider {
-      display: flex; align-items: center; gap: 16px; margin: 56px 0 40px;
-    }
-    .section-divider::after {
-      content: ''; flex: 1; height: 1px;
-      background: var(--border);
-    }
-    .section-divider span {
-      font-size: 13px; font-weight: 500; color: var(--text-tertiary);
-      letter-spacing: 0.08em; white-space: nowrap;
-    }
+    .nav-links a:hover::after,.nav-links a.active::after{transform:translateX(-50%) scaleX(1);}
 
     @media (max-width: 768px) {
       .bento { grid-template-columns: repeat(2, 1fr); }
       .span-2, .span-3, .span-4 { grid-column: span 2; }
-      .bento-card { padding: 24px; }
-      .about-card { padding: 32px 24px; }
-      .about-card .card-title { font-size: 24px; }
-      .section { padding: 24px 16px; }
-      .nav-links { gap: 16px; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .modal-panel { padding: 24px; }
-      .contact-section { padding: 60px 0; }
-      .learning-roadmap { grid-template-columns: 1fr; }
-      .portfolio-preview { grid-template-columns: 1fr; }
-      .journal-entry { flex-direction: column; gap: 4px; }
-      .journal-date { min-width: auto; }
+      .bento-card { padding: var(--space-xl); }
+      .about-card { padding: var(--space-2xl) var(--space-xl); }
+      .about-card .card-title { font-size: var(--text-xl); }
+      .section { padding: var(--space-3xl) var(--space-md); }
+      .nav-links { gap: var(--space-md); }
+      .pillars-grid { grid-template-columns: 1fr; gap: var(--space-sm); }
+      .pillar-card { padding: var(--space-xl) var(--space-lg); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); }
+      .stat-item { padding: var(--space-md) var(--space-sm); }
+      .stat-item-value { font-size: var(--text-xl); }
+      .explore-grid { grid-template-columns: 1fr 1fr; }
       .mini-timeline { flex-wrap: wrap; gap: 12px 0; }
       .mini-tl-item { flex: 0 0 50%; min-width: 50%; }
       .mini-tl-line { display: none; }
       .mini-tl-dot { margin-bottom: 4px; }
+      .case-card { width: calc(50% - var(--space-xl) / 2); }
     }
-
     @media (max-width: 480px) {
       .bento { grid-template-columns: 1fr; }
       .span-2, .span-3, .span-4 { grid-column: span 1; }
-      .mini-tl-item { flex: 0 0 100%; min-width: 100%; }
+      .mini-tl-item { flex: 0 0 50%; min-width: 50%; }
+      .hero-section { padding: 60px 0 40px; min-height: 100dvh; }
+      .hero-name { font-size: clamp(32px, 12vw, 48px); }
+      .back-to-top { bottom: 20px; right: 16px; }
+      .case-card { width: 100%; }
+      .explore-grid { grid-template-columns: 1fr; }
+      /* 移动端关闭按钮加大并与图标对齐 */
+      .modal-close-btn { width: 44px; height: 44px; top: 52px; right: 24px; }
+      .modal-close-btn::after { font-size: 28px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
-      .hero-bg-orb, .hero-scroll-dot { animation: none; }
-      .hero-label, .hero-name, .hero-title, .hero-meta, .hero-scroll { animation: none; opacity: 1; }
     }
-
-    @media (max-width: 768px) {
-      .hero-section { padding: 80px 0 60px; }
-      .hero-bento { grid-template-columns: repeat(2, 1fr); }
-      .hero-name { font-size: clamp(40px, 8vw, 64px); }
-    }
-    @media (max-width: 480px) {
-      .hero-section { padding: 60px 0 40px; min-height: 100dvh; }
-      .hero-bento { grid-template-columns: 1fr; }
-      .hero-stat { padding: 16px 12px; }
-      .hero-name { font-size: clamp(32px, 12vw, 48px); }
-    }
-
-    .back-to-top {
-      position:fixed;bottom:32px;right:32px;z-index:1000;
-      width:44px;height:44px;border-radius:50%;
-      background:var(--card-bg);border:1px solid var(--card-border);
-      color:var(--text-secondary);cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-      opacity:0;visibility:hidden;transform:translateY(10px);
-      transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
-    }
-    .back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0);}
-    .back-to-top:hover{color:var(--text-primary);transform:translateY(-2px);}
-
-    .skill-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
-    .skill-tag-item{padding:8px 16px;border-radius:20px;background:var(--card-bg);border:1px solid var(--card-border);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all 0.25s ease;cursor:default;}
-    .skill-tag-item:hover{background:var(--accent);color:#fff;border-color:var(--accent);transform:translateY(-1px);}
-    .skill-tag-item.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
-
-    /* 案例展示 */
-    .cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:40px;margin-bottom:0;}
-    .case-card{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);background:var(--card-bg);border:1px solid var(--card-border);text-decoration:none;color:inherit;display:block;}
-    .case-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.2);border-color:var(--accent);}
-    .case-preview{height:260px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-    .case-preview.neuroflow{background:linear-gradient(135deg,#faf8f5 0%,#f2ede6 50%,#fce4de 100%);}
-    .case-preview.yunlan{background:linear-gradient(135deg,#fafaf9 0%,#f0ede8 100%);}
-    .case-preview-inner{text-align:center;padding:24px;}
-    .case-preview-inner .cp-logo{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:10px;}
-    .neuroflow .cp-logo{color:#1c2333;}
-    .yunlan .cp-logo{color:#1e3a5f;}
-    .case-preview-inner .cp-badge{display:inline-block;padding:4px 14px;border-radius:14px;font-size:11px;font-weight:600;margin-bottom:16px;}
-    .neuroflow .cp-badge{background:rgba(232,114,90,0.15);color:#e8725a;}
-    .yunlan .cp-badge{background:rgba(196,163,90,0.15);color:#c4a35a;}
-    .case-preview-inner .cp-title{font-size:15px;font-weight:600;margin-bottom:4px;}
-    .neuroflow .cp-title{color:#1c2333;}
-    .yunlan .cp-title{color:#1a1a1a;}
-    .case-preview-inner .cp-sub{font-size:12px;}
-    .neuroflow .cp-sub{color:#5c6370;}
-    .yunlan .cp-sub{color:#6b6b6b;}
-    .case-info{padding:24px 28px;}
-    .case-info h4{font-size:17px;font-weight:600;margin-bottom:6px;color:var(--text-primary);}
-    .case-info p{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;}
-    .case-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-    .case-tag{font-size:11px;padding:4px 10px;border-radius:10px;background:var(--accent-glass);color:var(--accent);}
-    .case-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;padding:8px 20px;border-radius:20px;background:var(--accent-glass);transition:all 0.25s ease;}
-    .case-btn:hover{background:var(--accent);color:#fff;gap:10px;}
-    @media (max-width:768px){.cases-grid{grid-template-columns:1fr;}}
   </style>
 
   <!-- OG / Social -->
@@ -949,233 +843,105 @@
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
 
+  <!-- ====== 导航栏 ====== -->
   <nav class="nav" id="nav">
     <button class="theme-toggle" id="themeToggle" aria-label="切换深色/浅色模式">
       <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
     <ul class="nav-links">
-      <li><a href="#creative">创意</a></li>
-      <li><a href="#cases">案例</a></li>
       <li><a href="#bento">职业</a></li>
-      <li><a href="#learning">学习</a></li>
-      <li><a href="#contact">联系</a></li>
+      <li><a href="#explore">探索</a></li>
+      <li><a href="#cases">作品</a></li>
+      <li><a href="/ai-radar/" target="_blank">AI新闻</a></li>
+      <li><a href="/pxid-landing/" target="_blank">PXID</a></li>
+      <li><a href="#contact" style="color:var(--accent);font-weight:500;">联系我</a></li>
     </ul>
   </nav>
 
-  <!-- Hero -->
+  <!-- ====== 英雄区 ====== -->
   <section class="hero-section" id="hero">
     <div class="hero-bg-orb"></div>
     <div class="hero-bg-orb-2"></div>
     <div class="hero-content reveal">
-      <p class="hero-label">房地产营销策划 · 营销部副经理</p>
+      <p class="hero-label">房地产营销策划经理 · 8年</p>
       <h1 class="hero-name">李坤</h1>
-      <p class="hero-tagline">8年深耕淮安 · 保利系标杆操盘 · 全周期营销管理</p>
+      <p class="hero-slogan">用数据和创意，让每个项目成为标杆。</p>
       <p class="hero-meta">保利堂悦 8开8罄 · 保利和府两年全市销冠 · 大平层精准圈层营销 · 项目重启盘活</p>
-      <div class="hero-bento">
-        <div class="hero-stat">
-          <div class="hero-stat-value">82.97亿</div>
-          <div class="hero-stat-label">操盘货值总额</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value">4</div>
-          <div class="hero-stat-label">项目统筹管理</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value">8开8罄</div>
-          <div class="hero-stat-label">标杆战绩</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value">淮安</div>
-          <div class="hero-stat-label">📍 所在地 · 13275171596</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ====== 创意探索 ====== -->
-  <section class="section" id="creative">
-    <div class="section-inner">
-      <div class="section-divider reveal">
-        <span>创意探索</span>
-      </div>
-      <h2 class="section-headline reveal reveal-delay-1" style="font-size:clamp(24px,4vw,44px);margin-bottom:32px;">
-        跨界学习，持续进化。
-      </h2>
-      <p style="font-size:15px;color:var(--text-secondary);margin-bottom:36px;margin-top:-20px;" class="reveal reveal-delay-1">
-        在房地产营销策划之外，探索技术与影像，用代码和镜头拓展表达边界。
-      </p>
-
-      <div class="creative-rows" id="creativeBento">
-
-        <!-- 技艺录 -->
-        <div class="creative-row edge-1 reveal reveal-delay-2 visible">
-          <div class="creative-channel">
-            <div class="card-icon icon-blue">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div class="channel-text">
-              <div class="card-label">技艺录</div>
-              <div class="card-title">技艺录</div>
-              <div class="card-desc">从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。</div>
-              <div class="channel-stat"><span class="channel-stat-dot"></span>8 篇文章</div>
-            </div>
-            <a class="channel-link" href="craft/index.html">查看全部 →</a>
-          </div>
-          <div class="creative-content">
-            <div class="creative-article-list">
-              <a class="creative-article-item" href="article.html?id=article-13">
-                <span class="art-arrow">→</span>
-                <span class="art-title">最速曲线：全栈工程师的系统性蜕变</span>
-                <span class="art-date">2026-04-26</span>
-              </a>
-              <a class="creative-article-item" href="article.html?id=article-1">
-                <span class="art-arrow">→</span>
-                <span class="art-title">HTML 语义化：从 div 到语义化标签</span>
-                <span class="art-date">2025-12-20</span>
-              </a>
-              <a class="creative-article-item" href="article.html?id=article-2">
-                <span class="art-arrow">→</span>
-                <span class="art-title">CSS 布局革命：Flexbox 与 Grid 实战</span>
-                <span class="art-date">2025-12-28</span>
-              </a>
-            </div>
-            <div class="creative-tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">AI</span>
-              <span class="tag">Vue</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 视频剪辑 -->
-        <div class="creative-row edge-5 reveal reveal-delay-3 visible">
-          <div class="creative-channel">
-            <div class="card-icon icon-purple">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-            </div>
-            <div class="channel-text">
-              <div class="card-label">视频剪辑</div>
-              <div class="card-title">视频剪辑</div>
-              <div class="card-desc">素材整理、剪辑节奏、转场特效、调色与音频处理。</div>
-              <div class="channel-stat"><span class="channel-stat-dot"></span>5 篇文章</div>
-            </div>
-            <a class="channel-link" href="video-lab/index.html">查看全部 →</a>
-          </div>
-          <div class="creative-content">
-            <div class="creative-article-list">
-              <a class="creative-article-item" href="article.html?id=article-15">
-                <span class="art-arrow">→</span>
-                <span class="art-title">【影视飓风】剪辑课 — MacBook Neo 介绍</span>
-                <span class="art-date">2026-06-11</span>
-              </a>
-              <a class="creative-article-item" href="article.html?id=article-11">
-                <span class="art-arrow">→</span>
-                <span class="art-title">调色基础：用色彩讲述情绪</span>
-                <span class="art-date">2026-03-01</span>
-              </a>
-              <a class="creative-article-item" href="article.html?id=article-10">
-                <span class="art-arrow">→</span>
-                <span class="art-title">音频处理：让声音更有质感</span>
-                <span class="art-date">2026-02-15</span>
-              </a>
-            </div>
-            <div class="creative-tags">
-              <span class="tag">剪辑思维</span>
-              <span class="tag">音频处理</span>
-              <span class="tag">调色</span>
-              <span class="tag">转场</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ====== 案例展示 ====== -->
-  <section class="section" id="cases" style="padding-bottom:40px;">
-    <div class="section-inner">
-      <p class="section-label reveal">案例展示</p>
-      <h2 class="section-headline reveal reveal-delay-1">
-        企业官网设计作品
-      </h2>
-      <p class="section-sub reveal reveal-delay-2" style="max-width:560px;color:var(--text-secondary);font-size:15px;line-height:1.7;margin-top:12px;">
-        从 AI 科技到传统企业，用设计语言诠释品牌价值。
-      </p>
-
-      <div class="cases-grid reveal reveal-delay-3">
-        <!-- NeuroFlow -->
-        <a href="neuroflow/index.html" class="case-card" target="_blank">
-          <div class="case-preview neuroflow">
-            <div class="case-preview-inner">
-              <div class="cp-logo">NeuroFlow</div>
-              <div class="cp-badge">企业级 AI SaaS</div>
-              <div class="cp-title">用 AI 把数据变成决策力</div>
-              <div class="cp-sub">500+ 企业 · 2.3 亿日均调用</div>
-            </div>
-          </div>
-          <div class="case-info">
-            <h4>NeuroFlow — AI 智能决策平台</h4>
-            <p>暖色调编辑排版风格，Tab 切换 + FAQ 手风琴 + 三步接入流程，传递 AI 温度与专业感。</p>
-            <div class="case-tags">
-              <span class="case-tag">AI / SaaS</span>
-              <span class="case-tag">暖色调</span>
-              <span class="case-tag">编辑排版</span>
-              <span class="case-tag">B2B</span>
-            </div>
-            <span class="case-btn">查看网站 →</span>
-          </div>
+      <div class="hero-cta">
+        <a href="#contact" class="hero-cta-btn hero-cta-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          联系我
         </a>
-
-        <!-- 云澜集团 -->
-        <a href="yunlan/index.html" class="case-card" target="_blank">
-          <div class="case-preview yunlan">
-            <div class="case-preview-inner">
-              <div class="cp-logo">云澜集团</div>
-              <div class="cp-badge">城市建设 · 资产管理</div>
-              <div class="cp-title">以远见构筑未来</div>
-              <div class="cp-sub">820 亿资产 · 28 年深耕</div>
-            </div>
-          </div>
-          <div class="case-info">
-            <h4>云澜集团 — 高端地产控股集团</h4>
-            <p>面向投资者与合作伙伴的企业官网，克制典雅的灰白基调，传递稳重与实力。</p>
-            <div class="case-tags">
-              <span class="case-tag">企业官网</span>
-              <span class="case-tag">地产</span>
-              <span class="case-tag">轻奢</span>
-              <span class="case-tag">投资者关系</span>
-            </div>
-            <span class="case-btn">查看网站 →</span>
-          </div>
-        </a>
-
       </div>
     </div>
   </section>
 
-  <!-- Bento Grid -->
+  <!-- ====== 数据看板 ====== -->
+  <section class="section" id="stats" style="padding-top:20px;padding-bottom:20px;">
+    <div class="section-inner">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-item-value">82.97亿</div>
+          <div class="stat-item-label">操盘货值总额</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-value">4</div>
+          <div class="stat-item-label">项目统筹管理</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-value">8开8罄</div>
+          <div class="stat-item-label">标杆战绩</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item-value">淮安</div>
+          <div class="stat-item-label">所在地 · 13275171596</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 三大支柱 ====== -->
+  <section class="pillars-section">
+    <div class="pillars-grid">
+      <div class="pillar-card reveal">
+        <div class="pillar-icon icon-orange" style="font-size:28px;">🏆</div>
+        <div class="pillar-highlight">82.97 亿</div>
+        <div class="pillar-title">操盘战绩</div>
+        <div class="pillar-desc">4个项目统筹管理<br>保利堂悦 8开8罄 标杆案例<br>保利和府连续两年全市销冠</div>
+      </div>
+      <div class="pillar-card reveal reveal-delay-1">
+        <div class="pillar-icon icon-blue" style="font-size:28px;">💡</div>
+        <div class="pillar-highlight">全周期</div>
+        <div class="pillar-title">核心能力</div>
+        <div class="pillar-desc">从前期定位到全周期操盘<br>数据分析 · 圈层营销 · 新媒体运营<br>项目重启盘活实战经验</div>
+      </div>
+      <div class="pillar-card reveal reveal-delay-2">
+        <div class="pillar-icon icon-green" style="font-size:28px;">🎯</div>
+        <div class="pillar-highlight">策划经理</div>
+        <div class="pillar-title">求职意向</div>
+        <div class="pillar-desc">策划经理 / 产品经理<br>淮安及周边市场<br>8年经验 · 随时到岗</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Bento Grid（职业信息） ====== -->
   <section class="section" id="bento">
     <div class="section-inner">
       <p class="section-label reveal">个人简介</p>
-      <h2 class="section-headline reveal reveal-delay-1">
-        以数据驱动策略，<br>以执行兑现承诺。
-      </h2>
-
+      <h2 class="section-headline reveal reveal-delay-1">以数据驱动策略，<br>以执行兑现承诺。</h2>
       <div class="bento">
 
         <!-- About -->
-        <div class="bento-card about-card span-3 edge-1 reveal reveal-delay-1" data-modal="about">
+        <div class="bento-card about-card span-2 edge-1 reveal reveal-delay-1" data-modal="about">
           <div class="card-icon icon-blue">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>
           </div>
-          <div class="card-title">
-            拥有强大学习能力和自驱力，善于应变，抗压能力强。
+          <div class="card-title" style="font-size:clamp(22px,3.5vw,32px);">
+            通过数据分析与圈层营销，实现保利堂悦 8开8罄。
           </div>
-          <div class="card-desc" style="margin-top:12px;">
-            8年房地产营销策划经验，从项目前期筹备到全周期操盘，经历过首开破局、续销攻坚、重启盘活等各类营销场景。擅长数据分析、圈层营销、新媒体运营——让每一个项目找到属于自己的破局路径。
+          <div class="card-desc" style="margin-top:12px;font-size:15px;">
+            8年房地产营销策划经验，从首开破局到续销攻坚、从项目重启到精准圈层去化——在淮安市场用数据驱动策略，以执行兑现承诺。
           </div>
           <div class="card-expand-hint">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -1183,10 +949,13 @@
         </div>
 
         <!-- Stat -->
-        <div class="bento-card stat-card span-1 edge-3 reveal reveal-delay-2" data-modal="stats">
-          <div class="stat-value">8+</div>
-          <div class="stat-unit">年地产经验</div>
-          <div class="stat-label">全周期操盘</div>
+        <div class="bento-card stat-card span-2 edge-3 reveal reveal-delay-2" data-modal="stats">
+          <div class="stat-value">82.97<span style="font-size:24px;font-weight:500;"> 亿</span></div>
+          <div class="stat-unit">操盘货值总额</div>
+          <div class="stat-label" style="margin-top:8px;">8+ 年经验 · 4 项目统筹 · 8开8罄</div>
+          <div class="card-expand-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          </div>
         </div>
 
         <!-- Experience -->
@@ -1197,54 +966,14 @@
           <div class="card-label">职业经历</div>
           <div class="card-title">工作经历</div>
           <div class="card-subtitle">从人才市场运营到头部房企策划统筹，深耕淮安8年</div>
-
-          <!-- Mini Timeline -->
           <div class="mini-timeline">
-            <div class="mini-tl-item">
-              <div class="mini-tl-dot active"></div>
-              <div class="mini-tl-line"></div>
-              <div class="mini-tl-body">
-                <div class="mini-tl-org">御策行</div>
-                <div class="mini-tl-role">项目企划</div>
-                <div class="mini-tl-date">2023 — 至今</div>
-              </div>
-            </div>
-            <div class="mini-tl-item">
-              <div class="mini-tl-dot"></div>
-              <div class="mini-tl-line"></div>
-              <div class="mini-tl-body">
-                <div class="mini-tl-org">保利和润</div>
-                <div class="mini-tl-role">项目统筹</div>
-                <div class="mini-tl-date">2021 — 2023</div>
-              </div>
-            </div>
-            <div class="mini-tl-item">
-              <div class="mini-tl-dot"></div>
-              <div class="mini-tl-line"></div>
-              <div class="mini-tl-body">
-                <div class="mini-tl-org">百达行</div>
-                <div class="mini-tl-role">策划</div>
-                <div class="mini-tl-date">2019 — 2021</div>
-              </div>
-            </div>
-            <div class="mini-tl-item">
-              <div class="mini-tl-dot"></div>
-              <div class="mini-tl-body">
-                <div class="mini-tl-org">经发集团</div>
-                <div class="mini-tl-role">运营</div>
-                <div class="mini-tl-date">2017 — 2019</div>
-              </div>
-            </div>
+            <div class="mini-tl-item"><div class="mini-tl-dot"></div><div class="mini-tl-line"></div><div class="mini-tl-body"><div class="mini-tl-org">经发集团</div><div class="mini-tl-role">运营</div><div class="mini-tl-date">2017 — 2019</div></div></div>
+            <div class="mini-tl-item"><div class="mini-tl-dot"></div><div class="mini-tl-line"></div><div class="mini-tl-body"><div class="mini-tl-org">百达行</div><div class="mini-tl-role">策划</div><div class="mini-tl-date">2019 — 2021</div></div></div>
+            <div class="mini-tl-item"><div class="mini-tl-dot"></div><div class="mini-tl-line"></div><div class="mini-tl-body"><div class="mini-tl-org">保利和润</div><div class="mini-tl-role">项目统筹</div><div class="mini-tl-date">2021 — 2023</div></div></div>
+            <div class="mini-tl-item"><div class="mini-tl-dot active"></div><div class="mini-tl-body"><div class="mini-tl-org">御策行</div><div class="mini-tl-role">项目企划</div><div class="mini-tl-date">2023 — 至今</div></div></div>
           </div>
-
-          <div class="tag-row" style="margin-top:auto;">
-            <span class="tag">保利系项目</span>
-            <span class="tag">项目统筹</span>
-            <span class="tag">全周期操盘</span>
-          </div>
-          <div class="card-expand-hint">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-          </div>
+          <div class="tag-row"><span class="tag">保利系项目</span><span class="tag">项目统筹</span><span class="tag">全周期操盘</span></div>
+          <div class="card-expand-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
         </div>
 
         <!-- Education -->
@@ -1296,35 +1025,19 @@
           </div>
         </div>
 
-        <!-- Job Target — 填补2列空缺 -->
+        <!-- Job Target -->
         <div class="bento-card target-card span-2 edge-3 reveal reveal-delay-3" data-modal="target">
           <div class="card-icon icon-orange">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
           </div>
           <div class="card-label">在找什么</div>
           <div class="card-title">求职意向</div>
-          <div class="card-desc" style="margin-bottom:4px;">期待一个能将策略落地、持续创造价值的平台。</div>
+          <div class="card-desc" style="margin-bottom:4px;">期待一个能将策略落地、持续创造价值的平台。既能以策划视角操盘项目，也能从产品角度思考用户价值，用技术能力将想法变为可交付的成果。</div>
           <div style="margin-top:auto;">
-            <div class="target-row">
-              <span class="target-dot"></span>
-              <span class="target-key">岗位</span>
-              <span class="target-val">策划经理</span>
-            </div>
-            <div class="target-row">
-              <span class="target-dot"></span>
-              <span class="target-key">地点</span>
-              <span class="target-val">淮安及周边</span>
-            </div>
-            <div class="target-row">
-              <span class="target-dot"></span>
-              <span class="target-key">年限</span>
-              <span class="target-val">8年</span>
-            </div>
-            <div class="target-row">
-              <span class="target-dot"></span>
-              <span class="target-key">到岗</span>
-              <span class="target-val">随时到岗</span>
-            </div>
+            <div class="target-row"><span class="target-dot"></span><span class="target-key">岗位</span><span class="target-val">策划经理</span></div>
+            <div class="target-row"><span class="target-dot"></span><span class="target-key">地点</span><span class="target-val">淮安及周边</span></div>
+            <div class="target-row"><span class="target-dot"></span><span class="target-key">年限</span><span class="target-val">8年</span></div>
+            <div class="target-row"><span class="target-dot"></span><span class="target-key">到岗</span><span class="target-val">随时到岗</span></div>
           </div>
           <div class="card-expand-hint">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -1357,150 +1070,159 @@
     </div>
   </section>
 
-  <!-- ====== 学习历程 ====== -->
-  <section class="section" id="learning">
-    <div class="section-inner">
-      <div class="section-divider reveal">
-        <span>学习历程</span>
-      </div>
-      <h2 class="section-headline reveal reveal-delay-1" style="font-size:clamp(24px,4vw,44px);margin-bottom:32px;">
-        每一步都算数。
+  <!-- ====== 探索与学习 ====== -->
+  <section class="section" id="explore" style="padding-bottom:48px;">
+    <div class="section-inner" style="text-align:center;">
+      <p class="section-label reveal">探索与学习</p>
+      <h2 class="section-headline reveal reveal-delay-1" style="font-size:clamp(24px,4vw,44px);margin-bottom:12px;">
+        跨界探索，持续进化。
       </h2>
-
-      <div class="bento">
-
-        <!-- 学习路线图 -->
-        <div class="bento-card span-4 edge-2 reveal reveal-delay-2" data-modal="learning">
-          <div class="card-icon icon-green" style="margin-bottom:12px;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <p style="font-size:15px;color:var(--text-secondary);margin-bottom:40px;" class="reveal reveal-delay-1">
+        在房地产营销策划之外，用代码和镜头拓展表达边界。
+      </p>
+      <div class="explore-grid">
+        <a href="craft/index.html" class="explore-card reveal reveal-delay-2">
+          <div class="explore-icon icon-blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           </div>
-          <div class="card-title" style="margin-bottom:4px;">学习路线图</div>
-          <div class="card-subtitle" style="margin-bottom:20px;">记录我的跨界学习进度与成长轨迹</div>
-
-          <div class="learning-roadmap">
-            <div class="roadmap-col">
-              <h4><span class="col-icon col-fe">🛠️</span> 技艺录</h4>
-              <div class="roadmap-item">
-                <span class="ri-icon">✅</span>
-                <span class="ri-label">HTML5 / CSS3 基础</span>
-                <span class="ri-status status-badge status-done"><span class="status-dot"></span>完成</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">💻</span>
-                <span class="ri-label">JavaScript 核心语法</span>
-                <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">🤖</span>
-                <span class="ri-label">AI &amp; Vue</span>
-                <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">🔧</span>
-                <span class="ri-label">工程化 &amp; 工具链</span>
-                <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">🚀</span>
-                <span class="ri-label">第一个上线项目</span>
-                <span class="ri-status status-badge status-done"><span class="status-dot"></span>完成</span>
-              </div>
-            </div>
-            <div class="roadmap-col">
-              <h4><span class="col-icon col-edit">🎬</span> 视频剪辑</h4>
-              <div class="roadmap-item">
-                <span class="ri-icon">🎯</span>
-                <span class="ri-label">剪辑软件基础操作</span>
-                <span class="ri-status status-badge status-learning"><span class="status-dot"></span>进行中</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">✂️</span>
-                <span class="ri-label">剪辑节奏与叙事</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">✨</span>
-                <span class="ri-label">转场 & 特效制作</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">🎨</span>
-                <span class="ri-label">调色与音频处理</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
-              </div>
-              <div class="roadmap-item">
-                <span class="ri-icon">🏆</span>
-                <span class="ri-label">首个完整剪辑作品</span>
-                <span class="ri-status status-badge status-pending"><span class="status-dot"></span>待开始</span>
-              </div>
-            </div>
+          <div class="explore-title">技艺录</div>
+          <div class="explore-desc">从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。</div>
+          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;"></span> 22 篇文章 · 88 个技术标签</div>
+          <div class="explore-arrow">查看全部 →</div>
+        </a>
+        <a href="video-lab/index.html" class="explore-card reveal reveal-delay-3">
+          <div class="explore-icon icon-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
           </div>
-
-          <div class="card-expand-hint">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          <div class="explore-title">视频剪辑</div>
+          <div class="explore-desc">素材整理、剪辑节奏、转场特效、调色与音频处理。</div>
+          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#bf5af2;display:inline-block;"></span> 学习进行中</div>
+          <div class="explore-arrow">查看作品 →</div>
+        </a>
+        <a href="notes/index.html" class="explore-card reveal reveal-delay-4">
+          <div class="explore-icon icon-amber">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           </div>
-        </div>
-
-        <!-- 学习心得 -->
-        <div class="bento-card span-4 edge-3 reveal reveal-delay-3" data-modal="journal">
-          <div class="card-icon icon-orange" style="margin-bottom:12px;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </div>
-          <div class="card-title" style="margin-bottom:4px;">学习心得</div>
-          <div class="card-subtitle" style="margin-bottom:8px;">记录思考，沉淀成长</div>
-
-          <div class="journal-entries">
-            <div class="journal-entry">
-              <div class="journal-date">2026.05</div>
-              <div class="journal-body">
-                <h5>用 Apple 发布会风格做了自己的简历</h5>
-                <p>从零手写 HTML/CSS/JS，实现了 Bento 栅格布局、液态玻璃效果、深色/浅色模式切换。整个过程让自己对响应式设计、CSS 变量管理和交互动效有了更深的理解。编程真的很有趣 —— 所见即所得。</p>
-              </div>
-            </div>
-            <div class="journal-entry">
-              <div class="journal-date">2026.05</div>
-              <div class="journal-body">
-                <h5>开始系统学习编程</h5>
-                <p>决定跳出舒适区，在房地产策划之外开辟第二技能线。选择编程是因为它能将"呈现"的能力延伸到数字世界。HTML/CSS 并不难，难的是做出好品味的设计——这恰恰是策划人的优势。</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-expand-hint">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-          </div>
-        </div>
-
+          <div class="explore-title">随笔</div>
+          <div class="explore-desc">工作感悟、生活观察、阅读笔记——不一定有结论，但一定有思考。</div>
+          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#c87a1e;display:inline-block;"></span> 2 篇文章</div>
+          <div class="explore-arrow">查看全部 →</div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- ====== 案例展示（作品） ====== -->
+  <section class="section" id="cases" style="padding-bottom:40px;">
+    <div class="section-inner">
+      <p class="section-label reveal">作品展示</p>
+      <h2 class="section-headline reveal reveal-delay-1">用作品说话。</h2>
+      <p style="max-width:560px;color:var(--text-secondary);font-size:15px;line-height:1.7;margin-top:12px;" class="reveal reveal-delay-2">
+        从微信小程序到企业官网，从功能演示到自动化站点，用设计与技术诠释产品价值。
+      </p>
+      <div class="cases-carousel reveal reveal-delay-3">
+        <div class="cases-track-wrap">
+          <div class="cases-track" id="casesTrack">
+        <a href="宠急帮/index.html" class="case-card" target="_blank">
+          <div class="case-preview dark" style="background:linear-gradient(135deg,#3d1f0a,#c76e2e,#f4a460);"><div class="case-preview-inner"><div class="cp-logo" style="font-weight:800;">宠急帮</div><div class="cp-badge">微信小程序</div><div class="cp-title">毛孩子的紧急帮手</div><div class="cp-sub">上门喂食 · 遛狗 · 陪玩 · 洗护 · 寄养</div></div></div>
+          <div class="case-info"><h4>宠急帮 — 宠物临时照顾服务平台</h4><p>暖橙活力 × 深色卡片风格。双角色（求助者/帮助者）实时匹配，5 大服务覆盖全部宠物照顾场景，微信小程序 + 云开发。</p><div class="case-tags"><span class="case-tag">微信小程序</span><span class="case-tag">原生开发</span><span class="case-tag">云开发</span><span class="case-tag">双角色</span></div><span class="case-btn">查看详情 →</span></div>
+        </a>
+        <a href="pxid/index.html" class="case-card" target="_blank">
+          <div class="case-preview dark" style="background:linear-gradient(135deg,#0a0c0f,#0d1520,#111d2e);"><div class="case-preview-inner"><div class="cp-logo" style="font-weight:800;">PXID</div><div class="cp-badge">ODM/OEM 制造商</div><div class="cp-title">电动出行，中国智造</div><div class="cp-sub">13 年经验 · 200+ 专利 · 全球市场</div></div></div>
+          <div class="case-info"><h4>PXID 品向制造 — 电动出行 ODM/OEM 解决方案</h4><p>专精特新企业，ISO9001 / CE / UL 认证。Next.js 企业官网，暗黑科技风格 + 中英双语 + 完整产品矩阵（电动自行车、电摩、滑板车）。</p><div class="case-tags"><span class="case-tag">企业官网</span><span class="case-tag">Next.js</span><span class="case-tag">电动出行</span><span class="case-tag">中英双语</span><span class="case-tag">ODM/OEM</span></div><span class="case-btn">查看网站 →</span></div>
+        </a>
+        <a href="pet-paws/index.html" class="case-card" target="_blank">
+          <div class="case-preview dark" style="background:linear-gradient(135deg,#1a0f2e,#4a2c6a,#8b5a9f);"><div class="case-preview-inner"><div class="cp-logo" style="font-weight:800;">宠 迹</div><div class="cp-badge">微信小程序</div><div class="cp-title">记录每一次成长</div><div class="cp-sub">体重 · 疫苗 · 驱虫 · 饮食</div></div></div>
+          <div class="case-info"><h4>宠迹 — 宠物成长记录小程序</h4><p>车厘子红 × 暗黑 Bento 风格，4 页微信原生小程序 Demo——成长仪表盘 / 宠物档案 / 一键添加 / 疫苗管理。</p><div class="case-tags"><span class="case-tag">微信小程序</span><span class="case-tag">Bento Grid</span><span class="case-tag">Ardot 设计</span><span class="case-tag">原生开发</span></div><span class="case-btn">查看详情 →</span></div>
+        </a>
+        <a href="ai-radar/index.html" class="case-card" target="_blank">
+          <div class="case-preview dark" style="background:linear-gradient(135deg,#0a0f1a,#1a2a4a,#2d4a7a);"><div class="case-preview-inner"><div class="cp-logo" style="font-weight:800;">AI 新闻雷达</div><div class="cp-badge">自动化资讯站点</div><div class="cp-title">每日 AI 精选，尽在掌握</div><div class="cp-sub">模型发布 · 产品更新 · 行业动态 · 论文 · 技巧</div></div></div>
+          <div class="case-info"><h4>AI 新闻雷达 — 每日自动更新的 AI 资讯站</h4><p>Apple Keynote 暗黑风格 Bento Grid 布局，对接 AI HOT API 每天自动拉取全球 AI 资讯，WorkBuddy 自动化程序驱动定时更新并推送 COS。</p><div class="case-tags"><span class="case-tag">自动化</span><span class="case-tag">Apple 风格</span><span class="case-tag">API 集成</span><span class="case-tag">定时推送</span><span class="case-tag">纯前端</span></div><span class="case-btn">查看网站 →</span></div>
+        </a>
+        <a href="neuroflow/index.html" class="case-card" target="_blank">
+          <div class="case-preview neuroflow"><div class="case-preview-inner"><div class="cp-logo">NeuroFlow</div><div class="cp-badge">企业级 AI SaaS</div><div class="cp-title">用 AI 把数据变成决策力</div><div class="cp-sub">500+ 企业 · 2.3 亿日均调用</div></div></div>
+          <div class="case-info"><h4>NeuroFlow — AI 智能决策平台</h4><p>暖色调编辑排版风格，Tab 切换 + FAQ 手风琴 + 三步接入流程，传递 AI 温度与专业感。</p><div class="case-tags"><span class="case-tag">AI / SaaS</span><span class="case-tag">暖色调</span><span class="case-tag">编辑排版</span><span class="case-tag">B2B</span></div><span class="case-btn">查看网站 →</span></div>
+        </a>
+        <a href="yunlan/index.html" class="case-card" target="_blank">
+          <div class="case-preview yunlan"><div class="case-preview-inner"><div class="cp-logo">云澜集团</div><div class="cp-badge">城市建设 · 资产管理</div><div class="cp-title">以远见构筑未来</div><div class="cp-sub">820 亿资产 · 28 年深耕</div></div></div>
+          <div class="case-info"><h4>云澜集团 — 高端地产控股集团</h4><p>面向投资者与合作伙伴的企业官网，克制典雅的灰白基调，传递稳重与实力。</p><div class="case-tags"><span class="case-tag">企业官网</span><span class="case-tag">地产</span><span class="case-tag">轻奢</span><span class="case-tag">投资者关系</span></div><span class="case-btn">查看网站 →</span></div>
+        </a>
+        <a href="bigbang/index.html" class="case-card" target="_blank">
+          <div class="case-preview dark" style="background:linear-gradient(135deg,#4a0a0a,#8b0000,#b91c22);"><div class="case-preview-inner"><div class="cp-logo" style="font-weight:800;">BIG BANG</div><div class="cp-badge">功能展示 · 仿 Smartisan OS</div><div class="cp-title">把文字"炸"开</div><div class="cp-sub">拇指大面积按压 · 智能分词 · OCR 识别</div></div></div>
+          <div class="case-info"><h4>大爆炸 Big Bang — Smartisan OS 功能展示</h4><p>仿 Smartisan OS 经典功能页面，大字体排版 + 手机模拟交互 + 逐段功能分解展示，致敬锤子科技的极致设计。</p><div class="case-tags"><span class="case-tag">功能展示</span><span class="case-tag">Smartisan 风格</span><span class="case-tag">手机 UI</span><span class="case-tag">仿写</span></div><span class="case-btn">查看网站 →</span></div>
+        </a>
+        <a href="http://orca.appin.site" class="case-card" target="_blank">
+          <div class="case-preview dark" style="background:linear-gradient(135deg,#0a0607,#1a4a2e,#2d9659);"><div class="case-preview-inner"><img src="uploads/orca-logo.png" alt="Orca" style="height: 36px; margin-bottom: 12px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));"><div class="cp-badge">WordPress 科技博客</div><div class="cp-title">技术驱动变革</div><div class="cp-sub">科技资讯 · 新车评测 · AI 趋势 · 数码盘点</div></div></div>
+          <div class="case-info"><h4>Orca — 技术驱动变革</h4><p>WordPress 自建科技博客，Relive-Pro 主题。覆盖新能源汽车、数码产品、AI 行业动态与科技趋势解读。</p><div class="case-tags"><span class="case-tag">WordPress</span><span class="case-tag">科技博客</span><span class="case-tag">自建站点</span><span class="case-tag">内容运营</span></div><span class="case-btn">查看网站 →</span></div>
+        </a>
+          </div>
+        </div>
+        <div class="cases-nav">
+          <button class="cases-nav-btn" id="casesPrev" aria-label="上一个">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="cases-nav-btn" id="casesNext" aria-label="下一个">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 联系我 ====== -->
   <section class="section" id="contact">
     <div class="section-inner contact-section">
       <div class="contact-avatar reveal">李</div>
       <h2 class="contact-headline reveal reveal-delay-1">期待与您合作。</h2>
       <p class="contact-sub reveal reveal-delay-2">
-        意向岗位：策划经理 · 淮安及周边市场
+        意向岗位：策划经理 / 产品经理 · 淮安及周边市场
       </p>
       <div class="contact-links reveal reveal-delay-3">
         <a href="tel:13275171596" class="cta-btn cta-btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           拨打电话
         </a>
-        <a href="#" class="cta-btn cta-btn-secondary" onclick="window.print()">打印简历</a>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <p>李坤 · 策划经理 · 房地产营销策划</p>
+    <div class="footer-qr-row reveal">
+      <div class="footer-qr-card">
+        <div class="footer-qr-img"><img src="uploads/qr-wechat-mp.png" alt="微信公众号二维码" onerror="this.parentElement.style.display='none'"></div>
+        <span class="footer-qr-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 13.5a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2zm-2.5-9C5.6 4.5 0 8.3 0 13c0 2.4 1.4 4.6 3.6 6L3 21l3.2-1.6c1 .3 2 .4 3.1.4h.5c-.2-.6-.3-1.2-.3-1.9 0-3.6 3.4-6.5 7.6-6.5h.5C17 7.6 11.9 4.5 12 4.5zM22 14.4c0-2.8-2.9-5.1-6.4-5.1S9.2 11.6 9.2 14.4s2.9 5.1 6.4 5.1c.7 0 1.4-.1 2.1-.3L20 20.5l-.5-2c1.5-.9 2.5-2.4 2.5-4.1z"/></svg>
+          微信公众号
+        </span>
+      </div>
+      <div class="footer-qr-card">
+        <div class="footer-qr-img"><img src="uploads/qr-wechat-channel.png" alt="微信视频号二维码" onerror="this.parentElement.style.display='none'"></div>
+        <span class="footer-qr-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          微信视频号
+        </span>
+      </div>
+      <div class="footer-qr-card">
+        <div class="footer-qr-img"><img src="uploads/qr-bilibili.png" alt="哔哩哔哩主页二维码" onerror="this.parentElement.style.display='none'"></div>
+        <span class="footer-qr-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3L21 6.2v2.3c0 .8-.3 1.5-.8 2 .5.5.8 1.2.8 2v5.3c0 1.5-1.2 2.8-2.8 2.8H5.8C4.2 20.6 3 19.3 3 17.8v-5.3c0-.8.3-1.5.8-2-.5-.5-.8-1.2-.8-2V6.2L6.2 3h2.3l2 2h3l2-2h2.3zM6 11.5v6.3h12v-6.3H6zm2 1.5h2v3H8v-3zm6 0h2v3h-2v-3z"/></svg>
+          哔哩哔哩
+        </span>
+      </div>
+    </div>
+    <p>李坤 · 策划经理 / 产品经理</p>
   </footer>
 
   <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-panel" id="modalPanel"></div>
   </div>
+
+  <!-- 回到顶部 -->
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
   <script>
     (function() {
@@ -1524,18 +1246,33 @@
         if (localStorage.getItem('theme') === null) body.classList.toggle('light', e.matches);
       });
 
-      // Scroll progress
+      // Scroll progress + back to top
+      var backToTop = document.getElementById('backToTop');
       window.addEventListener('scroll', function() {
         var docH = document.documentElement.scrollHeight - window.innerHeight;
         progressBar.style.width = docH > 0 ? (window.scrollY / docH * 100) + '%' : '0%';
+        backToTop.classList.toggle('visible', window.scrollY > 400);
+      });
+      backToTop.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // Nav hide/show
+      // Nav hide/show + scroll spy
       var lastScroll = 0;
+      var sections = document.querySelectorAll('.section, .pillars-section');
+      var navLinks = document.querySelectorAll('.nav-links a');
       window.addEventListener('scroll', function() {
         var s = window.scrollY;
         nav.classList.toggle('hidden', s > 100 && s > lastScroll);
         lastScroll = s;
+        var currentId = '';
+        var midViewport = window.scrollY + window.innerHeight * 0.35;
+        sections.forEach(function(sec) {
+          if (sec.offsetTop <= midViewport) { currentId = sec.id || ''; }
+        });
+        navLinks.forEach(function(link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+        });
       });
 
       // Reveal
@@ -1544,10 +1281,8 @@
       }, { rootMargin: '0px 0px -40px 0px', threshold: 0.1 });
       function observeAll() { document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) { observer.observe(el); }); }
       observeAll();
-      // Fix: 浏览器返回时（BFCache 恢复），只处理 reveal 动画，不重新加载内容
       window.addEventListener('pageshow', function(e) {
         if (e.persisted) {
-          // BFCache 恢复了页面，强制显示视口中的 reveal 元素
           setTimeout(function() {
             document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
               var rect = el.getBoundingClientRect();
@@ -1570,297 +1305,130 @@
         });
       }
 
+      // Cases Carousel
+      (function() {
+        var track = document.getElementById('casesTrack');
+        var prevBtn = document.getElementById('casesPrev');
+        var nextBtn = document.getElementById('casesNext');
+        var dotsWrap = document.getElementById('carouselDots');
+        if (!track || !prevBtn || !nextBtn) return;
+
+        var cards = track.querySelectorAll('.case-card');
+        var totalCards = cards.length;
+        if (totalCards === 0) return;
+
+        var currentIndex = 0;
+
+        function getVisibleCount() {
+          var w = window.innerWidth;
+          if (w <= 480) return 1;
+          if (w <= 900) return 2;
+          return 4; /* desktop: show 4 per page */
+        }
+
+        function getMaxIndex() {
+          return Math.max(0, totalCards - getVisibleCount());
+        }
+
+        function getCardWidth() {
+          if (!cards[0]) return 0;
+          return cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap) || 0;
+        }
+
+        function updateCarousel() {
+          var cardW = getCardWidth();
+          if (cardW <= 0) { cardW = track.querySelector('.case-card').offsetWidth + 24; }
+          track.style.transform = 'translateX(-' + (currentIndex * cardW) + 'px)';
+          prevBtn.disabled = currentIndex <= 0;
+          nextBtn.disabled = currentIndex >= getMaxIndex();
+          renderDots();
+        }
+
+        function renderDots() {
+          dotsWrap.innerHTML = '';
+          var maxIdx = getMaxIndex();
+          for (var i = 0; i <= maxIdx; i++) {
+            var dot = document.createElement('span');
+            dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
+            (function(idx) { dot.addEventListener('click', function() { currentIndex = idx; updateCarousel(); }); })(i);
+            dotsWrap.appendChild(dot);
+          }
+        }
+
+        prevBtn.addEventListener('click', function() { if (currentIndex > 0) { currentIndex--; updateCarousel(); } });
+        nextBtn.addEventListener('click', function() { if (currentIndex < getMaxIndex()) { currentIndex++; updateCarousel(); } });
+
+        // Touch / swipe support
+        var touchStartX = 0, touchEndX = 0;
+        track.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        track.addEventListener('touchend', function(e) {
+          touchEndX = e.changedTouches[0].screenX;
+          var diff = touchStartX - touchEndX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0 && currentIndex < getMaxIndex()) { currentIndex++; }
+            else if (diff < 0 && currentIndex > 0) { currentIndex--; }
+            updateCarousel();
+          }
+        }, { passive: true });
+
+        // Init after layout
+        requestAnimationFrame(function() { setTimeout(updateCarousel, 100); });
+        window.addEventListener('resize', function() {
+          currentIndex = Math.min(currentIndex, getMaxIndex());
+          updateCarousel();
+        });
+      })();
+
       // Modal data
       var modalData = {
         about: {
           icon: 'icon-blue',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>',
           title: '自我评价',
-          subtitle: '房地产营销策划 · 8年经验',
-          content: '\
-            <p style="font-size:16px;color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">\
-              拥有强大学习能力和自驱力；工作中善于应变，抗压能力强，能够快速适应新工作环境；\
-              有良好的沟通与组织协调能力；善于分析数据，高效办公，各类办公软件熟练使用。\
-            </p>\
-            <p style="font-size:16px;color:var(--text-secondary);line-height:1.8;margin-bottom:32px;">\
-              从人才市场运营到头部房企策划统筹，从项目前期筹备到全周期操盘，\
-              经历过首开破局、续销攻坚、重启盘活等各类营销场景。\
-              在淮安市场中深耕多年，对区域市场客群有深入的认知和判断。\
-            </p>\
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;">\
-                <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">10+</div>\
-                <div style="font-size:13px;color:var(--text-tertiary);">服务项目</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;">\
-                <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">100%</div>\
-                <div style="font-size:13px;color:var(--text-tertiary);">节点达成率</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;">\
-                <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">4</div>\
-                <div style="font-size:13px;color:var(--text-tertiary);">统筹项目</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;">\
-                <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">5000+</div>\
-                <div style="font-size:13px;color:var(--text-tertiary);">活动单场到访峰值</div>\
-              </div>\
-            </div>\
-          '
+          subtitle: '策划经理 / 产品经理 · 8年经验',
+          content: '<p style="font-size:16px;color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">拥有强大学习能力和自驱力，具备从0到1构建产品的完整经验——从需求洞察、用户调研到原型设计、前端开发、上线迭代。工作中善于应变，抗压能力强，能够快速适应新工作环境；有良好的沟通与组织协调能力；善于分析数据，高效办公，各类办公软件熟练使用。</p><p style="font-size:16px;color:var(--text-secondary);line-height:1.8;margin-bottom:32px;">从人才市场运营到头部房企策划统筹，从项目前期筹备到全周期操盘，经历过首开破局、续销攻坚、重启盘活等各类营销场景。在淮安市场中深耕多年，对区域市场客群有深入的认知和判断。近两年跨界学习前端开发与产品设计，独立交付 6 个数字产品（小程序/企业官网/功能页面），具备产品思维与技术落地的双重能力。</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;"><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;"><div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">10+</div><div style="font-size:13px;color:var(--text-tertiary);">服务项目</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;"><div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">100%</div><div style="font-size:13px;color:var(--text-tertiary);">节点达成率</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;"><div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">4</div><div style="font-size:13px;color:var(--text-tertiary);">统筹项目</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;text-align:center;"><div style="font-size:32px;font-weight:700;letter-spacing:-0.02em;">5000+</div><div style="font-size:13px;color:var(--text-tertiary);">活动单场到访峰值</div></div></div>'
         },
         experience: {
           icon: 'icon-purple',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>',
           title: '工作经历',
           subtitle: '从运营到策划统筹，深耕淮安市场',
-          content: '\
-            <div class="modal-timeline-item">\
-              <div class="modal-timeline-header">\
-                <span class="modal-timeline-role">项目企划</span>\
-                <span class="modal-timeline-date">2023.11 — 至今</span>\
-              </div>\
-              <div class="modal-timeline-org">淮安御策行策划营销有限公司</div>\
-              <ul class="modal-bullets">\
-                <li>负责国子璟缘、国子沁园、九里颐荷府、九里锦华苑4个项目企划统筹</li>\
-                <li>撰写周度/月度营销方案、节点活动方案、区域市场调研、地块可研报告及项目重启方案</li>\
-                <li>统筹国子璟缘、国子沁园开放活动组织实施，国子沁园别墅去化方案及国子璟缘首开方案</li>\
-                <li>九里颐荷府大平层去化专案——搭建精准圈层拓客体系，累计成交11套，圈层活动到访-认筹转化率10%，百度搜索指数提升180%</li>\
-                <li>九里锦华苑精妆去化专案——地缘客群再定位，客群匹配度从40%提升至90%，定向获客成本降低20%</li>\
-              </ul>\
-            </div>\
-            <div class="modal-timeline-item">\
-              <div class="modal-timeline-header">\
-                <span class="modal-timeline-role">项目统筹</span>\
-                <span class="modal-timeline-date">2021.3 — 2023.4</span>\
-              </div>\
-              <div class="modal-timeline-org">保利和润房地产投资顾问有限公司徐州分公司</div>\
-              <ul class="modal-bullets">\
-                <li>负责淮安和府、淮安堂悦、淮安里院3个项目策划条线统筹工作</li>\
-                <li>年度费用计划铺排与论证，月度营销费用计划编制与实施，推售铺排及价格表编制</li>\
-                <li>项目首开前案场及阵地包装、线上媒体投放及线下广告推广策略保障</li>\
-                <li>撰写里院与时光印象破局方案，推动项目成功重启</li>\
-                <li>🏆 获得奖励：2021年公司年度优秀新人</li>\
-              </ul>\
-            </div>\
-            <div class="modal-timeline-item">\
-              <div class="modal-timeline-header">\
-                <span class="modal-timeline-role">策划</span>\
-                <span class="modal-timeline-date">2019.12 — 2021.3</span>\
-              </div>\
-              <div class="modal-timeline-org">北京市百达行房地产经纪有限责任公司</div>\
-              <ul class="modal-bullets">\
-                <li>负责淮安堂悦项目首开前筹备工作及开盘活动组织实施</li>\
-                <li>撰写首开前营销方案、包装方案、圈层拓客方案</li>\
-                <li>案场暖场活动、业主答谢活动、企事业单位圈层活动方案撰写与组织实施</li>\
-                <li>案场包装导视、圈层物料定制、工程园林单位协调</li>\
-                <li>编制推售楼栋价格表，完成月度任务铺排</li>\
-                <li>2020年8月同步开启淮安保利国联和府前期筹备工作</li>\
-              </ul>\
-            </div>\
-            <div class="modal-timeline-item">\
-              <div class="modal-timeline-header">\
-                <span class="modal-timeline-role">运营</span>\
-                <span class="modal-timeline-date">2017.2 — 2019.9</span>\
-              </div>\
-              <div class="modal-timeline-org">淮安开发区经济发展集团</div>\
-              <ul class="modal-bullets">\
-                <li>负责开发区经发集团与淮安市开发区人社局合作共建人才市场的运营工作</li>\
-                <li>负责人力资源市场以及人社局人社系统维护，参与活动企业信息审核、账户开立、展位安排</li>\
-                <li>统计分析企业招聘结果及来访求职人员信息分布</li>\
-                <li>整合人力资源公司资源，负责恩来干部学院工作人员招聘工作</li>\
-              </ul>\
-            </div>\
-          '
+          content: '<div class="modal-timeline-item"><div class="modal-timeline-header"><span class="modal-timeline-role">运营</span><span class="modal-timeline-date">2017.2 — 2019.9</span></div><div class="modal-timeline-org">淮安开发区经济发展集团</div><ul class="modal-bullets"><li>负责开发区经发集团与淮安市开发区人社局合作共建人才市场的运营工作</li><li>负责人力资源市场以及人社局人社系统维护，参与活动企业信息审核、账户开立、展位安排</li><li>统计分析企业招聘结果及来访求职人员信息分布</li><li>整合人力资源公司资源，负责恩来干部学院工作人员招聘工作</li></ul></div><div class="modal-timeline-item"><div class="modal-timeline-header"><span class="modal-timeline-role">策划</span><span class="modal-timeline-date">2019.12 — 2021.3</span></div><div class="modal-timeline-org">北京市百达行房地产经纪有限责任公司</div><ul class="modal-bullets"><li>负责淮安堂悦项目首开前筹备工作及开盘活动组织实施</li><li>撰写首开前营销方案、包装方案、圈层拓客方案</li><li>案场暖场活动、业主答谢活动、企事业单位圈层活动方案撰写与组织实施</li><li>案场包装导视、圈层物料定制、工程园林单位协调</li><li>编制推售楼栋价格表，完成月度任务铺排</li><li>2020年8月同步开启淮安保利国联和府前期筹备工作</li></ul></div><div class="modal-timeline-item"><div class="modal-timeline-header"><span class="modal-timeline-role">项目统筹</span><span class="modal-timeline-date">2021.3 — 2023.4</span></div><div class="modal-timeline-org">保利和润房地产投资顾问有限公司徐州分公司</div><ul class="modal-bullets"><li>负责淮安和府、淮安堂悦、淮安里院3个项目策划条线统筹工作</li><li>年度费用计划铺排与论证，月度营销费用计划编制与实施，推售铺排及价格表编制</li><li>项目首开前案场及阵地包装、线上媒体投放及线下广告推广策略保障</li><li>撰写里院与时光印象破局方案，推动项目成功重启</li><li>🏆 获得奖励：2021年公司年度优秀新人</li></ul></div><div class="modal-timeline-item"><div class="modal-timeline-header"><span class="modal-timeline-role">项目企划</span><span class="modal-timeline-date">2023.11 — 至今</span></div><div class="modal-timeline-org">淮安御策行策划营销有限公司</div><ul class="modal-bullets"><li>负责国子璟缘、国子沁园、九里颐荷府、九里锦华苑4个项目企划统筹</li><li>撰写周度/月度营销方案、节点活动方案、区域市场调研、地块可研报告及项目重启方案</li><li>统筹国子璟缘、国子沁园开放活动组织实施，国子沁园别墅去化方案及国子璟缘首开方案</li><li>九里颐荷府大平层去化专案——搭建精准圈层拓客体系，累计成交11套，圈层活动到访-认筹转化率10%，百度搜索指数提升180%</li><li>九里锦华苑精妆去化专案——地缘客群再定位，客群匹配度从40%提升至90%，定向获客成本降低20%</li></ul></div>'
         },
         education: {
           icon: 'icon-green',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg>',
           title: '教育背景',
           subtitle: '信息管理与信息系统 · 本科',
-          content: '\
-            <div class="modal-timeline-item">\
-              <div class="modal-timeline-header">\
-                <span class="modal-timeline-role">信息管理与信息系统</span>\
-                <span class="modal-timeline-date">2008.9 — 2012.6</span>\
-              </div>\
-              <div class="modal-timeline-org">南京理工大学泰州科技学院 · 本科</div>\
-              <ul class="modal-bullets">\
-                <li>主修课程：信息管理、数据分析、管理学、市场营销等</li>\
-                <li>培养数据思维与信息管理能力，为房地产营销数据分析奠定专业基础</li>\
-                <li>具备将数据洞察转化为营销策略的专业能力</li>\
-              </ul>\
-            </div>\
-            <div class="modal-timeline-item" style="margin-top:24px;">\
-              <div class="modal-timeline-header">\
-                <span class="modal-timeline-role">持续学习</span>\
-                <span class="modal-timeline-date">职业发展</span>\
-              </div>\
-              <ul class="modal-bullets">\
-                <li>各类办公软件熟练使用，高效办公</li>\
-                <li>熟悉新媒体运营：短视频创作、直播、H5海报、微信公众号运营</li>\
-                <li>持续关注房地产行业动态与营销创新方法论</li>\
-              </ul>\
-            </div>\
-          '
+          content: '<div class="modal-timeline-item"><div class="modal-timeline-header"><span class="modal-timeline-role">信息管理与信息系统</span><span class="modal-timeline-date">2008.9 — 2012.6</span></div><div class="modal-timeline-org">南京理工大学泰州科技学院 · 本科</div><ul class="modal-bullets"><li>主修课程：信息管理、数据分析、管理学、市场营销等</li><li>培养数据思维与信息管理能力，为房地产营销数据分析奠定专业基础</li><li>具备将数据洞察转化为营销策略的专业能力</li></ul></div><div class="modal-timeline-item" style="margin-top:24px;"><div class="modal-timeline-header"><span class="modal-timeline-role">持续学习</span><span class="modal-timeline-date">职业发展</span></div><ul class="modal-bullets"><li>各类办公软件熟练使用，高效办公</li><li>熟悉新媒体运营：短视频创作、直播、H5海报、微信公众号运营</li><li>自学前端开发与产品设计：HTML/CSS/JS、Vue.js、微信小程序、Figma 原型设计</li><li>独立从 0 到 1 交付 6 个数字产品（小程序/企业官网/SaaS 演示/功能页面）</li><li>持续关注房地产行业动态与营销创新方法论</li></ul></div>'
         },
         skills: {
           icon: 'icon-pink',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
           title: '专业技能',
-          subtitle: '覆盖房地产营销策划全链条',
-          content: '\
-            <div class="skills-grid">\
-              <div class="skill-category">\
-                <h4>策划能力</h4>\
-                <div class="skill-tags"><span class="skill-tag-item primary">营销方案撰写</span><span class="skill-tag-item primary">市场调研分析</span><span class="skill-tag-item primary">项目统筹管理</span><span class="skill-tag-item">价格策略制定</span><span class="skill-tag-item">地块可研报告</span></div>\
-              </div>\
-              <div class="skill-category">\
-                <h4>营销推广</h4>\
-                <div class="skill-tags"><span class="skill-tag-item primary">圈层营销</span><span class="skill-tag-item primary">活动组织执行</span><span class="skill-tag-item">新媒体运营</span><span class="skill-tag-item">线上推广投放</span><span class="skill-tag-item">案场包装体系</span></div>\
-              </div>\
-              <div class="skill-category">\
-                <h4>数据分析</h4>\
-                <div class="skill-tags"><span class="skill-tag-item">数据分析能力</span><span class="skill-tag-item">客群定位研究</span><span class="skill-tag-item">竞品动态追踪</span><span class="skill-tag-item">费用预决算</span></div>\
-              </div>\
-              <div class="skill-category">\
-                <h4>工具能力</h4>\
-                <div class="skill-tags"><span class="skill-tag-item">H5/小游戏工具</span><span class="skill-tag-item">短视频创作</span><span class="skill-tag-item">微信公众号</span></div>\
-              </div>\
-            </div>\
-          '
+          subtitle: '覆盖策划全链条 + 产品设计与开发',
+          content: '<div class="skills-grid"><div class="skill-category"><h4>策划能力</h4><div class="skill-tags"><span class="skill-tag-item primary">营销方案撰写</span><span class="skill-tag-item primary">市场调研分析</span><span class="skill-tag-item primary">项目统筹管理</span><span class="skill-tag-item">价格策略制定</span><span class="skill-tag-item">地块可研报告</span></div></div><div class="skill-category"><h4>产品设计</h4><div class="skill-tags"><span class="skill-tag-item primary">需求分析与用户调研</span><span class="skill-tag-item primary">信息架构与原型设计</span><span class="skill-tag-item">产品文档与 PRD</span><span class="skill-tag-item">用户画像与场景建模</span><span class="skill-tag-item">竞品分析与市场定位</span></div></div><div class="skill-category"><h4>营销推广</h4><div class="skill-tags"><span class="skill-tag-item primary">圈层营销</span><span class="skill-tag-item primary">活动组织执行</span><span class="skill-tag-item">新媒体运营</span><span class="skill-tag-item">线上推广投放</span><span class="skill-tag-item">案场包装体系</span></div></div><div class="skill-category"><h4>技术能力</h4><div class="skill-tags"><span class="skill-tag-item primary">HTML/CSS/JS 前端开发</span><span class="skill-tag-item primary">微信小程序开发</span><span class="skill-tag-item">Git 版本管理</span><span class="skill-tag-item">Vue.js / Next.js</span><span class="skill-tag-item">AI 工具链应用</span></div></div><div class="skill-category"><h4>数据分析</h4><div class="skill-tags"><span class="skill-tag-item">数据分析能力</span><span class="skill-tag-item">客群定位研究</span><span class="skill-tag-item">竞品动态追踪</span><span class="skill-tag-item">费用预决算</span></div></div><div class="skill-category"><h4>工具能力</h4><div class="skill-tags"><span class="skill-tag-item">H5/小游戏工具</span><span class="skill-tag-item">短视频创作</span><span class="skill-tag-item">微信公众号</span><span class="skill-tag-item">Notion/Figma</span></div></div></div>'
         },
         projects: {
           icon: 'icon-orange',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
           title: '重点项目',
           subtitle: '从标杆首开到破局续销',
-          content: '\
-            <div class="modal-projects">\
-              <div class="modal-project-card">\
-                <h4>淮安保利堂悦</h4>\
-                <div class="project-period">2019.12 — 2021.03</div>\
-                <div style="margin-bottom:10px;"><span class="highlight-label">8开8罄</span></div>\
-                <ul>\
-                  <li>参与全周期营销工作，实现项目8次开盘全部售罄</li>\
-                  <li>前期搭建案场包装体系，负责导视系统、户型单页、区位展板等物料设计与落地</li>\
-                  <li>中期编制全年营销费用计划，执行偏差控制在5%以内</li>\
-                  <li>组织5场圈层业主维护活动（保利大剧院刘晓庆话剧专场、保利好声音、航天兵器展等），客户参与率100%</li>\
-                  <li>后期参与8次开盘活动组织执行，保障每次开盘客户高效选房</li>\
-                </ul>\
-              </div>\
-              <div class="modal-project-card">\
-                <h4>淮安保利国联和府</h4>\
-                <div class="project-period">2020.08 — 2023.05</div>\
-                <div style="margin-bottom:10px;"><span class="highlight-label">区域销冠盘</span></div>\
-                <ul>\
-                  <li>独立完成每月月度营销方案，方案落地后月度到访量环比提升10%</li>\
-                  <li>独立协调城管、公安、社区、退伍军人事业部等部门，保障淮安首个「保利兵器展」顺利举办</li>\
-                  <li>活动吸引到访超5000组，认筹超50组，超额126%完成独代任务指标</li>\
-                  <li>面对市场下行，组织案场销售拍摄创意短视频、个人直播、网红大V联动直播等新媒体宣传</li>\
-                  <li>利用H5海报、小游戏工具、微信公众号运营扩大项目影响力，助力达成区域销冠目标</li>\
-                  <li>独立撰写时光印象项目重启方案与价格破局策略，成功实现项目重启</li>\
-                </ul>\
-              </div>\
-              <div class="modal-project-card">\
-                <h4>淮安保利国联里院</h4>\
-                <div class="project-period">2021.04 — 2022.09</div>\
-                <div style="margin-bottom:10px;"><span class="highlight-label">独立统筹</span></div>\
-                <ul>\
-                  <li>独立统筹项目策划工作，完成全程策划报告、定位报告、执行报告</li>\
-                  <li>撰写推广定位报告、项目包装方案、起势营销活动，负责代理方策划带教</li>\
-                  <li>面对市场下行，制定相应拓客策略，提供有效销售道具帮助团队获客</li>\
-                  <li>完成项目二次启动策划方案，成功重新启动销售</li>\
-                  <li>独立负责保利航空展与保利好声音（4盘联动）活动举办与落地</li>\
-                  <li>撰写破局方案，成功实现项目规划调整</li>\
-                </ul>\
-              </div>\
-              <div class="modal-project-card">\
-                <h4>国子沁园 · 国子璟缘 · 九里颐荷府 · 九里锦华苑</h4>\
-                <div class="project-period">2023.11 — 至今</div>\
-                <div style="margin-bottom:10px;"><span class="highlight-label">多项目统筹</span></div>\
-                <ul>\
-                  <li>统筹4个项目顾问工作，负责重启报告、营销报告、节点活动方案撰写</li>\
-                  <li><strong>九里颐荷府：</strong>搭建大平层精准圈层拓客体系，锁定"35-50岁私营业主+三甲医院中层"核心客群，累计成交11套，圈层活动转化率10%</li>\
-                  <li><strong>九里锦华苑：</strong>客群再定位 — 从拆迁刚需转向地缘改善，客群匹配度从40%提升至90%，定向获客成本降低20%</li>\
-                  <li><strong>国子沁园/璟缘：</strong>服务项目重启阶段，撰写重启方案、入市营销方案、特定产品去化方案</li>\
-                </ul>\
-              </div>\
-            </div>\
-          '
+          content: '<div class="modal-projects"><div class="modal-project-card"><h4>淮安保利堂悦</h4><div class="project-period">2019.12 — 2021.03</div><div style="margin-bottom:10px;"><span class="highlight-label">8开8罄</span></div><ul><li>参与全周期营销工作，实现项目8次开盘全部售罄</li><li>前期搭建案场包装体系，负责导视系统、户型单页、区位展板等物料设计与落地</li><li>中期编制全年营销费用计划，执行偏差控制在5%以内</li><li>组织5场圈层业主维护活动（保利大剧院刘晓庆话剧专场、保利好声音、航天兵器展等），客户参与率100%</li><li>后期参与8次开盘活动组织执行，保障每次开盘客户高效选房</li></ul></div><div class="modal-project-card"><h4>淮安保利国联和府</h4><div class="project-period">2020.08 — 2023.05</div><div style="margin-bottom:10px;"><span class="highlight-label">区域销冠盘</span></div><ul><li>独立完成每月月度营销方案，方案落地后月度到访量环比提升10%</li><li>独立协调城管、公安、社区、退伍军人事业部等部门，保障淮安首个「保利兵器展」顺利举办</li><li>活动吸引到访超5000组，认筹超50组，超额126%完成独代任务指标</li><li>面对市场下行，组织案场销售拍摄创意短视频、个人直播、网红大V联动直播等新媒体宣传</li><li>利用H5海报、小游戏工具、微信公众号运营扩大项目影响力，助力达成区域销冠目标</li><li>独立撰写时光印象项目重启方案与价格破局策略，成功实现项目重启</li></ul></div><div class="modal-project-card"><h4>淮安保利国联里院</h4><div class="project-period">2021.04 — 2022.09</div><div style="margin-bottom:10px;"><span class="highlight-label">独立统筹</span></div><ul><li>独立统筹项目策划工作，完成全程策划报告、定位报告、执行报告</li><li>撰写推广定位报告、项目包装方案、起势营销活动，负责代理方策划带教</li><li>面对市场下行，制定相应拓客策略，提供有效销售道具帮助团队获客</li><li>完成项目二次启动策划方案，成功重新启动销售</li><li>独立负责保利航空展与保利好声音（4盘联动）活动举办与落地</li><li>撰写破局方案，成功实现项目规划调整</li></ul></div><div class="modal-project-card"><h4>国子沁园 · 国子璟缘 · 九里颐荷府 · 九里锦华苑</h4><div class="project-period">2023.11 — 至今</div><div style="margin-bottom:10px;"><span class="highlight-label">多项目统筹</span></div><ul><li>统筹4个项目顾问工作，负责重启报告、营销报告、节点活动方案撰写</li><li><strong>九里颐荷府：</strong>搭建大平层精准圈层拓客体系，锁定"35-50岁私营业主+三甲医院中层"核心客群，累计成交11套，圈层活动转化率10%</li><li><strong>九里锦华苑：</strong>客群再定位 — 从拆迁刚需转向地缘改善，客群匹配度从40%提升至90%，定向获客成本降低20%</li><li><strong>国子沁园/璟缘：</strong>服务项目重启阶段，撰写重启方案、入市营销方案、特定产品去化方案</li></ul></div></div>'
         },
         stats: {
           icon: 'icon-orange',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
           title: '关键数据',
           subtitle: '用数字说话',
-          content: '\
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;">\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">8+</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">年地产经验</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">10+</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">服务项目</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">8</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">次开盘售罄</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">126%</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">独代任务达成</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">5000+</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">单场活动到访</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">5</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">圈层活动场次</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;grid-column:span 2;">\
-                <div style="font-size:16px;font-weight:600;margin-bottom:8px;">费用管控</div>\
-                <div style="display:flex;justify-content:center;gap:40px;">\
-                  <div><span style="font-size:32px;font-weight:700;">5%</span><div style="font-size:12px;color:var(--text-tertiary);">偏差以内</div></div>\
-                  <div><span style="font-size:32px;font-weight:700;">100%</span><div style="font-size:12px;color:var(--text-tertiary);">节点达成率</div></div>\
-                </div>\
-              </div>\
-            </div>\
-          '
+          content: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;"><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">8+</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">年地产经验</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">10+</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">服务项目</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">8</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">次开盘售罄</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">126%</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">独代任务达成</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">5000+</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">单场活动到访</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">5</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">圈层活动场次</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;grid-column:span 2;"><div style="font-size:16px;font-weight:600;margin-bottom:8px;">费用管控</div><div style="display:flex;justify-content:center;gap:40px;"><div><span style="font-size:32px;font-weight:700;">5%</span><div style="font-size:12px;color:var(--text-tertiary);">偏差以内</div></div><div><span style="font-size:32px;font-weight:700;">100%</span><div style="font-size:12px;color:var(--text-tertiary);">节点达成率</div></div></div></div></div>'
         },
         target: {
           icon: 'icon-orange',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
           title: '求职意向',
-          subtitle: '策划经理 · 淮安及周边',
-          content: '\
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;">\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;">\
-                <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">意向岗位</div>\
-                <div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">策划经理</div>\
-                <div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">房地产行业</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;">\
-                <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">工作年限</div>\
-                <div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">8 年</div>\
-                <div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">全周期操盘经验</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;">\
-                <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">期望地点</div>\
-                <div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">淮安</div>\
-                <div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">及周边城市</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;">\
-                <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">到岗时间</div>\
-                <div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">随时</div>\
-                <div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">可快速到岗</div>\
-              </div>\
-            </div>\
-            <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--accent-glow);border-radius:16px;padding:24px;margin-top:20px;text-align:center;">\
-              <div style="font-size:14px;color:var(--text-secondary);margin-bottom:6px;">期待一个能将策略落地、持续创造价值的平台</div>\
-              <div style="font-size:13px;color:var(--text-tertiary);">擅长数据分析 · 圈层营销 · 项目统筹 · 新媒体运营</div>\
-            </div>\
-          '
+          subtitle: '策划经理 / 产品经理 · 淮安及周边',
+          content: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;"><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;"><div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">意向岗位</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">策划经理</div><div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">房地产行业</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;"><div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">意向岗位</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">产品经理</div><div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">互联网/数字化产品</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;"><div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">工作年限</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">8 年</div><div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">全周期操盘经验</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;"><div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">期望地点</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">淮安</div><div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">及周边城市</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:28px 20px;"><div style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--text-tertiary);margin-bottom:8px;">到岗时间</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;">随时</div><div style="font-size:14px;color:var(--text-secondary);margin-top:4px;">可快速到岗</div></div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--accent-glow);border-radius:16px;padding:24px;margin-top:20px;text-align:center;"><div style="font-size:14px;color:var(--text-secondary);margin-bottom:6px;">期待一个能将策略落地、持续创造价值的平台</div><div style="font-size:13px;color:var(--text-tertiary);">擅长数据分析 · 圈层营销 · 项目统筹 · 新媒体运营</div></div>'
         },
         'portfolio-fe': {
           icon: 'icon-blue', _dynamic: true, _category: 'craft',
@@ -1881,102 +1449,14 @@
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
           title: '学习路线图详情',
           subtitle: '技艺探索 + 影像创作 双线并进',
-          content: '\
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">20%</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">技艺录总体进度</div>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;">\
-                <div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">10%</div>\
-                <div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">剪辑总体进度</div>\
-              </div>\
-            </div>\
-            <div style="margin-bottom:32px;">\
-              <h5 style="font-size:16px;font-weight:600;margin-bottom:16px;">🛠️ 技艺录学习计划</h5>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;">\
-                <div style="margin-bottom:16px;">\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>HTML/CSS 基础</span><span style="color:#30d158;">✅ 已完成</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:100%;background:#30d158;border-radius:2px;"></div></div>\
-                </div>\
-                <div style="margin-bottom:16px;">\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>JavaScript 核心</span><span style="color:#2997ff;">🔄 40%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:40%;background:linear-gradient(90deg,#2997ff,#5e5ce6);border-radius:2px;"></div></div>\
-                </div>\
-                <div style="margin-bottom:16px;">\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>框架学习 (React/Vue)</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div>\
-                </div>\
-                <div>\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>项目实战上线</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div>\
-                </div>\
-              </div>\
-            </div>\
-            <div>\
-              <h5 style="font-size:16px;font-weight:600;margin-bottom:16px;">🎬 视频剪辑学习计划</h5>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;">\
-                <div style="margin-bottom:16px;">\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>剪辑软件基础</span><span style="color:#2997ff;">🔄 30%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:30%;background:linear-gradient(90deg,#bf5af2,#ff375f);border-radius:2px;"></div></div>\
-                </div>\
-                <div style="margin-bottom:16px;">\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>剪辑节奏叙事</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div>\
-                </div>\
-                <div style="margin-bottom:16px;">\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>特效 & 调色</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div>\
-                </div>\
-                <div>\
-                  <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>首个作品输出</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div>\
-                  <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div>\
-                </div>\
-              </div>\
-            </div>\
-          '
+          content: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;"><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">20%</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">技艺录总体进度</div></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;text-align:center;"><div style="font-size:44px;font-weight:700;letter-spacing:-0.03em;">10%</div><div style="font-size:14px;color:var(--text-tertiary);margin-top:4px;">剪辑总体进度</div></div></div><div style="margin-bottom:32px;"><h5 style="font-size:16px;font-weight:600;margin-bottom:16px;">🛠️ 技艺录学习计划</h5><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;"><div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>HTML/CSS 基础</span><span style="color:#30d158;">✅ 已完成</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:100%;background:#30d158;border-radius:2px;"></div></div></div><div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>JavaScript 核心</span><span style="color:#2997ff;">🔄 40%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:40%;background:linear-gradient(90deg,#2997ff,#5e5ce6);border-radius:2px;"></div></div></div><div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>框架学习 (React/Vue)</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div></div><div><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>项目实战上线</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div></div></div></div><div><h5 style="font-size:16px;font-weight:600;margin-bottom:16px;">🎬 视频剪辑学习计划</h5><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:20px;"><div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>剪辑软件基础</span><span style="color:#2997ff;">🔄 30%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:30%;background:linear-gradient(90deg,#bf5af2,#ff375f);border-radius:2px;"></div></div></div><div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>剪辑节奏叙事</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div></div><div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>特效 & 调色</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div></div><div><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:13px;"><span>首个作品输出</span><span style="color:var(--text-tertiary);">⬜ 0%</span></div><div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:0%;"></div></div></div></div></div>'
         },
         journal: {
           icon: 'icon-orange',
           iconSvg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
           title: '学习心得',
           subtitle: '每一步都值得被记录',
-          content: '\
-            <div style="margin-bottom:24px;">\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;margin-bottom:16px;">\
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">\
-                  <h5 style="font-size:16px;font-weight:600;">用 Apple 发布会风格做了自己的简历</h5>\
-                  <span style="font-size:12px;color:var(--text-tertiary);">2026.05</span>\
-                </div>\
-                <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">\
-                  从零手写 HTML/CSS/JS，实现了 Bento 栅格布局、液态玻璃（Liquid Glass）视觉效果、深色/浅色模式自动切换、滚动渐入动画、详情 Modal 展开等完整交互。整个过程让我对响应式设计、CSS 变量管理和交互动效有了更深的理解。<br><br>\
-                  <strong>最大的收获：</strong>编程真的很有趣——所见即所得，每一步修改都能立刻看到结果。这种即时反馈带来的成就感，和房地产策划「等几个月才能看到项目落地」完全不同。<br><br>\
-                  <strong>策划人的优势：</strong>发现做策划练出来的「信息层级梳理」和「视觉品味判断」，在编程设计中直接复用。策划方案里琢磨标题、副标题、信息卡的节奏，和网页的排版逻辑高度相通。\
-                </p>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;margin-bottom:16px;">\
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">\
-                  <h5 style="font-size:16px;font-weight:600;">开始系统学习编程</h5>\
-                  <span style="font-size:12px;color:var(--text-tertiary);">2026.05</span>\
-                </div>\
-                <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">\
-                  决定跳出舒适区，在房地产策划之外开辟第二技能线。选择编程是因为它能将「呈现」的能力延伸到数字世界。<br><br>\
-                  <strong>学习策略：</strong>不报班、不刷课，直接上手做项目。先做一个自己真正需要的东西（这份简历），在做的过程中遇到什么问题就学什么。这种方式比按部就班地看教程效率高得多。<br><br>\
-                  <strong>下个目标：</strong>用 JavaScript 给页面加上更多交互，然后学习 React，做一个真正可以上线的个人网站。\
-                </p>\
-              </div>\
-              <div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;">\
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">\
-                  <h5 style="font-size:16px;font-weight:600;">用 AI 工具辅助学习：效率翻倍</h5>\
-                  <span style="font-size:12px;color:var(--text-tertiary);">2026.05</span>\
-                </div>\
-                <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">\
-                  这次做简历最大的变化是——全程使用 AI 编程助手协作。不再是「搜教程 → 看视频 → 抄代码」的传统路径，而是直接描述我想要的效果，AI 给出实现方案，我再理解和调整。<br><br>\
-                  <strong>关键认知：</strong>AI 工具正在彻底改变技能学习的范式。以前学会一件事可能要几个月，现在可以在几天内就做出能用的东西。这让我更加确信——<em>跨界学习</em>正当时，门槛在降低，关键在于<strong>行动</strong>。\
-                </p>\
-              </div>\
-            </div>\
-          '
+          content: '<div style="margin-bottom:24px;"><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><h5 style="font-size:16px;font-weight:600;">用 Apple 发布会风格做了自己的简历</h5><span style="font-size:12px;color:var(--text-tertiary);">2026.05</span></div><p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">从零手写 HTML/CSS/JS，实现了 Bento 栅格布局、液态玻璃（Liquid Glass）视觉效果、深色/浅色模式自动切换、滚动渐入动画、详情 Modal 展开等完整交互。整个过程让我对响应式设计、CSS 变量管理和交互动效有了更深的理解。<br><br><strong>最大的收获：</strong>编程真的很有趣——所见即所得，每一步修改都能立刻看到结果。这种即时反馈带来的成就感，和房地产策划「等几个月才能看到项目落地」完全不同。<br><br><strong>策划人的优势：</strong>发现做策划练出来的「信息层级梳理」和「视觉品味判断」，在编程设计中直接复用。策划方案里琢磨标题、副标题、信息卡的节奏，和网页的排版逻辑高度相通。</p></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;margin-bottom:16px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><h5 style="font-size:16px;font-weight:600;">开始系统学习编程</h5><span style="font-size:12px;color:var(--text-tertiary);">2026.05</span></div><p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">决定跳出舒适区，在房地产策划之外开辟第二技能线。选择编程是因为它能将「呈现」的能力延伸到数字世界。<br><br><strong>学习策略：</strong>不报班、不刷课，直接上手做项目。先做一个自己真正需要的东西（这份简历），在做的过程中遇到什么问题就学什么。这种方式比按部就班地看教程效率高得多。<br><br><strong>下个目标：</strong>用 JavaScript 给页面加上更多交互，然后学习 React，做一个真正可以上线的个人网站。</p></div><div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;"><div style="display:flex;justify-content:space-between;margin-bottom:8px;"><h5 style="font-size:16px;font-weight:600;">用 AI 工具辅助学习：效率翻倍</h5><span style="font-size:12px;color:var(--text-tertiary);">2026.05</span></div><p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">这次做简历最大的变化是——全程使用 AI 编程助手协作。不再是「搜教程 → 看视频 → 抄代码」的传统路径，而是直接描述我想要的效果，AI 给出实现方案，我再理解和调整。<br><br><strong>关键认知：</strong>AI 工具正在彻底改变技能学习的范式。以前学会一件事可能要几个月，现在可以在几天内就做出能用的东西。这让我更加确信——<em>跨界学习</em>正当时，门槛在降低，关键在于<strong>行动</strong>。</p></div></div>'
         }
       };
 
@@ -1984,18 +1464,11 @@
       function openModal(key) {
         var data = modalData[key];
         if (!data) return;
-        modalPanel.innerHTML = '\
-          <button class="modal-close" id="modalClose">\
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>\
-          </button>\
-          <div class="modal-icon ' + data.icon + '">' + data.iconSvg + '</div>\
-          <h2 class="modal-section-title">' + data.title + '</h2>\
-          <p class="modal-section-sub">' + data.subtitle + '</p>\
-          <div>' + data.content + '</div>';
+        modalPanel.innerHTML = '<div class="modal-close-btn" id="modalClose"></div><div class="modal-scroll"><div class="modal-icon ' + data.icon + '">' + data.iconSvg + '</div><h2 class="modal-section-title">' + data.title + '</h2><p class="modal-section-sub">' + data.subtitle + '</p><div>' + data.content + '</div></div>';
         modalOverlay.classList.add('active');
         body.classList.add('modal-open');
         document.getElementById('modalClose').addEventListener('click', closeModal);
-        setTimeout(function() { modalPanel.scrollTop = 0; }, 50);
+        setTimeout(function() { var ms = modalPanel.querySelector('.modal-scroll'); if(ms) ms.scrollTop = 0; }, 50);
       }
 
       function closeModal() {
@@ -2016,176 +1489,150 @@
         });
       });
     })();
-      // ================================================================
-      //  动态内容加载：创意探索区从 content.json 读取
-      // ================================================================
-      var dynamicContentLoaded = false;
 
-      function catLabel(cat) { return cat === 'craft' ? '技艺录' : cat === 'video' ? '视频剪辑' : cat; }
+    // ================================================================
+    //  动态内容加载：创意探索区从 content.json 读取
+    // ================================================================
+    var dynamicContentLoaded = false;
 
-      function loadDynamicContent() {
-        fetch('content.json?' + Date.now())
-          .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-          .then(function(data) {
-            var articles = data.articles || [];
-            var projects = data.projects || [];
-            dynamicContentLoaded = true;
-            renderBentoCards(articles, projects);
-          })
-          .catch(function() {
-            // fetch 失败（本地 file:// 协议等）→ 保持静态 HTML 内容，不做任何操作
-          });
-      }
+    function catLabel(cat) { return cat === 'craft' ? '技艺录' : cat === 'video' ? '视频剪辑' : cat === 'notes' ? '随笔' : cat; }
 
-      function renderBentoCards(articles, projects) {
-        var bento = document.getElementById('creativeBento');
-        if (!bento) return;
-
-        var categories = [
-          { key: 'craft', label: '技艺录', icon: 'icon-blue',
-            iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-            desc: '从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。',
-            link: 'craft/index.html' },
-          { key: 'video', label: '视频剪辑', icon: 'icon-purple',
-            iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
-            desc: '素材整理、剪辑节奏、转场特效、调色与音频处理。',
-            link: 'video-lab/index.html' }
-        ];
-
-        var edgeClasses = ['edge-1', 'edge-5'];
-
-        var html = '';
-        for (var c = 0; c < categories.length; c++) {
-          var cat = categories[c];
-          var catArticles = articles.filter(function(a) {
-            return a.category === cat.key && a.status === 'published';
-          }).slice(0, 3);
-          var allCatArticles = articles.filter(function(a) {
-            return a.category === cat.key && a.status === 'published';
-          });
-
-          html += '<div class="creative-row ' + edgeClasses[c] + ' reveal reveal-delay-' + (c + 2) + ' visible">';
-
-          // Left: Channel info
-          html += '<div class="creative-channel">';
-          html += '<div class="card-icon ' + cat.icon + '">' + cat.iconSvg + '</div>';
-          html += '<div class="channel-text">';
-          html += '<div class="card-label">' + cat.label.toUpperCase() + '</div>';
-          html += '<div class="card-title">' + cat.label + '</div>';
-          html += '<div class="card-desc">' + cat.desc + '</div>';
-          html += '<div class="channel-stat"><span class="channel-stat-dot"></span>' + allCatArticles.length + ' 篇文章</div>';
-          html += '</div>';
-          html += '<a class="channel-link" href="' + cat.link + '">查看全部 →</a>';
-          html += '</div>';
-
-          // Right: Content
-          html += '<div class="creative-content">';
-
-          if (catArticles.length > 0) {
-            html += '<div class="creative-article-list">';
-            for (var a = 0; a < catArticles.length; a++) {
-              var art = catArticles[a];
-              html += '<a class="creative-article-item" href="article.html?id=' + art.id + '">';
-              html += '<span class="art-arrow">→</span>';
-              html += '<span class="art-title">' + art.title + '</span>';
-              html += '<span class="art-date">' + (art.date || '') + '</span>';
-              html += '</a>';
-            }
-            html += '</div>';
-
-            // Tags
-            var allTags = [];
-            for (var t = 0; t < allCatArticles.length; t++) {
-              var tgs = allCatArticles[t].tags || [];
-              for (var tg = 0; tg < tgs.length; tg++) {
-                if (allTags.indexOf(tgs[tg]) === -1) allTags.push(tgs[tg]);
-              }
-            }
-            if (allTags.length > 0) {
-              html += '<div class="creative-tags">';
-              for (var tt = 0; tt < Math.min(allTags.length, 6); tt++) {
-                html += '<span class="tag">' + allTags[tt] + '</span>';
-              }
-              html += '</div>';
-            }
-          } else {
-            html += '<div style="font-size:13px;color:var(--text-tertiary);padding:12px 0;">暂无文章，敬请期待...</div>';
-          }
-
-          html += '</div>'; // .creative-content
-          html += '</div>'; // .creative-row
-        }
-
-        bento.innerHTML = html;
-
-        // Re-observe new cards for reveal animation
-        if (typeof observeAll === 'function') observeAll();
-      }
-
-      function renderModalContent(containerId, category, articles, projects) {
-        var el = document.getElementById(containerId);
-        if (!el) return;
-
-        var catArticles = articles.filter(function(a) {
-          return a.category === category && a.status === 'published';
+    function loadDynamicContent() {
+      fetch('content.json?' + Date.now())
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function(data) {
+          var articles = data.articles || [];
+          var projects = data.projects || [];
+          dynamicContentLoaded = true;
+          renderBentoCards(articles, projects);
+        })
+        .catch(function() {
+          // fetch 失败（本地 file:// 协议等）→ 保持静态 HTML 内容
         });
-        var catProjects = projects.filter(function(p) { return p.category === category; });
+    }
 
-        var html = '';
+    function renderBentoCards(articles, projects) {
+      var bento = document.getElementById('creativeBento');
+      if (!bento) return;
 
-        // Articles
+      var categories = [
+        { key: 'craft', label: '技艺录', icon: 'icon-blue',
+          iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+          desc: '从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。',
+          link: 'craft/index.html' },
+        { key: 'video', label: '视频剪辑', icon: 'icon-purple',
+          iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+          desc: '素材整理、剪辑节奏、转场特效、调色与音频处理。',
+          link: 'video-lab/index.html' },
+        { key: 'notes', label: '随笔', icon: 'icon-amber',
+          iconSvg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+          desc: '工作感悟、生活观察、阅读笔记——不一定有结论，但一定有思考。',
+          link: 'notes/index.html' }
+      ];
+
+      var edgeClasses = ['edge-1', 'edge-5', 'edge-3'];
+      var html = '';
+      for (var c = 0; c < categories.length; c++) {
+        var cat = categories[c];
+        var catArticles = articles.filter(function(a) {
+          return a.category === cat.key && a.status === 'published';
+        }).slice(0, 3);
+        var allCatArticles = articles.filter(function(a) {
+          return a.category === cat.key && a.status === 'published';
+        });
+
+        html += '<div class="creative-row ' + edgeClasses[c] + ' reveal reveal-delay-' + (c + 2) + ' visible">';
+        html += '<div class="creative-channel">';
+        html += '<div class="card-icon ' + cat.icon + '">' + cat.iconSvg + '</div>';
+        html += '<div class="channel-text">';
+        html += '<div class="card-label">' + cat.label.toUpperCase() + '</div>';
+        html += '<div class="card-title">' + cat.label + '</div>';
+        html += '<div class="card-desc">' + cat.desc + '</div>';
+        html += '<div class="channel-stat"><span class="channel-stat-dot"></span>' + allCatArticles.length + ' 篇文章</div>';
+        html += '</div>';
+        html += '<a class="channel-link" href="' + cat.link + '">查看全部 →</a>';
+        html += '</div>';
+        html += '<div class="creative-content">';
         if (catArticles.length > 0) {
-          html += '<h5 style="font-size:15px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">文章</h5>';
-          html += '<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">';
-          for (var i = 0; i < catArticles.length; i++) {
-            var a = catArticles[i];
-            html += '<a href="article.html?id=' + a.id + '" style="display:block;background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:12px;padding:16px;text-decoration:none;border:1px solid var(--border);transition:border-color 0.2s;">';
-            html += '<div style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:4px;">' + a.title + '</div>';
-            html += '<div style="font-size:12px;color:var(--text-tertiary);">' + (a.excerpt || '').substring(0, 80) + (a.excerpt && a.excerpt.length > 80 ? '...' : '') + '</div>';
-            html += '<div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap;">';
-            if (a.tags) {
-              for (var t = 0; t < a.tags.length; t++) {
-                html += '<span style="font-size:11px;background:var(--tag-bg);padding:2px 8px;border-radius:4px;color:var(--text-tertiary);">' + a.tags[t] + '</span>';
-              }
-            }
-            html += '</div></a>';
+          html += '<div class="creative-article-list">';
+          for (var a = 0; a < catArticles.length; a++) {
+            var art = catArticles[a];
+            html += '<a class="creative-article-item" href="article.html?id=' + art.id + '">';
+            html += '<span class="art-arrow">→</span>';
+            html += '<span class="art-title">' + art.title + '</span>';
+            html += '<span class="art-date">' + (art.date || '') + '</span>';
+            html += '</a>';
           }
           html += '</div>';
-        }
-
-        // Projects
-        if (catProjects.length > 0) {
-          html += '<h5 style="font-size:15px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">作品</h5>';
-          html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">';
-          for (var j = 0; j < catProjects.length; j++) {
-            var p = catProjects[j];
-            html += '<div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);">';
-            html += '<div style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:6px;">' + p.title + '</div>';
-            html += '<div style="font-size:12px;color:var(--text-tertiary);margin-bottom:8px;">' + (p.description || '') + '</div>';
-            html += '<span class="status-badge ' + (p.status === 'completed' ? 'status-done' : 'status-learning') + '" style="justify-content:center;display:inline-flex;"><span class="status-dot"></span>' + (p.status === 'completed' ? '已完成' : '进行中') + '</span>';
+          var allTags = [];
+          for (var t = 0; t < allCatArticles.length; t++) {
+            var tgs = allCatArticles[t].tags || [];
+            for (var tg = 0; tg < tgs.length; tg++) {
+              if (allTags.indexOf(tgs[tg]) === -1) allTags.push(tgs[tg]);
+            }
+          }
+          if (allTags.length > 0) {
+            html += '<div class="creative-tags">';
+            for (var tt = 0; tt < Math.min(allTags.length, 6); tt++) {
+              html += '<span class="tag">' + allTags[tt] + '</span>';
+            }
             html += '</div>';
           }
+        } else {
+          html += '<div style="font-size:13px;color:var(--text-tertiary);padding:12px 0;">暂无文章，敬请期待...</div>';
+        }
+        html += '</div></div>';
+      }
+      bento.innerHTML = html;
+      if (typeof observeAll === 'function') observeAll();
+    }
+
+    function renderModalContent(containerId, category, articles, projects) {
+      var el = document.getElementById(containerId);
+      if (!el) return;
+      var catArticles = articles.filter(function(a) {
+        return a.category === category && a.status === 'published';
+      });
+      var catProjects = projects.filter(function(p) { return p.category === category; });
+      var html = '';
+      if (catArticles.length > 0) {
+        html += '<h5 style="font-size:15px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">文章</h5>';
+        html += '<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">';
+        for (var i = 0; i < catArticles.length; i++) {
+          var a = catArticles[i];
+          html += '<a href="article.html?id=' + a.id + '" style="display:block;background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:12px;padding:16px;text-decoration:none;border:1px solid var(--border);transition:border-color 0.2s;">';
+          html += '<div style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:4px;">' + a.title + '</div>';
+          html += '<div style="font-size:12px;color:var(--text-tertiary);">' + (a.excerpt || '').substring(0, 80) + (a.excerpt && a.excerpt.length > 80 ? '...' : '') + '</div>';
+          html += '<div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap;">';
+          if (a.tags) {
+            for (var t = 0; t < a.tags.length; t++) {
+              html += '<span style="font-size:11px;background:var(--tag-bg);padding:2px 8px;border-radius:4px;color:var(--text-tertiary);">' + a.tags[t] + '</span>';
+            }
+          }
+          html += '</div></a>';
+        }
+        html += '</div>';
+      }
+      if (catProjects.length > 0) {
+        html += '<h5 style="font-size:15px;font-weight:600;margin-bottom:14px;color:var(--text-primary);">作品</h5>';
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">';
+        for (var j = 0; j < catProjects.length; j++) {
+          var p = catProjects[j];
+          html += '<div style="background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);">';
+          html += '<div style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:6px;">' + p.title + '</div>';
+          html += '<div style="font-size:12px;color:var(--text-tertiary);margin-bottom:8px;">' + (p.description || '') + '</div>';
+          html += '<span class="status-badge ' + (p.status === 'completed' ? 'status-done' : 'status-learning') + '" style="justify-content:center;display:inline-flex;"><span class="status-dot"></span>' + (p.status === 'completed' ? '已完成' : '进行中') + '</span>';
           html += '</div>';
         }
-
-        if (!catArticles.length && !catProjects.length) {
-          html = '<p style="color:var(--text-secondary);text-align:center;padding:24px 0;">暂无内容，通过管理后台添加文章和作品。</p>';
-        }
-
-        el.innerHTML = html;
+        html += '</div>';
       }
+      if (!catArticles.length && !catProjects.length) {
+        html = '<p style="color:var(--text-secondary);text-align:center;padding:24px 0;">暂无内容，通过管理后台添加文章和作品。</p>';
+      }
+      el.innerHTML = html;
+    }
 
-      // Load content on page init
-      loadDynamicContent();
-
-  
-      var btt=document.getElementById('backToTop');
-      if(btt){window.addEventListener('scroll',function(){window.scrollY>600?btt.classList.add('visible'):btt.classList.remove('visible')},{passive:true});
-      btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});}
-</script>
-
-  <button id="backToTop" class="back-to-top" aria-label="回到顶部">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
+    loadDynamicContent();
+  </script>
 </body>
 </html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布 — 技艺录</title>
+  <style>
+    :root {
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+      --accent-dark: #6d28d9;
+      --bg: #faf9fc;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --code-bg: #1e1b4b;
+      --highlight-bg: #f5f3ff;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;background: var(--bg);color: var(--text);line-height: 1.85;font-size: 16px;-webkit-font-smoothing: antialiased;}
+    
+    /* ── Nav ── */
+    .nav{position: fixed;top:0;left:0;right:0;z-index:100;background: rgba(250,249,252,0.85);backdrop-filter: blur(20px);border-bottom: 1px solid var(--border);padding: 0 24px;height: 56px;display: flex;align-items: center;justify-content: space-between;}
+    .nav a{color: var(--text);text-decoration: none;font-size: 14px;font-weight: 500;}
+    .nav .logo{font-weight: 700;font-size: 16px;color: var(--accent);}
+    .nav-links{display: flex;gap: 24px;}
+    .nav-links a:hover{color: var(--accent);}
+
+    /* ── Hero ── */
+    .hero{position: relative;margin-top: 56px;width: 100%;height: clamp(320px, 45vh, 520px);overflow: hidden;display: flex;align-items: center;justify-content: center;}
+    .hero-bg{position: absolute;inset: 0;background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #5b21b6 60%, #7c3aed 100%);}
+    .hero-img{position: absolute;inset: 0;width: 100%;height: 100%;object-fit: cover;opacity: 0.55;mix-blend-mode: overlay;}
+    .hero-overlay{position: absolute;inset: 0;background: linear-gradient(180deg, rgba(30,27,75,0.6) 0%, rgba(30,27,75,0.85) 100%);}
+    .hero-content{position: relative;z-index: 2;text-align: center;max-width: 800px;padding: 0 24px;}
+    .hero-tag{display: inline-block;background: rgba(255,255,255,0.12);color: var(--accent-light);font-size: 13px;font-weight: 600;padding: 4px 14px;border-radius: 20px;margin-bottom: 16px;letter-spacing: 0.5px;}
+    .hero h1{font-size: clamp(24px,4vw,40px);font-weight: 800;color: #fff;line-height: 1.3;margin-bottom: 16px;letter-spacing: -0.5px;}
+    .hero-meta{display: flex;gap: 24px;align-items: center;justify-content: center;color: rgba(255,255,255,0.7);font-size: 14px;flex-wrap: wrap;}
+    .hero-meta span{display: flex;align-items: center;gap: 6px;}
+
+    /* ── Summary Card (Template B) ── */
+    .summary-wrap{max-width: 864px;margin: -40px auto 0;padding: 0 32px;position: relative;z-index: 10;}
+    .summary-card{background: var(--card-bg);border: 1px solid var(--border);border-radius: 16px;padding: 32px;box-shadow: 0 8px 40px rgba(124,58,237,0.08);display: flex;gap: 24px;align-items: flex-start;}
+    .summary-icon{width: 52px;height: 52px;border-radius: 14px;background: linear-gradient(135deg, var(--accent), var(--accent-dark));display: flex;align-items: center;justify-content: center;font-size: 24px;flex-shrink: 0;}
+    .summary-text h3{font-size: 15px;font-weight: 700;color: var(--accent);margin-bottom: 8px;letter-spacing: 0.5px;}
+    .summary-text p{font-size: 14px;color: var(--text-secondary);line-height: 1.7;margin-bottom: 14px;}
+    .key-points{display: flex;flex-wrap: wrap;gap: 8px;}
+    .key-points span{background: var(--highlight-bg);color: var(--accent-dark);font-size: 12px;font-weight: 600;padding: 5px 12px;border-radius: 8px;}
+
+    /* ── Content Layout ── */
+    .main-layout{max-width: 1200px;margin: 0 auto;padding: 0 32px;}
+    
+
+    /* ── Content ── */
+    .content-wrap{max-width: 864px;margin: 40px auto 0;padding: 0 32px 80px;}
+    .content-wrap h2{font-size: 24px;font-weight: 750;color: var(--text);margin: 52px 0 8px;padding-top: 20px;letter-spacing: -0.3px;}
+    .content-wrap h2:first-of-type{margin-top: 20px;}
+    .content-wrap h3{font-size: 18px;font-weight: 650;color: var(--text);margin: 28px 0 8px;}
+    .content-wrap p{margin-bottom: 18px;color: #374151;font-size: 16px;line-height: 1.9;}
+    .content-wrap strong{color: var(--text);font-weight: 700;}
+
+    /* Section Image */
+    .section-img{margin: 28px 0 32px;border-radius: 14px;overflow: hidden;border: 1px solid var(--border);}
+    .section-img img{width: 100%;display: block;}
+    .section-img .caption{font-size: 12px;color: var(--text-secondary);text-align: center;padding: 10px 16px;background: #f5f5f5;}
+
+    /* Pull Quote */
+    .pull-quote{border-left: 4px solid var(--accent);padding: 16px 20px;margin: 28px 0;background: var(--highlight-bg);border-radius: 0 12px 12px 0;font-size: 15px;color: var(--accent-dark);font-weight: 500;line-height: 1.75;}
+
+    /* Info Box */
+    .info-box{background: #f8f7ff;border: 1px solid #e0d7fe;border-radius: 12px;padding: 20px 24px;margin: 28px 0;}
+    .info-box strong,.info-box b{color: var(--accent-dark);}
+
+    /* Highlight Box */
+    .highlight-box{background: linear-gradient(135deg, #f5f3ff, #ede9fe);border-radius: 14px;padding: 24px;margin: 28px 0;border: 1px solid #d8ceff;}
+
+    /* Table */
+    .table-wrap{overflow-x: auto;margin: 28px 0;border-radius: 12px;border: 1px solid var(--border);}
+    .table-wrap table{width: 100%;border-collapse: collapse;font-size: 14px;}
+    .table-wrap th{background: #f5f3ff;color: var(--accent-dark);font-weight: 700;padding: 12px 16px;text-align: left;font-size: 13px;border-bottom: 2px solid var(--accent-light);}
+    .table-wrap td{padding: 10px 16px;border-bottom: 1px solid var(--border);color: #374151;}
+    .table-wrap tr:last-child td{border-bottom: none;}
+
+    /* Checklist */
+    .checklist{list-style: none;padding: 0;margin: 24px 0;}
+    .checklist li{padding: 6px 0 6px 28px;position: relative;font-size: 15px;color: #374151;}
+    .checklist li::before{content: "✔";position: absolute;left: 0;color: var(--accent);font-weight: 700;font-size: 14px;}
+
+    /* Step List */
+    .step-list{list-style: none;padding: 0;margin: 24px 0;counter-reset: step;}
+    .step-list li{counter-increment: step;padding: 14px 0 14px 52px;position: relative;border-bottom: 1px solid var(--border);}
+    .step-list li:last-child{border-bottom: none;}
+    .step-list li::before{content: counter(step);position: absolute;left: 0;top: 14px;width: 32px;height: 32px;background: var(--accent);color: #fff;border-radius: 50%;font-size: 14px;font-weight: 700;display: flex;align-items: center;justify-content: center;}
+
+    /* Tags */
+    .tag-cloud{margin-top: 48px;padding-top: 28px;border-top: 1px solid var(--border);display: flex;flex-wrap: wrap;gap: 8px;align-items: center;}
+    .tag-cloud .tag-label{font-size: 13px;color: var(--text-secondary);font-weight: 600;margin-right: 4px;}
+    .tag-cloud a{font-size: 12px;color: var(--accent);text-decoration: none;background: var(--highlight-bg);padding: 4px 12px;border-radius: 6px;font-weight: 500;transition: 0.2s;}
+    .tag-cloud a:hover{background: var(--accent);color: #fff;}
+
+    /* Footer */
+    .footer{text-align: center;padding: 40px 0;color: var(--text-secondary);font-size: 13px;border-top: 1px solid var(--border);margin: 0 32px;}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .content-wrap{padding: 0 20px 60px;max-width: 100%;}
+      .summary-wrap{padding: 0 20px;}
+      .summary-card{flex-direction: column;padding: 24px;}
+      .hero h1{font-size: 22px;}
+      .hero-meta{font-size: 12px;gap: 14px;}
+    }
+    @media (max-width: 600px){
+      .content-wrap h2{font-size: 20px;}
+      .content-wrap{font-size: 15px;}
+      .hero{height: 260px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/craft/" class="logo">技艺录</a>
+  <div class="nav-links">
+    <a href="/">首页</a>
+    <a href="/craft/">技艺</a>
+    <a href="/video-lab/">视频</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <img class="hero-img" src="/uploads/xpeng-gx-2698-cover.png" alt="小鹏GX" loading="eager">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">行业分析</div>
+    <h1>26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布</h1>
+    <div class="hero-meta">
+      <span>📅 2026-06-17</span>
+      <span>📖 5 章节</span>
+      <span>⏱ 约 6 分钟</span>
+      <span>🏷️ 5 个标签</span>
+    </div>
+  </div>
+</section>
+
+<!-- Summary Card -->
+<div class="summary-wrap">
+  <div class="summary-card">
+    <div class="summary-icon">📋</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>2026年车市淘汰赛——日系从30%跌到12%、燃油车暴跌37%、全行业利润率仅3.2%。26.98万的小鹏GX用「直降13万 + 800V平台 + XNGP全场景智驾」的组合拳，揭开低质高价最后的遮羞布。本文从数据到洞察，全面拆解「诚意定价」逻辑与价值战新趋势。</p>
+      <div class="key-points">
+        <span>🚗 车市断崖：跌20%，利率仅3.2%</span>
+        <span>⚠️ 五大出局特征</span>
+        <span>💰 预售39.98→权益价26.98万</span>
+        <span>⚔️ 价格战 → 价值战</span>
+        <span>✅ 诚意 = 降价 + 不减配</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content-wrap">
+
+<h2 id="s1">一、数据先说话：车市有多严峻？</h2>
+
+<div class="section-img">
+  <img src="/uploads/xpeng-gx-2698-section-1.png" alt="2026车市数据可视化" loading="lazy">
+  <div class="caption">△ 2026 中国车市核心数据一览</div>
+</div>
+
+<p>2026年1-5月，<strong>中国乘用车销量同比下跌近20%</strong>。这不是"微调"，是断崖。</p>
+
+<p>更扎心的是利润——<strong>全行业利润率仅3.2%</strong>，卖一辆车赚的钱，不如卖一杯奶茶。</p>
+
+<div class="pull-quote">
+  燃油车同比下降37%，断崖式下跌；新能源渗透率已达66.7%，每卖出3辆车就有2辆是新能源。
+</div>
+
+<p><strong>日系品牌</strong>：市占率从30%暴跌到12%，三年缩水一大半。不是日系不努力——丰田降价3万、本田搞零首付、日产直接砍掉入门款——但越降越卖不动。因为消费者变了，他们不再买"省油耐用的工具车"，他们要的是<strong>"智能+高效+性价比的综合体验"</strong>。</p>
+
+<div class="info-box">
+  <strong>📊 核心数字记忆</strong><br>
+  ▸ 乘用车零售同比 <strong>-20%</strong>（断崖级下跌）<br>
+  ▸ 行业利润率 <strong>3.2%</strong>（卖车不如卖奶茶）<br>
+  ▸ 燃油车同比 <strong>-37%</strong> · 新能源渗透率 <strong>66.7%</strong><br>
+  ▸ 日系市占率：<strong>30% → 12%</strong>（三年缩水60%）
+</div>
+
+<h2 id="s2">二、谁在被淘汰？低质高价的五大出局特征</h2>
+
+<div class="section-img">
+  <img src="/uploads/xpeng-gx-2698-section-2.png" alt="低质高价车的五大出局特征" loading="lazy">
+  <div class="caption">△ 2026车市淘汰赛：低质高价车的五个致命特征</div>
+</div>
+
+<p>2026年的车市淘汰赛，不是"谁更便宜谁赢"，而是<strong>"谁没诚意谁走人"</strong>。</p>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>特征</th><th>典型表现</th><th>下场</th></tr></thead>
+    <tbody>
+      <tr><td><strong>换壳不改心</strong></td><td>老平台套新壳，内饰贴个屏就涨价3万</td><td>销量腰斩</td></tr>
+      <tr><td><strong>配置玩加减法</strong></td><td>低配砍气囊，高配加氛围灯</td><td>口碑崩盘</td></tr>
+      <tr><td><strong>终端大幅优惠</strong></td><td>指导价虚高，优惠5万起</td><td>品牌价值归零</td></tr>
+      <tr><td><strong>智驾外包拼凑</strong></td><td>L2辅助驾驶拼凑感强</td><td>用户体验差评</td></tr>
+      <tr><td><strong>三年不换代</strong></td><td>2023款卖到2026年</td><td>被新品碾压</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pull-quote">
+  一句话：消费者不是买不起，是不愿意当冤种了。
+</div>
+
+<h2 id="s3">三、26.98万的小鹏GX，凭什么叫"诚意"？</h2>
+
+<div class="section-img">
+  <img src="/uploads/xpeng-gx-2698-section-3.png" alt="小鹏GX对比分析" loading="lazy">
+  <div class="caption">△ 低质高价 vs 诚意定价：小鹏GX核心参数对比</div>
+</div>
+
+<p>小鹏GX权益价26.98万起（预售39.98万，<strong>直降13万</strong>），但诚意不只是降价——</p>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>对比项</th><th>低质高价典型</th><th style="color:#7c3aed;">小鹏GX</th></tr></thead>
+    <tbody>
+      <tr><td><strong>平台</strong></td><td>老平台换壳</td><td style="color:#7c3aed;font-weight:600;">全新800V高压平台</td></tr>
+      <tr><td><strong>智驾</strong></td><td>L2拼凑</td><td style="color:#7c3aed;font-weight:600;">XNGP全场景智驾，终身免费</td></tr>
+      <tr><td><strong>芯片</strong></td><td>8155凑合用</td><td style="color:#7c3aed;font-weight:600;">双图灵AI芯片</td></tr>
+      <tr><td><strong>动力</strong></td><td>单一纯电</td><td style="color:#7c3aed;font-weight:600;">纯电+增程双版本</td></tr>
+      <tr><td><strong>安全</strong></td><td>基础气囊</td><td style="color:#7c3aed;font-weight:600;">飞行汽车级安全冗余</td></tr>
+      <tr><td><strong>选装</strong></td><td>核心功能捆绑选装包</td><td style="color:#7c3aed;font-weight:600;">全系标配，不加价</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="highlight-box">
+  <strong>🔑 核心逻辑：诚意 = 降价 + 不减配。</strong>不是卖低价，是卖高价值。在26.98万的价格点上，小鹏GX给的是30万+级别的产品力。
+</div>
+
+<h2 id="s4">四、价格战转价值战，消费者怎么选？</h2>
+
+<div class="section-img">
+  <img src="/uploads/xpeng-gx-2698-section-4.png" alt="价格战 vs 价值战" loading="lazy">
+  <div class="caption">△ 从价格战到价值战：2026车市的根本转变</div>
+</div>
+
+<p>2026年的车市正在经历一个<strong>根本转变</strong>：从"价格战"走向"价值战"。</p>
+
+<div class="info-box">
+  <strong>⚔️ 价格战（旧模式）</strong><br>
+  我比你便宜1万 → 你降2万 → 我降3万 → 双方亏损，消费者也得不到好产品<br><br>
+  <strong>💎 价值战（新模式）</strong><br>
+  我26.98万给你800V+智驾+图灵芯片 → 你必须用同等价值来回应 → 消费者受益
+</div>
+
+<p><strong>购车诚意判断清单</strong>——下次看车，拿出这份清单对号入座：</p>
+
+<ul class="checklist">
+  <li>✅ 全系标配核心功能（智驾、800V）</li>
+  <li>✅ 终身免费OTA升级</li>
+  <li>✅ 不捆绑选装包</li>
+  <li>✅ 定价透明，不搞"终端大幅优惠"噱头</li>
+</ul>
+
+<ul class="checklist">
+  <li>❌ 指导价虚高+终端大幅优惠</li>
+  <li>❌ 低配砍安全配置</li>
+  <li>❌ 智驾按月收费</li>
+  <li>❌ 老平台换壳当新款卖</li>
+</ul>
+
+<h2 id="s5">五、写在最后</h2>
+
+<div class="pull-quote">
+  2026的车市，不看面子看诚意。26.98万撕开的不是价格线，是低质高价的最后遮羞布。
+</div>
+
+<p>当消费者开始用<strong>"诚意清单"</strong>而不是"品牌信仰"来投票，那些还在靠换壳加价的品牌，出局只是时间问题。</p>
+
+<p>小鹏GX的意义不只是"多了一个选择"，而是<strong>重新定义了"这个价位应该得到什么"</strong>——800V、全场景智驾、AI芯片、安全冗余，这些曾经只在40万+车上出现的配置，如今26.98万全系标配。这不是价格战，这是价值战的宣言。</p>
+
+<div class="highlight-box">
+  <strong>📌 一句话总结</strong><br>
+  诚意 = 降价 + 不减配。<br>
+  26.98万的小鹏GX用行动证明：让消费者赢，品牌才能赢。
+</div>
+
+<p style="font-size:13px;color:var(--text-secondary);margin-top:32px;">数据来源：中汽协、乘联会、各品牌官方发布数据，截至2026年6月。</p>
+
+<!-- Tags -->
+<div class="tag-cloud">
+  <span class="tag-label">标签：</span>
+  <a href="/craft/?tag=小鹏">小鹏</a>
+  <a href="/craft/?tag=新能源">新能源</a>
+  <a href="/craft/?tag=车市">车市</a>
+  <a href="/craft/?tag=诚意定价">诚意定价</a>
+  <a href="/craft/?tag=价值战">价值战</a>
+  <a href="/craft/?tag=行业分析">行业分析</a>
+</div>
+
+</div>
+
+<div class="footer">
+  &copy; 2026 技艺录 · 让好内容找到对的人
+</div>
+
+</body>
+</html>

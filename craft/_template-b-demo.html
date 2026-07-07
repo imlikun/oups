@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模板B参考：宽屏紫色风格</title>
+<meta name="description" content="模板B参考实现：紫色配色、顶部目录、宽内容区、摘要卡片">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.9; font-size:16px; -webkit-font-smoothing:antialiased; }
+
+.nav { position:fixed; top:0; left:0; right:0; z-index:200; background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%; background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%); pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px; background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15; max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+
+/* Summary Card */
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px; display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center; background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+
+/* Top TOC */
+.top-toc { max-width:var(--max-wide); margin:0 auto; padding:0 32px; }
+.top-toc-inner { display:flex; gap:8px; overflow-x:auto; padding:20px 0; border-bottom:1px solid var(--border); scrollbar-width:none; -ms-overflow-style:none; }
+.top-toc-inner::-webkit-scrollbar { display:none; }
+.top-toc a { flex-shrink:0; font-size:12px; padding:6px 14px; border-radius:20px; background:var(--bg-card); color:var(--text-secondary); text-decoration:none; border:1px solid transparent; transition:all 0.2s; white-space:nowrap; }
+.top-toc a:hover { background:var(--accent-light); color:var(--accent); border-color:rgba(124,58,237,0.15); }
+.top-toc a.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* Article */
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px; position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+
+/* Section Image */
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+
+/* Pull Quote */
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent); background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+
+/* Table */
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); background:var(--bg-card); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+
+/* Tags */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>模板B · 参考实现</div>
+    <h1>这是<em>模板B</em>：宽屏紫色风格</h1>
+    <p class="hero-desc">顶部目录 · 摘要卡片 · 800px 宽内容区 · 紫色配色 —— 适合工具介绍和对比评测类文章</p>
+    <div class="hero-meta">
+      <span>模板B</span><span class="sep"></span>
+      <span>参考实现</span><span class="sep"></span>
+      <span>2026-06-17</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">8</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">5</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">7</div><div class="label">分钟阅读</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">📋</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>模板B专为宽屏阅读体验设计。去掉了侧边栏，改用顶部横向滚动目录，内容区宽度从 680px 提升到 800px。新增摘要卡片，让读者在 3 秒内抓住文章核心。</p>
+      <div class="key-points">
+        <span>紫色配色</span><span>顶部目录</span><span>宽内容区</span><span>摘要卡片</span><span>章节配图</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="top-toc">
+  <div class="top-toc-inner" id="topToc">
+    <a href="#s1" class="active">一、设计理念</a>
+    <a href="#s2">二、布局对比</a>
+    <a href="#s3">三、配色方案</a>
+    <a href="#s4">四、摘要卡片</a>
+    <a href="#s5">五、章节配图</a>
+    <a href="#s6">六、响应式</a>
+    <a href="#s7">七、使用建议</a>
+    <a href="#s8">八、总结</a>
+  </div>
+</div>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="s1">一、设计理念</h2>
+    <p>模板B的核心理念是<strong>「宽屏、沉浸、高效」</strong>。去掉侧边栏后，读者的视线可以更集中于内容本身。</p>
+
+    <div class="section-img">
+      <div style="background:linear-gradient(135deg,#7c3aed22,#a855f722);padding:60px;text-align:center;color:var(--accent);font-size:14px;">🖼️ 章节配图位置（16:9）</div>
+      <div class="caption">△ 章节配图示例：可视化解释核心概念</div>
+    </div>
+
+    <p>顶部目录采用横向滚动设计，在移动端自动适配。相比侧边栏，顶部目录的点击热区更大，更适合触屏设备。</p>
+
+    <div class="pull-quote">
+      <p>模板A适合技术教程（需要精细的章节导航），模板B适合工具介绍（需要更宽的代码块和表格）。</p>
+    </div>
+
+    <h2 id="s2">二、布局对比</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>对比项</th><th>模板A（蓝色）</th><th>模板B（紫色）</th></tr></thead>
+        <tbody>
+          <tr><td>内容区宽度</td><td>680px</td><td>800px</td></tr>
+          <tr><td>目录位置</td><td>左侧边栏（sticky）</td><td>顶部横向滚动</td></tr>
+          <tr><td>摘要展示</td><td>无（或在Hero区）</td><td>独立摘要卡片</td></tr>
+          <tr><td>配色</td><td>蓝色 #1a6ff5</td><td>紫色 #7c3aed</td></tr>
+          <tr><td>适合文章类型</td><td>技术教程、流程说明</td><td>工具介绍、对比评测</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s3">三、配色方案</h2>
+    <p>模板B使用<strong>紫色系配色</strong>，传达「创意、工具、现代感」的视觉语言。</p>
+    <ul>
+      <li>主色：<code>#7c3aed</code>（紫色 600）</li>
+      <li>浅色背景：<code>rgba(124,58,237,0.06)</code></li>
+      <li>文字主色：<code>#111827</code>（灰 900）</li>
+      <li>文字副色：<code>#4b5563</code>（灰 600）</li>
+    </ul>
+
+    <h2 id="s4">四、摘要卡片</h2>
+    <p>摘要卡片位于 Hero 区和正文之间，是模板B的<strong>标志性组件</strong>。它在视觉上形成一个「过渡桥梁」，让读者从标题自然过渡到正文。</p>
+    <p>摘要卡片包含三部分：</p>
+    <ul>
+      <li><strong>图标区</strong>：56×56px，紫色浅底，容纳一个 emoji 或图标</li>
+      <li><strong>摘要正文</strong>：2-3 句话，概括文章核心价值</li>
+      <li><strong>关键点标签</strong>：3-5 个，用圆角标签展示</li>
+    </ul>
+
+    <h2 id="s5">五、章节配图</h2>
+    <p>模板B支持在章节开头插入<strong>AI 生成的配图</strong>。这些配图由 ImageGen 根据章节标题自动生成，风格统一、视觉一致。</p>
+
+    <div class="section-img">
+      <div style="background:linear-gradient(135deg,#7c3aed11,#a855f711);padding:60px;text-align:center;color:var(--accent);font-size:14px;">🖼️ 第二章配图位置</div>
+      <div class="caption">△ 章节配图自动插入对应 h2 下方</div>
+    </div>
+
+    <p>配图生成规则：</p>
+    <ul>
+      <li>每篇文章最多 5 张配图</li>
+      <li>优先为「概念解释、工作流程、对比分析」类章节生成</li>
+      <li>图片比例：16:9（横版）或 1:1（方形）</li>
+      <li>自动插入对应 h2 标题下方</li>
+    </ul>
+
+    <h2 id="s6">六、响应式适配</h2>
+    <p>模板B在移动端的适配策略：</p>
+    <ul>
+      <li><strong>1200px 以下</strong>：内容区宽度自动收缩</li>
+      <li><strong>900px 以下</strong>：摘要卡片改为纵向排列</li>
+      <li><strong>600px 以下</strong>：字号缩小，间距紧凑</li>
+    </ul>
+
+    <h2 id="s7">七、使用建议</h2>
+    <p>根据文章类型选择模板：</p>
+    <table class="table-wrap">
+      <thead><tr><th>文章类型</th><th>推荐模板</th><th>原因</th></tr></thead>
+      <tbody>
+        <tr><td>技术教程（多步骤）</td><td>模板A</td><td>侧边栏目录便于跳章</td></tr>
+        <tr><td>工具介绍（有表格）</td><td>模板B</td><td>宽内容区适合放表格</td></tr>
+        <tr><td>对比评测（多维度）</td><td>模板B</td><td>宽屏更适合复杂表格</td></tr>
+        <tr><td>流程说明（有图示）</td><td>模板A 或 B</td><td>根据配图数量决定</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="s8">八、总结</h2>
+    <div class="pull-quote">
+      <p>模板A和模板B不是「好和更好」的关系，而是「不同场景的最佳选择」。交替使用，让技艺录的视觉体验更丰富。</p>
+    </div>
+
+    <p style="margin-top:20px;">下次发布文章时，Skill 会自动检测最近一篇使用的模板，然后<strong>交替选择</strong>。你也可以手动指定使用哪个模板。</p>
+
+  </article>
+
+  <div class="tag-cloud">
+    <a href="#">模板B</a>
+    <a href="#">宽屏设计</a>
+    <a href="#">紫色配色</a>
+    <a href="#">摘要卡片</a>
+    <a href="#">章节配图</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var tocLinks = document.querySelectorAll('#topToc a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({id:id, el:el, link:a});
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 200;
+    var active = null;
+    for (var i = headings.length-1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>

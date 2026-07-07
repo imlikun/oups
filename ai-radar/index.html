@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新闻雷达 — 每日 AI 资讯精选</title>
+<meta name="description" content="AI 新闻雷达，每天自动从 AI HOT 精选全球 AI 资讯。覆盖模型发布、产品更新、行业动态、论文研究、技巧观点五大板块。">
+<meta property="og:title" content="AI 新闻雷达 — 每日 AI 资讯精选">
+<meta property="og:description" content="每天自动更新，精选全球 AI 资讯。模型发布、产品更新、行业动态、论文研究、技巧观点一站浏览。">
+<meta property="og:type" content="website">
+<style>
+/* ═════════════════════════════════════
+   AI 新闻雷达 — Cyber UI v2
+   深空紫 · 玻璃拟态 · 点阵背景
+   ═════════════════════════════════════ */
+:root {
+  --bg: #06060e;
+  --card-bg: rgba(255,255,255,0.025);
+  --card-hover: rgba(255,255,255,0.045);
+  --text: #e8e8ed;
+  --text-secondary: #9898a8;
+  --text-tertiary: #646478;
+  --accent: #7c3aed;
+  --border: rgba(255,255,255,0.05);
+  --border-hover: rgba(255,255,255,0.1);
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px;
+  --cat-model: #818cf8; --cat-model-bg: rgba(129,140,248,0.12);
+  --cat-product: #c084fc; --cat-product-bg: rgba(192,132,252,0.12);
+  --cat-industry: #34d399; --cat-industry-bg: rgba(52,211,153,0.12);
+  --cat-paper: #fbbf24; --cat-paper-bg: rgba(251,191,36,0.12);
+  --cat-tip: #f472b6; --cat-tip-bg: rgba(244,114,182,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.72;font-size:15px;
+  -webkit-font-smoothing:antialiased;position:relative;
+}
+/* Dot grid + ambient glow */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.09;
+  background-image:radial-gradient(rgba(124,58,237,0.16) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+body::after{
+  content:'';position:fixed;top:-20%;right:-10%;width:70%;height:70%;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(124,58,237,0.05),transparent 70%);
+}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(6,6,14,0.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,0.04);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;height:52px;}
+.nav-logo{font-size:14px;font-weight:600;color:var(--text);text-decoration:none;
+  display:flex;align-items:center;gap:7px;opacity:0.72;transition:opacity 0.2s;}
+.nav-logo:hover{opacity:1}
+.nav-logo svg{width:17px;height:17px;stroke:var(--accent)}
+.nav-title{font-size:12px;font-weight:500;color:var(--text-tertiary);letter-spacing:0.03em}
+.nav-pulse{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-tertiary)}
+.nav-pulse .dot{width:6px;height:6px;border-radius:50%;background:#34d399;
+  box-shadow:0 0 8px rgba(52,211,153,0.4);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+
+/* ── Hero ── */
+.hero{position:relative;z-index:1;padding:140px 0 84px;text-align:center;overflow:hidden;
+  background:linear-gradient(180deg,rgba(124,58,237,0.07) 0%,transparent 65%);}
+.hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:640px;height:440px;
+  background:radial-gradient(ellipse at center,rgba(124,58,237,0.14),transparent 70%);
+  pointer-events:none;}
+.hero::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.06;
+  background-image:radial-gradient(rgba(255,255,255,0.15) 0.5px,transparent 0.5px);
+  background-size:26px 26px;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;
+  padding:6px 18px;border-radius:20px;background:rgba(124,58,237,0.15);
+  border:1px solid rgba(124,58,237,0.25);color:rgba(255,255,255,0.85);
+  font-size:11px;font-weight:600;letter-spacing:0.06em;margin-bottom:28px;
+  position:relative;z-index:1}
+.hero-badge .bdot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 8px var(--accent)}
+.hero h1{font-size:clamp(30px,6vw,54px);font-weight:700;letter-spacing:-1.8px;
+  line-height:1.12;max-width:700px;margin:0 auto 18px;position:relative;z-index:1;
+  background:linear-gradient(180deg,#f0e6ff 0%,#c4b5fd 40%,#a78bfa 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-desc{color:#a1a1b8;font-size:15px;max-width:500px;margin:0 auto 36px;
+  line-height:1.7;position:relative;z-index:1}
+.hero-stats{display:flex;justify-content:center;gap:52px;position:relative;z-index:1}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:44px;font-weight:700;letter-spacing:-1.5px;
+  font-variant-numeric:tabular-nums;font-family:"SF Mono","Fira Code","Menlo",monospace;
+  color:#e0d8f0}
+.hero-stat .num.purple{background:linear-gradient(135deg,#c084fc,#818cf8,#00d4ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-stat .label{font-size:11px;color:var(--text-tertiary);margin-top:6px;letter-spacing:0.04em}
+
+/* ── Filters ── */
+.filters-wrap{position:relative;z-index:1;display:flex;justify-content:center;gap:6px;
+  padding:0 28px 48px;flex-wrap:wrap;}
+.f-chip{padding:8px 20px;border-radius:22px;border:1px solid rgba(255,255,255,0.05);
+  background:rgba(255,255,255,0.02);color:var(--text-secondary);font-size:12px;font-weight:500;
+  cursor:pointer;transition:all 0.25s;user-select:none;white-space:nowrap;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.f-chip:hover{border-color:rgba(255,255,255,0.1);color:#d4d4dc;background:rgba(255,255,255,0.035)}
+.f-chip.active{background:rgba(124,58,237,0.12);border-color:rgba(124,58,237,0.3);
+  color:#c4b5fd;box-shadow:0 0 20px rgba(124,58,237,0.06)}
+.f-chip .count{font-size:10px;margin-left:4px;opacity:0.5}
+
+/* ── Grid ── */
+.grid{position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  padding:0 28px 80px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:14px;}
+.card{background:var(--card-bg);border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,0.04);padding:24px 26px;
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+  cursor:pointer;position:relative;display:flex;flex-direction:column;gap:16px;
+  overflow:hidden;text-decoration:none;color:inherit;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+/* category accent left-bar */
+.card::before{content:'';position:absolute;top:12px;left:0;bottom:12px;width:2px;
+  border-radius:0 2px 2px 0;opacity:0.35;transition:opacity 0.3s,width 0.3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,0.45),
+  0 0 0 1px rgba(255,255,255,0.04) inset;border-color:rgba(255,255,255,0.07);background:var(--card-hover)}
+.card:hover::before{opacity:1;width:3px}
+/* category color mapping */
+.card.cat-model::before{background:#818cf8}
+.card.cat-product::before{background:#c084fc}
+.card.cat-industry::before{background:#34d399}
+.card.cat-paper::before{background:#fbbf24}
+.card.cat-tip::before{background:#f472b6}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.card-cat{font-size:10px;font-weight:700;padding:4px 12px;border-radius:12px;
+  letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.cat-model{background:var(--cat-model-bg);color:var(--cat-model)}
+.cat-product{background:var(--cat-product-bg);color:var(--cat-product)}
+.cat-industry{background:var(--cat-industry-bg);color:var(--cat-industry)}
+.cat-paper{background:var(--cat-paper-bg);color:var(--cat-paper)}
+.cat-tip{background:var(--cat-tip-bg);color:var(--cat-tip)}
+.card-score{font-size:11px;color:var(--text-tertiary);white-space:nowrap;
+  display:flex;align-items:center;gap:3px;letter-spacing:0.02em}
+.card-title{font-size:15px;font-weight:600;line-height:1.5;color:#e0e0e8;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-summary{font-size:13px;color:var(--text-secondary);line-height:1.72;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:12px;border-top:1px solid rgba(255,255,255,0.04)}
+.card-source{font-size:11px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-time{font-size:11px;color:var(--text-tertiary);white-space:nowrap;flex-shrink:0}
+
+/* ── Empty ── */
+.empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-tertiary)}
+.empty svg{width:52px;height:52px;margin-bottom:18px;opacity:0.18;stroke:var(--text-tertiary)}
+.empty p{font-size:15px}
+
+/* ── Sources ── */
+.sources-section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 28px 80px}
+.sources-divider{width:60px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(124,58,237,0.3),transparent);
+  margin:0 auto 48px}
+.sources-header{text-align:center;margin-bottom:44px}
+.sources-header h2{font-size:26px;font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-bottom:10px}
+.sources-header p{font-size:14px;color:var(--text-tertiary);max-width:520px;margin:0 auto;line-height:1.7}
+.sources-header strong{color:#c4b5fd;font-weight:700}
+.sources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:14px}
+.src-card{background:var(--card-bg);border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,0.04);padding:22px 26px 18px;
+  transition:all 0.25s;position:relative;overflow:hidden;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.src-card:hover{border-color:rgba(255,255,255,0.08);background:var(--card-hover);transform:translateY(-1px)}
+.src-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.src-card.cat-labs::before{background:linear-gradient(90deg,#818cf8,#6366f1)}
+.src-card.cat-cn::before{background:linear-gradient(90deg,#f472b6,#fb923c)}
+.src-card.cat-overseas::before{background:linear-gradient(90deg,#c084fc,#818cf8)}
+.src-card.cat-dev::before{background:linear-gradient(90deg,#34d399,#10b981)}
+.src-card.cat-biz::before{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+.src-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.src-card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:16px;flex-shrink:0}
+.src-card.cat-labs .src-card-icon{background:rgba(129,140,248,0.12);color:#818cf8}
+.src-card.cat-cn .src-card-icon{background:rgba(244,114,182,0.12);color:#f472b6}
+.src-card.cat-overseas .src-card-icon{background:rgba(192,132,252,0.12);color:#c084fc}
+.src-card.cat-dev .src-card-icon{background:rgba(52,211,153,0.12);color:#34d399}
+.src-card.cat-biz .src-card-icon{background:rgba(251,191,36,0.12);color:#fbbf24}
+.src-card-title{font-size:14px;font-weight:600;color:var(--text)}
+.src-card-count{font-size:11px;color:var(--text-tertiary);margin-left:auto}
+.src-tags{display:flex;flex-wrap:wrap;gap:6px}
+.src-tag{display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:14px;font-size:11px;font-weight:500;
+  background:rgba(255,255,255,0.03);color:var(--text-secondary);
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.2s;white-space:nowrap}
+.src-tag:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:#d4d4dc}
+.src-tag .sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.src-card.cat-labs .src-tag .sdot{background:#818cf8}
+.src-card.cat-cn .src-tag .sdot{background:#f472b6}
+.src-card.cat-overseas .src-tag .sdot{background:#c084fc}
+.src-card.cat-dev .src-tag .sdot{background:#34d399}
+.src-card.cat-biz .src-tag .sdot{background:#fbbf24}
+
+/* ── Footer ── */
+.footer{position:relative;z-index:1;text-align:center;padding:40px 0 60px;
+  border-top:1px solid rgba(255,255,255,0.04)}
+.footer p{font-size:12px;color:var(--text-tertiary);line-height:1.8}
+.footer a{color:#a78bfa;text-decoration:none;transition:color 0.2s}
+.footer a:hover{color:#c4b5fd}
+
+/* ── Mobile ── */
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr;padding:0 20px 60px}
+  .sources-grid{grid-template-columns:1fr}
+  .hero{padding:110px 0 56px}
+  .hero-stats{gap:32px}
+  .hero-stat .num{font-size:32px}
+  .sources-section{padding:0 20px 60px}
+  .sources-header h2{font-size:22px}
+}
+
+.card-enter{animation:cardIn 0.45s cubic-bezier(0.16,1,0.3,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      李坤
+    </a>
+    <div class="nav-pulse">
+      <span class="dot"></span>
+      自动更新中
+    </div>
+    <div class="nav-title">AI 新闻雷达</div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge"><span class="bdot"></span> DAILY AI DIGEST</div>
+  <h1>今天的 AI 世界<br>发生了什么？</h1>
+  <p class="hero-desc">每天自动从 AI HOT 精选全球人工智能资讯，模型发布、产品更新、行业动态、论文研究、技巧观点，一站浏览。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num" id="totalCount">--</div><div class="label">精选资讯</div></div>
+    <div class="hero-stat"><div class="num purple" id="catCount">--</div><div class="label">覆盖板块</div></div>
+    <div class="hero-stat"><div class="num" id="topSource">--</div><div class="label">资讯来源</div></div>
+  </div>
+</section>
+
+<!-- Filters -->
+<div class="filters-wrap" id="filters">
+  <div class="f-chip active" data-cat="all">全部<span class="count" id="cnt-all">0</span></div>
+  <div class="f-chip" data-cat="ai-models">模型发布<span class="count" id="cnt-models">0</span></div>
+  <div class="f-chip" data-cat="ai-products">产品更新<span class="count" id="cnt-products">0</span></div>
+  <div class="f-chip" data-cat="industry">行业动态<span class="count" id="cnt-industry">0</span></div>
+  <div class="f-chip" data-cat="paper">论文研究<span class="count" id="cnt-paper">0</span></div>
+  <div class="f-chip" data-cat="tip">技巧观点<span class="count" id="cnt-tip">0</span></div>
+</div>
+
+<!-- Grid -->
+<div class="grid" id="grid"></div>
+
+<!-- Sources -->
+<section class="sources-section">
+  <div class="sources-divider"></div>
+  <div class="sources-header">
+    <h2>信源追踪</h2>
+    <p>实时追踪全球 <strong id="srcTotal">34</strong> 个核心 AI 信源，覆盖官方实验室、中文媒体、海外科技媒体、开发者社区与投资机构。</p>
+  </div>
+  <div class="sources-grid" id="sourcesGrid"></div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>数据来源 <a href="https://aihot.virxact.com" target="_blank">AI HOT</a> · 每天自动更新 · 本站由 WorkBuddy 自动化程序驱动</p>
+  <p style="margin-top:6px;opacity:0.45;">Powered by <a href="https://www.appin.site" target="_blank">appin.site</a></p>
+</footer>
+
+<!-- Data -->
+<script id="ai-data" type="application/json">{"count":5,"hasNext":false,"nextCursor":null,"items":[{"id":"cmr65ieko002tslf0xiomac0c","title":"26000名学生研究显示AI隐藏学习成本需两年才显现","title_en":"A 26，000-student study shows AI's hidden learning cost takes two full years to surface","url":"https://the-decoder.com/a-26000-student-study-shows-ais-hidden-learning-cost-takes-two-full-years-to-surface","permalink":"https://aihot.virxact.com/items/cmr65ieko002tslf0xiomac0c","source":"The Decoder：AI News（RSS）","publishedAt":"2026-07-04T09:08:41.000Z","summary":"一项追踪26000名7-12年级中学生30个月的面板数据研究发现：使用AI后作业分数提升18%，完成时间从64分钟降至45分钟，但闭卷考试分数下降20%，升学考试成绩下降18%至24%，且完全影响约两年才显现。81%长期用户作业完成时间低于50分钟（外包迹象）。社会学科下降27%，STEM下降22%，英语下降17%，语文下降9%。每周使用AI一小时损失约5%，五小时损失30%。早期损失从约25%降至16%但未消失。","category":"tip","score":73,"selected":true},{"id":"cmr5zuihg0739slc7nv4mlc5r","title":"NVIDIA 联合多所大学提出 ASPIRE：自我改进机器人框架，零样本成功率最高提升 77 分","title_en":"NVIDIA AI Introduces ASPIRE： A Self-Improving Robotics Framework Reaching 31% Zero-Shot on LIBERO-Pro Long Tasks","url":"https://www.marktechpost.com/2026/07/03/nvidia-ai-introduces-aspire-a-self-improving-robotics-framework-reaching-31-zero-shot-on-libero-pro-long-tasks","permalink":"https://aihot.virxact.com/items/cmr5zuihg0739slc7nv4mlc5r","source":"MarkTechPost（RSS）","publishedAt":"2026-07-04T06:32:47.000Z","summary":"NVIDIA 联合密歇根大学、UIUC、UC Berkeley 等提出 ASPIRE，一个持续学习机器人框架。它通过协调器-执行器架构、闭环执行引擎、技能库和进化搜索，编写并优化机器人控制程序。编程智能体使用 Claude Code（Claude Opus 4.6，1M token 上下文窗口）。在 LIBERO-Pro 上最高比最强基线提升 77 分；Robosuite 双手交接成功率从 20% 提升至 92%；BEHAVIOR-1K 收音机拾取任务从 56% 提升至 88%。利用 LIBERO-90 积累的技能，ASPIRE 在零样本条件下对 LIBERO-Pro Long 任务达到约 31% 成功率，此前方法饱和在 4% 附近。","category":"paper","score":70,"selected":true},{"id":"cmr5wizx2067eslc7xynzcf9y","title":"我国研制全球首款基于可控存内计算的忆阻器神经动力学芯片","title_en":"我国研制全球首款神经动力学芯片，首次将单步运算时延压缩至 2.12 毫秒","url":"https://www.ithome.com/0/972/526.htm","permalink":"https://aihot.virxact.com/items/cmr5wizx2067eslc7xynzcf9y","source":"IT之家（RSS）","publishedAt":"2026-07-04T05:01:02.000Z","summary":"北京大学集成电路学院联合中科院上海微系统所，发布全球首款基于可控存内计算的忆阻器神经动力学芯片，首次将单步运算时延压缩至2.12毫秒。芯片采用40纳米工艺，存内计算阵列与外围电路总面积0.28平方毫米，运行频率50 MHz，单步积分仅需9级流水。在脑皮层重建等任务中较当前GPU提速50至478倍，突破神经动力学实时计算瓶颈。相关成果7月3日发表于《科学》。","category":"paper","score":74,"selected":true},{"id":"cmr5cef1q017islc779xjrcy6","title":"pxpipe：通过图像化压缩输入token降低Claude Code成本","title_en":"通过将代码转换为图像并由模型进行OCR识别，将《Fable》的开发成本降低了60%","url":"https://github.com/teamchong/pxpipe","permalink":"https://aihot.virxact.com/items/cmr5cef1q017islc779xjrcy6","source":"Hacker News 热门（buzzing.cc 中文翻译）","publishedAt":"2026-07-03T19:19:45.726Z","summary":"pxpipe是一个本地代理，将系统提示、工具文档和历史记录等密集文本渲染为PNG图像，利用图像token成本取决于像素尺寸的特性压缩输入token。在Fable 5模型上，约25k文本token压缩为约2.7k图像token，端到端账单降低59-70%。SWE-bench Lite 10个实例全部通过，成本从$54降至$27；SWE-bench Pro 19对测试中18对判定一致，单次请求成本降低约60%。该方法有损（精确ID等需保持文本），默认仅处理`claude-fable-5`请求，可通过`PXPIPE_MODELS`变量控制。","category":"tip","score":83,"selected":true},{"id":"cmr5blxyu00ykslc7kiaaxqam","title":"Fable 的判断力：Simon Willison 从 Claude Code 团队获得的效率技巧","title_en":"Fable's judgement","url":"https://simonwillison.net/2026/Jul/3/judgement","permalink":"https://aihot.virxact.com/items/cmr5blxyu00ykslc7kiaaxqam","source":"Simon Willison 博客","publishedAt":"2026-07-03T18:51:06.000Z","summary":"Simon Willison 在 AIE 上与 Claude Code 团队交流后建议，让 Fable（以及 Opus）用自己的判断力工作，而非硬性规定行为。例如，直接让 Fable 自行决定何时编写测试，比给出具体规则更好。为应对价格即将上涨、节省 Fable token，Jesse Vincent 的另一个技巧是告诉 Fable 将较小任务委托给较低功耗模型（Sonnet 用于实质性实现、Haiku 用于机械修改），主循环保留判断、审计和数据合成等任务。Willison 已将提示词存入 Claude Code 记忆文件，实际效果良好，Fable token 消耗速度明显下降。","category":"tip","score":73,"selected":true}]}</script>
+
+<script>
+(function(){
+  var raw = document.getElementById('ai-data').textContent.trim();
+
+  var catMap = {
+    'ai-models':  { label:'模型发布', css:'cat-model' },
+    'ai-products':{ label:'产品更新', css:'cat-product' },
+    'industry':   { label:'行业动态', css:'cat-industry' },
+    'paper':      { label:'论文研究', css:'cat-paper' },
+    'tip':        { label:'技巧观点', css:'cat-tip' }
+  };
+
+  function init(data) {
+    var items = data && data.items || [];
+    if (!items.length) {
+      document.getElementById('grid').innerHTML =
+        '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>暂无最新资讯，稍后再来看看</p></div>';
+      return;
+    }
+
+    items.sort(function(a,b){ return new Date(b.publishedAt) - new Date(a.publishedAt); });
+
+    var cats = {};
+    var sources = {};
+    items.forEach(function(it){
+      cats[it.category] = (cats[it.category]||0) + 1;
+      sources[it.source] = true;
+    });
+    document.getElementById('totalCount').textContent = items.length;
+    document.getElementById('catCount').textContent = Object.keys(cats).length;
+    document.getElementById('topSource').textContent = Object.keys(sources).length;
+
+    ['all','ai-models','ai-products','industry','paper','tip'].forEach(function(c){
+      var el = document.getElementById('cnt-' + (c === 'all' ? 'all' : c.replace('ai-','')));
+      if (el) el.textContent = c === 'all' ? items.length : (cats[c] || 0);
+    });
+
+    function timeAgo(iso) {
+      var diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      if (diff < 60) return '刚刚';
+      if (diff < 3600) return Math.floor(diff/60) + ' 分钟前';
+      if (diff < 86400) return Math.floor(diff/3600) + ' 小时前';
+      if (diff < 172800) return '昨天';
+      var d = new Date(iso);
+      return (d.getMonth()+1) + '月' + d.getDate() + '日';
+    }
+
+    function catLabel(c) { return catMap[c] ? catMap[c].label : c; }
+    function catCSS(c) { return catMap[c] ? catMap[c].css : ''; }
+
+    function scoreStars(s) {
+      var c = Math.round((s||50)/20);
+      var html = '';
+      for (var i=0;i<5;i++) html += i < c ? '★' : '☆';
+      return html;
+    }
+
+    renderGrid(items, catLabel, catCSS, timeAgo, scoreStars);
+
+    document.getElementById('filters').addEventListener('click', function(e){
+      var chip = e.target.closest('.f-chip');
+      if (!chip) return;
+      document.querySelectorAll('.f-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var cat = chip.dataset.cat;
+      var filtered = cat === 'all' ? items : items.filter(function(i){ return i.category === cat; });
+      renderGrid(filtered, catLabel, catCSS, timeAgo, scoreStars);
+    });
+  }
+
+  function renderGrid(items, catLabel, catCSS, timeAgo, scoreStars) {
+    var idx = 0;
+    var html = items.length === 0
+      ? '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>该分类暂无内容</p></div>'
+      : items.map(function(it){
+          idx++;
+          return '<a href="'+ it.url +'" target="_blank" class="card card-enter '+ catCSS(it.category) +'" style="animation-delay:'+ (idx*0.03) +'s">' +
+            '<div class="card-top">' +
+              '<span class="card-cat '+ catCSS(it.category) +'">'+ catLabel(it.category) +'</span>' +
+              '<span class="card-score">'+ scoreStars(it.score) +' '+ (it.score||'') +'</span>' +
+            '</div>' +
+            '<div class="card-title">'+ it.title +'</div>' +
+            '<div class="card-summary">'+ (it.summary || '') +'</div>' +
+            '<div class="card-footer">' +
+              '<span class="card-source">'+ it.source +'</span>' +
+              '<span class="card-time">'+ timeAgo(it.publishedAt) +'</span>' +
+            '</div>' +
+          '</a>';
+        }).join('');
+    document.getElementById('grid').innerHTML = html;
+  }
+
+  try {
+    var data = JSON.parse(raw);
+    if (data && typeof data === 'object' && !data.items && !data.count) {
+      init(data);
+    } else {
+      init(data);
+    }
+  } catch(e) {
+    // 尝试清洗非法控制字符后重试
+    try {
+      var cleaned = raw.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      var data = JSON.parse(cleaned);
+      init(data);
+    } catch(e2) {
+      document.getElementById('grid').innerHTML =
+        '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>数据加载失败，请稍后刷新</p></div>';
+    }
+  }
+
+  var sourcesData = [
+    {
+      id: 'labs', css: 'cat-labs', icon: '🔬', label: 'Official AI Labs',
+      items: ['OpenAI','Anthropic','DeepMind','Google AI','Meta','NVIDIA','HuggingFace','Stability','Mistral','Cohere']
+    },
+    {
+      id: 'cn', css: 'cat-cn', icon: '🗞', label: '中文 AI 媒体',
+      items: ['机器之心','量子位','InfoQ','宝玉','少数派','36氪']
+    },
+    {
+      id: 'overseas', css: 'cat-overseas', icon: '🌐', label: '海外科技媒体',
+      items: ['The Verge','TechCrunch','Ars Technica','Wired','VentureBeat','MIT Tech Review']
+    },
+    {
+      id: 'dev', css: 'cat-dev', icon: '💻', label: '开发者 & 学术',
+      items: ['Simon Willison','Karpathy','ArXiv','PapersWithCode','Hacker News']
+    },
+    {
+      id: 'biz', css: 'cat-biz', icon: '💼', label: '商业 & 投资',
+      items: ['a16z','Sequoia','DeepLearning.AI','Import AI']
+    }
+  ];
+
+  function renderSources() {
+    var total = 0;
+    var html = sourcesData.map(function(cat) {
+      total += cat.items.length;
+      var tags = cat.items.map(function(s) {
+        return '<span class="src-tag"><span class="sdot"></span>' + s + '</span>';
+      }).join('');
+      return '<div class="src-card ' + cat.css + '">' +
+        '<div class="src-card-header">' +
+          '<div class="src-card-icon">' + cat.icon + '</div>' +
+          '<div class="src-card-title">' + cat.label + '</div>' +
+          '<div class="src-card-count">' + cat.items.length + ' 个信源</div>' +
+        '</div>' +
+        '<div class="src-tags">' + tags + '</div>' +
+      '</div>';
+    }).join('');
+    document.getElementById('sourcesGrid').innerHTML = html;
+    document.getElementById('srcTotal').textContent = total;
+  }
+
+  renderSources();
+})();
+</script>
+</body>
+</html>

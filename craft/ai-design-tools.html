@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码</title>
+<meta name="description" content="盘点 5 款让 AI 写出专业级 UI 的设计工具和资源库：Impeccable、UI/UX Pro Max Skill、Open Design、华数设计、Awesome DESIGN.md——覆盖从学规范到完稿质检的完整链条。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:560px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:26px; font-weight:700; margin:56px 0 20px; color:#111; letter-spacing:-0.6px; position:relative; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:6px; line-height:1.85; color:#333; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.pull-quote { margin:36px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.info-box { margin:28px 0; padding:20px 24px; background:#f8f9fb; border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; }
+.info-box p { margin-bottom:0; font-size:14px; }
+.highlight-box { margin:28px 0; padding:22px 28px; background:linear-gradient(135deg,rgba(26,111,245,0.03),rgba(26,111,245,0.07)); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#222; }
+.table-wrap { margin:28px 0; overflow-x:auto; }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:#f1f3f5; }
+.table-wrap th { padding:12px 16px; text-align:left; font-weight:600; font-size:12px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:12px 16px; border-bottom:1px solid var(--border); color:#333; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:rgba(26,111,245,0.02); }
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7; overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; white-space:pre; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--accent-light); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:22px; }
+  .pull-quote p { font-size:15px; }
+  .page { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> 工具合集 · AI 设计</div>
+  <h1>5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码</h1>
+  <p class="hero-desc">给 AI 装上"设计脑"——覆盖从学规范到完稿质检的完整链条</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span><span>2026-06-25</span><span class="dot"></span><span>5 个章节</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+  <aside class="toc-sidebar">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、为什么需要？</a></li>
+      <li><a href="#s2">二、5 款工具逐一介绍</a></li>
+      <li><a href="#s3">三、横向对比总表</a></li>
+      <li><a href="#s4">四、推荐使用顺序</a></li>
+      <li><a href="#s5">五、一句话总结</a></li>
+    </ul>
+  </aside>
+
+  <main class="article-body">
+
+<div class="section-img">
+  <img src="/uploads/ai-design-tools-cover.jpg" alt="AI 设计工具合集">
+  <div class="caption">△ 5 款 AI 设计工具 — 从代码到专业级界面的完整方案</div>
+</div>
+
+<h2 id="s1">一、为什么需要这些工具？</h2>
+
+<p><strong>痛点</strong>：用 AI（Cursor / Claude Code / Copilot）写前端代码时，功能能跑，但界面丑——同质化严重，缺乏设计感。</p>
+
+<div class="highlight-box">
+  <p><strong>解决方案</strong>：给 AI 装上"设计脑"，让它生成的不只是"能用的页面"，而是"好看的界面"。下面5个工具覆盖了这条链路的每一个环节。</p>
+</div>
+
+<h2 id="s2">二、5 款工具逐一介绍</h2>
+
+<h3>1. Impeccable — AI 设计质量自动检测与校正</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>GitHub</td><td><a href="https://github.com/pbakaus/impeccable" target="_blank">github.com/pbakaus/impeccable</a></td></tr>
+<tr><td>Stars</td><td>24,000+</td></tr>
+<tr><td>作者</td><td>Paul Bakaus（前 Google 开发者布道师）</td></tr>
+<tr><td>定位</td><td>给 AI 编程助手装上"设计技能包"</td></tr>
+</tbody>
+</table>
+</div>
+
+<h4>核心能力</h4>
+<ul>
+  <li><strong>1 套技能 + 23 个命令</strong> — 用专业术语指导 AI 输出高质量设计</li>
+  <li><strong>44 条确定性检测规则</strong> — 自动扫描 AI 生成的 HTML/CSS/JS 中的设计反模式</li>
+  <li><strong>浏览器扩展</strong> — 可直接在网页上扫描设计问题</li>
+  <li><strong>设计钩子</strong> — AI 编辑文件后自动运行检测器，实时反馈问题</li>
+</ul>
+
+<h4>能检测什么？</h4>
+<p>过度使用的字体、紫色/青色渐变调色板（AI 最爱翻车）、玻璃态效果（glassmorphism）、霓虹发光效果、弹跳缓动函数、颜色对比度不足、排版层级混乱。</p>
+
+<h4>支持 12+ AI 工具</h4>
+<p>Claude Code、GitHub Copilot、Codex (OpenAI)、Cursor、Gemini CLI、Kiro、OpenCode、Pi、Qoder、RovoDev、Trae 等。</p>
+
+<div class="code-block"># 安装技能
+npx impeccable skills install
+
+# 运行检测
+npx impeccable detect
+
+# 开启自动钩子（AI 编辑后自动检查）
+/impeccable hooks on</div>
+
+<h3>2. UI/UX Pro Max Skill — 一个文件让 AI 变身设计师</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>GitHub</td><td><a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank">github.com/nextlevelbuilder/ui-ux-pro-max-skill</a></td></tr>
+<tr><td>Stars</td><td>33,400+</td></tr>
+<tr><td>特点</td><td>创建不到 3 个月即获 3.3 万 Stars，增速最快的独立 Skill</td></tr>
+</tbody>
+</table>
+</div>
+
+<ul>
+  <li>🎯 <strong>单一专注</strong> — 只解决一个问题：让 AI 生成专业级界面</li>
+  <li>📦 <strong>极简交付</strong> — 一个 SKILL 文件搞定，无需复杂配置</li>
+</ul>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>Impeccable</th><th>UI/UX Pro</th></tr></thead>
+<tbody>
+<tr><td>方式</td><td>检测 + 校正（事后审计）</td><td>直接指导（事前规范）</td></tr>
+<tr><td>复杂度</td><td>23 命令 + 44 检测规则</td><td>单一 SKILL 文件</td></tr>
+<tr><td>适用</td><td>已有项目优化</td><td>从零开始设计</td></tr>
+<tr><td>Stars</td><td>24K+</td><td>33.4K+</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">
+  <div class="info-title">💡 建议</div>
+  <p>两个可以搭配使用——UI/UX Pro 做初始设计指导，Impeccable 做最终质量把关。</p>
+</div>
+
+<h3>3. Open Design — Claude Design 的开源替代方案</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>官网</td><td><a href="https://open-design.ai" target="_blank">open-design.ai</a></td></tr>
+<tr><td>定位</td><td>Figma 和 Claude Design 的 Agent-native 替代品</td></tr>
+<tr><td>协议</td><td>Apache-2.0</td></tr>
+</tbody>
+</table>
+</div>
+
+<ul>
+  <li><strong>155+ 可组合组件</strong> — 不是写文章，是直接产出设计稿</li>
+  <li><strong>129 个 Design System</strong> — 内置大量成熟设计系统</li>
+  <li><strong>21 个 Coding Agent 集成</strong> — 零配置接入主流 AI 编程工具</li>
+  <li><strong>桌面端优先</strong> — 本地运行，支持 BYOK（自带模型）</li>
+</ul>
+
+<p>能产出：原型、实时 Artifact、PPT 幻灯片、图片、HyperFrames、视频。</p>
+
+<h3>4. 华数设计 — 国产 AI 商务设计工具</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>用户量</td><td>19,000+</td></tr>
+<tr><td>定位</td><td>国产商务设计平台</td></tr>
+</tbody>
+</table>
+</div>
+<p>面向商务场景的 AI 设计辅助工具，适合国内用户使用。建议通过国内应用商店或官方渠道进一步了解。</p>
+
+<h3>5. Awesome DESIGN.md — AI 设计协议规范库</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>GitHub</td><td><a href="https://github.com/fchangjun/awesome-design-md-cn" target="_blank">github.com/fchangjun/awesome-design-md-cn</a></td></tr>
+<tr><td>Stars</td><td>43,000+（10 天内突破 35K，史上增长最快的 awesome-list）</td></tr>
+<tr><td>来源</td><td>Google Stitch 团队提出的 DESIGN.md 概念</td></tr>
+<tr><td>定位</td><td>收录 70+ 知名品牌 DESIGN.md 案例</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>什么是 DESIGN.md？</strong>一份纯 Markdown 格式的设计规范文件，专门写给 AI Agent 读取。让 AI 能理解你的设计系统（颜色、字体、间距、组件规范），从而生成符合品牌规范的界面。</p>
+
+<div class="pull-quote"><p>"这是 GitHub 历史上增长最快的 awesome-list。说明一个信号：'让 AI 理解设计'正在成为行业刚需。"</p></div>
+
+<h2 id="s3">三、横向对比总表</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>工具</th><th>类型</th><th>Stars</th><th>核心价值</th><th>开源</th></tr></thead>
+<tbody>
+<tr><td>Impeccable</td><td>设计检测+校正</td><td>24K+</td><td>44条规则自动扫描设计问题</td><td>✅</td></tr>
+<tr><td>UI/UX Pro</td><td>设计技能包</td><td>33.4K+</td><td>一个SKILL文件提升AI设计力</td><td>✅</td></tr>
+<tr><td>Open Design</td><td>完整设计工具</td><td>150K+ 级</td><td>155组件+129设计系统</td><td>✅</td></tr>
+<tr><td>华数设计</td><td>商务设计工具</td><td>19K+</td><td>国产商务场景设计辅助</td><td>—</td></tr>
+<tr><td>Awesome DESIGN.md</td><td>规范案例库</td><td>43K+</td><td>70+品牌DESIGN.md参考</td><td>✅</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s4">四、推荐使用顺序</h2>
+
+<div class="code-block">第一步：学习 → 看 Awesome DESIGN.md，了解什么是好的设计规范文档
+第二步：装备 → 安装 Impeccable + UI/UX Pro Max Skill
+第三步：实践 → 用 Open Design 做完整的设计→开发流程
+第四步：深耕 → 根据自己的需求选择深度使用某个工具</div>
+
+<h2 id="s5">五、一句话总结</h2>
+
+<div class="pull-quote"><p>这 5 个工具覆盖了"AI 做设计"的完整链条：学规范（DESIGN.md）→ 写代码时被指导（UI/UX Pro）→ 写完后被检查（Impeccable）→ 完整工作流（Open Design）。不需要全装，按需选择。</p></div>
+
+<div class="tag-cloud">
+  <a href="/article.html?cat=craft">技艺录</a>
+  <a href="#">AI设计</a>
+  <a href="#">前端开发</a>
+  <a href="#">UI/UX</a>
+  <a href="#">设计工具</a>
+  <a href="#">开源</a>
+</div>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · 技艺录 — <a href="/craft/">查看更多文章</a></p>
+</footer>
+
+</body>
+</html>

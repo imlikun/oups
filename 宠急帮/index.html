@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>宠急帮 — 宠物临时照顾服务平台</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #0a0a0d;
+    --bg-card: rgba(255,255,255,0.04);
+    --text: #f0f0f0;
+    --text-secondary: rgba(255,255,255,0.55);
+    --accent: #ff6b35;
+    --accent-light: #ff9a7a;
+    --accent-glow: rgba(255,107,53,0.25);
+    --border: rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.03);
+    --green: #07c160;
+    --blue: #448aff;
+  }
+  * { margin:0; padding:0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+  .container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--text-secondary); text-decoration: none; font-size: 14px;
+    margin-top: 32px; transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--accent-light); }
+
+  .hero { text-align: center; padding: 60px 0 40px; }
+  .hero-badge {
+    display: inline-block; padding: 6px 16px; border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255,107,53,0.2), rgba(255,154,122,0.1));
+    border: 1px solid rgba(255,107,53,0.3); color: var(--accent-light);
+    font-size: 13px; font-weight: 600; letter-spacing: 1px; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 72px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 8px;
+    background: linear-gradient(135deg, #ff9a7a, #ff6b35, #e65100);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero h1 .sub {
+    display: block; font-size: clamp(16px, 3vw, 24px); font-weight: 500;
+    -webkit-text-fill-color: var(--text-secondary); letter-spacing: 0; margin-top: 4px;
+  }
+  .hero-tagline { font-size: 17px; color: var(--text-secondary); max-width: 520px; margin: 16px auto 0; line-height: 1.7; }
+
+  .phone-row {
+    display: flex; gap: 24px; align-items: flex-start;
+    margin-top: 48px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+  }
+  .phone-row::-webkit-scrollbar { height: 4px; }
+  .phone-row::-webkit-scrollbar-track { background: transparent; }
+  .phone-row::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+  .phone-row::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+  .phone-group { display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; scroll-snap-align: start; }
+  .phone-frame {
+    width: 260px; flex-shrink: 0;
+    background: #1a1a1d; border-radius: 36px;
+    padding: 6px; position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .phone-frame img {
+    width: 100%; height: auto; border-radius: 30px; display: block;
+  }
+  .phone-label { text-align: center; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-top: 6px; letter-spacing: 0.5px; }
+  .phone-label-sub { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 400; margin-top: 2px; }
+
+  .section { padding: 56px 0; }
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    color: var(--accent-light); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .section-title { font-size: clamp(22px, 4vw, 36px); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 24px; }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .feature-card {
+    background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 28px;
+    backdrop-filter: blur(12px); transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-2px); border-color: rgba(255,107,53,0.3); box-shadow: 0 8px 32px rgba(255,107,53,0.08); }
+  .feature-icon { font-size: 32px; margin-bottom: 12px; }
+  .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .role-card {
+    background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 28px;
+    backdrop-filter: blur(12px); text-align: center;
+  }
+  .role-card.asker { border-color: rgba(255,107,53,0.2); }
+  .role-card.helper { border-color: rgba(7,193,96,0.2); }
+  .role-card .icon { font-size: 40px; margin-bottom: 12px; }
+  .role-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .role-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+  .palette-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
+  .palette-swatch {
+    width: 72px; height: 72px; border-radius: 18px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; font-size: 10px; font-weight: 600;
+    position: relative; overflow: hidden;
+  }
+  .palette-swatch span { position: absolute; bottom: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .tech-card {
+    background: var(--glass); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+  }
+  .tech-card .layer { font-size: 11px; font-weight: 600; letter-spacing: 1px; color: var(--accent-light); margin-bottom: 6px; }
+  .tech-card .name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .tech-card .desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  .summary-banner {
+    background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(255,107,53,0.02));
+    border: 1px solid rgba(255,107,53,0.15); border-radius: 20px; padding: 36px; text-align: center;
+  }
+  .summary-banner strong { color: var(--accent-light); }
+
+  .qrcode-banner {
+    background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(255,154,122,0.02));
+    border: 1px solid rgba(255,107,53,0.12); border-radius: 24px; padding: 40px 48px;
+  }
+  .qrcode-content {
+    display: flex; align-items: center; gap: 48px; justify-content: center;
+  }
+  .qrcode-text { flex: 1; max-width: 420px; }
+  .qrcode-hint { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+  .qrcode-img-wrap {
+    flex-shrink: 0;
+    background: #fff; border-radius: 20px; padding: 12px;
+    box-shadow: 0 12px 40px rgba(255,107,53,0.15), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .qrcode-img { width: 160px; height: 160px; display: block; border-radius: 8px; }
+
+  .footer { text-align: center; padding: 60px 0 40px; border-top: 1px solid var(--border); margin-top: 40px; }
+  .footer a { color: var(--accent-light); text-decoration: none; font-weight: 600; }
+  .footer a:hover { text-decoration: underline; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  @media (max-width: 768px) {
+    .phone-frame { width: 220px; }
+    .hero h1 { font-size: 32px; }
+    .feature-grid, .role-grid { grid-template-columns: 1fr; }
+    .phone-row { gap: 16px; padding-left: 16px; padding-right: 16px; }
+    .qrcode-banner { padding: 28px 24px; }
+    .qrcode-content { flex-direction: column-reverse; gap: 24px; text-align: center; }
+    .qrcode-text { max-width: 100%; }
+    .qrcode-hint { justify-content: center; }
+    .qrcode-img-wrap { padding: 10px; }
+    .qrcode-img { width: 140px; height: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <a href="/" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    返回首页
+  </a>
+
+  <!-- Hero -->
+  <section class="hero reveal">
+    <div class="hero-badge">微信小程序 · 原生开发</div>
+    <h1>宠急帮<span class="sub">宠物临时照顾服务平台</span></h1>
+    <p class="hero-tagline">出差/旅游/临时有事，毛孩子怎么办？一键发布需求，专业帮助者极速响应，让宠物的每一次短暂分离都有安心的陪伴。</p>
+  </section>
+
+  <!-- QR Code CTA -->
+  <section class="section" style="padding-top:8px;">
+    <div class="qrcode-banner reveal reveal-delay-1">
+      <div class="qrcode-content">
+        <div class="qrcode-text">
+          <div class="section-label" style="margin-left:0;">扫码体验</div>
+          <h2 style="font-size:clamp(20px,4vw,30px);font-weight:700;margin-bottom:12px;">微信扫码，即刻体验</h2>
+          <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;max-width:360px;">打开微信扫一扫，进入 <strong style="color:#ff9a7a;">宠急帮</strong> 小程序。发布一个需求，或帮助一位毛孩子——每一次接单都是一次温暖的传递。</p>
+          <div class="qrcode-hint">
+            <i class="fa-solid fa-arrow-left" style="font-size:20px;color:var(--accent-light);"></i>
+            <span style="font-size:13px;color:var(--text-secondary);">微信扫码</span>
+          </div>
+        </div>
+        <div class="qrcode-img-wrap">
+          <img src="qrcode.jpg" alt="宠急帮小程序二维码" class="qrcode-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phone Mockups — 4 Screens -->
+  <div class="phone-row">
+    <div class="phone-group reveal reveal-delay-1">
+      <div class="phone-frame">
+        <img src="screen-welcome.png" alt="宠急帮欢迎页" style="width:100%;height:auto;border-radius:22px;">
+      </div>
+      <div class="phone-label">欢迎 · 服务预览</div>
+      <div class="phone-label-sub">5 大服务模块 / 四步求助指引</div>
+    </div>
+    <div class="phone-group reveal reveal-delay-1">
+      <div class="phone-frame">
+        <img src="screen-asker-home.png" alt="求助者首页" style="width:100%;height:auto;border-radius:22px;">
+      </div>
+      <div class="phone-label">求助者 · 首页</div>
+      <div class="phone-label-sub">极速响应卡片 / 一键发布需求</div>
+    </div>
+    <div class="phone-group reveal reveal-delay-2">
+      <div class="phone-frame">
+        <img src="screen-publish.png" alt="发布需求页" style="width:100%;height:auto;border-radius:22px;">
+      </div>
+      <div class="phone-label">发布 · 下单</div>
+      <div class="phone-label-sub">宠物信息 + 服务类型 + 时间</div>
+    </div>
+    <div class="phone-group reveal reveal-delay-3">
+      <div class="phone-frame">
+        <img src="screen-helper-pool.png" alt="帮助者待接单" style="width:100%;height:auto;border-radius:22px;">
+      </div>
+      <div class="phone-label">帮助者 · 接单池</div>
+      <div class="phone-label-sub">实时订单 / 一键确认接单</div>
+    </div>
+  </div>
+
+  <!-- Core Features -->
+  <section class="section">
+    <p class="section-label reveal">核心机制</p>
+    <h2 class="section-title reveal reveal-delay-1">求助者 + 帮助者，双角色实时匹配</h2>
+    <div class="role-grid reveal reveal-delay-1">
+      <div class="role-card asker">
+        <div class="icon">🐱</div>
+        <h3 style="color:var(--accent-light);">求助者</h3>
+        <p>手机号登录自动识别身份 → 选择宠物类型与名字 → 指定服务类型和时间 → 一键发布需求，帮助者极速响应</p>
+      </div>
+      <div class="role-card helper">
+        <div class="icon">🐾</div>
+        <h3 style="color:var(--green);">帮助者</h3>
+        <p>在线接单池实时刷新 → 确认接单后自动排入今日行程 → 上门完成服务 → 标记完成，积累好评与收入</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label reveal">服务矩阵</p>
+    <h2 class="section-title reveal reveal-delay-1">5 大服务，覆盖宠物临时照顾全部场景</h2>
+    <div class="feature-grid">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">🍽️</div>
+        <h3>上门喂食</h3>
+        <p>按需上门为宠物添加食物和水，确保毛孩子不会挨饿，适用于短期出差和临时外出。</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">🐕</div>
+        <h3>上门遛狗</h3>
+        <p>专业帮助者按时上门带狗狗外出活动，解决主人无法按时遛狗的烦恼。支持大型犬特殊需求。</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">🎾</div>
+        <h3>陪玩互动</h3>
+        <p>陪伴宠物玩耍，消耗精力、预防拆家。猫咪逗猫棒、狗狗飞盘——每次上门都是一次愉快的互动。</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">🛁</div>
+        <h3>洗护美容</h3>
+        <p>帮助者携带专业工具上门为宠物洗护，让毛孩子在家就能享受清爽舒适的体验。</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2" style="grid-column:1 / -1;">
+        <div class="feature-icon">🚗</div>
+        <h3>接送寄养</h3>
+        <p>帮助者上门接宠到寄养点，服务完成后安全送回。适用于主人长期出差、旅游等需要较长时间照顾的场景。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Language -->
+  <section class="section">
+    <p class="section-label reveal">设计语言</p>
+    <h2 class="section-title reveal reveal-delay-1">暖橙活力 × 暗夜深色 × 卡片式信息层级</h2>
+    <p style="color:var(--text-secondary);font-size:15px;line-height:1.8;max-width:720px;margin-bottom:24px;" class="reveal reveal-delay-1">
+      以 <code style="color:#ff9a7a;background:rgba(255,107,53,0.1);padding:2px 8px;border-radius:4px;">#FF6B35</code> 暖橙色为主色调，传递温暖与活力；
+      <code style="color:var(--text-secondary);background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:4px;">#1E2A3A</code> 深蓝黑为卡片底色，营造信任感。
+      大面积圆角卡片 + 高对比度文字 + 清晰视觉层级——让用户在一屏内完成「看服务 - 选类型 - 发需求」。
+    </p>
+    <div class="palette-row reveal reveal-delay-2">
+      <div class="palette-swatch" style="background:linear-gradient(135deg,#ff6b35,#ff9a7a);box-shadow:0 4px 20px rgba(255,107,53,0.4);">#FF6B35<span>暖橙主色</span></div>
+      <div class="palette-swatch" style="background:#0a0a0d;border:1px solid rgba(255,255,255,0.1);">#0A0A0D<span>纯黑底色</span></div>
+      <div class="palette-swatch" style="background:#1e2a3a;border:1px solid rgba(255,255,255,0.06);">#1E2A3A<span>深蓝黑卡片</span></div>
+      <div class="palette-swatch" style="background:#faf8f6;border:1px solid rgba(0,0,0,0.1);"><span style="color:#1e2a3a;">#FAF8F6</span></div>
+      <div class="palette-swatch" style="background:linear-gradient(135deg,#07c160,#34d058);box-shadow:0 4px 16px rgba(7,193,96,0.3);">#07C160<span>微信绿</span></div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="section">
+    <p class="section-label reveal">技术栈</p>
+    <h2 class="section-title reveal reveal-delay-1">微信原生 · 云开发 · 零依赖</h2>
+    <div class="tech-grid reveal reveal-delay-2">
+      <div class="tech-card">
+        <div class="layer">框架</div>
+        <div class="name">微信原生小程序</div>
+        <div class="desc">WXML + WXSS + JS，零外部依赖，轻量高性能</div>
+      </div>
+      <div class="tech-card">
+        <div class="layer">后端</div>
+        <div class="name">微信云开发</div>
+        <div class="desc">CloudBase 云函数处理订单逻辑，云数据库存储用户与订单数据</div>
+      </div>
+      <div class="tech-card">
+        <div class="layer">尺寸适配</div>
+        <div class="name">rpx 响应式单位</div>
+        <div class="desc">375px 设计稿 → 750rpx，1:2 精准映射全机型</div>
+      </div>
+      <div class="tech-card">
+        <div class="layer">角色系统</div>
+        <div class="name">手机号自动识别</div>
+        <div class="desc">微信授权登录后自动分配到帮助者或求助者角色，无需手动切换</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Naming -->
+  <section class="section">
+    <p class="section-label reveal">品牌命名</p>
+    <h2 class="section-title reveal reveal-delay-1">宠急帮 — 毛孩子的紧急帮手</h2>
+    <p style="color:var(--text-secondary);font-size:15px;line-height:1.8;max-width:680px;margin-bottom:24px;" class="reveal reveal-delay-1">
+      「<strong style="color:#ff9a7a;">宠急帮</strong>」—— 宠物 + 紧急 + 帮忙，三字合一，精准传达"宠物有急事，我来帮"的服务定位。简短好记，好搜好懂。<br><br>
+      用户角色自动识别：<strong style="color:#ff9a7a;">求助者</strong>（需要照顾宠物的人）与 <strong style="color:#07c160;">帮助者</strong>（提供照顾服务的人），双端数据实时同步。
+    </p>
+  </section>
+
+  <!-- Summary Banner -->
+  <section class="section">
+    <div class="summary-banner reveal reveal-delay-1">
+      <p style="font-size:clamp(15px,2.5vw,18px);color:var(--text-secondary);line-height:1.9;max-width:640px;margin:0 auto;">
+        用 <strong>微信原生技术栈</strong> + <strong>云开发后端</strong>，构建了<br>
+        一个支持 <strong>双角色实时匹配</strong> 的宠物临时照顾小程序。<br>
+        从登录到发布再到接单，<strong>全链路闭环</strong>。
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p style="color:var(--text-secondary);font-size:14px;">
+      项目地址：<a href="/宠急帮/">appin.site/宠急帮</a>
+    </p>
+    <p style="color:var(--text-secondary);font-size:13px;margin-top:8px;">
+      <a href="/">← 返回个人主页</a>
+    </p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+})();
+</script>
+
+</body>
+</html>

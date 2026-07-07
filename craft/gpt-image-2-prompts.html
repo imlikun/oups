@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPT Image 2 开源提示词库：900+模板直接复制出图</title>
+<meta name="description" content="GPT Image 2 + awesome-gpt-image-2-prompts 开源提示词案例库，收录 900+ 高质量 Prompt 模板，覆盖 7 大场景，CC0 协议完全开放。让 AI 图像生成从「灵光一现」变成「工程化复用」。">
+<style>
+/* ========== 模板B：现代宽屏风格 ========== */
+/* 配色：紫色强调 #7c3aed，背景白色+浅灰卡片 */
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-18px; left:0; right:0; height:2px; background:var(--accent); border-radius:1px; }
+
+/* ---- Hero ---- */
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%);
+  pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+
+/* ---- Summary Card (between Hero and Article) ---- */
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+
+/* ---- Article Body ---- */
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px;
+  position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body h4 { font-size:15px; font-weight:600; margin:24px 0 10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+
+/* Section Image (generated illustration) */
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+
+/* Pull Quote */
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+
+/* Info Box */
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+
+/* Highlight Box */
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08));
+  border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+
+/* Steps */
+.step-list { counter-reset:step; list-style:none; margin:28px 0 40px; }
+.step-list li { counter-increment:step; margin-bottom:20px; padding:24px 28px; background:#fff;
+  border:1px solid var(--border); border-radius:var(--radius); position:relative; box-shadow:0 2px 8px rgba(0,0,0,0.02); }
+.step-list li::before { content:counter(step); position:absolute; top:-10px; left:20px;
+  background:var(--accent); color:#fff; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+.step-list li .step-label { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; display:block; padding-top:8px; }
+.step-list li p { margin-bottom:4px; font-size:15px; }
+
+/* QA Checklist */
+.checklist { list-style:none; margin:24px 0 36px; }
+.checklist li { padding:12px 18px; margin-bottom:8px; border-radius:10px; background:var(--bg-card); display:flex; align-items:center; gap:10px; font-size:14px; border:1px solid var(--border); }
+.checklist li::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:800; flex-shrink:0; }
+
+/* Tables */
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+
+/* Code Block */
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7;
+  overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; }
+.code-block .comment { color:#6c7086; }
+.code-block .cmd { color:#89b4fa; }
+
+/* Tag Cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* Back */
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+/* Footer */
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+  .pull-quote p { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>AI 工具</div>
+    <h1>GPT Image 2 开源提示词库：900+模板直接复制出图</h1>
+    <p class="hero-desc">GPT Image 2 + awesome-gpt-image-2-prompts 开源提示词案例库，收录 900+ 高质量 Prompt 模板，覆盖 7 大场景，CC0 协议完全开放。让 AI 图像生成从「灵光一现」变成「工程化复用」。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-06-22</span><span class="sep"></span>
+      <span>约 3,200 字</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">9</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">7</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">14</div><div class="label">分钟阅读</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Summary Card -->
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">📋</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>awesome-gpt-image-2-prompts 是由 EvoLinkAI 团队维护的开源提示词案例库，收录超过 900 条 GPT-Image-2 的高质量 Prompt 和对应效果图。覆盖电商、广告创意、人像摄影、海报插画、角色设计、UI素材等 7 大场景，CC0 许可证完全开放，支持 11 种语言。本文从是什么、怎么用、Prompt 写作技巧到常见误区全面拆解这套「AI 图像生成的工程化方法论」。</p>
+      <div class="key-points"><span>16.9K+ GitHub Star</span>
+<span>900+ 现成 Prompt 模板</span>
+<span>覆盖电商/广告/人像等 7 大场景</span>
+<span>CC0 协议完全开放</span>
+<span>支持 API 调用 + Python SDK</span>
+<span>11 种语言含简体中文</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-img" style="max-width:var(--max-text);margin:0 auto 32px;padding:0 32px;">
+  <img src="/uploads/gpt-image-2-cover.jpg" alt="GPT Image 2 提示词库">
+  <div class="caption">△ GPT Image 2 — 900+ 开源提示词模板，覆盖 7 大场景</div>
+</div>
+
+<!-- Article -->
+<div class="article-wrap">
+  <article class="article-body">
+    <h2>一、这是什么？</h2>
+<p>GPT Image 2 是 OpenAI 推出的新一代图像生成模型，文字渲染准确率高达 <strong>99%+</strong>，支持 4K 分辨率，3 秒出图。</p>
+<p><strong>awesome-gpt-image-2-prompts</strong> 是由 EvoLinkAI 团队维护的开源提示词案例库，专门收录 GPT-Image-2 的高质量 Prompt 和对应效果图。简单来说：<strong>你不用自己摸索怎么写提示词了，直接来这个仓库找模板，复制粘贴就能出好图。</strong></p>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>数据</th></tr></thead><tbody><tr><td>GitHub Stars</td><td>16.9K+（2个月内）</td></tr><tr><td>案例总数</td><td>900+ 条（持续更新）</td></tr><tr><td>开源协议</td><td>CC0 1.0（完全开放，可自由使用）</td></tr><tr><td>多语言支持</td><td>11种语言（含简体中文）</td></tr><tr><td>仓库地址</td><td><a href="https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts" target="_blank">github.com/EvoLinkAI/awesome-gpt-image-2-prompts</a></td></tr></tbody></table></div>
+<h2>二、核心功能</h2>
+<h3>1. 900+ 现成 Prompt 模板</h3>
+<p>每条模板都包含：提示词全文（可直接复制使用）、对应效果图（看到这个 Prompt 出来到底什么效果）、场景分类标签（方便按需检索）。</p>
+<h3>2. 7 大场景全覆盖</h3>
+<div class="table-wrap"><table><thead><tr><th>场景分类</th><th>适合谁</th><th>典型案例</th></tr></thead><tbody><tr><td>电商场景</td><td>电商运营、产品经理</td><td>产品主图、故事板、电商拍法</td></tr><tr><td>广告创意</td><td>广告策划、品牌设计</td><td>广告 KV、品牌叙事图</td></tr><tr><td>人像摄影</td><td>摄影师、自媒体</td><td>写真、头像、人物概念图</td></tr><tr><td>海报插画</td><td>设计师、内容创作者</td><td>电影海报、品牌视觉、插画风格</td></tr><tr><td>角色设计</td><td>游戏开发者、IP设计师</td><td>游戏角色、IP形象、二次元人设</td></tr><tr><td>UI/社媒素材</td><td>UI设计师、运营</td><td>App界面Mockup、封面图、社媒配图</td></tr><tr><td>社区实验</td><td>所有AI爱好者</td><td>探索性玩法和创意实验</td></tr></tbody></table></div>
+<h3>3. API 调用支持</h3>
+<p>提供结构化的 JSON 文件（gpt_image_2_prompt.json），所有 Prompt 可程序化读取，方便批量处理或接入自己的工具链。</p>
+<h3>4. 工作流集成</h3>
+<p>支持 GPT-Image-2 × Seedance 2.0 影视级工作流，实现从图片生成到视频生成的完整链路。</p>
+<h2>三、怎么用？</h2>
+<h3>方式一：直接浏览复制（零门槛）</h3>
+<ol class="step-list"><li><span class="step-label">打开仓库</span><p>打开 GitHub 仓库 <a href="https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts" target="_blank">github.com/EvoLinkAI/awesome-gpt-image-2-prompts</a></p></li><li><span class="step-label">找分类</span><p>找到你需要的场景分类（如「电商场景」）</p></li><li><span class="step-label">选案例</span><p>浏览案例，找到满意的效果图</p></li><li><span class="step-label">复制 Prompt</span><p>复制对应的 Prompt</p></li><li><span class="step-label">生成</span><p>去 Evolink 平台（evolink.ai/gpt-image-2）粘贴 Prompt，直接生成</p></li></ol>
+<h3>方式二：API 调用（开发者适用）</h3>
+<p><strong>步骤 1：注册获取 API Key</strong> — 去 Evolink 平台免费注册，获取 API Key。</p>
+<p><strong>步骤 2：调用接口</strong></p>
+<div class="code-block">export EVOLINK_API_KEY="your_key_here"
+curl --request POST \
+  --url https://api.evolink.ai/v1/images/generations \
+  --header "Authorization: Bearer ${EVOLINK_API_KEY}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "gpt-image-2",
+    "prompt": "A premium ecommerce hero shot..."
+  }'
+</div>
+<p><strong>步骤 3：本地技能安装</strong> — 一键安装后可直接调用技能，无需重复配置 API Key：</p>
+<div class="code-block">npx evolink-gpt-image -y</div>
+<h3>方式三：Python SDK 调用</h3>
+<div class="code-block">from openai import OpenAI
+
+client = OpenAI()
+result = client.images.generate(
+    model="gpt-image-2",
+    prompt=prompt,
+    size="1024x1536",
+    quality="high",
+    n=1,
+)
+print(result.data[0].url)
+</div>
+<h2>四、Prompt 写作技巧</h2>
+<div class="pull-quote"><p>好 Prompt 不是形容词堆砌，而是约束越明确越好。<br><br>核心公式：<strong>任务类型 + 主体锚点 + 结构约束 + 光线/材质/色彩 + 文字要求 + 保留项/排除项</strong></p></div>
+<h3>5 类关键约束</h3>
+<div class="table-wrap"><table><thead><tr><th>约束类型</th><th>说明</th><th>示例</th></tr></thead><tbody><tr><td>任务类型</td><td>你在生成什么</td><td><code>editorial portrait / product ad / UI mockup</code></td></tr><tr><td>主体锚点</td><td>画面中心是谁/什么</td><td><code>年轻女性、便利店门口、中景</code></td></tr><tr><td>结构约束</td><td>镜头、构图、布局</td><td><code>35mm、中景、眼平视角</code></td></tr><tr><td>材质与光线</td><td>决定画面可信度</td><td><code>荧光灯+霓虹、玻璃反射、皮肤纹理</code></td></tr><tr><td>输出边界</td><td>什么必须有/什么不能有</td><td><code>无塑料皮肤、无水印、无多余文字</code></td></tr></tbody></table></div>
+<h3>人像摄影骨架模板</h3>
+<div class="code-block">Create a candid editorial portrait of [主体] in [环境].
+Camera: [35mm / 85mm / iPhone / CCD], [framing], [angle].
+Lighting: [mixed fluorescent and neon / soft window light / harsh flash].
+Skin and texture: natural skin texture, visible pores, realistic highlights, no plastic skin.
+Wardrobe and pose: [服装], [姿势], [表情].
+Background: [2-3 key environment details], shallow depth of field.
+Mood and grade: [cinematic / nostalgic / documentary / casual snapshot].
+Output boundary: no watermark, no extra text, no synthetic beauty-filter look.
+</div>
+<h3>产品广告骨架模板</h3>
+<div class="code-block">Create a premium product advertising image for [产品].
+Hero object: [形状, 材质, 颜色, 角度, 品牌区域].
+Composition: [centered / three-quarter view / split layout / 9-panel storyboard].
+Supporting props: [2-4 props], each with a narrative role.
+Lighting: [low-key studio / soft daylight / hard edge light / glossy reflections].
+Surface and environment: [wet ground / marble / paper texture / desk / void background].
+Color system: [3-5 colors].
+Typography rule: [no text / short headline only / Chinese labels with short copy].
+Avoid: cheap e-commerce look, random props, unreadable text, broken geometry.
+</div>
+<h3>UI/信息图骨架模板（JSON格式）</h3>
+<div class="code-block">{
+  "type": "infographic or UI mockup",
+  "goal": "explain [topic] for [audience]",
+  "canvas": { "aspect_ratio": "4:5", "background": "clean paper texture" },
+  "layout": {
+    "header": "title + subtitle",
+    "main_visual": "one central diagram or hero image",
+    "modules": 4,
+    "footer": "legend or CTA",
+    "text_language": "Simplified Chinese",
+    "text_density": "short labels only"
+  },
+  "visual_system": {
+    "style": "editorial / futuristic / museum board",
+    "palette": ["#0F172A", "#E2E8F0", "#38BDF8"]
+  },
+  "must_keep": ["clear hierarchy", "consistent icon style", "readable labels"],
+  "avoid": ["crowded layout", "fake tiny paragraphs", "random decoration"]
+}
+</div>
+<h2>五、常见误区与避坑指南</h2>
+<div class="table-wrap"><table><thead><tr><th>常见错误</th><th>为什么会翻车</th><th>正确做法</th></tr></thead><tbody><tr><td>只写风格不写结构</td><td>模型不知道画面分几块、文字放哪</td><td>先写比例、模块数、标题层级</td></tr><tr><td>想要人物一致只写 "same person"</td><td>五官、服装、镜头都没锁定</td><td>分别写清脸型、发型、服装、画幅</td></tr><tr><td>形容词堆太多</td><td>有噪声缺约束</td><td>少写空话，多写镜头、材质、构图</td></tr><tr><td>中文文案太长</td><td>小字容易失真</td><td>改成短标题、短标签、模块化信息</td></tr><tr><td>只说"不要改别的"</td><td>没定义 keep 的具体内容</td><td>列出 preserve 清单与 change 清单</td></tr><tr><td>直接搬社区 prompt 商用</td><td>可能踩版权/商标风险</td><td>学结构，不直接搬整段案例</td></tr></tbody></table></div>
+<h4>中文文本特别注意</h4>
+<ul class="checklist"><li>海报和信息图尽量用短标题+短标签，不要塞密集正文</li><li>明确写 Simplified Chinese，并限定标题数量和每模块行数</li><li>如果必须做长中文内容，先出结构稿，再二次编辑精修</li></ul>
+<h2>六、技术架构说明</h2>
+<div class="table-wrap"><table><thead><tr><th>维度</th><th>说明</th></tr></thead><tbody><tr><td>项目性质</td><td>提示词资源仓库（awesome-list），非代码库</td></tr><tr><td>核心依赖</td><td>OpenAI GPT-Image-2 模型 + Evolink 平台 API</td></tr><tr><td>数据格式</td><td>Markdown 文件 + 结构化 JSON</td></tr><tr><td>目录结构</td><td>cases/ecommerce.md（电商）、cases/ad-creative.md（广告）等按场景分文件</td></tr><tr><td>多语言</td><td>README_xx.md 格式，支持11种语言</td></tr><tr><td>更新机制</td><td>社区贡献 + 团队筛选，持续更新</td></tr></tbody></table></div>
+<h2>七、同类仓库对比</h2>
+<div class="table-wrap"><table><thead><tr><th>仓库</th><th>Stars</th><th>特点</th><th>最适合</th></tr></thead><tbody><tr><td><strong>EvoLinkAI</strong>/awesome-gpt-image-2-prompts</td><td><strong>16.9K+</strong></td><td>精选案例密度高，电商广告强</td><td>电商主图、广告KV、产品摄影</td></tr><tr><td><strong>YouMind-OpenLab</strong>/awesome-gpt-image-2</td><td>4.1K+</td><td>规模最大(3600+条)，检索友好</td><td>找灵感、找同类案例</td></tr><tr><td><strong>freestylefly</strong>/awesome-gpt-image-2</td><td>2.9K+</td><td>结构化程度最高(Prompt-as-Code)</td><td>UI、信息图、批量化出图</td></tr><tr><td><strong>Anil-matcha</strong>/Awesome-GPT-Image-2-API-Prompts</td><td>1.8K+</td><td>开发者手册风格</td><td>API集成、工程落地</td></tr></tbody></table></div>
+<div class="info-box"><div class="info-title">推荐使用顺序</div><p>找灵感 → 先在 <strong>YouMind</strong> 搜索相似任务<br>看成熟案例 → 去 <strong>EvoLinkAI</strong> 看完整广告图、电商图<br>改造成模板 → 用 <strong>freestylefly</strong> 的结构化思路拆解<br>落 API → 参考 <strong>Anil-matcha</strong> 的工程文档接入</p></div>
+<h2>八、30分钟上手路线</h2>
+<ol class="step-list"><li><span class="step-label">找灵感</span><p>在 YouMind 找 5 个相似任务，看别人怎么定义目标</p></li><li><span class="step-label">学成熟案例</span><p>去 EvoLinkAI 挑 1-2 个成熟案例，观察主体、镜头、光线、文字约束</p></li><li><span class="step-label">改造模板</span><p>把案例重写成自己的骨架模板，删掉与业务无关的描述</p></li><li><span class="step-label">结构化拆解</span><p>用 freestylefly 思路拆成：业务变量、视觉常量、布局协议</p></li><li><span class="step-label">接入 API</span><p>接 API，记录 3 组成功样本和 3 组失败样本</p></li></ol>
+<h3>发布前检查清单</h3>
+<ul class="checklist"><li>任务类型明确，不是笼统的"来一张图"</li><li>主体锚点只有 1 个中心</li><li>画幅、镜头或布局数量已写明</li><li>光线与材质是具体物理描述，不是空话</li><li>文本语言、标题层级、字数密度已限定</li><li>保留项与禁止项分别列出</li><li>商用版权/品牌/人物风险已审查</li><li>成功样本已沉淀成模板</li></ul>
+<h2>九、总结</h2>
+<div class="highlight-box"><p>GPT Image 2 提示词库的核心价值：<br><br>不是「更长的 prompt」，而是<strong>「更清楚的约束」</strong><br><br>不是「灵感型手艺」，而是<strong>「可复用的工程资产」</strong><br><br>好模板控制得越清楚越好，描述华丽反而是噪声。<br><br>一句话：<strong>学结构，不抄整段；建模板，不留灵感。</strong></p></div>
+  </article>
+
+  <div class="tag-cloud">
+    <a href="/craft/?tag=GPT Image 2">GPT Image 2</a>
+<a href="/craft/?tag=AI 绘图">AI 绘图</a>
+<a href="/craft/?tag=Prompt 工程">Prompt 工程</a>
+<a href="/craft/?tag=图像生成">图像生成</a>
+<a href="/craft/?tag=OpenAI">OpenAI</a>
+<a href="/craft/?tag=提示词模板">提示词模板</a>
+<a href="/craft/?tag=开源">开源</a>
+  </div>
+  <a href="/craft/" class="back-link">返回技艺录</a>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  // Nav scroll shadow
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+})();
+</script>
+
+</body>
+</html>

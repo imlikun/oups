@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>book-to-skill：把技术书一键变成 AI 专属知识库</title>
+<meta name="description" content="不是让 AI「读」书，而是让 AI「学会」这本书——把 PDF/EPUB/DOCX 等技术书编译成结构化的 AI Skill 包，Token 成本直降 51 倍，MIT 开源。">
+<style>
+/* ========== 模板B：现代宽屏风格 ========== */
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-18px; left:0; right:0; height:2px; background:var(--accent); border-radius:1px; }
+
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%); pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px;
+  position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body h4 { font-size:15px; font-weight:600; margin:24px 0 10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08));
+  border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+
+.step-list { counter-reset:step; list-style:none; margin:28px 0 40px; }
+.step-list li { counter-increment:step; margin-bottom:20px; padding:24px 28px; background:#fff;
+  border:1px solid var(--border); border-radius:var(--radius); position:relative; box-shadow:0 2px 8px rgba(0,0,0,0.02); }
+.step-list li::before { content:counter(step); position:absolute; top:-10px; left:20px;
+  background:var(--accent); color:#fff; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+.step-list li .step-label { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; display:block; padding-top:8px; }
+.step-list li p { margin-bottom:4px; font-size:15px; }
+
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7;
+  overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; }
+.code-block .comment { color:#6c7086; }
+.code-block .cmd { color:#89b4fa; }
+
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+  .pull-quote p { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>AI 工具详解</div>
+    <h1>book-to-skill：把技术书一键变成 <em>AI 专属知识库</em></h1>
+    <p class="hero-desc">不是让 AI "读"书，而是让 AI "学会"这本书，以后随问随答，不用每次都上传整本。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-01</span><span class="sep"></span>
+      <span>约 3200 字</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">12</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">6</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">8</div><div class="label">分钟阅读</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Summary Card -->
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">📚</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>book-to-skill 是一款 MIT 开源的 CLI 工具，把 PDF、EPUB、DOCX 等技术书籍/文档提前拆解、结构化编译成 AI Skill 包，放到 Claude Code、GitHub Copilot、Amp 等 AI 编程助手里直接使用。编译一次永久复用，Token 成本降低 90% 以上。</p>
+      <div class="key-points">
+        <span>MIT 开源可商用</span>
+        <span>Token 成本降 51 倍</span>
+        <span>支持 8 种文件格式</span>
+        <span>Python 3.9+ 全平台</span>
+        <span>编译一次永久复用</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Article -->
+<div class="article-wrap">
+  <article class="article-body">
+
+    <div class="pull-quote">
+      <p>不是让 AI "读"书，而是让 AI "学会"这本书——编译一次、永久复用，Token 成本降低 90% 以上。</p>
+    </div>
+
+    <h2>一、这是什么？</h2>
+
+    <p><strong>book-to-skill</strong> 是一款 MIT 开源的 CLI 工具，核心功能是：</p>
+
+    <div class="highlight-box">
+      <p>把你手里的 PDF、EPUB、DOCX 等技术书籍/文档，<strong>提前拆解、结构化编译成 AI Skill 包</strong>，放到 Claude Code、GitHub Copilot、Amp 等 AI 编程助手里直接使用。</p>
+    </div>
+
+    <p><strong>一句话理解</strong>：不是让 AI "读"书，而是让 AI "学会"这本书，以后随问随答，不用每次都上传整本。</p>
+
+    <div class="info-box">
+      <div class="info-title">基本信息</div>
+      <p><strong>GitHub：</strong>virgiliojr94/book-to-skill ｜ <strong>开源协议：</strong>MIT（可商用、可二次开发）</p>
+      <p style="margin-top:4px;"><strong>Star 数：</strong>2026年5月 Python 日榜 #10，持续活跃更新 ｜ <strong>定位：</strong>遵循 Agent Skills 开放标准</p>
+    </div>
+
+    <h2>二、解决什么痛点？</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>传统方式</th><th>问题</th></tr></thead>
+        <tbody>
+          <tr><td>直接上传整本 PDF 给 AI</td><td>Token 瞬间爆表，每次提问都重新消耗，成本高</td></tr>
+          <tr><td>搭建 RAG 检索</td><td>只能做关键词匹配，无法理解全书框架，回答碎片化</td></tr>
+          <tr><td>手动整理笔记</td><td>费时费力，最后尘封硬盘再也不看</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>book-to-skill 的做法：</strong>提前把书"编译"成结构化的 Skill 包，AI 只加载核心框架（约 5000 Token），只在你问具体章节时才按需读取，成本低、幻觉少、可复用。</p>
+    </div>
+
+    <h2>三、编译后生成什么文件？</h2>
+
+    <p>一本书编译后，在 ~/.claude/skills/&lt;书名&gt;/ 下生成 5 类文件：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>文件</th><th>作用</th><th>大小</th></tr></thead>
+        <tbody>
+          <tr><td>SKILL.md</td><td>核心心智模型 + 章节总索引（每次必加载）</td><td>~4000 tokens</td></tr>
+          <tr><td>chapters/ch01-*.md</td><td>每章一个文件，按需加载</td><td>~1000 tokens/章</td></tr>
+          <tr><td>glossary.md</td><td>全书术语表，按字母排序</td><td>~1500 tokens</td></tr>
+          <tr><td>patterns.md</td><td>技术模式、算法、设计模式汇总</td><td>~2000 tokens</td></tr>
+          <tr><td>cheatsheet.md</td><td>决策速查表、核心规则</td><td>~1000 tokens</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>对比整书直接上传：</strong>一本 256K Token 的技术书，传统方式每次消耗 256K，book-to-skill 固定约 5000 Token，<strong>节省 51 倍</strong>。</p>
+    </div>
+
+    <h2>四、支持哪些文件格式？</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>格式</th><th>解析引擎</th><th>安装命令</th></tr></thead>
+        <tbody>
+          <tr><td>PDF（纯文字）</td><td>pdftotext（poppler）</td><td>sudo apt install poppler-utils</td></tr>
+          <tr><td>PDF（技术型：含代码/表格）</td><td>Docling</td><td>pip3 install docling</td></tr>
+          <tr><td>EPUB</td><td>ebooklib + beautifulsoup4</td><td>pip3 install ebooklib beautifulsoup4</td></tr>
+          <tr><td>DOCX</td><td>python-docx</td><td>pip3 install python-docx</td></tr>
+          <tr><td>HTML</td><td>beautifulsoup4</td><td>pip3 install beautifulsoup4</td></tr>
+          <tr><td>RTF</td><td>striprtf</td><td>pip3 install striprtf</td></tr>
+          <tr><td>MOBI/AZW（Kindle）</td><td>Calibre ebook-convert</td><td>安装 Calibre</td></tr>
+          <tr><td>TXT / Markdown / reStructuredText</td><td>内置，无需额外依赖</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>不支持</strong>：扫描版 PDF（需先 OCR）、DRM 加密文档、纯图片格式。</p>
+
+    <h2>五、怎么用？（小白版）</h2>
+
+    <h3>第一步：安装 Skill</h3>
+    <p><strong>Claude Code 用户（最简单）</strong>：打开 Claude Code，直接发送：</p>
+    <div class="code-block">
+      Install book-to-skill: https://raw.githubusercontent.com/virgiliojr94/book-to-skill/master/SKILL.md
+    </div>
+    <p>看到"安装成功"即可。</p>
+
+    <h3>第二步：检查依赖</h3>
+    <div class="code-block">
+      python3 ~/.claude/skills/book-to-skill/scripts/extract.py --check
+    </div>
+    <p>会告诉你哪些格式的依赖已安装、哪些还需要装。</p>
+
+    <h3>第三步：转换书籍</h3>
+    <div class="code-block">
+      <span class="comment"># 基本用法（自动生成 skill 名称）</span><br>
+      /book-to-skill ~/Downloads/DDIA.pdf<br><br>
+      <span class="comment"># 自定义 skill 名称（方便记忆）</span><br>
+      /book-to-skill ~/Downloads/python-book.epub python-guide<br><br>
+      <span class="comment"># 批量处理整个文件夹</span><br>
+      /book-to-skill ~/company-docs/ internal-docs<br><br>
+      <span class="comment"># 向已有 skill 追加新内容（增量更新，不用重跑）</span><br>
+      /book-to-skill ~/new-paper.pdf ~/.claude/skills/python-guide
+    </div>
+
+    <h3>第四步：使用</h3>
+    <div class="code-block">
+      /ddia-book                    <span class="comment"># 加载核心框架</span><br>
+      /ddia-book replication        <span class="comment"># 查询"数据复制"相关章节</span><br>
+      /ddia-book ch05              <span class="comment"># 直接读第5章</span><br>
+      /ddia-book "有哪些章节？"   <span class="comment"># 列出所有章节</span>
+    </div>
+
+    <h2>六、Token 成本实测</h2>
+
+    <p>官方用 103 页技术书做的基准测试：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>解析方式</th><th>耗时</th><th>保留表格</th><th>保留代码块</th></tr></thead>
+        <tbody>
+          <tr><td>pdftotext（纯文本模式）</td><td>0.1秒</td><td>0</td><td>0</td></tr>
+          <tr><td>Docling（布局感知模式）</td><td>164秒</td><td>48个</td><td>36个</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>结论：</strong>纯文字叙事书用快速模式；技术书（有代码/表格）用 Docling 模式，虽然慢但信息完整。单本书编译成本约 $1（调用 AI 分析结构），编译一次永久复用。</p>
+    </div>
+
+    <h2>七、与 RAG / NotebookLM 的区别</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>直接上传PDF</th><th>RAG检索</th><th>NotebookLM</th><th>book-to-skill</th></tr></thead>
+        <tbody>
+          <tr><td>工作时机</td><td>查询时加载全文</td><td>查询时切片检索</td><td>上传后向量化</td><td><strong>编译时一次性结构化</strong></td></tr>
+          <tr><td>理解深度</td><td>无结构，易丢失</td><td>碎片拼接，无整体框架</td><td>中</td><td><strong>提取全书心智模型</strong></td></tr>
+          <tr><td>Token消耗</td><td>极高（每次全量）</td><td>中等</td><td>低</td><td><strong>极低（固定~5000）</strong></td></tr>
+          <tr><td>幻觉概率</td><td>高</td><td>中高</td><td>中</td><td><strong>极低（锚定原文）</strong></td></tr>
+          <tr><td>适合场景</td><td>临时查阅</td><td>跨多书批量检索</td><td>综合整理</td><td><strong>单本深度复用</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>选型建议：</strong>跨几十本书模糊检索 → RAG 或 NotebookLM；经典技术书、企业内档、新书外文资料 → <strong>book-to-skill</strong>。</p>
+    </div>
+
+    <h2>八、真实使用场景</h2>
+
+    <h3>场景1：技术书编码时随时查阅</h3>
+    <p>把《Designing Data-Intensive Applications》编译成 skill，写分布式代码时直接问 /ddia-book ch05 讲分区与负载均衡，AI 基于真实内容回答，不编造。</p>
+
+    <h3>场景2：企业团队统一知识库</h3>
+    <p>把内部架构手册、运维 SOP、接口规范全部编译成一个 backend-standard skill，团队成员的 Claude Code 都加载同一套，写代码自动遵循公司规范。</p>
+
+    <h3>场景3：个人知识库整合</h3>
+    <p>把多篇论文 + 个人 Markdown 笔记合并编译成一个 skill，写实验代码时 AI 自动整合多篇文献结论，精准引用。</p>
+
+    <h2>九、五大设计原则（为什么效果好）</h2>
+
+    <ol>
+      <li><strong>密度优于完整性</strong> — 1000 token 摘要胜过 10000 token 原文堆砌</li>
+      <li><strong>实践者语气</strong> — 输出"何时用X"而非"书中解释了X"</li>
+      <li><strong>核心前置</strong> — 最重要的内容放在 SKILL.md 前 5000 token</li>
+      <li><strong>按需章节</strong> — 章节文件只在被问到时才加载</li>
+      <li><strong>从不使用原始文本</strong> — 总是综合、提炼、提取信号，而非复制</li>
+    </ol>
+
+    <h2>十、注意事项 & 避坑</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>问题</th><th>原因</th><th>解决方案</th></tr></thead>
+        <tbody>
+          <tr><td>章节拆分异常</td><td>书籍无规范章节标题</td><td>开启 Technical 模式，或手动调整 chapters 文件夹</td></tr>
+          <tr><td>扫描版PDF解析空白</td><td>工具只支持可复制文本</td><td>先 OCR 转文字</td></tr>
+          <tr><td>解析速度慢</td><td>Docling 引擎本身耗时</td><td>技术书单页约1.5秒，103页约3分钟，属正常</td></tr>
+          <tr><td>低配设备卡顿</td><td>内存不足</td><td>8G 内存可正常用，避免同时解析多本书</td></tr>
+          <tr><td>AI 无法识别 Skill</td><td>路径不对或权限未开</td><td>Claude Code 建议在项目目录下安装</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pull-quote">
+      <p><strong>版权提醒：</strong>工具本身 MIT 开源，但你用它处理的书籍如果受版权保护，生成的 Skill 包不能公开分发，仅限个人本地使用。</p>
+    </div>
+
+    <h2>十一、项目信息汇总</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项目</th><th>信息</th></tr></thead>
+        <tbody>
+          <tr><td>仓库地址</td><td><a href="https://github.com/virgiliojr94/book-to-skill" target="_blank">github.com/virgiliojr94/book-to-skill</a></td></tr>
+          <tr><td>开源协议</td><td>MIT License</td></tr>
+          <tr><td>运行环境</td><td>Python 3.9+，全平台支持</td></tr>
+          <tr><td>支持 AI 工具</td><td>Claude Code、GitHub Copilot CLI、Amp</td></tr>
+          <tr><td>更新状态</td><td>活跃（2026年6月仍有持续提交）</td></tr>
+          <tr><td>PyPI 安装</td><td>pip install "book-to-skill[pdf,epub,docx]"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>十二、总结</h2>
+
+    <p><strong>book-to-skill 的核心价值</strong>：</p>
+    <ul>
+      <li>不是"更长的 Prompt"，而是"结构化的知识资产"</li>
+      <li>不是"临时查资料"，而是"让书籍常驻你的工作流"</li>
+      <li>编译一次、永久复用，Token 成本降低 90% 以上</li>
+    </ul>
+
+    <p><strong>适合谁</strong>：程序员、算法工程师、企业技术团队、科研学习者、AI Agent 开发者。</p>
+
+    <div class="highlight-box">
+      <p><strong>一句话：</strong>如果你有反复查阅的技术书或内部文档，这个工具能让你和 AI 的协作效率提升一个量级。</p>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="/article.html?cat=craft">AI</a>
+      <a href="/article.html?cat=craft">知识库</a>
+      <a href="/article.html?cat=craft">开源</a>
+      <a href="/article.html?cat=craft">书籍</a>
+      <a href="/article.html?cat=craft">工具</a>
+      <a href="/article.html?cat=craft">GitHub</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+})();
+</script>
+
+</body>
+</html>

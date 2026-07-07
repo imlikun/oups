@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>随笔 — 李坤的个人思考</title>
+<meta name="description" content="记录工作、生活、阅读中的碎片思考——李坤的随笔空间。">
+<style>
+:root {
+  --bg: #f9f8f6;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #999;
+  --accent: #c87a1e;
+  --accent-light: rgba(200,122,30,0.08);
+  --accent-soft: rgba(200,122,30,0.06);
+  --border: rgba(0,0,0,0.07);
+  --card-bg: #fff;
+  --radius: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(249,248,246,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:800px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500;
+  transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:2px; background:var(--accent); border-radius:1px; }
+
+/* ---- Hero ---- */
+.hero { max-width:800px; margin:0 auto; padding:130px 32px 48px; }
+.hero-inner { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+.hero-left { flex:1; min-width:260px; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em;
+  margin-bottom:18px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(30px,4.5vw,46px); font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:14px; }
+.hero h1 em { font-style:normal; color:var(--accent); }
+.hero-desc { color:var(--text-secondary); font-size:15px; max-width:440px; line-height:1.65; }
+.hero-right { display:flex; gap:32px; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
+.hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:2px; }
+
+/* ---- Article List ---- */
+.list-wrap { max-width:800px; margin:0 auto; padding:0 32px 80px; }
+.list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+.list-header h2 { font-size:15px; font-weight:600; color:var(--text); letter-spacing:0.02em; }
+.list-header h2 span { color:var(--text-muted); font-weight:400; }
+
+/* Article Item */
+.article-item { display:block; padding:28px 0; border-bottom:1px solid var(--border);
+  text-decoration:none; color:inherit; transition:background 0.2s; border-radius:10px; margin:0 -12px; padding-left:12px; padding-right:12px; }
+.article-item:hover { background:rgba(200,122,30,0.02); }
+.article-item:last-child { border-bottom:none; }
+
+.article-item .item-title { font-size:18px; font-weight:600; color:var(--text); letter-spacing:-0.3px;
+  margin-bottom:8px; transition:color 0.2s; }
+.article-item:hover .item-title { color:var(--accent); }
+.article-item .item-excerpt { font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:10px;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.article-item .item-meta { display:flex; align-items:center; gap:16px; font-size:12px; color:var(--text-muted); }
+.article-item .item-meta .item-date { display:flex; align-items:center; gap:4px; }
+.article-item .item-meta .item-tags { display:flex; gap:6px; }
+.article-item .item-meta .item-tag { padding:2px 8px; border-radius:6px; background:var(--accent-soft); color:var(--accent);
+  font-size:11px; font-weight:500; }
+
+/* Empty State */
+.empty-state { text-align:center; padding:80px 20px; color:var(--text-muted); }
+.empty-state .empty-icon { font-size:48px; margin-bottom:16px; opacity:0.3; }
+.empty-state .empty-text { font-size:15px; }
+
+/* ---- Footer ---- */
+.footer { max-width:800px; margin:0 auto; padding:32px; border-top:1px solid var(--border);
+  text-align:center; color:var(--text-muted); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* ---- Loading ---- */
+.loading { text-align:center; padding:60px 20px; color:var(--text-muted); font-size:14px; }
+
+/* ---- Mobile ---- */
+@media (max-width:640px) {
+  .hero { padding:100px 20px 32px; }
+  .hero-right { gap:20px; }
+  .list-wrap { padding:0 20px 60px; }
+  .nav-inner { padding:0 20px; }
+  .nav-links { gap:16px; }
+  .nav-links a { font-size:13px; }
+  .article-item .item-title { font-size:16px; }
+}
+
+/* ---- Animations ---- */
+@keyframes fadeInUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.article-item { animation:fadeInUp 0.5s ease-out both; }
+.article-item:nth-child(2) { animation-delay:0.08s; }
+.article-item:nth-child(3) { animation-delay:0.16s; }
+.article-item:nth-child(4) { animation-delay:0.24s; }
+.article-item:nth-child(5) { animation-delay:0.32s; }
+.article-item:nth-child(6) { animation-delay:0.40s; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">李坤<span>· 随笔</span></a>
+    <div class="nav-links">
+      <a href="/" >首页</a>
+      <a href="/craft/" >技艺录</a>
+      <a href="/video-lab/" >视频剪辑</a>
+      <a href="/notes/" class="active">随笔</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="dot"></span> 随笔 · NOTES</div>
+      <h1>碎片<em>思考</em>，随<em>手</em>记。</h1>
+      <p class="hero-desc">工作感悟、生活观察、阅读笔记——不一定有结论，但一定有思考。</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat"><div class="num" id="stat-count">0</div><div class="label">篇随笔</div></div>
+      <div class="hero-stat"><div class="num" id="stat-tags">0</div><div class="label">个标签</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="list-wrap">
+  <div class="list-header">
+    <h2>全部随笔 <span id="list-count">(0)</span></h2>
+  </div>
+  <div id="article-list">
+    <div class="loading">加载中...</div>
+  </div>
+</section>
+
+<div class="footer">
+  <p>© 2026 李坤 · <a href="/">appin.site</a></p>
+</div>
+
+<script>
+var STATIC_ARTICLES = [
+  {title:'¥188万撬动全球：一份写给总经理的海外营销破局方案', excerpt:'五大战区、三个Go/No-Go检查点、¥188万年度预算——一份可以直接给总经理看的海外营销年度计划。', date:'2026-07-05', link:'/notes/pxid-gm-report.html', tags:['海外营销','PXID','GEO战略']},
+  {title:'中国研发×印度制造：12个月海外营销作战全图', excerpt:'从公司分析到竞品情报，从12个月月度计划到三档预算方案——一份完整的PXID海外营销推广计划。', date:'2026-07-05', link:'/notes/pxid-marketing-plan.html', tags:['PXID','海外营销','印度制造']}
+];
+
+function renderList(articles) {
+  var list = document.getElementById('article-list');
+  var countEl = document.getElementById('stat-count');
+  var tagsEl = document.getElementById('stat-tags');
+  var listCountEl = document.getElementById('list-count');
+
+  if (!articles || articles.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">还没有随笔，敬请期待。</div></div>';
+    countEl.textContent = '0';
+    tagsEl.textContent = '0';
+    listCountEl.textContent = '(0)';
+    return;
+  }
+
+  var tags = new Set();
+  articles.forEach(function(a) { (a.tags || []).forEach(function(t) { tags.add(t); }); });
+
+  var html = '';
+  for (var i = 0; i < articles.length; i++) {
+    var a = articles[i];
+    var date = a.date || '';
+    var tagHtml = '';
+    if (a.tags && a.tags.length) {
+      tagHtml = '<div class="item-tags">';
+      for (var t = 0; t < Math.min(a.tags.length, 3); t++) {
+        tagHtml += '<span class="item-tag">' + a.tags[t] + '</span>';
+      }
+      tagHtml += '</div>';
+    }
+    var link = a.link || ('/notes/' + (a.slug || a.id) + '.html');
+    html += '<a class="article-item" href="' + link + '">' +
+      '<div class="item-title">' + (a.title || '无标题') + '</div>' +
+      '<div class="item-excerpt">' + (a.excerpt || '') + '</div>' +
+      '<div class="item-meta">' +
+        '<span class="item-date">' + date + '</span>' +
+        tagHtml +
+      '</div>' +
+    '</a>';
+  }
+
+  list.innerHTML = html;
+  countEl.textContent = articles.length;
+  tagsEl.textContent = tags.size;
+  listCountEl.textContent = '(' + articles.length + ')';
+}
+
+// 从 content.json 加载
+fetch('/content.json?' + Date.now())
+  .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(function(data) {
+    var notes = (data.articles || []).filter(function(a) {
+      return a.category === 'notes' && a.status === 'published';
+    });
+    notes.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
+    renderList(notes);
+  })
+  .catch(function(e) {
+    // fetch 失败 → 用静态后备
+    renderList(STATIC_ARTICLES);
+  });
+
+// Nav scroll effect
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('nav');
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+});
+</script>
+</body>
+</html>

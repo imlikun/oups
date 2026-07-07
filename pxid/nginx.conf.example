@@ -1,0 +1,28 @@
+# Nginx configuration for PXID static site
+# Place this in your nginx server block
+
+server {
+    listen 80;
+    server_name www.appin.site appin.site;
+
+    root /path/to/your/site;
+    
+    # Force index.html as directory index (not index.txt)
+    index index.html;
+
+    # Block access to Next.js RSC .txt files
+    location ~* \.txt$ {
+        deny all;
+    }
+
+    # Static assets with long cache
+    location /_next/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # SPA-like fallback for client-side routing (if needed)
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+}

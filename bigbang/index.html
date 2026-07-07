@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大爆炸 Big Bang 2.0 — 仿 Smartisan OS 功能展示</title>
+<meta name="description" content="大爆炸（Big Bang 2.0）功能展示 — 用拇指大面积按压，文字瞬间炸开成独立字词，随心选取、搜索、分享。仿 Smartisan OS 经典功能页面。">
+<style>
+  :root {
+    --red: #B91C22;
+    --red-dark: #8B0000;
+    --red-light: #FDE8E8;
+    --bg: #fafaf8;
+    --bg-card: #fff;
+    --text: #1a1a1a;
+    --text-secondary: #666;
+    --text-tertiary: #999;
+    --border: #e8e8e4;
+    --shadow: 0 4px 24px rgba(0,0,0,.06);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,.10);
+    --phone-bg: #f0ece4;
+    --phone-screen: #fff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---- Nav ---- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,250,248,.82); backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 15px; font-weight: 700; color: var(--red);
+    text-decoration: none; letter-spacing: .02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--red);
+  }
+  .nav-back {
+    font-size: 13px; color: var(--text-secondary); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-back:hover { color: var(--red); }
+
+  /* ---- Hero ---- */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 120px 32px 80px; position: relative; overflow: hidden;
+    background: linear-gradient(180deg, #fafaf8 0%, #f5f0eb 100%);
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(185,28,34,.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content {
+    text-align: center; position: relative; z-index: 1; max-width: 720px;
+  }
+  .hero-badge {
+    display: inline-block; background: var(--red-light); color: var(--red);
+    font-size: 13px; font-weight: 600; padding: 6px 20px; border-radius: 20px;
+    margin-bottom: 32px; letter-spacing: .03em;
+  }
+  .hero-title {
+    font-size: clamp(48px, 8vw, 88px); font-weight: 800;
+    letter-spacing: -.03em; line-height: 1.05; margin-bottom: 8px;
+  }
+  .hero-title .accent { color: var(--red); }
+  .hero-subtitle {
+    font-size: clamp(18px, 3vw, 24px); font-weight: 600; color: var(--text-secondary);
+    letter-spacing: -.01em; margin-bottom: 28px;
+  }
+  .hero-desc {
+    font-size: 17px; color: var(--text-secondary); line-height: 1.8;
+    max-width: 580px; margin: 0 auto 40px;
+  }
+  .hero-phone {
+    margin: 0 auto; position: relative;
+    width: 280px; height: 520px;
+    background: var(--phone-bg);
+    border-radius: 36px; padding: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.12), 0 0 0 2px rgba(0,0,0,.04);
+    animation: phoneFloat 4s ease-in-out infinite;
+  }
+  .hero-phone-screen {
+    width: 100%; height: 100%; background: #fff; border-radius: 24px;
+    overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-phone-text {
+    font-size: 24px; font-weight: 700; color: var(--text);
+    transition: all .6s cubic-bezier(.16,1,.3,1);
+    letter-spacing: .02em;
+  }
+  .hero-phone-text.explode {
+    letter-spacing: .5em; font-size: 18px; color: var(--red);
+    text-shadow: 0 0 20px rgba(185,28,34,.15);
+  }
+
+  @keyframes phoneFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* ---- Feature Section ---- */
+  .section {
+    padding: 100px 32px; position: relative;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section:nth-child(odd) { background: transparent; }
+  .section:nth-child(even) { background: #fff; }
+
+  .section-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .section-inner.reverse { direction: rtl; }
+  .section-inner.reverse .section-text { direction: ltr; }
+  .section-inner.reverse .section-visual { direction: ltr; }
+
+  .section-number {
+    font-size: 13px; font-weight: 700; color: var(--red); letter-spacing: .08em;
+    margin-bottom: 16px; text-transform: uppercase;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+    letter-spacing: -.02em; line-height: 1.2; margin-bottom: 20px;
+  }
+  .section-desc {
+    font-size: 15px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 24px;
+  }
+  .section-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .section-tag {
+    font-size: 12px; font-weight: 600; color: var(--red);
+    background: var(--red-light); padding: 4px 14px; border-radius: 12px;
+    letter-spacing: .02em;
+  }
+
+  /* ---- Phone Visual ---- */
+  .phone-wrap {
+    display: flex; justify-content: center;
+  }
+  .phone {
+    width: 260px; height: 480px;
+    background: #2a2a2a;
+    border-radius: 32px; padding: 12px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.12);
+    position: relative;
+  }
+  .phone-notch {
+    width: 80px; height: 4px; background: #555; border-radius: 2px;
+    margin: 0 auto 12px;
+  }
+  .phone-screen {
+    width: 100%; height: 100%; background: #fff; border-radius: 24px;
+    overflow: hidden; position: relative;
+  }
+  .ps-demo {
+    padding: 28px 20px; height: 100%;
+    display: flex; flex-direction: column;
+  }
+
+  /* Demo 1: Trigger area */
+  .demo-press {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+  }
+  .demo-press-indicator {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 3px dashed var(--red); opacity: .5;
+    display: flex; align-items: center; justify-content: center;
+    animation: pressPulse 2s ease-in-out infinite;
+  }
+  .demo-press-indicator::after {
+    content: ''; width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(185,28,34,.08);
+    animation: pressPulse 2s ease-in-out infinite .3s;
+  }
+  @keyframes pressPulse {
+    0%, 100% { transform: scale(1); opacity: .5; }
+    50% { transform: scale(1.15); opacity: .9; }
+  }
+
+  /* Demo 2: Exploded text */
+  .demo-exploded {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    padding: 32px 12px;
+  }
+  .demo-word {
+    padding: 6px 14px; background: #f5f5f5; border-radius: 8px;
+    font-size: 16px; font-weight: 500; cursor: default;
+    transition: all .3s;
+  }
+  .demo-word.selected {
+    background: var(--red-light); color: var(--red);
+    transform: scale(1.08); font-weight: 700;
+  }
+  .demo-word:nth-child(1) { animation: wordFloat .6s ease-out 0s both; }
+  .demo-word:nth-child(2) { animation: wordFloat .6s ease-out .05s both; }
+  .demo-word:nth-child(3) { animation: wordFloat .6s ease-out .1s both; }
+  .demo-word:nth-child(4) { animation: wordFloat .6s ease-out .15s both; }
+  .demo-word:nth-child(5) { animation: wordFloat .6s ease-out .2s both; }
+  .demo-word:nth-child(6) { animation: wordFloat .6s ease-out .25s both; }
+  .demo-word:nth-child(7) { animation: wordFloat .6s ease-out .3s both; }
+  @keyframes wordFloat {
+    from { opacity: 0; transform: translateY(12px) scale(.8); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Demo 3: Search/Dictionary */
+  .demo-search {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    padding: 32px 12px;
+  }
+  .demo-search-word {
+    font-size: 28px; font-weight: 800; color: var(--red);
+  }
+  .demo-search-result {
+    width: 100%; padding: 20px; background: #fafafa; border-radius: 12px;
+    text-align: left; font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .demo-search-result strong { color: var(--text); }
+
+  /* Demo 4: Image OCR */
+  .demo-image {
+    width: 90%; height: 180px; margin: 24px auto;
+    background: linear-gradient(135deg, #e8e4da, #d5d0c3);
+    border-radius: 16px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .demo-image::before {
+    content: '🌆'; font-size: 48px; opacity: .6;
+  }
+  .demo-image-texts {
+    position: absolute; inset: 0; display: flex; flex-wrap: wrap;
+    align-content: center; justify-content: center; gap: 6px; padding: 20px;
+  }
+  .demo-ocr-word {
+    padding: 4px 10px; background: rgba(255,255,255,.9); border-radius: 4px;
+    font-size: 12px; font-weight: 600; backdrop-filter: blur(4px);
+    animation: wordFloat .5s ease-out both;
+  }
+
+  /* Demo 5: Edit mode */
+  .demo-edit {
+    padding: 16px;
+  }
+  .demo-edit-line {
+    display: flex; gap: 2px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .demo-edit-char {
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 500; border-radius: 4px; cursor: default;
+    transition: all .2s;
+  }
+  .demo-edit-char:nth-child(5) { background: var(--red-light); color: var(--red); }
+  .demo-edit-cursor {
+    width: 2px; height: 28px; background: var(--red);
+    animation: cursorBlink .8s steps(1) infinite;
+    margin: 2px 4px;
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Demo 6: Integration */
+  .demo-integration {
+    padding: 24px 16px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .demo-integration-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px; background: #f8f8f8; border-radius: 12px;
+    font-size: 13px;
+  }
+  .demo-integration-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .demo-integration-icon.one-step { background: #e8f4fd; }
+  .demo-integration-icon.capsule { background: #fef3c7; }
+
+  /* ---- CTA / Integration Banner ---- */
+  .integration-banner {
+    background: linear-gradient(135deg, var(--red-dark), var(--red));
+    color: #fff; padding: 64px 32px; text-align: center;
+  }
+  .integration-banner h3 {
+    font-size: clamp(24px, 4vw, 36px); font-weight: 800;
+    letter-spacing: -.02em; margin-bottom: 12px;
+  }
+  .integration-banner p {
+    font-size: 16px; opacity: .85; max-width: 540px; margin: 0 auto 32px;
+    line-height: 1.8;
+  }
+  .integration-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px; max-width: 800px; margin: 0 auto;
+  }
+  .integration-card {
+    background: rgba(255,255,255,.12); backdrop-filter: blur(12px);
+    border-radius: 20px; padding: 28px 24px; text-align: left;
+    border: 1px solid rgba(255,255,255,.15);
+  }
+  .integration-card h4 {
+    font-size: 18px; font-weight: 700; margin-bottom: 8px;
+  }
+  .integration-card p {
+    font-size: 14px; opacity: .8; margin: 0;
+  }
+
+  /* ---- Footer ---- */
+  .site-footer {
+    text-align: center; padding: 40px 32px; color: var(--text-tertiary);
+    font-size: 13px; border-top: 1px solid var(--border);
+  }
+  .site-footer a { color: var(--red); text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+
+  /* ---- Scroll Reveal ---- */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: all .7s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .section { padding: 60px 20px; }
+    .section-inner {
+      grid-template-columns: 1fr; gap: 40px;
+    }
+    .section-inner.reverse { direction: ltr; }
+    .hero { padding: 100px 20px 60px; min-height: auto; }
+    .hero-phone { width: 220px; height: 400px; }
+    .phone { width: 220px; height: 400px; }
+    .nav { padding: 0 16px; }
+    .integration-cards { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111110;
+      --bg-card: #1a1a1a;
+      --text: #eee;
+      --text-secondary: #999;
+      --text-tertiary: #666;
+      --border: #2a2a2a;
+      --shadow: 0 4px 24px rgba(0,0,0,.3);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,.4);
+      --phone-bg: #2a2a2a;
+      --phone-screen: #1a1a1a;
+      --red-light: rgba(185,28,34,.15);
+    }
+    .hero { background: linear-gradient(180deg, #111110 0%, #1a1515 100%); }
+    .section:nth-child(even) { background: #161616; }
+    .phone { background: #333; }
+    .phone-screen { background: #1a1a1a; }
+    .demo-word { background: #2a2a2a; color: #ccc; }
+    .demo-search-result { background: #1a1a1a; }
+    .integration-banner { background: linear-gradient(135deg, #5a0000, #8B0000); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span> Big Bang 2.0
+  </a>
+  <a href="../index.html" class="nav-back">← 返回首页</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge reveal">Smartisan OS 经典功能</div>
+    <h1 class="hero-title reveal reveal-delay-1">
+      大<span class="accent">爆炸</span>
+    </h1>
+    <p class="hero-subtitle reveal reveal-delay-2">Big Bang 2.0</p>
+    <p class="hero-desc reveal reveal-delay-2">
+      颠覆性地解决手机屏幕上处理文字的问题。<br>
+      拇指大面积按压，文字瞬间「炸」开成独立字词，随心选取、搜索、分享。
+    </p>
+    <div class="hero-phone reveal reveal-delay-3" id="heroPhone">
+      <div class="hero-phone-screen">
+        <span class="hero-phone-text" id="heroText">大爆炸</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 01: 触发大爆炸 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-text reveal">
+      <div class="section-number">01</div>
+      <h2 class="section-title">触发大爆炸</h2>
+      <p class="section-desc">
+        用拇指大面积长按目标文本，文字就会「炸」开成独立的字和词。选择任意字词，即可快速完成复制、搜索或分享。告别手机上笨拙的文本选择体验。
+      </p>
+      <div class="section-tags">
+        <span class="section-tag">大面积按压</span>
+        <span class="section-tag">智能分词</span>
+        <span class="section-tag">随心选取</span>
+      </div>
+    </div>
+    <div class="section-visual phone-wrap reveal reveal-delay-1">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-demo">
+            <div class="demo-press">
+              <div class="demo-press-indicator"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 02: 触发面积设置 -->
+<section class="section" style="background:#fff;">
+  <div class="section-inner reverse">
+    <div class="section-text reveal">
+      <div class="section-number">02</div>
+      <h2 class="section-title">触发面积设置</h2>
+      <p class="section-desc">
+        每个人手指粗细不同，大面积按压的触发成功率也不同。在设置中可根据自己的拇指大小，调整按压触发面积，让每次「爆炸」都精准无误。
+      </p>
+      <div class="section-tags">
+        <span class="section-tag">自适应</span>
+        <span class="section-tag">可调节</span>
+      </div>
+    </div>
+    <div class="section-visual phone-wrap reveal reveal-delay-1">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-demo" style="justify-content:center;gap:16px;">
+            <div style="text-align:center;font-size:13px;color:var(--text-secondary);">触发面积</div>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <span style="font-size:11px;color:var(--text-tertiary);">小</span>
+              <div style="width:160px;height:6px;background:#e0e0e0;border-radius:3px;position:relative;">
+                <div style="position:absolute;left:60%;top:-4px;width:18px;height:18px;border-radius:50%;background:var(--red);box-shadow:0 2px 8px rgba(185,28,34,.3);"></div>
+              </div>
+              <span style="font-size:11px;color:var(--text-tertiary);">大</span>
+            </div>
+            <div style="margin-top:8px;display:flex;gap:8px;">
+              <div style="width:60px;height:60px;border-radius:50%;border:2px dashed var(--red);opacity:.3;"></div>
+              <div style="width:80px;height:80px;border-radius:50%;border:3px dashed var(--red);opacity:.6;"></div>
+              <div style="width:60px;height:60px;border-radius:50%;border:2px dashed var(--red);opacity:.3;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 03: 文字爆炸 · 炸了又炸 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-text reveal">
+      <div class="section-number">03</div>
+      <h2 class="section-title">炸了又炸</h2>
+      <p class="section-desc">
+        想再次拆分已经智能分好的字词？点击「菜刀」图标继续爆炸，直至每个汉字独立。按压处会留下一枚指纹标记，方便你快速定位。
+      </p>
+      <p class="section-desc">
+        每次只炸出一个自然段。向上或向下拖动，上下段落也会被拉出炸开——现用现炸，不会满屏都是字。
+      </p>
+      <div class="section-tags">
+        <span class="section-tag">逐字拆分</span>
+        <span class="section-tag">指纹定位</span>
+        <span class="section-tag">现用现炸</span>
+      </div>
+    </div>
+    <div class="section-visual phone-wrap reveal reveal-delay-1">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="demo-exploded">
+            <span class="demo-word">大</span>
+            <span class="demo-word selected">爆炸</span>
+            <span class="demo-word">功能</span>
+            <span class="demo-word">颠覆</span>
+            <span class="demo-word">手机</span>
+            <span class="demo-word">文字</span>
+            <span class="demo-word">处理</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 04: 文字查询 -->
+<section class="section" style="background:#fff;">
+  <div class="section-inner reverse">
+    <div class="section-text reveal">
+      <div class="section-number">04</div>
+      <h2 class="section-title">文字查询</h2>
+      <p class="section-desc">
+        遇到不懂的生词？炸开后一键搜索引擎查询。遇到英文生词？炸开后直接查看中文翻译。长按底部图标还能切换查词字典、更换搜索引擎。
+      </p>
+      <div class="section-tags">
+        <span class="section-tag">搜索</span>
+        <span class="section-tag">查字典</span>
+        <span class="section-tag">翻译</span>
+      </div>
+    </div>
+    <div class="section-visual phone-wrap reveal reveal-delay-1">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="demo-search">
+            <div class="demo-search-word">Serendipity</div>
+            <div class="demo-search-result">
+              <strong>ser·en·dip·i·ty</strong><br>
+              /ˌserənˈdipədē/<br>
+              <em>n.</em> 意外发现珍奇事物的本领；机缘巧合<br>
+              <span style="color:var(--red);font-size:11px;">翻译自牛津词典</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 05: 提取图片内信息 -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-text reveal">
+      <div class="section-number">05</div>
+      <h2 class="section-title">提取图片信息</h2>
+      <p class="section-desc">
+        长按图片即可触发大爆炸，手动调整识别区域，图片中的文字瞬间提取。英文菜单？点击翻译。电话号码？直接拨打。二维码？一键识别。
+      </p>
+      <p class="section-desc">
+        支持 16 种语言文字识别——选择的语言越少，识别越精准。
+      </p>
+      <div class="section-tags">
+        <span class="section-tag">OCR 识别</span>
+        <span class="section-tag">二维码</span>
+        <span class="section-tag">16 种语言</span>
+      </div>
+    </div>
+    <div class="section-visual phone-wrap reveal reveal-delay-1">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-demo" style="padding:20px;">
+            <div class="demo-image">
+              <div class="demo-image-texts">
+                <span class="demo-ocr-word" style="animation-delay:0s">Cappuccino</span>
+                <span class="demo-ocr-word" style="animation-delay:.1s">Latte</span>
+                <span class="demo-ocr-word" style="animation-delay:.2s">Espresso</span>
+                <span class="demo-ocr-word" style="animation-delay:.3s">Mocha</span>
+                <span class="demo-ocr-word" style="animation-delay:.4s">Americano</span>
+              </div>
+            </div>
+            <div style="text-align:center;font-size:13px;color:var(--text-secondary);margin-top:8px;">
+              📸 图片文字已提取
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 06: 编辑模式 -->
+<section class="section" style="background:#fff;">
+  <div class="section-inner reverse">
+    <div class="section-text reveal">
+      <div class="section-number">06</div>
+      <h2 class="section-title">大爆炸编辑模式</h2>
+      <p class="section-desc">
+        进入编辑模式后，所有中文被炸成一个个单字。单选或连选文字，轻松完成删除、剪切、复制和粘贴。大光标快速拖动定位，撤销/重做随时修正。
+      </p>
+      <p class="section-desc">
+        从便签等编辑状态炸出的文字，修改完直接保存。从微博等非编辑状态炸出的文字，选择「保存到」保留所有修改。拖动文字气泡还能调整段落顺序。
+      </p>
+      <div class="section-tags">
+        <span class="section-tag">单字编辑</span>
+        <span class="section-tag">撤销重做</span>
+        <span class="section-tag">拖拽排序</span>
+      </div>
+    </div>
+    <div class="section-visual phone-wrap reveal reveal-delay-1">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-demo" style="padding:28px 16px;">
+            <div class="demo-edit">
+              <div class="demo-edit-line" style="flex-wrap:wrap;gap:1px;">
+                <span class="demo-edit-char">大</span>
+                <span class="demo-edit-char">爆</span>
+                <span class="demo-edit-char">炸</span>
+                <span class="demo-edit-char">编</span>
+                <span class="demo-edit-char">辑</span>
+                <span class="demo-edit-char">模</span>
+                <span class="demo-edit-char">式</span>
+                <div class="demo-edit-cursor"></div>
+              </div>
+              <div style="font-size:12px;color:var(--text-tertiary);margin-top:12px;">
+                轻点「编辑」进入逐字模式
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Integration Banner -->
+<section class="integration-banner">
+  <h3 class="reveal">融会贯通</h3>
+  <p class="reveal reveal-delay-1">
+    大爆炸与一步、闪念胶囊配合，如同左勾拳右勾拳——效率再度提升。
+  </p>
+  <div class="integration-cards reveal reveal-delay-2">
+    <div class="integration-card">
+      <h4>🔗 大爆炸 × 一步</h4>
+      <p>炸开任意文字，选取关键段落，一键「一步」转发到微信好友或第三方应用。</p>
+    </div>
+    <div class="integration-card">
+      <h4>💊 大爆炸 × 闪念胶囊</h4>
+      <p>炸开文本选取关键信息，拖拽至闪念胶囊，轻点几下变成待办事项。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="site-footer">
+  <p>此页面为<a href="https://www.smartisan.com/os/#/bigbang" target="_blank">Smartisan OS</a>「大爆炸 Big Bang」功能的致敬仿写作品。</p>
+  <p style="margin-top:4px;">© 2026 — 仅供学习与作品展示</p>
+</div>
+
+<script>
+// Hero phone text explode animation
+(function() {
+  var heroText = document.getElementById('heroText');
+  var exploded = false;
+  var phone = document.getElementById('heroPhone');
+
+  function toggleExplode() {
+    exploded = !exploded;
+    if (exploded) {
+      heroText.classList.add('explode');
+    } else {
+      heroText.classList.remove('explode');
+    }
+  }
+
+  if (phone) {
+    phone.addEventListener('click', toggleExplode);
+    // Also trigger on mouseenter for desktop
+    phone.addEventListener('mouseenter', function() {
+      heroText.classList.add('explode');
+    });
+    phone.addEventListener('mouseleave', function() {
+      heroText.classList.remove('explode');
+    });
+  }
+})();
+
+// Scroll reveal
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+
+// Demo word selection
+(function() {
+  var words = document.querySelectorAll('.demo-word');
+  words.forEach(function(w) {
+    w.addEventListener('click', function() {
+      this.classList.toggle('selected');
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新闻雷达搭建教程：零代码做一个每天自动更新的 AI 资讯站</title>
+<meta name="description" content="从零开始搭建一个漂亮的 AI 资讯站点，自动对接 AI HOT 数据，WorkBuddy 每天定时更新并推送 COS。选模板 → 配API → 设自动化 → 上线全流程。">
+<meta property="og:title" content="AI 新闻雷达搭建教程：零代码做一个每天自动更新的 AI 资讯站">
+<meta property="og:description" content="从零开始搭建一个漂亮的 AI 资讯站点，自动对接 AI HOT 数据，WorkBuddy 每天定时更新并推送 COS。">
+<style>
+/* ═══════════════════════════════════
+   模板 B — 紫色宽屏杂志风格
+   ═══════════════════════════════════ */
+:root {
+  --bg: #fafaf8; --bg-card: #ffffff; --bg-elevated: #f5f5f2;
+  --text: #1a1a1b; --text-secondary: #5e5e64; --text-tertiary: #999;
+  --accent: #7c3aed; --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06); --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+  --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.75;font-size:15px;
+  -webkit-font-smoothing:antialiased}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(250,250,248,0.92);backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;height:54px}
+.nav-logo{font-size:14px;font-weight:600;color:var(--accent);
+  text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-links{display:flex;gap:20px;list-style:none;align-items:center}
+.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:12px;
+  font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent)}
+
+/* Hero — full-width cover */
+.hero{background:linear-gradient(135deg,#2e1065,#4c1d95,#7c3aed,#a78bfa);
+  padding:130px 28px 80px;text-align:center;color:#fff;position:relative;
+  overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,255,255,0.1),transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;border-radius:20px;background:rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.9);font-size:10px;font-weight:600;
+  letter-spacing:0.08em;margin-bottom:22px;position:relative;z-index:1}
+.hero h1{font-size:clamp(24px,5vw,42px);font-weight:700;letter-spacing:-1.2px;
+  line-height:1.2;max-width:700px;margin:0 auto 14px;position:relative;z-index:1}
+.hero-desc{color:rgba(255,255,255,0.75);font-size:15px;max-width:500px;
+  margin:0 auto 30px;position:relative;z-index:1;line-height:1.65}
+.hero-meta{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+  color:rgba(255,255,255,0.6);font-size:12px;position:relative;z-index:1}
+.hero-img{margin-top:36px;position:relative;z-index:1;
+  max-width:800px;margin-left:auto;margin-right:auto;
+  border-radius:var(--radius-lg);overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,0.3)}
+.hero-img img{width:100%;display:block}
+
+/* Section */
+.section{padding:50px 28px;max-width:820px;margin:0 auto}
+.section h2{font-size:24px;font-weight:700;margin-bottom:10px;letter-spacing:-0.5px;color:#111}
+.section h3{font-size:17px;font-weight:600;margin:28px 0 10px;color:#111}
+.section p{margin-bottom:14px;color:var(--text-secondary);font-size:15px}
+.section ul{margin:10px 0 20px 20px;color:var(--text-secondary)}
+.section ul li{margin-bottom:6px;font-size:15px}
+
+/* Feature grid */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;margin:24px 0}
+.f-card{background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:20px 22px;transition:all 0.2s}
+.f-card:hover{box-shadow:var(--shadow-md);border-color:rgba(0,0,0,0.1)}
+.f-card .ficon{font-size:22px;margin-bottom:10px}
+.f-card h4{font-size:15px;font-weight:600;margin-bottom:5px;color:#111}
+.f-card p{font-size:13px;color:var(--text-secondary);margin-bottom:8px;line-height:1.6}
+
+/* Code */
+.code-block{background:#1a1a2e;color:#e4e4e7;border-radius:var(--radius-sm);
+  padding:18px 22px;margin:16px 0;overflow-x:auto;
+  font-family:"SF Mono","Fira Code","Consolas",monospace;font-size:12px;
+  line-height:1.8}
+.code-block .cm{color:#6b7280}
+.code-block .kw{color:#c084fc}
+.code-block .str{color:#34d399}
+
+/* Steps */
+.step{display:flex;gap:18px;margin:24px 0;padding:20px 22px;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-md);align-items:flex-start;transition:all 0.2s}
+.step:hover{box-shadow:var(--shadow-md)}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;flex-shrink:0}
+.step-body h4{font-size:16px;font-weight:600;margin-bottom:4px;color:#111}
+.step-body p{font-size:14px;color:var(--text-secondary);margin-bottom:6px}
+.step-body code{background:var(--accent-light);padding:2px 6px;
+  border-radius:4px;font-size:12px;color:var(--accent)}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,var(--accent-light),rgba(124,58,237,0.1));
+  border:1px solid rgba(124,58,237,0.15);border-radius:var(--radius-lg);
+  padding:28px 32px;text-align:center;margin:40px 0}
+.cta-box h3{color:#111;margin-bottom:6px}
+.cta-box p{color:var(--text-secondary);margin-bottom:16px}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;
+  padding:10px 24px;border-radius:12px;background:var(--accent);
+  color:#fff;text-decoration:none;font-size:14px;font-weight:600;
+  transition:all 0.2s}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(124,58,237,0.25)}
+
+@media(max-width:700px){
+  .hero{padding:110px 20px 50px}
+  .section{padding:36px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/">李坤</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">TUTORIAL · 实战教程</div>
+  <h1>零代码做一个每天<br>自动更新的 AI 资讯站</h1>
+  <p class="hero-desc">选模板 → 配 API → 设自动化 → 上线，四步搞定一个漂亮的、每天自动刷新内容的 AI 新闻站点，全程不需要写后端。</p>
+  <div class="hero-meta">
+    <span>📅 2026-06-25</span>
+    <span>🏷️ AI 工具 · 自动化 · 前端</span>
+    <span>⏱️ 约 8 分钟</span>
+  </div>
+</section>
+
+<section class="section">
+  <h2>为什么做一个 AI 资讯站？</h2>
+  <p>AI 圈每天都有新闻——OpenAI 又发新模型了、Anthropic 有新能力了、某家创业公司获大额融资了……但信息散落在 Twitter、Hacker News、各个博客里，需要一个地方把它们收拢起来，一眼看完。</p>
+  <p>传统的做法是前后端全栈：数据库存、定时任务拉、模板引擎渲染。但现在有一种更轻量的方式：<strong>纯前端页面 + 外部 API 数据 + 一个定时脚本每天刷新一次推 CDN</strong>。这就是 <em>AI 新闻雷达</em> 的核心思路。</p>
+</section>
+
+<section class="section">
+  <h2>架构概览</h2>
+  <div class="feature-grid">
+    <div class="f-card">
+      <div class="ficon">📡</div>
+      <h4>数据源</h4>
+      <p>对接 <a href="https://aihot.virxact.com" target="_blank">AI HOT</a> 公开 API，免费、无需注册。每天精选全球 AI 资讯，按模型 / 产品 / 行业 / 论文 / 技巧五板块分类。</p>
+    </div>
+    <div class="f-card">
+      <div class="ficon">🎨</div>
+      <h4>前端页面</h4>
+      <p>纯静态 HTML，Apple Keynote 暗黑风格 + Bento Grid 栅格布局。数据通过 <code>&lt;script&gt;</code> 标签内嵌 JSON 直接渲染，零后端依赖。</p>
+    </div>
+    <div class="f-card">
+      <div class="ficon">🤖</div>
+      <h4>自动化程序</h4>
+      <p>WorkBuddy 设置每天 9:00 自动运行 Python 脚本——拉取 API → 注入 HTML → 推送 COS。全程无人值守。</p>
+    </div>
+    <div class="f-card">
+      <div class="ficon">☁️</div>
+      <h4>部署</h4>
+      <p>腾讯云 COS 静态托管 + CDN。文件更新瞬间全网生效，成本趋近于零。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>第一步：选一个好看的设计模板</h2>
+  <p>不需要从零设计。AI 新闻雷达的模板是一套暗黑风格的 Apple Keynote 设计语言：</p>
+  <ul>
+    <li><strong>全局噪点纹理</strong> — 纯黑背景不沉闷，用 SVG 噪点增加质感</li>
+    <li><strong>液态玻璃卡片</strong> — 半透明背景 + 12px 模糊 + 对角线高光</li>
+    <li><strong>Bento Grid 自适应栅格</strong> — 每张卡片独立 hover 动效</li>
+    <li><strong>板块色彩标签</strong> — 模型蓝色 / 产品紫色 / 行业绿色 / 论文橙色 / 技巧红色</li>
+    <li><strong>Hero 径向渐变光晕</strong> — 蓝色调从顶部扩散，呼应 AI 主题</li>
+  </ul>
+  <p style="margin-top:14px;padding:14px 18px;background:var(--accent-light);border-radius:var(--radius-sm);font-size:13px;">
+    💡 <strong>设计灵感</strong>：每一张资讯卡片都是"卡片即文章"——点击直达源链接，阅读原文无需额外跳转。score 用 ★ 星标可视化热度，publishedAt 自动转换为"3 小时前"这样人话时间。
+  </p>
+</section>
+
+<section class="section">
+  <h2>第二步：对接数据 API</h2>
+  <p>AI HOT 提供了免费的公开 REST API。核心端点是：</p>
+  <div class="code-block">
+<span class="cm"># 拉取过去 24 小时精选资讯（mode=selected），最多 100 条</span>
+<span class="kw">GET</span> <span class="str">https://aihot.virxact.com/api/public/items?mode=selected&since={ISO时间}&take=100</span>
+  </div>
+  <p>响应是标准 JSON，每条数据包含：</p>
+  <ul>
+    <li><strong>title</strong> — 资讯标题</li>
+    <li><strong>summary</strong> — AI 生成的摘要</li>
+    <li><strong>url</strong> — 原文链接</li>
+    <li><strong>source</strong> — 来源（Hacker News / TechCrunch / OpenAI 官方博客等）</li>
+    <li><strong>category</strong> — 分类 slug（ai-models / ai-products / industry / paper / tip）</li>
+    <li><strong>score</strong> — 热度评分（0-100）</li>
+    <li><strong>publishedAt</strong> — 发布时间（ISO 8601）</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h2>第三步：写一个自动更新脚本</h2>
+  <p>这是整个系统的关键。一个小巧的 Python 脚本，做三件事：</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>拉取数据</h4>
+      <p>用 <code>urllib</code> 调 AI HOT API，拿到过去 24 小时的精选 JSON。注意要带浏览器 User-Agent，否则 API 的 nginx UA 黑名单会返回 403。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>注入 HTML</h4>
+      <p>HTML 模板里有一个占位符 <code>__AI_DATA_PLACEHOLDER__</code>（放在 <code>&lt;script id="ai-data"&gt;</code> 标签里）。脚本读取 HTML 文件，把 JSON 数据替换进去，保存。页面打开时，JavaScript 从嵌好的 JSON 直接渲染卡片，不需要任何异步请求——首屏即见，无网络抖动。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>推送 CDN</h4>
+      <p>用腾讯云 COS SDK（<code>qcloud_cos</code>）把更新后的 HTML 上传到对象存储，设置 <code>CacheControl: no-cache</code> 让 CDN 立即刷新。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>第四步：设置 WorkBuddy 每日自动化</h2>
+  <p>最后一步是把脚本"挂"起来。在 WorkBuddy 里创建一条自动化任务：</p>
+  <div class="code-block">
+<span class="cm"># RRULE 表达式：每天上午 9:00 执行</span>
+<span class="kw">FREQ</span>=DAILY;<span class="kw">BYHOUR</span>=9;<span class="kw">BYMINUTE</span>=0
+  </div>
+  <p>配置好之后，WorkBuddy 每天 9:00 准时执行：运行 update.py → AI HOT 拉数据 → 注入 HTML → 推 COS。<strong>全程无人值守，每天醒来网站就已经刷新好了。</strong></p>
+
+  <p style="margin-top:14px;padding:14px 18px;background:rgba(48,209,88,0.06);border-radius:var(--radius-sm);font-size:13px;border:1px solid rgba(48,209,88,0.15);">
+    🟢 <strong>效果</strong>：每天上午 9:00 自动抓取过去 24 小时全球 AI 资讯，分类展示在页面上。你只需要打开浏览器看一眼，就知道今天 AI 圈发生了什么。
+  </p>
+</section>
+
+<section class="section">
+  <h2>复用这套模板</h2>
+  <p>这种"纯前端 + 定时脚本注入数据 + CDN 托管"的模式可以复用到很多场景：</p>
+  <ul>
+    <li><strong>加密货币行情看板</strong> — 拉 CoinGecko API，嵌入 HTML，每小时更新</li>
+    <li><strong>天气预报面板</strong> — 拉 OpenWeather API，优雅的天气卡片布局</li>
+    <li><strong>产品发布日志</strong> — 拉 GitHub Releases API，自动生成 changelog 页面</li>
+    <li><strong>个人阅读摘要</strong> — 拉 Pocket/Instapaper API，自动生成每日阅读推荐</li>
+  </ul>
+  <p>关键优势：<strong>没有服务器成本、没有数据库维护、没有被攻击的风险</strong>。整个站点就是几个静态文件，CDN 分发到全球。</p>
+</section>
+
+<section class="section">
+  <div class="cta-box">
+    <h3>想看看效果？</h3>
+    <p>AI 新闻雷达已在线运行，每天自动更新全球 AI 资讯精选。</p>
+    <a href="/ai-radar/" class="cta-btn" target="_blank">打开 AI 新闻雷达 →</a>
+  </div>
+</section>
+
+</body>
+</html>

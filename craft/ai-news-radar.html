@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>伯乐News雷达：AI资讯过滤神器，告别信息过载</title>
+<meta name="description" content="伯乐News雷达是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。核心解决一个问题：AI 新闻太多、重复太多、噪音太多——你需要一个帮你筛信源的工具。MIT 开源，零服务器部署。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:560px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:26px; font-weight:700; margin:56px 0 20px; color:#111; letter-spacing:-0.6px; position:relative; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:6px; line-height:1.85; color:#333; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.pull-quote { margin:36px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.info-box { margin:28px 0; padding:20px 24px; background:#f8f9fb; border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; }
+.info-box p { margin-bottom:0; font-size:14px; }
+.highlight-box { margin:28px 0; padding:22px 28px; background:linear-gradient(135deg,rgba(26,111,245,0.03),rgba(26,111,245,0.07)); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#222; }
+.table-wrap { margin:28px 0; overflow-x:auto; }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:#f1f3f5; }
+.table-wrap th { padding:12px 16px; text-align:left; font-weight:600; font-size:12px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:12px 16px; border-bottom:1px solid var(--border); color:#333; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:rgba(26,111,245,0.02); }
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7; overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; white-space:pre; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--accent-light); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:22px; }
+  .pull-quote p { font-size:15px; }
+  .page { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> 开源工具 · AI资讯</div>
+  <h1>伯乐News雷达：AI资讯过滤神器，告别信息过载</h1>
+  <p class="hero-desc">不是收集更多，而是过滤得更好——22个默认信源，7天观察期 + 65%差异过滤，零服务器部署</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span><span>2026-06-25</span><span class="dot"></span><span>9 个章节</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+  <aside class="toc-sidebar">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、这是什么？</a></li>
+      <li><a href="#s2">二、核心能力</a></li>
+      <li><a href="#s3">三、技术架构</a></li>
+      <li><a href="#s4">四、四种使用方式</a></li>
+      <li><a href="#s5">五、X API 成本优化</a></li>
+      <li><a href="#s6">六、多语言支持</a></li>
+      <li><a href="#s7">七、四次迭代</a></li>
+      <li><a href="#s8">八、适合谁用？</a></li>
+      <li><a href="#s9">九、总结</a></li>
+    </ul>
+  </aside>
+
+  <main class="article-body">
+
+<div class="section-img">
+  <img src="/uploads/bolenews-cover.jpg" alt="伯乐News雷达">
+  <div class="caption">△ 伯乐News雷达 — AI 资讯智能筛选系统</div>
+</div>
+
+<div class="highlight-box">
+  <p><strong>一句话</strong>：伯乐News雷达（ai-news-radar）是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。在信息洪流中，真正的智慧不是收集更多，而是过滤得更好。</p>
+</div>
+
+<h2 id="s1">一、这是什么？</h2>
+
+<p>伯乐News雷达（ai-news-radar）是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。核心解决一个问题：<strong>AI 新闻太多，重复太多，噪音太多</strong>——你不需要更多信源，你需要一个帮你筛信源的工具。</p>
+
+<p>项目名字取自"千里马常有，而伯乐不常有"——信息源（千里马）到处都是，但能判断哪些值得追、怎么接最稳定的工具（伯乐），此前没有。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>项目名称</td><td>ai-news-radar（伯乐Skill）</td></tr>
+<tr><td>GitHub 仓库</td><td><a href="https://github.com/LearnPrompt/ai-news-radar" target="_blank">github.com/LearnPrompt/ai-news-radar</a></td></tr>
+<tr><td>在线体验</td><td><a href="https://learnprompt.github.io/ai-news-radar/" target="_blank">learnprompt.github.io/ai-news-radar/</a></td></tr>
+<tr><td>开源协议</td><td>MIT</td></tr>
+<tr><td>更新频率</td><td>每30分钟自动刷新</td></tr>
+<tr><td>默认信源</td><td>22个（可扩展至150+）</td></tr>
+<tr><td>部署方式</td><td>GitHub Actions + GitHub Pages，零服务器</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s2">二、核心能力：伯乐"看马三绝招"</h2>
+
+<h3>第一招：智能识别最优接入方式</h3>
+
+<p>伯乐不会傻打开网页硬扒文本。它会先分析一个信息源，判断最稳定的接入路径是什么：有 RSS？优先走结构化订阅。有公开 API？走 API 拿数据。有 Skill 接入？直接装 Skill。都没有？用 Jina 兜底读静态页面。需要登录态？走 Agent 邮箱订阅。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>信源类型</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>官方RSS/changelog</td><td>官方发布的RSS订阅、产品更新日志</td><td>OpenAI Blog、Anthropic Blog</td></tr>
+<tr><td>私人OPML/RSS</td><td>用户自己的RSS订阅列表</td><td>个人Feedly导出</td></tr>
+<tr><td>公开GitHub feed/JSON</td><td>GitHub公开动态、开放API</td><td>Follow Builders JSON</td></tr>
+<tr><td>公开页面</td><td>公开网页内容</td><td>TechURLs、Info Flow</td></tr>
+<tr><td>AgentMail邮箱订阅</td><td>通过邮箱订阅的新闻邮件</td><td>各类AI Newsletter</td></tr>
+<tr><td>X API</td><td>Twitter/X API接入</td><td>开发者账号</td></tr>
+<tr><td>Skill接入</td><td>已封装为Skill的信息源</td><td>AI HOT Skill</td></tr>
+<tr><td>REST API</td><td>网站提供的公开API</td><td>AI HOT /api/public/items</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>第二招：分层筛选，一手源+聚合源双重架构</h3>
+
+<p>伯乐不是把所有源一锅炖，而是分两层：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>层级</th><th>角色</th><th>代表信源</th></tr></thead>
+<tbody>
+<tr><td>一手源</td><td>保障信息可信度</td><td>OpenAI、Anthropic、Google DeepMind</td></tr>
+<tr><td>聚合源</td><td>拓展信息覆盖面</td><td>TechURLs、Buzzing、Info Flow</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><strong>一手源负责准，聚合源负责全。</strong>两层配合，既不会漏重要信息，也不会被二手转述误导。</p>
+
+<h3>第三招：7天观察期 + 65%差异过滤</h3>
+
+<p>这是伯乐最核心的质量把控机制：</p>
+<ul>
+  <li><strong>7天观察期</strong>：新接入的信源不会立即上线，先观察7天，看它能否稳定输出内容</li>
+  <li><strong>65%差异阈值</strong>：7天内，新信源与现有信源的内容差异必须大于65%才保留</li>
+  <li><strong>信源健康检查</strong>：持续监控每个信源的可用状态，坏了的自动跳过</li>
+</ul>
+
+<div class="pull-quote"><p>"22个默认信源里没有一条是冗余的，每条都在提供独特价值。"</p></div>
+
+<h2 id="s3">三、技术架构</h2>
+
+<div class="code-block">GitHub Actions（每30分钟触发）
+    ↓
+伯乐Skill 判断信源类型 → 选择最优抓取方式
+    ↓
+抓取数据 → 去重 → AI标签分类 → 源健康度检查
+    ↓
+生成 data/*.json 静态数据文件
+    ↓
+自动提交到仓库 → GitHub Pages 部署
+    ↓
+用户访问在线页面（零服务器、零后端）</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>实现</th></tr></thead>
+<tbody>
+<tr><td>部署方式</td><td>纯静态，GitHub Pages，无后端依赖</td></tr>
+<tr><td>数据格式</td><td>静态JSON文件，100%自持</td></tr>
+<tr><td>自动更新</td><td>GitHub Actions 每30分钟运行</td></tr>
+<tr><td>多语言</td><td>中英文双语 + AI术语翻译修正表</td></tr>
+<tr><td>私有信源</td><td>支持 Base64 编码存入 GitHub Secrets</td></tr>
+<tr><td>扩展性</td><td>OPML格式 RSS 自定义订阅</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s4">四、怎么用？四种方式</h2>
+
+<h3>方式一：在线浏览（零门槛）</h3>
+<p>直接打开 <a href="https://learnprompt.github.io/ai-news-radar/" target="_blank">learnprompt.github.io/ai-news-radar/</a>，无需安装、无需注册，看到的就是最近24小时精选AI资讯。</p>
+
+<h3>方式二：安装雷达Skill（零API、零Key）</h3>
+<p>把以下指令丢给你的 Agent（Codex / Claude Code / OpenClaw / Hermes 等）：</p>
+<div class="code-block">请使用伯乐Skill，先问我要信息源清单，然后帮我判断每个信源该用RSS、公开feed、静态页面、Jina兜底、AgentMail邮箱还是跳过。目标是部署一个不需要服务器、能用GitHub Actions自动更新的AI日报网站。不要把任何API Key、cookies、token、私有邮件内容写入仓库。</div>
+
+<h3>方式三：Fork 仓库自定义（开发者）</h3>
+<p>Fork github.com/LearnPrompt/ai-news-radar，修改 feeds/follow.example.opml，开启 GitHub Pages，GitHub Actions 自动每30分钟更新。</p>
+
+<h3>方式四：关注"伯乐精选"</h3>
+<p>在线页面中有"伯乐精选"板块，展示经多源验证的趋势信号——同一事件被多个独立信源报道时才会出现在这里，可信度最高。</p>
+
+<h2 id="s5">五、X API 成本优化（开发者关心）</h2>
+<p>伯乐对 X API 调用做了三重优化：</p>
+<ul>
+  <li><strong>只看过去24小时</strong>：不拉历史，保留备份去重</li>
+  <li><strong>每账号最多3条</strong>：同一账号一天最多保留3条新推文</li>
+  <li><strong>过滤无效内容</strong>：去掉转发和回复</li>
+</ul>
+<p><strong>成本</strong>：满额返回125条/天，约 $0.625/天，不到5块人民币。</p>
+
+<h2 id="s6">六、多语言支持</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>能力</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>原生支持</td><td>中英文双语</td></tr>
+<tr><td>AI翻译</td><td>11种语言自动翻译</td></tr>
+<tr><td>术语修正</td><td>内置术语修正后处理表，自动修正Google翻译的AI术语错误</td></tr>
+</tbody>
+</table>
+</div>
+<p>术语修正示例："快速工程" → "提示工程"、"快速词" → "提示词"。</p>
+
+<h2 id="s7">七、项目演进：四次迭代</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>阶段</th><th>做法</th><th>问题</th></tr></thead>
+<tbody>
+<tr><td>第一阶段</td><td>RSS泛滥，全量订阅</td><td>被信息淹没，大量重复</td></tr>
+<tr><td>第二阶段</td><td>AI预处理去重总结</td><td>丢失信源属性，无法判断可信度</td></tr>
+<tr><td>第三阶段</td><td>AI News Radar固定页面</td><td>无法满足个性化需求</td></tr>
+<tr><td>第四阶段</td><td>伯乐Skill，智能筛选信源</td><td>当前版本，解决以上所有问题</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="pull-quote"><p>"真正的安全感不来自信息量，而来自判断力。AI让获取信息成本越来越低，选择信源、保留原始来源、判断哪些值得追，这些事情更重要。"</p></div>
+
+<h2 id="s8">八、适合谁用？</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>用户类型</th><th>使用方式</th><th>价值</th></tr></thead>
+<tbody>
+<tr><td>AI爱好者</td><td>在线浏览</td><td>每天3分钟掌握AI圈大事</td></tr>
+<tr><td>开发者</td><td>Fork仓库自定义</td><td>打造专属资讯雷达，数据100%自持</td></tr>
+<tr><td>Agent用户</td><td>安装雷达Skill</td><td>零API零Key，让Agent自动播报AI资讯</td></tr>
+<tr><td>内容创作者</td><td>关注伯乐精选</td><td>获取经多源验证的趋势信号，找选题</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s9">九、总结</h2>
+<p>伯乐News雷达的核心价值：</p>
+<ul>
+  <li>不是"收集更多"，而是"过滤得更好"</li>
+  <li>不是"更大的聚合站"，而是"更聪明的筛选器"</li>
+  <li>不是"给你500个源全盘接收"，而是"帮你从500个里挑出最适合你的10个"</li>
+</ul>
+
+<div class="pull-quote"><p>在信息洪流中，真正的智慧不是收集更多，而是过滤得更好。</p></div>
+
+<div class="tag-cloud">
+  <a href="/article.html?cat=craft">技艺录</a>
+  <a href="#">AI资讯</a>
+  <a href="#">开源工具</a>
+  <a href="#">RSS</a>
+  <a href="#">信息过滤</a>
+  <a href="#">GitHub Actions</a>
+</div>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · 技艺录 — <a href="/craft/">查看更多文章</a></p>
+</footer>
+
+</body>
+</html>

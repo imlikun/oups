@@ -5,7 +5,7 @@
       "title": "我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页",
       "slug": "apple-resume-page",
       "category": "craft",
-      "featured": true,
+      "featured": false,
       "image": "uploads/apple-resume-page-header.webp",
       "excerpt": "从零开始，用纯前端技术搭建一个具有液态玻璃视觉效果和 Canvas 粒子动画的交互式简历页面，分享一下技术选型和踩坑经验。",
       "content": "## 为什么要做这个项目\n\n做了 8 年房地产营销策划，我一直对技术和设计有浓厚的兴趣。去年开始自学前端开发，这个简历页面算是我的第一个完整作品。\n\n选择 Apple 发布会风格，是因为我一直很喜欢 Apple 的极简设计语言——大量留白、精致的排版、克制的配色。我希望自己的简历也能传递出这种质感。\n\n## 技术选型\n\n整个页面用**纯 HTML + CSS + 原生 JavaScript** 完成，没有使用任何框架。选这个技术栈有两个原因：\n\n1. **零依赖**——不需要 npm、webpack、框架，一个文件就能跑\n2. **学习价值**——亲自写每一行代码，才能真正理解 CSS Grid、Intersection Observer、Canvas API 的底层原理\n\n## 几个有意思的技术点\n\n### Bento Grid 栅格布局\n\n用 CSS Grid 实现不规则卡片排列，每张卡片可以跨 1-4 列，形成杂志般的排版节奏。\n\n### 液态玻璃效果\n\n用 `backdrop-filter` 实现毛玻璃质感，配合高光线叠加增加层次。\n\n### Canvas 粒子动画\n\nHero 区域做了两个 Canvas 动效——多彩涟漪和时空穿梭，可以一键切换。\n\n## 最大的收获\n\n不是技术本身，而是**跨界学习的信心**。从一个完全不懂代码的策划，到能独立做出一个视觉效果不错的页面，这个过程证明了：只要方法对路、持续投入，跨行学习并没有想象中那么难。",
@@ -18,7 +18,8 @@
       ],
       "videoUrl": "",
       "date": "2026-06-01",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-2",
@@ -37,7 +38,8 @@
       ],
       "videoUrl": "",
       "date": "2026-06-03",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-3",
@@ -76,7 +78,8 @@
       ],
       "videoUrl": "",
       "date": "2026-05-25",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-5",
@@ -114,7 +117,8 @@
       ],
       "videoUrl": "",
       "date": "2026-05-18",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-7",
@@ -152,7 +156,8 @@
       ],
       "videoUrl": "",
       "date": "2026-05-10",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-9",
@@ -178,7 +183,7 @@
       "title": "Canvas API 深入：从涟漪动画到粒子系统的完整实现",
       "slug": "canvas-api-ripple-particles",
       "category": "craft",
-      "featured": true,
+      "featured": false,
       "image": "uploads/canvas-api-ripple-particles-header.webp",
       "excerpt": "Canvas 是浏览器原生的 2D 绘图 API，功能非常强大。以我的简历页 Hero 动效为例，深入讲解涟漪扩散和粒子系统的实现原理。",
       "content": "## Canvas 基础回顾\n\n```javascript\nconst canvas = document.getElementById('canvas');\nconst ctx = canvas.getContext('2d');\n\n// 清空画布\nctx.clearRect(0, 0, canvas.width, canvas.height);\n\n// 画一个圆\nctx.beginPath();\nctx.arc(x, y, radius, 0, Math.PI * 2);\nctx.stroke();\n```\n\n## 涟漪效果的实现思路\n\n1. 用 `requestAnimationFrame` 驱动动画循环\n2. 每个涟漪是一个对象：`{ x, y, radius, alpha, lineWidth }`\n3. 每帧 `radius += speed`，`alpha -= 0.02`，alpha 小于 0 时移除\n4. 多个涟漪同时存在，形成层叠效果\n\n## 粒子系统的核心\n\n每个粒子有位置、速度、加速度：\n```javascript\nparticles.push({\n  x: Math.random() * w,\n  y: Math.random() * h,\n  vx: (Math.random() - 0.5) * 2,\n  vy: (Math.random() - 0.5) * 2,\n  size: Math.random() * 3 + 1,\n  color: colors[Math.floor(Math.random() * colors.length)]\n});\n```\n\n## 性能优化\n\n- 用 `offscreenCanvas` 做预渲染\n- 粒子数量超过 500 时要有衰减机制\n- 页面不可见时用 `document.hidden` 暂停动画",
@@ -190,7 +195,8 @@
       ],
       "videoUrl": "",
       "date": "2026-04-28",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-11",
@@ -228,7 +234,8 @@
       ],
       "videoUrl": "",
       "date": "2026-04-15",
-      "status": "published"
+      "status": "published",
+      "template": "A"
     },
     {
       "id": "article-13",
@@ -270,10 +277,10 @@
     },
     {
       "id": "article-14",
-      "title": "TrendRadar：全网热点一键推送到微信的 AI 舆情雷达",
+      "title": "AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信",
       "slug": "trendradar-ai-hot-push",
       "category": "craft",
-      "featured": true,
+      "featured": false,
       "image": "uploads/trendradar-header.webp",
       "excerpt": "TrendRadar 就像一个「AI 私人编辑」——每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到微信/钉钉/飞书上。",
       "content": "## 一句话说明\n\nTrendRadar 就像一个「AI 私人编辑」——它每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到你的微信/钉钉/飞书上。你不用再一个个 App 去刷，打开聊天窗口就能看完当天最重要的新闻。\n\n## 这是什么？\n\n想象你订了一份「私人报纸」：\n\n- ❌ 传统方式：每天买 35 份报纸，每份翻一遍，信息量爆炸但真正想看的只有 3 条\n- ✅ TrendRadar：一个编辑帮你盯着这 35 份报纸，只剪下你感兴趣的那几条，装进信封送到你桌上\n\n## 项目基本信息\n\n| 项目 | 信息 |\n| --- | --- |\n| 名称 | TrendRadar（趋势雷达） |\n| GitHub | https://github.com/sansan0/TrendRadar |\n| Star | 59.3k+ |\n| 许可证 | GPL-3.0 |\n| 当前版本 | v6.9.1（主程序）/ MCP v4.1.0 |\n\n## 核心能力\n\n### 1. 全网热点聚合\n\n默认监控 11 个平台：微博、抖音、知乎、B站热搜、今日头条、百度热搜、华尔街见闻、财联社、澎湃新闻、凤凰网、贴吧。基于 newsnow 数据源，可扩展到 35+ 个平台。\n\n### 2. 三种智能推送模式\n\n| 模式 | 工作方式 | 适合谁 |\n| --- | --- | --- |\n| daily（当日汇总） | 推送当天所有匹配新闻 | 管理者/普通人 |\n| current（当前榜单） | 推送当前榜单上的匹配新闻 | 自媒体/创作者 |\n| incremental（增量监控） | 只推新增的，绝不重复 | 投资者/交易员 |\n\n### 3. 精准关键词筛选\n\n6 种筛选语法：\n\n- 普通词：基础匹配，包含任一即捕获\n- `+词汇`：必须词，必须同时包含\n- `!词汇`：过滤词，排除干扰\n- `@数字`：数量限制\n- `/pattern/`：正则表达式\n- `=文本`：备注显示名称\n\n### 4. AI 分析简报（v5.0.0+）\n\n让 AI 先读完所有新闻，生成一份深度分析报告，包含：\n\n1. **核心热点态势**——今天最热门的几个话题\n2. **舆论风向争议**——有争议的观点和讨论\n3. **异动与弱信号**——还没上热搜但值得关注的信息\n4. **研判策略建议**——基于以上分析的行动建议\n\n支持 100+ AI 提供商（DeepSeek、OpenAI、Gemini、Claude、Ollama 本地等）。\n\n### 5. MCP 对话分析（v3.0.0+）\n\n基于 MCP 协议，可以在 Claude Desktop、Cherry Studio 等 AI 客户端里直接和 TrendRadar 对话分析，支持 21+ 种智能分析工具。\n\n## 安装部署\n\n### 方案一：GitHub Actions（30秒部署）\n\n1. Fork 仓库\n2. 配置 Secrets（WEWORK_WEBHOOK_URL 等）\n3. 手动运行一次 workflow 测试\n4. ⚠️ 每 7 天需要「签到」一次续期\n\n### 方案二：Docker 部署（推荐）\n\n```bash\n# 1. 克隆项目\ngit clone https://github.com/sansan0/TrendRadar.git\ncd TrendRadar\n\n# 2. 配置推送渠道和关键词\nnano docker/.env\nnano config/frequency_words.txt\n\n# 3. 启动\ndocker compose up -d\n\n# 4. 查看状态\ndocker exec -it trendradar python manage.py status\n```\n\n## 推送渠道\n\n支持 9+ 渠道：企业微信、个人微信、飞书、钉钉、Telegram、邮件、ntfy、Bark、Slack。\n\n企业微信配置最简单：进入群聊 → 消息推送 → 添加机器人 → 复制 Webhook 地址 → 配置到 `WEWORK_WEBHOOK_URL`。\n\n## 关键链接\n\n- 📦 GitHub 仓库：https://github.com/sansan0/TrendRadar\n- 🎛️ 在线配置编辑器：https://sansan0.github.io/TrendRadar/\n- 🐳 Docker 镜像：wantcat/trendradar\n\n---\n\n> 💡 如果你每天要刷多个 App 看热点，或者需要追踪特定关键词（品牌/行业/竞品），这个项目可以帮你省大量时间。",
@@ -287,7 +294,520 @@
       ],
       "videoUrl": "",
       "date": "2026-06-12",
+      "status": "published",
+      "template": "A"
+    },
+    {
+      "id": "article-16",
+      "title": "AI 文章自动配图教程：让小黑插图帮你的内容一键生成手绘风格图解",
+      "slug": "ian-xiaohei-illustrations",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/ian-xiaohei-cover.jpg",
+      "excerpt": "一个 Codex Skill，教 AI 给中文文章生成配图——不是随便配一张好看的图，而是把文章里的关键判断、流程、状态或隐喻，画成一张有记忆点的 16:9 手绘解释图。作者 Ian，GitHub 4.6k+ stars。",
+      "content": "详见独立文章页：/craft/ian-xiaohei-illustrations.html",
+      "tags": [
+        "AI",
+        "工具",
+        "Codex",
+        "Skill",
+        "插图",
+        "GitHub"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-16",
+      "status": "published",
+      "link": "/craft/ian-xiaohei-illustrations.html",
+      "template": "A"
+    },
+    {
+      "id": "article-17",
+      "title": "AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播",
+      "slug": "deep-live-cam",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/deep-live-cam-cover.png",
+      "excerpt": "一张照片就能实现实时 AI 换脸——虚拟主播、影视特效、视频二创，开源免费，普通电脑就能跑。3 种安装方式 + 3 大使用场景 + 完整合规指南。",
+      "content": "详见独立文章页：/craft/deep-live-cam.html",
+      "tags": [
+        "AI换脸",
+        "开源",
+        "GitHub",
+        "Deep-Live-Cam",
+        "虚拟主播",
+        "影视特效",
+        "工具"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-17",
+      "status": "published",
+      "link": "/craft/deep-live-cam.html",
+      "template": "A"
+    },
+    {
+      "id": "article-18",
+      "title": "26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布",
+      "slug": "xpeng-gx-2698",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/xpeng-gx-2698-cover.png",
+      "excerpt": "2026年车市淘汰赛——日系从30%跌到12%、燃油车暴跌37%、全行业利润率仅3.2%。26.98万的小鹏GX用「直降13万+800V平台+XNGP全场景智驾」的组合拳，揭开低质高价最后的遮羞布。",
+      "content": "详见独立文章页：/craft/xpeng-gx-2698.html",
+      "tags": [
+        "小鹏",
+        "新能源",
+        "车市",
+        "诚意定价",
+        "价值战",
+        "行业分析"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-17",
+      "status": "published",
+      "link": "/craft/xpeng-gx-2698.html",
+      "template": "B"
+    },
+    {
+      "id": "article-19",
+      "title": "数字人视频制作教程：美团 LongCat，一张照片+音频自动生成对口型视频",
+      "slug": "longcat-video-avatar-1.5",
+      "category": "craft",
+      "featured": false,
+      "image": "craft/longcat-hero.png",
+      "excerpt": "美团开源的商业级数字人视频生成模型——上传照片+音频，约1分钟生成对口型说话视频，MIT协议可商用，甚至赢了部分闭源商业产品。",
+      "content": "详见独立文章页：/craft/longcat-video-avatar-1.5.html",
+      "tags": [
+        "数字人",
+        "AI视频",
+        "美团",
+        "开源",
+        "LongCat",
+        "唇形同步"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-18",
+      "status": "published",
+      "link": "/craft/longcat-video-avatar-1.5.html",
+      "template": "A"
+    },
+    {
+      "id": "article-21",
+      "title": "【影视飓风】第三课混剪 — 2026.06.24 第一版",
+      "slug": "ysjf-course3-mashup",
+      "category": "video",
+      "featured": true,
+      "image": "",
+      "excerpt": "「影视飓风」剪辑课第三课的混剪作业。从多条素材中提炼情绪节奏，完成一段完整的叙事混剪。记录选材逻辑、节奏把控和配乐搭配的全过程。",
+      "content": "## 项目背景\n\n这是「影视飓风」剪辑课第三课的作业，主题是「混剪」。课程要求从大量素材中提炼出一条有情绪递进和叙事逻辑的混剪作品。\n\n混剪不同于单主题剪辑，需要在不同场景、不同情绪之间找到一条贯穿的线索，用节奏和配乐把看似不相关的画面串联成一个完整的故事。\n\n## 创作思路\n\n### 选材阶段\n- 素材筛选：从课程提供的素材库中选取有情绪张力的片段\n- 建立情绪曲线：开头铺垫 → 中间爆发 → 结尾收束\n- 画面匹配：寻找动作连续性、色彩呼应、构图相似的镜头组\n\n### 剪辑节奏\n- **开场**：用低饱和度、慢节奏画面建立氛围\n- **中段**：随着音乐推进逐步加快切换频率\n- **高潮**：密集快切配合强节拍制造冲击力\n- **收尾**：回落到慢节奏，用最后一个意味深长的镜头收束\n\n### 配乐选择\n音乐是混剪的灵魂——不是画面去配合音乐，也不是音乐去配合画面，而是两者在节奏点上「对撞」。第三课的练习重点恰恰是这种对撞感的把控。\n\n## 学习收获\n\n第三课最大的收获是对 **情绪递进** 的理解：混剪不是素材的随机拼凑，而是一条完整的情绪曲线。从选材到剪辑，每一步都要服务于这条曲线的走向。",
+      "tags": [
+        "影视飓风",
+        "剪辑课",
+        "混剪",
+        "作业"
+      ],
+      "videoUrl": "https://player.bilibili.com/player.html?bvid=BV1FSjd6NEW2",
+      "date": "2026-06-25",
       "status": "published"
+    },
+    {
+      "id": "article-22",
+      "title": "【影视飓风】第十课混剪 — 2026.06.24 第一版",
+      "slug": "ysjf-course10-mashup",
+      "category": "video",
+      "featured": true,
+      "image": "",
+      "excerpt": "「影视飓风」剪辑课第十课的混剪作业。综合运用前期所学——剪辑节奏、调色、声音设计、叙事结构——完成一段完整的叙事混剪作品。",
+      "content": "## 项目背景\n\n这是「影视飓风」剪辑课第十课的作业。作为课程进阶阶段的综合练习，第十课要求将前期所学的各项技能——剪辑节奏、调色逻辑、声音设计、叙事结构——融会贯通，完成一段具有完整叙事弧线的混剪作品。\n\n## 创作思路\n\n### 前期规划\n- **主题确立**：从课程素材库中确定一个核心叙事主题\n- **情绪曲线设计**：铺垫 → 推进 → 转折 → 高潮 → 收束\n- **分镜草稿**：用手绘或文字描述大致剪辑结构\n\n### 剪辑执行\n- **粗剪**：按情绪曲线排列素材，确定段落节奏\n- **精剪**：逐帧调整切换点，确保动作连续性和视觉流畅度\n- **调色**：统一画面风格，用色调强化情绪递进\n- **声音设计**：环境音、音效、配乐三层叠加\n\n### 声音设计心得\n声音是第十课的重点——好的声音设计能让画面「活」起来。从环境底噪到关键音效的精准卡点，每一层声音都在参与叙事。\n\n## 学习收获\n\n第十课让我真正体会到 **「综合运用」** 的力量。前九课学的每项技能单独拿出来都只是工具，但当它们协同工作时，才能真正讲好一个故事。这也是整个课程最有价值的地方——不是教你怎么按按钮，而是教你怎么「思考」一段剪辑。",
+      "tags": [
+        "影视飓风",
+        "剪辑课",
+        "第十课",
+        "混剪",
+        "作业"
+      ],
+      "videoUrl": "https://player.bilibili.com/player.html?bvid=BV17LjZ6KEoC",
+      "date": "2026-06-25",
+      "status": "published"
+    },
+    {
+      "id": "article-23",
+      "title": "【影视飓风】第十课混剪 — 2026.06.24 第二版",
+      "slug": "ysjf-course10-mashup-v2",
+      "category": "video",
+      "featured": true,
+      "image": "",
+      "excerpt": "第十课混剪第二版。在第一版基础上优化了节奏密度、音效卡点和环境音层次，完成度更高。",
+      "content": "## 项目背景\n\n这是「影视飓风」第十课混剪的第二版剪辑。在第一版基础上，根据课程反馈进行了针对性优化。\n\n## 创作思路\n\n### 前期规划\n- **主题确立**：从课程素材库中确定一个核心叙事主题\n- **情绪曲线设计**：铺垫 → 推进 → 转折 → 高潮 → 收束\n- **分镜草稿**：用手绘或文字描述大致剪辑结构\n\n### 剪辑执行\n- **粗剪**：按情绪曲线排列素材，确定段落节奏\n- **精剪**：逐帧调整切换点，确保动作连续性和视觉流畅度\n- **调色**：统一画面风格，用色调强化情绪递进\n- **声音设计**：环境音、音效、配乐三层叠加\n\n### 第二版调整\n在第一版基础上，根据课程反馈进行了以下优化：\n- 调整了高潮段落的节奏密度，张力释放更有层次\n- 优化了关键音效的卡点精准度，打击感和画面衔接更紧密\n- 补强了环境音的层次感，空间氛围更扎实\n\n## 学习收获\n\n第二版调整让我更深刻地体会到——混剪的「完成度」往往不在大结构上，而在细节的打磨。节奏密度、音效卡点、环境音层次，每一项微调都在影响最终观感。剪辑不是一次成型的，好作品是改出来的。",
+      "tags": [
+        "影视飓风",
+        "剪辑课",
+        "第十课",
+        "混剪",
+        "第二版",
+        "直传"
+      ],
+      "videoUrl": "",
+      "directVideo": "video-lab/videos/course10-v2.mp4",
+      "date": "2026-06-25",
+      "status": "published"
+    },
+    {
+      "id": "article-20",
+      "title": "GPT Image 2 开源提示词库：900+模板直接复制出图",
+      "slug": "gpt-image-2-prompts",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/gpt-image-2-cover.jpg",
+      "excerpt": "GPT Image 2 + awesome-gpt-image-2-prompts 开源提示词案例库，收录 900+ 高质量 Prompt 模板，覆盖 7 大场景，CC0 协议完全开放。",
+      "content": "详见独立文章页：/craft/gpt-image-2-prompts.html",
+      "tags": [
+        "GPT Image 2",
+        "AI 绘图",
+        "Prompt 工程",
+        "图像生成",
+        "OpenAI",
+        "提示词模板",
+        "开源"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-22",
+      "status": "published",
+      "link": "/craft/gpt-image-2-prompts.html",
+      "template": "B"
+    },
+    {
+      "id": "article-24",
+      "title": "伯乐News雷达：AI资讯过滤神器，告别信息过载",
+      "slug": "ai-news-radar",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/bolenews-cover.jpg",
+      "excerpt": "伯乐News雷达是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。22个默认信源，7天观察期+65%差异过滤，零服务器部署。",
+      "content": "详见独立文章页：/craft/ai-news-radar.html",
+      "tags": [
+        "AI资讯",
+        "开源工具",
+        "RSS",
+        "信息过滤",
+        "GitHub Actions"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-25",
+      "status": "published",
+      "link": "/craft/ai-news-radar.html",
+      "template": "A"
+    },
+    {
+      "id": "article-25",
+      "title": "AI 副业赚钱完全指南：这些方法让你用 AI 增加第二份收入",
+      "slug": "aimoneyhunter",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/aimoneyhunter-cover.jpg",
+      "excerpt": "aimoneyhunter 15,000+ Stars，专门收集整理利用 AI 做副业赚钱的方法。不是教你用 AI，而是教你怎么用 AI 赚钱。",
+      "content": "详见独立文章页：/craft/aimoneyhunter.html",
+      "tags": [
+        "AI副业",
+        "自媒体",
+        "赚钱方法论",
+        "开源项目",
+        "创业思维"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-25",
+      "status": "published",
+      "link": "/craft/aimoneyhunter.html",
+      "template": "B"
+    },
+    {
+      "id": "article-26",
+      "title": "5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码",
+      "slug": "ai-design-tools",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/ai-design-tools-cover.jpg",
+      "excerpt": "盘点 Impeccable、UI/UX Pro Max Skill、Open Design、Awesome DESIGN.md 等5款工具——覆盖从学规范到完稿质检的完整链条。",
+      "content": "详见独立文章页：/craft/ai-design-tools.html",
+      "tags": [
+        "AI设计",
+        "前端开发",
+        "UI/UX",
+        "设计工具",
+        "开源"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-25",
+      "status": "published",
+      "link": "/craft/ai-design-tools.html",
+      "template": "A"
+    },
+    {
+      "id": "article-27",
+      "title": "多平台内容分发实操教程：一次编辑同步发布到微信公众号、知乎、B站等10+平台",
+      "slug": "multipost",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/multipost-cover.jpg",
+      "excerpt": "一个开源免费的浏览器扩展，支持 27+ 个平台处理器。写一次内容，一键发布到所有社交平台。免费开源，无需登录。",
+      "content": "详见独立文章页：/craft/multipost.html",
+      "tags": [
+        "浏览器扩展",
+        "多平台发布",
+        "社交媒体",
+        "效率工具",
+        "开源"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-25",
+      "status": "published",
+      "link": "/craft/multipost.html",
+      "template": "B"
+    },
+    {
+      "id": "article-28",
+      "title": "零代码搭建自动更新的 AI 资讯站：选模板、配API、设自动化全教程",
+      "slug": "ai-news-radar-guide",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/ai-news-radar-cover.jpg",
+      "excerpt": "纯前端 + 外部API + 定时脚本注入 + CDN托管，四步搭建一个每天自动刷新的 AI 新闻站点。全程零后端、零数据库、零服务器运维。",
+      "content": "详见独立文章页：/craft/ai-news-radar-guide.html",
+      "tags": [
+        "AI工具",
+        "自动化",
+        "前端开发",
+        "API集成",
+        "定时任务",
+        "实战教程"
+      ],
+      "videoUrl": "",
+      "date": "2026-06-26",
+      "status": "published",
+      "link": "/craft/ai-news-radar-guide.html",
+      "template": "B"
+    },
+    {
+      "id": "article-29",
+      "title": "【影视飓风】第11课平面追踪 — 2026.06.25 第二版",
+      "slug": "ysjf-course11-plane-track-v2",
+      "category": "video",
+      "featured": true,
+      "image": "",
+      "excerpt": "第11课平面追踪第二版。运用平面追踪技术实现文字、图形与画面中元素的精准跟随，完成一段创意特效混剪。",
+      "content": "详见独立文章页：/article.html?id=article-29",
+      "tags": [
+        "影视飓风",
+        "剪辑课",
+        "第11课",
+        "平面追踪",
+        "特效",
+        "第二版",
+        "直传"
+      ],
+      "videoUrl": "",
+      "directVideo": "video-lab/videos/course11-v2.mp4",
+      "date": "2026-06-25",
+      "status": "published"
+    },
+    {
+      "id": "article-30",
+      "title": "NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体",
+      "slug": "nomifun-ai-workstation",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/nomifun-cover.png",
+      "excerpt": "不是玩具桌宠，是真正能干活的开源 AI 工作站——桌面 AI 伙伴、无人值守 Agent、企业级知识库、11 个 IM 渠道、Rust 自研原生工具引擎，永久免费。",
+      "content": "详见独立文章页：/craft/nomifun-ai-workstation.html",
+      "tags": [
+        "NomiFun",
+        "AI",
+        "开源",
+        "桌宠",
+        "自动化",
+        "知识库",
+        "GitHub"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-01",
+      "status": "published",
+      "link": "/craft/nomifun-ai-workstation.html",
+      "template": "A"
+    },
+    {
+      "id": "article-31",
+      "title": "book-to-skill：把技术书一键变成 AI 专属知识库",
+      "slug": "book-to-skill",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/book-to-skill-cover.png",
+      "excerpt": "不是让 AI「读」书，而是让 AI「学会」这本书——把 PDF/EPUB/DOCX 等技术书编译成结构化的 AI Skill 包，Token 成本直降 51 倍，MIT 开源。",
+      "content": "详见独立文章页：/craft/book-to-skill.html",
+      "tags": [
+        "AI",
+        "知识库",
+        "开源",
+        "书籍",
+        "工具",
+        "Skill",
+        "GitHub"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-01",
+      "status": "published",
+      "link": "/craft/book-to-skill.html",
+      "template": "B"
+    },
+    {
+      "id": "article-32",
+      "title": "yt-dlp：120K+ Stars 的开源音视频下载神器，1800+ 网站全覆盖",
+      "slug": "yt-dlp-downloader",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/yt-dlp-cover.png",
+      "excerpt": "不是替代浏览器下载，而是替代一整套商业下载软件。1800+ 网站全覆盖，一行命令搞定视频下载，支持 8K/HDR/SponsorBlock。",
+      "content": "详见独立文章页：/craft/yt-dlp-downloader.html",
+      "tags": [
+        "yt-dlp",
+        "开源",
+        "视频下载",
+        "命令行",
+        "Python",
+        "ffmpeg",
+        "GitHub"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-03",
+      "status": "published",
+      "link": "/craft/yt-dlp-downloader.html",
+      "template": "A"
+    },
+    {
+      "id": "article-33",
+      "title": "Chatwoot：31K+ Stars 的开源客服系统，Zendesk/Intercom 的免费替代方案",
+      "slug": "chatwoot",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/chatwoot-cover.png",
+      "excerpt": "不是更便宜，而是更可控。MIT 协议开源客服系统，全渠道统一收口，自托管数据自己掌控，AI Agent 原生集成。",
+      "content": "详见独立文章页：/craft/chatwoot.html",
+      "tags": [
+        "Chatwoot",
+        "开源",
+        "客服系统",
+        "自托管",
+        "Ruby",
+        "Vue",
+        "GitHub"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-03",
+      "status": "published",
+      "link": "/craft/chatwoot.html",
+      "template": "B"
+    },
+    {
+      "id": "article-34",
+      "title": "¥188万撬动全球：一份写给总经理的海外营销破局方案",
+      "slug": "pxid-gm-report",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/pxid-gm-report-cover.png",
+      "excerpt": "五大战区、三个Go/No-Go检查点、¥188万年度预算——一份可以直接给总经理看的海外营销年度计划。",
+      "content": "详见独立文章页：/notes/pxid-gm-report.html",
+      "tags": [
+        "海外营销",
+        "PXID",
+        "GEO战略",
+        "ODM",
+        "印度制造",
+        "总经理汇报",
+        "P&L"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-05",
+      "status": "published",
+      "link": "/notes/pxid-gm-report.html",
+      "template": "notes"
+    },
+    {
+      "id": "article-35",
+      "title": "中国研发×印度制造：12个月海外营销作战全图",
+      "slug": "pxid-marketing-plan",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/pxid-marketing-plan-cover.png",
+      "excerpt": "从公司分析到竞品情报，从12个月月度计划到三档预算方案——一份完整的PXID海外营销推广计划。",
+      "content": "详见独立文章页：/notes/pxid-marketing-plan.html",
+      "tags": [
+        "PXID",
+        "海外营销",
+        "中国研发",
+        "印度制造",
+        "E-bike",
+        "ODM",
+        "12个月计划",
+        "竞品分析"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-05",
+      "status": "published",
+      "link": "/notes/pxid-marketing-plan.html",
+      "template": "notes"
+    },
+    {
+      "id": "article-36",
+      "title": "Agent Reach：给 AI Agent 一键装上互联网能力，15个平台零API费用",
+      "slug": "agent-reach",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/agent-reach-cover.png",
+      "excerpt": "一个开源的能力层工具，把 Twitter、YouTube、B站、小红书等 15 个平台的接入能力整合成一个 CLI。零 API 费用，MIT 协议，兼容 Claude Code / OpenClaw / Cursor。",
+      "content": "详见独立文章页：/craft/agent-reach.html",
+      "tags": [
+        "Agent Reach",
+        "AI Agent",
+        "开源",
+        "互联网访问",
+        "MIT",
+        "Python",
+        "Claude Code",
+        "OpenClaw",
+        "GitHub"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-07",
+      "status": "published",
+      "link": "/craft/agent-reach.html",
+      "template": "A"
+    },
+    {
+      "id": "article-37",
+      "title": "PXID 海外营销计划 — 总经理审阅版",
+      "slug": "pxid-gm-review",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/pxid-gm-review-cover.png",
+      "excerpt": "三大阶段执行路径、月度预算、人力配置、KPI 体系、风险评估与避免踩坑清单——一份可直接给总经理审阅的海外 B2B 营销计划。",
+      "content": "详见独立文章页：/notes/pxid-gm-review.html",
+      "tags": [
+        "海外营销",
+        "PXID",
+        "OEM/ODM",
+        "B2B",
+        "总经理审阅",
+        "印度制造",
+        "反倾销税",
+        "内容营销",
+        "SEO",
+        "GEO",
+        "YouTube",
+        "WhatsApp"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-05",
+      "status": "published",
+      "link": "/notes/pxid-gm-review.html",
+      "template": "notes"
     }
   ],
   "projects": [
@@ -310,6 +830,16 @@
       "link": "https://player.bilibili.com/player.html?bvid=BV1xx411c7mD",
       "status": "completed",
       "date": "2026-05-28"
+    },
+    {
+      "id": "proj-3",
+      "title": "Orca 科技博客",
+      "category": "craft",
+      "image": "uploads/orca-logo.png",
+      "description": "WordPress 自建科技博客，Relive-Pro 主题，覆盖新能源汽车、数码产品、AI 与科技趋势解读",
+      "link": "http://orca.appin.site",
+      "status": "completed",
+      "date": "2026-06-24"
     }
   ],
   "site": {

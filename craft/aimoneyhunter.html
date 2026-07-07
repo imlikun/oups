@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 副业赚钱完全指南：这些方法让你用 AI 增加第二份收入</title>
+<meta name="description" content="aimoneyhunter（AI 猎人）是一个 GitHub 开源项目，15,000+ Stars，专门收集整理利用 AI 做副业赚钱的方法、思路和实践案例。不是教你用 AI，而是教你怎么用 AI 赚钱。">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%); pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px; position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08)); border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> 开源项目 · AI 副业</div>
+    <h1>AI 副业赚钱完全指南：<em>这些方法</em>让你用 AI 增加第二份收入</h1>
+    <p class="hero-desc">不是教你用 AI，而是教你怎么<em>用 AI 赚钱</em>。15,000+ Stars 的副业方法论开源仓库。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-06-25</span><span class="sep"></span>
+      <span>8 个章节</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">15K+</div><div class="label">GitHub Stars</div></div>
+      <div class="hero-stat"><div class="num">4</div><div class="label">已验证方案</div></div>
+      <div class="hero-stat"><div class="num">5</div><div class="label">自媒体类别</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">💰</div>
+    <div class="summary-text">
+      <h3>核心摘要</h3>
+      <p>aimoneyhunter（AI 猎人）是一个 GitHub 开源项目，由开发者 Yangyi 创建，专门收集 AI 副业赚钱方法。项目虽已停止维护，但其中的副业方法和思维框架至今仍有参考价值。</p>
+      <div class="key-points">
+        <span>套壳站分销</span><span>API 聚合赚差价</span><span>聚焦刚需场景</span><span>模型训练服务</span><span>自媒体矩阵</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-wrap">
+<div class="article-body">
+
+<div class="section-img">
+  <img src="/uploads/aimoneyhunter-cover.jpg" alt="AI 副业赚钱大集合">
+  <div class="caption">△ aimoneyhunter — 用 AI 赚钱的完整方法论</div>
+</div>
+
+<h2>一、这是什么？</h2>
+
+<p><strong>aimoneyhunter</strong>（AI 猎人）是一个 GitHub 开源项目，由开发者 Yangyi（@Yangyi）创建和维护，专门收集整理利用 AI 做副业赚钱的方法、思路和实践案例。</p>
+
+<p><strong>核心定位</strong>：不是教你用 AI，而是教你怎么<strong>用 AI 赚钱</strong>。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>维度</th><th>数据</th></tr></thead>
+<tbody>
+<tr><td>仓库地址</td><td><a href="https://github.com/bleedline/aimoneyhunter" target="_blank">github.com/bleedline/aimoneyhunter</a></td></tr>
+<tr><td>GitHub Stars</td><td>15,000+</td></tr>
+<tr><td>项目性质</td><td>信息聚合仓库（awesome-list），非代码库</td></tr>
+<tr><td>语言</td><td>中文为主 + 英文版本</td></tr>
+<tr><td>当前状态</td><td>⚠️ 已标记"作废"，域名被黑产截流</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">
+  <div class="info-title">⚠️ 重要说明</div>
+  <p>作者已在 README 明确声明该项目已停止维护。但其中的副业方法和思路仍有参考价值。原网站域名已被黑产收购，不要点击可疑链接。</p>
+</div>
+
+<h2>二、项目的真实故事</h2>
+
+<p>这个项目背后有一个完整的创业故事，分成三个阶段：</p>
+
+<h3>第一阶段：SEO 导航站（2022末-2023初）</h3>
+<p>ChatGPT 刚火，作者用费曼学习法做 SEO 工具 + WP 导航站。内容策略：ChatGPT / Midjourney / Stable Diffusion 从注册安装到提示词教程。通过抖音博主自发传播（不告诉网站名→评论区问→回答→三方共赢），两周 DAU 到 2 万，一周拉 1 万私域社群。</p>
+
+<h3>第二阶段：垂直化转型</h3>
+<p>市场 AI 站太多、内容同质化严重。将内容垂直定位为"AI 副业方向"，利用 GitHub Repo 做内容聚合，被宝玉转发后爆火，DAU 回到 1 万。</p>
+
+<h3>第三阶段：停止运营</h3>
+<p>作者精力转移，未持续投入运营。域名到期后被黑产收购做截流（自动监控过期域名），最终将仓库标记为作废。</p>
+
+<div class="pull-quote"><p>"内容生态最重要的就是运营，没有好内容就没有生命力。如果不能构建出内容循环生产的机制，就会陷入恶性循环。"</p></div>
+
+<h2>三、已验证的赚钱方案</h2>
+
+<h3>方案 1：套壳站</h3>
+<p>做 GPT/MJ 套壳站，SaaS 或私有化部署贴牌，几千块一套卖给想赚钱的小老板。核心组件：分销系统必不可少。</p>
+
+<h3>方案 2：API 聚合</h3>
+<p>把各类 LLM/AI 能力缝合成 API，支持开发者快速调用。盈利模式：中间商赚差价——找便宜的 API 账号，按低于官网的价格卖出。衍生玩法：开源自助发卡站，给号贩子用就能赚钱。</p>
+
+<h3>方案 3：聚焦刚需场景</h3>
+<p>把 AI 能力聚焦到某一领域或某一人群的特定需求上。案例：AI 写论文、AI 自媒体发布、AI 证件照。核心原则：必须要<strong>刚需</strong>才可行，越聚焦力量越大。</p>
+
+<h3>方案 4：模型训练服务</h3>
+<p>帮甲方做模型训练。风险：不好交付，国内模型效果可能达不到甲方要求。</p>
+
+<h2>四、自媒体赚钱（重点板块）</h2>
+
+<p>这是项目中<strong>内容最多、最详细的部分</strong>：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>类别</th><th>涉及内容</th></tr></thead>
+<tbody>
+<tr><td>视频</td><td>AI 生成视频、视频剪辑自动化、短视频批量生产</td></tr>
+<tr><td>图片</td><td>AI 头像、表情包、产品图、设计素材</td></tr>
+<tr><td>文案</td><td>AI 写作、标题生成、文案模板</td></tr>
+<tr><td>音频</td><td>AI 配音、音乐生成、播客制作</td></tr>
+<tr><td>直播</td><td>AI 数字人直播、虚拟主播</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="pull-quote"><p>"技术人挣技术人的钱很难，但技术人挣普通人的钱相对容易。"</p></div>
+
+<h2>五、副业认知精华</h2>
+
+<p>作者给出的四条核心认知：</p>
+<ol>
+  <li><strong>做内容搞流量</strong>，而不是做一个产品去卖</li>
+  <li><strong>做铲子</strong>，而不是挖金子</li>
+  <li><strong>不想花钱，就要花时间</strong></li>
+  <li><strong>做资产</strong>，而不是卖时间</li>
+</ol>
+
+<h3>自媒体策略建议</h3>
+<ul>
+  <li>从最小切入点开始，比如先做个 Midjourney API</li>
+  <li>搞清楚四个问题再推广：目标用户是谁？核心功能是什么？核心卖点是什么？用户聚集地在哪里？</li>
+</ul>
+
+<h2>六、适合谁看？</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>人群</th><th>价值</th></tr></thead>
+<tbody>
+<tr><td>想用 AI 赚钱的自由职业者</td><td>提供已验证的变现思路</td></tr>
+<tr><td>技术人员找副业</td><td>技术变现的具体方案</td></tr>
+<tr><td>自媒体创作者</td><td>AI 辅助内容生产的实操方法</td></tr>
+<tr><td>创业者/小老板</td><td>了解 AI 行业的商业模式参考</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>七、一句话总结</h2>
+
+<div class="pull-quote"><p>aimoneyhunter 的价值不在工具本身，而在于它展示了一套完整的"从学习到变现"的思维框架。项目虽已作废，但"从小切入、做铲子不挖金子、做资产不卖时间"这些底层逻辑依然有效。</p></div>
+
+<div class="tag-cloud">
+  <a href="/article.html?cat=craft">技艺录</a>
+  <a href="#">AI副业</a>
+  <a href="#">自媒体</a>
+  <a href="#">赚钱方法论</a>
+  <a href="#">开源项目</a>
+  <a href="#">创业思维</a>
+</div>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+</div>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · 技艺录 — <a href="/craft/">查看更多文章</a></p>
+</footer>
+
+</body>
+</html>

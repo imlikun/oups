@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>宠急帮 — Phone Screens</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#111; display:flex; gap:30px; padding:40px; flex-wrap:wrap; justify-content:center; }
+
+  .phone {
+    width:280px; height:580px; background:#faf8f6; border-radius:36px;
+    overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.04);
+    display:flex; flex-direction:column; font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    flex-shrink:0;
+  }
+  .status-bar { height:28px; background:#faf8f6; display:flex; align-items:center; justify-content:space-between; padding:0 20px; font-size:10px; font-weight:600; color:#1e2a3a; flex-shrink:0; }
+  .content { flex:1; overflow-y:auto; padding:0 12px 12px; display:flex; flex-direction:column; gap:8px; }
+  .content::-webkit-scrollbar { width:2px; }
+  .content::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.1); border-radius:4px; }
+
+  /* Account bar */
+  .acct-bar { display:flex; align-items:center; background:#fff; padding:10px 12px; border-radius:40px; box-shadow:0 2px 10px rgba(0,0,0,0.03); margin-top:4px; }
+  .acct-avatar { width:32px; height:32px; border-radius:50%; background:#fff0e8; display:flex; align-items:center; justify-content:center; font-size:18px; margin-right:8px; flex-shrink:0; }
+  .acct-detail { flex:1; min-width:0; }
+  .acct-name { font-size:13px; font-weight:700; color:#1e2a3a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .acct-role { font-size:10px; font-weight:600; color:#8e9aaf; background:#f0f3f8; padding:1px 8px; border-radius:12px; display:inline-block; margin-top:2px; }
+  .acct-btn { background:#07c160; color:#fff; font-size:11px; font-weight:600; padding:6px 14px; border-radius:20px; border:none; cursor:pointer; flex-shrink:0; margin-left:8px; }
+
+  /* Page header */
+  .page-header { display:flex; justify-content:space-between; align-items:center; padding:4px 0; }
+  .page-title { font-size:20px; font-weight:800; color:#1e2a3a; }
+  .resp-badge { font-size:10px; font-weight:700; color:#ff6b35; background:#fff0e8; padding:3px 10px; border-radius:14px; }
+
+  /* Emergency card */
+  .e-card {
+    background:linear-gradient(145deg,#1e2a3a,#15202b); border-radius:16px;
+    padding:18px; color:white; position:relative; overflow:hidden;
+    box-shadow:0 6px 16px rgba(30,42,58,0.2);
+  }
+  .e-card::after { content:'🐾'; position:absolute; top:-10px; right:-6px; font-size:72px; opacity:0.05; transform:rotate(15deg); }
+  .e-card .tag { display:inline-block; background:rgba(255,107,53,0.2); padding:3px 12px; border-radius:14px; font-size:10px; font-weight:700; color:#ff9a7a; margin-bottom:8px; }
+  .e-card .big { font-size:18px; font-weight:800; display:block; margin-bottom:4px; }
+  .e-card .sub { font-size:13px; color:rgba(255,255,255,0.65); display:block; margin-bottom:12px; }
+  .e-btn { background:#ff6b35; border:none; width:100%; padding:12px; border-radius:28px; font-weight:700; font-size:14px; color:white; text-align:center; box-shadow:0 4px 12px rgba(255,107,53,0.3); }
+
+  /* Section title */
+  .sec-title { font-size:15px; font-weight:700; color:#1e2a3a; margin:2px 0; }
+
+  /* Service scroll */
+  .svc-row { display:flex; gap:14px; overflow-x:auto; padding:4px 0 8px; }
+  .svc-row::-webkit-scrollbar { display:none; }
+  .svc-item { display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; width:70px; }
+  .svc-avatar { width:60px; height:60px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .svc-avatar.hl { background:#fff0e8; border:2px solid #ff6b35; }
+  .svc-item span { font-size:11px; font-weight:600; color:#1e2a3a; }
+  .step-avatar { width:60px; height:60px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-size:26px; }
+
+  /* Feature icon */
+  .f-avatar { width:60px; height:60px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-size:26px; }
+  .f-avatar.hl { background:#fff0e8; border:2px solid #ff6b35; }
+
+  /* Instructions */
+  .instr-card { background:white; border-radius:14px; padding:8px 14px; box-shadow:0 4px 14px rgba(30,42,58,0.04); }
+  .step { display:flex; gap:10px; padding:8px 0; align-items:center; border-bottom:1px solid #f5f3f0; }
+  .step:last-child { border-bottom:none; }
+  .step-num { background:#1e2a3a; color:white; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; }
+  .step-text { font-size:12px; color:#1e2a3a; line-height:1.5; }
+
+  /* Order card */
+  .order-card { background:white; border-radius:14px; padding:14px; box-shadow:0 4px 14px rgba(30,42,58,0.04); }
+  .o-header { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .o-avatar { width:36px; height:36px; border-radius:12px; background:#fff0e8; display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .o-name { font-weight:800; font-size:15px; color:#1e2a3a; }
+  .o-tag { background:#f0f3f8; padding:2px 12px; border-radius:14px; font-size:11px; font-weight:600; color:#1e2a3a; }
+  .o-status { font-size:10px; font-weight:700; padding:2px 10px; border-radius:14px; margin-left:auto; }
+  .o-status.pending { background:#fff8e1; color:#b8860b; }
+  .o-status.ongoing { background:#dbeafe; color:#1e40af; }
+  .o-status.completed { background:#e8f5f2; color:#2a9d8f; }
+  .o-detail { font-size:12px; color:#1e2a3a; display:flex; align-items:center; gap:6px; margin:3px 0; }
+  .o-btn { flex:1; padding:8px; border:none; border-radius:20px; font-weight:700; font-size:12px; text-align:center; cursor:pointer; }
+  .o-btn.accept { background:#ff6b35; color:white; }
+  .o-btn.complete { background:#2a9d8f; color:white; }
+  .o-actions { display:flex; gap:8px; margin-top:8px; }
+
+  /* Form */
+  .form-group { background:white; border-radius:14px; padding:14px; box-shadow:0 4px 14px rgba(30,42,58,0.04); }
+  .group-label { font-size:11px; font-weight:700; color:#8e9aaf; margin-bottom:12px; }
+  .f-row { display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
+  .f-label { font-size:12px; font-weight:600; color:#1e2a3a; }
+  .f-label .req { color:#ff6b35; }
+  .f-input { background:#f8f6f4; border-radius:12px; padding:10px 14px; font-size:13px; color:#1e2a3a; }
+  .f-input.placeholder { color:#b0bacd; }
+  .type-row { display:flex; gap:8px; }
+  .type-btn { flex:1; padding:8px; text-align:center; background:#f8f6f4; border-radius:28px; font-weight:600; font-size:11px; color:#8e9aaf; }
+  .type-btn.active { background:#fff0e8; color:#ff6b35; border:1px solid #ff6b35; }
+  .pill-row { display:flex; gap:6px; flex-wrap:wrap; }
+  .pill { background:#f8f6f4; padding:6px 12px; border-radius:20px; font-size:11px; font-weight:600; color:#1e2a3a; }
+  .pill.active { background:#1e2a3a; color:white; }
+  .sec-btn { background:#1e2a3a; border:none; width:100%; padding:12px; border-radius:28px; font-weight:700; font-size:14px; color:white; text-align:center; }
+
+  /* Menu */
+  .menu-list { background:white; border-radius:14px; padding:4px 0; box-shadow:0 4px 14px rgba(30,42,58,0.04); }
+  .menu-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid #f5f3f0; }
+  .menu-item:last-child { border-bottom:none; }
+  .menu-icon { font-size:16px; width:22px; text-align:center; }
+  .menu-text { flex:1; font-weight:600; color:#1e2a3a; font-size:13px; }
+  .menu-value { font-weight:800; color:#ff6b35; font-size:13px; }
+
+  /* Profile card */
+  .p-card { background:white; border-radius:14px; padding:16px; box-shadow:0 4px 14px rgba(30,42,58,0.04); display:flex; align-items:center; gap:14px; }
+  .p-avatar { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#ff6b35,#ff9a7a); display:flex; align-items:center; justify-content:center; font-size:28px; color:white; }
+  .p-info .p-name { font-size:15px; font-weight:700; color:#1e2a3a; }
+  .p-info .p-bio { font-size:11px; color:#8e9aaf; margin-top:2px; display:block; }
+  .empty-state { text-align:center; padding:30px 0; color:#b0bacd; font-size:13px; }
+  .empty-emoji { font-size:40px; display:block; margin-bottom:8px; }
+
+  /* Bottom nav */
+  .bottom-nav { display:flex; justify-content:space-around; padding:8px 6px 16px; border-top:1px solid rgba(0,0,0,0.03); background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); }
+  .nav-item { display:flex; flex-direction:column; align-items:center; gap:2px; font-size:10px; font-weight:600; color:#b0bacd; padding:4px 12px; border-radius:14px; }
+  .nav-item.active { color:#ff6b35; background:#fff0e8; }
+  .nav-icon { font-size:20px; }
+</style>
+</head>
+<body>
+
+<!-- ====== Screen 1: Welcome / Login ====== -->
+<div class="phone" id="screen1">
+  <div class="status-bar"><span>9:41</span><span>WiFi ▮▮▮▮</span></div>
+  <div class="content">
+    <div class="acct-bar">
+      <div class="acct-avatar">🐾</div>
+      <div class="acct-detail"><div class="acct-name">未登录</div><div class="acct-role">点击登录</div></div>
+      <div class="acct-btn">手机号登录</div>
+    </div>
+    <div class="page-header"><div class="page-title">宠急<span style="color:#ff6b35;">帮</span></div></div>
+    <div class="e-card">
+      <div class="tag">🚀 极速响应</div>
+      <div class="big">宠物临时照顾服务平台</div>
+      <div class="sub">出差/旅游/临时有事 · 专业帮助者上门服务</div>
+      <div style="text-align:center;padding:10px 0 4px;font-size:13px;color:rgba(255,255,255,0.7);">📱 手机号快捷登录</div>
+    </div>
+    <div class="sec-title">🐶 我们的服务</div>
+    <div class="svc-row">
+      <div class="svc-item"><div class="svc-avatar hl">🍽️</div><span>上门喂食</span></div>
+      <div class="svc-item"><div class="f-avatar">🐕</div><span>上门遛狗</span></div>
+      <div class="svc-item"><div class="f-avatar">🎾</div><span>陪玩互动</span></div>
+      <div class="svc-item"><div class="f-avatar">🛁</div><span>洗护美容</span></div>
+      <div class="svc-item"><div class="f-avatar">🚗</div><span>接送寄养</span></div>
+    </div>
+    <div class="instr-card">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><b>手机号登录</b> 自动识别身份</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><b>发布需求</b> 填写宠物信息和服务时间</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><span style="color:#ff6b35;font-weight:600;">极速响应</span> 帮助者亲自接单</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><b>开始服务</b> 上门照顾你的毛孩子</div></div>
+    </div>
+    <div style="text-align:center;font-size:10px;color:#b0bacd;padding:6px 0;">登录即代表同意《隐私政策》</div>
+  </div>
+</div>
+
+<!-- ====== Screen 2: Asker Home ====== -->
+<div class="phone" id="screen2">
+  <div class="status-bar"><span>9:41</span><span>WiFi ▮▮▮▮</span></div>
+  <div class="content">
+    <div class="acct-bar">
+      <div class="acct-avatar">🐱</div>
+      <div class="acct-detail"><div class="acct-name">豆豆妈妈</div><div class="acct-role">求助者</div></div>
+    </div>
+    <div class="page-header">
+      <div class="page-title">宠急<span style="color:#ff6b35;">帮</span></div>
+      <span style="font-size:24px;">🔔</span>
+    </div>
+    <div class="e-card">
+      <div class="tag">🚀 极速响应</div>
+      <div class="big">🆘 毛孩子急需救援？</div>
+      <div class="sub">本人亲自接单 · <b>1对1服务</b> · 不转包</div>
+      <div class="e-btn">立即发布需求 →</div>
+    </div>
+    <div class="sec-title">🐶 我能提供的服务</div>
+    <div class="svc-row">
+      <div class="svc-item"><div class="svc-avatar hl">🍽️</div><span>上门喂食</span></div>
+      <div class="svc-item"><div class="svc-avatar">🐕</div><span>上门遛狗</span></div>
+      <div class="svc-item"><div class="svc-avatar">🎾</div><span>陪玩互动</span></div>
+      <div class="svc-item"><div class="svc-avatar">🛁</div><span>洗护美容</span></div>
+      <div class="svc-item"><div class="svc-avatar">🚗</div><span>接送寄养</span></div>
+    </div>
+    <div class="sec-title">📖 使用说明</div>
+    <div class="instr-card">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><b>发布需求</b> 填写宠物信息和服务时间</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><span style="color:#ff6b35;font-weight:600;">极速响应</span> 发布即触发提醒，本人亲自接单</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><b>沟通细节</b> 微信确认具体需求</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><b>开始服务</b> 上门照顾你的毛孩子</div></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active"><span class="nav-icon">🏠</span>首页</div>
+    <div class="nav-item"><span class="nav-icon">➕</span>发布</div>
+    <div class="nav-item"><span class="nav-icon">📋</span>我的</div>
+  </div>
+</div>
+
+<!-- ====== Screen 3: Publish Order ====== -->
+<div class="phone" id="screen3">
+  <div class="status-bar"><span>9:41</span><span>WiFi ▮▮▮▮</span></div>
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title" style="font-size:16px;">✏️ 发布需求</div>
+      <div class="resp-badge">⏳ 响应 ＜5分钟</div>
+    </div>
+    <div class="form-group">
+      <div class="group-label">🐾 谁需要帮助</div>
+      <div class="f-row">
+        <div class="f-label">宠物类型 <span class="req">*</span></div>
+        <div class="type-row">
+          <div class="type-btn active">🐱 猫咪</div>
+          <div class="type-btn">🐶 狗狗</div>
+          <div class="type-btn">其他</div>
+        </div>
+      </div>
+      <div class="f-row">
+        <div class="f-label">宠物名字 <span class="req">*</span></div>
+        <div class="f-input">豆豆</div>
+      </div>
+      <div class="f-row" style="margin-bottom:0;">
+        <div class="f-label">位置 <span class="req">*</span></div>
+        <div class="f-input" style="display:flex;justify-content:space-between;align-items:center;">越秀区人民政府<span style="font-size:16px;color:#ff6b35;">📍</span></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="group-label">⏰ 服务详情</div>
+      <div class="f-row">
+        <div class="f-label">服务类型 <span class="req">*</span></div>
+        <div class="type-row">
+          <div class="type-btn active">🍽️ 喂食</div>
+          <div class="type-btn">🐕 遛狗</div>
+          <div class="type-btn">🎾 陪玩</div>
+        </div>
+      </div>
+      <div class="f-row">
+        <div class="f-label">开始时间 <span class="req">*</span></div>
+        <div class="f-input" style="display:flex;justify-content:space-between;">15分钟后<span>📅</span></div>
+        <div class="pill-row">
+          <div class="pill active">15分钟后</div>
+          <div class="pill">1小时后</div>
+          <div class="pill">3小时后</div>
+          <div class="pill">自定义</div>
+        </div>
+      </div>
+      <div class="f-row" style="margin-bottom:0;">
+        <div class="f-label">备注 <span style="font-weight:400;color:#b0bacd;">(选填)</span></div>
+        <div class="f-input placeholder">例如：猫粮在柜子里</div>
+      </div>
+    </div>
+    <div class="sec-btn">🚀 立即发布，等待接单</div>
+    <div style="text-align:center;font-size:10px;color:#b0bacd;padding-bottom:4px;">发布即代表同意《服务协议》</div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item"><span class="nav-icon">🏠</span>首页</div>
+    <div class="nav-item active"><span class="nav-icon">➕</span>发布</div>
+    <div class="nav-item"><span class="nav-icon">📋</span>我的</div>
+  </div>
+</div>
+
+<!-- ====== Screen 4: Helper Pool ====== -->
+<div class="phone" id="screen4">
+  <div class="status-bar"><span>9:41</span><span>WiFi ▮▮▮▮</span></div>
+  <div class="content">
+    <div class="acct-bar">
+      <div class="acct-avatar">🐾</div>
+      <div class="acct-detail"><div class="acct-name">金牌守护者</div><div class="acct-role">帮助者</div></div>
+    </div>
+    <div class="page-header">
+      <div class="page-title" style="font-size:18px;">📋 待接订单</div>
+      <span style="font-size:24px;position:relative;">🔔<span style="position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;background:#ff3b30;border-radius:8px;color:white;font-size:10px;display:flex;align-items:center;justify-content:center;padding:0 4px;">3</span></span>
+    </div>
+    <div class="e-card">
+      <div class="tag">🟢 在线接单中</div>
+      <div class="big">有 <span style="color:#ff6b35;">3</span> 个毛孩子需要帮助</div>
+      <div class="sub">确认接单后，将自动排入你的今日行程</div>
+    </div>
+    <div class="order-card">
+      <div class="o-header">
+        <div class="o-avatar">🐱</div>
+        <div class="o-name">豆豆</div>
+        <div class="o-tag">上门喂食</div>
+        <div class="o-status pending">待接单</div>
+      </div>
+      <div class="o-detail">🕐 今天 15:30</div>
+      <div class="o-detail">📍 越秀区人民政府</div>
+      <div class="o-actions"><div class="o-btn accept">✅ 确认接单</div></div>
+    </div>
+    <div class="order-card">
+      <div class="o-header">
+        <div class="o-avatar">🐶</div>
+        <div class="o-name">旺财</div>
+        <div class="o-tag">上门遛狗</div>
+        <div class="o-status pending">待接单</div>
+      </div>
+      <div class="o-detail">🕐 今天 17:00</div>
+      <div class="o-detail">📍 天河区体育西路</div>
+      <div class="o-detail">📝 大型犬，需要牵引绳</div>
+      <div class="o-actions"><div class="o-btn accept">✅ 确认接单</div></div>
+    </div>
+    <div class="order-card">
+      <div class="o-header">
+        <div class="o-avatar">🐾</div>
+        <div class="o-name">糯米</div>
+        <div class="o-tag">陪玩互动</div>
+        <div class="o-status pending">待接单</div>
+      </div>
+      <div class="o-detail">🕐 明天 10:00</div>
+      <div class="o-detail">📍 海珠区江南西</div>
+      <div class="o-actions"><div class="o-btn accept">✅ 确认接单</div></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active"><span class="nav-icon">📋</span>待接单</div>
+    <div class="nav-item"><span class="nav-icon">📅</span>行程</div>
+    <div class="nav-item"><span class="nav-icon">👤</span>我的</div>
+  </div>
+</div>
+
+</body>
+</html>
