@@ -279,8 +279,8 @@ ${itemsHtml}
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>每日热点与好书 | ${data.date} — 李坤</title>
-<meta name="description" content="${data.sections[0]?.items[0]?.title || '每日热点简报'}——${data.date}每日热点简报。">
+<title>每日阅读 | ${data.date} — 李坤</title>
+<meta name="description" content="${data.sections[0]?.items[0]?.title || '每日阅读'}——${data.date}阅读简报。">
 <style>
 :root{
   --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
@@ -382,7 +382,7 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 
 <header class="article-header">
   <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · ${data.date} ${weekday}</div>
-  <h1>每日<em class="hl">热点</em>与好书</h1>
+  <h1>每日阅读</h1>
   <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 ${totalItems} 条</p>
   <div class="section-tags">
         ${sectionTagsHtml}
