@@ -78,6 +78,14 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 .rating-weread{background:rgba(48,209,88,.08);color:#30d158}
 .rating-score{font-weight:800}
 .book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
 .divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
 .footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
 .footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}

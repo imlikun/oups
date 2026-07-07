@@ -4,182 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>每日热点与好书 | 2026-07-07 — 李坤</title>
-<meta name="description" content="BAT抱团阻击字节、蔚来月交付破4万、世界机器人大会8月启幕——2026年7月7日每日热点简报。">
+<meta name="description" content="BAT抱团阻击字节了？（来自虎嗅）——2026-07-07每日热点简报。">
 <style>
-:root {
-  --bg: #f7faf7;
-  --text: #1a1a1a;
-  --text-secondary: #555;
-  --text-muted: #888;
-  --accent: #30d158;
-  --accent-light: rgba(48,209,88,0.08);
-  --border: rgba(0,0,0,0.07);
-  --card-bg: #fff;
-  --radius: 14px;
-  --radius-sm: 10px;
+:root{
+  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
+  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
+  --card-bg:#fff;--radius:14px;--radius-sm:10px;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
-  background:var(--bg); color:var(--text); line-height:1.7;
-  -webkit-font-smoothing:antialiased;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
 
-/* ---- Nav ---- */
-.nav { position:fixed; top:0; left:0; right:0; z-index:100;
-  background:rgba(247,250,247,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border); }
-.nav-inner { max-width:860px; margin:0 auto; padding:0 32px;
-  display:flex; align-items:center; justify-content:space-between; height:58px; }
-.nav-back { font-size:15px; color:var(--accent); text-decoration:none; font-weight:600;
-  display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
-.nav-back:hover { gap:10px; }
-.nav-links { display:flex; gap:20px; align-items:center; font-size:13px; }
-.nav-links a { color:var(--text-muted); text-decoration:none; transition:color 0.2s; }
-.nav-links a:hover { color:var(--accent); }
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 
-/* ---- Article Header ---- */
-.article-header { max-width:860px; margin:0 auto; padding:100px 32px 40px; text-align:center; }
-.article-date-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 16px; border-radius:20px;
-  background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:600; letter-spacing:0.06em;
-  margin-bottom:18px; }
-.article-date-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent);
-  animation:pulse-dot 2s ease-in-out infinite; }
-@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.4} }
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
 
-.article-header h1 { font-size:clamp(24px,4vw,36px); font-weight:800; letter-spacing:-0.5px;
-  line-height:1.25; margin-bottom:14px; color:var(--text); }
-.article-header h1 .hl { color:var(--accent); }
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+.news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--accent);text-decoration:none;
+  font-weight:500;margin-top:8px;padding-left:34px;transition:gap .2s}
+.news-link:hover{gap:8px;text-decoration:underline}
 
-.article-meta { font-size:13px; color:var(--text-muted); margin-top:12px; }
-.article-meta .sep { margin:0 8px; opacity:0.4; }
-
-.section-tags { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
-.section-tags span { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:8px;
-  font-size:11px; font-weight:600; }
-.tag-social { background:rgba(41,151,255,0.08); color:#2997ff; }
-.tag-auto { background:rgba(255,159,10,0.08); color:#e08600; }
-.tag-tech { background:rgba(191,90,242,0.08); color:#bf5af2; }
-.tag-elderly { background:rgba(200,122,30,0.08); color:#c87a1e; }
-.tag-psych { background:rgba(255,69,89,0.08); color:#e54d66; }
-.tag-book { background:rgba(90,200,120,0.08); color:#2ea043; }
-
-/* ---- Article Body ---- */
-.article-body { max-width:860px; margin:0 auto; padding:0 32px 80px; }
-
-/* Section */
-.section-block { margin-bottom:36px; }
-.section-head { display:flex; align-items:center; gap:10px; margin-bottom:18px;
-  padding-bottom:12px; border-bottom:2px solid var(--border); }
-.section-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center;
-  font-size:15px; flex-shrink:0; }
-.section-title { font-size:17px; font-weight:700; letter-spacing:0.02em; }
-
-/* News Item */
-.news-item { padding:16px 18px; border:1px solid var(--border); border-radius:var(--radius-sm);
-  background:var(--card-bg); margin-bottom:12px; transition:all 0.2s ease;
-  position:relative; }
-.news-item:hover { box-shadow:0 4px 16px rgba(0,0,0,0.05); transform:translateY(-1px); }
-.news-item:last-child { margin-bottom:0; }
-
-.news-item .num { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
-  border-radius:6px; font-size:11px; font-weight:700; color:var(--card-bg); flex-shrink:0; margin-right:12px;
-  background:var(--text-secondary); }
-.news-item .item-header { display:flex; align-items:flex-start; gap:0; }
-.news-item h3 { font-size:15px; font-weight:700; line-height:1.55; color:var(--text); flex:1; }
-.news-item h3 strong { color:var(--text); }
-
-.news-source-tag { display:inline-block; font-size:10.5px; font-weight:600; padding:1px 7px; border-radius:4px;
-  margin-left:8px; vertical-align:middle; white-space:nowrap; }
-.src-huxiu { background:rgba(255,107,129,0.08); color:#d63b52; }
-.src-36kr { background:rgba(0,194,146,0.08); color:#00c292; }
-.src-tmtpost { background:rgba(0,160,233,0.08); color:#00a0e9; }
-.src-geekpark { background:rgba(0,200,168,0.08); color:#00c8a8; }
-.src-other { background:var(--accent-light); color:var(--accent); }
-
-.news-summary { font-size:13.5px; color:var(--text-secondary); line-height:1.65;
-  margin-top:8px; padding-left:34px; }
-.news-link { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--accent);
-  text-decoration:none; font-weight:500; margin-top:8px; padding-left:34px;
-  transition:gap 0.2s; }
-.news-link:hover { gap:8px; text-decoration:underline; }
-
-/* Book Item */
-.book-item { padding:20px 22px; border:1px solid var(--border); border-radius:var(--radius-sm);
-  background:linear-gradient(135deg,#fff,#f8fdf8); margin-bottom:12px; transition:all 0.2s ease; }
-.book-item:hover { box-shadow:0 4px 20px rgba(48,209,88,0.08); transform:translateY(-1px); }
-.book-item:last-child { margin-bottom:0; }
-
-.book-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:10px; }
-.book-num { display:flex; align-items:center; justify-content:center; min-width:22px; height:22px;
-  border-radius:6px; font-size:11px; font-weight:700; color:#fff;
-  background:var(--accent); flex-shrink:0; }
-.book-info { flex:1; }
-.book-info h3 { font-size:15.5px; font-weight:700; line-height:1.45; }
-.book-info h3 em { font-style:normal; color:var(--accent); }
-.book-author { font-size:12.5px; color:var(--text-muted); margin-top:2px; }
-
-.book-ratings { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 8px; padding-left:36px; }
-.rating-pill { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:6px;
-  font-size:11.5px; font-weight:600; }
-.rating-douban { background:rgba(41,151,255,0.08); color:#2997ff; }
-.rating-weread { background:rgba(48,209,88,0.08); color:#30d158; }
-.rating-score { font-weight:800; }
-
-.book-desc { font-size:13.5px; color:var(--text-secondary); line-height:1.68;
-  padding-left:36px; }
-
-/* Divider */
-.divider { text-align:center; padding:30px 0 10px; color:var(--text-muted); font-size:11.5px;
-  letter-spacing:0.1em; opacity:0.5; }
-
-/* Footer nav */
-.footer-nav { max-width:860px; margin:0 auto; padding:0 32px 60px;
-  display:flex; justify-content:space-between; align-items:center; }
-.footer-nav a { color:var(--accent); text-decoration:none; font-size:14px; font-weight:600;
-  display:flex; align-items:center; gap:6px; transition:gap 0.2s; }
-.footer-nav a:hover { gap:10px; }
-.footer-nav .disabled { color:var(--text-muted); pointer-events:none; }
-
-@media (max-width:640px) {
-  .nav-inner { padding:0 16px; }
-  .article-header { padding:90px 16px 28px; }
-  .article-body { padding:0 16px 60px; }
-  .footer-nav { padding:0 16px 48px; }
-  .news-summary, .news-link, .book-ratings, .book-desc { padding-left:0; }
-  .news-item .num { display:none; }
-  .section-tags { justify-content:flex-start; }
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
+.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
 }
 </style>
 </head>
 <body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-back">← 返回列表</a>
-    <div class="nav-links">
-      <a href="/">首页</a>
-      <a href="/craft/">技艺录</a>
-    </div>
-  </div>
-</nav>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
 
 <header class="article-header">
-  <div class="article-date-badge"><span class="dot"></span> DAILY DIGEST · 2026-07-07 星期一</div>
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-07 星期二</div>
   <h1>每日<em class="hl">热点</em>与好书</h1>
-  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>来源：虎嗅 / 36氪 / 钛媒体 / 极客公园<span class="sep">·</span>共 22 条</p>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 16 条</p>
   <div class="section-tags">
-    <span class="tag-social"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
-    <span class="tag-auto"><span class="tag-dot" style="background:#ff9f0a"></span> 汽车 ×5</span>
-    <span class="tag-tech"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
-    <span class="tag-book"><span class="tag-dot" style="background:#2ea043"></span> 好书推荐 ×3</span>
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×0</span>
   </div>
 </header>
 
 <article class="article-body">
 
-<!-- ===== 社会商业热点 ===== -->
 <section class="section-block">
   <div class="section-head">
     <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
@@ -187,43 +125,43 @@ body {
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num">1</span><h3><strong>BAT抱团阻击字节了？</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>BAT抱团阻击字节了？（来自虎嗅）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
     <div class="news-summary">"反字节联盟"把BAT拉进同一战壕，互联网格局再变。</div>
     <a href="https://www.huxiu.com/article/4873007.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num">2</span><h3><strong>今年暑期，国内旅行社正在系统性崩盘</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>今年暑期，国内旅行社正在系统性崩盘（来自虎嗅）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
     <div class="news-summary">暑期旅游旺季反现旅行社大面积亏损，行业面临系统性危机。</div>
     <a href="https://www.huxiu.com/article/4873122.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num">3</span><h3><strong>AGI第一股暴跌90%，AI泡沫终于要破了？</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>AGI第一股暴跌90%，AI泡沫终于要破了？（来自虎嗅）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
     <div class="news-summary">AI概念股暴跌九成，市场质疑AI泡沫是否正在加速破裂。</div>
     <a href="https://www.huxiu.com/article/4872781.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num">4</span><h3><strong>SK海力士冲刺全球前三大规模IPO</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>SK海力士冲刺全球前三大规模IPO（来自36氪）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
     <div class="news-summary">SK海力士拟募资280亿美元，冲击全球规模前三的IPO。</div>
     <a href="https://www.36kr.com/p/3884808204497159" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num">5</span><h3><strong>苹果新CEO地狱开局：16款新品突围</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>苹果新CEO地狱开局：16款新品突围（来自36氪）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
     <div class="news-summary">苹果新CEO面临涨价与泄密双重困境，拟推16款新品突围。</div>
     <a href="https://www.36kr.com/p/3884297914579586" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num">6</span><h3><strong>三星Q2利润同比增1810%，一年赚回40年</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>三星Q2利润同比增1810%，一年赚回40年（来自钛媒体）</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
     <div class="news-summary">三星单季利润超越英伟达此前创下的全球科技企业纪录。</div>
     <a href="https://www.tmtpost.com/8054813.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 </section>
 
-<!-- ===== 汽车热点 ===== -->
+
 <section class="section-block">
   <div class="section-head">
     <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
@@ -243,25 +181,25 @@ body {
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>2026半年销量收官：新能源零售105万辆，渗透率破60%</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>2026半年销量收官：新能源零售105万辆，渗透率破60%（36氪）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
     <div class="news-summary">6月狭义乘用车零售约165万辆，环比涨9.3%；新能源零售105万辆，渗透率稳定在60%以上。</div>
     <a href="https://www.36kr.com/p/3878173964073607" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>海豹08/小鹏MONA L03领衔，7月将上市新车汇总</strong></h3></div>
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>海豹08/小鹏MONA L03领衔，7月将上市新车汇总（汽车之家）</strong></h3></div>
     <div class="news-summary">比亚迪海豹08中大型旗舰轿车7月2日上市，插混+纯电双动力，盲订已开启。</div>
     <a href="https://www.autohome.com.cn/news/202606/1315376.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>工信部目录实锤：比亚迪天神之眼+全续航矩阵</strong></h3></div>
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>工信部目录实锤：比亚迪天神之眼+全续航矩阵（懂车帝）</strong></h3></div>
     <div class="news-summary">比亚迪新车覆盖305km代步、600-700km家用、超1000km豪华旗舰的完整产品矩阵。</div>
     <a href="https://www-hl.dongchedi.com/article/7608050865907171865" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 </section>
 
-<!-- ===== 科技热点 ===== -->
+
 <section class="section-block">
   <div class="section-head">
     <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
@@ -269,105 +207,55 @@ body {
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>产业年均增速超20%，2026世界机器人大会8月启幕</strong><span class="news-source-tag src-other">人民网</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>产业年均增速超20%，2026世界机器人大会8月启幕（人民网）</strong></h3></div>
     <div class="news-summary">工信部披露：1-5月机器人规上企业营收破900亿元，同比增26.9%，近五年年均增速超20%。</div>
     <a href="https://finance.people.com.cn/n1/2026/0707/c1004-40755020.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>马斯克xAI正式更名为SpaceXAI；字节申请「咕咕嘎嘎」等热梗著作权</strong><span class="news-source-tag src-geekpark">极客公园</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>马斯克xAI正式更名为SpaceXAI；字节申请「咕咕嘎嘎」等热梗著作权（极客公园）</strong><span class="news-source-tag src-geekpark">极客公园</span></h3></div>
     <div class="news-summary">xAI并入SpaceXAI，AI业务与航天算力卫星深度协同；字节加速IP护城河布局。</div>
     <a href="https://www.geekpark.net/news/366948" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>半年重建，腾讯再交卷：混元Hy3正式发布</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>半年重建，腾讯再交卷：混元Hy3正式发布（钛媒体）</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
     <div class="news-summary">混元Hy3日均token消耗量增加20倍，5分钟可生成3D小游戏。</div>
     <a href="https://www.tmtpost.com/8054215.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>维纳智能：中国数据生成科创公司首登Nature期刊</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>维纳智能：中国数据生成科创公司首登Nature期刊（钛媒体）</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
     <div class="news-summary">用推理数据生成替代人工标注，以因果锚定驱动优化，首登国际顶刊。</div>
     <a href="https://www.tmtpost.com/8054654.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 
   <div class="news-item">
-    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>Edge AI Daily早报：英伟达Kyber推迟至2028年，AWS与Anthropic大举扩张算力</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
+    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>Edge AI Daily早报：英伟达Kyber推迟至2028年，AWS与Anthropic大举扩张算力（钛媒体）</strong><span class="news-source-tag src-tmtpost">钛媒体</span></h3></div>
     <div class="news-summary">英伟达下一代架构延期，AWS与Anthropic加速算力军备竞赛。</div>
     <a href="https://www.tmtpost.com/8054592.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
   </div>
 </section>
 
-<!-- ===== 好书推荐 ===== -->
+
 <section class="section-block">
   <div class="section-head">
     <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
     <div class="section-title" style="color:#2ea043;">四、好书推荐</div>
   </div>
 
-  <div class="book-item">
-    <div class="book-header">
-      <span class="book-num">1</span>
-      <div class="book-info">
-        <h3><em>《羽蛇的天空》</em> — 宝树</h3>
-        <div class="book-author">新星出版社 · 科幻/奇幻短篇集</div>
-      </div>
-    </div>
-    <div class="book-ratings">
-      <span class="rating-pill rating-douban">豆瓣 <span class="rating-score">9.7</span> <small>(30人)</small></span>
-      <span class="rating-pill rating-weread">微信读书 热门新书</span>
-    </div>
-    <div class="book-desc">宝树2026年6月新星出版社推出的科幻/奇幻短篇集，以"羽蛇"意象为线索，融合玛雅神话与未来想象，笔法绮丽而克制。30位读者打出9.7高分，被誉为"中文科幻近五年最被低估的文本实验"。</div>
-  </div>
-
-  <div class="book-item">
-    <div class="book-header">
-      <span class="book-num">2</span>
-      <div class="book-info">
-        <h3><em>《作家们毫无进展：珀金斯与海明威、菲茨杰拉德、沃尔夫书信集》</em></h3>
-        <div class="book-author">(美) 马修·J.布鲁科利 / (美) 朱迪丝·S.鲍曼 编 · 广西师范大学出版社</div>
-      </div>
-    </div>
-    <div class="book-ratings">
-      <span class="rating-pill rating-douban">豆瓣 <span class="rating-score">8.9</span> <small>(101人)</small></span>
-      <span class="rating-pill rating-weread">微信读书 传记/文学类热门</span>
-    </div>
-    <div class="book-desc">记录传奇编辑麦克斯·珀金斯与海明威、菲茨杰拉德、托马斯·沃尔夫三位天才作家的通信往来，揭开《太阳照常升起》《了不起的盖茨比》《天使，望故乡》等经典诞生的幕后故事，是文学爱好者理解"作家如何成为作家"的一手档案。</div>
-  </div>
-
-  <div class="book-item">
-    <div class="book-header">
-      <span class="book-num">3</span>
-      <div class="book-info">
-        <h3><em>《佩索阿：最后的时光：图像小说》</em></h3>
-        <div class="book-author">(法) 尼古拉·巴拉尔 著绘 · 湖南文艺出版社</div>
-      </div>
-    </div>
-    <div class="book-ratings">
-      <span class="rating-pill rating-douban">豆瓣 <span class="rating-score">8.6</span> <small>(16人)</small></span>
-      <span class="rating-pill rating-weread">微信读书 图像小说/传记类新品</span>
-    </div>
-    <div class="book-desc">法国图像小说家以独特视觉语言重现葡萄牙文学巨擘费尔南多·佩索阿生命最后时光，融合异名写作、内心独白与里斯本街景，文学与图像的跨界佳作。</div>
-  </div>
 </section>
-
 <div class="divider">— END OF DIGEST —</div>
-
 </article>
 
 <div class="footer-nav">
-  <a href="2026-07-03.html">← 上一篇（7/3）</a>
+  <a href="2026-07-03.html">← 上一篇（07-03）</a>
   <a href="index.html">返回列表</a>
   <span class="disabled">下一篇 →</span>
 </div>
 
 <script>
-// Nav scroll effect
-window.addEventListener('scroll', () => {
-  document.querySelector('.nav').classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
 </script>
-
 </body>
 </html>
