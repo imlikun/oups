@@ -808,6 +808,29 @@
       "status": "published",
       "link": "/notes/pxid-gm-review.html",
       "template": "notes"
+    },
+    {
+      "id": "article-38",
+      "title": "PXID 海外市场研究报告",
+      "slug": "pxid-overseas-market-report",
+      "category": "notes",
+      "template": "notes",
+      "status": "published",
+      "featured": false,
+      "date": "2026-07-07",
+      "image": "https://images.pexels.com/photos/7964240/pexels-photo-7964240.jpeg?auto=compress&cs=tinysrgb&w=1400&q=80",
+      "link": "/notes/pxid-overseas-market-report.html",
+      "excerpt": "从海外 B2B 买家画像、网站体验偏好、6 大推广渠道、新站点形式建议到推广路线图——一份系统性的 PXID 海外市场研究报告。",
+      "content": "详见独立文章页：/notes/pxid-overseas-market-report.html",
+      "tags": [
+        "PXID",
+        "海外市场",
+        "海外营销",
+        "市场研究",
+        "B2B",
+        "ODM"
+      ],
+      "videoUrl": ""
     }
   ],
   "projects": [
