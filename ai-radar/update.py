@@ -73,14 +73,24 @@ def update_html(data_json):
 
 def upload_to_cos():
     """推送到腾讯云 COS"""
-    cred_file = os.path.expanduser("~/.cos_env")
-    creds = {}
-    with open(cred_file) as f:
-        for line in f:
-            line = line.strip()
-            if line and not line.startswith("#") and "=" in line:
-                k, v = line.split("=", 1)
-                creds[k] = v
+    # 优先从环境变量读取（GitHub Actions Secrets 注入），
+    # 本地无环境变量时 fallback 到 ~/.cos_env 文件
+    creds = {
+        "COS_SECRET_ID": os.environ.get("COS_SECRET_ID", ""),
+        "COS_SECRET_KEY": os.environ.get("COS_SECRET_KEY", ""),
+    }
+    if not creds["COS_SECRET_ID"] or not creds["COS_SECRET_KEY"]:
+        cred_file = os.path.expanduser("~/.cos_env")
+        if os.path.exists(cred_file):
+            with open(cred_file) as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        creds[k] = v
+    if not creds.get("COS_SECRET_ID") or not creds.get("COS_SECRET_KEY"):
+        print("  ❌ 缺少 COS 凭证（请设置环境变量 COS_SECRET_ID/COS_SECRET_KEY 或 ~/.cos_env）")
+        sys.exit(1)
 
     from qcloud_cos import CosConfig, CosS3Client
     config = CosConfig(

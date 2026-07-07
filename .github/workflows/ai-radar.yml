@@ -1,0 +1,49 @@
+name: AI 新闻雷达每日更新
+
+on:
+  schedule:
+    # 每天 UTC 00:00 运行 = 北京时间 08:00
+    # 想改时间就改这里（GitHub Actions 用 UTC，且可能有几分钟~几小时延迟）
+    - cron: '0 0 * * *'
+  workflow_dispatch: {}   # 允许在 Actions 页面手动触发测试
+
+permissions:
+  contents: write        # 允许 git push 回仓库
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout 仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 配置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install --quiet cos-python-sdk-v5
+
+      - name: 运行更新脚本（拉取+注入+推送 COS）
+        env:
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+        working-directory: ai-radar
+        run: python update.py
+
+      - name: 若 index.html 有变化则提交回仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ai-radar/index.html
+          if git diff --cached --quiet; then
+            echo "ℹ️ 无内容变化，跳过提交"
+          else
+            git commit -m "chore(ai-radar): 每日自动更新 $(date +%Y-%m-%d)"
+            git push
+            echo "✅ 已提交并推送更新"
+          fi
