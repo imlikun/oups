@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日热点与好书 | 2026-07-03 — 李坤</title>
+<meta name="description" content="宇树科技科创板 IPO 注册获批，A 股“具身智能第一股”即将登场（来自极客公园/36氪/钛媒体）——2026-07-03每日热点简报。">
+<style>
+:root{
+  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
+  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
+  --card-bg:#fff;--radius:14px;--radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
+
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+.news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--accent);text-decoration:none;
+  font-weight:500;margin-top:8px;padding-left:34px;transition:gap .2s}
+.news-link:hover{gap:8px;text-decoration:underline}
+
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
+.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
+
+<header class="article-header">
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-03 星期五</div>
+  <h1>每日<em class="hl">热点</em>与好书</h1>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 15 条</p>
+  <div class="section-tags">
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×4</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×0</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
+    <div class="section-title" style="color:#2997ff;">一、社会/商业热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>宇树科技科创板 IPO 注册获批，A 股“具身智能第一股”即将登场（来自极客公园/36氪/钛媒体）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="news-summary">7 月 2 日，证监会同意宇树科技首次公开发行股票注册申请。自 3 月 20 日获受理以来仅用 104 天，创下科创板预先审阅机制落地以来最快审核纪录；公司拟公开发行不低于 4044.64 万股，募资 42.02 亿元。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>可灵独立后拿下 30 亿美元融资，打响 AI 视频竞赛下半场（来自 36氪）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="news-summary">可灵科技获得 30 亿美元融资，创下全球 AI 视频生成公司单轮融资新纪录，公司估值达 180 亿美元，AI 视频生成赛道进入资本与商业化双重加速期。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>Anthropic 删除识别“中国 AI”的隐藏代码，官方回应称只是实验（来自 36氪/极客公园）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="news-summary">Anthropic 被曝在 Claude Code 中隐藏了识别中国 AI 的功能，官方回应称为 2026 年 3 月上线的“实验性”措施，目的是防止未经授权的账户转售及模型蒸馏攻击，现已删除相关代码。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>阿里 AI 产线大整合，92 年陈宇森统管三大 Agent（来自虎嗅/36氪）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">阿里巴巴进行 AI 业务线大调整，由 92 年出生的陈宇森统管三大 Agent 业务，阿里 AI 产线进入集中化、年轻化的新阶段。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>Meta 押注 AI 基础设施导致存储股暴跌，市场重新评估算力过剩风险（来自虎嗅/钛媒体）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">Meta 在 AI 基础设施与内容格式上的系列布局引发市场震动，存储板块大幅下跌；业内人士称“算力过剩”系误读，但 AI 大厂之间互相设防、成本内卷的趋势正在加剧。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>苹果遭遇史上最恶劣泄密事件，iPhone 18 Pro 核心信息被提前曝光（来自虎嗅/极客公园）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">苹果供应链发生严重泄密，iPhone 18 Pro 的设计、芯片规格、影像方案等核心信息被提前曝光；苹果发起 DMCA 维权全网清除泄露素材，但供应商保密体系已受严峻拷问。</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
+    <div class="section-title" style="color:#e08600;">二、汽车热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">1</span><h3><strong>6 月新势力销量出炉：蔚来交付超 4 万，小米、理想超 3 万</strong></h3></div>
+    <div class="news-summary">2026 年 6 月，蔚来公司交付新车 40597 台，创今年以来新高（蔚来品牌 21908 台、乐道 11743 台、萤火虫 6946 台）；小鹏交付 40126 台，小米、理想、极氪均超 3 万台。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">2</span><h3><strong>比亚迪 6 月销量 403472 辆，上半年累计突破 180 万辆</strong></h3></div>
+    <div class="news-summary">比亚迪 6 月实现销量 403472 辆，其中乘用车 397292 辆；2026 年上半年累计销售突破 180 万辆，继续领跑全球新能源市场。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>史上最严电池新国标 7 月 1 日正式实施，要求“不起火、不爆炸”</strong></h3></div>
+    <div class="news-summary">《电动汽车安全要求》（GB 18384-2025）和《电动汽车用动力蓄电池安全要求》（GB 38031-2025）7 月 1 日起正式实施，首次强制要求热失控后“不起火、不爆炸”，并新增“一键物理断电”等要求；新申报车型立即执行，已上市车型有一年过渡期。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>IEA：2026 年全球电动汽车销量将达 2300 万辆，占新车近 30%</strong></h3></div>
+    <div class="news-summary">国际能源署《全球电动汽车展望 2026》预计，2026 年全球电动汽车销量将攀升至 2300 万辆，占全球新车销量近 30%；欧洲市场增幅 20%，亚太（除中国）增长超 50%，拉美增长 45%。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>通用汽车 Q2 美国销量同比下滑 4.2%，电动车需求疲软拖累业绩</strong></h3></div>
+    <div class="news-summary">通用汽车 7 月 2 日公布，第二季度在美国市场轻型车销量同比下降 4.2% 至 71.49 万辆；上半年总销量 130 万辆，同比下降 6.8%。下滑主因是全电动汽车及雪佛兰 Silverado 皮卡需求低于预期。</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
+    <div class="section-title" style="color:#bf5af2;">三、科技热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>美团开源 1.6 万亿参数 MoE 大模型 LongCat-2.0，适配国产算力</strong></h3></div>
+    <div class="news-summary">美团 7 月 1 日正式开源 LongCat-2.0，1.6 万亿参数混合专家模型，已完成全流程国产算力适配，在 5 万张国产加速器上稳定部署运行。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>优必选发布消费级人形机器人「优世界 U1」系列，搭载情感大模型</strong></h3></div>
+    <div class="news-summary">优必选 6 月 30 日推出全新消费级品牌“优世界”，首发全尺寸超仿生人形机器人 U1 系列，分 183cm 男款和 168cm 女款，88 个高精度活动关节，主打家庭陪伴与智能交互。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>微软投入 25 亿美元成立 Frontier Company，专攻企业 AI 落地</strong></h3></div>
+    <div class="news-summary">微软宣布投入 25 亿美元成立 Frontier Company，聚焦企业级 AI 应用落地；同一天 Meta 推出 Pocket 应用押注 AI 内容格式，谷歌则在安卓系统层抢占 AI Agent 入口。</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>2026 全球数字经济大会 7 月 2 日在京启幕，人形机器人与世界模型集中亮相</strong></h3></div>
+    <div class="news-summary">大会以“建设数字友好城市——智惠无界，数联全球”为主题于国家会议中心举行，国内外最新人形机器人和世界模型集中亮相，近 20 项行业规则标准陆续出炉。</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
+    <div class="section-title" style="color:#2ea043;">四、好书推荐</div>
+  </div>
+
+</section>
+<div class="divider">— END OF DIGEST —</div>
+</article>
+
+<div class="footer-nav">
+  <a href="2026-07-02.html">← 上一篇（07-02）</a>
+  <a href="index.html">返回列表</a>
+  <a href="2026-07-07.html">下一篇（07-07）→</a>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
+</script>
+</body>
+</html>

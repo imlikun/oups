@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日热点 — 李坤的每日简报</title>
+<meta name="description" content="社会商业热点、汽车科技动态、养老产业观察、心理学好书推荐——每天一份，自动推送。">
+<style>
+:root {
+  --bg: #f7faf7;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #30d158;
+  --accent-light: rgba(48,209,88,0.08);
+  --accent-medium: rgba(48,209,88,0.14);
+  --border: rgba(0,0,0,0.07);
+  --card-bg: #fff;
+  --radius: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(247,250,247,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500;
+  transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:2px; background:var(--accent); border-radius:1px; }
+
+/* ---- Hero ---- */
+.hero { max-width:1120px; margin:0 auto; padding:130px 32px 48px; }
+.hero-inner { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+.hero-left { flex:1; min-width:260px; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em;
+  margin-bottom:18px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent);
+  animation:pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.4} }
+.hero h1 { font-size:clamp(30px,4.5vw,46px); font-weight:700; letter-spacing:-1px; line-height:1.15; margin-bottom:14px; }
+.hero h1 em { font-style:normal; color:var(--accent); }
+.hero-desc { color:var(--text-secondary); font-size:15px; max-width:520px; line-height:1.65; }
+.hero-right { display:flex; gap:28px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
+.hero-stat .label { font-size:12px; color:var(--text-muted); margin-top:2px; }
+
+/* ---- Section Tags ---- */
+.section-tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+.section-tags span { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:8px;
+  font-size:11px; font-weight:600; }
+.tag-social { background:rgba(41,151,255,0.08); color:#2997ff; }
+.tag-auto { background:rgba(255,159,10,0.08); color:#e08600; }
+.tag-tech { background:rgba(191,90,242,0.08); color:#bf5af2; }
+.tag-elderly { background:rgba(200,122,30,0.08); color:#c87a1e; }
+.tag-psych { background:rgba(255,69,89,0.08); color:#e54d66; }
+.tag-book { background:rgba(90,200,120,0.08); color:#2ea043; }
+
+/* ---- List ---- */
+.list-wrap { max-width:1120px; margin:0 auto; padding:0 32px 80px; }
+.list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+.list-header h2 { font-size:15px; font-weight:600; color:var(--text); letter-spacing:0.02em; }
+.list-header h2 span { color:var(--text-muted); font-weight:400; }
+
+/* Digest Card */
+.digest-item { display:block; padding:24px 28px; border:1px solid var(--border); border-radius:var(--radius);
+  background:var(--card-bg); text-decoration:none; color:inherit;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1); margin-bottom:16px;
+  position:relative; overflow:hidden; }
+.digest-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:var(--accent); opacity:0; transition:opacity 0.25s; }
+.digest-item:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(48,209,88,0.10);
+  border-color:rgba(48,209,88,0.2); }
+.digest-item:hover::before { opacity:1; }
+
+.digest-date-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.digest-date { font-size:13px; font-weight:700; color:var(--accent); letter-spacing:0.03em; }
+.digest-weekday { font-size:12px; color:var(--text-muted); font-weight:400; margin-left:8px; }
+.digest-status { font-size:11px; padding:2px 8px; border-radius:6px; font-weight:600; }
+.status-latest { background:var(--accent-light); color:var(--accent); }
+
+.digest-title { font-size:18px; font-weight:700; line-height:1.4; color:var(--text);
+  margin-bottom:10px; transition:color 0.2s; }
+.digest-item:hover .digest-title { color:var(--accent); }
+
+.digest-preview { display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:8px; margin-top:12px; }
+.digest-preview-tag { font-size:11.5px; color:var(--text-secondary); padding:6px 10px; border-radius:8px;
+  background:var(--bg); display:flex; align-items:center; gap:5px; }
+.digest-preview-tag .tag-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+
+.digest-arrow { display:inline-flex; align-items:center; gap:4px; font-size:13px; color:var(--accent);
+  font-weight:600; margin-top:12px; transition:gap 0.2s; }
+.digest-item:hover .digest-arrow { gap:8px; }
+
+/* ---- Footer ---- */
+.footer { text-align:center; padding:40px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* ---- Empty ---- */
+.empty { text-align:center; padding:80px 32px; color:var(--text-muted); }
+.empty-icon { font-size:48px; margin-bottom:16px; }
+.empty h3 { font-size:20px; margin-bottom:8px; color:var(--text-secondary); }
+
+/* ---- Reveal Animation ---- */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.5s ease,transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+@media (max-width:900px) {
+  .hero-inner { flex-direction:column; gap:24px; }
+  .digest-preview { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width:600px) {
+  .nav-inner { padding:0 16px; }
+  .hero { padding:110px 16px 32px; }
+  .list-wrap { padding:0 16px 60px; }
+  .digest-item { padding:18px 16px; }
+  .digest-title { font-size:16px; }
+  .digest-preview { grid-template-columns: 1fr; }
+  .hero-right { gap:16px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">← 李坤 <span>/ 每日热点</span></a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/daily-digest/" class="active">每日热点</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="dot"></span>DAILY DIGEST</div>
+      <h1>每日<em>热点</em>与好书</h1>
+      <p class="hero-desc">每天中午自动推送。覆盖社会商业热点、汽车行业动态、科技前沿、养老产业观察、心理学精选、好书推荐——6 大板块，一文尽览。</p>
+      <div class="section-tags">
+        <span class="tag-social"><span class="tag-dot" style="background:#2997ff"></span> 社会商业</span>
+        <span class="tag-auto"><span class="tag-dot" style="background:#ff9f0a"></span> 汽车</span>
+        <span class="tag-tech"><span class="tag-dot" style="background:#bf5af2"></span> 科技</span>
+        <span class="tag-elderly"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业</span>
+        <span class="tag-psych"><span class="tag-dot" style="background:#e54d66"></span> 心理学</span>
+        <span class="tag-book"><span class="tag-dot" style="background:#2ea043"></span> 好书推荐</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat"><div class="num" id="totalCount">4</div><div class="label">篇简报</div></div>
+      <div class="hero-stat"><div class="num">6</div><div class="label">大板块</div></div>
+      <div class="hero-stat"><div class="num">12:00</div><div class="label">每日推送</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="list-wrap">
+  <div class="list-header">
+    <h2>全部简报 <span id="countLabel">(4)</span></h2>
+  </div>
+  <div id="digestList">
+
+    <!-- 2026-07-07 -->
+    <a href="2026-07-07.html" class="digest-item reveal">
+      <div class="digest-date-row">
+        <div>
+          <span class="digest-date">2026-07-07</span>
+          <span class="digest-weekday">星期一</span>
+        </div>
+        <span class="digest-status status-latest">最新</span>
+      </div>
+      <div class="digest-title">BAT 抱团阻击字节、暑期旅行社崩盘、AGI 第一股暴跌 90%、世界机器人大会启幕</div>
+      <div class="digest-preview">
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#ff9f0a"></span> 汽车 ×5</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×4</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#e54d66"></span> 心理学</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</div>
+      </div>
+      <div class="digest-arrow">阅读全文 →</div>
+    </a>
+
+    <!-- 2026-07-03 -->
+    <a href="2026-07-03.html" class="digest-item reveal">
+      <div class="digest-date-row">
+        <div>
+          <span class="digest-date">2026-07-03</span>
+          <span class="digest-weekday">星期五</span>
+        </div>
+      </div>
+      <div class="digest-title">宇树科技 IPO 获批、可灵 30 亿美元融资、蔚来月交付破 4 万、电池新国标实施</div>
+      <div class="digest-preview">
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#ff9f0a"></span> 汽车 ×5</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×4</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3（含微信读书评分）</div>
+      </div>
+      <div class="digest-arrow">阅读全文 →</div>
+    </a>
+
+    <!-- 2026-07-02 -->
+    <a href="2026-07-02.html" class="digest-item reveal">
+      <div class="digest-date-row">
+        <div>
+          <span class="digest-date">2026-07-02</span>
+          <span class="digest-weekday">星期四</span>
+        </div>
+      </div>
+      <div class="digest-title">GPT-5.6 发布争议、新能源新国标洗牌、美团开源 LongCat-2.0 万亿模型</div>
+      <div class="digest-preview">
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×3</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#ff9f0a"></span> 汽车 ×3</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3（豆瓣 9 分+）</div>
+      </div>
+      <div class="digest-arrow">阅读全文 →</div>
+    </a>
+
+    <!-- 2026-06-29 -->
+    <a href="2026-06-29.html" class="digest-item reveal">
+      <div class="digest-date-row">
+        <div>
+          <span class="digest-date">2026-06-29</span>
+          <span class="digest-weekday">星期一</span>
+        </div>
+      </div>
+      <div class="digest-title">四川宜宾 5.5 级地震、蔚来 ES8 大五座版预订、人形机器人 150 亿美元市场预测</div>
+      <div class="digest-preview">
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×3（虎嗅）</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#ff9f0a"></span> 汽车 ×3</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×4</div>
+        <div class="digest-preview-tag"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</div>
+      </div>
+      <div class="digest-arrow">阅读全文 →</div>
+    </a>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>由 <a href="/">八戒（WorkBuddy）</a> 自动生成 · 每日 12:00 推送至 IMA 笔记并同步至此站</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+</script>
+
+</body>
+</html>

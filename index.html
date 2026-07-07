@@ -718,7 +718,7 @@
     }
 
     /* Explore */
-    .explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+    .explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); }
     .explore-card {
       display: flex; flex-direction: column;
       background: var(--card-bg); backdrop-filter: blur(24px) saturate(160%);
@@ -1124,6 +1124,15 @@
           <div class="explore-title">随笔</div>
           <div class="explore-desc">工作感悟、生活观察、阅读笔记——不一定有结论，但一定有思考。</div>
           <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#c87a1e;display:inline-block;"></span> 3 篇文章</div>
+          <div class="explore-arrow">查看全部 →</div>
+        </a>
+        <a href="daily-digest/index.html" class="explore-card reveal reveal-delay-5">
+          <div class="explore-icon icon-green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="explore-title">每日热点</div>
+          <div class="explore-desc">社会商业热点、汽车科技动态、养老产业观察、心理学好书推荐——每天一份，自动推送。</div>
+          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#30d158;display:inline-block;"></span> 每日更新 · 6 大板块</div>
           <div class="explore-arrow">查看全部 →</div>
         </a>
       </div>
