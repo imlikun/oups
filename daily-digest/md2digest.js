@@ -209,7 +209,7 @@ function countItems(sections) {
 }
 
 // ---- Generate HTML ----
-function generateHTML(data, outputPath) {
+function generateHTML(data, outputPath, allDates) {
   const weekday = getWeekday(data.date);
   const totalItems = countItems(data.sections);
   
@@ -285,8 +285,7 @@ ${itemsHtml}
 </section>`;
   }).join('\n\n');
   
-  // Find prev/next dates from existing files
-  const allDates = ['2026-06-29','2026-07-02','2026-07-03','2026-07-07','2026-07-08'].sort().reverse();
+  // Find prev/next dates from discovered file list (passed in)
   const idx = allDates.indexOf(data.date);
   const prevDate = idx < allDates.length - 1 ? allDates[idx+1] : null;
   const nextDate = idx > 0 ? allDates[idx-1] : null;
@@ -431,10 +430,22 @@ window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.t
 const srcDir = '/Users/likun/WorkBuddy/2026-06-17-16-22-19/daily-digest/';
 const outDir = '/Users/likun/Projects/appin-site/daily-digest/';
 
-const files = ['2026-07-08.md','2026-07-07.md','2026-07-03.md','2026-07-02.md','2026-06-29.md'];
+// Auto-discover all YYYY-MM-DD.md files (so the daily automation needs no manual edits)
+const files = fs.readdirSync(srcDir)
+  .filter(f => /^\d{4}-\d{2}-\d{2}\.md$/.test(f))
+  .sort(); // ascending by date string (YYYY-MM-DD sorts lexicographically)
+
+if (files.length === 0) {
+  console.error('No daily-digest markdown files found in', srcDir);
+  process.exit(1);
+}
+
+// Descending list (newest first) for prev/next navigation
+const allDates = files.map(f => f.replace(/\.md$/, '')).sort().reverse();
+
 for (const f of files) {
   const md = fs.readFileSync(path.join(srcDir, f), 'utf8');
   const data = parseDigest(md);
   const outPath = path.join(outDir, f.replace('.md', '.html'));
-  generateHTML(data, outPath);
+  generateHTML(data, outPath, allDates);
 }
