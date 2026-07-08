@@ -8,25 +8,36 @@ AI 新闻雷达 — 每日自动更新脚本
 用法: python3 update.py [--dry-run]
 """
 
-import json, os, sys, subprocess, datetime
+import json, os, sys, subprocess, datetime, time
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 API_BASE = "https://aihot.virxact.com/api/public"
 HTML_PATH = os.path.join(os.path.dirname(__file__), "index.html")
 DRY_RUN = "--dry-run" in sys.argv
 
-def fetch_items():
+def fetch_items(max_retries=3, timeout=60):
+    """从 AI HOT API 拉取过去 24 小时精选资讯。
+
+    海外 GitHub Actions runner 访问 aihot.virxact.com 偶发超时，
+    故加重试（默认 3 次，间隔 8s），覆盖偶发网络抖动。
+    """
     from urllib.request import Request, urlopen
-    from urllib.error import URLError
+    from urllib.error import URLError, HTTPError
     since = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
     url = f"{API_BASE}/items?mode=selected&since={since}&take=100"
-    req = Request(url, headers={"User-Agent": UA})
-    try:
-        with urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode())
-    except URLError as e:
-        print(f"  ❌ API fetch failed: {e}")
-        return None
+    last_err = None
+    for attempt in range(1, max_retries + 1):
+        req = Request(url, headers={"User-Agent": UA})
+        try:
+            with urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode())
+        except (URLError, HTTPError) as e:
+            last_err = e
+            print(f"  ⚠️ 第 {attempt}/{max_retries} 次拉取失败: {e}")
+            if attempt < max_retries:
+                time.sleep(8)
+    print(f"  ❌ AI HOT API 连续 {max_retries} 次拉取失败（最后一次: {last_err}）")
+    return None
 
 def update_html(data_json):
     """将 JSON 数据注入到 HTML 中的 <script id="ai-data"> 标签"""
@@ -118,8 +129,8 @@ def main():
     print("\n  📡 拉取 AI HOT 数据...")
     data = fetch_items()
     if not data:
-        print("  ⚠️ API 调用失败，跳过本次更新")
-        sys.exit(1)
+        print("  ⚠️ API 调用失败，跳过本次更新（保留昨日数据，不改动 index.html）")
+        sys.exit(0)
     print(f"  📊 获取到 {data.get('count', 0)} 条资讯")
 
     # 2. Update HTML
