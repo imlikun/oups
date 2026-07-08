@@ -3,6 +3,9 @@ const path = require('path');
 
 // ---- Markdown parser (lightweight) ----
 function parseDigest(md) {
+  // Decode HTML entities (IMA sometimes stores chars as &#xHH; / &#DD;)
+  md = md.replace(/&#x([0-9a-fA-F]+);/g, (m,h)=>{try{return String.fromCharCode(parseInt(h,16));}catch(e){return m;}})
+         .replace(/&#(\d+);/g, (m,d)=>{try{return String.fromCharCode(parseInt(d,10));}catch(e){return m;}});
   const lines = md.split('\n');
   const result = { title: '', date: '', meta: '', sections: [] };
   let currentSection = null;
@@ -36,6 +39,7 @@ function parseDigest(md) {
     const secMatch = line.match(/^##\s+(.+)/);
     if (secMatch) {
       if (currentSection.items.length > 0 || currentSection.title) {
+        if (currentSection._book && currentSection._book.title) currentSection.items.push(currentSection._book);
         result.sections.push(currentSection);
       }
       const secTitle = secMatch[1].trim();
@@ -52,6 +56,50 @@ function parseDigest(md) {
       continue;
     }
     
+    // Book section handling — placed before news because the legacy book
+    // format `1. **《x》**— author` also matches the news regex.
+    if (currentSection.type === 'book' || line.match(/^###\s+\d+\.\s+/)) {
+      const bookNew = line.match(/^###\s+(\d+)\.\s+(.+)$/);
+      const bookOld = line.match(/^(\d+)\.\s+\*\*(.+?)\*\*[—–-]\s*(.*)$/);
+      if (bookNew || bookOld) {
+        if (currentSection._book && currentSection._book.title) currentSection.items.push(currentSection._book);
+        let num, title, author = '';
+        if (bookNew) {
+          num = parseInt(bookNew[1]);
+          title = bookNew[2].trim().replace(/^\*\*|\*\*$/g, '').replace(/^《|》$/g, '');
+        } else {
+          num = parseInt(bookOld[1]);
+          title = bookOld[2].trim();
+          author = bookOld[3].trim();
+        }
+        currentSection._book = { num, title, author, doubanScore:'', wereadScore:'', wereadCount:'', doubanCount:'', desc:'', link:'', highlights:[] };
+        continue;
+      }
+      if (currentSection._book && currentSection._book.title) {
+        const cl = line.trim();
+        if (!cl) continue;
+        // Highlight / 金句:  > "text"（N人划线） or  - > "text"（N人划线）
+        const hl = cl.match(/^>?\s*"?(.+?)"?\s*[（(](\d+)\s*人划线?[）)]$/);
+        if (hl && (cl.startsWith('>') || cl.startsWith('- >'))) {
+          currentSection._book.highlights.push({ text: hl[1].replace(/^["'"]|["'"]$/g, '').trim(), count: parseInt(hl[2]) });
+          continue;
+        }
+        const mdLink = cl.match(/\[[^\]]*\]\((https?:\/\/[^\)]+)\)/);
+        if (mdLink) { currentSection._book.link = mdLink[1]; continue; }
+        if (cl.match(/^https?:\/\/\S+$/)) { currentSection._book.link = cl; continue; }
+        const liStar = cl.match(/^\*\s+\*\*(.+?)\*\*[：:]\s*(.+)$/);
+        const liDash = cl.match(/^-\s+(.+?)[：:]\s*\*\*(.+?)\*\*/);
+        if (liStar) { applyBookField(currentSection._book, liStar[1], liStar[2]); continue; }
+        if (liDash) { applyBookField(currentSection._book, liDash[1], liDash[2]); continue; }
+        if (cl.length > 6 && !cl.startsWith('-') && !cl.startsWith('*') && !cl.startsWith('>')) {
+          currentSection._book.desc = (currentSection._book.desc ? currentSection._book.desc + ' ' : '') + cl;
+          continue;
+        }
+        continue;
+      }
+      continue;
+    }
+
     // News item
     const newsMatch = line.match(/^(\d+)\.\s+\*\*(.+?)\*\*(.*)$/);
     if (newsMatch && currentSection.type === 'news') {
@@ -65,93 +113,62 @@ function parseDigest(md) {
       
       // Next non-empty lines are summary + link
       i++;
-      while (i < lines.length && lines[i].trim() && !lines[i].match(/^(\d+|\s*##)/)) {
+      while (i < lines.length) {
         const contentLine = lines[i].trim();
-        if (!contentLine) break;
+        if (!contentLine) { i++; continue; }
+        if (contentLine.match(/^(\d+)\.\s+\*\*|^##\s|^###\s/)) break;
         
-        // Check for source prefix like "来源："
-        const srcMatch = contentLine.match(/^来源[:：]\s*(.+)/);
-        if (srcMatch) {
-          // The rest might be URL on the same or next line
-          let rest = srcMatch[1].trim();
-          if (rest.match(/^https?:\/\//)) {
-            item.link = rest;
-          } else {
-            item.sourceName = rest;
-            // Check next line for URL
-            if (i+1 < lines.length && lines[i+1].trim().match(/^https?:\/\//)) {
-              i++;
-              item.link = lines[i].trim();
-            }
-          }
-        } else if (contentLine.match(/^https?:\/\//)) {
-          item.link = contentLine;
-        } else if (contentLine.length > 10) {
-          item.summary = (item.summary ? item.summary + ' ' : '') + contentLine;
+        // Markdown link [text](url)
+        const mdLink = contentLine.match(/\[[^\]]*\]\((https?:\/\/[^\)]+)\)/);
+        if (mdLink) {
+          item.link = mdLink[1];
+          const rest = contentLine.replace(mdLink[0], '').replace(/^\s*[\|｜]\s*/, '').replace(/作者[：:]\s*\S+\s*[\|｜]?/, '').trim();
+          if (rest && !/^[\|\s]*$/.test(rest)) item.summary = (item.summary ? item.summary + ' ' : '') + rest;
+          i++; continue;
         }
+        // Raw url line
+        if (contentLine.match(/^https?:\/\/\S+$/)) {
+          item.link = contentLine; i++; continue;
+        }
+        // Embedded url with keyword
+        const embLink = contentLine.match(/\((https?:\/\/[^\)]+)\)/);
+        if (embLink && /阅读原文|打开阅读|查看原文|来源/.test(contentLine)) {
+          item.link = embLink[1]; i++; continue;
+        }
+        if (contentLine.length > 4) item.summary = (item.summary ? item.summary + ' ' : '') + contentLine;
         i++;
       }
-      // Back up one line because the outer loop will increment
       i--;
       
       if (item.title || item.summary) currentSection.items.push(item);
       continue;
     }
-    
-    // Book item
-    const bookMatch = line.match(/^(\d+)\.\s+\*\*(.+?)\*\*[—–-]\s*(.*)$/);
-    if (bookMatch && currentSection.type === 'book') {
-      const item = {
-        num: parseInt(bookMatch[1]),
-        title: bookMatch[2].trim(),
-        author: bookMatch[3].trim(),
-        doubanScore: '',
-        wereadScore: '',
-        doubanCount: '',
-        desc: '',
-        link: '',
-        highlights: []  // {text, count} from weread bestbookmarks
-      };
-
-      i++;
-      while (i < lines.length && lines[i].trim() && !lines[i].match(/^(\d+|\s*##|--)/)) {
-        const cl = lines[i].trim();
-        if (cl.match(/豆瓣评分/) || cl.match(/微信读书/)) {
-          const scoreMatch = cl.match(/\*\*(\d+\.?\d*)\*\*/);
-          const countMatch = cl.match(/（(\d+)人评价）/);
-          if (scoreMatch) {
-            if (cl.includes('豆瓣')) { item.doubanScore = scoreMatch[1]; if(countMatch) item.doubanCount = countMatch[1]; }
-            else { item.wereadScore = scoreMatch[1]; }
-          }
-          const wereadPct = cl.match(/推荐值[：:]\s*\*\*(\d+\.?\d*%?)\*\*/);
-          if (wereadPct) item.wereadScore = wereadPct[1];
-        } else if (cl.match(/^来源[:：]/)) {
-          const urlMatch = cl.match(/https:\/\/[^\s]+/);
-          if (urlMatch) item.link = urlMatch[0];
-        } else if (cl.match(/^- > /) || cl.match(/^- >＞/)) {
-          // Highlight line: - > 金句内容 (N人划线)
-          const hlText = cl.replace(/^- > ?/, '').replace(/^- >＞?/, '');
-          const cntMatch = hlText.match(/[（(](\d+)人划线?[）)]$/);
-          item.highlights.push({
-            text: hlText.replace(/[（(]\d+人划线?[）)]$/, '').trim(),
-            count: cntMatch ? parseInt(cntMatch[1]) : 0
-          });
-        } else if (cl.length > 10 && !cl.match(/^\s*- /) && !cl.match(/^[|｜]/)) {
-          item.desc = (item.desc ? item.desc + ' ' : '') + cl;
-        }
-        i++;
-      }
-      i--;
-      
-      if (item.title) currentSection.items.push(item);
-    }
   }
   
   if (currentSection && (currentSection.items.length > 0 || currentSection.title)) {
+    if (currentSection._book && currentSection._book.title) currentSection.items.push(currentSection._book);
     result.sections.push(currentSection);
   }
   
   return result;
+}
+
+// ---- Book field helper ----
+function applyBookField(book, key, val) {
+  val = val.trim();
+  if (/作者/.test(key)) {
+    book.author = val.replace(/^：|:/, '').trim();
+  } else if (/微信读书/.test(key)) {
+    const sc = val.match(/(\d+\.?\d*)\s*分?/); if (sc) book.wereadScore = sc[1];
+    const cnt = val.match(/(\d+)\s*人评价/); if (cnt) book.wereadCount = cnt[1];
+  } else if (/豆瓣/.test(key)) {
+    const sc = val.match(/(\d+\.?\d*)/); if (sc) book.doubanScore = sc[1];
+    const cnt = val.match(/(\d+)\s*人评价/); if (cnt) book.doubanCount = cnt[1];
+  } else if (/简介/.test(key)) {
+    book.desc = val;
+  } else if (/打开阅读|阅读原文/.test(key)) {
+    const u = val.match(/\(?(https?:\/\/[^)\s]+)\)?/); if (u) book.link = u[1];
+  }
 }
 
 // ---- Source tag detector ----
@@ -220,7 +237,7 @@ function generateHTML(data, outputPath) {
       </div>
       <div class="book-ratings">
         ${book.doubanScore ? `<span class="rating-pill rating-douban">豆瓣 <span class="rating-score">${book.doubanScore}</span>${book.doubanCount ? ` <small>(${book.doubanCount}人)</small>` : ''}</span>` : ''}
-        ${book.wereadScore ? `<span class="rating-pill rating-weread">微信读书 ${book.wereadScore}</span>` : ''}
+        ${book.wereadScore ? `<span class="rating-pill rating-weread">微信读书 <span class="rating-score">${book.wereadScore}</span>${book.wereadCount ? ` <small>(${book.wereadCount}人)</small>` : ''}</span>` : ''}
       </div>
       ${book.desc ? `<div class="book-desc">${book.desc}</div>` : ''}
       ${book.highlights && book.highlights.length > 0 ? `
@@ -269,7 +286,7 @@ ${itemsHtml}
   }).join('\n\n');
   
   // Find prev/next dates from existing files
-  const allDates = ['2026-06-29','2026-07-02','2026-07-03','2026-07-07'].sort().reverse();
+  const allDates = ['2026-06-29','2026-07-02','2026-07-03','2026-07-07','2026-07-08'].sort().reverse();
   const idx = allDates.indexOf(data.date);
   const prevDate = idx < allDates.length - 1 ? allDates[idx+1] : null;
   const nextDate = idx > 0 ? allDates[idx-1] : null;
@@ -414,7 +431,7 @@ window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.t
 const srcDir = '/Users/likun/WorkBuddy/2026-06-17-16-22-19/daily-digest/';
 const outDir = '/Users/likun/Projects/appin-site/daily-digest/';
 
-const files = ['2026-07-07.md','2026-07-03.md','2026-07-02.md','2026-06-29.md'];
+const files = ['2026-07-08.md','2026-07-07.md','2026-07-03.md','2026-07-02.md','2026-06-29.md'];
 for (const f of files) {
   const md = fs.readFileSync(path.join(srcDir, f), 'utf8');
   const data = parseDigest(md);

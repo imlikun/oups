@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日阅读 | 2026-07-08 — 商业·科技·汽车·养老·心理·好书</title>
+<meta name="description" content="每日阅读 2026-07-08：6 大板块、23 条精选、3 本好书，覆盖商业、科技、汽车、养老、心理与人文，源自虎嗅、36氪、钛媒体、极客公园等信源。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* ---- Hero ---- */
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+
+/* ---- Layout ---- */
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+
+/* ---- TOC Sidebar ---- */
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+
+/* ---- Article Body ---- */
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+
+/* Section Image (cover) */
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+
+/* News Item Card */
+.news-item { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.news-item:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.news-item .ni-head { display:flex; align-items:center; gap:10px; margin-bottom:9px; flex-wrap:wrap; }
+.news-item .ni-title { font-size:16.5px; font-weight:600; color:#111; line-height:1.45; flex:1; min-width:200px; }
+.news-item .ni-source { display:inline-block; font-size:11px; font-weight:600; color:var(--accent); background:var(--accent-light); padding:3px 10px; border-radius:12px; white-space:nowrap; }
+.news-item .ni-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+
+/* Book Card */
+.book-card { margin:0 0 20px; padding:22px 24px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.book-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.book-card .bc-head { display:flex; align-items:baseline; gap:12px; margin-bottom:4px; flex-wrap:wrap; }
+.book-card .bc-title { font-size:19px; font-weight:700; color:#111; }
+.book-card .bc-rating { font-size:12.5px; font-weight:600; color:#e6770a; background:rgba(230,119,10,0.08); padding:3px 10px; border-radius:12px; }
+.book-card .bc-author { font-size:13px; color:var(--text-secondary); margin-bottom:12px; }
+.book-card .bc-intro { font-size:14.5px; color:#444; line-height:1.8; margin:0 0 14px; }
+.book-card .bc-highlights { list-style:none; margin:0; border-top:1px dashed var(--border); padding-top:14px; }
+.book-card .bc-highlights li { font-size:13.5px; color:#555; line-height:1.75; margin-bottom:8px; padding-left:16px; position:relative; }
+.book-card .bc-highlights li::before { content:"“"; position:absolute; left:0; top:-2px; color:var(--accent); font-weight:700; font-size:16px; }
+
+/* Pull Quote */
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+
+/* Tag Cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+
+/* Back */
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+/* Footer */
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+  .news-item .ni-title { min-width:100%; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>每日阅读 · DAILY READING</div>
+  <h1>每日阅读 · 2026-07-08</h1>
+  <p class="hero-desc">每天为你筛选最值得读的内容——6 大板块、23 条精选、3 本好书，覆盖商业、科技、汽车、养老、心理与人文。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-07-08</span><span class="dot"></span>
+    <span>6 大板块 · 23 条精选</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+  <aside class="toc-sidebar" id="toc">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">社会 / 商业热点</a></li>
+      <li><a href="#s2">汽车热点</a></li>
+      <li><a href="#s3">科技热点</a></li>
+      <li><a href="#s4">养老产业</a></li>
+      <li><a href="#s5">心理学</a></li>
+      <li><a href="#s6">好书推荐</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+
+    <div class="section-img">
+      <img src="/uploads/daily-reading-2026-07-08-cover.jpg" alt="每日阅读 2026-07-08 封面">
+      <div class="caption">△ 每日阅读 · 在喧嚣的信息流里，留出一块安静的阅读之地</div>
+    </div>
+
+    <h2 id="s1">一、社会 / 商业热点</h2>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">800 万个 AI 角色，被大厂亲手关掉</span><span class="ni-source">钛媒体</span></div>
+      <p class="ni-desc">用户亲手创造的 AI 角色正在被陆续下线，大厂 AI 产品「瘦身」背后，是商业化压力与合规风险的双重考量。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">「物理 AI 第一股」Momenta 登陆港交所，市值破 700 亿港元</span><span class="ni-source">36氪 / 钛媒体</span></div>
+      <p class="ni-desc">累计融资超 25 亿美元，量产规模与 Robotaxi 落地节奏，将决定其后续估值能否获得支撑。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">腾讯退出快手主要股东序列，BAT 抱团阻击字节？</span><span class="ni-source">虎嗅</span></div>
+      <p class="ni-desc">腾讯减持快手超百亿元，百度、阿里、腾讯三大巨头是否有意联合对抗字节跳动的扩张态势，引发市场关注。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">3.8 万小时、狂烧天价 token：字节发现 Agent 的 Scaling Law</span><span class="ni-source">36氪</span></div>
+      <p class="ni-desc">字节跳动通过大规模实验揭示了 AI Agent 领域的 Scaling Law，为 AI 下半场的竞逐提供了关键方法论。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">90% 的代码交给 AI 之后，字节发现了一个反常识的真相</span><span class="ni-source">极客公园</span></div>
+      <p class="ni-desc">当团队九成以上代码由 AI 写出，效率却只涨了六成——这两个数字之间，藏着 AI Coding 进入企业的全部难题。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">曝 DeepSeek 自研 AI 芯片；中国人形机器人今年有望破 10 万台</span><span class="ni-source">极客公园</span></div>
+      <p class="ni-desc">DeepSeek 加入自研芯片赛道，华为天才少年吐槽其面试流程；同时国内人形机器人整机产量今年有望突破 10 万台。</p>
+    </div>
+
+    <h2 id="s2">二、汽车热点</h2>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">中国汽车全年出口或破千万辆，海外「卖疯了」</span><span class="ni-source">乘联分会</span></div>
+      <p class="ni-desc">乘联分会此前已将 2026 年国内零售预期从「微降 1%」大幅下调至「下降 11%」，但出口量自 2023 年首次超越日本后，三年增长近一倍。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">L2 智驾强制国标发布，2027 年 1 月 1 日起实施</span><span class="ni-source">GB 47955—2026</span></div>
+      <p class="ni-desc">《智能网联汽车 组合驾驶辅助系统安全要求》获批，以法定强制要求划定智驾安全底线；当前搭载组合驾驶辅助系统的新车渗透率已达七成。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">6 月新能源渗透率冲到 63%，销量前十没有燃油车了</span><span class="ni-source">乘联分会</span></div>
+      <p class="ni-desc">5 月零售前十全部为新能源车（海鸥、元 UP、Model Y、SU7、零跑 C10/A10 等），6 月渗透率预计进一步升至 63.6%；上半年累计批发 647 万辆，同比增 38%。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">欧洲车市「变天」，中国车反超日系</span><span class="ni-source">海外市场</span></div>
+      <p class="ni-desc">5 月五家中国车企在欧洲销量同比增长 65% 至 13.8 万辆，首次超越日本六车企的 13 万辆；比亚迪同比暴增 136.6%，零跑暴涨 465.1%。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">全新奔驰纯电 GLC 今日上市，7 月多款重磅新车扎堆</span><span class="ni-source">新车上市</span></div>
+      <p class="ni-desc">纯电 GLC 预售价 34.9 万起，800V 高压平台；此外蔚来 ES8 五座版、领克 07 GT、新款理想 L6、2026 款探险者均将在 7 月内集中上市。</p>
+    </div>
+
+    <h2 id="s3">三、科技热点</h2>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">2026 中国互联网大会今日开幕，展览面积首破 10 万平方米</span><span class="ni-source">中国互联网大会</span></div>
+      <p class="ni-desc">第 25 届中国互联网大会 7 月 8-10 日在京举办，主题「智启新程·融创未来」，1100 余家企业参展，超 300 款产品全球首发；同期发布《智能体终端权限高质量发展倡议书》。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">SpaceX 申请发射 10 万颗卫星，打造第三代星链星座</span><span class="ni-source">SpaceX</span></div>
+      <p class="ni-desc">目标直指 AI 时代的全球通信底座，申请拓展 92GHz 至 275GHz 频段；目前第二代星座实际在轨超 7000 颗。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">OpenAI 与 Anthropic 呼吁成立国际 AI 监管组织</span><span class="ni-source">OpenAI / Anthropic</span></div>
+      <p class="ni-desc">两家 AI 巨头联合呼吁国际社会协同监管 AI 发展，预警「递归式自我改进」现象可能导致人类丧失对 AI 的控制权；联合国首次举办 AI 治理对话。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">三星 Q2 盈利暴增 1810% 却遭股价跳水，全球科技股大幅波动</span><span class="ni-source">全球科技股</span></div>
+      <p class="ni-desc">费城半导体指数大跌 4.65%，英特尔跌超 9%，台积电跌超 4%；分析认为 AI 行情正从「无差别上涨」切换至「考验业绩兑现」的分化阶段。</p>
+    </div>
+
+    <h2 id="s4">四、养老产业</h2>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">烟台出台养老产业高质量发展三年行动方案（2026-2028）</span><span class="ni-source">烟台市政府</span></div>
+      <p class="ni-desc">7 月 3 日烟台市政府新闻办举行政策吹风会，围绕养老产业推出系统性政策规划，涵盖养老服务供给、产业生态培育等方向，为地方级银发经济政策落地提供了新样本。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">2026 全球数字经济大会智慧康养产业发展论坛在京举办</span><span class="ni-source">全球数字经济大会</span></div>
+      <p class="ni-desc">7 月 4 日的论坛以「数字赋能·智慧康养·银发经济新未来」为主题，聚焦 AI+养老、智慧康养场景建设、科技赋能养老等方向，搭建政产学研医金协同平台。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">北京居家适老化改造公共样板间建成投运，居民可就近参观</span><span class="ni-source">北京市发改委</span></div>
+      <p class="ni-desc">北京市发改委批复支持建设第二批 24 个居家适老化改造公共样板间，已有 6 个建成投运。适老化改造从「政策倡导」走向「可体验、可复制」的落地阶段。</p>
+    </div>
+
+    <h2 id="s5">五、心理学</h2>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">为什么你做任何事都会不自觉地「紧绷」？（轻心理）</span><span class="ni-source">KnowYourself 知我心理</span></div>
+      <p class="ni-desc">我们似乎总在不经意间绷紧身体——一篇来自 KnowYourself 的轻心理文章，温柔地拆解现代人的「身心紧绷」与如何真正松下来。</p>
+    </div>
+
+    <div class="news-item">
+      <div class="ni-head"><span class="ni-title">当弗洛伊德谈「性」时，他到底在谈论什么？</span><span class="ni-source">精神分析</span></div>
+      <p class="ni-desc">拆解精神分析内核，还原被道德偏见遮蔽的身体真相——无意识与幼儿性欲为何饱受非议？一次对经典理论的重新审视。</p>
+    </div>
+
+    <h2 id="s6">六、好书推荐</h2>
+
+    <div class="book-card">
+      <div class="bc-head"><span class="bc-title">《金钱博弈》</span><span class="bc-rating">微信读书 9.2 · 神作</span></div>
+      <div class="bc-author">作者：单伟建 ｜ 5897 人评价</div>
+      <p class="bc-intro">作者作为新桥资本亚洲合伙人，以第一视角完整记录收购韩国第一银行的真实交易过程。这不是一本理论教科书，而是一部活生生的跨境并购实战回忆录，展现了买方与卖方、政府与资本之间的艰难博弈与博弈艺术。</p>
+      <ul class="bc-highlights">
+        <li>在任何重大交易中，都需为对方着想，否则很难谈拢。（4662 人划线）</li>
+        <li>我的人生哲学从来就是时刻准备着，把握机会，所以当机会来临时，我已经做好了准备。（3043 人划线）</li>
+        <li>时和势往往决定命运，但很难预料。能不能把握住，就看自己了。（1998 人划线）</li>
+      </ul>
+    </div>
+
+    <div class="book-card">
+      <div class="bc-head"><span class="bc-title">《重走：在公路、河流和驿道上寻找西南联大》</span><span class="bc-rating">微信读书 8.9 · 好评如潮</span></div>
+      <div class="bc-author">作者：杨潇 ｜ 1895 人评价</div>
+      <p class="bc-intro">作者徒步重走西南联大西迁之路，从长沙到昆明 1600 公里，将历史与现实交织，追问在不确定的时代，思想和行动的关系是什么，人生的意义又到底为何。融旅行文学、历史叙事与个人思考于一体。</p>
+      <ul class="bc-highlights">
+        <li>乱世读书是中国知识分子几乎发乎本能的世界观，更是他们解决内心危机的方法论。（1837 人划线）</li>
+        <li>一件喜欢做的事会像原子发动机一样提供内心的能量，让你的人生是真正幸福的。（1666 人划线）</li>
+        <li>线上线下，我们都生活在一个个小圈子里……是时候换一种观看方式，用脚丈量一下广袤真实的大地了。（1652 人划线）</li>
+      </ul>
+    </div>
+
+    <div class="book-card">
+      <div class="bc-head"><span class="bc-title">《吉尔·德勒兹》</span><span class="bc-rating">豆瓣 9.0 ｜ 微信读书 8.8</span></div>
+      <div class="bc-author">作者：芙丽达·贝克曼 ｜ 126 人评价</div>
+      <p class="bc-intro">一本出色的德勒兹思想入门指南，以清晰的脉络梳理了这位法国哲学家的核心概念——差异、重复、欲望、无器官身体，帮助读者理解为什么德勒兹成为当代思想中不可绕过的人物。</p>
+      <ul class="bc-highlights">
+        <li>通过为个体设限并赋予其一个具体的形态和一个终极所指，创造出一个被定义的个体以及一个有始有终的故事，人生因此在这一过程中「关闭」。（198 人划线）</li>
+        <li>无意识并非技巧精湛的精神分析所能牵引出来的受压抑的记忆和幻想；相反，它产生于现在。（136 人划线）</li>
+        <li>如果一个人从未知晓一种狂热的需求——要钻研得更深，要思考得更系统，要开发心智至臻……这个人将永远无法明白思考到底意味着什么。（126 人划线）</li>
+      </ul>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="/article.html?cat=craft">每日阅读</a>
+      <a href="/article.html?cat=craft">商业</a>
+      <a href="/article.html?cat=craft">科技</a>
+      <a href="/article.html?cat=craft">汽车</a>
+      <a href="/article.html?cat=craft">养老</a>
+      <a href="/article.html?cat=craft">心理学</a>
+      <a href="/article.html?cat=craft">好书推荐</a>
+      <a href="/article.html?cat=craft">阅读</a>
+    </div>
+
+    <a href="/craft/" class="back-link">返回技艺录</a>
+
+
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var tocLinks = document.querySelectorAll('.toc-list a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({id:id, el:el, link:a});
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length-1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>
