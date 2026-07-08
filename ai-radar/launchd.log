@@ -1,0 +1,18 @@
+──── 2026-07-08 20:16:40 启动 AI 雷达本地更新 ────
+═══ AI 新闻雷达 · 每日更新 ═══
+  时间: 2026-07-08 20:16:40
+  模式: 正式 (推送到 COS)
+
+  📡 拉取 AI HOT 数据...
+  📊 获取到 25 条资讯
+
+  📝 更新 HTML...
+  ✅ 已注入 25 条资讯到 /Users/likun/Projects/appin-site/ai-radar/index.html
+
+  ☁️ 推送到 COS...
+  ✅ 已推送到 COS: ai-radar/index.html
+
+  🎉 完成！
+update.py 退出码: 0
+git 存档已推送
+──── 2026-07-08 20:16:45 结束 ────
