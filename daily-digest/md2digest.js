@@ -101,23 +101,34 @@ function parseDigest(md) {
     }
 
     // News item
-    const newsMatch = line.match(/^(\d+)\.\s+\*\*(.+?)\*\*(.*)$/);
+    const newsMatch = line.match(/^(\d+)\.\s+\*\*(.+?)\*\*\s*(.*)$/);
     if (newsMatch && currentSection.type === 'news') {
       const item = {
         num: parseInt(newsMatch[1]),
         title: newsMatch[2].trim(),
-        sourceTag: newsMatch[3].trim().replace(/[（(]/, '').replace(/[）)]/, ''),
+        sourceTag: '',
         summary: '',
         link: ''
       };
-      
-      // Next non-empty lines are summary + link
+
+      // 处理同一行剩余部分（兼容格式B：标题（来源）— 摘要 → [阅读原文](url) 全在一行）
+      let restInline = newsMatch[3];
+      const srcMatch = restInline.match(/（((?:来自[^）]*|[^）]*来源)）)/);
+      if (srcMatch) { item.sourceTag = srcMatch[1].trim(); restInline = restInline.replace(srcMatch[0], ' '); }
+      const inlineMd = restInline.match(/\[[^\]]*\]\((https?:\/\/[^\)]+)\)/);
+      if (inlineMd) { item.link = inlineMd[1]; restInline = restInline.replace(inlineMd[0], ' '); }
+      const inlineEmb = restInline.match(/[（(](https?:\/\/[^）)]+)[）)]/);
+      if (!item.link && inlineEmb && /阅读原文|打开阅读|查看原文|来源/.test(restInline)) { item.link = inlineEmb[1]; restInline = restInline.replace(inlineEmb[0], ' '); }
+      restInline = restInline.replace(/[｜|]\s*→\s*$/, '').replace(/\s*→\s*$/, '').replace(/^\s*[—–\-|｜]\s*/, '').trim();
+      if (restInline && !/^[\|\s]*$/.test(restInline)) item.summary = restInline;
+
+      // Next non-empty lines are summary + link (兼容格式A：摘要与链接各自独立成行)
       i++;
       while (i < lines.length) {
         const contentLine = lines[i].trim();
         if (!contentLine) { i++; continue; }
         if (contentLine.match(/^(\d+)\.\s+\*\*|^##\s|^###\s/)) break;
-        
+
         // Markdown link [text](url)
         const mdLink = contentLine.match(/\[[^\]]*\]\((https?:\/\/[^\)]+)\)/);
         if (mdLink) {
@@ -139,7 +150,7 @@ function parseDigest(md) {
         i++;
       }
       i--;
-      
+
       if (item.title || item.summary) currentSection.items.push(item);
       continue;
     }
