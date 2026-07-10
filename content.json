@@ -880,6 +880,30 @@
       "status": "published",
       "link": "/craft/trae-advanced-guide.html",
       "template": "B"
+    },
+    {
+      "id": "article-41",
+      "title": "AI 平台免费额度与优惠攻略（2026年7月版）",
+      "slug": "ai-free-credits-guide-2026-07",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/ai-free-credits-guide-cover.jpg",
+      "excerpt": "汇总 30+ 国内外主流 AI 平台的免费 token、新用户福利、订阅价格与省钱技巧，零成本玩转 AI。",
+      "content": "详见独立文章页：/craft/ai-free-credits-guide-2026-07.html",
+      "tags": [
+        "AI",
+        "免费额度",
+        "大模型",
+        "优惠攻略",
+        "省钱技巧",
+        "开发工具",
+        "2026"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-10",
+      "status": "published",
+      "link": "/craft/ai-free-credits-guide-2026-07.html",
+      "template": "C"
     }
   ],
   "projects": [

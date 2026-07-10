@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 平台免费额度与优惠攻略（2026年7月版）</title>
+<meta name="description" content="汇总 30+ 国内外主流 AI 平台的免费 token、新用户福利、订阅价格与省钱技巧，零成本玩转 AI。">
+<style>
+/* ========== 模板C：暗色沉浸风格 ========== */
+/* 配色：霓虹青强调 #00f5d4，暗色背景 #0a0a10 */
+:root {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --radius: 12px;
+  --max-text: 720px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: rgba(10,10,16,0.88); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+/* ---- Progress Bar ---- */
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+
+/* ---- Hero ---- */
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, #ffffff 30%, #c0c0c8 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--accent), #0ea5e9);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 540px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: #3a3a44; }
+
+/* ---- TOC (Horizontal Pills, Sticky) ---- */
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: rgba(10,10,16,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+
+/* ---- Article Body ---- */
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: #e8e8ec; letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: #d0d0d6; }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: #b0b0b8; }
+.article-body strong { font-weight: 700; color: #e4e4e8; }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: #b0b0b8; }
+.article-body a { color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+
+/* ---- Pull Quote ---- */
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: #d0d0d6; margin: 0;
+  line-height: 1.75; }
+
+/* ---- Info Box ---- */
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+
+/* ---- Highlight Box ---- */
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: #c8c8d0; line-height: 1.75; }
+
+/* ---- Step List ---- */
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+
+/* ---- Checklist ---- */
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+
+/* ---- Table ---- */
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: rgba(255,255,255,0.03); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); white-space: nowrap; }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: #b0b0b8; line-height: 1.65; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: #e4e4e8; }
+
+/* ---- Code Block ---- */
+.code-block { margin: 28px 0; background: #0d0d18; color: #c9d1d9;
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+
+/* ---- Section Image ---- */
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+
+/* ---- Tag Cloud ---- */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+
+/* ---- Back Link ---- */
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent); }
+.back-link::before { content: "←"; font-size: 15px; }
+
+/* ---- Side Progress Dot ---- */
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+
+/* ---- Footer ---- */
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent); text-decoration: none; }
+
+/* ---- Tips list ---- */
+.tips { counter-reset: tip; list-style: none; margin: 28px 0 12px; padding: 0; }
+.tips li { counter-increment: tip; position: relative; padding: 16px 18px 16px 52px;
+  margin-bottom: 12px; background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); }
+.tips li::before { content: counter(tip); position: absolute; left: 16px; top: 16px;
+  width: 24px; height: 24px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; display: flex;
+  align-items: center; justify-content: center; }
+.tips li .t-title { display: block; font-weight: 700; color: #e4e4e8; font-size: 15px; margin-bottom: 4px; }
+.tips li p { margin: 0; font-size: 14px; color: #b0b0b8; line-height: 1.7; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Page Dots -->
+<nav class="page-dot" id="pageDots"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>AI 免费额度攻略</div>
+    <h1>AI 平台<em>免费额度</em>与优惠攻略 · 2026年7月版</h1>
+    <p class="hero-desc">汇总 30+ 国内外主流 AI 平台的免费 token、新用户福利、订阅价格与省钱技巧，帮你零成本或低成本把 AI 用起来。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-10</span><span class="sep"></span>
+      <span>约 8 分钟阅读</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOC Bar -->
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#sec-overseas">海外平台</a>
+    <a href="#sec-domestic">国内平台</a>
+    <a href="#sec-subscription">订阅套餐</a>
+    <a href="#sec-coding">编码工具</a>
+    <a href="#sec-education">教育福利</a>
+    <a href="#sec-tips">省钱技巧</a>
+  </div>
+</div>
+
+<!-- Article -->
+<div class="article-wrap">
+  <article class="article-body">
+
+    <div class="highlight-box">
+      <p><strong>核心结论：</strong>只想零成本上手——海外选 <strong>Google Gemini</strong>（全模型永久免费 + 高速）、<strong>Groq / DeepSeek</strong>（无限调用）；国内选 <strong>智谱 GLM-4-Flash</strong>、<strong>腾讯混元 lite</strong>、<strong>硅基流动 &lt;9B 模型</strong>（均永久免费）。编码工具直接上 <strong>Trae 国内版</strong>（个人完全免费）或 <strong>GitHub Copilot</strong> 学生版。</p>
+    </div>
+
+    <h2 id="sec-overseas">一、海外平台——注册即送免费额度</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>免费额度</th><th>有效期</th><th>需绑卡</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td><strong>OpenAI</strong></td><td>$5 试用金</td><td>3 个月</td><td>需绑卡</td><td>免费版 ChatGPT 每几小时可发约 10 条消息</td></tr>
+          <tr><td><strong>Anthropic (Claude)</strong></td><td>$5 额度</td><td>30 天</td><td>需身份验证</td><td>免费层每 5 小时有限量消息，动态调整</td></tr>
+          <tr><td><strong>Google Gemini API</strong></td><td>全模型免费（限速）</td><td>永久</td><td>不需要</td><td>Flash 每分钟最高 100 万 token，无总量上限</td></tr>
+          <tr><td><strong>xAI (Grok)</strong></td><td>注册送 $25</td><td>一次性</td><td>不需要</td><td>选数据共享可额外获 $150/月</td></tr>
+          <tr><td><strong>Mistral</strong></td><td>无限调用（限速）</td><td>永久</td><td>不需要</td><td>适合轻量级开发测试</td></tr>
+          <tr><td><strong>Together AI</strong></td><td>最高 $100 初始余额</td><td>一次性</td><td>需要</td><td>开源模型为主</td></tr>
+          <tr><td><strong>Groq</strong></td><td>无限调用（限速）</td><td>永久</td><td>不需要</td><td>以极快推理速度著称</td></tr>
+          <tr><td><strong>DeepSeek</strong></td><td>无限调用（限速）</td><td>永久</td><td>不需要</td><td>网页端 V3/R1 免费，API 无免费额度</td></tr>
+          <tr><td><strong>AI21</strong></td><td>$10 额度</td><td>3 个月</td><td>不需要</td><td>—</td></tr>
+          <tr><td><strong>Cohere</strong></td><td>1,000 次调用/月</td><td>每月重置</td><td>不需要</td><td>适合小规模测试</td></tr>
+          <tr><td><strong>Fireworks AI</strong></td><td>$1 测试额度</td><td>一次性</td><td>不需要</td><td>—</td></tr>
+          <tr><td><strong>Cerebras</strong></td><td>无限调用（限速）</td><td>永久</td><td>不需要</td><td>—</td></tr>
+          <tr><td><strong>NVIDIA NIM</strong></td><td>70+ 免费 API</td><td>Key 12 个月</td><td>需开发者账号</td><td>默认 40 RPM</td></tr>
+          <tr><td><strong>Cloudflare Workers AI</strong></td><td>10,000 neurons/天</td><td>每日重置</td><td>需要</td><td>—</td></tr>
+          <tr><td><strong>OpenRouter</strong></td><td>部分模型免费（限速）</td><td>永久</td><td>需要</td><td>聚合平台，可调用多种模型</td></tr>
+          <tr><td><strong>Stability AI</strong></td><td>免费层（限速）</td><td>永久</td><td>不需要</td><td>图像生成</td></tr>
+          <tr><td><strong>fal.ai</strong></td><td>初始免费额度</td><td>一次性</td><td>不需要</td><td>图像/视频生成</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec-domestic">二、国内平台——注册即送免费额度</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>免费额度</th><th>有效期</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td><strong>智谱 AI (GLM)</strong></td><td>2000 万 token</td><td>永久</td><td>GLM-4-Flash 永久免费；轻量版 128K 上下文无限量免费</td></tr>
+          <tr><td><strong>硅基流动 (SiliconFlow)</strong></td><td>2000 万 token + 14 元体验金</td><td>永久（&lt;9B 永久免费）</td><td>9B 以下参数模型永久免费调用</td></tr>
+          <tr><td><strong>阿里云百炼</strong></td><td>最高 7000 万 token</td><td>3 个月</td><td>覆盖全系模型；Qwen Turbo 输入仅 0.3 元/百万 token</td></tr>
+          <tr><td><strong>火山引擎（豆包）</strong></td><td>50 万 token 或 200 万/天</td><td>视方案</td><td>新用户 19.9 元获千万 token 特惠</td></tr>
+          <tr><td><strong>百度千帆</strong></td><td>特定模型永久免费；其他 100 万 token</td><td>永久/3 个月</td><td>速度限制版免费</td></tr>
+          <tr><td><strong>Kimi (月之暗面)</strong></td><td>15 元体验券</td><td>永久</td><td>基础会员 49 元/月，Pro 版 89 元/月</td></tr>
+          <tr><td><strong>腾讯混元</strong></td><td>100 万 token + embedding 额度</td><td>1 年</td><td>混元 lite API 完全免费</td></tr>
+          <tr><td><strong>讯飞星火</strong></td><td>20 万 token/模型</td><td>未明确</td><td>—</td></tr>
+          <tr><td><strong>DeepSeek</strong></td><td>100 万 token</td><td>30 天</td><td>V4 系列峰谷定价，Flash 谷时输入仅 1 元/百万 token</td></tr>
+          <tr><td><strong>ModelScope (魔搭)</strong></td><td>2000 次 API/天</td><td>每日重置</td><td>—</td></tr>
+          <tr><td><strong>MiniMax</strong></td><td>100 万 token（百炼领取）</td><td>半年</td><td>M2.7 输入 2.1 元/百万 token</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec-subscription">三、消费端订阅套餐价格对比</h2>
+    <h3>海外订阅套餐</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>基础版</th><th>进阶版</th><th>旗舰版</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ChatGPT (OpenAI)</strong></td><td>Free $0</td><td>Plus $20/月（年付 $17）；Go $8/月</td><td>Pro $100/月（5x）或 $200/月（20x）</td></tr>
+          <tr><td><strong>Claude (Anthropic)</strong></td><td>Free（限量）</td><td>Pro $20/月</td><td>Max $100/月（5x）或 $200/月（20x）</td></tr>
+          <tr><td><strong>Gemini (Google)</strong></td><td>Free</td><td>Advanced $19.99/月（含 2TB 云存储）</td><td>—</td></tr>
+          <tr><td><strong>Grok (xAI)</strong></td><td>Free（限量）</td><td>$10/月；$30/月</td><td>$300/月（重度用户）</td></tr>
+          <tr><td><strong>Copilot (Microsoft)</strong></td><td>Free</td><td>Pro $20/月</td><td>M365 集成 $30/用户/月</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>国内订阅套餐</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>基础版</th><th>进阶版</th><th>旗舰版</th></tr></thead>
+        <tbody>
+          <tr><td><strong>豆包</strong></td><td>免费（日限）</td><td>68 元/月</td><td>500 元/月（含办公套件）</td></tr>
+          <tr><td><strong>Kimi</strong></td><td>免费（日限）</td><td>49 元/月</td><td>Pro 89 元/月；编程套餐最高 699 元/月</td></tr>
+          <tr><td><strong>文心一言</strong></td><td>免费</td><td>49.9 元/月</td><td>Pro 99.9 元/月</td></tr>
+          <tr><td><strong>智谱 GLM</strong></td><td>免费</td><td>49 元/月</td><td>最高 469 元/月</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec-coding">四、AI 编码工具优惠汇总</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>优惠内容</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cursor</strong></td><td>首月 5 折</td><td>通过推荐链接注册</td></tr>
+          <tr><td><strong>Cline</strong></td><td>$1.99/月 促销价</td><td>捆绑 10+ 开源模型</td></tr>
+          <tr><td><strong>Devin Desktop</strong></td><td>完成新手引导送 $10</td><td>部分高级模型 7 月初前免费</td></tr>
+          <tr><td><strong>CodeBuddy（国内版）</strong></td><td>微信注册送积分；HY3 模型免费至 7 月下旬</td><td>—</td></tr>
+          <tr><td><strong>ZCode</strong></td><td>5 天免费体验，每天 500 万 token</td><td>—</td></tr>
+          <tr><td><strong>OpenCode</strong></td><td>推荐注册双方各得 $5</td><td>—</td></tr>
+          <tr><td><strong>Codebuff</strong></td><td>注册送 500 积分</td><td>—</td></tr>
+          <tr><td><strong>Augment Code</strong></td><td>试用送 3 万积分</td><td>—</td></tr>
+          <tr><td><strong>Trae（国内版）</strong></td><td>个人开发者完全免费</td><td>—</td></tr>
+          <tr><td><strong>GitHub Copilot</strong></td><td>学生免费（Pro 已暂停新注册）</td><td>学生开发者包</td></tr>
+          <tr><td><strong>Amazon Q Developer</strong></td><td>永久免费层</td><td>—</td></tr>
+          <tr><td><strong>Gemini CLI</strong></td><td>免费调用层</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec-education">五、学生 / 教育专属福利</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>福利内容</th><th>条件</th></tr></thead>
+        <tbody>
+          <tr><td><strong>GitHub Copilot</strong></td><td>免费 Pro 订阅</td><td>学生身份验证（目前 Pro/Max 暂停新注册）</td></tr>
+          <tr><td><strong>Google Gemini</strong></td><td>1 年免费 AI Pro 会员</td><td>学术身份验证</td></tr>
+          <tr><td><strong>Zed 编辑器</strong></td><td>1 年免费会员 + ~$10/月 AI 算力</td><td>学生身份</td></tr>
+          <tr><td><strong>JetBrains</strong></td><td>在读期间免费全产品线</td><td>学生/教师身份</td></tr>
+          <tr><td><strong>OpenAI</strong></td><td>教师/研究者年度免费计划</td><td>需申请</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="sec-tips">六、省钱技巧 &amp; 白嫖策略</h2>
+    <ol class="tips">
+      <li><span class="t-title">聚合平台一站式白嫖</span><p>用 OpenRouter、SiliconFlow 等聚合平台，一个 API Key 即可调用多个免费模型，省去逐平台注册的麻烦。</p></li>
+      <li><span class="t-title">善用永久免费模型</span><p>智谱 GLM-4-Flash、腾讯混元 lite、SiliconFlow &lt;9B 模型、Google Gemini（限速下）均为永久免费，适合长期轻量使用。</p></li>
+      <li><span class="t-title">多平台轮换薅羊毛</span><p>国内平台新用户额度大多永久有效（智谱、Kimi、硅基流动），可同时注册多个平台按需轮换。</p></li>
+      <li><span class="t-title">关注限时促销</span><p>阿里云部分高级模型限时 5-8 折、火山引擎新用户 19.9 元千万 token、Anthropic Sonnet 5 临时促销价（截至 2026 年 8 月底），都是短期窗口。</p></li>
+      <li><span class="t-title">峰谷时段调用</span><p>DeepSeek V4 系列实行峰谷定价，谷时价格仅为峰时一半，合理安排调用时间可大幅降本。</p></li>
+      <li><span class="t-title">缓存命中降本</span><p>DeepSeek、Kimi 等支持上下文缓存，缓存命中时成本可降至原价的 1/6 甚至更低。</p></li>
+      <li><span class="t-title">数据共享换额度</span><p>xAI (Grok) 选择共享数据可额外获得 $150/月 的免费额度，适合不在意的用户。</p></li>
+    </ol>
+
+    <p style="color:var(--text-tertiary);font-size:13px;margin-top:32px;">* 信息收集时间：2026 年 7 月 10 日。各平台政策可能随时调整，建议以官网最新公告为准。</p>
+
+    <div class="tag-cloud">
+      <a href="#">AI</a>
+      <a href="#">免费额度</a>
+      <a href="#">大模型</a>
+      <a href="#">优惠攻略</a>
+      <a href="#">省钱技巧</a>
+      <a href="#">开发工具</a>
+      <a href="#">2026</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var pb = document.getElementById('progressBar');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    var pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
+    pb.style.setProperty('--progress', pct + '%');
+  });
+
+  var tocLinks = document.querySelectorAll('#tocScroll a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({ id: id, el: el, link: a });
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 140;
+    var active = headings[0];
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+    if (active && active.link) {
+      active.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+  window.addEventListener('scroll', updateTOC);
+
+  var dotContainer = document.getElementById('pageDots');
+  var dotLinks = [];
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.id;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      h.el.scrollIntoView({ behavior: 'smooth' });
+    });
+    dotContainer.appendChild(a);
+    dotLinks.push({ el: h.el, link: a });
+  });
+  function updateDots() {
+    var scrollY = window.scrollY + window.innerHeight / 2;
+    var active = dotLinks[0];
+    for (var i = dotLinks.length - 1; i >= 0; i--) {
+      if (dotLinks[i].el.offsetTop <= scrollY) { active = dotLinks[i]; break; }
+    }
+    dotLinks.forEach(function(d) { d.link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateDots);
+  updateTOC();
+  updateDots();
+})();
+</script>
+
+</body>
+</html>
