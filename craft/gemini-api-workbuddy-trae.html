@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程</title>
+<meta name="description" content="从零手把手教你把 Google Gemini 模型接入 WorkBuddy 和 Trae，利用官方 OpenAI 兼容接口，全程不用写代码，跟着点就行。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* ---- Hero ---- */
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+
+/* ---- Layout ---- */
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+
+/* ---- TOC Sidebar ---- */
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+
+/* ---- Article Body ---- */
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.article-body ol li { padding-left:4px; }
+
+/* Table */
+.article-body table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:14px;
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.article-body th { background:var(--accent-light); text-align:left; padding:10px 14px; font-weight:600; color:#111;
+  border-bottom:1px solid var(--border); white-space:nowrap; }
+.article-body td { padding:10px 14px; border-bottom:1px solid var(--border); color:#333; vertical-align:top; }
+.article-body tr:last-child td { border-bottom:none; }
+
+/* Code */
+.article-body pre { background:#0f1115; color:#e6e6e6; padding:16px 18px; border-radius:var(--radius);
+  overflow-x:auto; margin:0 0 24px; font-size:13.5px; line-height:1.7;
+  font-family:"SF Mono",Menlo,Consolas,monospace; }
+.article-body code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:0.9em; }
+.article-body :not(pre) > code { background:var(--accent-light); color:var(--accent); padding:2px 6px; border-radius:5px; }
+
+/* Blockquote (提示框) */
+.article-body blockquote { margin:24px 0; padding:14px 20px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; color:#333; font-size:14.5px; line-height:1.75; }
+.article-body blockquote p { margin:0; }
+
+/* Section Image (cover) */
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+
+/* Tag Cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+
+/* Back */
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+/* Footer */
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>API 接入 · AI 编程</div>
+  <h1>把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程</h1>
+  <p class="hero-desc">手把手从零开始，利用 Gemini 官方的 OpenAI 兼容接口，把 gemini-2.5-flash / pro 接进两款 AI 编程工具。全程不需要写代码，跟着点就行。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-07-10</span><span class="dot"></span>
+    <span>接入教程</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="hero-cover">
+  <img src="/uploads/gemini-api-workbuddy-trae-cover.jpg" alt="把 Google Gemini 接入 WorkBuddy 和 Trae 小白教程" loading="eager" />
+</div>
+
+<div class="page">
+  <aside class="toc-sidebar" id="toc">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">获取 Gemini API Key</a></li>
+      <li><a href="#s2">OpenAI 兼容接口</a></li>
+      <li><a href="#s3">在 WorkBuddy 中接入</a></li>
+      <li><a href="#s4">在 Trae 中接入</a></li>
+      <li><a href="#s5">验证是否成功</a></li>
+      <li><a href="#s6">可选模型参考</a></li>
+      <li><a href="#s7">总结</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+    <h2 id="s1">第一步：获取 Google Gemini API Key</h2>
+    <p>不管用 WorkBuddy 还是 Trae，你都需要先拿到一个 API Key（可以理解为一把"钥匙"，让工具能调用 Google 的 AI 模型）。</p>
+
+    <h3>1.1 打开 Google AI Studio</h3>
+    <p>用浏览器访问：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">https://aistudio.google.com/apikey</a></p>
+    <blockquote>
+      <p>注意：你需要一个 Google 账号（就是 Gmail 那个账号）。如果没登录，会提示你先登录。</p>
+    </blockquote>
+
+    <h3>1.2 创建 API Key</h3>
+    <ol>
+      <li>登录后，你会看到 API Key 管理页面</li>
+      <li>点击 <strong>"Create API key"</strong>（创建 API 密钥）</li>
+      <li>选择 <strong>"Create API key in new project"</strong>（在新项目中创建）</li>
+      <li>等几秒钟，系统会生成一串很长的密钥，类似 <code>AIzaSyD......xxxxx</code></li>
+      <li><strong>立刻复制保存下来！</strong> 关掉窗口后就看不到了（但可以在页面上重新查看）</li>
+    </ol>
+
+    <h3>1.3 关于网络问题</h3>
+    <p>Google AI Studio 在国内无法直接访问，你需要使用科学上网工具。如果 API Key 创建好了，后续调用 API 同样需要稳定的网络环境。</p>
+
+    <h3>1.4 Gemini API 免费额度</h3>
+    <p>Google 提供了免费额度，对于个人使用来说完全够用。免费模型包括 <code>gemini-2.5-flash</code> 和 <code>gemini-2.5-pro</code> 等，每分钟有请求次数限制，但日常使用没问题。</p>
+
+    <h2 id="s2">第二步：了解一个关键概念 —— OpenAI 兼容接口</h2>
+    <p>Google Gemini 官方现在提供了 <strong>OpenAI 兼容接口</strong>，意思是：虽然 Gemini 是 Google 的模型，但它模拟了 OpenAI 的 API 格式。这样 WorkBuddy 和 Trae 就能直接把它当成"OpenAI 格式的模型"来用，不需要额外装什么转换工具。</p>
+    <p>这个兼容接口的地址（Base URL）是：</p>
+    <pre><code>https://generativelanguage.googleapis.com/v1beta/openai</code></pre>
+    <p>记住这个地址，下面配置的时候要用。</p>
+
+    <h2 id="s3">第三步：在 WorkBuddy 中接入 Gemini</h2>
+    <p>WorkBuddy 有两种配置方式：通过界面操作，或者直接编辑配置文件。推荐用界面操作，更直观。</p>
+
+    <h3>方式一：通过界面配置（推荐）</h3>
+    <ol>
+      <li>打开 WorkBuddy 桌面客户端</li>
+      <li>在聊天界面底部，找到模型切换区域，点击 <strong>"+配置自定义模型"</strong></li>
+      <li>在弹出的页面中，选择 <strong>"通用 OpenAI 兼容"</strong> 或类似的自定义选项</li>
+      <li>填写以下信息：</li>
+    </ol>
+    <table>
+      <thead>
+        <tr><th>字段</th><th>填写内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>模型名称 / Model Name</td><td><code>gemini-2.5-flash</code>（或 <code>gemini-2.5-pro</code>）</td></tr>
+        <tr><td>Base URL</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td></tr>
+        <tr><td>API Key</td><td>你第一步获取的那个密钥</td></tr>
+      </tbody>
+    </table>
+    <p>点击保存，然后在模型列表里切换到刚添加的 Gemini 模型，发一条消息测试即可。</p>
+
+    <h3>方式二：编辑 models.json 配置文件</h3>
+    <p>如果界面操作不成功，可以手动编辑配置文件。</p>
+    <p><strong>配置文件位置：</strong></p>
+    <ul>
+      <li>macOS / Linux：<code>~/.workbuddy/models.json</code></li>
+      <li>Windows：<code>C:\Users\你的用户名\.workbuddy\models.json</code></li>
+    </ul>
+    <p><strong>编辑方法：</strong>用任意文本编辑器（记事本、VS Code 等）打开 <code>models.json</code>，在里面添加如下内容：</p>
+    <pre><code>[
+  {
+    "id": "gemini-2.5-flash",
+    "name": "gemini-2.5-flash",
+    "vendor": "custom",
+    "url": "https://generativelanguage.googleapis.com/v1beta/openai/v1",
+    "apiKey": "你的API_KEY粘贴在这里"
+  }
+]</code></pre>
+    <blockquote>
+      <p>注意事项：</p>
+      <p>· 如果文件里已经有其他模型配置，在最外层的 <code>[]</code> 里面用逗号隔开，添加新的对象即可<br>
+      · <code>id</code> 和 <code>name</code> 必须填写一样的值<br>
+      · <code>url</code> 末尾注意加上 <code>/v1</code><br>
+      · 修改完文件后，必须<strong>完全退出 WorkBuddy 再重新打开</strong>才能生效（不是关闭窗口，是在任务栏/菜单栏彻底退出）</p>
+    </blockquote>
+
+    <h3>WorkBuddy 常见问题排查</h3>
+    <ul>
+      <li><strong>报 404 错误</strong>：检查模型名称是否正确，<code>id</code> 和 <code>name</code> 是否一致</li>
+      <li><strong>报 401 错误</strong>：API Key 填写有误，重新复制粘贴</li>
+      <li><strong>报 400 错误</strong>：URL 路径有问题，确认末尾有 <code>/v1</code></li>
+      <li><strong>配置不生效</strong>：彻底退出 WorkBuddy（Mac 上右键 Dock 图标退出，Windows 上在任务管理器中结束进程），然后重新打开</li>
+    </ul>
+
+    <h2 id="s4">第四步：在 Trae 中接入 Gemini</h2>
+    <p>Trae 是字节跳动出品的 AI 编程工具（IDE），有两种方式接入 Gemini：原生配置和通过 Cline 插件。</p>
+
+    <h3>方式一：Trae 原生配置（推荐）</h3>
+    <ol>
+      <li>打开 Trae IDE</li>
+      <li>点击右上角的 <strong>齿轮图标</strong>（设置），或者用快捷键 <code>Ctrl + ,</code>（Mac 上是 <code>Cmd + ,</code>）</li>
+      <li>找到 <strong>"Models"</strong> 或 <strong>"AI 模型"</strong> 区域</li>
+      <li>点击 <strong>"Add Model"</strong>（添加模型）</li>
+      <li>按以下信息填写：</li>
+    </ol>
+    <table>
+      <thead>
+        <tr><th>字段</th><th>填写内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>API Provider（提供方）</td><td>选择 <strong>"OpenAI"</strong>（因为 Gemini 有 OpenAI 兼容接口）</td></tr>
+        <tr><td>模型类型</td><td>选择 <strong>"自定义模型"</strong></td></tr>
+        <tr><td>Model Name（模型名称）</td><td><code>gemini-2.5-flash</code>（或 <code>gemini-2.5-pro</code>）</td></tr>
+        <tr><td>API Key</td><td>你第一步获取的密钥</td></tr>
+        <tr><td>Base URL / Custom Request URL</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai/v1</code></td></tr>
+      </tbody>
+    </table>
+    <p>点击保存/完成，回到聊天窗口，在模型列表里切换到 Gemini，发一条消息测试。</p>
+
+    <h3>方式二：通过 Cline 插件接入</h3>
+    <p>如果原生配置遇到问题，可以用 Cline 插件作为替代方案。</p>
+    <ol>
+      <li>在 Trae 的插件市场搜索 <strong>"Cline"</strong> 并安装</li>
+      <li>安装完成后，在左侧边栏找到 Cline 图标，点击进入</li>
+      <li>点击 Cline 面板里的 <strong>齿轮图标</strong>（设置）</li>
+      <li>在 API Configuration 中：
+        <ul>
+          <li>API Provider 选择 <strong>"Google Gemini"</strong></li>
+          <li>粘贴你的 API Key</li>
+          <li>如果需要自定义 Base URL，勾选对应选项并填入地址</li>
+          <li>Model Name 填写 <code>gemini-2.5-flash</code> 或 <code>gemini-2.5-pro</code></li>
+        </ul>
+      </li>
+      <li>点击 Done 保存，然后在 Cline 聊天窗口测试</li>
+    </ol>
+
+    <h2 id="s5">第五步：验证是否成功</h2>
+    <p>配置完成后，在对应工具中发送一条简单的消息来测试，比如：</p>
+    <blockquote>
+      <p>"你好，请用一句话介绍你自己。"</p>
+    </blockquote>
+    <p>如果模型正常回复了，说明接入成功。如果报错，请对照上面的"常见问题排查"部分检查配置。</p>
+
+    <h2 id="s6">可选模型参考</h2>
+    <table>
+      <thead>
+        <tr><th>模型名称</th><th>特点</th><th>适用场景</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>gemini-2.5-flash</code></td><td>速度快、免费额度大</td><td>日常对话、快速问答</td></tr>
+        <tr><td><code>gemini-2.5-pro</code></td><td>能力更强、推理更好</td><td>复杂任务、代码生成</td></tr>
+        <tr><td><code>gemini-2.5-flash-lite</code></td><td>最轻量、响应最快</td><td>简单任务、低延迟场景</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="s7">总结</h2>
+    <p>整个流程其实就是三步：</p>
+    <ol>
+      <li>去 Google AI Studio 拿 API Key</li>
+      <li>在工具里添加自定义模型，填入 Gemini 的 OpenAI 兼容接口地址 + API Key + 模型名</li>
+      <li>测试一下能不能正常对话</li>
+    </ol>
+    <p>关键地址再贴一遍：<code>https://generativelanguage.googleapis.com/v1beta/openai/v1</code></p>
+
+    <div class="tag-cloud">
+      <a href="/craft/">Gemini API</a>
+      <a href="/craft/">WorkBuddy</a>
+      <a href="/craft/">Trae</a>
+      <a href="/craft/">API 接入</a>
+      <a href="/craft/">OpenAI 兼容接口</a>
+      <a href="/craft/">AI 编程</a>
+      <a href="/craft/">gemini-2.5-flash</a>
+      <a href="/craft/">接入教程</a>
+    </div>
+
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var tocLinks = document.querySelectorAll('.toc-list a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({id:id, el:el, link:a});
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length-1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>

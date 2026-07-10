@@ -904,6 +904,52 @@
       "status": "published",
       "link": "/craft/aiworkskills-wechat-ai-ops.html",
       "template": "A"
+    },
+    {
+      "id": "article-43",
+      "title": "MoneyPrinterTurbo：输入关键词，全自动生成短视频",
+      "slug": "money-printer-turbo",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/money-printer-turbo-cover.jpg",
+      "excerpt": "GitHub 94.1k stars 的开源短视频生成工具：输入关键词即自动生成文案、匹配无版权素材、加字幕配乐，输出竖屏/横屏短视频并批量发布。",
+      "tags": [
+        "MoneyPrinterTurbo",
+        "短视频",
+        "开源工具",
+        "AI视频",
+        "自动化",
+        "内容创作",
+        "批量生成",
+        "短视频运营"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-10",
+      "status": "published",
+      "link": "/craft/money-printer-turbo.html",
+      "template": "C"
+    },
+    {
+      "id": "article-44",
+      "title": "把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程",
+      "slug": "gemini-api-workbuddy-trae",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/gemini-api-workbuddy-trae-cover.jpg",
+      "excerpt": "手把手从零开始，利用 Gemini 官方 OpenAI 兼容接口，把 gemini-2.5-flash / pro 接进 WorkBuddy 和 Trae，全程不用写代码。",
+      "content": "详见独立文章页：/craft/gemini-api-workbuddy-trae.html",
+      "tags": [
+        "Gemini API",
+        "WorkBuddy",
+        "Trae",
+        "API 接入",
+        "OpenAI 兼容接口"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-10",
+      "status": "published",
+      "link": "/craft/gemini-api-workbuddy-trae.html",
+      "template": "A"
     }
   ],
   "projects": [
