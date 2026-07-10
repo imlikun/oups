@@ -114,7 +114,16 @@
       .content-wrap{font-size: 15px;}
       .hero{height: 260px;}
     }
-  </style>
+  
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
+</style>
 </head>
 <body>
 
@@ -164,6 +173,10 @@
 </div>
 
 <!-- Content -->
+
+<div class="hero-cover">
+  <img src="uploads/xpeng-gx-2698-cover.jpg" alt="26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布" loading="eager" />
+</div>
 <div class="content-wrap">
 
 <h2 id="s1">一、数据先说话：车市有多严峻？</h2>

@@ -170,6 +170,15 @@ body {
   .article-body h2 { font-size:22px; }
   .hero { height:260px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -221,6 +230,10 @@ body {
 
 <article class="article-body">
 
+
+<div class="hero-cover">
+  <img src="uploads/deep-live-cam-cover.jpg" alt="AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播" loading="eager" />
+</div>
 <h2 id="s1">一、这是什么——先打个比方</h2>
 
 <p>你小时候玩过「贴纸换脸」吗？拿一张明星照片，把脸剪下来贴在自己脸上拍照。</p>

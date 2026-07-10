@@ -167,6 +167,15 @@ code { font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; }
   .hero-content h1 { font-size: 26px; }
   .content { padding: 0; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -208,7 +217,11 @@ code { font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; }
   </aside>
 
   <main class="content">
-    <h2 id="what">一、这是什么？</h2>
+    
+<div class="hero-cover">
+  <img src="uploads/yt-dlp-cover.jpg" alt="yt-dlp：120K+ Stars 的开源音视频下载神器，1800+ 网站全覆盖" loading="eager" />
+</div>
+<h2 id="what">一、这是什么？</h2>
     <p><strong>yt-dlp</strong> 是基于 Python 的开源命令行音视频下载工具，是已经停更的 youtube-dl 的活跃分支（fork）。</p>
     <p><strong>简单来说</strong>：你在 B 站、YouTube、Twitter、TikTok、抖音等任何视频网站看到一个视频，想下载到本地永久保存——yt-dlp 复制粘贴链接就能下。</p>
 

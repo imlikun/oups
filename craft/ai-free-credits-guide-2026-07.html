@@ -287,6 +287,15 @@ body {
   cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
   transition: all .2s; flex-shrink: 0; }
 .theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -337,6 +346,10 @@ body {
 </div>
 
 <!-- Article -->
+
+<div class="hero-cover">
+  <img src="uploads/ai-free-credits-guide-cover.jpg" alt="AI 平台免费额度与优惠攻略（2026年7月版）" loading="eager" />
+</div>
 <div class="article-wrap">
   <article class="article-body">
 

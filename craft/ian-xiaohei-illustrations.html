@@ -171,6 +171,15 @@ body {
   .pull-quote p { font-size:15px; }
   .page { padding:0 16px 60px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -230,7 +239,11 @@ body {
       <p>传统配图 = 去家具城买现成的沙发——颜色可能不搭，但凑合能用。小黑插图 = 雇佣一位懂建筑结构的插画师——他根据你的承重墙（核心逻辑），现场画一张风格统一的装饰画。</p>
     </div>
 
-    <h2 id="s1">一、这是什么？</h2>
+    
+<div class="hero-cover">
+  <img src="uploads/ian-xiaohei-cover.jpg" alt="AI 文章自动配图教程：让小黑插图帮你的内容一键生成手绘风格图解" loading="eager" />
+</div>
+<h2 id="s1">一、这是什么？</h2>
 
     <p>想象你刚写完一篇 3000 字的技术文章，结构清晰、逻辑自洽，但总觉得少了点什么。你试过放一张 Unsplash 的氛围图，但那张图跟内容毫无关系；你也试过画流程图，但读起来像产品说明书。</p>
 

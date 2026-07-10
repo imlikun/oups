@@ -116,6 +116,15 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
   .hero{padding:110px 20px 50px}
   .section{padding:36px 20px}
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -213,7 +222,11 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-syste
 
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-body">
+    
+<div class="hero-cover">
+  <img src="uploads/ai-news-radar-cover.jpg" alt="零代码搭建自动更新的 AI 资讯站：选模板、配API、设自动化全教程" loading="eager" />
+</div>
+<div class="step-body">
       <h4>拉取数据</h4>
       <p>用 <code>urllib</code> 调 AI HOT API，拿到过去 24 小时的精选 JSON。注意要带浏览器 User-Agent，否则 API 的 nginx UA 黑名单会返回 403。</p>
     </div>

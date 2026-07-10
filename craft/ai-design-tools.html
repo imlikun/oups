@@ -103,6 +103,15 @@ body {
   .pull-quote p { font-size:15px; }
   .page { padding:0 16px 60px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -147,6 +156,10 @@ body {
   <div class="caption">△ 5 款 AI 设计工具 — 从代码到专业级界面的完整方案</div>
 </div>
 
+
+<div class="hero-cover">
+  <img src="uploads/ai-design-tools-cover.jpg" alt="5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码" loading="eager" />
+</div>
 <h2 id="s1">一、为什么需要这些工具？</h2>
 
 <p><strong>痛点</strong>：用 AI（Cursor / Claude Code / Copilot）写前端代码时，功能能跑，但界面丑——同质化严重，缺乏设计感。</p>

@@ -157,6 +157,15 @@ body {
   .article-body h3 { font-size:17px; }
   .pull-quote p { font-size:15px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -207,6 +216,10 @@ body {
   </div>
 </div>
 
+
+<div class="hero-cover">
+  <img src="uploads/trae-advanced-guide-cover.jpg" alt="Trae 进阶实战：免费 API 接入 + 记忆体系全攻略" loading="eager" />
+</div>
 <div class="article-wrap">
   <article class="article-body">
 

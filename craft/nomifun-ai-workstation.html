@@ -129,6 +129,15 @@ body {
   .article-body h2 { font-size:22px; }
   .page { padding:0 16px 60px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -182,7 +191,11 @@ body {
       <p>桌宠只是外壳，真正的价值是这个开源 AI 工作站的底层架构和无人值守自动化能力。</p>
     </div>
 
-    <h2 id="s1">一、这是什么？</h2>
+    
+<div class="hero-cover">
+  <img src="uploads/nomifun-cover.jpg" alt="NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体" loading="eager" />
+</div>
+<h2 id="s1">一、这是什么？</h2>
 
     <p><strong>NomiFun</strong> 是一款完全开源的本地优先 AI 超级工作站。你下载一个桌面应用，就能拥有：</p>
 

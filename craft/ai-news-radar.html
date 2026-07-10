@@ -103,6 +103,15 @@ body {
   .pull-quote p { font-size:15px; }
   .page { padding:0 16px 60px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -155,6 +164,10 @@ body {
   <p><strong>一句话</strong>：伯乐News雷达（ai-news-radar）是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。在信息洪流中，真正的智慧不是收集更多，而是过滤得更好。</p>
 </div>
 
+
+<div class="hero-cover">
+  <img src="uploads/bolenews-cover.jpg" alt="伯乐News雷达：AI资讯过滤神器，告别信息过载" loading="eager" />
+</div>
 <h2 id="s1">一、这是什么？</h2>
 
 <p>伯乐News雷达（ai-news-radar）是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。核心解决一个问题：<strong>AI 新闻太多，重复太多，噪音太多</strong>——你不需要更多信源，你需要一个帮你筛信源的工具。</p>

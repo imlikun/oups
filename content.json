@@ -326,7 +326,7 @@
       "slug": "deep-live-cam",
       "category": "craft",
       "featured": false,
-      "image": "uploads/deep-live-cam-cover.png",
+      "image": "uploads/deep-live-cam-cover.jpg",
       "excerpt": "一张照片就能实现实时 AI 换脸——虚拟主播、影视特效、视频二创，开源免费，普通电脑就能跑。3 种安装方式 + 3 大使用场景 + 完整合规指南。",
       "content": "详见独立文章页：/craft/deep-live-cam.html",
       "tags": [
@@ -350,7 +350,7 @@
       "slug": "xpeng-gx-2698",
       "category": "craft",
       "featured": false,
-      "image": "uploads/xpeng-gx-2698-cover.png",
+      "image": "uploads/xpeng-gx-2698-cover.jpg",
       "excerpt": "2026年车市淘汰赛——日系从30%跌到12%、燃油车暴跌37%、全行业利润率仅3.2%。26.98万的小鹏GX用「直降13万+800V平台+XNGP全场景智驾」的组合拳，揭开低质高价最后的遮羞布。",
       "content": "详见独立文章页：/craft/xpeng-gx-2698.html",
       "tags": [
@@ -615,7 +615,7 @@
       "slug": "nomifun-ai-workstation",
       "category": "craft",
       "featured": false,
-      "image": "uploads/nomifun-cover.png",
+      "image": "uploads/nomifun-cover.jpg",
       "excerpt": "不是玩具桌宠，是真正能干活的开源 AI 工作站——桌面 AI 伙伴、无人值守 Agent、企业级知识库、11 个 IM 渠道、Rust 自研原生工具引擎，永久免费。",
       "content": "详见独立文章页：/craft/nomifun-ai-workstation.html",
       "tags": [
@@ -639,7 +639,7 @@
       "slug": "book-to-skill",
       "category": "craft",
       "featured": false,
-      "image": "uploads/book-to-skill-cover.png",
+      "image": "uploads/book-to-skill-cover.jpg",
       "excerpt": "不是让 AI「读」书，而是让 AI「学会」这本书——把 PDF/EPUB/DOCX 等技术书编译成结构化的 AI Skill 包，Token 成本直降 51 倍，MIT 开源。",
       "content": "详见独立文章页：/craft/book-to-skill.html",
       "tags": [
@@ -663,7 +663,7 @@
       "slug": "yt-dlp-downloader",
       "category": "craft",
       "featured": false,
-      "image": "uploads/yt-dlp-cover.png",
+      "image": "uploads/yt-dlp-cover.jpg",
       "excerpt": "不是替代浏览器下载，而是替代一整套商业下载软件。1800+ 网站全覆盖，一行命令搞定视频下载，支持 8K/HDR/SponsorBlock。",
       "content": "详见独立文章页：/craft/yt-dlp-downloader.html",
       "tags": [
@@ -687,7 +687,7 @@
       "slug": "chatwoot",
       "category": "craft",
       "featured": false,
-      "image": "uploads/chatwoot-cover.png",
+      "image": "uploads/chatwoot-cover.jpg",
       "excerpt": "不是更便宜，而是更可控。MIT 协议开源客服系统，全渠道统一收口，自托管数据自己掌控，AI Agent 原生集成。",
       "content": "详见独立文章页：/craft/chatwoot.html",
       "tags": [
@@ -711,7 +711,7 @@
       "slug": "pxid-gm-report",
       "category": "notes",
       "featured": true,
-      "image": "uploads/pxid-gm-report-cover.png",
+      "image": "uploads/pxid-gm-report-cover.jpg",
       "excerpt": "五大战区、三个Go/No-Go检查点、¥188万年度预算——一份可以直接给总经理看的海外营销年度计划。",
       "content": "详见独立文章页：/notes/pxid-gm-report.html",
       "tags": [
@@ -735,7 +735,7 @@
       "slug": "pxid-marketing-plan",
       "category": "notes",
       "featured": true,
-      "image": "uploads/pxid-marketing-plan-cover.png",
+      "image": "uploads/pxid-marketing-plan-cover.jpg",
       "excerpt": "从公司分析到竞品情报，从12个月月度计划到三档预算方案——一份完整的PXID海外营销推广计划。",
       "content": "详见独立文章页：/notes/pxid-marketing-plan.html",
       "tags": [
@@ -760,7 +760,7 @@
       "slug": "agent-reach",
       "category": "craft",
       "featured": true,
-      "image": "uploads/agent-reach-cover.png",
+      "image": "uploads/agent-reach-cover.jpg",
       "excerpt": "一个开源的能力层工具，把 Twitter、YouTube、B站、小红书等 15 个平台的接入能力整合成一个 CLI。零 API 费用，MIT 协议，兼容 Claude Code / OpenClaw / Cursor。",
       "content": "详见独立文章页：/craft/agent-reach.html",
       "tags": [
@@ -831,31 +831,6 @@
         "ODM"
       ],
       "videoUrl": ""
-    },
-    {
-      "id": "article-39",
-      "title": "每日阅读 | 2026-07-08",
-      "slug": "daily-reading-2026-07-08",
-      "category": "craft",
-      "featured": true,
-      "image": "uploads/daily-reading-2026-07-08-cover.jpg",
-      "excerpt": "每天为你筛选最值得读的内容——6 大板块、23 条精选、3 本好书，覆盖商业、科技、汽车、养老、心理与人文。",
-      "content": "详见独立文章页：/craft/daily-reading-2026-07-08.html",
-      "tags": [
-        "每日阅读",
-        "商业",
-        "科技",
-        "汽车",
-        "养老",
-        "心理学",
-        "好书推荐",
-        "阅读"
-      ],
-      "videoUrl": "",
-      "date": "2026-07-08",
-      "status": "published",
-      "link": "/craft/daily-reading-2026-07-08.html",
-      "template": "A"
     },
     {
       "id": "article-40",

@@ -141,6 +141,15 @@ code { font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; }
   .hero-stats .stat .num { font-size: 22px; }
   .summary-card .key-points { grid-template-columns: 1fr; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -179,6 +188,10 @@ code { font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; }
 
 <main class="content">
 
+
+<div class="hero-cover">
+  <img src="uploads/chatwoot-cover.jpg" alt="Chatwoot：31K+ Stars 的开源客服系统，Zendesk/Intercom 的免费替代方案" loading="eager" />
+</div>
 <h2 id="what">一、这是什么？</h2>
 <p><strong>Chatwoot</strong> 是一个开源的全渠道客户支持平台（Omnichannel Helpdesk）。</p>
 <p><strong>简单来说</strong>：你开公司做电商/SaaS/在线服务，需要一个统一的客服工作台收邮件、收网站聊天、收 WhatsApp 消息、分配给客服同事处理——Chatwoot 就是干这个的，而且免费、可自托管、数据完全自己掌控。</p>
