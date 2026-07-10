@@ -856,6 +856,30 @@
       "status": "published",
       "link": "/craft/daily-reading-2026-07-08.html",
       "template": "A"
+    },
+    {
+      "id": "article-40",
+      "title": "Trae 进阶实战：免费 API 接入 + 记忆体系全攻略",
+      "slug": "trae-advanced-guide",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/trae-advanced-guide-cover.jpg",
+      "excerpt": "把 somerice 博客园三篇实战笔记整合为一——Agnes AI 三模态永久免费 API 怎么接进 Trae Work、Skill 怎么封装生图生视频、以及 Trae 三类记忆（全局/项目/会话）怎么管理，附 5 款免费 API 横向测评与报错排查。",
+      "content": "详见独立文章页：/craft/trae-advanced-guide.html",
+      "tags": [
+        "Trae",
+        "免费API",
+        "大模型",
+        "AI编程",
+        "记忆功能",
+        "开发效率",
+        "教程"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-10",
+      "status": "published",
+      "link": "/craft/trae-advanced-guide.html",
+      "template": "B"
     }
   ],
   "projects": [

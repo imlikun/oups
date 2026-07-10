@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trae 进阶实战：免费 API 接入 + 记忆体系全攻略</title>
+<meta name="description" content="Trae 卡排队、额度不够、模型太少？一份整合实测指南——用 Agnes AI 等 5 款免费 API 解锁不限量算力，再配记忆体系让 AI 记住你的编码习惯，彻底告别重复交代需求。">
+<style>
+/* ========== 模板B：现代宽屏风格 ========== */
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-18px; left:0; right:0; height:2px; background:var(--accent); border-radius:1px; }
+
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%);
+  pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px;
+  position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body h4 { font-size:15px; font-weight:600; margin:24px 0 10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08));
+  border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+
+.step-list { counter-reset:step; list-style:none; margin:28px 0 40px; }
+.step-list li { counter-increment:step; margin-bottom:20px; padding:24px 28px; background:#fff;
+  border:1px solid var(--border); border-radius:var(--radius); position:relative; box-shadow:0 2px 8px rgba(0,0,0,0.02); }
+.step-list li::before { content:counter(step); position:absolute; top:-10px; left:20px;
+  background:var(--accent); color:#fff; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+.step-list li .step-label { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; display:block; padding-top:8px; }
+.step-list li p { margin-bottom:4px; font-size:15px; }
+
+.checklist { list-style:none; margin:24px 0 36px; }
+.checklist li { padding:12px 18px; margin-bottom:8px; border-radius:10px; background:var(--bg-card); display:flex; align-items:center; gap:10px; font-size:14px; border:1px solid var(--border); }
+.checklist li::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:800; flex-shrink:0; }
+
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7;
+  overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; }
+.code-block .comment { color:#6c7086; }
+.code-block .cmd { color:#89b4fa; }
+
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+  .pull-quote p { font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>TRAE 进阶实战</div>
+    <h1>Trae 进阶实战：<em>免费 API 接入</em> + 记忆体系全攻略</h1>
+    <p class="hero-desc">Trae 卡排队、额度不够、模型太少？这份整合实测指南用 Agnes AI 等 5 款免费 API 解锁不限量算力，再配记忆体系让 AI 记住你的编码习惯——彻底告别重复交代需求。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026.07.10</span><span class="sep"></span>
+      <span>约 6800 字</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">14</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">7</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">18</div><div class="label">分钟阅读</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">🛠️</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>把两篇高赞 Trae 实测教程整合为一站式攻略：第一部分用 Agnes AI 等 5 款免费 API 给 Trae Work 接上独立通道，不排队、不限量、国内直连；第二部分彻底讲透 Trae 的三类记忆与导入导出，让换电脑、改项目、组队协作都不丢 AI 习惯。所有接口参数已核对至 2026 年 7 月最新实测。</p>
+      <div class="key-points">
+        <span>5 款免费 API 实测参数</span>
+        <span>Agnes 三模态永久免费</span>
+        <span>8n+1 视频帧规则</span>
+        <span>三类记忆区分</span>
+        <span>.trae 软链接迁移</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2>为什么给 Trae 接第三方免费 API</h2>
+    <p>经常用 Trae Work 的朋友应该都有体会，官方模型的痛点越来越明显：高峰期排队动辄几百上千人，写代码、调逻辑突然卡住；官方额度从日限改成周限，重度开发、批量调试根本不够用；自带模型品类太少，复杂推理、长文档、图文创作能力都比较单一；官方付费模型价格也不便宜。</p>
+    <p>好在 Trae Work 原生支持 <strong>OpenAI 标准自定义模型</strong>——不用破解、不用装插件，简单几步接入第三方免费 API，就能解锁<strong>不用排队、永久免费、多模型随意切换</strong>的满血体验，完全可以替代官方模型。</p>
+
+    <h2>一、最优解：Agnes AI 三模态永久免费（2026.7 实测）</h2>
+    <p>经过逐一实测，<strong>Agnes AI 是目前唯一国内可直连、文本 + 画图 + 短视频全模态永久免费</strong>的 API，没有任何套路，个人开发者可以零成本无脑用。</p>
+
+    <h3>1. 免费规则（永久有效，无套路）</h3>
+    <ul>
+      <li>注册超简单：普通国内邮箱就能注册，<strong>不需要境外手机号、不用绑卡、全程零充值</strong>。</li>
+      <li>免费模型全覆盖：<code>agnes-2.0-flash</code>（文本/编码）、<code>agnes-image-2.1-flash</code>（AI 生图）、<code>agnes-video-v2.0</code>（短视频）全部免费开放。</li>
+      <li>额度超级宽松：无月度调用上限、无 Token 总量限制，只有超高并发会轻微限流，日常个人开发完全感知不到。</li>
+      <li>商用边界清晰：个人学习、项目测试、低并发小型商用随便用；企业高并发业务，建议联系官方开通不限速专属通道。</li>
+    </ul>
+
+    <h3>2. 手把手接入 Trae Work（三步复制即用）</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-label">第一步：获取专属 API Key</span>
+        <p>打开官方开发者平台 <a href="https://platform.agnes-ai.com/" target="_blank" rel="noopener">platform.agnes-ai.com</a>，用邮箱注册登录，左侧菜单「设置」→「API 密钥」→「创建新的密钥」。<strong>重点提醒：密钥只显示一次，前缀为 sk-agnes-xxxx，一定要及时复制备份。</strong></p>
+        <p>实测有效全局接口地址：<code>https://apihub.agnes-ai.com/v1</code></p>
+      </li>
+      <li>
+        <span class="step-label">第二步：Trae 自定义模型配置</span>
+        <p>打开 Trae Work → 设置 → 模型 → 添加模型，拉到最底部选「自定义配置」，按下面精准填写：</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>配置项</th><th>精准填写内容（2026.7 实测）</th></tr></thead>
+            <tbody>
+              <tr><td>API 格式</td><td>OpenAI Chat Completions 格式</td></tr>
+              <tr><td>自定义请求地址</td><td>https://apihub.agnes-ai.com/v1</td></tr>
+              <tr><td>模型 ID</td><td>agnes-2.0-flash</td></tr>
+              <tr><td>API 密钥</td><td>个人 sk-agnes-xxxx 密钥</td></tr>
+              <tr><td>高级配置</td><td>默认无需修改</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+      <li>
+        <span class="step-label">第三步：接入验证（必做）</span>
+        <p>把模型切换为刚添加的 <code>agnes-2.0-flash</code>，在对话框输入 <code>你是什么大模型？</code>，只要正常返回模型信息，就说明接入成功，可以直接用来写代码、调逻辑、改文案。</p>
+      </li>
+    </ol>
+
+    <h2>二、进阶：用 Skill 接入生图 / 生视频</h2>
+    <p>这里有个关键细节：<strong>新版 Trae 只支持文本模型直连，画图、生成短视频必须通过 Skill 技能封装才能调用</strong>，这也是目前唯一能稳定用的方法：</p>
+    <ol>
+      <li>在 Trae 对话框输入固定指令：<em>我想要使用 Agnes Image 2.1 模型生图、Agnes Video 2.0 模型生成视频，访问它的 API 平台 https://agnes-ai.com/doc/overview，并将它打包成一份 Skill。</em></li>
+      <li>等待自动生成 agnes-ai 技能文件和 skill.md，把文件里所有 <code>YOUR_API_KEY</code> 替换成你自己的密钥。</li>
+      <li>回到 Trae 技能界面，上传修改好的文件，就能免费无脑用 AI 画图、生成短视频。</li>
+    </ol>
+    <div class="info-box">
+      <div class="info-title">避坑重点</div>
+      <p>视频生成有个<strong>硬性规则：帧数必须是 8n+1</strong>（比如 81、121、161 帧），填错必报错；另外高峰期服务器拥挤会出现 500 报错，不用慌，错开高峰重试即可。图片和视频模型严禁直接当对话模型接入，必须用 Skill 方式。</p>
+    </div>
+
+    <h2>三、5 款实测可用的免费 API 横向测评</h2>
+    <p>下面 5 个平台都是逐个实测验证过的，接口稳定、额度靠谱、完美适配 Trae，覆盖极速编码、中文创作、长文档解析、逻辑推理所有场景。核心参数直接抄：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>请求地址</th><th>推荐模型 ID</th><th>核心特点</th></tr></thead>
+        <tbody>
+          <tr><td>Groq</td><td>https://api.groq.com/openai/v1</td><td>llama-3.3-70b-versatile、qwen3-32b</td><td>速度天花板 700-850 token/s；永久免费每日万级请求、30RPM/6000TPM；需合规网络</td></tr>
+          <tr><td>硅基流动</td><td>https://api.siliconflow.cn/v1</td><td>Qwen2.5-7B、deepseek-ai/deepseek-llm-7b-chat、GLM-5.1</td><td>国内直连零延迟；新用户送 2000 万免费 Token；多模型一键切换</td></tr>
+          <tr><td>智谱 AI</td><td>https://open.bigmodel.cn/api/paas/v4/</td><td>glm-4-flash（永久免费）</td><td>256K 超长上下文、30 并发稳定；中文理解和生成顶尖</td></tr>
+          <tr><td>DeepSeek</td><td>https://api.deepseek.com/v1</td><td>deepseek-chat、deepseek-reasoner、deepseek-v4-flash</td><td>代码 / 推理超强；新用户官方直连额度有限，建议走硅基流动通道</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>这 4 家的接入方式和 Agnes 完全一致：API 格式都选 <strong>OpenAI Chat Completions 格式</strong>，填对应的请求地址和模型 ID 即可。Agnes 因为三模态最全，通常作为主力；其余几家按需互补。</p>
+
+    <h2>四、WorkBuddy 桌面端也能接（可选）</h2>
+    <p>如果你也用 WorkBuddy（腾讯的桌面级 AI 助手），接入方式差不多，而且搭配起来更香——WorkBuddy 负责操控本地文件，Agnes 负责免费算力。模型下拉菜单点「+ 添加自定义模型」，提供商选「自定义 / Custom」，参数填：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>配置项</th><th>填写内容</th></tr></thead>
+        <tbody>
+          <tr><td>API 基础地址</td><td>https://apihub.agnes-ai.com/v1</td></tr>
+          <tr><td>API 密钥</td><td>你的 sk-agnes-xxxx</td></tr>
+          <tr><td>模型名称（文本）</td><td>agnes-2.0-flash</td></tr>
+          <tr><td>模型名称（绘图）</td><td>agnes-image-2.1-flash</td></tr>
+          <tr><td>模型名称（视频）</td><td>agnes-video-v2.0</td></tr>
+          <tr><td>额外设置</td><td>勾选「启用工具调用、多模态图文输入」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>接好后可以一键批量解析 PDF、汇总 Excel、给代码批量加注释、自动生成封面，<strong>完全不消耗 WorkBuddy 积分</strong>。注意：用文件操控前，先在设置里把目标文件夹权限打开。</p>
+
+    <h2>五、接入报错排查（FAQ）</h2>
+    <ul class="checklist">
+      <li>模型无响应 / 接不通：大概率是 BaseURL 填错、密钥带了空格换行、或密钥过期封禁。</li>
+      <li>弹出 429 限流：所有免费模型都有每分钟请求上限，批量任务拆分分次执行，间隔 1-2 秒重试即可恢复。</li>
+      <li>图文 / 视频 500 报错：多模态模型不能直接自定义接入，必须用 Skill 技能模式；视频严格遵守 8n+1 帧数规则，错峰使用更稳定。</li>
+      <li>DeepSeek 调用失败：新用户官方直连额度有限，切换硅基流动聚合通道，稳定性翻倍。</li>
+      <li>频繁卡顿、断连：日常开发优先用硅基流动、智谱；需要极速响应就切 Groq，避开早晚高峰。</li>
+      <li>WorkBuddy 依旧扣积分：第三方 API 算力绝对不扣积分，只有软件本地原生操作会少量消耗，属正常规则。</li>
+    </ul>
+
+    <h2>六、场景化模型选型对照表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>平台</th><th>核心适配场景</th><th>响应速度</th><th>国内访问</th></tr></thead>
+        <tbody>
+          <tr><td>Agnes AI</td><td>日常编码、文案创作、AI 生图、短视频生成（全能首选，一站式搞定）</td><td>稳定中等</td><td>✅ 直连无压力</td></tr>
+          <tr><td>Groq</td><td>实时代码补全、快速调试、短句问答（追求极速必选）</td><td>🔥 行业顶级极速</td><td>⚠️ 需合规网络</td></tr>
+          <tr><td>硅基流动</td><td>长期日常开发、新模型测试、DeepSeek / GLM 新版调用</td><td>稳定中等</td><td>✅ 国内低延迟</td></tr>
+          <tr><td>智谱 AI</td><td>中文文案创作、长项目代码解析、长文档总结改写</td><td>稳定中等</td><td>✅ 全程稳定</td></tr>
+          <tr><td>DeepSeek</td><td>算法编写、代码纠错、数学逻辑推理、复杂问题拆解</td><td>稳定中等</td><td>✅ 国内直连</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pull-quote">
+      <p>免费 API 政策可能会变，建议大家关注各平台官方公告。企业级或商业项目还是买付费 API 更稳，有 SLA 保障；但个人学习、副业折腾、日常开发，这些免费资源完全够用。</p>
+    </div>
+
+    <h2>七、Trae 记忆体系：三类记忆先分清</h2>
+    <p>很多人用 Trae 还会踩另一类坑：C 盘被记忆缓存占满、项目改名记忆丢失、换电脑记忆无法迁移。先把记忆类型分清，后面所有修改、导出、导入才不会出错——三类记忆完全独立：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>记忆类型</th><th>作用范围</th><th>存储位置</th><th>可迁移性</th></tr></thead>
+        <tbody>
+          <tr><td>全局智能记忆</td><td>所有项目通用（个人编码习惯、通用要求）</td><td>系统 AppData 固定目录</td><td>支持整体迁移、复制备份</td></tr>
+          <tr><td>项目专属记忆</td><td>仅当前项目（架构、代码规范、业务规则）</td><td>项目根目录 /.trae 隐藏文件夹</td><td>禁止改名移动，仅可复制复用</td></tr>
+          <tr><td>会话聊天记忆</td><td>单条对话上下文，临时任务记录</td><td>内置会话数据库</td><td>仅可导出，无法一键导入复原</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">
+      <div class="info-title">硬核结论</div>
+      <p>Trae 官方<strong>没有一键修改记忆目录</strong>的可视化开关，两类记忆修改规则不同，不可混为一谈！</p>
+    </div>
+
+    <h2>八、存储目录与修改（C 盘爆满怎么办）</h2>
+    <h3>项目记忆 .trae：千万别动</h3>
+    <p>项目记忆默认在 <code>./.trae/</code> 隐藏文件夹。绝对不要重命名、剪切、移动、删除它——一旦项目路径变动，Trae 会判定为新项目，原有的项目记忆、规则、技能全部清零。正确做法是<strong>直接编辑内部记忆文本</strong>来修改 AI 项目约束规则。</p>
+    <h3>全局记忆：软链接迁移改盘</h3>
+    <p>全局记忆默认路径：Windows <code>%APPDATA%\Trae CN</code>、macOS <code>~/Library/Application Support/Trae CN</code>、Linux <code>~/.config/Trae CN</code>。如果 C 盘爆满，可以用软链接把它整体迁移到 D/E 盘，软件无感、升级不失效：</p>
+    <div class="code-block">
+<span class="comment"># Windows（管理员 CMD，先彻底退出 Trae）</span>
+<span class="cmd">mklink /D "%APPDATA%\Trae CN" "D:\TraeData\Trae CN"</span>
+
+<span class="comment"># macOS / Linux</span>
+<span class="cmd">ln -s /Volumes/Data/TraeData/TraeCN ~/Library/Application\ Support/Trae\ CN</span>
+    </div>
+    <p>注意：不能单独拆分迁移记忆子文件夹，只能整体迁移 <code>Trae CN</code> 根目录；不想迁移的话，用 <code>Ctrl+Shift+P</code> 执行 <code>Trae: Clear Cache</code> 清缓存不删记忆。</p>
+
+    <h2>九、导入导出全套（换电脑 / 协作 / 备份）</h2>
+    <ul>
+      <li><strong>项目长期记忆（最重要）</strong>：核心文件是 <code>AGENTS.md</code> + 根目录 <code>/.trae</code> 文件夹。导出直接复制这两个打包；导入时粘贴到新项目根目录，重启 Trae 自动加载（模式一：全盘复用），或只复制 <code>project_rules.md</code> / <code>user_rules.md</code> 文本（模式二：选择性复用）。</li>
+      <li><strong>全局个人记忆</strong>：直接复制全局根记忆文件夹（Windows <code>C:\Users\用户名\.trae</code>），新电脑粘贴覆盖即一键复原。</li>
+      <li><strong>AI 自动零散记忆</strong>：<code>Ctrl+Shift+P</code> 输入 <code>Trae: Open Memory Panel</code>，逐条复制面板内记忆文本保存。</li>
+      <li><strong>会话聊天记录</strong>：对话右上角「…」→ 导出 → 生成 md 文件；无法一键导入，新建空白会话粘贴内容即可让 AI 接续上下文。</li>
+    </ul>
+
+    <h2>十、极速操作对照表</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>需求场景</th><th>解决方案</th></tr></thead>
+        <tbody>
+          <tr><td>C 盘记忆缓存太大</td><td>管理员 CMD 软链接迁移全局 Trae CN 目录</td></tr>
+          <tr><td>移动项目不想丢记忆</td><td>不移动 .trae 文件夹，只复制记忆文件到新项目</td></tr>
+          <tr><td>新建项目复用老规范</td><td>复制 AGENTS.md + .trae 文件夹粘贴新项目</td></tr>
+          <tr><td>备份聊天对话</td><td>对话右上角导出 MD，新建会话粘贴复用</td></tr>
+          <tr><td>修改 AI 项目行为规则</td><td>直接编辑 .trae 内 project_rules.md</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>十一、高阶技巧：把记忆变成团队资产</h2>
+    <ul>
+      <li><strong>团队协作记忆共享</strong>：把项目内 <code>.trae</code> 文件夹和 <code>AGENTS.md</code> 提交到 Git 仓库，团队拉取代码后 Trae 自动同步统一的编码、业务记忆规范。</li>
+      <li><strong>自制通用记忆模板</strong>：写好通用代码风格、注释格式、交付要求存进 AGENTS.md，每次新建项目直接导入，无需重复告知 AI 编码习惯。</li>
+      <li><strong>记忆减负技巧</strong>：不要堆砌冗余记忆，定期清空记忆面板无效条目；业务变更直接修改 rules 文档，比删除记忆更稳定。</li>
+    </ul>
+
+    <h2>十二、总结与重要须知</h2>
+    <div class="highlight-box">
+      <p>把两件事做对，Trae 的体验会完全不一样：<strong>第一，接上 Agnes AI 等免费 API，排队和额度焦虑一次性解决；第二，理清三类记忆 + 做好 .trae / AGENTS.md 的导入导出，换电脑、改项目、组队都不丢 AI 习惯。</strong>截止 2026 年 7 月，这套方案已经非常成熟——不用花钱、不用排队、额度充足，写代码、改文案、做 AI 创作全场景覆盖。</p>
+    </div>
+    <ul>
+      <li>所有免费 API 适合个人学习、项目测试、低并发小型商用；企业高并发业务建议升级付费通道。</li>
+      <li>永久免费不代表无限制轰炸调用，高频刷屏容易触发临时限流，正常开发使用完全没问题。</li>
+      <li>AI 画图、生视频严格遵守内容合规规则，违规内容会直接封禁密钥且无法恢复。</li>
+      <li>免费平台政策会动态微调，正式项目上线前建议简单核对一遍官方最新规则。</li>
+    </ul>
+    <div class="info-box">
+      <div class="info-title">来源说明</div>
+      <p>本文整合自博客园 somerice 的《Trae Work 接入免费第三方 API 指南》（含 2026-07-06 更新实测版）与《Trae 记忆功能最全实操指南》两篇高赞实测文章，参数已核对至 2026 年 7 月最新实测，并重新组织了阅读顺序与结构。具体平台政策以官方公告为准。</p>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="#">Trae</a>
+      <a href="#">免费API</a>
+      <a href="#">大模型</a>
+      <a href="#">AI编程</a>
+      <a href="#">记忆功能</a>
+      <a href="#">开发效率</a>
+      <a href="#">教程</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+})();
+</script>
+
+</body>
+</html>
