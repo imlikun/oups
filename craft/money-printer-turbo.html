@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoneyPrinterTurbo：输入关键词，全自动生成短视频（94.1k Stars 开源神器）</title>
+<meta name="description" content="MoneyPrinterTurbo 是 GitHub 94.1k stars 的开源短视频生成工具：输入关键词即可自动生成文案、匹配无版权素材、加字幕配乐，输出竖屏/横屏短视频并批量发布。">
+<style>
+/* ========== 模板C：暗色沉浸风格 ========== */
+/* 配色：霓虹青强调 #00f5d4，暗色背景 #0a0a10 */
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+
+/* ---- Progress Bar ---- */
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+
+/* ---- Hero ---- */
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 540px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+
+/* ---- TOC (Horizontal Pills, Sticky) ---- */
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+
+/* ---- Article Body ---- */
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+
+/* ---- Pull Quote ---- */
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+
+/* ---- Info Box ---- */
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+
+/* ---- Highlight Box ---- */
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+
+/* ---- Step List ---- */
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+
+/* ---- Checklist ---- */
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+
+/* ---- Table ---- */
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; vertical-align: top; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: var(--body-strong); }
+
+/* ---- Code Block ---- */
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+
+/* ---- Section Image ---- */
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+
+/* ---- Tag Cloud ---- */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+
+/* ---- Back Link ---- */
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+
+/* ---- Page Dots ---- */
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+
+/* ---- Footer ---- */
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+
+<!-- Page Dots -->
+<nav class="page-dot" id="pageDots"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>工具拆解 · 短视频生成</div>
+    <h1>MoneyPrinterTurbo：输入关键词，<em>全自动</em>生成短视频</h1>
+    <p class="hero-desc">输入一个关键词，自动生成文案、匹配无版权素材、加字幕配乐，输出竖屏 9:16 / 横屏 16:9 短视频，还能批量多版本一键发布。GitHub 94.1k stars 的爆款开源项目。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-10</span><span class="sep"></span>
+      <span>约 6 分钟阅读</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOC Bar -->
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#s1">它解决什么问题</a>
+    <a href="#s2">核心能力拆解</a>
+    <a href="#s3">模型与配音兼容</a>
+    <a href="#s4">优势与局限</a>
+    <a href="#s5">本地部署方式</a>
+    <a href="#s6">怎么用 + 判断</a>
+  </div>
+</div>
+
+<!-- Hero Cover -->
+<div class="hero-cover">
+  <img src="/uploads/money-printer-turbo-cover.jpg" alt="MoneyPrinterTurbo 短视频自动生成工具" loading="eager" />
+</div>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="s1">一、它解决什么问题</h2>
+    <p>短视频制作的门槛不在"拍"，在于<strong>重复劳动</strong>：写脚本、找素材、剪字幕、配音乐、调比例、导出版本……每一步都碎。MoneyPrinterTurbo 的思路是：把这些环节串成一条流水线，你只给一个关键词，其余它跑完。</p>
+    <p>它面向的不是专业剪辑师，而是想<strong>批量产出短视频</strong>、却不想被剪辑细节淹没的个人与小团队——把"做一个视频"从项目降级成"说一句话"。</p>
+
+    <h2 id="s2">二、核心能力拆解</h2>
+    <p>整条流水线可以抽象成六个环节，关键词进去，成片出来：</p>
+    <div class="highlight-box">
+      <p>关键词 → 文案生成 → 素材匹配 → 字幕 / 配乐 → 导出（9:16 / 16:9）→ 批量 / 发布</p>
+    </div>
+    <ul class="step-list">
+      <li><span class="step-label">智能文案生成</span><p>根据关键词自动产出短视频口播 / 字幕文案，支持中英文，省去从空白页开始写脚本。</p></li>
+      <li><span class="step-label">无版权素材匹配</span><p>自动检索并匹配与主题契合的视频 / 图片素材，规避版权风险，不用自己到处找片。</p></li>
+      <li><span class="step-label">自动字幕与配乐</span><p>生成时间轴字幕、匹配背景音乐，成片直接可发，字幕与节奏基本对齐。</p></li>
+      <li><span class="step-label">多比例输出</span><p>原生支持竖屏 9:16 与横屏 16:9，一套文案两种成片，同时覆盖短视频与中视频场景。</p></li>
+      <li><span class="step-label">批量多版本</span><p>同一主题可一次产出多个版本，换开头 / 换文案做 A/B，测试哪条更易爆。</p></li>
+      <li><span class="step-label">一键发布</span><p>对接社交媒体接口，把成片批量推送到多平台，省掉逐个上传的最后一步。</p></li>
+    </ul>
+
+    <h2 id="s3">三、模型与配音兼容</h2>
+    <p>工具本身不绑定单一大模型，而是做一个<strong>模型无关的编排层</strong>：文案与语音可以分别挂不同模型，按成本与效果自由组合。</p>
+    <div class="info-box">
+      <div class="info-title">兼容情况</div>
+      <ul>
+        <li><strong>数十种大模型</strong>：公开资料明确列出兼容 OpenAI / DeepSeek / 通义千问 等，社区持续扩展。</li>
+        <li><strong>中英文配音</strong>：适配中文 / 英文语音，国内与出海双场景通吃。</li>
+        <li><strong>自备 Key</strong>：需要自行申请并填入模型 API Key，具体支持的模型列表以官方文档为准。</li>
+      </ul>
+    </div>
+
+    <h2 id="s4">四、优势与局限</h2>
+    <p>客观来看，它的长板和短板都很明显：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>优势</th><th>局限</th></tr></thead>
+        <tbody>
+          <tr><td><strong>成本</strong></td><td>开源免费（GitHub 94.1k stars），可自托管、可二次开发</td><td>需自备模型 API Key，成本随用量走</td></tr>
+          <tr><td><strong>自动化</strong></td><td>关键词进、成片出，全流程打通</td><td>抽象 / 意象类主题，素材匹配偶有违和，需人工筛选</td></tr>
+          <tr><td><strong>部署</strong></td><td>模型灵活，中英文配音通吃</td><td>需本地部署，有一定环境与配置门槛</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s5">五、本地部署方式</h2>
+    <p>它<strong>不是开箱即用的 SaaS</strong>，需要跑在自己机器上。不同系统的门槛差异明显：</p>
+    <ul class="checklist">
+      <li><strong>Windows</strong>：官方提供启动包，安装即用，门槛最低。</li>
+      <li><strong>macOS / Linux</strong>：需手动配置 Python 环境与依赖，按官方 README 逐步安装。</li>
+      <li><strong>配置</strong>：填入模型 API Key（如 OpenAI / DeepSeek / 通义），按需选择语音与输出比例。</li>
+      <li><strong>进阶</strong>：官方文档含案例演示与 API 接口说明，可基于此二次开发。</li>
+    </ul>
+    <div class="code-block">
+<span class="comment"># 获取项目（以官方仓库为准）</span>
+<span class="cmd">git clone https://github.com/harry0703/MoneyPrinterTurbo</span>
+<span class="comment"># 详细步骤见仓库 README 与官方文档</span>
+    </div>
+    <div class="info-box">
+      <div class="info-title">参考链接</div>
+      <ul>
+        <li>GitHub 主页：<a href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener">harry0703/MoneyPrinterTurbo</a></li>
+        <li>官方文档：含案例演示与 API 接口说明（以仓库 wiki / README 当前版本为准）</li>
+      </ul>
+    </div>
+
+    <h2 id="s6">六、怎么用 + 我的判断</h2>
+    <p>典型用法是一条直线：<strong>装好 → 填 Key → 输入关键词 → 选比例 / 语音 → 生成 → 批量 / 发布</strong>。配置一次之后，后续基本靠关键词驱动。</p>
+    <p>我的判断：</p>
+    <ul>
+      <li><strong>适合</strong>：想批量生产短视频的个人 IP、跨境 / 出海团队、需要多平台分发的小团队；以及把"做视频"当日常产出的人。</li>
+      <li><strong>注意</strong>：本地部署有门槛（尤其 Mac / Linux）；抽象主题素材需人工把关；依赖自备模型 Key，成本随用量增长。</li>
+      <li><strong>定位</strong>：它不是"剪辑软件替代"，而是"短视频流水线工厂"——把重复劳动自动化，让人只负责创意与审核。</li>
+    </ul>
+    <div class="pull-quote">
+      <p>它的价值不在"剪得有多炫"，而在让"产出短视频"这件事，从项目变成流水线。</p>
+    </div>
+
+  </article>
+
+  <div class="tag-cloud">
+    <a href="#">MoneyPrinterTurbo</a>
+    <a href="#">短视频</a>
+    <a href="#">开源工具</a>
+    <a href="#">AI视频</a>
+    <a href="#">自动化</a>
+    <a href="#">内容创作</a>
+    <a href="#">批量生成</a>
+    <a href="#">短视频运营</a>
+  </div>
+  <a href="/craft/" class="back-link">返回技艺录</a>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var pb = document.getElementById('progressBar');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    var pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
+    pb.style.setProperty('--progress', pct + '%');
+  });
+  var tocLinks = document.querySelectorAll('#tocScroll a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({ id: id, el: el, link: a });
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 140;
+    var active = headings[0];
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+    if (active && active.link) {
+      active.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+  window.addEventListener('scroll', updateTOC);
+  var dotContainer = document.getElementById('pageDots');
+  var dotLinks = [];
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.id;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      h.el.scrollIntoView({ behavior: 'smooth' });
+    });
+    dotContainer.appendChild(a);
+    dotLinks.push({ el: h.el, link: a });
+  });
+  function updateDots() {
+    var scrollY = window.scrollY + window.innerHeight / 2;
+    var active = dotLinks[0];
+    for (var i = dotLinks.length - 1; i >= 0; i--) {
+      if (dotLinks[i].el.offsetTop <= scrollY) { active = dotLinks[i]; break; }
+    }
+    dotLinks.forEach(function(d) { d.link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateDots);
+  updateTOC();
+  updateDots();
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    var saved = localStorage.getItem('craft-theme');
+    if (saved === 'dark') { root.setAttribute('data-theme','dark'); btn.textContent='☀️'; }
+    else { root.setAttribute('data-theme','light'); btn.textContent='🌙'; }
+    btn.addEventListener('click', function(){
+      var dark = root.getAttribute('data-theme') === 'dark';
+      if (dark) { root.setAttribute('data-theme','light'); localStorage.setItem('craft-theme','light'); btn.textContent='🌙'; }
+      else { root.setAttribute('data-theme','dark'); localStorage.setItem('craft-theme','dark'); btn.textContent='☀️'; }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>

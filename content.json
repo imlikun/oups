@@ -950,6 +950,30 @@
       "status": "published",
       "link": "/craft/gemini-api-workbuddy-trae.html",
       "template": "A"
+    },
+    {
+      "id": "article-45",
+      "title": "OmniGet：把 1,800+ 网站内容「下载 + 学习」揽进一个桌面",
+      "slug": "omniget",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/omniget-cover.jpg",
+      "excerpt": "免费开源桌面应用（Rust+Tauri，GPL-3.0）：从 1,800+ 站点下载课程/视频/音频/电子书，内置播放器、PDF/EPUB 阅读器、笔记与间隔重复，下载完直接学。",
+      "tags": [
+        "OmniGet",
+        "媒体下载",
+        "开源工具",
+        "桌面应用",
+        "学习工具",
+        "课程下载",
+        "电子书",
+        "笔记"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-10",
+      "status": "published",
+      "link": "/craft/omniget.html",
+      "template": "C"
     }
   ],
   "projects": [
