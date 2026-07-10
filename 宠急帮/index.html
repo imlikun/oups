@@ -177,13 +177,41 @@
 </style>
 </head>
 <body>
+<div class="sgn-bar" id="sgnBar">
+  <div class="sgn-inner">
+    <a href="/" class="sgn-logo">李坤</a>
+    <nav class="sgn-links" aria-label="站点导航">
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/video-lab/">视频剪辑</a>
+      <a href="/notes/">随笔</a>
+      <a href="/daily-digest/">每日阅读</a>
+      <a href="/ai-radar/">AI 雷达</a>
+      <a href="/bigbang/">大爆炸</a>
+      <a href="/neuroflow/">NeuroFlow</a>
+      <a href="/yunlan/">云澜</a>
+      <a href="/pet-paws/">宠迹</a>
+      <a href="/宠急帮/" class="active">宠急帮</a>
+    </nav>
+  </div>
+</div>
+<style>
+.sgn-bar{position:sticky;top:0;z-index:1000;background:rgba(18,18,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;}
+.sgn-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 20px;height:52px;box-sizing:border-box;}
+.sgn-logo{color:#fff;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;letter-spacing:.5px;flex-shrink:0;}
+.sgn-logo:hover{color:#2997ff;}
+.sgn-links{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;flex:1;}
+.sgn-links::-webkit-scrollbar{display:none;}
+.sgn-links a{color:rgba(255,255,255,.62);text-decoration:none;font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:8px;white-space:nowrap;transition:color .18s,background .18s;}
+.sgn-links a:hover{color:#fff;background:rgba(255,255,255,.08);}
+.sgn-links a.active{color:#fff;background:rgba(41,151,255,.22);}
+@media(max-width:640px){.sgn-inner{gap:10px;padding:8px 14px;}.sgn-links a{padding:6px 9px;font-size:13px;}}
+</style>
+
 
 <div class="container">
 
-  <a href="/" class="back-link">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    返回首页
-  </a>
+  
 
   <!-- Hero -->
   <section class="hero reveal">
@@ -216,28 +244,28 @@
   <div class="phone-row">
     <div class="phone-group reveal reveal-delay-1">
       <div class="phone-frame">
-        <img src="screen-welcome.png" alt="宠急帮欢迎页" style="width:100%;height:auto;border-radius:22px;">
+        <img src="screen-welcome.jpg" alt="宠急帮欢迎页" style="width:100%;height:auto;border-radius:22px;">
       </div>
       <div class="phone-label">欢迎 · 服务预览</div>
       <div class="phone-label-sub">5 大服务模块 / 四步求助指引</div>
     </div>
     <div class="phone-group reveal reveal-delay-1">
       <div class="phone-frame">
-        <img src="screen-asker-home.png" alt="求助者首页" style="width:100%;height:auto;border-radius:22px;">
+        <img src="screen-asker-home.jpg" alt="求助者首页" style="width:100%;height:auto;border-radius:22px;">
       </div>
       <div class="phone-label">求助者 · 首页</div>
       <div class="phone-label-sub">极速响应卡片 / 一键发布需求</div>
     </div>
     <div class="phone-group reveal reveal-delay-2">
       <div class="phone-frame">
-        <img src="screen-publish.png" alt="发布需求页" style="width:100%;height:auto;border-radius:22px;">
+        <img src="screen-publish.jpg" alt="发布需求页" style="width:100%;height:auto;border-radius:22px;">
       </div>
       <div class="phone-label">发布 · 下单</div>
       <div class="phone-label-sub">宠物信息 + 服务类型 + 时间</div>
     </div>
     <div class="phone-group reveal reveal-delay-3">
       <div class="phone-frame">
-        <img src="screen-helper-pool.png" alt="帮助者待接单" style="width:100%;height:auto;border-radius:22px;">
+        <img src="screen-helper-pool.jpg" alt="帮助者待接单" style="width:100%;height:auto;border-radius:22px;">
       </div>
       <div class="phone-label">帮助者 · 接单池</div>
       <div class="phone-label-sub">实时订单 / 一键确认接单</div>

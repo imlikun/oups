@@ -383,6 +383,37 @@
 </style>
 </head>
 <body>
+<div class="sgn-bar" id="sgnBar">
+  <div class="sgn-inner">
+    <a href="/" class="sgn-logo">李坤</a>
+    <nav class="sgn-links" aria-label="站点导航">
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/video-lab/">视频剪辑</a>
+      <a href="/notes/">随笔</a>
+      <a href="/daily-digest/">每日阅读</a>
+      <a href="/ai-radar/">AI 雷达</a>
+      <a href="/bigbang/" class="active">大爆炸</a>
+      <a href="/neuroflow/">NeuroFlow</a>
+      <a href="/yunlan/">云澜</a>
+      <a href="/pet-paws/">宠迹</a>
+      <a href="/宠急帮/">宠急帮</a>
+    </nav>
+  </div>
+</div>
+<style>
+.sgn-bar{position:sticky;top:0;z-index:1000;background:rgba(18,18,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;}
+.sgn-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 20px;height:52px;box-sizing:border-box;}
+.sgn-logo{color:#fff;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;letter-spacing:.5px;flex-shrink:0;}
+.sgn-logo:hover{color:#2997ff;}
+.sgn-links{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;flex:1;}
+.sgn-links::-webkit-scrollbar{display:none;}
+.sgn-links a{color:rgba(255,255,255,.62);text-decoration:none;font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:8px;white-space:nowrap;transition:color .18s,background .18s;}
+.sgn-links a:hover{color:#fff;background:rgba(255,255,255,.08);}
+.sgn-links a.active{color:#fff;background:rgba(41,151,255,.22);}
+@media(max-width:640px){.sgn-inner{gap:10px;padding:8px 14px;}.sgn-links a{padding:6px 9px;font-size:13px;}}
+</style>
+
 
 <!-- Nav -->
 <nav class="nav">
