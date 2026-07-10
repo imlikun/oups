@@ -814,19 +814,27 @@
     .footer-qr-card {
       display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
+    .footer-qr-title { font-size: 13px; color: var(--text-tertiary); letter-spacing: 2px; font-weight: 600; margin-bottom: 18px; }
     .footer-qr-img {
-      width: 96px; height: 96px; border-radius: 16px;
+      position: relative;
+      width: 112px; height: 112px; border-radius: 16px;
       background: #fff; padding: 8px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      transition: transform 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex; align-items: center; justify-content: center;
     }
-    .footer-qr-img:hover { transform: scale(1.06); }
-    .footer-qr-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+    .footer-qr-img::after {
+      content: "二维码"; position: absolute; font-size: 12px; color: rgba(0,0,0,0.3);
+    }
+    .footer-qr-img img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; background: #fff; }
+    .footer-qr-img:hover { transform: scale(1.08); box-shadow: 0 10px 32px rgba(0,0,0,0.18); }
     .footer-qr-label {
       font-size: 12px; color: var(--text-secondary); font-weight: 500;
       display: flex; align-items: center; gap: 5px;
     }
     .footer-qr-label svg { opacity: 0.6; }
+    .footer-qr-hint { font-size: 11px; color: var(--text-quaternary); margin-top: -4px; }
+    .light .footer-qr-hint { color: rgba(0,0,0,0.4); }
     .footer-icp { margin-top: 16px; font-size: 12px; color: var(--text-quaternary, rgba(255,255,255,0.35)); }
     .light .footer-icp { color: var(--text-quaternary, rgba(0,0,0,0.3)); }
     .footer-icp a { color: inherit; text-decoration: none; transition: color 0.2s; }
@@ -1309,27 +1317,31 @@
   </section>
 
   <footer class="footer">
+    <div class="footer-qr-title reveal">找到我 · 关注更新</div>
     <div class="footer-qr-row reveal">
       <div class="footer-qr-card">
-        <div class="footer-qr-img"><img src="uploads/qr-wechat-mp.png" alt="微信公众号二维码" onerror="this.parentElement.style.display='none'"></div>
+        <div class="footer-qr-img"><img src="uploads/qr-wechat-mp.png" alt="微信公众号二维码" onerror="this.style.display='none'"></div>
         <span class="footer-qr-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 13.5a1 1 0 110-2 1 1 0 010 2zm6 0a1 1 0 110-2 1 1 0 010 2zm-2.5-9C5.6 4.5 0 8.3 0 13c0 2.4 1.4 4.6 3.6 6L3 21l3.2-1.6c1 .3 2 .4 3.1.4h.5c-.2-.6-.3-1.2-.3-1.9 0-3.6 3.4-6.5 7.6-6.5h.5C17 7.6 11.9 4.5 12 4.5zM22 14.4c0-2.8-2.9-5.1-6.4-5.1S9.2 11.6 9.2 14.4s2.9 5.1 6.4 5.1c.7 0 1.4-.1 2.1-.3L20 20.5l-.5-2c1.5-.9 2.5-2.4 2.5-4.1z"/></svg>
           微信公众号
         </span>
+        <span class="footer-qr-hint">微信扫一扫关注</span>
       </div>
       <div class="footer-qr-card">
-        <div class="footer-qr-img"><img src="uploads/qr-wechat-channel.png" alt="微信视频号二维码" onerror="this.parentElement.style.display='none'"></div>
+        <div class="footer-qr-img"><img src="uploads/qr-wechat-channel.png" alt="微信视频号二维码" onerror="this.style.display='none'"></div>
         <span class="footer-qr-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
           微信视频号
         </span>
+        <span class="footer-qr-hint">微信扫一扫观看</span>
       </div>
       <div class="footer-qr-card">
-        <div class="footer-qr-img"><img src="uploads/qr-bilibili.png" alt="哔哩哔哩主页二维码" onerror="this.parentElement.style.display='none'"></div>
+        <div class="footer-qr-img"><img src="uploads/qr-bilibili.png" alt="哔哩哔哩主页二维码" onerror="this.style.display='none'"></div>
         <span class="footer-qr-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3L21 6.2v2.3c0 .8-.3 1.5-.8 2 .5.5.8 1.2.8 2v5.3c0 1.5-1.2 2.8-2.8 2.8H5.8C4.2 20.6 3 19.3 3 17.8v-5.3c0-.8.3-1.5.8-2-.5-.5-.8-1.2-.8-2V6.2L6.2 3h2.3l2 2h3l2-2h2.3zM6 11.5v6.3h12v-6.3H6zm2 1.5h2v3H8v-3zm6 0h2v3h-2v-3z"/></svg>
           哔哩哔哩
         </span>
+        <span class="footer-qr-hint">点击进入主页</span>
       </div>
     </div>
     <p>李坤 · 策划经理 / 产品经理</p>
