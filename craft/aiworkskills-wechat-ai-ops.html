@@ -134,6 +134,14 @@ body {
   .article-body h2 { font-size:21px; }
   .page { padding:0 16px 60px; }
 }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
 </style>
 </head>
 <body>
@@ -160,6 +168,11 @@ body {
   </div>
   <div class="hero-divider"></div>
 </section>
+
+<div class="hero-cover">
+  <img src="/uploads/aiworkskills-wechat-ai-ops-cover.jpg" alt="aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程" loading="eager" />
+</div>
+
 
 <div class="page">
   <aside class="toc-sidebar" id="toc">
