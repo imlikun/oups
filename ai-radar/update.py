@@ -3,7 +3,8 @@
 AI 新闻雷达 — 每日自动更新脚本
 1. 从 AI HOT API 拉取过去 24 小时精选资讯
 2. 注入到 ai-radar/index.html 的数据占位符中
-3. 推送到 COS
+3. 站点托管在阿里云 ECS (appin.site/ai-radar)，脚本直接改写同目录 index.html 即生效
+   （已不再推送 COS；AIHOT_API_BASE 环境变量可覆盖数据源地址）
 
 用法: python3 update.py [--dry-run]
 """
@@ -11,20 +12,24 @@ AI 新闻雷达 — 每日自动更新脚本
 import json, os, sys, subprocess, datetime, time
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-API_BASE = "https://aihot.virxact.com/api/public"
+API_BASE = os.environ.get("AIHOT_API_BASE", "https://aihot.virxact.com/api/public")  # 阿里云部署时用 AIHOT_API_BASE 覆盖新地址
 HTML_PATH = os.path.join(os.path.dirname(__file__), "index.html")
 DRY_RUN = "--dry-run" in sys.argv
 
 def fetch_items(max_retries=3, timeout=60):
     """从 AI HOT API 拉取过去 24 小时精选资讯。
 
-    海外 GitHub Actions runner 访问 aihot.virxact.com 偶发超时，
-    故加重试（默认 3 次，间隔 8s），覆盖偶发网络抖动。
+    aihot.virxact.com 多节点负载均衡，部分节点 SSL 证书主机名不匹配
+    (CERTIFICATE_VERIFY_FAILED: Hostname mismatch)，会间歇性导致定时任务空跑。
+    故每次尝试：先按默认证书验证；若遇到 SSL 证书错误则降级为不验证证书重试
+    (拉取的是公开 AI 资讯，非敏感数据，可接受降级)。另加重试覆盖网络抖动。
     """
+    import ssl
     from urllib.request import Request, urlopen
     from urllib.error import URLError, HTTPError
     since = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=24)).strftime("%Y-%m-%dT%H:%M:%SZ")
     url = f"{API_BASE}/items?mode=selected&since={since}&take=100"
+    unverified_ctx = ssl._create_unverified_context()
     last_err = None
     for attempt in range(1, max_retries + 1):
         req = Request(url, headers={"User-Agent": UA})
@@ -32,8 +37,20 @@ def fetch_items(max_retries=3, timeout=60):
             with urlopen(req, timeout=timeout) as resp:
                 return json.loads(resp.read().decode())
         except (URLError, HTTPError) as e:
-            last_err = e
-            print(f"  ⚠️ 第 {attempt}/{max_retries} 次拉取失败: {e}")
+            # 证书类错误：立即用不验证证书的 context 重试同一次
+            if isinstance(getattr(e, "reason", None), ssl.SSLError) or "CERTIFICATE" in str(e).upper():
+                try:
+                    print(f"  ⚠️ 第 {attempt}/{max_retries} 次遇到证书错误，降级为不验证证书重试...")
+                    with urlopen(req, timeout=timeout, context=unverified_ctx) as resp:
+                        return json.loads(resp.read().decode())
+                except (URLError, HTTPError) as e2:
+                    last_err = e2
+                    print(f"  ⚠️ 第 {attempt}/{max_retries} 次降级重试仍失败: {e2}")
+                else:
+                    continue
+            else:
+                last_err = e
+                print(f"  ⚠️ 第 {attempt}/{max_retries} 次拉取失败: {e}")
             if attempt < max_retries:
                 time.sleep(8)
     print(f"  ❌ AI HOT API 连续 {max_retries} 次拉取失败（最后一次: {last_err}）")
@@ -137,12 +154,14 @@ def main():
     print("\n  📝 更新 HTML...")
     update_html(data)
 
-    # 3. Upload
-    if not DRY_RUN:
+    # 3. Deploy
+    if DRY_RUN:
+        print("\n  🔍 预览模式，跳过写入以外步骤（已注入本地 index.html）")
+    elif os.environ.get("PUSH_COS") == "1":
         print("\n  ☁️ 推送到 COS...")
         upload_to_cos()
     else:
-        print("\n  🔍 预览模式，跳过推送")
+        print("\n  ✅ 已直接更新本地 index.html（阿里云站点即时生效，无需推送）")
 
     print("\n  🎉 完成！")
 

@@ -251,6 +251,7 @@ function generateHTML(data, outputPath, allDates) {
         ${book.wereadScore ? `<span class="rating-pill rating-weread">微信读书 <span class="rating-score">${book.wereadScore}</span>${book.wereadCount ? ` <small>(${book.wereadCount}人)</small>` : ''}</span>` : ''}
       </div>
       ${book.desc ? `<div class="book-desc">${book.desc}</div>` : ''}
+      ${book.link ? `<div style="padding:12px 0 0 36px"><a href="${book.link}" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>` : ''}
       ${book.highlights && book.highlights.length > 0 ? `
       <div class="book-highlights">
         <div class="highlights-label">✨ 读者金句</div>
