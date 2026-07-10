@@ -879,6 +879,56 @@
       "status": "published",
       "link": "/craft/ai-free-credits-guide-2026-07.html",
       "template": "C"
+    },
+    {
+      "id": "article-42",
+      "title": "aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程",
+      "slug": "aiworkskills-wechat-ai-ops",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/aiworkskills-wechat-ai-ops-cover.jpg",
+      "excerpt": "一款开源的公众号 AI 运营工具，把选题、写作、审稿、排版、配图、直发拆成可复用技能模块，内置业务资料库，支持 13+ 模型与可视化编排。",
+      "content": "详见独立文章页：/craft/aiworkskills-wechat-ai-ops.html",
+      "tags": [
+        "aiworkskills",
+        "公众号运营",
+        "AI工具",
+        "开源",
+        "技能模块",
+        "业务资料库",
+        "运营自动化",
+        "内容创作"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-10",
+      "status": "published",
+      "link": "/craft/aiworkskills-wechat-ai-ops.html",
+      "template": "A"
+    },
+    {
+      "id": "article-43",
+      "title": "每日阅读 | 2026-07-08",
+      "slug": "daily-reading-2026-07-08",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/daily-reading-2026-07-08-cover.jpg",
+      "excerpt": "每天为你筛选最值得读的内容——6 大板块、23 条精选、3 本好书，覆盖商业、科技、汽车、养老、心理与人文。",
+      "content": "详见独立文章页：/craft/daily-reading-2026-07-08.html",
+      "tags": [
+        "每日阅读",
+        "商业",
+        "科技",
+        "汽车",
+        "养老",
+        "心理学",
+        "好书推荐",
+        "阅读"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-08",
+      "status": "published",
+      "link": "/craft/daily-reading-2026-07-08.html",
+      "template": "A"
     }
   ],
   "projects": [

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程</title>
+<meta name="description" content="aiworkskills 是一款开源的公众号 AI 运营工具，将选题、写作、审稿、排版、配图、直发全流程拆解为可复用技能模块，内置业务资料库，支持 13+ 模型与可视化配置。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* ---- Hero ---- */
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+
+/* ---- Layout ---- */
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+
+/* ---- TOC Sidebar ---- */
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+
+/* ---- Article Body ---- */
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+
+/* Section Image (cover) */
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+
+/* Module Card (9 skills) */
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+
+/* Pipeline */
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+
+/* Info Box */
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+
+/* Pull Quote */
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+
+/* Tag Cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+
+/* Back */
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+/* Footer */
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>工具拆解 · AI 运营</div>
+  <h1>aiworkskills：一句话，跑完公众号运营全流程</h1>
+  <p class="hero-desc">一款开源的公众号 AI 运营工具，把选题、写作、审稿、排版、配图、直发拆成可复用技能模块，内置业务资料库，支持 13+ 模型与可视化编排。说一句话，自动跑完整条流水线。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-07-10</span><span class="dot"></span>
+    <span>工具拆解</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+  <aside class="toc-sidebar" id="toc">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">它解决什么问题</a></li>
+      <li><a href="#s2">9 大技能模块拆解</a></li>
+      <li><a href="#s3">内置业务资料库</a></li>
+      <li><a href="#s4">模型与配置平台</a></li>
+      <li><a href="#s5">一句话触发全流程</a></li>
+      <li><a href="#s6">我的判断：适合谁</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+    <div class="section-img">
+      <img src="/uploads/aiworkskills-wechat-ai-ops-cover.jpg" alt="aiworkskills 公众号 AI 运营工具封面">
+      <div class="caption">△ 把运营拆成技能，让"发一篇推文"变成"说一句话"</div>
+    </div>
+
+    <h2 id="s1">一、它解决什么问题</h2>
+    <p>公众号运营看似只是"写篇文章"，实则是一条很长的链路：<strong>选题 → 写作 → 审稿 → 排版 → 配图 → 发布</strong>。每一步都要切换工具、重复交代背景、手动调格式。单次对话式 AI 能帮你写，但写完了，排版、配图、发布还是得自己来——环节之间是断的。</p>
+    <p>aiworkskills 的思路是：<strong>不把 AI 当"写手"，而把运营当"流程"</strong>，把整条链路拆成可复用的技能模块，让一句话就能驱动从选题到发布的全过程。它面向的不是"偶尔写一条"的用户，而是有固定运营节奏、想把重复劳动自动化掉的账号主理人。</p>
+
+    <h2 id="s2">二、9 大技能模块拆解</h2>
+    <p>官方将公众号运营拆解为 <strong>9 个技能模块</strong>，形成一条完整的自动化流水线。其中公开资料明确列出 6 个核心模块，整体覆盖从选题到发布的全链路：</p>
+
+    <div class="pipeline">
+      <span class="step">选题调研</span><span class="arrow">→</span>
+      <span class="step">AI 写作</span><span class="arrow">→</span>
+      <span class="step">审稿校对</span><span class="arrow">→</span>
+      <span class="step">排版</span><span class="arrow">→</span>
+      <span class="step">配图</span><span class="arrow">→</span>
+      <span class="step">微信直发</span><span class="arrow">→</span>
+      <span class="step">… 更多模块</span>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">选题调研</span></div>
+      <p class="mc-desc">基于热点与业务资料库，自动推荐 <strong>3-5 个选题</strong>，并附带切入角度与预期效果，解决"今天到底写什么"的开局难题。</p>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">AI 写作</span></div>
+      <p class="mc-desc">严格遵循预设的<strong>文风规范</strong>（语气、结构、篇幅、禁忌词），一次性产出贴合账号调性的初稿，而非每次都要重新"教" AI 怎么写。</p>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">审稿校对</span></div>
+      <p class="mc-desc">内置<strong>敏感词检测</strong>与事实/语气核对，把合规风险挡在发布之前，降低人工终审的负担。</p>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">4</span><span class="mc-title">排版</span></div>
+      <p class="mc-desc">提供 <strong>4 套主题</strong>一键套用，标题层级、留白、配色统一，告别每次手动调格式的繁琐。</p>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">5</span><span class="mc-title">配图</span></div>
+      <p class="mc-desc">支持 <strong>14 种风格</strong>可选（插画、实拍、扁平、国潮等），按文章调性自动匹配首图与内文配图。</p>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">6</span><span class="mc-title">微信直发</span></div>
+      <p class="mc-desc">对接公众号接口，将成稿<strong>直接推送为草稿或定时发布</strong>，省去从编辑器复制粘贴到后台的最后一步。</p>
+    </div>
+
+    <div class="info-box">
+      <p><strong>关于"9 个模块"：</strong>公开资料明确列出上述 6 个核心模块，并说明整条流水线共拆为 9 个技能。其余模块（如发布管理、数据复盘、多端同步等）以平台实际版本为准，建议以 <a href="https://aiworkskills.cn" target="_blank" rel="noopener">aiworkskills.cn</a> 与 <a href="https://github.com/aiworkskills/wechat-article-skills" target="_blank" rel="noopener">GitHub 仓库</a> 的当前文档为准。</p>
+    </div>
+
+    <h2 id="s3">三、内置业务资料库：真正的效率护城河</h2>
+    <p>aiworkskills 最有价值的不是"能写"，而是<strong>记得住背景</strong>。它内置一个业务资料库：把产品介绍、品牌调性、卖点话术、常见问答、历史爆文统一存进去，AI 写作时直接调用，不用每次重复交代。</p>
+    <p>这相当于把"公司的脑子"变成了一个<strong>可检索、可复用的知识底座</strong>。带来的直接好处是：新人接手也能写出"老员工味"，多账号、多产品线能统一口径，同一个卖点不会每次都被重新解释一遍。</p>
+    <div class="pull-quote">
+      <p>没有资料库的 AI 写作，每次都是"从零教起"；有资料库的 AI 写作，才是"带着公司记忆在干活"。</p>
+    </div>
+
+    <h2 id="s4">四、支持的模型与配置平台</h2>
+    <p>工具本身不绑定单一大模型，而是做一个<strong>模型无关的编排层</strong>。公开资料显示其支持 <strong>13+ 模型</strong>，涵盖 QClaw、WorkBuddy、Claude、Cursor 等 Claw 系列工具，并持续扩展。</p>
+    <ul>
+      <li><strong>可视化配置平台</strong>：通过 <a href="https://aiworkskills.cn" target="_blank" rel="noopener">aiworkskills.cn</a>，不写代码也能编排技能、绑定模型、管理业务资料库。</li>
+      <li><strong>开源可自托管</strong>：项目托管在 GitHub（<a href="https://github.com/aiworkskills/wechat-article-skills" target="_blank" rel="noopener">aiworkskills/wechat-article-skills</a>），可私有部署、可二次开发，数据与控制权留在自己手里。</li>
+      <li><strong>模型灵活切换</strong>：不同环节可挂不同模型（如写作用强推理模型、配图用图像模型），按成本与效果自由组合。</li>
+    </ul>
+
+    <h2 id="s5">五、怎么用：一句话触发全流程</h2>
+    <p>典型用法是<strong>自然语言驱动</strong>。你只需说一句话，例如：</p>
+    <div class="info-box">
+      <p>「帮我写一篇关于 <strong>XX 新品体验</strong> 的推文，按品牌调性排版，配好图，发到公众号。」</p>
+      <p>→ 自动完成：选题调研 → AI 写作 → 审稿校对 → 排版 → 配图 → 微信直发。</p>
+    </div>
+    <p>配置一次（资料库 + 模型 + 文风规范）之后，后续基本靠一句话驱动。它最适合的是<strong>有固定运营节奏</strong>的账号——日更、周更、活动期集中发稿，都能把"发文章"降级为"说句话"。</p>
+
+    <h2 id="s6">六、我的判断：适合谁</h2>
+    <p>综合它的定位，我认为 aiworkskills 的价值与边界大致如下：</p>
+    <ul>
+      <li><strong>适合</strong>：公众号主理人、小团队内容运营、需要把"发文章"变成"说句话"的人；以及多产品线、多账号、需要统一口径的运营场景。</li>
+      <li><strong>注意</strong>：效果高度依赖<strong>业务资料库的质量</strong>（垃圾进、垃圾出）；金融、医疗等强合规行业仍需人工终审；作为开源项目，需要自行部署、配置模型 Key 与公众号接口权限。</li>
+      <li><strong>对比</strong>：相比纯对话式 AI，它把"写"升级成"写 + 审 + 排 + 发"的闭环；相比 SaaS 排版工具，它多了内容与分发的一体化，而不只是美化版面。</li>
+    </ul>
+    <div class="pull-quote">
+      <p>它的本质不是"更会写的 AI"，而是一套"把运营经验沉淀成可复用技能"的编排系统。资料库建得越好，自动化越像"另一个你"。</p>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="/craft/">aiworkskills</a>
+      <a href="/craft/">公众号运营</a>
+      <a href="/craft/">AI 工具</a>
+      <a href="/craft/">开源</a>
+      <a href="/craft/">技能模块</a>
+      <a href="/craft/">业务资料库</a>
+      <a href="/craft/">运营自动化</a>
+      <a href="/craft/">内容创作</a>
+      <a href="/craft/">WorkBuddy</a>
+      <a href="/craft/">Claw 系列</a>
+    </div>
+
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var tocLinks = document.querySelectorAll('.toc-list a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({id:id, el:el, link:a});
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length-1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>
