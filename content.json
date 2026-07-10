@@ -904,31 +904,6 @@
       "status": "published",
       "link": "/craft/aiworkskills-wechat-ai-ops.html",
       "template": "A"
-    },
-    {
-      "id": "article-43",
-      "title": "每日阅读 | 2026-07-08",
-      "slug": "daily-reading-2026-07-08",
-      "category": "craft",
-      "featured": true,
-      "image": "uploads/daily-reading-2026-07-08-cover.jpg",
-      "excerpt": "每天为你筛选最值得读的内容——6 大板块、23 条精选、3 本好书，覆盖商业、科技、汽车、养老、心理与人文。",
-      "content": "详见独立文章页：/craft/daily-reading-2026-07-08.html",
-      "tags": [
-        "每日阅读",
-        "商业",
-        "科技",
-        "汽车",
-        "养老",
-        "心理学",
-        "好书推荐",
-        "阅读"
-      ],
-      "videoUrl": "",
-      "date": "2026-07-08",
-      "status": "published",
-      "link": "/craft/daily-reading-2026-07-08.html",
-      "template": "A"
     }
   ],
   "projects": [
