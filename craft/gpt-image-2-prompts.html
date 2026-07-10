@@ -178,10 +178,10 @@ body {
 
 /* ---- Hero Cover (首图) ---- */
 .hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
-.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block;  max-height:460px; object-fit:cover;}
 @media(max-width:640px) {
   .hero-cover { margin-top:-16px; padding:0 12px; }
-  .hero-cover img { border-radius:10px; }
+  .hero-cover img { border-radius:10px;  max-height:460px; object-fit:cover;}
 }
 
 </style>
