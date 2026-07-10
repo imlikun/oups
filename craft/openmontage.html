@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenMontage：把你的 AI 编程助手，变成一整间视频工作室</title>
+<meta name="description" content="OpenMontage 是世界首个开源 Agent 视频生产系统（AGPL-3.0，7k+ stars）：12 条生产管线、52 个工具、500+ 智能体技能，把 Claude Code / Cursor / Copilot 等 AI 编程助手变成涵盖调研、脚本、素材、剪辑、渲染的完整视频工作室，且零 API Key 也能出片。">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 560px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; vertical-align: top; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: var(--body-strong); }
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block;  max-height:460px; object-fit:cover;}
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px;  max-height:460px; object-fit:cover;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+<nav class="page-dot" id="pageDots"></nav>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>工具拆解 · Agent 视频生产</div>
+    <h1>OpenMontage：把你的 AI 编程助手，变成<em>一整间视频工作室</em></h1>
+    <p class="hero-desc">世界首个开源 Agent 视频生产系统（AGPL-3.0，7k+ stars）：12 条生产管线、52 个工具、500+ 智能体技能，把 Claude Code / Cursor / Copilot 变成涵盖调研、脚本、素材、剪辑、渲染的完整工作室——且零 API Key 也能出片。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-11</span><span class="sep"></span>
+      <span>约 7 分钟阅读</span>
+    </div>
+  </div>
+</section>
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#s1">它是什么</a>
+    <a href="#s2">核心能力拆解</a>
+    <a href="#s3">真实素材 · 零成本</a>
+    <a href="#s4">成本治理与质控</a>
+    <a href="#s5">部署与安装</a>
+    <a href="#s6">我的判断</a>
+  </div>
+</div>
+<div class="hero-cover">
+  <img src="/uploads/openmontage-cover.jpg" alt="OpenMontage Agent 视频生产系统" loading="eager" />
+</div>
+<div class="article-wrap">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p>OpenMontage 是一个基于 <strong>AI Agent 架构的开源视频制作系统</strong>。它包含 12 条生产流水线、52 个专业工具、500+ 智能体技能——从创意构思、脚本撰写、素材生成到剪辑合成，全流程由 AI 自动编排。一句话：你用自然语言描述想要什么视频，AI Agent 帮你完成从零到成品的所有工作。</p>
+    <p>它和「提示词 → 5 秒视频」类工具的根本区别在于：普通 AI 视频工具只产出几秒片段，没有调研、脚本、剪辑、质控的完整链路；OpenMontage 是<strong>端到端的流水线</strong>，且这些技能协同模拟真实视频团队的工作流——把代码 / Codex 直接转化为完整视频内容。</p>
+    <div class="highlight-box">
+      <p>一句话定位：你的 AI 编程助手（Claude Code / Cursor / Copilot / Windsurf / Codex）就是编排器，OpenMontage 让它自主跑完「调研 → 提案 → 脚本 → 场景 → 素材 → 剪辑 → 渲染」全链路。</p>
+    </div>
+
+    <h2 id="s2">二、核心能力拆解</h2>
+    <p>OpenMontage 的能力可以拆成三层：流水线定义「做什么样的视频」，工具提供「怎么生产」，技能教 AI「怎么像个专家一样用工具」。</p>
+    <ol class="step-list">
+      <li><span class="step-label">12 条生产管线</span><p>动画解说、电影预告片、纪录片蒙太奇、Talking Head、短视频批量生产、播客转视频、本地化 / 配音、屏幕演示等——覆盖视频制作全场景。</p></li>
+      <li><span class="step-label">52 个专业工具</span><p>视频生成、图像生成、TTS 配音、音乐生成、音频混音、字幕、画面增强、分析等，拼出完整制作链路。</p></li>
+      <li><span class="step-label">500+ 智能体技能</span><p>每个工具都有对应的技能文件，教 AI 如何像专家一样使用它们——这是它区别于「裸调 API」的关键。</p></li>
+      <li><span class="step-label">参考视频驱动</span><p>粘贴一个你喜欢的 YouTube / Reel / TikTok 链接，AI 分析它的节奏、风格、结构，帮你创建差异化版本，而非凭空猜。</p></li>
+    </ol>
+
+    <h2 id="s3">三、真实素材 · 零成本</h2>
+    <p>它不依赖「付费用 AI 生成几秒片段」，而是尽量用真实、可商用的素材把视频做出来：</p>
+    <ul>
+      <li><strong>真实素材纪录片</strong>：支持从 Archive.org、NASA、Wikimedia Commons 等免费开放资源中检索和剪辑真实影像，做真正的纪录片蒙太奇。</li>
+      <li><strong>零 API Key 也能跑</strong>：内置 Piper TTS（离线语音合成）、免费素材源、Remotion / HyperFrames 合成引擎，完全免费也能制作视频。</li>
+      <li><strong>CLIP 语义检索 + 免费素材库</strong>：把「想要什么画面」翻译成可检索的真实素材，而不是硬生成。</li>
+    </ul>
+    <div class="info-box">
+      <p class="info-title">和普通 AI 视频工具的区别</p>
+      <p>Sora / Kling 类只生成几秒片段，没有调研、脚本、剪辑、质控的完整链路；OpenMontage 是端到端流水线，且 Agent-First——你的 AI 编程助手就是编排器。</p>
+    </div>
+
+    <h2 id="s4">四、成本治理与质量把关</h2>
+    <p>把 AI 编程助手变成视频工作室，最怕两件事：账单炸了、成品是废品。OpenMontage 用两套机制兜住：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>做法</th></tr></thead>
+        <tbody>
+          <tr><td><strong>成本治理</strong></td><td>7 维度评分 + 成本预估 + 预算上限 + 人工审批，杜绝意外账单；每次制作前先给预估。</td></tr>
+          <tr><td><strong>质量把关</strong></td><td>渲染前验证、渲染后自检（ffprobe + 帧采样 + 音频分析 + 字幕检查），确保不出废品。</td></tr>
+          <tr><td><strong>决策可追溯</strong></td><td>每个 Provider 选择跨 7 维度打分，留可追溯决策日志；每个创作决策需你审批。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s5">五、部署与安装</h2>
+    <p>前置依赖（门槛不高，但要齐）：</p>
+    <ul class="checklist">
+      <li>Python 3.10+（python.org）</li>
+      <li>Node.js 18+（nodejs.org）</li>
+      <li>FFmpeg 最新版（brew install ffmpeg / apt install ffmpeg）</li>
+      <li>一个 AI 编程助手：Claude Code / Cursor / Copilot / Windsurf / Codex</li>
+    </ul>
+    <div class="code-block">
+<span class="comment"># 克隆仓库</span>
+git clone https://github.com/calesthio/OpenMontage.git
+cd OpenMontage
+
+<span class="comment"># 一键安装</span>
+make setup
+
+<span class="comment"># 运行演示</span>
+make demo
+
+<span class="comment"># 渲染特定演示</span>
+./render-demo.sh world-in-numbers
+
+<span class="comment"># Windows：若 npm install 失败</span>
+npx --yes npm install
+
+<span class="comment"># 配置（把 .env.example 复制为 .env 并填 Key）</span>
+cp .env.example .env
+    </div>
+    <p>然后在你的 AI 编程助手里打开项目，直接说一句话就行：<em>「做一个 60 秒的动画解说，讲神经网络怎么学习」</em>，或真实影像路线：<em>「做一个 75 秒的纪录片蒙太奇，关于雨中的城市生活，只用真实素材、无旁白、挽歌基调、配乐」</em>。</p>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：已经在用 AI 编程助手、想把「写代码」的能力拓展到「做视频」的人；需要批量生产短视频 / 解说 / 纪录片的内容团队；想要可审查、可定制、成本可控的视频流水线的人。</p>
+    <p><strong>注意</strong>：① 仍处于 <strong>Beta / 早期活跃开发</strong>阶段，无正式 release 版本，稳定性待验证；② 协议是 <strong>AGPL-3.0</strong>，商业化需留意义务；③ 依赖 AI 编程助手环境，纯小白上手有门槛；④ 抽象主题的素材匹配偶有违和，需人工筛选（和 MoneyPrinterTurbo 类似）。star 数 7k+，但请自担早期项目风险。</p>
+    <p><strong>定位</strong>：它不是「提示词 → 5 秒视频」的玩具，而是 <strong>Agent 驱动的端到端视频生产系统</strong>——把真实视频团队的工作流（调研、提案、脚本、场景、素材、剪辑、渲染）压缩进一条可编排的流水线。如果你要的是「从一句话到成片」的整套能力，它比单点生成器完整得多。</p>
+
+    <div class="tag-cloud">
+      <a href="#">OpenMontage</a><a href="#">Agent 视频</a><a href="#">AI 视频</a><a href="#">视频生产</a>
+      <a href="#">Claude Code</a><a href="#">Remotion</a><a href="#">开源</a><a href="#">自动化剪辑</a>
+      <a href="#">短视频</a><a href="#">AGPL-3.0</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/calesthio/OpenMontage">calesthio/OpenMontage</a> 开源项目</p>
+</footer>
+<script>
+(function(){
+  var bar = document.getElementById('progressBar');
+  var toc = document.getElementById('tocScroll');
+  var dotsWrap = document.getElementById('pageDots');
+  var links = toc ? [].slice.call(toc.querySelectorAll('a')) : [];
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  // page dots
+  if(dotsWrap && sections.length){
+    sections.forEach(function(s){
+      var d = document.createElement('a');
+      d.href = '#' + s.id; d.textContent = s.id;
+      dotsWrap.appendChild(d);
+    });
+  }
+  var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('a')) : [];
+  function onScroll(){
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (sc / max) * 100 : 0;
+    if(bar) bar.style.setProperty('--progress', p + '%');
+    var idx = 0;
+    sections.forEach(function(s, i){ if(s.getBoundingClientRect().top <= 120) idx = i; });
+    links.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  // theme toggle
+  var tg = document.getElementById('themeToggle');
+  if(tg){
+    tg.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      tg.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇</title>
+<meta name="description" content="WebNovel Writer 是跑在 Claude Code 上的长篇网文创作插件，用 Story System（合同 + 章节提交 + 事件审计）解决 AI 写作的遗忘与幻觉，支持 200 万字量级连载，内置 8 个 Skill 命令与 37 个中文题材模板。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; max-height:460px; object-fit:cover;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源 · AI 写作工具</div>
+  <h1>WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇</h1>
+  <p class="hero-desc">一个跑在 Claude Code 上的长篇网文创作插件。它要解决的只有一件事——让 AI 写到几百章，依然记得住设定、接得住伏笔、守得住大纲。</p>
+  <div class="hero-meta">
+    <span>Claude Code 插件</span><span class="dot"></span>
+    <span>Story System 一致性引擎</span><span class="dot"></span>
+    <span>GPL v3</span><span class="dot"></span>
+    <span>v6.2.1</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/webnovel-writer-cover.jpg" alt="WebNovel Writer 封面">
+</div>
+
+<div class="page">
+  <aside class="toc-sidebar">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">它解决什么问题</a></li>
+      <li><a href="#s2">核心能力：8 个命令</a></li>
+      <li><a href="#s3">Story System 架构</a></li>
+      <li><a href="#s4">快速开始</a></li>
+      <li><a href="#s5">写章工作流</a></li>
+      <li><a href="#s6">我的判断</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+    <h2 id="s1">一、它解决什么问题</h2>
+    <p>长篇创作最难的不是写出第一章，而是写到第 80 章、第 200 章以后仍然保持：角色动机不漂移、战力/时间线/世界观不互相打架、伏笔有登记有回收、爽点与感情线保持节奏。普通 AI 写作写到十几章就开始「遗忘」和「幻觉」——把前面设定忘光，或凭空编造与已写内容冲突的情节。</p>
+    <p>WebNovel Writer 把上面这些「必须记住、不能写崩」的约束，变成 Claude Code 会自动执行的步骤：动笔前先查资料，写完后把新发生的事实记下来、做一致性审查，再同步进检索索引、章节摘要、长期记忆和可视化面板。它不只是一只会写的模型，而是<strong>边写边攒的一致性系统</strong>。</p>
+    <div class="info-box">
+      <p><strong>一句话定位</strong>：面向长篇连载的一致性系统，不是写完就忘的一次性生成器。官方称其支持 <strong>200 万字量级</strong> 的连载创作。</p>
+    </div>
+
+    <h2 id="s2">二、核心能力：8 个 Skill 命令</h2>
+    <p>整条创作流程被拆成 8 个 Claude Code Skill 命令，从初始化到审查、查询、沉淀记忆，串成一条闭环：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">/webnovel-init · 深度初始化</span></div>
+      <p class="mc-desc">分阶段问答，帮你把书的骨架、设定集、总纲和初始状态搭起来。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">/webnovel-plan · 卷纲规划</span></div>
+      <p class="mc-desc">基于总纲拆卷、拆章、补时间线，并写回新增设定。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">/webnovel-write · 章节创作</span></div>
+      <p class="mc-desc">一条龙写完一章：备上下文、起草、审查、润色、记录事实、自动备份。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">4</span><span class="mc-title">/webnovel-review · 质量审查</span></div>
+      <p class="mc-desc">从爽点、一致性、节奏、OOC、连贯性、追读力等维度审查章节。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">5</span><span class="mc-title">/webnovel-query · 状态查询</span></div>
+      <p class="mc-desc">查询角色、伏笔、节奏、实体关系和运行时信息。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">6</span><span class="mc-title">/webnovel-learn · 项目学习</span></div>
+      <p class="mc-desc">把这本书里好用的写法记下来，存进项目长期记忆。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">7</span><span class="mc-title">/webnovel-dashboard · 可视化面板</span></div>
+      <p class="mc-desc">只读浏览项目状态、实体图谱、章节内容和追读力数据。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">8</span><span class="mc-title">/webnovel-doctor · 项目体检</span></div>
+      <p class="mc-desc">阶段感知检查目录、文件、数据库、RAG、依赖和 Dashboard 产物。</p>
+    </div>
+
+    <h2 id="s3">三、Story System：一致性引擎</h2>
+    <p>v6.0.0 起上线的 <strong>Story System</strong> 是整套系统的核心，它把「怎么写」和「写了什么」分开：文笔和节奏可以放开发挥，但发生过的事实必须登记、过审、存档，不能含糊。</p>
+    <ul>
+      <li><strong>.story-system/</strong>：唯一的事实源头，动笔前的「合同」和写完后的「提交」都存在这里。</li>
+      <li><strong>accepted 的 CHAPTER_COMMIT</strong>：一章写完，新事实从这里入账。</li>
+      <li><strong>.webnovel/state.json、index.db、summaries/、memory_scratchpad.json</strong>：都是从主链派生出来的只读视图，供查询和展示用。</li>
+      <li><strong>projection_log.jsonl</strong>：投影执行日志，用来定位 state / index / summary / memory / vector 哪一路没同步。</li>
+    </ul>
+    <div class="pull-quote"><p>「边写边攒」——每章写完后事实会沉淀到可检索的状态系统，后续章节自动调用，这才是它对抗遗忘和幻觉的真正武器。</p></div>
+
+    <h2 id="s4">四、快速开始</h2>
+    <p>通过 Claude Code Marketplace 安装插件，再装 Python 依赖并初始化一本书：</p>
+    <div class="info-box">
+      <p><strong>1. 安装插件</strong></p>
+      <p class="mc-desc">claude plugin marketplace add lingfengQAQ/webnovel-writer --scope user</p>
+      <p class="mc-desc">claude plugin install webnovel-writer@webnovel-writer-marketplace --scope user</p>
+      <p><strong>2. 安装 Python 依赖</strong></p>
+      <p class="mc-desc">pip install -r https://raw.githubusercontent.com/lingfengQAQ/webnovel-writer/HEAD/requirements.txt</p>
+      <p><strong>3. 初始化一本书</strong></p>
+      <p class="mc-desc">在 Claude Code 中输入 /webnovel-init，会创建书项目目录（含 .story-system / 正文 / 大纲 / 设定集 / 审查报告）。</p>
+      <p><strong>4. 配置 RAG（可选但推荐）</strong></p>
+      <p class="mc-desc">复制 .env.example 为 .env，填写 Embedding（Qwen3-Embedding-8B）与 Rerank（jina-reranker-v3）Key。没填也能用——系统自动退回 BM25 关键词检索，只是语义召回弱一些。</p>
+    </div>
+
+    <h2 id="s5">五、写章工作流（9 步流水线）</h2>
+    <p><code>/webnovel-write</code> 不是把活儿丢给模型生成一次就完事，而是一条带关卡的完整流水线：</p>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">1</span><span class="mc-title">预检</span></div><p class="mc-desc">项目根、占位符和 Story System 健康状态。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">2</span><span class="mc-title">刷新运行时合同</span></div><p class="mc-desc">本章 runtime contract。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">3</span><span class="mc-title">context-agent 生成任务书</span></div><p class="mc-desc">明确本章要写什么、约束是什么。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">4</span><span class="mc-title">起草正文</span></div><p class="mc-desc">根据任务书落地章节内容。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">5</span><span class="mc-title">reviewer 多维审查</span></div><p class="mc-desc">blocking issue 不通过则阻断。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">6</span><span class="mc-title">润色 · 排版 · Anti-AI 终检</span></div><p class="mc-desc">去 AI 味，保证可读性。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">7</span><span class="mc-title">data-agent 提取事实</span></div><p class="mc-desc">把新发生的事实结构化。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">8</span><span class="mc-title">生成 CHAPTER_COMMIT</span></div><p class="mc-desc">驱动 state、index、summary、memory、vector 投影。</p></div>
+    <div class="mod-card"><div class="mc-head"><span class="mc-num">9</span><span class="mc-title">章节级备份</span></div><p class="mc-desc">落盘存档，可断点续写。</p></div>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：长篇连载网文作者、已经用 Claude Code 写作的人、受困于 AI「写到十几章就忘了前面设定」的人。内置 <strong>37 个中文网文题材模板</strong>（修仙、系统流、都市异能、古言宫斗、规则怪谈、抗战谍战……），也支持复合题材。</p>
+    <p><strong>注意</strong>：① 强依赖 Claude Code 环境；② RAG 语义检索需 API Key，不填则降级 BM25；③ 概念较多，初次上手有学习曲线，建议先吃透 init → plan → write 三条主线。</p>
+    <p><strong>定位</strong>：它不是「输入一句话吐一章」的一次性生成器，而是一套<strong>面向长篇连载的一致性系统</strong>——把设定、伏笔、节奏变成 AI 会自动遵守的约束。如果你写的是百万字级别、人设和世界观不能崩的长篇，它比通用写作助手靠谱得多。</p>
+
+    <div class="tag-cloud">
+      <a href="#">WebNovel Writer</a><a href="#">Claude Code</a><a href="#">网文写作</a><a href="#">AI 写作</a>
+      <a href="#">长篇连载</a><a href="#">Story System</a><a href="#">RAG 检索</a><a href="#">一致性系统</a>
+      <a href="#">开源工具</a><a href="#">小说创作</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/lingfengQAQ/webnovel-writer">lingfengQAQ/webnovel-writer</a> 开源项目</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

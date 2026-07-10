@@ -974,6 +974,58 @@
       "status": "published",
       "link": "/craft/omniget.html",
       "template": "C"
+    },
+    {
+      "id": "article-46",
+      "title": "WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇",
+      "slug": "webnovel-writer",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/webnovel-writer-cover.jpg",
+      "excerpt": "跑在 Claude Code 上的长篇网文创作插件，用 Story System（合同+章节提交+事件审计）解决 AI 写作的遗忘与幻觉，支持 200 万字连载，内置 8 个 Skill 命令与 37 个中文题材模板。",
+      "tags": [
+        "WebNovel Writer",
+        "Claude Code",
+        "网文写作",
+        "AI写作",
+        "长篇连载",
+        "Story System",
+        "RAG检索",
+        "一致性系统",
+        "开源工具",
+        "小说创作"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-11",
+      "status": "published",
+      "link": "/craft/webnovel-writer.html",
+      "template": "A"
+    },
+    {
+      "id": "article-47",
+      "title": "OpenMontage：把你的 AI 编程助手，变成一整间视频工作室",
+      "slug": "openmontage",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/openmontage-cover.jpg",
+      "excerpt": "世界首个开源 Agent 视频生产系统（AGPL-3.0，7k+ stars）：12 条生产管线、52 个工具、500+ 智能体技能，把 Claude Code/Cursor/Copilot 变成涵盖调研、脚本、素材、剪辑、渲染的完整视频工作室，零 API Key 也能出片。",
+      "tags": [
+        "OpenMontage",
+        "Agent视频",
+        "AI视频",
+        "视频生产",
+        "Claude Code",
+        "Remotion",
+        "开源",
+        "自动化剪辑",
+        "短视频",
+        "AGPL-3.0"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-11",
+      "status": "published",
+      "link": "/craft/openmontage.html",
+      "template": "C"
     }
   ],
   "projects": [
