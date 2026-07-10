@@ -432,7 +432,14 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     var craftArts = articles.filter(function(a) {
       return a.category === 'craft' && a.status === 'published';
     });
-    craftArts.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
+    craftArts.sort(function(a,b) {
+      var d = (b.date||'').localeCompare(a.date||'');
+      if (d !== 0) return d;
+      // 同日期按 id 降序（id 越大越新），保证最新发布的排最上
+      var na = parseInt(String(a.id).replace(/\D/g,''),10) || 0;
+      var nb = parseInt(String(b.id).replace(/\D/g,''),10) || 0;
+      return nb - na;
+    });
 
     if (craftArts.length === 0) return;
 
