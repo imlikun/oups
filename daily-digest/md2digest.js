@@ -141,6 +141,14 @@ function parseDigest(md) {
         if (contentLine.match(/^https?:\/\/\S+$/)) {
           item.link = contentLine; i++; continue;
         }
+        // Pattern: 来源：https://...  or 来源：http://...
+        const sourceUrl = contentLine.match(/来源[：:]\s*(https?:\/\/\S+)/);
+        if (sourceUrl) {
+          item.link = sourceUrl[1];
+          const rest = contentLine.replace(sourceUrl[0], '').trim();
+          if (rest && !/^[\|\s]*$/.test(rest)) item.summary = (item.summary ? item.summary + ' ' : '') + rest;
+          i++; continue;
+        }
         // Embedded url with keyword
         const embLink = contentLine.match(/\((https?:\/\/[^\)]+)\)/);
         if (embLink && /阅读原文|打开阅读|查看原文|来源/.test(contentLine)) {
