@@ -183,6 +183,7 @@ pre code { color:inherit; background:none; padding:0; }
       <li><a href="#sec8"><span class="num">08</span> 小结</a></li>
       <li><a href="#sec9"><span class="num">09</span> 实测补充：地区限制、充值与直连对比</a></li>
       <li><a href="#sec10"><span class="num">10</span> 再实测：API 路径返回 JSON，但 Pro 系列不免费</a></li>
+      <li><a href="#sec11"><span class="num">11</span> 新用户实测：2.5 系列已不可用，3.x 必填 preview</a></li>
     </ol>
   </div>
 </div>
@@ -525,6 +526,60 @@ print(resp.choices[0].message.content)</code></pre>
 </ul>
 
 <p>到此，OpenRouter 充值方案可以暂不执行。对于"只要 Gemini"这个需求，新加坡节点 + 直连 Google + Flash 系列免费模型已经够用。</p>
+
+</section>
+
+<section id="sec11">
+<h2><span class="sec-num">11</span> 新用户实测：2.5 系列已不可用，3.x 必填 preview</h2>
+
+<p><strong>22:26</strong>，按第 10 节的最终配置，在客户端把模型名填成 <code>gemini-2.5-flash</code> 后，Google 返回 404，报错信息为：</p>
+
+<blockquote>
+<p>This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.</p>
+</blockquote>
+
+<p>这说明 Google 对<strong>新注册 API 用户</strong>已经下线了 2.5 系列。虽然 AI Studio 的 Rate limit 页面仍显示 2.5 系列有额度，但新 key 实际无法调用——这是 2025 年中后期的策略变化。</p>
+
+<h3>新用户该用什么模型</h3>
+
+<p>从第 10 节的配额表看，3.x 系列才是新用户可用的免费模型：</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>模型</th><th>OpenAI 兼容层建议填写的模型名</th><th>RPM/TPM/RPD</th><th>适用</th></tr>
+</thead>
+<tbody>
+<tr><td>Gemini 3.1 Flash Lite</td><td><code>gemini-3.1-flash-lite-preview</code></td><td>15 / 250K / 500</td><td>✅ 免费层额度最多，新用户首选</td></tr>
+<tr><td>Gemini 3.5 Flash</td><td><code>gemini-3.5-flash</code></td><td>5 / 250K / 20</td><td>✅ 稳定版可用</td></tr>
+<tr><td>Gemini 3 Flash</td><td><code>gemini-3-flash</code></td><td>5 / 250K / 20</td><td>✅ 备选</td></tr>
+<tr><td>Gemini 2.5 Flash</td><td><code>gemini-2.5-flash</code></td><td>5 / 250K / 20</td><td>❌ 新用户已不可用</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>注意：你之前直接填 <code>gemini-3.1-flash-lite</code> 失败，很可能是因为 OpenAI 兼容层<strong>只暴露 preview 版本</strong>。原生端点 <code>/v1beta/models</code> 列出的是 <code>models/gemini-3.1-flash-lite</code>，但兼容层 <code>/v1beta/openai</code> 实际支持的是 <code>gemini-3.1-flash-lite-preview</code>（或带日期后缀的完整版本）。</p>
+
+<h3>验证兼容层真实支持的模型名</h3>
+
+<p>访问这个地址，看 OpenAI 兼容层实际返回什么：</p>
+
+<pre><code>https://generativelanguage.googleapis.com/v1beta/openai/models?key=你的GoogleKey</code></pre>
+
+<p>把返回的 <code>gemini-3.1</code> 相关模型名原样填进客户端，基本就能用。</p>
+
+<h3>修正后的最终配置（新用户版）</h3>
+
+<ul>
+<li>Base URL：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
+<li>API Key：Google AI Studio Key</li>
+<li>模型名：<code>gemini-3.1-flash-lite-preview</code>（或 <code>gemini-3.5-flash</code>）</li>
+</ul>
+
+<div class="info-box">
+<div class="info-box-title">📌 针对第 10 节的修正</div>
+<p>第 10 节写"最终可用配置"时把 <code>gemini-2.5-flash</code> 作为首选，但那是基于"旧用户可用"的假设。如果你是新用户，2.5 系列会直接 404。本文不删改旧内容，只在此补充说明，避免后人踩同一坑。</p>
+</div>
 
 </section>
 
