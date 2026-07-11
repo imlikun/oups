@@ -181,6 +181,7 @@ pre code { color:inherit; background:none; padding:0; }
       <li><a href="#sec6"><span class="num">06</span> 费用与配额</a></li>
       <li><a href="#sec7"><span class="num">07</span> 其他常见坑</a></li>
       <li><a href="#sec8"><span class="num">08</span> 小结</a></li>
+      <li><a href="#sec9"><span class="num">09</span> 实测补充：地区限制、充值与直连对比</a></li>
     </ol>
   </div>
 </div>
@@ -387,6 +388,76 @@ print(resp.choices[0].message.content)</code></pre>
   <span>代理</span>
   <span>AI 开发</span>
   <span>网络</span>
+</div>
+
+</section>
+
+<section id="sec9">
+<h2><span class="sec-num">09</span>实测补充：地区限制、充值与直连对比</h2>
+
+<p>文章发布后，我当场注册了 OpenRouter、拿了 key、从本地客户端实测了一遍连通性。结果比上面写的"国内更稳"要复杂——这里把<strong>带时间戳的真实排查过程</strong>记下来，给国内读者避坑。</p>
+
+<h3>实测时间线（北京时间 2026-07-11）</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>时间</th><th>操作</th><th>结果</th></tr></thead>
+<tbody>
+<tr><td>21:50</td><td>用 OpenRouter key 调 <code>google/gemini-2.5-flash</code>（本机直连）</td><td><strong>403</strong> <code>not available in your region</code></td></tr>
+<tr><td>21:55</td><td>同一客户端重试，模型仍为 Gemini</td><td>依旧 <strong>403</strong>，与沙箱侧测试结果一致</td></tr>
+<tr><td>22:00</td><td>代理节点切到<strong>新加坡</strong>再测</td><td><strong>403 → 402</strong>：地区限制解除，但提示 <code>Insufficient credits</code></td></tr>
+<tr><td>22:02</td><td>确认账户从未充值，理清"免费"误区</td><td>Gemini 在 OpenRouter <strong>并非免费</strong>，需先购 credit</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>坑一：OpenRouter 也救不了 Gemini 的地区限制</h3>
+<p>很多人（包括我写上文时）以为"走 OpenRouter 中转就能绕过直连的 502"。实测发现：OpenRouter 是<strong>合规网关，不是翻墙代理</strong>。它到 Google 后端拿模型时，照样执行 Google 的地区规则。只要账号 / 请求 IP 在中国大陆，Gemini 就返回 403。</p>
+
+<div class="info-box">
+<div class="info-box-title">⚠️ 哪些模型受影响</div>
+<p>受地区限制的是<strong>美国厂商模型</strong>：Gemini（Google）、Claude（Anthropic）、GPT（OpenAI）、Grok（xAI）。<strong>不受限制</strong>的是 DeepSeek、Qwen、Kimi、GLM、Llama 等——这些从中国大陆就能直接调（非免费模型同样需充值）。</p>
+</div>
+
+<h3>坑二：Gemini 在 OpenRouter 根本不是免费的</h3>
+<p>这是最大的认知偏差，也是 22:02 那一步才彻底想明白的。<strong>Google AI Studio 给的 Gemini 免费额度 ≠ OpenRouter 上的 Gemini 免费</strong>。OpenRouter 是 API 网关，每调一次都要付给 Google 上游费用，所以：</p>
+<ul>
+  <li><strong>Gemini / Claude / GPT 在 OpenRouter 全是付费模型</strong>，按 token 计费；</li>
+  <li>OpenRouter 要求账户<strong>先购买 credit</strong> 才能调用任何付费模型（错误码 <code>402 Insufficient credits. This account never purchased credits</code>）；</li>
+  <li>只有模型名带 <code>:free</code> 后缀的（如部分 Llama / Mistral）才是真免费，但经常排队、限流，质量也不如 Gemini。</li>
+</ul>
+
+<blockquote><p>一句话：Gemini 在 Google 那能白嫖，在 OpenRouter 这不能白嫖。切新加坡节点只解决了地区限制，接下来要<strong>充钱</strong>才能用。</p></blockquote>
+
+<h3>关键发现：如果新加坡能用，直连 Google 可能更香</h3>
+<p>切到新加坡节点后，OpenRouter 放行了 Gemini（403→402）。这证明新加坡 IP 通过了 OpenRouter 的地区判断。同一套逻辑也适用于<strong>直连 Google</strong>：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>路径</th><th>地区判断方</th><th>新加坡节点下</th><th>费用</th></tr></thead>
+<tbody>
+<tr><td>客户端 → OpenRouter → Google</td><td>OpenRouter</td><td>✅ 放行（402 仅因未充值）</td><td>付费（含中转费）</td></tr>
+<tr><td>客户端 → Google 直连</td><td>Google</td><td>✅ 同样放行（SG 在允许名单）</td><td><strong>免费</strong>（AI Studio 额度）</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>也就是说，<strong>如果你的目标只是用 Gemini，新加坡节点 + 直连 Google（用自己的 key）就够了，还免费用 AI Studio 额度</strong>，不用像 OpenRouter 那样充值。原先直连报 502，是因为旧节点到不了 <code>generativelanguage.googleapis.com</code> 这个域名；换成能正常路由 Google API 的新加坡节点后，直连 + 免费，比走 OpenRouter 更省。</p>
+
+<div class="highlight-box">
+<p><strong>OpenRouter 的真正价值</strong>：一个 key 调所有模型 + 自动 fallback + 不用每个厂商单独处理网络。<strong>如果你只想要 Gemini</strong>，配好新加坡节点直连 Google，往往更简单、更便宜。</p>
+</div>
+
+<h3>给国内读者的建议</h3>
+<ul>
+  <li><strong>只要 Gemini</strong>：新加坡（或日 / 美）节点 + 直连 Google，走 AI Studio 免费额度，零成本。</li>
+  <li><strong>想一个 key 调多家 + 自动容灾</strong>：用 OpenRouter，但先把模型换成<strong>不受地区限制</strong>的 DeepSeek / Qwen / Kimi / GLM，且<strong>先小额充值</strong>再测。</li>
+  <li><strong>非要 OpenRouter 上的 Gemini / Claude</strong>：需同时满足「充钱」+「请求 IP 在允许地区」。新加坡节点可解地区，社区还验证过 Cloudflare AI Gateway 反代、欧洲 VPS 单独给 OpenRouter 走规则两种办法。</li>
+</ul>
+
+<div class="info-box">
+<div class="info-box-title">📌 本文立场更新</div>
+<p>第 03 节说"OpenRouter 帮国内绕开直连"对<strong>连通性</strong>成立，但对<strong>Gemini / Claude 这类美国模型</strong>不成立——它们额外受地区限制。本文不删旧内容，保留完整排查轨迹，方便对照自己卡在 403 还是 402。</p>
 </div>
 
 </section>
