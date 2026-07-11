@@ -18,6 +18,15 @@
   --card-bg: #fff;
   --radius: 14px;
 }
+
+/* 7-day rotating card accents */
+.accent-0 { --accent:#30d158; --accent-light:rgba(48,209,88,0.08); --accent-medium:rgba(48,209,88,0.14); --accent-border:rgba(48,209,88,0.20); --accent-shadow:rgba(48,209,88,0.10); }
+.accent-1 { --accent:#2997ff; --accent-light:rgba(41,151,255,0.08); --accent-medium:rgba(41,151,255,0.14); --accent-border:rgba(41,151,255,0.20); --accent-shadow:rgba(41,151,255,0.10); }
+.accent-2 { --accent:#ff9f0a; --accent-light:rgba(255,159,10,0.08); --accent-medium:rgba(255,159,10,0.14); --accent-border:rgba(255,159,10,0.20); --accent-shadow:rgba(255,159,10,0.10); }
+.accent-3 { --accent:#bf5af2; --accent-light:rgba(191,90,242,0.08); --accent-medium:rgba(191,90,242,0.14); --accent-border:rgba(191,90,242,0.20); --accent-shadow:rgba(191,90,242,0.10); }
+.accent-4 { --accent:#e54d66; --accent-light:rgba(229,77,102,0.08); --accent-medium:rgba(229,77,102,0.14); --accent-border:rgba(229,77,102,0.20); --accent-shadow:rgba(229,77,102,0.10); }
+.accent-5 { --accent:#0ea5a1; --accent-light:rgba(14,165,161,0.08); --accent-medium:rgba(14,165,161,0.14); --accent-border:rgba(14,165,161,0.20); --accent-shadow:rgba(14,165,161,0.10); }
+.accent-6 { --accent:#ff6482; --accent-light:rgba(255,100,130,0.08); --accent-medium:rgba(255,100,130,0.14); --accent-border:rgba(255,100,130,0.20); --accent-shadow:rgba(255,100,130,0.10); }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
@@ -87,8 +96,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   position:relative; overflow:hidden; }
 .digest-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
   background:var(--accent); opacity:0; transition:opacity 0.25s; }
-.digest-item:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(48,209,88,0.10);
-  border-color:rgba(48,209,88,0.2); }
+.digest-item:hover { transform:translateY(-2px); box-shadow:0 8px 32px var(--accent-shadow);
+  border-color:var(--accent-border); }
 .digest-item:hover::before { opacity:1; }
 
 .digest-date-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
@@ -187,7 +196,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <div id="digestList">
 
     <!-- 2026-07-11 -->
-    <a href="2026-07-11.html" class="digest-item reveal">
+    <a href="2026-07-11.html" class="digest-item reveal accent-3">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-11</span>
@@ -208,7 +217,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-07-10 -->
-    <a href="2026-07-10.html" class="digest-item reveal">
+    <a href="2026-07-10.html" class="digest-item reveal accent-2">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-10</span>
@@ -228,7 +237,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-07-09 -->
-    <a href="2026-07-09.html" class="digest-item reveal">
+    <a href="2026-07-09.html" class="digest-item reveal accent-1">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-09</span>
@@ -248,7 +257,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-07-08 -->
-    <a href="2026-07-08.html" class="digest-item reveal">
+    <a href="2026-07-08.html" class="digest-item reveal accent-0">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-08</span>
@@ -268,7 +277,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-07-07 -->
-    <a href="2026-07-07.html" class="digest-item reveal">
+    <a href="2026-07-07.html" class="digest-item reveal accent-6">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-07</span>
@@ -286,7 +295,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-07-03 -->
-    <a href="2026-07-03.html" class="digest-item reveal">
+    <a href="2026-07-03.html" class="digest-item reveal accent-2">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-03</span>
@@ -304,7 +313,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-07-02 -->
-    <a href="2026-07-02.html" class="digest-item reveal">
+    <a href="2026-07-02.html" class="digest-item reveal accent-1">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-07-02</span>
@@ -322,7 +331,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </a>
 
     <!-- 2026-06-29 -->
-    <a href="2026-06-29.html" class="digest-item reveal">
+    <a href="2026-06-29.html" class="digest-item reveal accent-5">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">2026-06-29</span>
@@ -343,7 +352,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 </section>
 
 <footer class="footer">
-  <p>由 <a href="/">八戒（WorkBuddy）</a> 自动生成 · 每日 12:00 推送至 IMA 笔记并同步至此站</p>
+  <p>由 <a href="/">八戒（WorkBuddy）</a> 自动生成 · 每日 12:00 更新并同步至此站</p>
 </footer>
 
 <script>

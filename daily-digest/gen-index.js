@@ -26,6 +26,13 @@ function cleanTitle(t) {
   return t.replace(/\*\*/g, '').replace(/[（(]来自[^）)]*[）)]/g, '').replace(/\s+/g, ' ').trim();
 }
 
+function getAccentIndex(date) {
+  const d = new Date(date + 'T00:00:00');
+  const start = new Date(d.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((d - start) / (1000 * 60 * 60 * 24));
+  return dayOfYear % 7;
+}
+
 function parseDigest(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const dateMatch = path.basename(filePath).match(/^(\d{4}-\d{2}-\d{2})\.md$/);
@@ -62,6 +69,7 @@ function parseDigest(filePath) {
 }
 
 function cardHtml(item, isLatest) {
+  const accentIdx = getAccentIndex(item.date);
   const tags = item.sections
     .map(
       (s) =>
@@ -72,7 +80,7 @@ function cardHtml(item, isLatest) {
     ? `\n          <span class="digest-status status-latest">最新</span>`
     : '';
   return `    <!-- ${item.date} -->
-    <a href="${item.date}.html" class="digest-item reveal">
+    <a href="${item.date}.html" class="digest-item reveal accent-${accentIdx}">
       <div class="digest-date-row">
         <div>
           <span class="digest-date">${item.date}</span>
