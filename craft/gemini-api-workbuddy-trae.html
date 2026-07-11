@@ -16,8 +16,8 @@
   --accent-glow: rgba(26,111,245,0.12);
   --border: rgba(0,0,0,0.07);
   --radius: 10px;
-  --max-text: 680px;
-  --max-wide: 860px;
+  --max-text: 880px;
+  --max-wide: 1160px;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -45,8 +45,8 @@ body {
   background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
 .hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
 .hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
-  max-width:760px; margin:0 auto 16px; color:#111; }
-.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+  max-width:840px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:680px; margin:0 auto 28px; line-height:1.65; }
 .hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
 .hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
 .hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
@@ -96,6 +96,8 @@ body {
 .article-body blockquote { margin:24px 0; padding:14px 20px; border-left:3px solid var(--accent);
   background:var(--accent-light); border-radius:0 8px 8px 0; color:#333; font-size:14.5px; line-height:1.75; }
 .article-body blockquote p { margin:0; }
+.article-body blockquote.warn { border-left-color:#e8912d; background:rgba(232,145,45,0.08); }
+.article-body blockquote.ok { border-left-color:#1f9d55; background:rgba(31,157,85,0.08); }
 
 /* Section Image (cover) */
 .section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
@@ -176,14 +178,15 @@ body {
       <li><a href="#s3">在 WorkBuddy 中接入</a></li>
       <li><a href="#s4">在 Trae 中接入</a></li>
       <li><a href="#s5">验证是否成功</a></li>
-      <li><a href="#s6">可选模型参考</a></li>
-      <li><a href="#s7">总结</a></li>
+      <li><a href="#s6">可选模型与免费额度</a></li>
+      <li><a href="#s7">推理/thinking 调节</a></li>
+      <li><a href="#s8">总结</a></li>
     </ul>
   </aside>
 
   <article class="article-body">
     <h2 id="s1">第一步：获取 Google Gemini API Key</h2>
-    <p>不管用 WorkBuddy 还是 Trae，你都需要先拿到一个 API Key（可以理解为一把"钥匙"，让工具能调用 Google 的 AI 模型）。</p>
+    <p>不管用 WorkBuddy 还是 Trae，你都需要先拿到一个 API Key（可以理解为一把"钥匙"，让工具能调用 Google 的 AI 模型）。它免费申请，而且个人日常使用完全够用。</p>
 
     <h3>1.1 打开 Google AI Studio</h3>
     <p>用浏览器访问：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">https://aistudio.google.com/apikey</a></p>
@@ -197,145 +200,212 @@ body {
       <li>点击 <strong>"Create API key"</strong>（创建 API 密钥）</li>
       <li>选择 <strong>"Create API key in new project"</strong>（在新项目中创建）</li>
       <li>等几秒钟，系统会生成一串很长的密钥，类似 <code>AIzaSyD......xxxxx</code></li>
-      <li><strong>立刻复制保存下来！</strong> 关掉窗口后就看不到了（但可以在页面上重新查看）</li>
+      <li><strong>立刻复制保存下来！</strong> 这串密钥只显示一次；万一关掉没保存，可以到密钥列表里点 <strong>Show</strong> 重新查看或重新复制（不用删了重建）</li>
     </ol>
 
     <h3>1.3 关于网络问题</h3>
-    <p>Google AI Studio 在国内无法直接访问，你需要使用科学上网工具。如果 API Key 创建好了，后续调用 API 同样需要稳定的网络环境。</p>
+    <p>Google AI Studio 在国内无法直接访问，你需要使用网络加速工具来打开它并创建 Key。拿到 Key 之后，<strong>每次调用 API 同样需要稳定的网络环境</strong>——也就是说，你本地运行 WorkBuddy / Trae 的电脑，要能正常访问 <code>generativelanguage.googleapis.com</code> 这个域名，否则会一直超时或报连接错误。</p>
 
     <h3>1.4 Gemini API 免费额度</h3>
-    <p>Google 提供了免费额度，对于个人使用来说完全够用。免费模型包括 <code>gemini-2.5-flash</code> 和 <code>gemini-2.5-pro</code> 等，每分钟有请求次数限制，但日常使用没问题。</p>
+    <p>Google 提供免费额度（Free Tier），无需绑卡，用 AI Studio 的 Key 就能用。免费模型包括 <code>gemini-2.5-flash</code>、<code>gemini-2.5-pro</code>、<code>gemini-2.5-flash-lite</code> 等，有每分钟/每天的请求次数上限，但日常写代码、问问题完全够用。具体限额见下文<a href="#s6">第六节</a>。</p>
 
-    <h2 id="s2">第二步：了解一个关键概念 —— OpenAI 兼容接口</h2>
-    <p>Google Gemini 官方现在提供了 <strong>OpenAI 兼容接口</strong>，意思是：虽然 Gemini 是 Google 的模型，但它模拟了 OpenAI 的 API 格式。这样 WorkBuddy 和 Trae 就能直接把它当成"OpenAI 格式的模型"来用，不需要额外装什么转换工具。</p>
-    <p>这个兼容接口的地址（Base URL）是：</p>
-    <pre><code>https://generativelanguage.googleapis.com/v1beta/openai</code></pre>
-    <p>记住这个地址，下面配置的时候要用。</p>
+    <h2 id="s2">第二步：理解一个关键概念 —— OpenAI 兼容接口</h2>
+    <p>Google Gemini 官方提供了 <strong>OpenAI 兼容接口</strong>，意思是：虽然 Gemini 是 Google 的模型，但它模拟了 OpenAI 的 API 格式。这样 WorkBuddy 和 Trae 就能直接把它当成"OpenAI 格式的模型"来用，不需要额外装任何转换工具或代理。</p>
 
-    <h2 id="s3">第三步：在 WorkBuddy 中接入 Gemini</h2>
-    <p>WorkBuddy 有两种配置方式：通过界面操作，或者直接编辑配置文件。推荐用界面操作，更直观。</p>
-
-    <h3>方式一：通过界面配置（推荐）</h3>
-    <ol>
-      <li>打开 WorkBuddy 桌面客户端</li>
-      <li>在聊天界面底部，找到模型切换区域，点击 <strong>"+配置自定义模型"</strong></li>
-      <li>在弹出的页面中，选择 <strong>"通用 OpenAI 兼容"</strong> 或类似的自定义选项</li>
-      <li>填写以下信息：</li>
-    </ol>
+    <h3>2.1 记住这两个地址</h3>
+    <p>整个教程里真正要填的地址只有两个层级，别搞混：</p>
     <table>
       <thead>
-        <tr><th>字段</th><th>填写内容</th></tr>
+        <tr><th>用途</th><th>地址</th></tr>
       </thead>
       <tbody>
-        <tr><td>模型名称 / Model Name</td><td><code>gemini-2.5-flash</code>（或 <code>gemini-2.5-pro</code>）</td></tr>
-        <tr><td>Base URL</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td></tr>
-        <tr><td>API Key</td><td>你第一步获取的那个密钥</td></tr>
+        <tr><td><strong>接口根地址</strong><br>（大多数工具填这个）</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td></tr>
+        <tr><td><strong>完整对话接口</strong><br>（少数工具要填完整路径）</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai/chat/completions</code></td></tr>
       </tbody>
     </table>
-    <p>点击保存，然后在模型列表里切换到刚添加的 Gemini 模型，发一条消息测试即可。</p>
+    <blockquote>
+      <p>这是官方文档给出的真实地址，结尾<strong>没有</strong> <code>/v1</code>。网上很多教程让你在末尾加 <code>/v1</code>，那多半会踩坑——因为 Google 这层兼容接口的基路径就是 <code>/v1beta/openai</code>，再加 <code>/v1</code> 反而变成了一个不存在的路径，会直接 404。</p>
+    </blockquote>
+    <p>不同工具对"地址"的理解不一样，下面分两种情形：</p>
+    <ul>
+      <li><strong>情形 A（填根地址）</strong>：工具自己会在根地址后面补上 <code>/chat/completions</code> 等路径。WorkBuddy 的 <code>models.json</code> 就属于这种。</li>
+      <li><strong>情形 B（填完整路径）</strong>：工具让你直接填到 <code>/chat/completions</code> 这一层。Trae 的"完整 URL"模式就属于这种。</li>
+    </ul>
+    <p>记不住也没关系，下面每一步都直接给了该填的成品字符串。</p>
 
-    <h3>方式二：编辑 models.json 配置文件</h3>
-    <p>如果界面操作不成功，可以手动编辑配置文件。</p>
-    <p><strong>配置文件位置：</strong></p>
+    <h2 id="s3">第三步：在 WorkBuddy 中接入 Gemini</h2>
+    <p>WorkBuddy 通过本地配置文件 <code>models.json</code> 来添加自定义模型。把模型信息写进去，重启客户端即可在模型列表里看到。</p>
+
+    <h3>3.1 找到 / 创建配置文件</h3>
     <ul>
       <li>macOS / Linux：<code>~/.workbuddy/models.json</code></li>
       <li>Windows：<code>C:\Users\你的用户名\.workbuddy\models.json</code></li>
     </ul>
-    <p><strong>编辑方法：</strong>用任意文本编辑器（记事本、VS Code 等）打开 <code>models.json</code>，在里面添加如下内容：</p>
+    <p>如果文件不存在，直接用记事本 / VS Code 新建一个，把下面内容粘进去即可。</p>
+
+    <h3>3.2 写入 Gemini 配置</h3>
+    <p>用任意文本编辑器打开 <code>models.json</code>，写入以下内容（把 <code>你的GEMINI_API_KEY</code> 换成第一步拿到的密钥）：</p>
     <pre><code>[
   {
     "id": "gemini-2.5-flash",
     "name": "gemini-2.5-flash",
-    "vendor": "custom",
-    "url": "https://generativelanguage.googleapis.com/v1beta/openai/v1",
-    "apiKey": "你的API_KEY粘贴在这里"
+    "vendor": "Custom",
+    "url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "apiKey": "你的GEMINI_API_KEY",
+    "supportsToolCall": true,
+    "supportsImages": true,
+    "supportsReasoning": true,
+    "useCustomProtocol": false
+  }
+]</code></pre>
+    <p>如果想同时加上 Pro 版本，在 <code>[]</code> 里用逗号隔开再加一个对象（把 <code>id</code>/<code>name</code> 改成 <code>gemini-2.5-pro</code>，<code>url</code> 保持不变）：</p>
+    <pre><code>[
+  {
+    "id": "gemini-2.5-flash",
+    "name": "gemini-2.5-flash",
+    "vendor": "Custom",
+    "url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "apiKey": "你的GEMINI_API_KEY",
+    "supportsToolCall": true,
+    "supportsImages": true,
+    "supportsReasoning": true,
+    "useCustomProtocol": false
+  },
+  {
+    "id": "gemini-2.5-pro",
+    "name": "gemini-2.5-pro",
+    "vendor": "Custom",
+    "url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "apiKey": "你的GEMINI_API_KEY",
+    "supportsToolCall": true,
+    "supportsImages": true,
+    "supportsReasoning": true,
+    "useCustomProtocol": false
   }
 ]</code></pre>
     <blockquote>
-      <p>注意事项：</p>
-      <p>· 如果文件里已经有其他模型配置，在最外层的 <code>[]</code> 里面用逗号隔开，添加新的对象即可<br>
-      · <code>id</code> 和 <code>name</code> 必须填写一样的值<br>
-      · <code>url</code> 末尾注意加上 <code>/v1</code><br>
-      · 修改完文件后，必须<strong>完全退出 WorkBuddy 再重新打开</strong>才能生效（不是关闭窗口，是在任务栏/菜单栏彻底退出）</p>
+      <p>字段说明：</p>
+      <p>· <code>url</code> 填<strong>根地址</strong> <code>.../v1beta/openai</code> 即可，WorkBuddy 会自己拼接 <code>/chat/completions</code>，<strong>不要</strong>在末尾加 <code>/v1</code> 或 <code>/chat/completions</code><br>
+      · <code>vendor</code> 写 <code>"Custom"</code>（表示走 OpenAI 兼容协议）<br>
+      · <code>id</code> 和 <code>name</code> 保持一致，就是你在模型下拉里看到的名字<br>
+      · <code>supportsImages / supportsToolCall / supportsReasoning</code> 建议都开 <code>true</code>，Gemini 原生就支持这些能力</p>
     </blockquote>
+
+    <h3>3.3 让配置生效</h3>
+    <p>修改保存后，<strong>完全退出 WorkBuddy 再重新打开</strong>（不是关窗口，是在 Dock / 系统托盘里彻底退出进程）。重启后，聊天界面底部的模型下拉里就会出现 <code>gemini-2.5-flash</code>，选中它就能用了。</p>
 
     <h3>WorkBuddy 常见问题排查</h3>
     <ul>
-      <li><strong>报 404 错误</strong>：检查模型名称是否正确，<code>id</code> 和 <code>name</code> 是否一致</li>
-      <li><strong>报 401 错误</strong>：API Key 填写有误，重新复制粘贴</li>
-      <li><strong>报 400 错误</strong>：URL 路径有问题，确认末尾有 <code>/v1</code></li>
-      <li><strong>配置不生效</strong>：彻底退出 WorkBuddy（Mac 上右键 Dock 图标退出，Windows 上在任务管理器中结束进程），然后重新打开</li>
+      <li><strong>报 404 错误</strong>：几乎都是 <code>url</code> 填错。确认是 <code>https://generativelanguage.googleapis.com/v1beta/openai</code>，<strong>没有</strong>多余的 <code>/v1</code> 或 <code>/chat/completions</code>。</li>
+      <li><strong>报 401 错误</strong>：API Key 填错或复制时多了空格/换行，重新复制粘贴一遍。</li>
+      <li><strong>报 400 错误</strong>：通常是请求体或模型名问题——确认 <code>id</code> 写的是真实存在的模型名（如 <code>gemini-2.5-flash</code>），不要自己编造。</li>
+      <li><strong>模型列表里看不到</strong>：JSON 格式写坏了（少逗号、多逗号、引号用成中文引号）。可以用任意 JSON 校验工具先检查一下；另外确认是<strong>彻底退出</strong>后重开，而不是仅关窗口。</li>
+      <li><strong>一直超时 / 连不上</strong>：本地网络访问不了 <code>generativelanguage.googleapis.com</code>，检查你的网络加速工具是否生效。</li>
     </ul>
 
     <h2 id="s4">第四步：在 Trae 中接入 Gemini</h2>
-    <p>Trae 是字节跳动出品的 AI 编程工具（IDE），有两种方式接入 Gemini：原生配置和通过 Cline 插件。</p>
+    <p>Trae（字节出品的 AI 编程 IDE）原生支持添加自定义模型。下面用官方推荐的方式接入，最稳。</p>
 
-    <h3>方式一：Trae 原生配置（推荐）</h3>
+    <h3>方式一：Trae 原生自定义模型（推荐）</h3>
     <ol>
       <li>打开 Trae IDE</li>
-      <li>点击右上角的 <strong>齿轮图标</strong>（设置），或者用快捷键 <code>Ctrl + ,</code>（Mac 上是 <code>Cmd + ,</code>）</li>
-      <li>找到 <strong>"Models"</strong> 或 <strong>"AI 模型"</strong> 区域</li>
-      <li>点击 <strong>"Add Model"</strong>（添加模型）</li>
-      <li>按以下信息填写：</li>
+      <li>进入 <strong>设置 → 模型</strong>（快捷键 <code>Ctrl + ,</code> / Mac 上 <code>Cmd + ,</code>），打开模型管理面板</li>
+      <li>点击 <strong>"添加模型"</strong>，在弹出的窗口里选择 <strong>"自定义配置"</strong></li>
+      <li>API 格式选 <strong>"OpenAI Chat Completions 格式"</strong></li>
+      <li>打开 <strong>"完整 URL"</strong> 开关，勾选后填写完整接口地址：<br><code>https://generativelanguage.googleapis.com/v1beta/openai/chat/completions</code></li>
+      <li><strong>模型 ID</strong> 填 <code>gemini-2.5-flash</code>（或 <code>gemini-2.5-pro</code>）</li>
+      <li><strong>API Key</strong> 填第一步获取的密钥</li>
+      <li>点击保存。Trae 会立刻用这个地址探活，连上了模型就加进列表了</li>
     </ol>
-    <table>
-      <thead>
-        <tr><th>字段</th><th>填写内容</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>API Provider（提供方）</td><td>选择 <strong>"OpenAI"</strong>（因为 Gemini 有 OpenAI 兼容接口）</td></tr>
-        <tr><td>模型类型</td><td>选择 <strong>"自定义模型"</strong></td></tr>
-        <tr><td>Model Name（模型名称）</td><td><code>gemini-2.5-flash</code>（或 <code>gemini-2.5-pro</code>）</td></tr>
-        <tr><td>API Key</td><td>你第一步获取的密钥</td></tr>
-        <tr><td>Base URL / Custom Request URL</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai/v1</code></td></tr>
-      </tbody>
-    </table>
-    <p>点击保存/完成，回到聊天窗口，在模型列表里切换到 Gemini，发一条消息测试。</p>
+    <blockquote>
+      <p>如果你<strong>不勾选</strong>"完整 URL"开关，那就填<strong>根地址</strong> <code>https://generativelanguage.googleapis.com/v1beta/openai</code>（Trae 会自己补 <code>/chat/completions</code>）。两种写法二选一，效果一样——记住：根地址不带 <code>/v1</code>，完整地址以 <code>/chat/completions</code> 结尾。</p>
+    </blockquote>
 
-    <h3>方式二：通过 Cline 插件接入</h3>
-    <p>如果原生配置遇到问题，可以用 Cline 插件作为替代方案。</p>
+    <h3>方式二：通过 Cline 插件接入（备选）</h3>
+    <p>如果你的 Trae 版本界面里没有自定义模型入口，可以用 Cline 插件作为替代方案：</p>
     <ol>
       <li>在 Trae 的插件市场搜索 <strong>"Cline"</strong> 并安装</li>
-      <li>安装完成后，在左侧边栏找到 Cline 图标，点击进入</li>
-      <li>点击 Cline 面板里的 <strong>齿轮图标</strong>（设置）</li>
+      <li>安装完成后，在左侧边栏找到 Cline 图标点进去，点右上角<strong>齿轮</strong>（设置）</li>
       <li>在 API Configuration 中：
         <ul>
-          <li>API Provider 选择 <strong>"Google Gemini"</strong></li>
-          <li>粘贴你的 API Key</li>
-          <li>如果需要自定义 Base URL，勾选对应选项并填入地址</li>
-          <li>Model Name 填写 <code>gemini-2.5-flash</code> 或 <code>gemini-2.5-pro</code></li>
+          <li>API Provider 选 <strong>"OpenAI Compatible"</strong></li>
+          <li>Base URL 填 <code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
+          <li>API Key 填你的密钥</li>
+          <li>Model ID 填 <code>gemini-2.5-flash</code> 或 <code>gemini-2.5-pro</code></li>
         </ul>
       </li>
-      <li>点击 Done 保存，然后在 Cline 聊天窗口测试</li>
+      <li>点击 Done 保存，在 Cline 聊天窗口测试</li>
     </ol>
 
     <h2 id="s5">第五步：验证是否成功</h2>
-    <p>配置完成后，在对应工具中发送一条简单的消息来测试，比如：</p>
+    <p>最可靠的办法是用命令行直接打一下接口（不需要写代码，复制粘贴即可），确认 Key 和网络都没问题：</p>
+    <pre><code>curl "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer 你的GEMINI_API_KEY" \
+  -d '{
+    "model": "gemini-2.5-flash",
+    "messages": [{"role":"user","content":"你好，用一句话介绍你自己"}]
+  }'</code></pre>
+    <p>如果返回一段带 <code>"content"</code> 的 JSON，说明 Key 和接口都通了。然后回到 WorkBuddy / Trae，发一条消息测试：</p>
     <blockquote>
       <p>"你好，请用一句话介绍你自己。"</p>
     </blockquote>
-    <p>如果模型正常回复了，说明接入成功。如果报错，请对照上面的"常见问题排查"部分检查配置。</p>
+    <p>模型正常回复就接入成功。若报错，回头对照上面的"常见问题排查"逐项检查。</p>
 
-    <h2 id="s6">可选模型参考</h2>
+    <h2 id="s6">可选模型与免费额度</h2>
+    <p>截至 2026 年 7 月，<code>gemini-2.5</code> 系列仍是生产环境稳定版（官方承诺可用到 2026 年 10 月），推荐日常使用。各模型特点：</p>
     <table>
       <thead>
         <tr><th>模型名称</th><th>特点</th><th>适用场景</th></tr>
       </thead>
       <tbody>
-        <tr><td><code>gemini-2.5-flash</code></td><td>速度快、免费额度大</td><td>日常对话、快速问答</td></tr>
-        <tr><td><code>gemini-2.5-pro</code></td><td>能力更强、推理更好</td><td>复杂任务、代码生成</td></tr>
-        <tr><td><code>gemini-2.5-flash-lite</code></td><td>最轻量、响应最快</td><td>简单任务、低延迟场景</td></tr>
+        <tr><td><code>gemini-2.5-flash</code></td><td>速度快、免费额度大、性价比最高</td><td>日常对话、快速问答、代码补全</td></tr>
+        <tr><td><code>gemini-2.5-pro</code></td><td>能力最强、推理最深</td><td>复杂任务、架构设计、难 bug</td></tr>
+        <tr><td><code>gemini-2.5-flash-lite</code></td><td>最轻量、延迟最低、额度最大</td><td>高频简单任务、批量处理</td></tr>
       </tbody>
     </table>
+    <p>免费额度（Free Tier，无需绑卡）大致如下：</p>
+    <table>
+      <thead>
+        <tr><th>模型</th><th>每分钟请求 (RPM)</th><th>每天请求 (RPD)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>gemini-2.5-flash</code></td><td>10</td><td>250</td></tr>
+        <tr><td><code>gemini-2.5-flash-lite</code></td><td>15</td><td>1000</td></tr>
+        <tr><td><code>gemini-2.5-pro</code></td><td>5</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <blockquote>
+      <p>免费档有每分钟/每天上限，写代码时若短时间疯狂调用可能触发限流（返回 429）。正常人机交互完全够用；如果要跑自动化脚本，建议升级到付费档或控制频率。</p>
+    </blockquote>
+    <blockquote class="ok">
+      <p>想要更强？Google 已放出 <code>gemini-3</code> 系列（如 <code>gemini-3-flash</code>、<code>gemini-3.5-flash</code> 等）预览版，能力更强，但<strong>预览版通常需要绑定计费</strong>、没有免费档。本教程的 2.5 系列对绝大多数人已经绰绰有余，想尝鲜把上面的模型名换成 3 系即可，接入方式完全一样。</p>
+    </blockquote>
 
-    <h2 id="s7">总结</h2>
+    <h2 id="s7">进阶：调节 Gemini 的"思考"（reasoning）</h2>
+    <p>Gemini 2.5 是"会先思考再回答"的推理模型。思考能提升质量，但也会更慢、更费 token。你可以按需调节：</p>
+    <ul>
+      <li><strong>gemini-2.5-flash</strong>：支持用 <code>reasoning_effort</code> 控制思考量，取值 <code>none</code> / <code>low</code> / <code>medium</code> / <code>high</code>。设为 <code>none</code> 可关闭思考，响应最快、最省额度，适合简单任务。</li>
+      <li><strong>gemini-2.5-pro</strong>：思考能力<strong>无法关闭</strong>，只能调高调低，不能设 <code>none</code>。</li>
+    </ul>
+    <p>在 WorkBuddy / Trae 的图形界面里，这类参数通常通过"高级设置 / 推理强度"开关控制；若你的版本没有该开关，一般保持默认即可，不影响正常使用。</p>
+    <blockquote class="warn">
+      <p>小提醒：Gemini 的"思考过程"会占用输出 token，免费档要注意别让长思考把额度吃太快。日常问答用 <code>gemini-2.5-flash</code> + 默认或 <code>low</code> 思考，是最省又最稳的组合。</p>
+    </blockquote>
+
+    <h2 id="s8">总结</h2>
     <p>整个流程其实就是三步：</p>
     <ol>
-      <li>去 Google AI Studio 拿 API Key</li>
-      <li>在工具里添加自定义模型，填入 Gemini 的 OpenAI 兼容接口地址 + API Key + 模型名</li>
-      <li>测试一下能不能正常对话</li>
+      <li>去 <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> 拿 API Key</li>
+      <li>在工具里添加自定义模型，填入 Gemini 的 OpenAI 兼容地址 + API Key + 模型名</li>
+      <li>用 curl 或直接在工具里发条消息验证</li>
     </ol>
-    <p>关键地址再贴一遍：<code>https://generativelanguage.googleapis.com/v1beta/openai/v1</code></p>
+    <p>两个最关键、最容易写错的地址再贴一遍：</p>
+    <ul>
+      <li>WorkBuddy <code>models.json</code> 的 <code>url</code>（根地址）：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
+      <li>Trae 完整 URL 模式（完整路径）：<code>https://generativelanguage.googleapis.com/v1beta/openai/chat/completions</code></li>
+    </ul>
+    <p>记住一句话：<strong>根地址不带 <code>/v1</code>，完整地址以 <code>/chat/completions</code> 结尾</strong>，就不会踩 404 的坑。</p>
 
     <div class="tag-cloud">
       <a href="/craft/">Gemini API</a>
