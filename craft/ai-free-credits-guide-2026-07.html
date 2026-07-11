@@ -38,7 +38,7 @@
   --hero-em-a: #0d9488;
   --hero-em-b: #0e7490;
   --radius: 12px;
-  --max-text: 720px;
+  --max-text: 880px;
 }
 html[data-theme="dark"] {
   --bg: #0a0a10;
@@ -105,19 +105,19 @@ body {
   pointer-events: none; }
 .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent); }
-.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-inner { position: relative; max-width: 840px; margin: 0 auto; padding: 0 24px; }
 .hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
   background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
   letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
 .hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
   box-shadow: 0 0 6px var(--accent); }
 .hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
-  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  line-height: 1.18; max-width: 840px; margin: 0 auto 20px;
   background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
-.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 540px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 680px; margin: 0 auto 30px; line-height: 1.7; }
 .hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
   color: var(--text-tertiary); flex-wrap: wrap; }
 .hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
