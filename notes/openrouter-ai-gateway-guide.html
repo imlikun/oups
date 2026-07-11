@@ -230,7 +230,7 @@ pre code { color:inherit; background:none; padding:0; }
 
 <div class="info-box">
 <div class="info-box-title">⚠️ 关键判断</div>
-<p>502 不是本地网络问题，也不是 API Key 错误（Key 错会报 401/403）。它意味着<strong>请求发出去了，但没到达 Google 后端</strong>。在你这个场景里，最大概率是代理节点对 <code>generativelanguage.googleapis.com</code> 这个域名不通。</p>
+<p>502 不是本地网络问题，也不是 API Key 错误（Key 错会报 401/403）。它意味着<strong>请求发出去了，但没到达 Google 后端</strong>。在我这个场景里，最大概率是代理节点对 <code>generativelanguage.googleapis.com</code> 这个域名不通。</p>
 </div>
 
 </section>
@@ -238,7 +238,7 @@ pre code { color:inherit; background:none; padding:0; }
 <section id="sec2">
 <h2><span class="sec-num">02</span>什么是 OpenRouter</h2>
 
-<p>OpenRouter 是一个<strong>统一的 AI 模型 API 网关</strong>。它把市面上几百个模型收进一个 OpenAI 兼容的端点，你用一套代码或客户端就能调所有模型。</p>
+<p>OpenRouter 是一个<strong>统一的 AI 模型 API 网关</strong>。它把市面上几百个模型收进一个 OpenAI 兼容的端点，我用一套代码或客户端就能调所有模型。</p>
 
 <div class="stat-row">
   <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">聚合模型数</div></div>
@@ -262,13 +262,13 @@ pre code { color:inherit; background:none; padding:0; }
 
 <p>关键不在「它更快」，而在<strong>请求路径变了</strong>。</p>
 
-<blockquote><p>直连模式：你的客户端 → 直接请求 <code>generativelanguage.googleapis.com</code>（国内常不通）<br>
-OpenRouter 模式：你的客户端 → 请求 <code>openrouter.ai</code> → OpenRouter 的服务器（在美国）再去请求 Google / Anthropic</p></blockquote>
+<blockquote><p>直连模式：我的客户端 → 直接请求 <code>generativelanguage.googleapis.com</code>（国内常不通）<br>
+OpenRouter 模式：我的客户端 → 请求 <code>openrouter.ai</code> → OpenRouter 的服务器（在美国）再去请求 Google / Anthropic</p></blockquote>
 
-<p>也就是说，<strong>你不再需要直连 Google 的 API 域名</strong>。只要你的网络能到 <code>openrouter.ai</code>（这个域名相对 Google Cloud API 更容易连通，很多代理节点对其也更友好），就能间接用上 Gemini、Claude 等所有模型。</p>
+<p>也就是说，<strong>我不再需要直连 Google 的 API 域名</strong>。只要我的网络能到 <code>openrouter.ai</code>（这个域名相对 Google Cloud API 更容易连通，很多代理节点对其也更友好），就能间接用上 Gemini、Claude 等所有模型。</p>
 
 <div class="highlight-box">
-<p>一句话：OpenRouter 帮你「代请求」。Google 接口连不上，就让 OpenRouter 的服务器去连——你只跟 OpenRouter 打交道。</p>
+<p>一句话：OpenRouter 帮我「代请求」。Google 接口连不上，就让 OpenRouter 的服务器去连——我只跟 OpenRouter 打交道。</p>
 </div>
 
 </section>
@@ -303,13 +303,13 @@ OpenRouter 模式：你的客户端 → 请求 <code>openrouter.ai</code> → Op
 <p>保存后发一条测试消息即可。</p>
 
 <h3>4. 代码调用示例（Python）</h3>
-<p>如果你是自己写程序，直接复用 OpenAI SDK，只改 <code>base_url</code> 和 <code>api_key</code>：</p>
+<p>如果是自己写程序，直接复用 OpenAI SDK，只改 <code>base_url</code> 和 <code>api_key</code>：</p>
 
 <pre><code>from openai import OpenAI
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="sk-or-v1-xxx",   # 换成你的 key
+    api_key="sk-or-v1-xxx",   # 换成我的 key
 )
 
 resp = client.chat.completions.create(
@@ -359,7 +359,7 @@ print(resp.choices[0].message.content)</code></pre>
 
 <div class="info-box">
 <div class="info-box-title">💡 成本提示</div>
-<p>如果你本来就要用 Gemini / Claude 的付费 API，经过 OpenRouter 中转一般只贵一点点（服务费），但换来的是<strong>不用每个厂商单独注册 + 单独处理网络问题 + 一套代码切换模型</strong>。对国内开发者来说，这笔溢价往往值得。</p>
+<p>如果我本来就要用 Gemini / Claude 的付费 API，经过 OpenRouter 中转一般只贵一点点（服务费），但换来的是<strong>不用每个厂商单独注册 + 单独处理网络问题 + 一套代码切换模型</strong>。对国内开发者来说，这笔溢价往往值得。</p>
 </div>
 
 </section>
@@ -380,7 +380,7 @@ print(resp.choices[0].message.content)</code></pre>
 <section id="sec8">
 <h2><span class="sec-num">08</span>小结</h2>
 
-<p>回到开头那个 502：直连 Google API 失败，多半是网络 / 节点问题，不是你配置错了。与其跟 DNS 污染和流媒体节点较劲，不如把请求路径改成「你 → OpenRouter → Google」。一层统一网关，把 300+ 模型收进一个端点、一个 key，换模型只改名字——开发体验提升明显，国内连通性也稳得多。</p>
+<p>回到开头那个 502：直连 Google API 失败，多半是网络 / 节点问题，不是我配置错了。与其跟 DNS 污染和流媒体节点较劲，不如把请求路径改成「我 → OpenRouter → Google」。一层统一网关，把 300+ 模型收进一个端点、一个 key，换模型只改名字——开发体验提升明显，国内连通性也稳得多。</p>
 
 <p>代价也很清楚：多一层中转、按 token 略贵、免费模型有额度限制。但对于「想稳定用上 Gemini / Claude，又不想在代理配置上耗一下午」的场景，OpenRouter 是目前最省心的方案之一。</p>
 
@@ -446,10 +446,10 @@ print(resp.choices[0].message.content)</code></pre>
 </table>
 </div>
 
-<p>也就是说，<strong>如果你的目标只是用 Gemini，新加坡节点 + 直连 Google（用自己的 key）就够了，还免费用 AI Studio 额度</strong>，不用像 OpenRouter 那样充值。原先直连报 502，是因为旧节点到不了 <code>generativelanguage.googleapis.com</code> 这个域名；换成能正常路由 Google API 的新加坡节点后，直连 + 免费，比走 OpenRouter 更省。</p>
+<p>也就是说，<strong>如果我的目标只是用 Gemini，新加坡节点 + 直连 Google（用自己的 key）就够了，还免费用 AI Studio 额度</strong>，不用像 OpenRouter 那样充值。原先直连报 502，是因为旧节点到不了 <code>generativelanguage.googleapis.com</code> 这个域名；换成能正常路由 Google API 的新加坡节点后，直连 + 免费，比走 OpenRouter 更省。</p>
 
 <div class="highlight-box">
-<p><strong>OpenRouter 的真正价值</strong>：一个 key 调所有模型 + 自动 fallback + 不用每个厂商单独处理网络。<strong>如果你只想要 Gemini</strong>，配好新加坡节点直连 Google，往往更简单、更便宜。</p>
+<p><strong>OpenRouter 的真正价值</strong>：一个 key 调所有模型 + 自动 fallback + 不用每个厂商单独处理网络。<strong>如果我只想要 Gemini</strong>，配好新加坡节点直连 Google，往往更简单、更便宜。</p>
 </div>
 
 <h3>给国内读者的建议</h3>
@@ -471,7 +471,7 @@ print(resp.choices[0].message.content)</code></pre>
 
 <p><strong>22:09</strong>，把浏览器地址从根路径 <code>generativelanguage.googleapis.com</code> 换成完整 API 路径：</p>
 
-<pre><code>https://generativelanguage.googleapis.com/v1beta/models?key=你的GoogleKey</code></pre>
+<pre><code>https://generativelanguage.googleapis.com/v1beta/models?key=我的GoogleKey</code></pre>
 
 <p>返回了完整的模型列表 JSON——包含 <code>models/gemini-2.5-flash</code>、<code>models/gemini-2.5-pro</code>、<code>models/gemini-3.1-flash-lite</code> 等几十条记录。这说明：</p>
 
@@ -523,7 +523,7 @@ print(resp.choices[0].message.content)</code></pre>
 
 <ul>
 <li>Base URL：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
-<li>API Key：Google AI Studio Key</li>
+<li>API Key：我用的 Google AI Studio Key</li>
 <li>模型名：<code>gemini-2.5-flash</code>（或 <code>gemini-3.1-flash-lite</code>）</li>
 </ul>
 
@@ -560,13 +560,13 @@ print(resp.choices[0].message.content)</code></pre>
 </table>
 </div>
 
-<p>注意：你之前直接填 <code>gemini-3.1-flash-lite</code> 失败，很可能是因为 OpenAI 兼容层<strong>只暴露 preview 版本</strong>。原生端点 <code>/v1beta/models</code> 列出的是 <code>models/gemini-3.1-flash-lite</code>，但兼容层 <code>/v1beta/openai</code> 实际支持的是 <code>gemini-3.1-flash-lite-preview</code>（或带日期后缀的完整版本）。</p>
+<p>注意：我之前直接填 <code>gemini-3.1-flash-lite</code> 失败，很可能是因为 OpenAI 兼容层<strong>只暴露 preview 版本</strong>。原生端点 <code>/v1beta/models</code> 列出的是 <code>models/gemini-3.1-flash-lite</code>，但兼容层 <code>/v1beta/openai</code> 实际支持的是 <code>gemini-3.1-flash-lite-preview</code>（或带日期后缀的完整版本）。</p>
 
 <h3>验证兼容层真实支持的模型名</h3>
 
 <p>访问这个地址，看 OpenAI 兼容层实际返回什么：</p>
 
-<pre><code>https://generativelanguage.googleapis.com/v1beta/openai/models?key=你的GoogleKey</code></pre>
+<pre><code>https://generativelanguage.googleapis.com/v1beta/openai/models?key=我的GoogleKey</code></pre>
 
 <p>把返回的 <code>gemini-3.1</code> 相关模型名原样填进客户端，基本就能用。</p>
 
@@ -574,13 +574,13 @@ print(resp.choices[0].message.content)</code></pre>
 
 <ul>
 <li>Base URL：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
-<li>API Key：Google AI Studio Key</li>
+<li>API Key：我用的 Google AI Studio Key</li>
 <li>模型名：<code>gemini-3.1-flash-lite-preview</code>（或 <code>gemini-3.5-flash</code>）</li>
 </ul>
 
 <div class="info-box">
 <div class="info-box-title">📌 针对第 10 节的修正</div>
-<p>第 10 节写"最终可用配置"时把 <code>gemini-2.5-flash</code> 作为首选，但那是基于"旧用户可用"的假设。如果你是新用户，2.5 系列会直接 404。本文不删改旧内容，只在此补充说明，避免后人踩同一坑。</p>
+<p>第 10 节写"最终可用配置"时把 <code>gemini-2.5-flash</code> 作为首选，但那是基于"旧用户可用"的假设。如果我是新用户，2.5 系列会直接 404。本文不删改旧内容，只在此补充说明，避免后人踩同一坑。</p>
 </div>
 
 </section>
@@ -601,7 +601,7 @@ print(resp.choices[0].message.content)</code></pre>
 <p>用 curl 或客户端直接发一条最小请求，逐个模型名测试：</p>
 
 <pre><code>curl -X POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions \
-  -H "Authorization: Bearer 你的GoogleKey" \
+  -H "Authorization: Bearer 我的GoogleKey" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gemini-3.1-flash-lite-preview",
@@ -632,7 +632,7 @@ print(resp.choices[0].message.content)</code></pre>
 <p><strong>22:32</strong>，按第 12 节的修正方法，在终端用 curl 直接调用 chat/completions 实测 <code>gemini-3.1-flash-lite-preview</code>，经新加坡节点（本地代理 <code>127.0.0.1:1087</code>）直连 Google，返回正常结果：</p>
 
 <pre><code>curl -x http://127.0.0.1:1087 -X POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions \
-  -H "Authorization: Bearer 你的GoogleKey" \
+  -H "Authorization: Bearer 我的GoogleKey" \
   -H "Content-Type: application/json" \
   -d '{"model":"gemini-3.1-flash-lite-preview","messages":[{"role":"user","content":"ping"}],"max_tokens":10}'</code></pre>
 
@@ -640,14 +640,14 @@ print(resp.choices[0].message.content)</code></pre>
 
 <div class="info-box">
 <div class="info-box-title">✅ 关键提醒：终端也要走代理</div>
-<p>本次成功的前提是 curl 加了 <code>-x http://127.0.0.1:1087</code> 走本地新加坡节点代理。终端默认<b>不走</b>系统代理，如果不加该参数直连，会再次 502（与你最早浏览器直连报错同源）。代理端口若非 1087，按你 V2rayU 实际端口改。</p>
+<p>本次成功的前提是 curl 加了 <code>-x http://127.0.0.1:1087</code> 走本地新加坡节点代理。终端默认<b>不走</b>系统代理，如果不加该参数直连，会再次 502（与我最早浏览器直连报错同源）。代理端口若非 1087，按我 V2rayU 实际端口改。</p>
 </div>
 
 <h3>最终可用配置（新用户 · 经实测确认）</h3>
 
 <ul>
 <li>Base URL：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
-<li>API Key：Google AI Studio Key（以 <code>AI...</code> 或 <code>AQ...</code> 开头，<strong>不是</strong> OpenRouter 的 <code>sk-or-v1...</code>）</li>
+<li>API Key：我用的 Google AI Studio Key（以 <code>AI...</code> 或 <code>AQ...</code> 开头，<strong>不是</strong> OpenRouter 的 <code>sk-or-v1...</code>）</li>
 <li>模型名：<code>gemini-3.1-flash-lite-preview</code>（免费层 15 RPM / 250K TPM / 500 RPD）</li>
 <li>网络：请求须经允许地区节点（实测新加坡可用），且<strong>终端/客户端须显式走代理</strong></li>
 </ul>
