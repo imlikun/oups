@@ -184,6 +184,7 @@ pre code { color:inherit; background:none; padding:0; }
       <li><a href="#sec9"><span class="num">09</span> 实测补充：地区限制、充值与直连对比</a></li>
       <li><a href="#sec10"><span class="num">10</span> 再实测：API 路径返回 JSON，但 Pro 系列不免费</a></li>
       <li><a href="#sec11"><span class="num">11</span> 新用户实测：2.5 系列已不可用，3.x 必填 preview</a></li>
+      <li><a href="#sec12"><span class="num">12</span> 修正：OpenAI 兼容层没有 /models 端点</a></li>
     </ol>
   </div>
 </div>
@@ -579,6 +580,47 @@ print(resp.choices[0].message.content)</code></pre>
 <div class="info-box">
 <div class="info-box-title">📌 针对第 10 节的修正</div>
 <p>第 10 节写"最终可用配置"时把 <code>gemini-2.5-flash</code> 作为首选，但那是基于"旧用户可用"的假设。如果你是新用户，2.5 系列会直接 404。本文不删改旧内容，只在此补充说明，避免后人踩同一坑。</p>
+</div>
+
+</section>
+
+<section id="sec12">
+<h2><span class="sec-num">12</span> 修正：OpenAI 兼容层没有 /models 端点</h2>
+
+<p><strong>22:28</strong>，按第 11 节的建议访问 <code>https://generativelanguage.googleapis.com/v1beta/openai/models?key=...</code>，Google 返回 404：</p>
+
+<blockquote>
+<p>"error": { "code": 404, "message": "Requested entity was not found.", "status": "NOT_FOUND" }</p>
+</blockquote>
+
+<p>这说明 Google 的 OpenAI 兼容层<strong>只实现了 <code>/chat/completions</code>，没有实现 <code>/models</code></strong>。所以没法像原生 API 那样列模型清单来查名字，只能直接调用 chat/completions 试错。</p>
+
+<h3>修正后的验证方法</h3>
+
+<p>用 curl 或客户端直接发一条最小请求，逐个模型名测试：</p>
+
+<pre><code>curl -X POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions \
+  -H "Authorization: Bearer 你的GoogleKey" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gemini-3.1-flash-lite-preview",
+    "messages": [{"role": "user", "content": "ping"}],
+    "max_tokens": 10
+  }'</code></pre>
+
+<p>如果返回正常回复，说明模型名可用；如果报错，再换下一个。注意：gemini-2.5-flash 返回的 404 不是"路径不存在"，而是"模型对新用户不可用"，这反而证明 <code>/chat/completions</code> 本身是通的。</p>
+
+<h3>建议按这个顺序试</h3>
+
+<ol>
+<li><code>gemini-3.1-flash-lite-preview</code>（免费层额度最多：15 RPM / 500 RPD）</li>
+<li><code>gemini-3.5-flash</code>（稳定版，5 RPM / 20 RPD）</li>
+<li><code>gemini-3-flash</code>（备选，5 RPM / 20 RPD）</li>
+</ol>
+
+<div class="info-box">
+<div class="info-box-title">📌 针对第 11 节的修正</div>
+<p>第 11 节建议用 <code>/v1beta/openai/models</code> 查看兼容层支持的模型名，但经实测该端点不存在。正确做法是直接调用 <code>/v1beta/openai/chat/completions</code> 试模型名。本文不删改旧内容，只在此补充。</p>
 </div>
 
 </section>
