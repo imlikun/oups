@@ -1026,6 +1026,30 @@
       "status": "published",
       "link": "/craft/openmontage.html",
       "template": "C"
+    },
+    {
+      "id": "article-48",
+      "title": "用 OpenRouter 做统一 AI 网关：国内调用 Gemini/Claude API 的实战方案",
+      "slug": "openrouter-ai-gateway-guide",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/openrouter-ai-gateway-guide-cover.jpg",
+      "excerpt": "直连 Gemini API 报 502、模型名怎么填、代理节点到不了 Google？用 OpenRouter 这层统一网关，把 300+ 模型收进一个 OpenAI 兼容端点，国内也能稳定调用。",
+      "content": "详见独立文章页：/notes/openrouter-ai-gateway-guide.html",
+      "tags": [
+        "OpenRouter",
+        "Gemini",
+        "Claude",
+        "API网关",
+        "代理",
+        "AI开发",
+        "网络"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-11",
+      "status": "published",
+      "link": "/notes/openrouter-ai-gateway-guide.html",
+      "template": "C"
     }
   ],
   "projects": [

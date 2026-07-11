@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用 OpenRouter 做统一 AI 网关：国内调用 Gemini/Claude API 的实战方案 — 李坤的随笔</title>
+<meta name="description" content="直连 Gemini API 报 502、模型名怎么填、代理节点到不了 Google？用 OpenRouter 这层统一网关，把 300+ 模型收进一个 OpenAI 兼容端点，国内也能稳定调用。">
+<style>
+:root {
+  --bg: #f9f8f6;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #999;
+  --accent: #c87a1e;
+  --accent-light: rgba(200,122,30,0.1);
+  --accent-soft: rgba(200,122,30,0.06);
+  --border: rgba(0,0,0,0.08);
+  --card-bg: #fff;
+  --radius: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(249,248,246,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:820px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
+.nav-links { display:flex; gap:24px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* ---- Hero ---- */
+.hero { position:relative; min-height:420px; display:flex; align-items:center; justify-content:center;
+  overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(180deg, rgba(249,248,246,0.3) 0%, rgba(249,248,246,0.85) 70%, var(--bg) 100%); }
+.hero-content { position:relative; z-index:1; max-width:800px; padding:120px 32px 48px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:rgba(255,255,255,0.9); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em;
+  margin-bottom:20px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(28px,4.5vw,42px); font-weight:700; letter-spacing:-1px; line-height:1.2; margin-bottom:16px; }
+.hero-meta { display:flex; align-items:center; justify-content:center; gap:20px; font-size:13px; color:var(--text-muted); }
+.hero-meta span { display:flex; align-items:center; gap:4px; }
+
+/* ---- TOC ---- */
+.toc-wrap { max-width:820px; margin:0 auto; padding:12px 32px 32px; }
+.toc { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; }
+.toc-title { font-size:13px; font-weight:600; color:var(--text-muted); letter-spacing:0.05em; margin-bottom:14px; text-transform:uppercase; }
+.toc-list { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; list-style:none; }
+.toc-list li a { display:flex; align-items:baseline; gap:8px; color:var(--text-secondary); text-decoration:none; font-size:14px; padding:4px 0; transition:color 0.2s; }
+.toc-list li a:hover { color:var(--accent); }
+.toc-list li .num { color:var(--accent); font-weight:600; font-size:12px; min-width:20px; }
+
+/* ---- Content ---- */
+.content { max-width:820px; margin:0 auto; padding:0 32px 80px; }
+.content section { margin-bottom:48px; }
+.content h2 { font-size:24px; font-weight:700; letter-spacing:-0.3px; margin-bottom:20px; padding-top:8px;
+  border-top:2px solid var(--accent-light); padding-top:28px; }
+.content h2:first-child { border-top:none; padding-top:0; }
+.content h2 .sec-num { color:var(--accent); font-size:16px; font-weight:600; margin-right:8px; }
+.content h3 { font-size:18px; font-weight:600; margin:24px 0 12px; }
+.content p { margin-bottom:16px; font-size:16px; color:var(--text); }
+.content ul, .content ol { margin:12px 0 20px 20px; }
+.content li { margin-bottom:8px; font-size:15px; line-height:1.7; }
+.content strong { font-weight:600; }
+.content blockquote { border-left:3px solid var(--accent); padding:12px 20px; margin:20px 0;
+  background:var(--accent-soft); border-radius:0 8px 8px 0; font-size:15px; color:var(--text); }
+.content blockquote p { margin-bottom:0; }
+.content code { background:var(--accent-soft); padding:2px 6px; border-radius:5px; font-size:0.9em;
+  font-family:'SF Mono','Fira Code',monospace; color:#a8550f; }
+
+/* Tables */
+.table-wrap { overflow-x:auto; margin:20px 0; border-radius:10px; border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:14px; background:var(--card-bg); }
+th { background:var(--accent-light); color:var(--accent); font-weight:600; padding:12px 16px; text-align:left; white-space:nowrap; }
+td { padding:12px 16px; border-top:1px solid var(--border); line-height:1.6; }
+tr:hover td { background:var(--accent-soft); }
+
+/* Code blocks */
+pre { background:#2a2a2a; color:#e0e0e0; padding:20px 24px; border-radius:10px; overflow-x:auto;
+  margin:20px 0; font-size:13px; line-height:1.6; font-family:'SF Mono','Fira Code',monospace; }
+pre code { color:inherit; background:none; padding:0; }
+
+/* Info boxes */
+.info-box { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  padding:20px 24px; margin:20px 0; }
+.info-box-title { font-size:14px; font-weight:600; color:var(--accent); margin-bottom:10px; }
+
+/* Highlight box */
+.highlight-box { background:linear-gradient(135deg, var(--accent-light), var(--accent-soft));
+  border-radius:var(--radius); padding:24px 28px; margin:24px 0; border:1px solid rgba(200,122,30,0.15); }
+.highlight-box p { margin-bottom:0; font-size:16px; }
+
+/* Summary card */
+.summary-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  padding:28px 32px; margin:32px 0; box-shadow:0 2px 12px rgba(0,0,0,0.03); }
+.summary-card h3 { font-size:16px; font-weight:600; color:var(--accent); margin-bottom:16px; }
+.summary-card .key-points { list-style:none; margin:0; padding:0; }
+.summary-card .key-points li { padding:8px 0 8px 28px; position:relative; font-size:15px; line-height:1.6; }
+.summary-card .key-points li::before { content:'✓'; position:absolute; left:0; top:8px; color:var(--accent);
+  font-weight:700; font-size:14px; }
+
+/* Stat cards */
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:24px 0; }
+.stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.stat-card .stat-num { font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; }
+.stat-card .stat-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+
+/* Tag cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:32px 0; padding-top:24px; border-top:1px solid var(--border); }
+.tag-cloud span { padding:5px 14px; border-radius:20px; background:var(--accent-soft); color:var(--accent);
+  font-size:13px; font-weight:500; }
+
+/* Footer */
+.footer { max-width:820px; margin:0 auto; padding:32px; border-top:1px solid var(--border);
+  text-align:center; color:var(--text-muted); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Mobile */
+@media (max-width:640px) {
+  .hero { min-height:340px; }
+  .hero-content { padding:100px 20px 32px; }
+  .nav-inner { padding:0 20px; }
+  .nav-links { gap:14px; }
+  .nav-links a { font-size:13px; }
+  .toc-list { grid-template-columns:1fr; }
+  .content { padding:0 20px 60px; }
+  .content h2 { font-size:20px; }
+  .stat-row { grid-template-columns:1fr; }
+  .table-wrap { font-size:12px; }
+  th, td { padding:8px 10px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">李坤<span>· 随笔</span></a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/" class="active">随笔</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('/uploads/openrouter-ai-gateway-guide-cover.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> 随笔 · AI 工程</div>
+    <h1>用 OpenRouter 做统一 AI 网关：国内调用 Gemini/Claude API 的实战方案</h1>
+    <div class="hero-meta">
+      <span>📅 2026-07-11</span>
+      <span>👤 李坤</span>
+      <span>📖 约 12 分钟</span>
+    </div>
+  </div>
+</section>
+
+<div class="toc-wrap">
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol class="toc-list">
+      <li><a href="#sec1"><span class="num">01</span> 背景：为什么直连 Gemini API 会失败</a></li>
+      <li><a href="#sec2"><span class="num">02</span> 什么是 OpenRouter</a></li>
+      <li><a href="#sec3"><span class="num">03</span> 为什么它能解决国内访问问题</a></li>
+      <li><a href="#sec4"><span class="num">04</span> 实战：在客户端里配置</a></li>
+      <li><a href="#sec5"><span class="num">05</span> 常用模型名对照表</a></li>
+      <li><a href="#sec6"><span class="num">06</span> 费用与配额</a></li>
+      <li><a href="#sec7"><span class="num">07</span> 其他常见坑</a></li>
+      <li><a href="#sec8"><span class="num">08</span> 小结</a></li>
+    </ol>
+  </div>
+</div>
+
+<article class="content">
+
+<div class="summary-card">
+  <h3>核心要点</h3>
+  <ul class="key-points">
+    <li>直连 Gemini API 报 502，根因多半是网络 / 节点，不是配置错</li>
+    <li>OpenRouter 用「服务端代请求」绕开直连，国内更稳</li>
+    <li>一个端点、一个 key、换模型只改名字，开发体验好很多</li>
+    <li>模型名是 <code>厂商/模型</code> 格式，跟官方不一样</li>
+    <li>代价：多一层中转、按 token 略贵、免费模型有额度限制</li>
+  </ul>
+</div>
+
+<section id="sec1">
+<h2><span class="sec-num">01</span>背景：为什么直连 Gemini API 会失败</h2>
+
+<p>前几天在客户端里配 Gemini，踩了一圈坑，过程挺典型，先复盘一下，方便对照自己卡在哪一步。</p>
+
+<h3>第一步：模型名填成了展示名</h3>
+<p>在模型设置里填了 <code>Gemini 3.1 Flash Lite</code>——这是控制台里的<strong>展示名称</strong>，不是 API 模型 ID。API 要的是全小写、连字符格式，比如 <code>gemini-3.1-flash-lite</code>。填错名字，网关找不到对应模型，直接抛 502。</p>
+
+<h3>第二步：改成 API ID 还是 502</h3>
+<p>把名字改对之后，依然 502。这时候就不是配置问题了——浏览器直接访问 <code>generativelanguage.googleapis.com</code> 显示 404（其实正常，根路径没页面），但客户端里请求 <code>/v1beta/openai/chat/completions</code> 就是不通。</p>
+
+<h3>第三步：代理全局模式也不行</h3>
+<p>把代理切成「全局」，YouTube 能开，但 Gemini API 还是 502。说明问题不在路由规则，而在<strong>代理节点本身到不了 Google API 域名</strong>。常见三种情况：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>现象</th><th>根因</th><th>判断依据</th></tr></thead>
+<tbody>
+<tr><td>YouTube 能开，Google API 不通</td><td>节点只解锁流媒体，不开放 Google Cloud / API 域名</td><td>全局模式仍失败</td></tr>
+<tr><td>改了模型名仍 502</td><td>请求没真正到达 Google 后端（被拦截 / 污染）</td><td>不是 401/404，而是 502</td></tr>
+<tr><td>本地 DNS 解析到错误 IP</td><td>DNS 污染，需开启远程 DNS 解析</td><td>全局模式 + 远程 DNS 后仍不行 → 排除此项</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-box">
+<div class="info-box-title">⚠️ 关键判断</div>
+<p>502 不是本地网络问题，也不是 API Key 错误（Key 错会报 401/403）。它意味着<strong>请求发出去了，但没到达 Google 后端</strong>。在你这个场景里，最大概率是代理节点对 <code>generativelanguage.googleapis.com</code> 这个域名不通。</p>
+</div>
+
+</section>
+
+<section id="sec2">
+<h2><span class="sec-num">02</span>什么是 OpenRouter</h2>
+
+<p>OpenRouter 是一个<strong>统一的 AI 模型 API 网关</strong>。它把市面上几百个模型收进一个 OpenAI 兼容的端点，你用一套代码或客户端就能调所有模型。</p>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">聚合模型数</div></div>
+  <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">统一端点</div></div>
+  <div class="stat-card"><div class="stat-num">1</div><div class="stat-label">API Key</div></div>
+</div>
+
+<p>它覆盖的厂商包括：OpenAI、Anthropic、Google、Meta、Mistral，以及大量开源模型（DeepSeek、Qwen、Llama 等）。核心特点：</p>
+
+<ul>
+  <li><strong>单一端点</strong>：<code>https://openrouter.ai/api/v1</code>，完全兼容 OpenAI SDK。</li>
+  <li><strong>一个 Key 通吃</strong>：在 OpenRouter 注册一次，拿到 <code>sk-or-v1-...</code> 的 key，所有模型都能用。</li>
+  <li><strong>换模型只改名字</strong>：想从 Gemini 换成 Claude，改一个 <code>model</code> 字段即可，不用改代码、不用换 key。</li>
+  <li><strong>按 token 计费</strong>：有免费模型和付费模型，先充值 credit，调用扣费。</li>
+</ul>
+
+</section>
+
+<section id="sec3">
+<h2><span class="sec-num">03</span>为什么它能解决国内访问问题</h2>
+
+<p>关键不在「它更快」，而在<strong>请求路径变了</strong>。</p>
+
+<blockquote><p>直连模式：你的客户端 → 直接请求 <code>generativelanguage.googleapis.com</code>（国内常不通）<br>
+OpenRouter 模式：你的客户端 → 请求 <code>openrouter.ai</code> → OpenRouter 的服务器（在美国）再去请求 Google / Anthropic</p></blockquote>
+
+<p>也就是说，<strong>你不再需要直连 Google 的 API 域名</strong>。只要你的网络能到 <code>openrouter.ai</code>（这个域名相对 Google Cloud API 更容易连通，很多代理节点对其也更友好），就能间接用上 Gemini、Claude 等所有模型。</p>
+
+<div class="highlight-box">
+<p>一句话：OpenRouter 帮你「代请求」。Google 接口连不上，就让 OpenRouter 的服务器去连——你只跟 OpenRouter 打交道。</p>
+</div>
+
+</section>
+
+<section id="sec4">
+<h2><span class="sec-num">04</span>实战：在客户端里配置</h2>
+
+<p>以任意 OpenAI 兼容客户端（Cherry Studio、各类对话 App）为例，步骤很简单：</p>
+
+<h3>1. 注册并拿 Key</h3>
+<p>去 <code>openrouter.ai</code> 注册，在 <strong>API Keys</strong> 页面生成一个 key，格式是 <code>sk-or-v1-xxxxxxxx</code>。</p>
+
+<h3>2. 添加自定义提供方</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>字段</th><th>填什么</th></tr></thead>
+<tbody>
+<tr><td>名称</td><td>OpenRouter（随便起）</td></tr>
+<tr><td>API 地址（Base URL）</td><td><code>https://openrouter.ai/api/v1</code></td></tr>
+<tr><td>API Key</td><td><code>sk-or-v1-xxxxxxxx</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3. 添加模型</h3>
+<p>模型名填 OpenRouter 的 slug，例如：</p>
+<ul>
+  <li><code>google/gemini-2.5-pro</code></li>
+  <li><code>anthropic/claude-3.7-sonnet</code></li>
+  <li><code>openai/gpt-4o</code></li>
+</ul>
+<p>保存后发一条测试消息即可。</p>
+
+<h3>4. 代码调用示例（Python）</h3>
+<p>如果你是自己写程序，直接复用 OpenAI SDK，只改 <code>base_url</code> 和 <code>api_key</code>：</p>
+
+<pre><code>from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key="sk-or-v1-xxx",   # 换成你的 key
+)
+
+resp = client.chat.completions.create(
+    model="google/gemini-2.5-pro",
+    messages=[{"role": "user", "content": "用一句话解释什么是 API 网关"}],
+)
+print(resp.choices[0].message.content)</code></pre>
+
+<p>就这么几行，原来调 OpenAI 的代码几乎不用改，模型却能从 GPT 换成 Gemini / Claude。</p>
+
+</section>
+
+<section id="sec5">
+<h2><span class="sec-num">05</span>常用模型名对照表</h2>
+
+<p>OpenRouter 的模型名是 <code>厂商/模型</code> 格式，跟官方 API 里的名字不一样，这是最容易踩的坑。常用对照：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>想要的模型</th><th>OpenRouter 模型名</th></tr></thead>
+<tbody>
+<tr><td>Gemini 2.5 Pro</td><td><code>google/gemini-2.5-pro</code></td></tr>
+<tr><td>Gemini 2.5 Flash</td><td><code>google/gemini-2.5-flash</code></td></tr>
+<tr><td>Claude 3.7 Sonnet</td><td><code>anthropic/claude-3.7-sonnet</code></td></tr>
+<tr><td>Claude 3.5 Haiku</td><td><code>anthropic/claude-3.5-haiku</code></td></tr>
+<tr><td>GPT-4o</td><td><code>openai/gpt-4o</code></td></tr>
+<tr><td>DeepSeek V3</td><td><code>deepseek/deepseek-chat</code></td></tr>
+<tr><td>Llama 3.3 70B</td><td><code>meta-llama/llama-3.3-70b-instruct</code></td></tr>
+<tr><td>Qwen3 235B</td><td><code>qwen/qwen3-235b-a22b</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>完整列表在 OpenRouter 官网的 Models 页面，每个模型卡片下方都直接给出可复制的 slug。</p>
+
+</section>
+
+<section id="sec6">
+<h2><span class="sec-num">06</span>费用与配额</h2>
+
+<ul>
+  <li><strong>免费模型</strong>：很多开源模型（DeepSeek、Qwen、Llama、部分 Meta 模型）有免费档，模型名带 <code>:free</code> 后缀，适合试用和轻量调用。</li>
+  <li><strong>付费模型</strong>：按 token 计费，价格通常跟官方一致或略高——OpenRouter 会收一点服务费作为中转成本。</li>
+  <li><strong>Credit 系统</strong>：先充值 credit，调用时按量扣费，比每个厂商分别开账单省心。</li>
+  <li><strong>速率限制</strong>：免费模型有 RPM / TPM 上限；充值后可提高额度。</li>
+</ul>
+
+<div class="info-box">
+<div class="info-box-title">💡 成本提示</div>
+<p>如果你本来就要用 Gemini / Claude 的付费 API，经过 OpenRouter 中转一般只贵一点点（服务费），但换来的是<strong>不用每个厂商单独注册 + 单独处理网络问题 + 一套代码切换模型</strong>。对国内开发者来说，这笔溢价往往值得。</p>
+</div>
+
+</section>
+
+<section id="sec7">
+<h2><span class="sec-num">07</span>其他常见坑</h2>
+
+<ol>
+  <li><strong>模型名格式</strong>：必须 <code>厂商/模型</code>，不能填官方展示名（比如 <code>Gemini 2.5 Pro</code> 会 404）。</li>
+  <li><strong>401 vs 404</strong>：401 = key 错；404 = 模型名错（OpenRouter 对未知模型返回 404，不是 400）。</li>
+  <li><strong>Key 安全</strong>：浏览器端直接调 OpenRouter 需要带 key，暴露在前端有泄露风险，正式项目务必走后端代理。</li>
+  <li><strong>思考模式</strong>：Gemini / Claude 的 thinking 在 OpenRouter 通过 <code>reasoning</code> 参数控制，不是所有客户端都暴露这个开关。</li>
+  <li><strong>流式响应</strong>：OpenAI SDK 默认 <code>stream=True</code>，客户端要支持 SSE 才能正常显示逐字输出。</li>
+</ol>
+
+</section>
+
+<section id="sec8">
+<h2><span class="sec-num">08</span>小结</h2>
+
+<p>回到开头那个 502：直连 Google API 失败，多半是网络 / 节点问题，不是你配置错了。与其跟 DNS 污染和流媒体节点较劲，不如把请求路径改成「你 → OpenRouter → Google」。一层统一网关，把 300+ 模型收进一个端点、一个 key，换模型只改名字——开发体验提升明显，国内连通性也稳得多。</p>
+
+<p>代价也很清楚：多一层中转、按 token 略贵、免费模型有额度限制。但对于「想稳定用上 Gemini / Claude，又不想在代理配置上耗一下午」的场景，OpenRouter 是目前最省心的方案之一。</p>
+
+<div class="tag-cloud">
+  <span>OpenRouter</span>
+  <span>Gemini</span>
+  <span>Claude</span>
+  <span>API 网关</span>
+  <span>代理</span>
+  <span>AI 开发</span>
+  <span>网络</span>
+</div>
+
+</section>
+
+</article>
+
+<div class="footer">
+  <p>© 2026 李坤 · <a href="/notes/">返回随笔</a> · <a href="/">首页</a></p>
+</div>
+
+</body>
+</html>
