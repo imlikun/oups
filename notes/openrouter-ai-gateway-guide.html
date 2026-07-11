@@ -182,6 +182,7 @@ pre code { color:inherit; background:none; padding:0; }
       <li><a href="#sec7"><span class="num">07</span> 其他常见坑</a></li>
       <li><a href="#sec8"><span class="num">08</span> 小结</a></li>
       <li><a href="#sec9"><span class="num">09</span> 实测补充：地区限制、充值与直连对比</a></li>
+      <li><a href="#sec10"><span class="num">10</span> 再实测：API 路径返回 JSON，但 Pro 系列不免费</a></li>
     </ol>
   </div>
 </div>
@@ -459,6 +460,71 @@ print(resp.choices[0].message.content)</code></pre>
 <div class="info-box-title">📌 本文立场更新</div>
 <p>第 03 节说"OpenRouter 帮国内绕开直连"对<strong>连通性</strong>成立，但对<strong>Gemini / Claude 这类美国模型</strong>不成立——它们额外受地区限制。本文不删旧内容，保留完整排查轨迹，方便对照自己卡在 403 还是 402。</p>
 </div>
+
+</section>
+
+<section id="sec10">
+<h2><span class="sec-num">10</span> 再实测：API 路径返回 JSON，但 Pro 系列不免费</h2>
+
+<p><strong>22:09</strong>，把浏览器地址从根路径 <code>generativelanguage.googleapis.com</code> 换成完整 API 路径：</p>
+
+<pre><code>https://generativelanguage.googleapis.com/v1beta/models?key=你的GoogleKey</code></pre>
+
+<p>返回了完整的模型列表 JSON——包含 <code>models/gemini-2.5-flash</code>、<code>models/gemini-2.5-pro</code>、<code>models/gemini-3.1-flash-lite</code> 等几十条记录。这说明：</p>
+
+<ul>
+<li>新加坡节点 + 直连 Google API，网络已通；</li>
+<li>API Key 有效；</li>
+<li>地区限制已放行。</li>
+</ul>
+
+<p>之前浏览器访问根路径报 404，是<strong>正常行为</strong>（API 域名没有网页首页），不是"打不开"。</p>
+
+<h3>22:13 查看 AI Studio 配额：Pro 系列 0/0/0</h3>
+
+<p>转到 <code>aistudio.google.com/app/apikey</code> 的 Rate limit 页面，发现免费额度不是"每个模型都有"，而是按模型分配的：</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>模型</th><th>RPM</th><th>TPM</th><th>RPD</th><th>是否免费</th></tr>
+</thead>
+<tbody>
+<tr><td><code>gemini-2.5-flash</code></td><td>0/5</td><td>0/250K</td><td>0/20</td><td>✅ 有</td></tr>
+<tr><td><code>gemini-2.5-flash-lite</code></td><td>0/10</td><td>0/250K</td><td>0/20</td><td>✅ 有</td></tr>
+<tr><td><code>gemini-3.1-flash-lite</code></td><td>0/15</td><td>0/250K</td><td>0/500</td><td>✅ 免费层最多</td></tr>
+<tr><td><code>gemini-3-flash</code></td><td>0/5</td><td>0/250K</td><td>0/20</td><td>✅ 有</td></tr>
+<tr><td><code>gemini-3.5-flash</code></td><td>0/5</td><td>0/250K</td><td>0/20</td><td>✅ 有</td></tr>
+<tr><td><code>gemini-2.5-pro</code></td><td>0/0</td><td>0/0</td><td>0/0</td><td>❌ 无</td></tr>
+<tr><td><code>gemini-3-pro</code></td><td>0/0</td><td>0/0</td><td>0/0</td><td>❌ 无</td></tr>
+<tr><td><code>gemini-3.1-pro</code></td><td>0/0</td><td>0/0</td><td>0/0</td><td>❌ 无</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>关键结论：Gemini 2.5 Pro / 3 Pro / 3.1 Pro 的 RPM/TPM/RPD 全为 0/0，说明<strong>免费层完全不提供 Pro 系列</strong>。前面第 06 节说"Pro 免费层额度少"不够准确，应理解为"Pro 没有免费额度"。</p>
+
+<h3>免费用户该用什么模型</h3>
+
+<p>从配额表看，可用且额度充足的模型是 Flash / Flash Lite 系列：</p>
+
+<ul>
+<li><strong><code>gemini-2.5-flash</code></strong>：5 RPM / 250K TPM / 20 RPD，日常开发首选</li>
+<li><strong><code>gemini-2.5-flash-lite</code></strong>：10 RPM / 250K TPM / 20 RPD，更便宜</li>
+<li><strong><code>gemini-3.1-flash-lite</code></strong>：15 RPM / 250K TPM / 500 RPD，免费层额度最多</li>
+</ul>
+
+<p>注意：OpenAI 兼容端点填写模型名时，要把列表里的 <code>models/gemini-2.5-flash</code> 去掉 <code>models/</code> 前缀，写成 <code>gemini-2.5-flash</code>。</p>
+
+<h3>最终可用配置（直连 Google，免费）</h3>
+
+<ul>
+<li>Base URL：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
+<li>API Key：Google AI Studio Key</li>
+<li>模型名：<code>gemini-2.5-flash</code>（或 <code>gemini-3.1-flash-lite</code>）</li>
+</ul>
+
+<p>到此，OpenRouter 充值方案可以暂不执行。对于"只要 Gemini"这个需求，新加坡节点 + 直连 Google + Flash 系列免费模型已经够用。</p>
 
 </section>
 
