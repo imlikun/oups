@@ -185,6 +185,7 @@ pre code { color:inherit; background:none; padding:0; }
       <li><a href="#sec10"><span class="num">10</span> 再实测：API 路径返回 JSON，但 Pro 系列不免费</a></li>
       <li><a href="#sec11"><span class="num">11</span> 新用户实测：2.5 系列已不可用，3.x 必填 preview</a></li>
       <li><a href="#sec12"><span class="num">12</span> 修正：OpenAI 兼容层没有 /models 端点</a></li>
+      <li><a href="#sec13"><span class="num">13</span> 实测闭环：curl 直连成功，确认最终可用配置</a></li>
     </ol>
   </div>
 </div>
@@ -622,6 +623,36 @@ print(resp.choices[0].message.content)</code></pre>
 <div class="info-box-title">📌 针对第 11 节的修正</div>
 <p>第 11 节建议用 <code>/v1beta/openai/models</code> 查看兼容层支持的模型名，但经实测该端点不存在。正确做法是直接调用 <code>/v1beta/openai/chat/completions</code> 试模型名。本文不删改旧内容，只在此补充。</p>
 </div>
+
+</section>
+
+<section id="sec13">
+<h2><span class="sec-num">13</span> 实测闭环：curl 直连成功，确认最终可用配置</h2>
+
+<p><strong>22:32</strong>，按第 12 节的修正方法，在终端用 curl 直接调用 chat/completions 实测 <code>gemini-3.1-flash-lite-preview</code>，经新加坡节点（本地代理 <code>127.0.0.1:1087</code>）直连 Google，返回正常结果：</p>
+
+<pre><code>curl -x http://127.0.0.1:1087 -X POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions \
+  -H "Authorization: Bearer 你的GoogleKey" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"gemini-3.1-flash-lite-preview","messages":[{"role":"user","content":"ping"}],"max_tokens":10}'</code></pre>
+
+<p>Google 正常回复 <code>"content":"Pong! How can I help"</code>，并带 <code>usage</code> 字段（prompt_tokens: 2, completion_tokens: 6, total_tokens: 8）。<strong>这证明整条链路完全打通</strong>：网络到 Google API 通、Key 有效、模型名正确，且<strong>免费额度可用（无 402 / 403）</strong>。</p>
+
+<div class="info-box">
+<div class="info-box-title">✅ 关键提醒：终端也要走代理</div>
+<p>本次成功的前提是 curl 加了 <code>-x http://127.0.0.1:1087</code> 走本地新加坡节点代理。终端默认<b>不走</b>系统代理，如果不加该参数直连，会再次 502（与你最早浏览器直连报错同源）。代理端口若非 1087，按你 V2rayU 实际端口改。</p>
+</div>
+
+<h3>最终可用配置（新用户 · 经实测确认）</h3>
+
+<ul>
+<li>Base URL：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></li>
+<li>API Key：Google AI Studio Key（以 <code>AI...</code> 或 <code>AQ...</code> 开头，<strong>不是</strong> OpenRouter 的 <code>sk-or-v1...</code>）</li>
+<li>模型名：<code>gemini-3.1-flash-lite-preview</code>（免费层 15 RPM / 250K TPM / 500 RPD）</li>
+<li>网络：请求须经允许地区节点（实测新加坡可用），且<strong>终端/客户端须显式走代理</strong></li>
+</ul>
+
+<p>到此，本文开头的「国内直连 Gemini 报 502」问题被彻底解决——<strong>不需要 OpenRouter 充值，不需要任何中转，直连 Google + 免费 Flash 模型即可</strong>。OpenRouter 仍是「一个 key 调所有模型」的便利选项，但对「只要 Gemini」的需求，直连是更省的方案。</p>
 
 </section>
 
