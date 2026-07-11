@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日阅读 | 2026-07-11 — 李坤</title>
+<meta name="description" content="小红书用几十万的劳资纠纷，卡住 500 亿美元的上市咽喉——2026-07-11阅读简报。">
+<style>
+:root{
+  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
+  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
+  --card-bg:#fff;--radius:14px;--radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
+
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+    .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#fff;text-decoration:none;
+  font-weight:600;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
+  box-shadow:0 1px 2px rgba(48,209,88,.25);transition:all .2s}
+.news-link:hover{background:#26b94a;gap:10px;box-shadow:0 3px 8px rgba(48,209,88,.35)}
+
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
+.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
+
+<header class="article-header">
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-11 星期六</div>
+  <h1>每日阅读</h1>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 23 条</p>
+  <div class="section-tags">
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
+        <span class="tag-elderly" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业 ×3</span>
+        <span class="tag-psych" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#e54d66"></span> 心理学 ×1</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
+    <div class="section-title" style="color:#2997ff;">一、社会 / 商业热点（6 条）</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>小红书用几十万的劳资纠纷，卡住 500 亿美元的上市咽喉</strong></h3></div>
+    <div class="news-summary">小红书因一起小额劳资纠纷遭遇上市进程受阻，折射出平台商业化与合规之间的脆弱平衡。</div>
+    <a href="https://www.huxiu.com/article/4874403.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>8 万亿，史上第二大 IPO 来了</strong></h3></div>
+    <div class="news-summary">长鑫科技冲刺 IPO，有望成为 A 股/港股历史上规模第二大的 IPO，存储与半导体国产替代再成焦点。</div>
+    <a href="https://www.36kr.com/p/3890686285822721" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>洪水冲出的广西“隐秘”产业，还在渡劫</strong></h3></div>
+    <div class="news-summary">广西因洪水暴露出的隐蔽产业现状及其面临的持续困境，引发对区域产业链韧性的讨论。</div>
+    <a href="https://www.huxiu.com/article/4874423.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>GPT-5.6 开放，跑分之外的隐忧：Anthropic 反超、微软去 OpenAI 化</strong></h3></div>
+    <div class="news-summary">GPT-5.6 虽被称作“实用智能”，但 OpenAI 正面临 Anthropic 反超与微软“去 OpenAI 化”的双重压力。</div>
+    <a href="https://www.tmtpost.com/8060184.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>功率器件，疯狂扩产</strong></h3></div>
+    <div class="news-summary">功率半导体进入新的结构性周期，行业正疯狂扩产，新能源车与 AI 电源需求拉动上游景气度。</div>
+    <a href="https://www.36kr.com/p/3890682689337865" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>苹果起诉 OpenAI 窃取商业机密，要求重新设计 AI 硬件</strong></h3></div>
+    <div class="news-summary">苹果在加州北区法院起诉 OpenAI 策动前员工泄露未发布产品资料，要求销毁涉密资料并重设计 AI 硬件。</div>
+    <a href="https://www.geekpark.net/news/367184" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
+    <div class="section-title" style="color:#e08600;">二、汽车热点（5 条）</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">1</span><h3><strong>6 月中国汽车出口首破 100 万辆，同比增长 75.1%</strong></h3></div>
+    <div class="news-summary">中汽协数据显示，6 月单月出口 103.7 万辆、上半年累计 509.6 万辆（同比 +65.3%），新能源汽车成核心增长动力，全年有望破千万。</div>
+    <a href="https://new.qq.com/rain/a/20260711A01XYW00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">2</span><h3><strong>明年 1 月 1 日起，新能源汽车 15 年车船税减免政策取消</strong></h3></div>
+    <div class="news-summary">车船税 15 年来首次重大调整，明年 1 月 1 日起新能源车 15 年减免政策将取消，家用车使用成本预期上升。</div>
+    <a href="https://new.qq.com/rain/a/20260711A050GS00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>九部门出台汽车后市场扶持新政</strong></h3></div>
+    <div class="news-summary">市场监管总局、金融监管总局等九部门印发《关于培育壮大汽车后市场消费的若干措施》，聚焦改装、房车露营、经典车、维修保险、汽车赛事、租赁六大领域共 17 项举措。</div>
+    <a href="https://new.qq.com/rain/a/20260711A050GS00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>小米汽车回应澎程上市时间与车祸谣言</strong></h3></div>
+    <div class="news-summary">小米汽车通过“答网友问”明确澎程为旗下独立 SUV 系列（非子品牌），并回应“车未发布已现车祸”为纯粹谣言，正收集证据投诉。</div>
+    <a href="https://new.qq.com/rain/a/20260711A050GS00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>大众汽车激进转型：车型阵容砍半、产能压至 900 万辆</strong></h3></div>
+    <div class="news-summary">大众公布新一轮深度转型规划，拟将车型阵容逐步削减至现有半数、年产能下调至 900 万辆；Q2 全球交付同比降 8.6%、在华暴跌 36.6%。</div>
+    <a href="https://new.qq.com/rain/a/20260711A04KQH00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
+    <div class="section-title" style="color:#bf5af2;">三、科技热点（5 条 · AI / 芯片 / 机器人）</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>SK 海力士完成创纪录美国上市，融资 265 亿美元</strong></h3></div>
+    <div class="news-summary">韩国存储芯片巨头完成美国史上最大外国企业 IPO，首日涨 13%；CEO 称 AI 已重塑存储周期，2027 年或迎最严重短缺、缺口延续至 2030 年后。</div>
+    <a href="https://k.sina.com.cn/article_1856404484_6ea67c0402701fmi6.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>宇树 G1 人形机器人完成活体微创手术，登上 Nature</strong></h3></div>
+    <div class="news-summary">加州大学圣地亚哥分校团队用两台“Surgie”人形机器人，在活体动物上分别完成人机协作与机器人团队胆囊切除，为全球首例人形机器人走完标准微创流程。</div>
+    <a href="https://new.qq.com/rain/a/20260711A02FTW00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>三星研发 AI PC 加速芯片 GAIA，已向联想、惠普提供样片</strong></h3></div>
+    <div class="news-summary">三星正研发 AI PC 加速芯片 GAIA 并送样测试，计划明年量产；同期上纬新材将在 WAIC 推出可变形个人机器人“启元 T1”（轮足人形/四足切换）。</div>
+    <a href="https://www.163.com/dy/article/L1HVENFQ0534A4SC.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>聆思科技完成近 5 亿元 B 轮融资，加码端侧大模型芯片</strong></h3></div>
+    <div class="news-summary">安徽聆思智能科技完成近 5 亿元 B 轮融资（安徽/合肥国资领投），首颗端侧大模型芯片 Nebula 系列计划年底上市，面向机器人、AIPC、智能座舱等场景。</div>
+    <a href="https://guba.eastmoney.com/news,cjpl,1741903993.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>苹果起诉 OpenAI 窃取商业机密，要求重设计 AI 硬件</strong></h3></div>
+    <div class="news-summary">苹果指控 OpenAI 策动前苹果硬件高管 Tang Tan 等人泄露未发布产品图纸，OpenAI 回应“对其他公司商业秘密没兴趣”。</div>
+    <a href="https://www.163.com/dy/article/L1HTCN6J05119FMA.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(200,122,30,0.1);color:#c87a1e;">🏠</div>
+    <div class="section-title" style="color:#c87a1e;">四、养老产业</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">1</span><h3><strong>【养老产业】长护险参保人数达 3.2 亿人，失能照护加速扩面</strong></h3></div>
+    <div class="news-summary">国家医保局新闻发布会介绍，目前河北、山西等 17 个省份已出台省级实施方案、100 个统筹地区落地运行，长护险参保覆盖达 3.2 亿人；经失能评估认定者可享 20 项生活照护 + 16 项医疗护理服务。</div>
+    <a href="https://www.ageclub.net/article-detail/9852" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">2</span><h3><strong>【养老产业】养老服务师职业资格制度落地，初/中级全国统考</strong></h3></div>
+    <div class="news-summary">民政部、人社部制定发布《养老服务师职业资格制度暂行规定》，从 5 方面作出 23 条规定；资格设为初/中/高三级，初、中级实行全国统一大纲、统一命题、统一考试，各科合格线通常为试卷满分 60%，合格颁发纸质与电子证书。</div>
+    <a href="https://www.ageclub.net/article-detail/9769" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">3</span><h3><strong>【养老产业】适老化改造设计师等 12 个新职业公示；京东接入居家养老国补</strong></h3></div>
+    <div class="news-summary">人社部公示拟新增 12 个新职业/新工种，含“适老化改造设计师”；京东于 7 月 1 日上线居家养老服务国补入口，符合条件老年人下单助浴、助洁、陪诊、康复理疗等高频服务可立减 50%，最高补贴 800 元/月。</div>
+    <a href="https://www.ageclub.net/article-detail/9852" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,69,89,0.1);color:#e54d66;">🧠</div>
+    <div class="section-title" style="color:#e54d66;">五、心理学</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">1</span><h3><strong>【心理学】性爱，为什么会让人发出「上不了台面的声音」？(轻心理)</strong></h3></div>
+    <div class="news-summary">微信读书评分：7.0 分（250 人评价）。KnowYourself 知我心理“轻心理”系列轮播（年内第 192 天）。</div>
+    <a href="https://weread.qq.com/book-detail?type=1&v=ef8324f0813abb227g017288" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
+    <div class="section-title" style="color:#2ea043;">六、好书推荐</div>
+  </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">1</span>
+        <div class="book-info">
+          <h3><em>夜晚的潜水艇》· 陈春成</em></h3>
+          
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=93e32750813ab7dd0g0169dc" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “工作中，有时甲方和领导还说我的方案缺乏想象力，那时我真想开着我的潜水艇撞死他们。”"</p>
+          <span class="highlight-count">19860人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “我能在莲蓬里睡觉，到云端游泳，在黑板上行走，追踪墨水瓶里的蓝鲸，我能一边挨老师的骂一边在太空里漂浮，谁也管不着我，谁也捉不住我。无数个世界任凭我随意出入，而这世……”"</p>
+          <span class="highlight-count">19512人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “富商明白找到的希望微乎其微，但他认为找寻的过程本身就是在向博尔赫斯致敬，像一种朝圣。其间所耗费的财力之巨大和岁月之漫长，才配得上博尔赫斯的伟大。”"</p>
+          <span class="highlight-count">16305人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">2</span>
+        <div class="book-info">
+          <h3><em>这才是数学（数学觉醒三部曲）》· [美] 保罗·洛克哈特</em></h3>
+          
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=da1322c0813abbb27g010c36" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “不能仅仅因为图片看上去很逼真，我们就认为那是真实发生的情形。”"</p>
+          <span class="highlight-count">63人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “事实上，这使得我们可以立即推广前面所得到的速度相加的结论：如果向量 p=a+b 是两个运动模式的和……那么仍然……”"</p>
+          <span class="highlight-count">63人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “既然我们选择了使圆的半径与运动的速率都为 1 的单位，那么速度与径向量的长度都等于单位长度。”"</p>
+          <span class="highlight-count">63人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">3</span>
+        <div class="book-info">
+          <h3><em>一个数学家的叹息》· [美] 保罗·洛克哈特（数学主题伴侣经典）</em></h3>
+          
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=116323b0719523e51163ee4" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “如果你要造船，不要招揽人来搬木材，不要给人指派任务和工作，而是要教他们去渴望那广袤的大海。”"</p>
+          <span class="highlight-count">969人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “要抹杀学生对一门科目的热情与兴趣，最有效的方法就是把它列为必修课。把它列入标准化测验的主要科目，就能保证让它失去生命力。”"</p>
+          <span class="highlight-count">448人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “我们学习东西是因为它现在吸引我们，而不是为了将来可能有用。”"</p>
+          <span class="highlight-count">322人划线</span>
+        </blockquote>
+      </div>
+    </div>
+</section>
+<div class="divider">— END OF DIGEST —</div>
+</article>
+
+<div class="footer-nav">
+  <a href="2026-07-10.html">← 上一篇（07-10）</a>
+  <a href="index.html">返回列表</a>
+  <span class="disabled">下一篇 →</span>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
+</script>
+</body>
+</html>
