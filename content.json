@@ -1075,6 +1075,53 @@
       "status": "published",
       "link": "/craft/gemini-api-newbie-guide.html",
       "template": "A"
+    },
+    {
+      "id": "article-50",
+      "title": "养老类视频号内容方向与规划方案",
+      "slug": "senior-video-content-strategy",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/senior-video-strategy-cover.jpg",
+      "excerpt": "银发经济 + 视频号：4 个账号定位方向、内容矩阵、私域闭环与首月执行节奏——一份可落地的养老类视频号规划方案。",
+      "content": "详见独立文章页：/notes/senior-video-content-strategy.html",
+      "tags": [
+        "视频号",
+        "养老",
+        "银发经济",
+        "内容规划",
+        "私域运营",
+        "直播"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-11",
+      "status": "published",
+      "link": "/notes/senior-video-content-strategy.html",
+      "template": "A"
+    },
+    {
+      "id": "article-51",
+      "title": "个人兴趣视频号内容方向与定位建议",
+      "slug": "personal-interest-video-positioning",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/personal-interest-video-cover.jpg",
+      "excerpt": "科技、手机、汽车、历史、心理学、户外爬山……如何把散落的兴趣整合成视频号真人 IP？这里有一份路线与 MAGIC 内容矩阵建议。",
+      "content": "详见独立文章页：/notes/personal-interest-video-positioning.html",
+      "tags": [
+        "视频号",
+        "个人IP",
+        "真人IP",
+        "内容矩阵",
+        "理工男",
+        "跨界思考",
+        "MAGIC"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-11",
+      "status": "published",
+      "link": "/notes/personal-interest-video-positioning.html",
+      "template": "B"
     }
   ],
   "projects": [
