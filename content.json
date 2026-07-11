@@ -1122,6 +1122,54 @@
       "status": "published",
       "link": "/notes/personal-interest-video-positioning.html",
       "template": "B"
+    },
+    {
+      "id": "article-52",
+      "title": "养老类视频号内容方向与规划方案（精修版）",
+      "slug": "senior-video-content-strategy-20260712",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/senior-video-strategy-cover.jpg",
+      "excerpt": "精修新增：新增核心结论、四方向决策矩阵、合规风险提示与首月落地 Checklist，结论先行。",
+      "content": "详见独立文章页：/notes/senior-video-content-strategy-20260712.html",
+      "tags": [
+        "视频号",
+        "养老",
+        "银发经济",
+        "内容规划",
+        "私域运营",
+        "合规",
+        "直播"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-12",
+      "status": "published",
+      "link": "/notes/senior-video-content-strategy-20260712.html",
+      "template": "A"
+    },
+    {
+      "id": "article-53",
+      "title": "个人兴趣视频号内容方向与定位建议（精修版）",
+      "slug": "personal-interest-video-positioning-20260712",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/personal-interest-video-cover.jpg",
+      "excerpt": "精修新增：新增核心结论、坤哥专属兴趣×MAGIC 映射、前三支视频脚本、避坑指南与 30 天启动计划。",
+      "content": "详见独立文章页：/notes/personal-interest-video-positioning-20260712.html",
+      "tags": [
+        "视频号",
+        "个人IP",
+        "真人IP",
+        "内容矩阵",
+        "理工男",
+        "跨界思考",
+        "MAGIC"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-12",
+      "status": "published",
+      "link": "/notes/personal-interest-video-positioning-20260712.html",
+      "template": "B"
     }
   ],
   "projects": [
