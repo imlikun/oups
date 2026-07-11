@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小白教程：国内免费用上 Gemini（Google 最强 AI）的 4 步配置</title>
+<meta name="description" content="纯小白向教程：不用懂代码，照着填 4 个框就能在国内免费用上 Google Gemini。含 Key 获取、网络排查、报错对照表与模型名避坑，10 分钟搞定。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 680px;
+  --max-wide: 860px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; max-height:460px; object-fit:cover;}
+.article-body code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:0.88em; background:#f0f2f5; color:#c0384a; padding:2px 6px; border-radius:5px; }
+.err-table { width:100%; border-collapse:collapse; margin:24px 0; font-size:14px; background:#fff; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.err-table th { background:var(--accent); color:#fff; font-weight:600; text-align:left; padding:12px 16px; font-size:13px; }
+.err-table td { padding:11px 16px; border-top:1px solid var(--border); color:#333; line-height:1.6; vertical-align:top; }
+.err-table tr:nth-child(even) td { background:#fafbfc; }
+.err-table code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:0.9em; color:#c0384a; }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>教程 · 小白友好</div>
+  <h1>国内免费用上 Gemini：4 步配置小白教程</h1>
+  <p class="hero-desc">不用懂代码，照着填 4 个框就能用。我把踩过的坑都标了出来，跟着做 10 分钟搞定，免费、国内可用。</p>
+  <div class="hero-meta">
+    <span>Google Gemini</span><span class="dot"></span>
+    <span>免费 API</span><span class="dot"></span>
+    <span>4 步配置</span><span class="dot"></span>
+    <span>2026-07-11</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/gemini-api-newbie-cover.jpg" alt="国内免费使用 Gemini 教程封面">
+</div>
+
+<div class="page">
+  <aside class="toc-sidebar">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">你能白嫖到什么</a></li>
+      <li><a href="#s2">准备这 3 样东西</a></li>
+      <li><a href="#s3">第 1 步：拿到 Key</a></li>
+      <li><a href="#s4">第 2 步：确认网络通</a></li>
+      <li><a href="#s5">第 3 步：填 4 个框</a></li>
+      <li><a href="#s6">第 4 步：发消息测试</a></li>
+      <li><a href="#s7">报错对照表</a></li>
+      <li><a href="#s8">模型名别填错</a></li>
+      <li><a href="#s9">小结</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+    <h2 id="s1">一、你能白嫖到什么</h2>
+    <p>Gemini 是 Google 出的 AI（和 ChatGPT 是一类东西）。它有个普通用户容易忽略的好处：能通过「API」<strong>免费调用</strong>——不用开会员、不用充钱。本文就教你怎么在国内把它配好，用任意支持「OpenAI 格式」的聊天客户端直接跟它对话。</p>
+    <div class="info-box">
+      <p><strong>免费额度有多少？</strong> 免费层大约给到每天 500 次请求、每分钟 15 次。日常聊天完全用不完，只有疯狂刷屏才会超限，不用担心。</p>
+    </div>
+
+    <h2 id="s2">二、先准备这 3 样东西</h2>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">一个 Google 账号</span></div>
+      <p class="mc-desc">没有就去注册一个，免费。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">一个能上境外网站的代理（梯子）</span></div>
+      <p class="mc-desc">你平时能上 YouTube，一般就已经有了。后面关键是要让它「路由到 Google 的 API 域名」。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">一个聊天客户端</span></div>
+      <p class="mc-desc">支持「自定义 API / OpenAI 兼容」设置的就行（比如你平时用的那个 AI 客户端）。本文不限定具体软件。</p>
+    </div>
+
+    <h2 id="s3">三、第 1 步：拿到 Google 的 Key</h2>
+    <p>Key 就是一把「钥匙」，客户端靠它证明「我是合法用户」。获取步骤：</p>
+    <div class="info-box">
+      <p><strong>1.</strong> 打开 Google AI Studio：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a></p>
+      <p><strong>2.</strong> 点「Create API Key」，会生成一个以 <code>AI</code> 或 <code>AQ</code> 开头的密钥。</p>
+      <p><strong>3.</strong> 复制保存好。这串字符不要发给别人，泄露了就去后台点 Revoke 作废、重新生成。</p>
+    </div>
+
+    <h2 id="s4">四、第 2 步：确认网络能通 Google</h2>
+    <p>这一步最容易踩坑，先看明白原理：</p>
+    <div class="pull-quote"><p>在浏览器打开 <code>generativelanguage.googleapis.com</code> 显示 404，<strong>不代表</strong> API 不通。这个域名本来就没有网页首页，404 是正常的。</p></div>
+    <p>要判断 API 到底通不通，得访问<strong>完整路径</strong>（把 <code>你的Key</code> 换成你刚拿到的）：</p>
+    <div class="info-box">
+      <p><code>https://generativelanguage.googleapis.com/v1beta/models?key=你的Key</code></p>
+      <p>如果返回一大串 JSON（模型列表），说明<strong>网络通了、Key 也有效</strong>。</p>
+    </div>
+    <p><strong>关键坑：</strong>你的「梯子」必须能路由到 Google 的这个 API 域名。很多人 YouTube 能开、但 API 域名不通——因为有些节点只解锁了流媒体，没开放 Google Cloud。测试方法：把梯子切到「全局模式」，或选一个<strong>香港 / 新加坡 / 日本</strong>节点，再访问上面的地址。能返回 JSON，就说明这个节点能用。</p>
+
+    <h2 id="s5">五、第 3 步：在客户端填 4 个框</h2>
+    <p>在客户端的「自定义 API / 模型设置」里，照着填这 4 项：</p>
+    <div class="info-box">
+      <p><strong>名称</strong>：随便写，如「Gemini」</p>
+      <p><strong>Base URL（接口地址）</strong>：<code>https://generativelanguage.googleapis.com/v1beta/openai</code></p>
+      <p><strong>API Key</strong>：你刚拿到的 Google Key</p>
+      <p><strong>模型名</strong>：<code>gemini-3.1-flash-lite-preview</code></p>
+    </div>
+    <div class="pull-quote"><p>三个「不要」：① 模型名<strong>不要</strong>带 <code>models/</code> 前缀；② <strong>不要</strong>用 <code>gemini-2.5-flash</code>（新用户已不可用）；③ <strong>不要</strong>用任何 Pro 系列（不免费，会报错）。</p></div>
+
+    <h2 id="s6">六、第 4 步：发一条消息测试</h2>
+    <p>确保客户端走的是<strong>能访问 Google 的梯子节点</strong>（见第 2 步），然后发一句话，比如「你好」。</p>
+    <p>正常会收到回复——<strong>恭喜，已经免费用上 Gemini 了！</strong></p>
+
+    <h2 id="s7">七、报错对照表（一眼看懂）</h2>
+    <p>如果出错，先看错误码，对照下表：</p>
+    <table class="err-table">
+      <thead><tr><th>错误码</th><th>意思</th><th>怎么办</th></tr></thead>
+      <tbody>
+        <tr><td><code>401</code></td><td>Key 错了或失效</td><td>去 AI Studio 重新生成一个 Key</td></tr>
+        <tr><td><code>402</code></td><td>余额不足（用了付费模型）</td><td>换回 flash 系列，别用 Pro</td></tr>
+        <tr><td><code>403</code></td><td>地区不允许</td><td>换香港 / 新加坡 / 日本节点，或换其他模型</td></tr>
+        <tr><td><code>404</code></td><td>路径或模型名写错</td><td>核对第 5 步的 4 个框，尤其模型名</td></tr>
+        <tr><td><code>502</code></td><td>网络到不了 Google</td><td>梯子没路由到该域名，换节点或开全局</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="s8">八、模型名千万别填错</h2>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">✓</span><span class="mc-title">能用（免费）</span></div>
+      <p class="mc-desc"><code>gemini-3.1-flash-lite-preview</code>（推荐，免费额度最多）／ <code>gemini-3.5-flash</code> ／ <code>gemini-3-flash</code></p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">✗</span><span class="mc-title">不能用</span></div>
+      <p class="mc-desc"><code>gemini-2.5-flash</code>（新用户已下线）／ 任何 <code>Pro</code> 系列（不免费）／ 带 <code>models/</code> 前缀的写法</p>
+    </div>
+
+    <h2 id="s9">九、小结</h2>
+    <p>整件事就 4 步：</p>
+    <div class="pipeline">
+      <span class="step">拿 Key</span><span class="arrow">→</span>
+      <span class="step">确认梯子通 Google</span><span class="arrow">→</span>
+      <span class="step">客户端填 4 个框</span><span class="arrow">→</span>
+      <span class="step">发消息测试</span>
+    </div>
+    <p>核心坑只有两个：① 梯子要能路由到 Google 的 <strong>API 域名</strong>（不是只开 YouTube）；② 模型名填 <code>gemini-3.1-flash-lite-preview</code>，别用 2.5 和 Pro。搞定后，就是免费、国内可用的 Gemini。</p>
+
+    <div class="tag-cloud">
+      <a href="#">Gemini</a><a href="#">Google AI</a><a href="#">API 配置</a><a href="#">免费 AI</a>
+      <a href="#">小白教程</a><a href="#">代理设置</a><a href="#">AI 客户端</a><a href="#">国内可用</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理，基于坤哥配置 Gemini API 的实踩坑经历写成</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

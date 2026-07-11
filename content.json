@@ -1050,6 +1050,31 @@
       "status": "published",
       "link": "/notes/openrouter-ai-gateway-guide.html",
       "template": "C"
+    },
+    {
+      "id": "article-49",
+      "title": "国内免费用上 Gemini：4 步配置小白教程",
+      "slug": "gemini-api-newbie-guide",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/gemini-api-newbie-cover.jpg",
+      "excerpt": "纯小白向教程：不用懂代码，照着填 4 个框就能在国内免费用上 Google Gemini。含 Key 获取、网络排查、报错对照表与模型名避坑。",
+      "content": "详见独立文章页：/craft/gemini-api-newbie-guide.html",
+      "tags": [
+        "Gemini",
+        "Google AI",
+        "API配置",
+        "免费AI",
+        "小白教程",
+        "代理设置",
+        "AI客户端",
+        "国内可用"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-11",
+      "status": "published",
+      "link": "/craft/gemini-api-newbie-guide.html",
+      "template": "A"
     }
   ],
   "projects": [
