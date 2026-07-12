@@ -66,7 +66,15 @@ function parseDigest(md) {
         let num, title, author = '';
         if (bookNew) {
           num = parseInt(bookNew[1]);
-          title = bookNew[2].trim().replace(/^\*\*|\*\*$/g, '').replace(/^《|》$/g, '');
+          // Extract title and author from `### 1. 《title》｜ author` format
+          const rawTitleAuthor = bookNew[2].trim().replace(/^\*\*|\*\*$/g, '');
+          const splitMatch = rawTitleAuthor.match(/^(.+?)[｜|]\s*(.+)$/);
+          if (splitMatch) {
+            title = splitMatch[1].trim();
+            author = splitMatch[2].trim();
+          } else {
+            title = rawTitleAuthor;
+          }
         } else {
           num = parseInt(bookOld[1]);
           title = bookOld[2].trim();
