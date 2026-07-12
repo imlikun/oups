@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智谱 GLM + DeepSeek 接入 WorkBuddy / Trae：国内直连，免费用上大模型</title>
+<meta name="description" content="两个国产大模型，都兼容 OpenAI 接口，国内直连、不用任何额外工具，免费额度够日常使用。手把手把它们接进 WorkBuddy 和 Trae，零基础也能照做。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 880px;
+  --max-wide: 1160px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+
+/* ---- Hero ---- */
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:840px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:680px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+
+/* ---- Layout ---- */
+.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
+
+/* ---- TOC Sidebar ---- */
+.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
+.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.toc-list { list-style:none; }
+.toc-list li { margin-bottom:6px; }
+.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
+  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
+.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+
+/* ---- Article Body ---- */
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.article-body ol li { padding-left:4px; }
+
+/* Table */
+.article-body table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:14px;
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.article-body th { background:var(--accent-light); text-align:left; padding:10px 14px; font-weight:600; color:#111;
+  border-bottom:1px solid var(--border); white-space:nowrap; }
+.article-body td { padding:10px 14px; border-bottom:1px solid var(--border); color:#333; vertical-align:top; }
+.article-body tr:last-child td { border-bottom:none; }
+
+/* Code */
+.article-body pre { background:#0f1115; color:#e6e6e6; padding:16px 18px; border-radius:var(--radius);
+  overflow-x:auto; margin:0 0 24px; font-size:13.5px; line-height:1.7;
+  font-family:"SF Mono",Menlo,Consolas,monospace; }
+.article-body code { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:0.9em; }
+.article-body :not(pre) > code { background:var(--accent-light); color:var(--accent); padding:2px 6px; border-radius:5px; }
+
+/* Blockquote (提示框) */
+.article-body blockquote { margin:24px 0; padding:14px 20px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; color:#333; font-size:14.5px; line-height:1.75; }
+.article-body blockquote p { margin:0; }
+.article-body blockquote.warn { border-left-color:#e8912d; background:rgba(232,145,45,0.08); }
+.article-body blockquote.ok { border-left-color:#1f9d55; background:rgba(31,157,85,0.08); }
+
+/* Tag Cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+
+/* Back */
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+/* Footer */
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .page { flex-direction:column; gap:32px; }
+  .toc-sidebar { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>API 接入 · AI 编程</div>
+  <h1>智谱 GLM + DeepSeek 接入 WorkBuddy / Trae：国内直连，免费用上大模型</h1>
+  <p class="hero-desc">两个国产大模型，都兼容 OpenAI 接口，国内直连、不用任何额外工具，免费额度够日常使用。本文手把手把它们接进 WorkBuddy 和 Trae，零基础也能照做。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-07-12</span><span class="dot"></span>
+    <span>接入教程</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+  <aside class="toc-sidebar" id="toc">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">为什么是这两个</a></li>
+      <li><a href="#s2">前置准备：拿 Key</a></li>
+      <li><a href="#s3">一、智谱 GLM 接入</a></li>
+      <li><a href="#s4">二、DeepSeek 接入</a></li>
+      <li><a href="#s5">常见问题</a></li>
+      <li><a href="#s6">总结</a></li>
+    </ul>
+  </aside>
+
+  <article class="article-body">
+    <h2 id="s1">为什么是这两个</h2>
+    <p>两个都不需要任何网络工具，注册即用，是新手入门最稳的选择。</p>
+    <table>
+      <thead>
+        <tr><th>对比</th><th>智谱 GLM</th><th>DeepSeek</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>厂商</td><td>智谱 AI（清华系）</td><td>深度求索</td></tr>
+        <tr><td>中文能力</td><td>强，长上下文</td><td>强，推理突出</td></tr>
+        <tr><td>接口</td><td>OpenAI 兼容</td><td>OpenAI 兼容</td></tr>
+        <tr><td>访问</td><td>国内直连</td><td>国内直连</td></tr>
+        <tr><td>免费模型</td><td><code>glm-4-flash</code></td><td><code>deepseek-chat</code></td></tr>
+        <tr><td>控制台</td><td>open.bigmodel.cn</td><td>platform.deepseek.com</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="s2">前置准备：各自拿一个 Key</h2>
+    <ul>
+      <li><strong>智谱</strong>：打开 <a href="https://open.bigmodel.cn" target="_blank" rel="noopener">open.bigmodel.cn</a>，注册后在「API Keys」页面新建密钥，复制 <code>sk-</code> 开头的 Key</li>
+      <li><strong>DeepSeek</strong>：打开 <a href="https://platform.deepseek.com" target="_blank" rel="noopener">platform.deepseek.com</a>，注册后在「API Keys」页面新建密钥，复制 <code>sk-</code> 开头的 Key</li>
+    </ul>
+    <blockquote class="warn">
+      <p>⚠️ Key 只显示一次，存到安全的地方；泄露了就在控制台删除重开。</p>
+    </blockquote>
+
+    <h2 id="s3">一、智谱 GLM 接入</h2>
+
+    <h3>1. 接入 WorkBuddy</h3>
+    <ol>
+      <li>打开 WorkBuddy，点左下角 <strong>设置</strong> ⚙️</li>
+      <li>进入 <strong>模型</strong> 设置页 → <strong>自定义模型</strong> → <strong>添加模型</strong></li>
+      <li>提供商选 <strong>其他 / Custom</strong>（⚠️ 不要选「智谱官方」，那个会跳腾讯云收费通道）</li>
+      <li>填三个参数：</li>
+    </ol>
+    <table>
+      <thead>
+        <tr><th>字段</th><th>填写内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>API Base URL</td><td><code>https://open.bigmodel.cn/api/paas/v4</code></td></tr>
+        <tr><td>API Key</td><td>你的智谱 Key（<code>sk-</code> 开头）</td></tr>
+        <tr><td>模型名称</td><td><code>glm-4-flash</code>（免费）</td></tr>
+      </tbody>
+    </table>
+    <blockquote class="ok">
+      <p>想要更强可换 <code>glm-4.7-flash</code> 或 <code>glm-5.1</code>（按量计费）。</p>
+    </blockquote>
+    <p>保存，模型选择器里选中 <code>glm-4-flash</code> 即可对话，调用走智谱免费额度。</p>
+
+    <h3>2. 接入 Trae</h3>
+    <ol>
+      <li>Trae → <strong>设置 → AI Providers</strong> → 选 <strong>Custom</strong> 或 <strong>OpenAI Compatible</strong></li>
+      <li>填：</li>
+    </ol>
+    <table>
+      <thead>
+        <tr><th>字段</th><th>填写内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>API URL</td><td><code>https://open.bigmodel.cn/api/paas/v4/chat/completions</code></td></tr>
+        <tr><td>API Key</td><td>你的智谱 Key</td></tr>
+        <tr><td>模型名称</td><td><code>glm-4-flash</code></td></tr>
+      </tbody>
+    </table>
+    <p>保存设为默认，写代码就能用 GLM 补全和对话。</p>
+
+    <h3>3. 验证一下（Python）</h3>
+    <pre><code>from openai import OpenAI
+
+client = OpenAI(
+    api_key="你的智谱Key",
+    base_url="https://open.bigmodel.cn/api/paas/v4"
+)
+
+r = client.chat.completions.create(
+    model="glm-4-flash",
+    messages=[{"role": "user", "content": "用一句话介绍智谱 GLM"}]
+)
+print(r.choices[0].message.content)</code></pre>
+
+    <h3>4. 免费额度</h3>
+    <p><code>glm-4-flash</code> 永久免费；新用户另有 2000 万 token 体验额度，轻量长期使用足够。</p>
+
+    <h2 id="s4">二、DeepSeek 接入</h2>
+
+    <h3>1. 接入 WorkBuddy</h3>
+    <ol>
+      <li>打开 WorkBuddy → <strong>设置</strong> → <strong>模型</strong> → <strong>自定义模型</strong> → <strong>添加模型</strong></li>
+      <li>提供商选 <strong>其他 / Custom</strong></li>
+      <li>填：</li>
+    </ol>
+    <table>
+      <thead>
+        <tr><th>字段</th><th>填写内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>API Base URL</td><td><code>https://api.deepseek.com/v1</code></td></tr>
+        <tr><td>API Key</td><td>你的 DeepSeek Key（<code>sk-</code> 开头）</td></tr>
+        <tr><td>模型名称</td><td><code>deepseek-chat</code></td></tr>
+      </tbody>
+    </table>
+    <blockquote class="ok">
+      <p>需要深度推理换 <code>deepseek-reasoner</code>。</p>
+    </blockquote>
+    <p>保存，选中即可对话。</p>
+
+    <h3>2. 接入 Trae</h3>
+    <ol>
+      <li>Trae → <strong>设置 → AI Providers</strong> → <strong>Custom / OpenAI Compatible</strong></li>
+      <li>填：</li>
+    </ol>
+    <table>
+      <thead>
+        <tr><th>字段</th><th>填写内容</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>API URL</td><td><code>https://api.deepseek.com/v1/chat/completions</code></td></tr>
+        <tr><td>API Key</td><td>你的 DeepSeek Key</td></tr>
+        <tr><td>模型名称</td><td><code>deepseek-chat</code></td></tr>
+      </tbody>
+    </table>
+    <p>保存设为默认。</p>
+
+    <h3>3. 验证一下（curl）</h3>
+    <pre><code>curl https://api.deepseek.com/v1/chat/completions \
+  -H "Authorization: Bearer 你的DeepSeekKey" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"deepseek-chat","messages":[{"role":"user","content":"用一句话介绍 DeepSeek"}]}'</code></pre>
+
+    <h3>4. 免费额度</h3>
+    <p>网页端 / App 完全免费；API 新用户赠 100 万 token 体验，之后按量计费、价格很低。</p>
+
+    <h2 id="s5">常见问题</h2>
+    <ul>
+      <li><strong>要装代理 / 加速工具吗？</strong> 不需要。两个都是国内直连，正常网络环境直接通。</li>
+      <li><strong>Trae 报错 Invalid BaseURL？</strong> API URL 必须填<strong>完整路径</strong>（含 <code>/v1/chat/completions</code>），不能只填域名。</li>
+      <li><strong>模型名大小写？</strong> 严格照填 <code>glm-4-flash</code> / <code>deepseek-chat</code>，错一个字符都会报模型不存在。</li>
+      <li><strong>能两个都加吗？</strong> 可以。WorkBuddy / Trae 都支持添加多个自定义模型，按需切换。</li>
+    </ul>
+
+    <h2 id="s6">总结</h2>
+    <blockquote>
+      <p>总结：智谱 GLM 和 DeepSeek 是性价比最高的国产入门选择——国内直连、OpenAI 兼容、免费额度友好。按上面步骤 5 分钟就能在 WorkBuddy 和 Trae 里用上，先把 <code>glm-4-flash</code> 和 <code>deepseek-chat</code> 跑通，再按需要升级付费模型。</p>
+    </blockquote>
+
+    <div class="tag-cloud">
+      <a href="/craft/">智谱 GLM</a>
+      <a href="/craft/">DeepSeek</a>
+      <a href="/craft/">WorkBuddy</a>
+      <a href="/craft/">Trae</a>
+      <a href="/craft/">API 接入</a>
+      <a href="/craft/">OpenAI 兼容接口</a>
+      <a href="/craft/">国内直连</a>
+      <a href="/craft/">免费额度</a>
+      <a href="/craft/">接入教程</a>
+    </div>
+
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var tocLinks = document.querySelectorAll('.toc-list a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({id:id, el:el, link:a});
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 120;
+    var active = null;
+    for (var i = headings.length-1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>
