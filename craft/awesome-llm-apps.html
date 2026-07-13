@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集</title>
+<meta name="description" content="awesome-llm-apps 是 GitHub 顶流实战合集，汇集 100+ 经过端到端测试的可运行 LLM 应用（RAG、AI Agent、多代理团队、MCP、语音代理）。覆盖 OpenAI/Anthropic/Gemini 与开源模型，clone 下来几条命令就能跑，是快速搭建 AI 产品原型的现成弹药库。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 880px;
+  --max-wide: 920px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { max-width:var(--max-text); margin:0 auto; padding:0 28px 100px; }
+.toc-overlay { position:absolute; top:50%; right:24px; transform:translateY(-50%); z-index:5;
+  background:rgba(255,255,255,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:10px;
+  padding:16px 20px; min-width:170px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  animation:tocFadeIn 0.5s ease 0.3s both; }
+@keyframes tocFadeIn { from{opacity:0; transform:translateY(-50%) translateX(8px);} to{opacity:1; transform:translateY(-50%) translateX(0);} }
+.toc-overlay .toc-title { font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+.toc-overlay .toc-list { list-style:none; }
+.toc-overlay .toc-list li { margin-bottom:4px; }
+.toc-overlay .toc-list a { font-size:12px; color:var(--text-secondary); text-decoration:none; display:block;
+  padding:3px 8px; border-radius:5px; transition:all 0.15s; line-height:1.5; border-left:2px solid transparent; }
+.toc-overlay .toc-list a:hover, .toc-overlay .toc-list a.active { color:var(--accent); background:rgba(26,111,245,0.08); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .toc-overlay { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; max-height:460px; object-fit:cover;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源 · LLM 应用合集</div>
+  <h1>awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集</h1>
+  <p class="hero-desc">GitHub 顶流实战合集，汇集 100+ 经过端到端测试的可运行 LLM 应用。RAG、AI Agent、多代理团队、MCP、语音代理一应俱全，clone 下来几条命令就能跑——拿来改改，就是你的产品原型。</p>
+  <div class="hero-meta">
+    <span>Shubhamsaboo/awesome-llm-apps</span><span class="dot"></span>
+    <span>Apache-2.0</span><span class="dot"></span>
+    <span>10 万+ Star</span><span class="dot"></span>
+    <span>Python 为主</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/awesome-llm-apps-cover.jpg" alt="awesome-llm-apps 封面">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">它是什么 / 为什么值得收藏</a></li>
+      <li><a href="#s2">多代理协作系统</a></li>
+      <li><a href="#s3">RAG 知识库</a></li>
+      <li><a href="#s4">语音交互代理</a></li>
+      <li><a href="#s5">快速开始（3 命令部署）</a></li>
+      <li><a href="#s6">我的判断</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么，为什么值得收藏</h2>
+    <p>学 LLM 应用开发，最怕两件事：一是教程零散、找不到对应场景的参考实现；二是理论满天飞、能直接跑的代码却很少。<strong>awesome-llm-apps</strong> 就是冲着这两个痛点来的——它是一个按技术方向和难度分层的「实战代码库」，每个子项目都配有可运行代码 + 独立 README，覆盖从入门到进阶的完整学习路径。</p>
+    <p>整个仓库由 <strong>Shubhamsaboo</strong> 维护、社区共建（80+ 贡献者），采用 <strong>Apache-2.0</strong> 协议——可以 clone、修改、商用，基本没有限制。模型层面同时支持闭源（OpenAI / Anthropic / Google Gemini / xAI）和开源（Qwen、Llama、Gemma 等可本地部署），对云端和本地两种需求都友好。</p>
+    <div class="info-box">
+      <p><strong>一句话定位</strong>：不是框架、不是课程，而是一座「LLM 应用源码弹药库」——100+ 个经过端到端测试、能直接跑的现成项目，专治「想动手却不知道从哪抄起」。</p>
+    </div>
+
+    <h2 id="s2">二、核心类型一：多代理协作系统</h2>
+    <p>把多个有不同职责的 Agent 编排成一支「团队」，分工协作完成单 Agent 搞不定的复杂任务。仓库里这块最出彩，典型如 <strong>多代理团队（Multi-agent Teams）</strong> 系列：竞品情报团队、金融分析团队、法务团队、招聘团队、房地产团队……每个团队由多个专职 Agent 组成，互相交接上下文。</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">例</span><span class="mc-title">HN 简报机器人（Newsletter Bot）</span></div>
+      <p class="mc-desc">用户给的例子：一个自动处理新闻摘要的多代理系统。它定时抓取 Hacker News 热门条目，由不同 Agent 分别负责「筛选 → 摘要 → 观点提炼 → 排版成简报」，全程无需人工干预，产出可直接订阅的每日简报。</p>
+    </div>
+    <p>这类项目的价值在于让你看清「Agent 编排」的真实写法：任务怎么切分、上下文怎么在 Agent 间传递、什么时候该让一个 Agent 把活儿交给下一个。比看论文直观得多。</p>
+
+    <h2 id="s3">三、核心类型二：RAG 知识库</h2>
+    <p>RAG（检索增强生成）是 LLM 落地最稳的方向之一，仓库里有专门的 <strong>rag_tutorials</strong> 板块，从基础向量检索到进阶用法全覆盖。它的一个关键设计是<strong>跨模型调用</strong>——同一套 RAG 流程可以挂在 Claude、GPT 等不同模型上，换模型不改架构。</p>
+    <ul>
+      <li><strong>跨模型兼容</strong>：检索层与生成层解耦，Claude / GPT / 开源模型可随时切换，便于做成本和效果对比。</li>
+      <li><strong>场景化示例</strong>：代码仓库问答、邮件收件箱检索、文档/PDF 知识库、带引用的精准回答等。</li>
+      <li><strong>进阶玩法</strong>：Agentic RAG（让 Agent 自己决定要不要再检索）、Voice RAG（语音进来、检索后语音出去）。</li>
+    </ul>
+    <p>如果你想做「基于自己私有数据问答」的产品，这一块是最直接的起跑线。</p>
+
+    <h2 id="s4">四、核心类型三：语音交互代理</h2>
+    <p><strong>voice_ai_agents</strong> 板块聚焦「能听会说」的 Agent，把语音识别和 LLM 生成串成完整闭环，几个代表项目：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">AI Audio Tour Agent · 语音导览</span></div>
+      <p class="mc-desc">根据地点/场景生成带讲解的语音导览，适合文旅、展厅类场景。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">Customer Support Voice Agent · 语音客服</span></div>
+      <p class="mc-desc">接住用户语音诉求，经 LLM 理解后给出语音答复，可直接套到客服原型。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">Voice RAG Agent · 语音知识库</span></div>
+      <p class="mc-desc">语音提问 → 检索知识库 → 语音作答，把第三节的 RAG 直接接到语音入口上。</p>
+    </div>
+    <p>语音方向天然更「产品感」——很多做 AI 硬件、陪聊、客服的同学，会直接拿这里的项目改造成型。</p>
+
+    <h2 id="s5">五、快速开始（3 命令跑起来）</h2>
+    <p>仓库里每个子项目都标注了运行步骤，整体套路高度统一。以跑通任意一个应用为例，核心就三步：</p>
+    <div class="info-box">
+      <p><strong>1. 克隆仓库</strong></p>
+      <p class="mc-desc">git clone https://github.com/Shubhamsaboo/awesome-llm-apps.git</p>
+      <p><strong>2. 进入目标项目目录</strong></p>
+      <p class="mc-desc">cd awesome-llm-apps/&lt;项目目录&gt;（如 starter_ai_agents/ai_travel_agent）</p>
+      <p><strong>3. 装依赖并运行</strong></p>
+      <p class="mc-desc">pip install -r requirements.txt，再按该项目 README 配置 API Key 后启动。</p>
+    </div>
+    <div class="pipeline">
+      <span class="step">clone 仓库</span><span class="arrow">→</span>
+      <span class="step">cd 进项目目录</span><span class="arrow">→</span>
+      <span class="step">pip install -r requirements.txt</span><span class="arrow">→</span>
+      <span class="step">按 README 配 Key 运行</span>
+    </div>
+    <p>所谓「不用折腾环境配置」，指的是仓库已经把依赖和目录结构都规整好了，省去你自己从零搭脚手架的过程。注意：调用闭源模型（OpenAI / Anthropic / Gemini）需要自备 API Key 并产生费用；用 Qwen、Llama 等开源模型则可以本地跑、零调用费。</p>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：想系统学 LLM 应用落地的人、需要现成原型快速起步的开发者、做 RAG / Agent / 语音方向的团队。它最大的价值是「降低从 0 到 1 的启动成本」——你不必再为空项目搭骨架，直接在一个验证过的实现上改。</p>
+    <p><strong>注意</strong>：① 它不是统一框架，而是一堆独立项目，没有抽象层，适合「抄作业」不适合「当底座」；② 子项目质量参差，上手前务必自己读懂代码再改；③ 闭源模型需 API Key，跑通前先算好成本；④ 仓库更新快、项目多，建议按「难度分层 + 技术方向」先定位再深入，别一口气全 clone。</p>
+    <p><strong>定位</strong>：如果你想要的是「一个能直接 import 的库」，它会让你失望；但如果你想要的是「100+ 个已经被别人跑通的真实实现，照着改就能变成自己的产品」——那这就是目前 GitHub 上最值得收藏的那一类合集。</p>
+
+    <div class="tag-cloud">
+      <a href="#">awesome-llm-apps</a><a href="#">LLM 应用</a><a href="#">RAG</a><a href="#">AI Agent</a>
+      <a href="#">多代理团队</a><a href="#">语音代理</a><a href="#">MCP</a><a href="#">开源合集</a>
+      <a href="#">Apache-2.0</a><a href="#">原型开发</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/Shubhamsaboo/awesome-llm-apps">Shubhamsaboo/awesome-llm-apps</a> 开源项目</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

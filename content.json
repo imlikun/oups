@@ -1216,6 +1216,60 @@
       "status": "published",
       "link": "/notes/ai-tool-usage-experience.html",
       "template": "A"
+    },
+    {
+      "id": "article-56",
+      "title": "Firecrawl：把任意网页变成结构化数据，14.9万 Star 的开源抓取引擎",
+      "slug": "firecrawl",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/firecrawl-cover.jpg",
+      "excerpt": "GitHub 14.9 万 Star 的开源网页抓取与转换引擎：输入 URL 即输出干净 Markdown/JSON，支持自定义 JSON Schema 批量提取商品数据（准确率 96%），还带 AI Agent 实时搜索——专为 RAG 与 AI Agent 开发设计，无需写爬虫。",
+      "content": "详见独立文章页：/craft/firecrawl.html",
+      "tags": [
+        "Firecrawl",
+        "网页抓取",
+        "数据提取",
+        "RAG",
+        "AI Agent",
+        "开源",
+        "JSON Schema",
+        "结构化数据",
+        "Mendable",
+        "爬虫替代"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-13",
+      "status": "published",
+      "link": "/craft/firecrawl.html",
+      "template": "C"
+    },
+    {
+      "id": "article-57",
+      "title": "awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集",
+      "slug": "awesome-llm-apps",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/awesome-llm-apps-cover.jpg",
+      "excerpt": "GitHub 顶流实战合集（Apache-2.0，10 万+ Star）：汇集 100+ 经过端到端测试的可运行 LLM 应用——多代理协作、RAG 知识库、语音交互代理一应俱全，clone 下来几条命令就能跑，是快速搭建 AI 产品原型的现成弹药库。",
+      "content": "详见独立文章页：/craft/awesome-llm-apps.html",
+      "tags": [
+        "awesome-llm-apps",
+        "LLM 应用",
+        "RAG",
+        "AI Agent",
+        "多代理团队",
+        "语音代理",
+        "MCP",
+        "开源合集",
+        "Apache-2.0",
+        "原型开发"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-13",
+      "status": "published",
+      "link": "/craft/awesome-llm-apps.html",
+      "template": "A"
     }
   ],
   "projects": [
