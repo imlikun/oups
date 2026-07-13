@@ -1148,7 +1148,7 @@
       "slug": "glm-deepseek-workbuddy-trae",
       "category": "craft",
       "featured": true,
-      "image": "",
+      "image": "uploads/glm-deepseek-workbuddy-trae-cover.jpg",
       "excerpt": "两个国产大模型，都兼容 OpenAI 接口，国内直连、不用任何额外工具，免费额度够日常使用。手把手把它们接进 WorkBuddy 和 Trae，零基础也能照做。",
       "content": "详见独立文章页：/craft/glm-deepseek-workbuddy-trae.html",
       "tags": [
