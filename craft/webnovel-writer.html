@@ -16,8 +16,8 @@
   --accent-glow: rgba(26,111,245,0.12);
   --border: rgba(0,0,0,0.07);
   --radius: 10px;
-  --max-text: 680px;
-  --max-wide: 860px;
+  --max-text: 880px;
+  --max-wide: 920px;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -46,14 +46,19 @@ body {
 .hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
 .hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
 .hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
-.page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:0 28px 100px; gap:60px; position:relative; }
-.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start; max-height:calc(100vh - 100px); overflow-y:auto; }
-.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
-.toc-list { list-style:none; }
-.toc-list li { margin-bottom:6px; }
-.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
-  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
-.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+.page { max-width:var(--max-text); margin:0 auto; padding:0 28px 100px; }
+.toc-overlay { position:absolute; bottom:20px; right:20px; z-index:5;
+  background:rgba(255,255,255,0.85); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:10px;
+  padding:14px 18px; min-width:170px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  animation:tocFadeIn 0.5s ease 0.3s both; }
+@keyframes tocFadeIn { from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+.toc-overlay .toc-title { font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+.toc-overlay .toc-list { list-style:none; }
+.toc-overlay .toc-list li { margin-bottom:4px; }
+.toc-overlay .toc-list a { font-size:12px; color:var(--text-secondary); text-decoration:none; display:block;
+  padding:3px 8px; border-radius:5px; transition:all 0.15s; line-height:1.5; border-left:2px solid transparent; }
+.toc-overlay .toc-list a:hover, .toc-overlay .toc-list a.active { color:var(--accent); background:rgba(26,111,245,0.08); border-left-color:var(--accent); }
 .article-body { flex:1; min-width:0; max-width:var(--max-text); }
 .article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
 .article-body h2:first-child { margin-top:0; }
@@ -96,8 +101,7 @@ body {
 .footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
 .footer a { color:var(--accent); text-decoration:none; }
 @media (max-width:900px) {
-  .page { flex-direction:column; gap:32px; }
-  .toc-sidebar { display:none; }
+  .toc-overlay { display:none; }
   .hero { padding:100px 20px 40px; }
 }
 @media (max-width:600px) {
@@ -138,10 +142,7 @@ body {
 
 <div class="hero-cover">
   <img src="/uploads/webnovel-writer-cover.jpg" alt="WebNovel Writer 封面">
-</div>
-
-<div class="page">
-  <aside class="toc-sidebar">
+  <aside class="toc-overlay">
     <div class="toc-title">目录</div>
     <ul class="toc-list">
       <li><a href="#s1">它解决什么问题</a></li>
@@ -152,7 +153,9 @@ body {
       <li><a href="#s6">我的判断</a></li>
     </ul>
   </aside>
+</div>
 
+<div class="page">
   <article class="article-body">
     <h2 id="s1">一、它解决什么问题</h2>
     <p>长篇创作最难的不是写出第一章，而是写到第 80 章、第 200 章以后仍然保持：角色动机不漂移、战力/时间线/世界观不互相打架、伏笔有登记有回收、爽点与感情线保持节奏。普通 AI 写作写到十几章就开始「遗忘」和「幻觉」——把前面设定忘光，或凭空编造与已写内容冲突的情节。</p>
