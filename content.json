@@ -1270,6 +1270,33 @@
       "status": "published",
       "link": "/craft/awesome-llm-apps.html",
       "template": "A"
+    },
+    {
+      "id": "article-58",
+      "title": "Echo Loop：用 AI 把「听不懂」练成「说得出」的英语听说训练 App",
+      "slug": "echo-loop",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/echo-loop-cover.jpg",
+      "excerpt": "开源 AI 英语听说训练应用（AGPL-3.0，Flutter 跨平台）：盲听、精听、跟读、复述、间隔复习自动驱动学习节奏，长难句意群划分、跟读 AI 评测、语境化闪卡、导入本地音频 + AI 字幕，把每段音频真正练到会说。",
+      "content": "详见独立文章页：/craft/echo-loop.html",
+      "tags": [
+        "Echo Loop",
+        "英语听说",
+        "AI 训练",
+        "间隔复习",
+        "Flutter",
+        "开源",
+        "AGPL-3.0",
+        "跟读评测",
+        "语言学习",
+        "移动端"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-14",
+      "status": "published",
+      "link": "/craft/echo-loop.html",
+      "template": "C"
     }
   ],
   "projects": [

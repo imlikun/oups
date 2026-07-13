@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo Loop：用 AI 把「听不懂」练成「说得出」的英语听说训练 App</title>
+<meta name="description" content="Echo Loop 是一款科学、高效的 AI 英语听说训练开源应用（AGPL-3.0，Flutter 跨平台）：通过盲听、精听、跟读、复述与间隔复习自动驱动学习节奏，长难句意群划分、跟读 AI 评测、语境化闪卡、导入本地音频 + AI 字幕，把每一段音频真正练到会说。">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 560px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; vertical-align: top; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: var(--body-strong); }
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block;  max-height:460px; object-fit:cover;}
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px;  max-height:460px; object-fit:cover;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+<nav class="page-dot" id="pageDots"></nav>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>工具拆解 · AI 英语学习</div>
+    <h1>Echo Loop：用 AI 把「听不懂」练成<em>「说得出」</em></h1>
+    <p class="hero-desc">一款科学、高效的 AI 英语听说训练开源应用（AGPL-3.0，Flutter 跨平台）：通过盲听、精听、跟读、复述与间隔复习自动驱动学习节奏，把每一段音频真正练懂、练熟、练到会说。由中央民族大学外国语学院杨艳老师指导设计。</p>
+    <div class="hero-meta">
+      <span>八戒</span><span class="sep"></span>
+      <span>2026-07-14</span><span class="sep"></span>
+      <span>约 6 分钟阅读</span>
+    </div>
+  </div>
+</section>
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#s1">它是什么</a>
+    <a href="#s2">听说闭环训练</a>
+    <a href="#s3">AI 能力拆解</a>
+    <a href="#s4">间隔复习法</a>
+    <a href="#s5">技术栈与平台</a>
+    <a href="#s6">我的判断</a>
+  </div>
+</div>
+<div class="hero-cover">
+  <img src="/uploads/echo-loop-cover.jpg" alt="Echo Loop AI 英语听说训练应用" loading="eager" />
+</div>
+<div class="article-wrap">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p><strong>Echo Loop</strong> 是一款开源的 AI 英语听说训练应用，核心解决一个老问题：大部分人学英语「听得断断续续、说得更磕巴」，因为缺乏一套能自动推进、且不靠意志力硬撑的训练系统。它把科学语言习得方法产品化——<strong>盲听 → 精听 → 跟读 → 复述 → 间隔复习</strong>，由系统自动安排每一次练习的节奏、跟读次数、复习时机和难句标记。</p>
+    <p>它不是又一个「背单词 + 播放听力」的 App，而是把「如何真正练好一段音频」这件事拆成可执行的闭环：你导入或选择一段材料，它替你规划该怎么练、什么时候该复习、哪几句需要专项突破。项目由中央民族大学外国语学院杨艳老师指导设计，方法论有语言学背景支撑。</p>
+    <div class="highlight-box">
+      <p>一句话定位：把「自己摸索怎么练英语」交给系统——自动驱动学习节奏与复习提醒，让每一段音频都练到「听懂、跟得上、说得出」。</p>
+    </div>
+
+    <h2 id="s2">二、听说闭环训练</h2>
+    <p>整条训练链路围绕「先输入、再模仿、后输出」展开，每一步都有明确目标：</p>
+    <ol class="step-list">
+      <li><span class="step-label">盲听（Blind Listen）</span><p>不依赖字幕，先尽量抓取大意与语音轮廓，逼自己进入「听」的状态。</p></li>
+      <li><span class="step-label">精听（Intensive Listen）</span><p>对照文本逐句打磨，长难句自动做<strong>意群划分</strong>，哪句听不清一目了然。</p></li>
+      <li><span class="step-label">跟读（Shadowing）</span><p>模仿语音语调跟读，系统自动对齐原文、高亮命中词并给出评级（见第三节）。</p></li>
+      <li><span class="step-label">复述（Retell）</span><p>脱离原文用自己的话复述，把「被动听懂」转成「主动输出」。</p></li>
+      <li><span class="step-label">难句收藏与专项复习</span><p>听不出的句子一键收藏，进入专项复习队列，反复强化直到拿下。</p></li>
+    </ol>
+
+    <h2 id="s3">三、AI 能力拆解</h2>
+    <p>Echo Loop 的「AI」不只是一句口号，而是嵌在训练各环节的具体能力：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>能力</th><th>做什么</th></tr></thead>
+        <tbody>
+          <tr><td><strong>跟读 AI 评测</strong></td><td>自动对齐原文、高亮你命中的单词、给出朗读评级——让你知道哪几个音没发准。</td></tr>
+          <tr><td><strong>AI 翻译 / 解析 / 词汇讲解</strong></td><td>选中句子即可获得翻译、语法解析与重点词汇释义，无需跳出 App 查词。</td></tr>
+          <tr><td><strong>语境化闪卡复习</strong></td><td>闪卡结合原句上下文生成，不是孤立背单词，而是「在语境里复习」。</td></tr>
+          <tr><td><strong>导入本地音频 + AI 字幕</strong></td><td>支持批量导入本地音频，AI 自动转录生成字幕，把任意素材变成训练材料。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">
+      <p class="info-title">离线也能用</p>
+      <p>跟读评测与部分识别能力支持离线（sherpa_onnx 离线语音识别 + 原生 ASR），没有网络也能练，适合通勤、出差场景。</p>
+    </div>
+
+    <h2 id="s4">四、间隔复习法</h2>
+    <p>「练过」不等于「记住」。Echo Loop 用符合<strong>艾宾浩斯遗忘曲线</strong>的间隔复习，把记忆固化：</p>
+    <ul>
+      <li><strong>1 次首次学习 + 7 轮间隔复习</strong>：复习节点从 6 小时逐步拉长到 28 天，越往后复习间隔越大。</li>
+      <li><strong>断点续学</strong>：自动记录学习阶段和句子进度，下次打开接着练，不丢上下文。</li>
+      <li><strong>学习数据统计</strong>：追踪学习时长、输入 / 输出比、唯一词汇量等指标，进步看得见。</li>
+    </ul>
+    <div class="pull-quote"><p>「从此不必自己摸索怎么练好英语」——系统自动安排节奏与复习提醒，你要做的只是每天打开练一会儿。</p></div>
+
+    <h2 id="s5">五、技术栈与平台</h2>
+    <p>技术选型是 <strong>Flutter + Material 3</strong> 跨平台方案，状态管理用 Riverpod，音频播放依赖 just_audio，语音 / TTS 用 flutter_tts + sherpa_onnx（离线识别），数据持久化走 Drift（SQLite）+ shared_preferences，后端通过 Supabase 与自定义 API 衔接。整体是一个标准的移动端 Flutter 工程。</p>
+    <h4>获取方式</h4>
+    <ul class="checklist">
+      <li>iOS：App Store 上架，中国区因 ICP 备案暂时下架，需非中国区账号下载</li>
+      <li>Android：Google Play 或 GitHub Releases 提供的 APK</li>
+      <li>macOS：开发中，尚未正式发布；Windows / Linux 规划或仅目录存在</li>
+      <li>Web：仅调试用途（flutter run -d chrome），无发布计划</li>
+    </ul>
+    <h4>从源码构建</h4>
+    <div class="code-block">
+<span class="comment"># 需先安装 Flutter 3.x 与对应平台工具链</span>
+git clone https://github.com/echo-loop/Echo-Loop.git
+cd Echo-Loop
+flutter pub get
+
+<span class="comment"># 运行（Android / iOS 设备 或模拟器）</span>
+flutter run
+
+<span class="comment"># 如接入后端，配置 API_BASE_URL / SUPABASE_URL 等编译期变量</span>
+    </div>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：想系统提升英语听力与口语、厌倦「碎片化背单词」的人；需要把任意音频（播客、影视、讲座）变成训练材料的学习者；认可「科学训练法 + 自动化节奏」比「靠自觉」更靠谱的人。AGPL-3.0 协议下可自由使用、修改、自托管。</p>
+    <p><strong>注意</strong>：① 协议是 <strong>AGPL-3.0</strong>，若做网络服务化修改有开源义务，纯自用无碍；② iOS 中国区 App Store 暂下架，国区用户需非中国区账号或 Android APK；③ 桌面 / Web 端不完善，主力仍是移动端；④ 具体 Star 数未公开，属较新的社区开源项目，功能仍在迭代，建议先下载试用再决定是否长期投入。</p>
+    <p><strong>定位</strong>：它不是「AI 陪聊」式的玩具，而是把<strong>语言习得方法论做成自动化闭环</strong>的训练系统——盲听、精听、跟读、复述、间隔复习一条龙，AI 负责评测与解析。如果你想要的是「把一段音频真正练到会说」，它比泛泛的英语学习 App 更聚焦、更成体系。</p>
+
+    <div class="tag-cloud">
+      <a href="#">Echo Loop</a><a href="#">英语听说</a><a href="#">AI 训练</a><a href="#">间隔复习</a>
+      <a href="#">Flutter</a><a href="#">开源</a><a href="#">AGPL-3.0</a><a href="#">跟读评测</a>
+      <a href="#">语言学习</a><a href="#">移动端</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/echo-loop/Echo-Loop">echo-loop/Echo-Loop</a> 开源项目</p>
+</footer>
+<script>
+(function(){
+  var bar = document.getElementById('progressBar');
+  var toc = document.getElementById('tocScroll');
+  var dotsWrap = document.getElementById('pageDots');
+  var links = toc ? [].slice.call(toc.querySelectorAll('a')) : [];
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if(dotsWrap && sections.length){
+    sections.forEach(function(s){
+      var d = document.createElement('a');
+      d.href = '#' + s.id; d.textContent = s.id;
+      dotsWrap.appendChild(d);
+    });
+  }
+  var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('a')) : [];
+  function onScroll(){
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (sc / max) * 100 : 0;
+    if(bar) bar.style.setProperty('--progress', p + '%');
+    var idx = 0;
+    sections.forEach(function(s, i){ if(s.getBoundingClientRect().top <= 120) idx = i; });
+    links.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  var tg = document.getElementById('themeToggle');
+  if(tg){
+    tg.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      tg.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+  }
+})();
+</script>
+</body>
+</html>
