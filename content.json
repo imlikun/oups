@@ -1194,26 +1194,27 @@
     },
     {
       "id": "article-55",
-      "title": "把 AI 工具测评写成视频：一份可落地的实操方法论",
-      "slug": "ai-tool-review-video-guide",
+      "title": "国内 AI 编程工具使用体验：WorkBuddy / CodeBuddy / Trae / 通义千问 / Claude / Cursor",
+      "slug": "ai-tool-usage-experience",
       "category": "notes",
       "featured": true,
-      "image": "uploads/ai-video-guide-points.png",
-      "excerpt": "把《国内 AI 编程工具使用体验》长文做成视频：三种形式怎么选、8 分钟分镜脚本、截图与录屏素材怎么用、七步制作流程与避坑清单。",
+      "image": "uploads/request-usage-2026-07-13_UsageDetails.png",
+      "excerpt": "约 50 天、烧了约 15000 积分的国内 AI 编程工具真实使用体验：WorkBuddy / CodeBuddy / Trae / 通义千问 / Claude / Cursor / DeepSeek，含 16 张真实截图。",
       "tags": [
         "AI工具测评",
-        "视频制作",
-        "内容创作",
         "WorkBuddy",
+        "CodeBuddy",
         "Trae",
-        "视频号",
-        "剪辑流程",
-        "自媒体"
+        "通义千问",
+        "Claude",
+        "Cursor",
+        "DeepSeek",
+        "使用体验"
       ],
       "videoUrl": "",
       "date": "2026-07-13",
       "status": "published",
-      "link": "/notes/ai-tool-review-video-guide.html",
+      "link": "/notes/ai-tool-usage-experience.html",
       "template": "A"
     }
   ],
