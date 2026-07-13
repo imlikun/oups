@@ -16,7 +16,7 @@
   --accent-glow: rgba(26,111,245,0.12);
   --border: rgba(0,0,0,0.07);
   --radius: 10px;
-  --max-text: 680px;
+  --max-text: 880px;
   --max-wide: 860px;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -61,17 +61,21 @@ body {
 .page { display:flex; max-width:var(--max-wide); margin:0 auto; padding:40px 28px 100px; gap:60px; position:relative; }
 
 /* ---- TOC Sidebar ---- */
-.toc-sidebar { width:200px; flex-shrink:0; position:sticky; top:80px; align-self:flex-start;
-  max-height:calc(100vh - 100px); overflow-y:auto; }
-.toc-title { font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase;
-  letter-spacing:0.1em; margin-bottom:14px; }
-.toc-list { list-style:none; }
-.toc-list li { margin-bottom:6px; }
-.toc-list a { font-size:12px; color:var(--text-tertiary); text-decoration:none; display:block;
-  padding:4px 8px; border-radius:5px; transition:all 0.2s; line-height:1.5; border-left:2px solid transparent; }
-.toc-list a:hover, .toc-list a.active { color:var(--accent); background:var(--accent-light); border-left-color:var(--accent); }
+
 
 /* ---- Article Body ---- */
+.toc-overlay { position:absolute; top:50%; right:24px; transform:translateY(-50%); z-index:5;
+  background:rgba(255,255,255,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:10px;
+  padding:16px 20px; min-width:170px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  animation:tocFadeIn 0.5s ease 0.3s both; }
+@keyframes tocFadeIn { from{opacity:0; transform:translateY(-50%) translateX(8px);} to{opacity:1; transform:translateY(-50%) translateX(0);} }
+.toc-overlay .toc-title { font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+.toc-overlay .toc-list { list-style:none; }
+.toc-overlay .toc-list li { margin-bottom:4px; }
+.toc-overlay .toc-list a { font-size:12px; color:var(--text-secondary); text-decoration:none; display:block;
+  padding:3px 8px; border-radius:5px; transition:all 0.15s; line-height:1.5; border-left:2px solid transparent; }
+.toc-overlay .toc-list a:hover, .toc-overlay .toc-list a.active { color:var(--accent); background:rgba(26,111,245,0.08); border-left-color:var(--accent); }
 .article-body { flex:1; min-width:0; max-width:var(--max-text); }
 .article-body h2 { font-size:26px; font-weight:700; margin:56px 0 20px; color:#111; letter-spacing:-0.6px; position:relative; }
 .article-body h2:first-child { margin-top:0; }
@@ -161,7 +165,7 @@ body {
 /* Responsive */
 @media (max-width:900px) {
   .page { flex-direction:column; gap:30px; }
-  .toc-sidebar { display:none; }
+  .toc-overlay { display:none; }
   .hero { height:320px; }
   .hero h1 { font-size:22px; }
 }
@@ -212,7 +216,14 @@ body {
 
 <div class="page">
 
-<aside class="toc-sidebar">
+
+
+<article class="article-body">
+
+
+<div class="hero-cover">
+  <img src="/uploads/deep-live-cam-cover.jpg" alt="AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播" loading="eager" />
+  <aside class="toc-overlay">
   <div class="toc-title">目录</div>
   <ul class="toc-list">
     <li><a href="#s1">一、这是什么</a></li>
@@ -228,11 +239,6 @@ body {
   </ul>
 </aside>
 
-<article class="article-body">
-
-
-<div class="hero-cover">
-  <img src="/uploads/deep-live-cam-cover.jpg" alt="AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播" loading="eager" />
 </div>
 <h2 id="s1">一、这是什么——先打个比方</h2>
 
