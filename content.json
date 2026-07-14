@@ -1343,6 +1343,35 @@
       "status": "published",
       "link": "/notes/monetization-plan-kun.html",
       "template": "C"
+    },
+    {
+      "id": "article-61",
+      "title": "坤哥 · 全域内容分发方案（9 平台 · 一次生产多端分发）",
+      "slug": "content-distribution-plan",
+      "category": "notes",
+      "featured": true,
+      "image": "",
+      "excerpt": "为独立开发者制定的 9 平台内容分发方案：一次生产、多端分发。含分发策略矩阵、各平台适配速查、每周排期表 A/B、批量编排 SOP 与跨境时区策略。",
+      "content": "详见独立文章页：/notes/content-distribution-plan.html",
+      "tags": [
+        "内容分发",
+        "多平台",
+        "微信公众号",
+        "小红书",
+        "B站",
+        "抖音",
+        "视频号",
+        "YouTube",
+        "TikTok",
+        "X",
+        "LinkedIn",
+        "个人品牌"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-14",
+      "status": "published",
+      "link": "/notes/content-distribution-plan.html",
+      "template": "A"
     }
   ],
   "projects": [

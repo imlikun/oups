@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>坤哥 · 全域内容分发方案（9 平台 · 一次生产多端分发） — 李坤的随笔</title>
+<meta name="description" content="为独立开发者制定的 9 平台内容分发方案：一次生产、多端分发。含分发策略矩阵、各平台适配速查、每周排期表 A/B、批量编排 SOP 与跨境时区策略。">
+<style>
+/* ========== 模板A：蓝色侧边栏风格（#1a6ff2）========== */
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #1a6ff2;
+  --accent-ink: #0b4fb0;
+  --accent-glow: rgba(26,111,242,0.12);
+  --accent-strong: rgba(26,111,242,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0b4fb0;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight:700; color: var(--accent-ink); text-decoration:none; letter-spacing:-0.2px;
+  display:flex; align-items:center; gap:6px; }
+.nav-logo .arrow { color:var(--text-tertiary); font-weight:400; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:11px; margin-left:2px; }
+.nav-links { display:flex; gap:24px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-tertiary); text-decoration:none; font-size:12px; font-weight:500; transition:color .2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent-ink); }
+
+/* ---- Progress Bar ---- */
+.progress-bar { position:fixed; top:52px; left:0; right:0; height:2px; z-index:199; background:transparent; }
+.progress-bar::after { content:''; position:absolute; left:0; top:0; height:2px;
+  background:linear-gradient(90deg,var(--accent),#0ea5e9); border-radius:0 1px 1px 0;
+  width:var(--progress,0%); transition:width .1s linear; }
+
+/* ---- Hero ---- */
+.hero { position:relative; min-height:380px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background:linear-gradient(135deg, rgba(26,111,242,0.10), rgba(14,116,144,0.12)); }
+.hero-overlay { position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(246,247,249,0.3) 0%, rgba(246,247,249,0.82) 55%, var(--bg) 100%); }
+.hero-content { position:relative; z-index:1; max-width:800px; padding:110px 28px 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-glow); color:var(--accent-ink); font-size:11px; font-weight:600; letter-spacing:.06em; margin-bottom:18px;
+  border:1px solid rgba(26,111,242,0.2); }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(26px,4.2vw,40px); font-weight:800; letter-spacing:-1px; line-height:1.2; margin-bottom:14px;
+  color:var(--hero-title-a); }
+.hero h1 em { font-style:normal; color:var(--hero-em-a); }
+.hero-desc { font-size:16px; color:var(--hero-title-b); max-width:640px; margin:0 auto 20px; line-height:1.7; }
+.hero-meta { display:flex; align-items:center; justify-content:center; gap:18px; font-size:12px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta span { display:flex; align-items:center; gap:4px; }
+
+/* ---- TOC ---- */
+.toc-wrap { max-width:820px; margin:0 auto; padding:10px 28px 28px; }
+.toc { background:var(--toc-bg); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; }
+.toc-title { font-size:12px; font-weight:600; color:var(--text-tertiary); letter-spacing:.08em; margin-bottom:14px; text-transform:uppercase; }
+.toc-list { display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; list-style:none; }
+.toc-list li a { display:flex; align-items:baseline; gap:8px; color:var(--text-secondary); text-decoration:none; font-size:14px; padding:4px 0; transition:color .2s; }
+.toc-list li a:hover { color:var(--accent-ink); }
+.toc-list li .num { color:var(--accent-ink); font-weight:600; font-size:12px; min-width:20px; }
+
+/* ---- Content Body ---- */
+.content { max-width:var(--max-text); margin:0 auto; padding:0 28px 80px; }
+.content section { margin-bottom:44px; }
+.content h2 { font-size:22px; font-weight:700; letter-spacing:-0.3px; margin-bottom:18px; padding-top:8px;
+  color:var(--heading-2); }
+.content h2 .sec-num { color:var(--accent-ink); font-size:15px; font-weight:700; margin-right:8px; }
+.content h3 { font-size:17px; font-weight:600; margin:22px 0 10px; color:var(--heading); }
+.content p { margin-bottom:14px; font-size:15.5px; color:var(--body-text); line-height:1.85; }
+.content ul, .content ol { margin:10px 0 18px 18px; }
+.content li { margin-bottom:7px; font-size:15px; line-height:1.75; color:var(--body-text); }
+.content strong { font-weight:600; color:var(--body-strong); }
+.content .key { color:var(--accent-ink); font-weight:700; }
+.content blockquote { border-left:3px solid var(--accent); padding:12px 20px; margin:18px 0;
+  background:var(--accent-glow); border-radius:0 8px 8px 0; font-size:14.5px; color:var(--body-text); }
+.content blockquote p { margin-bottom:0; }
+
+/* Table */
+.table-wrap { overflow-x:auto; margin:18px 0; border-radius:10px; border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; background:var(--bg-raised); }
+th { background:var(--thead-bg); color:var(--accent-ink); font-weight:600; padding:11px 14px; text-align:left; white-space:nowrap; border-bottom:1px solid var(--border); }
+td { padding:10px 14px; border-top:1px solid var(--border-subtle); line-height:1.65; color:var(--body-text); vertical-align:top; }
+tr:hover td { background:var(--bg-card); }
+
+/* Footer */
+.footer { text-align:center; padding:40px 28px; color:var(--text-tertiary); font-size:13px; border-top:1px solid var(--border); margin-top:40px; }
+.footer a { color:var(--accent-ink); text-decoration:none; }
+
+/* Responsive */
+@media(max-width:900px) {
+  .toc-list { grid-template-columns:1fr; }
+}
+@media(max-width:600px) {
+  .nav-inner { padding:0 16px; }
+  .hero-content { padding:90px 16px 40px; }
+  .content { padding:0 16px 60px; }
+  .toc-wrap { padding:10px 16px 20px; }
+  .toc { padding:18px 18px; }
+  .hero h1 { font-size:24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav"><div class="nav-inner">
+  <a class="nav-logo" href="/">appin.site<span> / 随笔</span></a>
+  <div class="nav-links">
+    <a href="/">首页</a>
+    <a href="/craft/">技艺录</a>
+    <a href="/notes/" class="active">随笔</a>
+    <a href="/ai-radar/">AI雷达</a>
+    <a href="/daily-digest/">每日阅读</a>
+  </div>
+</div></nav>
+
+<!-- Progress -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> 内容规划 · 全域分发</div>
+    <h1>坤哥 · 全域内容分发方案<br><em>一次生产，多端分发</em></h1>
+    <p class="hero-desc">为独立开发者制定的 9 平台内容分发方案：把每周 1 篇主稿长文 + 每 2 周 1 支中视频，按平台做改造，喂饱公众号、小红书、B站、抖音、视频号与 YouTube / TikTok / Instagram / X / LinkedIn。</p>
+    <div class="hero-meta">
+      <span>📅 2026-07-14</span>
+      <span>🏷️ 内容分发 · 9 平台</span>
+      <span>⏱️ 阅读约 15 分钟</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-wrap">
+  <div class="toc">
+    <div class="toc-title">目录导航</div>
+    <ul class="toc-list">
+      <li><span class="num">01</span><a href="#strategy">分发策略</a></li>
+      <li><span class="num">02</span><a href="#adapt">各平台适配速查卡</a></li>
+      <li><span class="num">03</span><a href="#schedule">每周发布排期与批量编排</a></li>
+      <li><span class="num">04</span><a href="#advice">优化建议与风险提示</a></li>
+      <li><span class="num">05</span><a href="#appendix">附录：同一主题 × 9 端示例</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Article -->
+<div class="content">
+
+<!-- ====== Section 1 ====== -->
+<section id="strategy">
+<h2><span class="sec-num">01</span>分发策略（主理人·安拓）</h2>
+<blockquote>
+<p>定位：综合科技随笔（长文 + 视频双形态）· 目标：专业影响力 + 个人品牌 · 节奏：每周 1–2 更 · 覆盖 9 平台：微信生态（公众号 / 视频号）、小红书、B站、抖音、YouTube、TikTok、Instagram、X、LinkedIn。制定：全域内容分发专家团。</p>
+</blockquote>
+
+<h3>核心骨架：一次生产、多端分发</h3>
+<p>每周产出 1 篇主稿长文（硬指标）+ 每 2 周 1 支中视频，再按平台做「比例 + 调性 + 标签」三件套改造，<span class="key">严禁原样搬运</span>（各平台有查重去重机制）。</p>
+
+<h3>内容形态 × 平台分工矩阵</h3>
+<div class="table-wrap"><table>
+<tr><th>生产主稿</th><th>分发到</th><th>形态</th></tr>
+<tr><td>长文主稿</td><td>微信公众号 + appin.site 技艺录</td><td>深度长文（品牌资产沉淀）</td></tr>
+<tr><td>图文拆解版</td><td>小红书</td><td>干货卡片 / 清单体</td></tr>
+<tr><td>中长视频</td><td>B站 + YouTube</td><td>同主题，中 / 英字幕</td></tr>
+<tr><td>短视频切片</td><td>抖音 + 视频号 + TikTok + IG Reels</td><td>60s 金句 / 演示</td></tr>
+<tr><td>观点短评</td><td>X + LinkedIn</td><td>英文面向海外开发者，反引流长文</td></tr>
+</table></div>
+
+<h3>平台优先级分层（先打透核心层，再外扩）</h3>
+<ul>
+<li>🔴 <strong>核心层（做深）</strong>：微信公众号、B站、小红书</li>
+<li>🟡 <strong>增长层</strong>：视频号、抖音、YouTube</li>
+<li>🟢 <strong>出海层</strong>：X、LinkedIn、TikTok、Instagram</li>
+</ul>
+
+<h3>预期心智</h3>
+<ul>
+<li>国内开发者 = 微信 + B站 + 小红书 三件套</li>
+<li>海外开发者 = X + LinkedIn + YouTube + TikTok</li>
+<li>长尾资产 = appin.site 技艺录（网站搜索沉淀）</li>
+</ul>
+</section>
+
+<!-- ====== Section 2 ====== -->
+<section id="adapt">
+<h2><span class="sec-num">02</span>各平台适配速查卡</h2>
+<p>同一主稿按此表做平台化改造。详细检查清单与示例见第三节附录。</p>
+
+<h3>国内平台</h3>
+<div class="table-wrap"><table>
+<tr><th>平台</th><th>最佳比例</th><th>标题 / 文案要点</th><th>标签</th><th>发布方式</th><th>算法与注意</th></tr>
+<tr><td><strong>微信公众号</strong></td><td>封面 2.35:1（1080×460）</td><td>标题≤64字、前15字含关键词；摘要≤120字独立可读；长文主稿</td><td>正文埋 2–3 长尾词</td><td>OAuth2 自动定时（周一 20:30）</td><td>订阅 + 推荐；私域联动枢纽（↔ 视频号 ↔ 企微）；禁外链裸链、禁诱导分享</td></tr>
+<tr><td><strong>微信视频号</strong></td><td>9:16（1080×1920），1–3min</td><td>生活化口语；3–5 话题 + 定位；柔性引导点赞转发</td><td>3–5 话题</td><td>手动 / 助手（周三 12:30）</td><td>社交 + 算法双引擎，冷启动靠首发朋友圈 / 群 24h 互动；禁其他平台水印</td></tr>
+<tr><td><strong>小红书</strong></td><td>封面 3:4（1080×1440），6–9 图</td><td>种草干货、emoji 分段；前 2 行定生死；标题含搜索词</td><td>10–15 个</td><td>草稿手动（周二 12:30）</td><td>搜索权重极高、长尾慢热；禁硬广 / 外链 / 水印；走真实经验分享</td></tr>
+<tr><td><strong>B站</strong></td><td>16:9 1080p，8–20min</td><td>信息密度高；分区科技 / 知识；内置弹幕设问</td><td>分区 + 3–10 标签</td><td>Webhook 自动（周五 19:00）</td><td>内容质量权重高、慢热周级；用户反感硬广 / 标题党</td></tr>
+<tr><td><strong>抖音</strong></td><td>9:16（1080×1920），30s–3min</td><td>前 3 秒强钩子（冲突 / 反差）；口语化</td><td>3–5 个</td><td>草稿手动（视频周 20:00）</td><td>完播率 &gt; 互动 &gt; 分享，小时级起量衰退快；无完整 API 需手动</td></tr>
+</table></div>
+
+<h3>海外平台（目标受众：北美开发者为主）</h3>
+<div class="table-wrap"><table>
+<tr><th>平台</th><th>最佳比例</th><th>标题 / 文案要点（英文）</th><th>标签</th><th>发布方式</th><th>算法与注意</th></tr>
+<tr><td><strong>YouTube</strong></td><td>16:9 1080p；Shorts 9:16</td><td>标题≤60字符含关键词；描述前 2 行钩子 + 时间戳；缩略图大字强对比</td><td>8–15（描述末 3–5 原生）</td><td>原生定时（周六 03:00 BJT = 周五 15:00 ET）</td><td>CTR × 观看时长 × 互动；SEO 重标题前置；FTC 赞助披露</td></tr>
+<tr><td><strong>TikTok</strong></td><td>9:16，15–60s</td><td>前 1 秒钩子；Caption ≤150 字符</td><td>3–5（1 泛 + 2 垂 + 1 细分）</td><td>Later 定时（周四 08:00 BJT = 周三 20:00 ET）</td><td>FYP 推荐；音乐用内置曲库（地区授权）；欧美偏好自嘲真实感</td></tr>
+<tr><td><strong>Instagram</strong></td><td>Reels 9:16 ≤90s / Carousel 4:5</td><td>Caption 首行钩子；视觉优先</td><td>8–15 三级混合</td><td>Meta 定时（周三 23:00 BJT = 11:00 ET）</td><td>Reels 权重最高；Save（收藏）长尾好；Bio 挂 Linktree 反引流</td></tr>
+<tr><td><strong>X / Twitter</strong></td><td>图文 16:9 / 1:1；视频 ≤2:20</td><td>首条钩子 + 🧵；Thread 展开；英文直给带锋芒</td><td>1–2 个（不堆砌）</td><td>Buffer 定时（周二–四 20:30 / 21:00）</td><td>即时性 + 互动；外链略降权 → 长文放 bio；可日更观点</td></tr>
+<tr><td><strong>LinkedIn</strong></td><td>16:9 横图 / 原生 PDF</td><td>150–300 词「故事 + 洞察」；首 2 行抛结论</td><td>3–5 专业词</td><td>原生定时（周二 / 四 20:30）</td><td>Dwell Time + 评论质量；原生 &gt; 外链；B2B 专业语境，限工作日</td></tr>
+</table></div>
+</section>
+
+<!-- ====== Section 3 ====== -->
+<section id="schedule">
+<h2><span class="sec-num">03</span>每周发布排期与批量编排（排期专家·凯历）</h2>
+
+<h3>A 方案（满血版 · 覆盖 9 平台）</h3>
+<p><strong>主稿分发骨架（每周）</strong></p>
+<div class="table-wrap"><table>
+<tr><th>星期</th><th>时间 (BJT)</th><th>平台</th><th>形态</th><th>发布方式</th><th>海外时区</th></tr>
+<tr><td>周一</td><td>20:30</td><td>微信公众号</td><td>主稿长文</td><td>自动 OAuth2</td><td>国内晚高峰</td></tr>
+<tr><td>周二</td><td>12:30</td><td>小红书</td><td>主稿图文</td><td>草稿手动</td><td>国内午间</td></tr>
+<tr><td>周二</td><td>20:30</td><td>LinkedIn</td><td>英文摘要 + 链接</td><td>定时</td><td>ET 周二 08:30</td></tr>
+<tr><td>周二</td><td>21:00</td><td>X</td><td>观点 Thread</td><td>Buffer</td><td>ET 周二 09:00</td></tr>
+<tr><td>周三</td><td>12:30</td><td>视频号</td><td>金句卡 / 短切片</td><td>手动</td><td>国内午间</td></tr>
+<tr><td>周三</td><td>20:30</td><td>X</td><td>日常观点</td><td>Buffer</td><td>ET 周三 08:30</td></tr>
+<tr><td>周四</td><td>20:30</td><td>X</td><td>日常观点</td><td>Buffer</td><td>ET 周四 08:30</td></tr>
+</table></div>
+
+<p><strong>视频周附加（双周，如第 1 / 3 / 5 周）</strong></p>
+<div class="table-wrap"><table>
+<tr><th>星期</th><th>时间 (BJT)</th><th>平台</th><th>形态</th><th>发布方式</th><th>海外时区</th></tr>
+<tr><td>周三</td><td>23:00</td><td>Instagram</td><td>Reel 切片</td><td>Meta 定时</td><td>ET 周三 11:00</td></tr>
+<tr><td>周四</td><td>08:00</td><td>TikTok</td><td>视频切片</td><td>Later 定时</td><td>ET 周三 20:00</td></tr>
+<tr><td>周四</td><td>20:00</td><td>抖音</td><td>切片 1</td><td>草稿手动</td><td>国内黄金</td></tr>
+<tr><td>周四</td><td>20:30</td><td>LinkedIn</td><td>视频英文摘要</td><td>定时</td><td>ET 周四 08:30</td></tr>
+<tr><td>周五</td><td>19:00</td><td>B站</td><td>中视频正片</td><td>Webhook 自动</td><td>国内周五晚</td></tr>
+<tr><td>周六</td><td>03:00</td><td>YouTube</td><td>中视频正片</td><td>原生定时</td><td>ET 周五 15:00</td></tr>
+<tr><td>周六</td><td>20:00</td><td>抖音</td><td>切片 2（可选）</td><td>草稿手动</td><td>国内黄金</td></tr>
+</table></div>
+<p>视频周仅需手动：小红书、视频号、抖音；其余全自动，坤哥无需熬夜。</p>
+
+<h3>B 方案（最小可行版 · 聚焦核心层 3 平台）</h3>
+<div class="table-wrap"><table>
+<tr><th>星期</th><th>时间 (BJT)</th><th>平台</th><th>形态</th><th>发布方式</th></tr>
+<tr><td>周一</td><td>20:30</td><td>微信公众号</td><td>主稿长文</td><td>自动 OAuth2</td></tr>
+<tr><td>周二</td><td>12:30</td><td>小红书</td><td>主稿图文</td><td>草稿手动</td></tr>
+<tr><td>周五</td><td>19:00</td><td>B站</td><td>中视频（视频周）</td><td>Webhook 自动</td></tr>
+</table></div>
+<p>视频号金句卡可作零成本加项在周三 12:30 补发。精力恢复后切回 A。</p>
+
+<h3>批量编排 SOP（排期日集中处理）</h3>
+<ol>
+<li><strong>排期日</strong>（建议周日 21:00 或周一 09:00）：确认主稿主题与形态，调取各平台适配稿。</li>
+<li><strong>录入定时</strong>，区分自动 / 手动：自动（排期日一次性设）— 公众号、B站、YouTube、TikTok、Instagram、LinkedIn、X；手动（到点发）— 小红书、视频号、抖音。</li>
+<li><strong>海外统一入口</strong>：所有海外平台 Bio / 置顶放 Linktree（聚合公众号 / Newsletter / B站），避免重复导流文案。</li>
+<li><strong>发布日只做确认 + 互动</strong>：自动项核查是否发出；手动项到点发，视频号首发 24h 朋友圈 + 群互动（冷启动关键）。</li>
+</ol>
+
+<h3>跨时区错峰策略</h3>
+<p>国内黄金 12–13、19–23 点与北美 08–10、17–19 ET 天然错开 12h。</p>
+<p><span class="key">坤哥睡前 1 小时（BJT 20:00–22:00）= 北美起床第 1 小时（ET 08:00–10:00）</span>：周一主稿周二同时驱动公众号（国内晚）+ LinkedIn / X（北美早），一次生产喂饱两时区。</p>
+<p>夏令时 EDT 按 BJT = ET + 12h；冬令时 EST 整体 +1h，排期日前强制核对一次偏移。</p>
+
+<h3>发布频率与节奏红线</h3>
+<ul>
+<li><strong>硬指标</strong>：主稿 1 篇 / 周（断更不超 1 周）；中视频 1 支 / 双周（可延至 3 周，别断超 1 月）。</li>
+<li>可日更观点：X（3–5 条 / 周，重质不硬凑）。</li>
+<li>慢养型（质量 &gt; 数量）：B站、小红书、YouTube。</li>
+<li>社交驱动：视频号（求冷启动互动）、抖音（切片为主）。</li>
+<li>低频精准：LinkedIn（1–2 条 / 周）、Instagram / TikTok（双周切片）。</li>
+<li><strong>断更保护</strong>：至少发 1 条 X 短评 + 重发 1 篇小红书 evergreen 旧文，维持算法信任。</li>
+</ul>
+
+<h3>发布检查清单</h3>
+<ul>
+<li>[ ] 主稿定稿，各平台适配稿到位</li>
+<li>[ ] 公众号 OAuth2 定时（周一 20:30）已设</li>
+<li>[ ] 海外 5 平台定时已设（YT 六 03:00 / LinkedIn 二 &amp; 四 20:30 / X 三发 / TikTok 四 08:00 / IG 三 23:00）</li>
+<li>[ ] B站 Webhook 定时（视频周 五 19:00）已设</li>
+<li>[ ] 小红书 / 视频号 / 抖音 草稿已存、手机提醒已设</li>
+<li>[ ] 发布日：自动项核查、手动项到点发、视频号首发 24h 朋友圈 + 群互动、评论区互动 30min</li>
+<li>[ ] 周末：记录数据、标记优质内容（下周公号 / 小红书 evergreen 重发）、预填下周排期</li>
+</ul>
+
+<h3>异常处理预案</h3>
+<ul>
+<li>公众号 OAuth2 失效 → 当天 20:30 前手动群发，检查 token。</li>
+<li>B站 Webhook 失败 → 后台手动上传定时。</li>
+<li>海外定时未发 → 查 Later / Meta / Buffer 登录态，手动补最近窗口。</li>
+<li>抖音 / 小红书 / 视频号忘发 → 当日 20:00 前补，错过则次日补。</li>
+<li>主稿延产 → 启动断更保护（X 短评 + 小红书旧文重发）。</li>
+<li>跨时区算错 → 排期日强制核对 ET ↔ BJT 偏移；X 可即时救场。</li>
+<li>国内大节假日 → 国内平台顺延 / 做节日版；海外照常。</li>
+</ul>
+</section>
+
+<!-- ====== Section 4 ====== -->
+<section id="advice">
+<h2><span class="sec-num">04</span>主理人优化建议与风险提示</h2>
+
+<h3>优化建议</h3>
+<ol>
+<li><strong>固定视觉 IP</strong>：1 个主色 + 1 套字体 + 真人出镜，9 端封面 / 头像统一，强化识别。</li>
+<li><strong>模板化降负担</strong>：小红书图文卡、视频号金句卡、X Thread 用固定模板，每周适配成本大降。</li>
+<li><strong>视频周前置生产</strong>：非视频周末拍剪，视频周只切片，平摊精力避免当周透支。</li>
+<li><strong>evergreen 复用</strong>：小红书 / B站 / YouTube 旧文可周期性重发，吃长尾搜索红利。</li>
+<li><strong>数据驱动迭代</strong>：每周记录核心指标（公众号打开率、B站完播、YouTube CTR、X 互动），下轮调整选题与标题公式。</li>
+</ol>
+
+<h3>风险提示</h3>
+<ul>
+<li>⚠️ <strong>合规红线</strong>：微信禁诱导分享 / 外链裸链；小红书禁硬广 / 水印；YouTube / X / LinkedIn 含品牌合作须 FTC 披露（#ad）。</li>
+<li>⚠️ <strong>版权</strong>：海外 BGM 用平台内置曲库（TikTok / IG）或 YouTube Audio Library；勿用国内平台音乐（海外无授权）；客户项目需脱敏。</li>
+<li>⚠️ <strong>时区陷阱</strong>：每年 11 月–次年 3 月切换冬令时，海外北京时间点整体 +1h，排期日前务必核对。</li>
+<li>⚠️ <strong>账号安全</strong>：抖音 / 小红书 / 视频号无完整自动 API，手动发布注意账号登录态与设备风控。</li>
+</ul>
+</section>
+
+<!-- ====== Section 5 ====== -->
+<section id="appendix">
+<h2><span class="sec-num">05</span>附录：同一主题 × 9 端示例</h2>
+<p>主稿：《我用 Vue 重写了公司官网，踩了这 5 个坑》</p>
+<div class="table-wrap"><table>
+<tr><th>平台</th><th>标题 / 开头示例</th></tr>
+<tr><td>微信公众号</td><td>《我用 Vue 重写了公司官网，踩了这 5 个坑》+ 深度复盘（SSR / 构建体积 / SEO…）</td></tr>
+<tr><td>小红书</td><td>「程序员必看｜用 Vue 重写官网，我踩的 5 个坑🚫」+ 6–9 图清单</td></tr>
+<tr><td>B站</td><td>【实战】用 Vue 重写公司官网，这 5 个坑别踩（8–20min 中视频）</td></tr>
+<tr><td>抖音</td><td>「千万别用 Vue 直接上 SSR，除非你想加班到凌晨」（前 3 秒钩子切片）</td></tr>
+<tr><td>视频号</td><td>「做独立开发第 8 年，我最后悔的一次技术选型」（金句口播短片）</td></tr>
+<tr><td>YouTube</td><td>I Rebuilt Our Company Site in Vue — 5 Pitfalls to Avoid（英文字幕中视频）</td></tr>
+<tr><td>TikTok</td><td>I rewrote our entire company site in Vue and made 5 stupid mistakes 💀 + POV 切片</td></tr>
+<tr><td>Instagram</td><td>We rebuilt our site in Vue. 5 pitfalls that ate 2 weeks 👇 + Reel / Carousel</td></tr>
+<tr><td>X</td><td>I rebuilt our company website in Vue. 5 pitfalls that cost me 2 weeks. A thread 🧵</td></tr>
+<tr><td>LinkedIn</td><td>Last quarter, I rebuilt our corporate site in Vue 3 as a solo dev. 5 lessons: + 专业复盘</td></tr>
+</table></div>
+<p style="margin-top:18px;">🔗 本文归档于 <a href="https://www.appin.site/notes/content-distribution-plan.html">appin.site / 随笔</a>　·　实现执行时可对接团队技能：<code>mp-draft-push</code>（公众号草稿）、<code>xiaohongshu</code>（小红书发布）、<code>libtv-skill</code>（素材生成）、<code>humanizer</code>（文案去 AI 化）。</p>
+</section>
+
+</div><!-- /.content -->
+
+<div class="footer">
+  <p>© 2026 appin.site · 李坤的创意探索 · 本站采用模板 A（蓝色风格）</p>
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  const y=window.scrollY;
+  document.getElementById('progress').style.setProperty('progress',(y/h*100)+'%');
+},{passive:true});
+</script>
+
+</body>
+</html>
