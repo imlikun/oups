@@ -1213,7 +1213,7 @@
           </div>
           <div class="explore-title">技艺录</div>
           <div class="explore-desc">从 HTML/CSS 到 AI 工具链，记录技术学习与实践的每一步。</div>
-          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;"></span> 23 篇文章 · 94 个技术标签</div>
+          <div class="explore-meta" id="stat-craft"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;"></span> <em>加载中…</em></div>
           <div class="explore-arrow">查看全部 →</div>
         </a>
         <a href="video-lab/index.html" class="explore-card reveal reveal-delay-3">
@@ -1222,7 +1222,7 @@
           </div>
           <div class="explore-title">视频剪辑</div>
           <div class="explore-desc">素材整理、剪辑节奏、转场特效、调色与音频处理。</div>
-          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#bf5af2;display:inline-block;"></span> 学习进行中</div>
+          <div class="explore-meta" id="stat-video"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#bf5af2;display:inline-block;"></span> <em>加载中…</em></div>
           <div class="explore-arrow">查看作品 →</div>
         </a>
         <a href="notes/index.html" class="explore-card reveal reveal-delay-4">
@@ -1231,7 +1231,7 @@
           </div>
           <div class="explore-title">随笔</div>
           <div class="explore-desc">工作感悟、生活观察、阅读笔记——不一定有结论，但一定有思考。</div>
-          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#c87a1e;display:inline-block;"></span> 3 篇文章</div>
+          <div class="explore-meta" id="stat-notes"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#c87a1e;display:inline-block;"></span> <em>加载中…</em></div>
           <div class="explore-arrow">查看全部 →</div>
         </a>
         <a href="daily-digest/index.html" class="explore-card reveal reveal-delay-5">
@@ -1240,7 +1240,7 @@
           </div>
           <div class="explore-title">每日阅读</div>
           <div class="explore-desc">社会商业热点、汽车科技动态、养老产业观察、心理学好书推荐——每天一份，自动推送。</div>
-          <div class="explore-meta"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#30d158;display:inline-block;"></span> 每日更新 · 6 大板块</div>
+          <div class="explore-meta" id="stat-daily"><span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#30d158;display:inline-block;"></span> 每日更新 · 自动推送</div>
           <div class="explore-arrow">查看全部 →</div>
         </a>
       </div>
@@ -1669,10 +1669,34 @@
           var projects = data.projects || [];
           dynamicContentLoaded = true;
           renderBentoCards(articles, projects);
+          updateExploreStats(articles);
         })
         .catch(function() {
           // fetch 失败（本地 file:// 协议等）→ 保持静态 HTML 内容
         });
+    }
+
+    // 更新首页探索区卡片的动态统计数字
+    function updateExploreStats(articles) {
+      var pub = articles.filter(function(a) { return a.status === 'published'; });
+      var cats = ['craft', 'video', 'notes'];
+      for (var i = 0; i < cats.length; i++) {
+        var key = cats[i];
+        var catArts = pub.filter(function(a) { return a.category === key; });
+        var count = catArts.length;
+        var el = document.getElementById('stat-' + key);
+        if (!el) continue;
+        if (key === 'craft') {
+          var tags = {};
+          catArts.forEach(function(a) { (a.tags || []).forEach(function(t) { tags[t] = 1; }); });
+          var tagCount = Object.keys(tags).length;
+          el.innerHTML = '<span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;"></span> ' + count + ' 篇文章 · ' + tagCount + ' 个技术标签';
+        } else if (key === 'video') {
+          el.innerHTML = '<span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#bf5af2;display:inline-block;"></span> ' + count + ' 篇作品';
+        } else if (key === 'notes') {
+          el.innerHTML = '<span class="channel-stat-dot" style="width:6px;height:6px;border-radius:50%;background:#c87a1e;display:inline-block;"></span> ' + count + ' 篇文章';
+        }
+      }
     }
 
     function renderBentoCards(articles, projects) {
