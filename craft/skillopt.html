@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillOpt：像训练神经网络一样，让 AI 技能自我进化</title>
+<meta name="description" content="SkillOpt 是微软开源的 Agent 技能优化框架（github.com/microsoft/SkillOpt，1.1 万 Star）：把指导 Agent 行为的技能文档当作「可训练的外部权重」，用「前向传播 → 反向传播 → 参数更新」的文本版训练循环让它自我进化，52 组评测全达最优或并列最优，最终输出轻量 best_skill.md 跨模型部署。">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 560px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; vertical-align: top; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: var(--body-strong); }
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block;  max-height:460px; object-fit:cover;}
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px;  max-height:460px; object-fit:cover;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+<nav class="page-dot" id="pageDots"></nav>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>微软开源 · Agent 技能优化</div>
+    <h1>SkillOpt：像训练神经网络一样，让 AI 技能<em>自我进化</em></h1>
+    <p class="hero-desc">微软开源的 SkillOpt（github.com/microsoft/SkillOpt，1.1 万 Star）把 Agent 的技能文档当作「可训练的外部权重」：不改模型权重，只用「前向传播 → 反向传播 → 参数更新」的文本版训练循环让它自我进化。52 组评测全部达到最优或并列最优，最终输出一个轻量 best_skill.md，跨模型、跨环境直接部署。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-15</span><span class="sep"></span>
+      <span>约 6 分钟阅读</span>
+    </div>
+  </div>
+</section>
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#s1">它是什么</a>
+    <a href="#s2">核心思路：外部权重</a>
+    <a href="#s3">训练循环三步走</a>
+    <a href="#s4">关键特性</a>
+    <a href="#s5">快速开始</a>
+    <a href="#s6">我的判断</a>
+  </div>
+</div>
+<div class="hero-cover">
+  <img src="/uploads/skillopt-cover.jpg" alt="SkillOpt 技能自我进化框架" loading="eager" />
+</div>
+<div class="article-wrap">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p>从提示词（prompt）到 Skills（技能文档），AI 工程化看似进化了，但大多数 Skills 还是靠人反复手调——写一份自然语言文档指导 Agent 怎么干活，效果不好就改改，再不好再改。这个过程没有系统性，也不可复现。</p>
+    <p>SkillOpt 给出的答案是：<strong>把指导 Agent 行为的技能文档，当成模型的可训练参数</strong>。既然内部权重可以用梯度下降优化，这份「外部权重」也应该有一套系统化的训练方法。它不微调模型，只训练那份 md 文件。</p>
+    <div class="highlight-box">
+      <p>一句话定位：在 7 个目标模型、6 个基准、3 类执行环境（直接对话 / Codex / Claude Code）共 <strong>52 组评测组合</strong> 中，SkillOpt 训练出的技能文档全部达到最优或并列最优——而且推理阶段零额外开销。</p>
+    </div>
+
+    <h2 id="s2">二、核心思路：技能即「外部权重」</h2>
+    <p>SkillOpt 的核心洞察只有一句话：<strong>Agent 的技能文档就是它的「外部权重」</strong>。内部权重决定模型「会不会」，技能文档决定 Agent「按什么规则干活」。两者都该可被训练，只是训练对象不同。</p>
+    <ul>
+      <li><strong>冻结目标模型</strong>：底层 LLM 不动，只换它读的那份技能文档。</li>
+      <li><strong>优化器模型</strong>：用一个（通常更强的）模型当「优化器」，分析执行轨迹、提出有界的修改建议。</li>
+      <li><strong>验证决定留存</strong>：候选技能在保留验证集上打分，只有比当前更好才被接受。</li>
+    </ul>
+    <p>训练完沉淀下来的，是高度<strong>通用的程序性操作策略</strong>，而不是对某个训练样本的生搬硬套——论文里展示的「代表性学到的规则」每条都在描述通用做法，而非具体答案。</p>
+
+    <h2 id="s3">三、训练循环三步走</h2>
+    <p>SkillOpt 把深度学习的训练循环，原样搬到了文本空间：</p>
+    <ol class="step-list">
+      <li><span class="step-label">Rollout · 前向传播</span><p>冻结的目标模型拿着当前版本的技能文档去执行一批任务，记录完整轨迹（消息、工具调用、验证反馈、最终得分）。这一步产出的是「证据」，相当于神经网络前向传播的结果。</p></li>
+      <li><span class="step-label">Reflect · 反向传播</span><p>独立的优化器模型分析这批轨迹。<strong>失败案例和成功案例被分开反思</strong>：失败的 minibatch 用来发现「哪些规则要修正」，成功的 minibatch 用来确认「哪些现有规则在起作用、不能动」。</p></li>
+      <li><span class="step-label">Update · 参数更新</span><p>优化器提出有界的技能修改，经验证门控（validation gating）后，胜出的候选成为新的当前技能；慢更新（slow update）机制把稳定经验写进受保护区，对抗遗忘。</p></li>
+    </ol>
+
+    <h2 id="s4">四、关键特性</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>特性</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Validation Gating</strong></td><td>每个候选技能在保留验证集上评分，只有打败当前 / 最佳技能才接受，杜绝越训越差。</td></tr>
+          <tr><td><strong>Slow Update</strong></td><td>epoch 边界的纵向对比写入受保护区，形成「动量」，防止新规则覆盖掉仍有效的旧经验。</td></tr>
+          <tr><td><strong>Meta Skill</strong></td><td>优化器侧记忆，跨 epoch 反思「什么有效」，再反馈进下一轮反思，提升反思质量。</td></tr>
+          <tr><td><strong>Pluggable Backends</strong></td><td>支持 OpenAI / Azure OpenAI、Anthropic Claude、本地 Qwen（vLLM），以及 Codex / Claude Code 执行后端。</td></tr>
+          <tr><td><strong>Six Benchmarks</strong></td><td>内置 SearchQA、DocVQA、ALFWorld、LiveMathematicianBench、SpreadsheetBench、OfficeQA 六大基准，开箱即训。</td></tr>
+          <tr><td><strong>Auto-resume</strong></td><td>每步都 checkpoint，中断后用同一条命令从上次完成处续跑。</td></tr>
+          <tr><td><strong>WebUI 监控</strong></td><td>自带 Gradio 监控面板，实时看训练进度、技能快照与迭代过程。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s5">五、快速开始</h2>
+    <p>前置：Python ≥ 3.10，以及至少一个模型后端密钥（Azure OpenAI / OpenAI / Anthropic / 本地 Qwen）。基准数据集需自备 splits。</p>
+    <div class="code-block">
+<span class="comment"># 克隆并安装</span>
+git clone https://github.com/microsoft/SkillOpt.git
+cd SkillOpt
+pip install -e .
+pip install -e ".[webui]"   <span class="comment"># 监控面板（可选）</span>
+
+<span class="comment"># 配置凭证：复制模板，填至少一种后端</span>
+cp .env.example .env
+<span class="comment"># 编辑 .env：AZURE_OPENAI_* / ANTHROPIC_API_KEY / QWEN_CHAT_BASE_URL ...</span>
+
+<span class="comment"># 启动训练 + Web 监控</span>
+python -m skillopt_webui.app
+    </div>
+    <p>训练完成后，输出目录下会生成 <strong>best_skill.md</strong>——这就是训练出来的最终技能文档。它轻量、可读、可版本化，直接替换到 Codex / Claude Code 等框架里即可，推理阶段零额外开销。若只想评估已有技能，可用 <code>scripts/eval_only.py</code> 跳过训练。</p>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：所有「有自动评测、执行反馈或可靠验证器」的场景——办公自动化、表格处理、文档问答、代码 / 工具执行、数学推理，以及有明确成功判据的企业流程。它的规范优化接口能直接套到 Codex、Claude Code 等框架，只需替换执行环境，不必重写算法。</p>
+    <p><strong>注意</strong>：① 需要至少一个模型后端密钥，且训练本身消耗 token，不是零成本；② 基准数据集不随仓库提供，需自行准备 splits；③ 本质是把「人调提示词」自动化，强依赖「可验证」——没有评测信号的任务很难直接受益；④ 用强模型当优化器、弱模型当目标，是它推荐的提效路线。</p>
+    <p><strong>定位</strong>：它启示了一个新方向——大模型时代<strong>值得被训练的不仅是权重，也包括模型外部的过程性知识</strong>。只要这份过程被控制、验证、记录，自然语言技能就能成为连接前沿模型能力与真实业务场景之间，一层稳定、可迁移、可回滚的适配器。</p>
+
+    <div class="tag-cloud">
+      <a href="#">SkillOpt</a><a href="#">微软</a><a href="#">Agent 技能</a><a href="#">自我进化</a>
+      <a href="#">外部权重</a><a href="#">文本空间优化</a><a href="#">Claude Code</a><a href="#">Codex</a>
+      <a href="#">开源</a><a href="#">技能训练</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/microsoft/SkillOpt">microsoft/SkillOpt</a> 开源项目（aka.ms/skillopt）</p>
+</footer>
+<script>
+(function(){
+  var bar = document.getElementById('progressBar');
+  var toc = document.getElementById('tocScroll');
+  var dotsWrap = document.getElementById('pageDots');
+  var links = toc ? [].slice.call(toc.querySelectorAll('a')) : [];
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if(dotsWrap && sections.length){
+    sections.forEach(function(s){
+      var d = document.createElement('a');
+      d.href = '#' + s.id; d.textContent = s.id;
+      dotsWrap.appendChild(d);
+    });
+  }
+  var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('a')) : [];
+  function onScroll(){
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (sc / max) * 100 : 0;
+    if(bar) bar.style.setProperty('--progress', p + '%');
+    var idx = 0;
+    sections.forEach(function(s, i){ if(s.getBoundingClientRect().top <= 120) idx = i; });
+    links.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  var tg = document.getElementById('themeToggle');
+  if(tg){
+    tg.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      tg.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Job Search：把 Claude Code 变成你的本地求职流水线</title>
+<meta name="description" content="AI Job Search（MadsLorentzen/ai-job-search）是基于 Claude Code 的开源求职工作流：自动筛岗、算匹配度、按 JD 定制 CV 与求职信、再做复核、PDF / ATS 检查与面试准备，把求职变成一条可编程、可审计的本地流水线。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 880px;
+  --max-wide: 920px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { max-width:var(--max-text); margin:0 auto; padding:0 28px 100px; }
+.toc-overlay { position:absolute; top:50%; right:24px; transform:translateY(-50%); z-index:5;
+  background:rgba(255,255,255,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:10px;
+  padding:16px 20px; min-width:170px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  animation:tocFadeIn 0.5s ease 0.3s both; }
+@keyframes tocFadeIn { from{opacity:0; transform:translateY(-50%) translateX(8px);} to{opacity:1; transform:translateY(-50%) translateX(0);} }
+.toc-overlay .toc-title { font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+.toc-overlay .toc-list { list-style:none; }
+.toc-overlay .toc-list li { margin-bottom:4px; }
+.toc-overlay .toc-list a { font-size:12px; color:var(--text-secondary); text-decoration:none; display:block;
+  padding:3px 8px; border-radius:5px; transition:all 0.15s; line-height:1.5; border-left:2px solid transparent; }
+.toc-overlay .toc-list a:hover, .toc-overlay .toc-list a.active { color:var(--accent); background:rgba(26,111,245,0.08); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .toc-overlay { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; max-height:460px; object-fit:cover;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源 · AI 求职工具</div>
+  <h1>AI Job Search：把 Claude Code 变成你的本地求职流水线</h1>
+  <p class="hero-desc">一个跑在 Claude Code 里的开源求职工作流。它把「刷岗位、算匹配度、改简历、写求职信、过 ATS、准备面试」这些重复劳动，编排成一条可被 AI 执行、验证、迭代的标准化流水线——数据留本地，投递你自己确认。</p>
+  <div class="hero-meta">
+    <span>Claude Code 插件</span><span class="dot"></span>
+    <span>本地求职工作流</span><span class="dot"></span>
+    <span>自动筛岗 · 定制 CV</span><span class="dot"></span>
+    <span>2026.07.15</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/ai-job-search-cover.jpg" alt="AI Job Search 求职工作流封面">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">它解决什么问题</a></li>
+      <li><a href="#s2">核心命令体系</a></li>
+      <li><a href="#s3">一次投递的 6 步</a></li>
+      <li><a href="#s4">快速开始</a></li>
+      <li><a href="#s5">适用场景</a></li>
+      <li><a href="#s6">我的判断</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+    <h2 id="s1">一、它解决什么问题</h2>
+    <p>求职本质上是一件高重复、高主观、多步骤的事：每天刷岗位、把 JD 和自己的履历逐条比对匹配度、为不同岗位改不同的简历、写语气不同的求职信、再检查 PDF 排版和 ATS 文本层、最后准备面试。人肉做这些，既累又容易漏。</p>
+    <p>AI Job Search 把上面这套流程，变成一条<strong>跑在 Claude Code 里的可编程流水线</strong>。它的本质是一个基于 Claude Code 的 Agentic 工作流编排系统——把求职拆成一系列可被 AI 执行、验证和迭代的标准化流程，而不是一个替你海投的机器人。</p>
+    <div class="info-box">
+      <p><strong>一句话定位</strong>：把求职从「人肉重复劳动」变成「本地可审计、可迭代的 AI 流水线」。官方框架与地域无关，内置门户偏丹麦市场，但可通过 <code>/add-portal</code> 扩展到任意地区（含中国区职位平台）。</p>
+    </div>
+
+    <h2 id="s2">二、核心命令体系</h2>
+    <p>整条求职流程被拆成一组 Claude Code 命令，从档案初始化到反馈校准，串成闭环：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">/setup · 个人档案初始化</span></div>
+      <p class="mc-desc">三种路径：导入文档文件夹、导入单份 CV、或面试模式，先把你的背景结构化。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">/scrape · 多门户批量搜岗</span></div>
+      <p class="mc-desc">跨职位门户批量搜索，去重后按匹配度排序呈现，一眼看清今天新出的机会。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">/rank · 批量评分排序</span></div>
+      <p class="mc-desc">对所有抓取到的岗位批量评分，生成排名短名单，支持并行 Agent 评估提升效率。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">4</span><span class="mc-title">/apply · 核心投递工作流</span></div>
+      <p class="mc-desc">匹配评估 → 简历定制 → 求职信 → 审稿人评审 → PDF 编译 → ATS 验证，六步一气呵成。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">5</span><span class="mc-title">/expand · 丰富技能档案</span></div>
+      <p class="mc-desc">从 GitHub、作品集、Google Scholar 等公开来源补全你的技能与项目经历。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">6</span><span class="mc-title">/upskill · 技能差距分析</span></div>
+      <p class="mc-desc">对照目标岗位生成优先级热力图与带时间估算的学习计划，知道该补什么。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">7</span><span class="mc-title">/outcome · 结果归档与校准</span></div>
+      <p class="mc-desc">记录申请结果、更新追踪表，并反向校准匹配框架，越用越准。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">8</span><span class="mc-title">/add-template · 注册简历模板</span></div>
+      <p class="mc-desc">注册自定义 LaTeX 简历 / 求职信模板，并自动测试编译是否正常。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">9</span><span class="mc-title">/add-portal · 扩展地区门户</span></div>
+      <p class="mc-desc">为任意地区的职位门户一键生成搜索插件，让框架覆盖全球市场。</p>
+    </div>
+
+    <h2 id="s3">三、一次投递的 6 步流水线</h2>
+    <p>最核心的 <code>/apply</code> 不是「生成一份简历就完事」，而是带关卡的生产级流水线：</p>
+    <div class="pipeline">
+      <span class="step">匹配评估</span><span class="arrow">→</span>
+      <span class="step">简历定制</span><span class="arrow">→</span>
+      <span class="step">求职信生成</span><span class="arrow">→</span>
+      <span class="step">审稿人评审</span><span class="arrow">→</span>
+      <span class="step">PDF 编译</span><span class="arrow">→</span>
+      <span class="step">ATS 验证</span>
+    </div>
+    <ul>
+      <li><strong>匹配评估</strong>：先判断这个岗位和你到底 match 到什么程度，再决定要不要投入。</li>
+      <li><strong>简历定制</strong>：针对该 JD 重写 / 调整简历，突出相关经历，而非一份通投。</li>
+      <li><strong>求职信生成</strong>：按岗位语气与要求生成定制求职信。</li>
+      <li><strong>审稿人评审</strong>：模拟审稿人视角检查一致性、夸大、遗漏，给出修改建议。</li>
+      <li><strong>PDF 编译</strong>：基于 LaTeX 模板编译出排版干净的成品。</li>
+      <li><strong>ATS 验证</strong>：检查 PDF 文本层能否被 ATS（ applicant tracking system）正确解析，避免「投了但机器读不出」。</li>
+    </ul>
+    <div class="pull-quote"><p>「投出去前先过 ATS 文本层」——这一步是很多人海投石沉大海的隐形原因，而它把它做进了流水线里。</p></div>
+
+    <h2 id="s4">四、快速开始</h2>
+    <p>前置依赖（门槛不算低，但都是一次性配置）：</p>
+    <div class="info-box">
+      <p><strong>1. Fork + Clone</strong></p>
+      <p class="mc-desc">gh repo fork MadsLorentzen/ai-job-search --clone &nbsp;→&nbsp; cd ai-job-search</p>
+      <p><strong>2. 安装门户 CLI 依赖</strong></p>
+      <p class="mc-desc">for portal in jobbank-search jobdanmark-search jobindex-search jobnet-search linkedin-search; do ... ; done</p>
+      <p><strong>3. 前置环境</strong></p>
+      <p class="mc-desc">Claude Code CLI（运行载体）· Python 3.10+ · Bun（门户 CLI 运行时）· LaTeX 发行版（TeX Live / MacTeX / MiKTeX，含 lualatex、xelatex）· poppler-utils（ATS 检查可选，macOS: brew install poppler）</p>
+    </div>
+
+    <h2 id="s5">五、适用场景</h2>
+    <p><strong>日常求职</strong>：早上开 Claude Code，<code>/scrape</code> 扫今天新岗 → <code>/rank --top 10</code> 排序 → 选最心仪的一个 <code>/apply</code> → 六步跑完拿到两份 PDF（CV + Cover Letter）→ 投出去后 <code>/outcome</code> 记录。</p>
+    <p><strong>面试准备</strong>：<code>/interview</code> 基于已跟踪的申请存档，构建阶段专属准备包——STAR 示例映射（你的每条经历对应哪些行为问题）、公司与面试官调研、模拟面试角色扮演、以及诚实的差距桥接。</p>
+    <p><strong>技能差距规划</strong>：<code>/upskill</code> 分析你的档案和目标职位的差距，生成带优先级的技能热力图与学习计划。</p>
+    <p><strong>多市场求职</strong>：<code>/add-portal</code> 让框架覆盖任意地区——无论丹麦、中国还是德国，一条命令生成当地职位门户的搜索技能插件。</p>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：愿意配置终端环境、想把求职「工程化」的人；需要多市场 / 多岗位投递、且重视数据隐私（全流程本地运行）的人；受困于「每份岗位都要重写简历」重复劳动的人。</p>
+    <p><strong>注意</strong>：① 强依赖 Claude Code + 本地环境配置，纯小白上手有门槛；② 编译 PDF 需要 LaTeX 发行版，没装就出不了成品；③ 框架本身<strong>不做自动投递</strong>，每一步都需你人工确认，定位是「减少重复劳动」而非「代投机器人」；④ 内置门户偏丹麦市场，中国区（如 Boss 直聘 / 猎聘）需自行 <code>/add-portal</code> 扩展。</p>
+    <p><strong>定位</strong>：它不是海投外挂，而是把求职变成一条<strong>可审计、可迭代、数据私有</strong>的本地流水线。如果你投入的是「值得认真准备」的岗位，它会把最耗时的定制与检查环节自动化，让你把精力放在决策上。</p>
+
+    <div class="tag-cloud">
+      <a href="#">AI Job Search</a><a href="#">Claude Code</a><a href="#">求职工具</a><a href="#">简历优化</a>
+      <a href="#">求职信</a><a href="#">ATS</a><a href="#">本地运行</a><a href="#">开源</a>
+      <a href="#">自动化求职</a><a href="#">匹配度</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/MadsLorentzen/ai-job-search">MadsLorentzen/ai-job-search</a> 开源项目</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>
