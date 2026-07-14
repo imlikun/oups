@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>坤哥内容变现方案（公众号 + appin.site 科技图文号）</title>
+<meta name="description" content="坤哥公众号+appin.site 科技图文号的完整内容变现方案：CPE 为主 + 轻量 CPS，月入 1k–5k 实战路径。">
+<style>
+/* ========== 模板C：暗色沉浸风格 ========== */
+/* 配色：霓虹青强调 #00f5d4，暗色背景 #0a0a10 */
+:root {
+  /* 默认亮色（白天护眼） */
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+
+/* ---- Progress Bar ---- */
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+
+/* ---- Hero ---- */
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 540px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+
+/* ---- TOC (Horizontal Pills, Sticky) ---- */
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+
+/* ---- Article Body ---- */
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+
+/* ---- Pull Quote ---- */
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+
+/* ---- Info Box ---- */
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+
+/* ---- Highlight Box ---- */
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+
+/* ---- Step List ---- */
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+
+/* ---- Checklist ---- */
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+
+/* ---- Table ---- */
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+
+/* ---- Code Block ---- */
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+
+/* ---- Section Image ---- */
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+
+/* ---- Tag Cloud ---- */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+
+/* ---- Back Link ---- */
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+
+/* ---- Side Progress Dot ---- */
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+
+/* ---- Footer ---- */
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/notes/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/notes/" class="active">随笔</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+
+<!-- Page Dots -->
+<nav class="page-dot" id="pageDots"></nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>内容变现 · 实战方案</div>
+    <h1>坤哥内容变现方案（公众号 + appin.site 科技图文号）</h1>
+    <p class="hero-desc">公众号 + appin.site 科技图文号，粉丝 &lt;1万、零变现经验，如何用 CPE 沉淀私域 + 轻量 CPS 分销，在 3–4 个月内稳稳月入 1k–5k 的实战路径。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-14</span><span class="sep"></span>
+      <span>约 2072 字</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOC Bar -->
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll"><a href="#s1">一、商业诊断</a><a href="#s2">二、变现模式设计</a><a href="#s3">三、执行方案</a><a href="#s4">四、收益预估（月，税前毛收入）</a><a href="#s5">五、风险提示</a><a href="#s6">六、行动清单（优先级排序）</a></div>
+</div>
+
+<!-- Article -->
+
+
+<div class="article-wrap">
+  <article class="article-body">
+    <div class="highlight-box"><p>由内容变现商业化专家团产出：主理人芬利统筹，赛勒(CPS)、艾菲(CPE/CPM)、麦奇(合作评估)、普罗(收益测算)四份专业报告整合。<br>假设说明：粉丝量级、互动率等未提供项按行业中位数假设（粉丝锚定 ~5000，打开率 4%，单篇阅读 150–200），落地后需首月实测校准。</p></div>
+<hr>
+<h2 id="s1">一、商业诊断</h2>
+<h3>用户画像与现状</h3>
+<div class="table-wrap"><table><tr><th>维度</th><th>情况</th></tr><tr><td>角色</td><td>创作者（独立开发者 / 科技内容创作者），变现诉求</td></tr><tr><td>主阵地</td><td>公众号 + appin.site 个人网站（图文）</td></tr><tr><td>粉丝量级</td><td>&lt; 1万（起步期，锚定 ~5000）</td></tr><tr><td>内容品类</td><td>科技/AI工具评测、开源项目解读、副业变现(aimoneyhunter)、技艺录</td></tr><tr><td>互动率（假设）</td><td>打开率≈4%，单篇阅读 150–200，留言 &lt;10</td></tr><tr><td>变现经验</td><td>无（纯兴趣创作）</td></tr><tr><td>变现目标</td><td>月入 1k–5k，补贴创作</td></tr></table></div>
+<h3>变现潜力评估</h3>
+<ul><li><strong>优势</strong>：垂直精准（科技/AI/开发者受众商业价值高）、已有网站 SEO 长尾、内容生产能力扎实、信任基础好。</li><li><strong>短板</strong>：粉丝量级小、无变现体系、缺商务经验。</li><li><strong>结论</strong>：不适合硬接品牌（CPM 此时 ROI 为负），应以 <strong>CPE 沉淀私域 + 轻量 CPS 分销</strong>起步；中性可达月入 2.3k，乐观破 5k。</li></ul>
+<hr>
+<h2 id="s2">二、变现模式设计</h2>
+<p><strong>推荐组合：CPE 为主（≈65% 权重）+ 轻量 CPS（≈35%）+ CPM 暂缓</strong></p>
+<p>理由：粉丝 &lt;1万，CPE 边际成本低、信任复利、性价比最高；CPS 零成本做复利铺垫；CPM 此时单篇曝光收入仅约 ¥6，ROI 极低。</p>
+<h3>CPE 详细策略（艾菲）</h3>
+<ul><li><strong>赞赏</strong>：公众号自带，话术"帮到你请喝杯咖啡☕"，¥5–10/篇。</li><li><strong>知识星球</strong>：年费 ¥199–299，前 30 天 ¥99 内测 20 人；权益 = AI工具周报 + 开源解读 + 副业踩坑。</li><li><strong>付费文章</strong>：单篇 ¥3–9，月 ≤2 篇防掉粉。</li><li><strong>1v1 咨询</strong>：¥299–599/次，需案例背书后推。</li><li><strong>约稿</strong>：被大号约稿 ¥300–1000/篇（暂不自建投稿平台）。</li><li><strong>防刷量</strong>：赞赏/付费系真实资金，天然筛选付费意愿；铁粉识别 = 连续阅读 ≥3月 + 主动留言 ≥3次 + 朋友圈转发 + 愿付费。</li></ul>
+<h3>CPS 详细策略（赛勒）</h3>
+<ul><li><strong>选品 6 类，新人只选佣 ≥15%</strong>：AI工具分销(20–30% 循环)、云服务器/域名(10–30%)、技术课程/知识星球分销(20–50%)、开发软件(15–30%)；<strong>避开</strong>图书(3–8%)/3C(1–5%)防被低佣坑。</li><li><strong>起步试水 2–3 品</strong>：AI工具 + 云服务器 + 知识星球分销。</li><li><strong>转化漏斗</strong>：公众号文(痛点标题+实测截图) → appin.site 长文 → 购买链接(CTA 置中/尾/评论区 3 处)。场景化话术示例："我实跑一周，X 响应最快，新用户用我链接首月 7 折 → [链接]（推广）"。</li><li><strong>CTA 位置（赛勒基准，AOV¥200/佣20%/阅读175）</strong>：单篇效率排序——文中痛点插链 ≈0.53 &gt; 公众号"原文直达" ≈0.35 &gt; appin.site 文末卡片 ≈0.10 &gt; 评论区置顶 ≈0.09；四位置全用 ≈1.07 单/篇（近翻倍）。<strong>主推「文中场景化插链 + 原文直达」双主 CTA</strong>，首篇测评四位置都放。</li><li><strong>合规</strong>：链接旁必标"广告 / 推广 / 合作"。</li></ul>
+<h3>合作与谈判（麦奇）</h3>
+<ul><li><strong>起步只做</strong>：CPS 分销 + 知识星球分销 + 审慎软广。</li><li><strong>报价</strong>：&lt;1万粉头条 300–1500 元/条（按阅读 0.5–1.5 元/阅读），坚持 30% 预付 + 验收付尾款。</li><li><strong>红线</strong>：收入门费 / 传销拉人头 / 刷量 / 不标广告 = 一律拒。</li><li><strong>合同必备</strong>：结算 ≤ 发布后 7 天、退款按效果比例非全额、IP 著作权归创作者、解约提前 7 天通知。</li></ul>
+<hr>
+<h2 id="s3">三、执行方案</h2>
+<h3>短期（0–30 天）— 搭地基</h3>
+<ul><li><strong>W1</strong>：开通京东联盟 + 腾讯云 CPS + 1 个 AI affiliate + 知识星球分销，熟悉后台；开公众号赞赏。</li><li><strong>W2</strong>：设计知识星球权益，¥99 内测 20 人；写 2 篇真实测评（含分销链接）。</li><li><strong>W3</strong>：发 2 篇带星球引导文；复盘点击率，优化 CTA/话术；建订单追踪表。</li><li><strong>W4</strong>：免费直播/问答筛铁粉转首批付费；留高 ROI 的 2 个品、砍 0 转化。</li></ul>
+<h3>中期（1–3 个月）— 跑通变现</h3>
+<ul><li>稳定周更 1 篇测评 + 1 篇星球引导；星球扩到 30 人；接 1–2 篇约稿；CPS 月 20 单。</li><li>建立对账节奏（日登记 / 周初核 / 月对账）。</li></ul>
+<h3>长期（3–12 个月）— 规模化</h3>
+<ul><li>破粉丝门槛（目标 5 万粉）后切入 CPM 软广（报价 800–3000/篇，开发者工具/云厂商/AI API）。</li><li>稳定月入 &gt;1万 注册个体户；多平台分发（小红书/知乎切片）。</li><li>CPS 订阅循环佣成长期被动收入。</li></ul>
+<hr>
+<h2 id="s4">四、收益预估（月，税前毛收入）</h2>
+<div class="highlight-box"><p>⚠️ <strong>重要：三段式时间线</strong>。① 首月(M1–2) 大概率 &lt;1k，正常；② <strong>中性档在 M3–4 稳落 1k–5k 中段（¥2,300）</strong>；③ 乐观"破 5k"靠循环佣累积落在 <strong>M5–8</strong>，满 ramp（续期全计入）需 <strong>M9–12</strong>，届时合计可破 ¥8k。首月别因落差打击信心。</p></div>
+<h3>首月冷启动（M1–2，月更 4 篇·冷信任·低单量观测期）</h3>
+<div class="table-wrap"><table><tr><th>档</th><th>CPS</th><th>CPE</th><th>合计</th><th>达标 1k–5k</th></tr><tr><td>保守</td><td>¥120</td><td>¥215</td><td><strong>¥335</strong></td><td>低于下限</td></tr><tr><td>中性</td><td>¥200</td><td>¥514</td><td><strong>¥714</strong></td><td>低于下限</td></tr><tr><td>乐观</td><td>¥280</td><td>¥863</td><td><strong>¥1,143</strong></td><td>触/超下限</td></tr></table></div>
+<p>中位约 ¥714，大概率低于 1k——须前置管理预期，避免落差打击信心。</p>
+<h3>稳态（M3–4 起，订阅循环佣开始长尾）</h3>
+<div class="table-wrap"><table><tr><th>场景</th><th>CPS</th><th>CPE</th><th>合计</th><th>达标 1k–5k</th></tr><tr><td>保守</td><td>¥320</td><td>¥800</td><td><strong>¥1,120</strong></td><td>达下限</td></tr><tr><td>中性</td><td>¥800</td><td>¥1,500</td><td><strong>¥2,300</strong></td><td>中段 ✓</td></tr><tr><td>乐观</td><td>¥1,520</td><td>¥4,400</td><td><strong>¥5,920</strong></td><td>超上限</td></tr></table></div>
+<h3>稳态·满 ramp（M9–12，循环佣续期全计入）</h3>
+<p>订阅类佣金续期全计入后，CPS 显著抬升：</p>
+<div class="table-wrap"><table><tr><th>档</th><th>CPS</th><th>CPE</th><th>合计</th><th>达标 1k–5k</th></tr><tr><td>保守</td><td>¥820</td><td>¥800</td><td><strong>¥1,620</strong></td><td>达下限</td></tr><tr><td>中性</td><td>¥2,125</td><td>¥1,500</td><td><strong>¥3,625</strong></td><td>达标中段</td></tr><tr><td>乐观</td><td>¥4,020</td><td>¥4,400</td><td><strong>¥8,420</strong></td><td>远超上限</td></tr></table></div>
+<ul><li><strong>中性 ramp 示意</strong>：M3≈¥2,625 / M4≈¥2,750 / M6≈¥2,950 / M9–12≈¥3,625（循环佣续期逐步累积）。</li><li><strong>CPE 是早期主引擎</strong>（星球 + 咨询 + 赞赏 + 约稿），CPS 为补充。</li><li><strong>关键纠正</strong>：赛勒"1–5k 需 50–250 单"是 CPS 单独口径，对 &lt;1万粉偏乐观；组合模式下 CPS 稳态仅需 8–38 单/月即可贡献 ¥300–1,500。原 8/20/38 单属"稳态月"假设，<strong>非首月</strong>。</li><li><strong>CPS 爬坡靠循环佣（关键杠杆）</strong>：订阅类续期把中性 CPS 从首期 ¥800 抬到满 ramp ¥2,125（合计 ¥2,300→¥3,625）；乐观更可破 ¥8k。续期从第 2–4 月起起量，是"稳定破 5k"的核心。</li><li><strong>ROI（普罗）</strong>：10h/周 ≈ 40h/月，时薪 保守 ¥27.5 / 中性 ¥57.5 / 乐观 ¥147.5；性价比排序 <strong>CPE &gt; CPS &gt; CPM</strong>。</li><li><strong>校准方法</strong>：跑满 2–4 周后，用 阅读 / UV / 点击 / 订单 四档数据反推真实漏斗，替换本表行业假设。</li></ul>
+<hr>
+<h2 id="s5">五、风险提示</h2>
+<ul><li><strong>合规【高】</strong>：所有推广必标"广告"；禁绝对化用语/虚假宣传；不诱导分享、集赞（违规）。</li><li><strong>资金【中】</strong>：坚持预付 + 小额试单验证付款信用；防分销骗局（收"入门费/押金"= 骗）。</li><li><strong>口碑【中】</strong>：只接自用过、调性匹配的品牌。</li><li><strong>执行【中】</strong>：周更节奏别断；别为变现牺牲内容质量导致掉粉。</li><li><strong>预期管理【中】</strong>：首月（M1–2）总收入大概率 &lt;1k（CPE 内测价 + CPS 零历史叠加），属正常冷启动；目标 1k–5k 在稳态（M3–4）达成，别因首月落差放弃。</li><li><strong>税务</strong>：单次 &gt;800 按劳务报酬预扣；连续 3 个月 &gt;1万 再注册个体户（经营所得核定 0.5–2%）。</li></ul>
+<hr>
+<h2 id="s6">六、行动清单（优先级排序）</h2>
+<div class="table-wrap"><table><tr><th>优先级</th><th>行动</th><th>资源需求</th></tr><tr><td><strong>P0（本周）</strong></td><td>① 开赞赏 + 注册京东联盟/腾讯云 CPS/1个 AI affiliate/知识星球分销账号 ② 建多平台订单追踪表</td><td>各平台免费联盟账号、表格工具</td></tr><tr><td><strong>P1（2 周内）</strong></td><td>③ 发 2 篇真实测评（场景化植入分销链接）④ 知识星球 ¥99 内测招 20 人</td><td>约 1–2h/篇内容时间</td></tr><tr><td><strong>P2（1 月内）</strong></td><td>⑤ 复盘优化 CTA/话术 ⑥ 免费问答筛铁粉转付费 ⑦ 砍 0 转化品，稳定周更 1 篇</td><td>固定更新节奏</td></tr></table></div>
+<p><strong>一句话路径</strong>：先搭 CPE 私域（赞赏+知识星球）锁住铁粉，同时轻量铺 CPS 分销做复利，CPM 等破 5 万粉再谈。</p>
+  </article>
+
+  <div class="tag-cloud">
+    <a href="#">内容变现</a><a href="#">CPS</a><a href="#">CPE</a><a href="#">CPM</a><a href="#">公众号</a><a href="#">副业</a>
+  </div>
+  <a href="/notes/" class="back-link">返回随笔</a>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/notes/">随笔</a></p>
+</footer>
+
+<script>
+(function() {
+  // Progress bar
+  var pb = document.getElementById('progressBar');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    var pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
+    pb.style.setProperty('--progress', pct + '%');
+  });
+
+  // TOC scroll active
+  var tocLinks = document.querySelectorAll('#tocScroll a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({ id: id, el: el, link: a });
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 140;
+    var active = headings[0];
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+    // Scroll active pill into view
+    if (active && active.link) {
+      active.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+  window.addEventListener('scroll', updateTOC);
+
+  // Page dots
+  var dotContainer = document.getElementById('pageDots');
+  var dotLinks = [];
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.id;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      h.el.scrollIntoView({ behavior: 'smooth' });
+    });
+    dotContainer.appendChild(a);
+    dotLinks.push({ el: h.el, link: a });
+  });
+  function updateDots() {
+    var scrollY = window.scrollY + window.innerHeight / 2;
+    var active = dotLinks[0];
+    for (var i = dotLinks.length - 1; i >= 0; i--) {
+      if (dotLinks[i].el.offsetTop <= scrollY) { active = dotLinks[i]; break; }
+    }
+    dotLinks.forEach(function(d) { d.link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateDots);
+  updateTOC();
+  updateDots();
+  // 主题切换（默认亮色，记忆选择）
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    var saved = localStorage.getItem('craft-theme');
+    if (saved === 'dark') { root.setAttribute('data-theme','dark'); btn.textContent='☀️'; }
+    else { root.setAttribute('data-theme','light'); btn.textContent='🌙'; }
+    btn.addEventListener('click', function(){
+      var dark = root.getAttribute('data-theme') === 'dark';
+      if (dark) { root.setAttribute('data-theme','light'); localStorage.setItem('craft-theme','light'); btn.textContent='🌙'; }
+      else { root.setAttribute('data-theme','dark'); localStorage.setItem('craft-theme','dark'); btn.textContent='☀️'; }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
