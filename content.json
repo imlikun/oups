@@ -1372,6 +1372,29 @@
       "status": "published",
       "link": "/notes/content-distribution-plan.html",
       "template": "A"
+    },
+    {
+      "id": "article-62",
+      "title": "我的多端内容矩阵规划：公众号 + 网站 + 两个视频号",
+      "slug": "multi-channel-content-plan",
+      "category": "notes",
+      "featured": true,
+      "image": "",
+      "excerpt": "把公众号、个人网站、两个视频号整合成一套「一次生产、多端分发」的内容矩阵：渠道分工、内容支柱、更新节奏、跨渠道流水线、命名合规护栏与 90 天路线图，附可直接照抄的样例框架。",
+      "content": "详见独立文章页：/notes/multi-channel-content-plan.html",
+      "tags": [
+        "内容规划",
+        "多端矩阵",
+        "公众号",
+        "视频号",
+        "网站",
+        "一次生产多端分发"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-14",
+      "status": "published",
+      "link": "/notes/multi-channel-content-plan.html",
+      "template": "B"
     }
   ],
   "projects": [
