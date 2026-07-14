@@ -1297,6 +1297,29 @@
       "status": "published",
       "link": "/craft/echo-loop.html",
       "template": "C"
+    },
+    {
+      "id": "article-59",
+      "title": "PXID 官网 SEO 开展路线图",
+      "slug": "pxid-seo-roadmap",
+      "category": "notes",
+      "featured": true,
+      "image": "",
+      "excerpt": "针对 pxid.com（电助力车 ODM/OEM 出口站）的 SEO 落地策略：长尾制胜、Pillar-Cluster 内容集群、中印制造差异化，以及结合 WordPress 迁移的站内技术要点。",
+      "tags": [
+        "SEO",
+        "PXID",
+        "内容营销",
+        "B2B出海",
+        "电助力车",
+        "关键词策略",
+        "WordPress"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-14",
+      "status": "published",
+      "link": "/notes/pxid-seo-roadmap.html",
+      "template": "B"
     }
   ],
   "projects": [

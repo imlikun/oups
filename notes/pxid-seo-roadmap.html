@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PXID 官网 SEO 开展路线图 — 李坤的随笔</title>
+<meta name="description" content="针对 pxid.com（电助力车 ODM/OEM 出口站）的 SEO 落地策略：长尾制胜、Pillar-Cluster 内容集群、中印制造差异化，以及结合 WordPress 迁移的站内技术要点。">
+<style>
+:root {
+  --bg: #f9f8f6;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #999;
+  --accent: #c87a1e;
+  --accent-light: rgba(200,122,30,0.1);
+  --accent-soft: rgba(200,122,30,0.06);
+  --border: rgba(0,0,0,0.08);
+  --card-bg: #fff;
+  --radius: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(249,248,246,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:820px; margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:58px; }
+.nav-logo { font-size:17px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-muted); font-weight:400; font-size:13px; margin-left:6px; }
+.nav-links { display:flex; gap:24px; align-items:center; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { position:relative; min-height:420px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+.hero-overlay { position:absolute; inset:0; background:linear-gradient(180deg, rgba(249,248,246,0.35) 0%, rgba(249,248,246,0.85) 70%, var(--bg) 100%); }
+.hero-content { position:relative; z-index:1; max-width:800px; padding:120px 32px 48px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:rgba(255,255,255,0.9); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(28px,4.5vw,42px); font-weight:700; letter-spacing:-1px; line-height:1.2; margin-bottom:16px; }
+.hero-meta { display:flex; align-items:center; justify-content:center; gap:20px; font-size:13px; color:var(--text-muted); }
+.hero-meta span { display:flex; align-items:center; gap:4px; }
+.toc-wrap { max-width:820px; margin:0 auto; padding:12px 32px 32px; }
+.toc { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; }
+.toc-title { font-size:13px; font-weight:600; color:var(--text-muted); letter-spacing:0.05em; margin-bottom:14px; text-transform:uppercase; }
+.toc-list { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; list-style:none; }
+.toc-list li a { display:flex; align-items:baseline; gap:8px; color:var(--text-secondary); text-decoration:none; font-size:14px; padding:4px 0; transition:color 0.2s; }
+.toc-list li a:hover { color:var(--accent); }
+.toc-list li .num { color:var(--accent); font-weight:600; font-size:12px; min-width:20px; }
+.content { max-width:820px; margin:0 auto; padding:0 32px 80px; }
+.content section { margin-bottom:48px; }
+.content h2 { font-size:24px; font-weight:700; letter-spacing:-0.3px; margin-bottom:20px; padding-top:8px;
+  border-top:2px solid var(--accent-light); padding-top:28px; }
+.content h2:first-child { border-top:none; padding-top:0; }
+.content h2 .sec-num { color:var(--accent); font-size:16px; font-weight:600; margin-right:8px; }
+.content h3 { font-size:18px; font-weight:600; margin:24px 0 12px; }
+.content p { margin-bottom:16px; font-size:16px; color:var(--text); }
+.content ul, .content ol { margin:12px 0 20px 20px; }
+.content li { margin-bottom:8px; font-size:15px; line-height:1.7; }
+.content strong { font-weight:600; }
+.content .key { color:#b35900; font-weight:700; }
+.content blockquote { border-left:3px solid var(--accent); padding:12px 20px; margin:20px 0;
+  background:var(--accent-soft); border-radius:0 8px 8px 0; font-size:15px; color:var(--text); }
+.content blockquote p { margin-bottom:0; }
+.table-wrap { overflow-x:auto; margin:20px 0; border-radius:10px; border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:14px; background:var(--card-bg); }
+th { background:var(--accent-light); color:var(--accent); font-weight:600; padding:12px 16px; text-align:left; white-space:nowrap; }
+td { padding:12px 16px; border-top:1px solid var(--border); line-height:1.6; }
+tr:hover td { background:var(--accent-soft); }
+.summary-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
+  padding:28px 32px; margin:32px 0; box-shadow:0 2px 12px rgba(0,0,0,0.03); }
+.summary-card h3 { font-size:16px; font-weight:600; color:var(--accent); margin-bottom:16px; }
+.summary-card .key-points { list-style:none; margin:0; padding:0; }
+.summary-card .key-points li { padding:8px 0 8px 28px; position:relative; font-size:15px; line-height:1.6; }
+.summary-card .key-points li::before { content:'✓'; position:absolute; left:0; top:8px; color:var(--accent); font-weight:700; font-size:14px; }
+.info-box { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin:20px 0; }
+.info-box-title { font-size:14px; font-weight:600; color:var(--accent); margin-bottom:10px; }
+.code-block { background:var(--accent-soft); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:20px 0;
+  font-family:'SF Mono',Menlo,Consolas,monospace; font-size:13px; line-height:1.7; color:var(--text); overflow-x:auto; white-space:pre; }
+.script-card { background:var(--card-bg); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 12px 12px 0; padding:20px 24px; margin:16px 0; }
+.script-card h4 { font-size:15px; font-weight:600; color:var(--accent); margin-bottom:10px; }
+.script-card p { margin-bottom:6px; font-size:14px; }
+.script-card b { color:var(--text); }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:32px 0; padding-top:24px; border-top:1px solid var(--border); }
+.tag-cloud span { padding:5px 14px; border-radius:20px; background:var(--accent-soft); color:var(--accent); font-size:13px; font-weight:500; }
+.footer { max-width:820px; margin:0 auto; padding:32px; border-top:1px solid var(--border); text-align:center; color:var(--text-muted); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:640px) {
+  .hero { min-height:340px; }
+  .hero-content { padding:100px 20px 32px; }
+  .nav-inner { padding:0 20px; }
+  .nav-links { gap:14px; }
+  .nav-links a { font-size:13px; }
+  .toc-list { grid-template-columns:1fr; }
+  .content { padding:0 20px 60px; }
+  .content h2 { font-size:20px; }
+  .table-wrap { font-size:12px; }
+  th, td { padding:8px 10px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">李坤<span>· 随笔</span></a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/" class="active">随笔</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg" style="background:linear-gradient(135deg, rgba(200,122,30,0.16) 0%, rgba(200,122,30,0.05) 55%, rgba(249,248,246,0) 100%);"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> 随笔 · SEO 策略</div>
+    <h1>PXID 官网 SEO 开展路线图</h1>
+    <div class="hero-meta">
+      <span>📅 2026-07-14</span>
+      <span>👤 李坤</span>
+      <span>📖 约 12 分钟</span>
+    </div>
+  </div>
+</section>
+
+<div class="toc-wrap">
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol class="toc-list">
+      <li><a href="#sec0"><span class="num">00</span> 核心结论（TL;DR）</a></li>
+      <li><a href="#sec1"><span class="num">01</span> 一、关键词与意图布局</a></li>
+      <li><a href="#sec2"><span class="num">02</span> 二、内容引擎：Pillar–Cluster</a></li>
+      <li><a href="#sec3"><span class="num">03</span> 三、站内技术 SEO</a></li>
+      <li><a href="#sec4"><span class="num">04</span> 四、内链与架构</a></li>
+      <li><a href="#sec5"><span class="num">05</span> 五、站外 / 外链</a></li>
+      <li><a href="#sec6"><span class="num">06</span> 六、内容生产节奏</a></li>
+      <li><a href="#sec7"><span class="num">07</span> 七、Meta 与基础优化</a></li>
+      <li><a href="#sec8"><span class="num">08</span> 八、监测与迭代</a></li>
+      <li><a href="#sec9"><span class="num">09</span> 九、本周就能做的 5 件事</a></li>
+    </ol>
+  </div>
+</div>
+
+<article class="content">
+
+<blockquote>
+<p>PXID 是 B2B 电助力车 ODM/OEM 出口站，SEO 主战场是英文 Google。这份路线图把"怎么开展"拆成可落地的九步——研究底座来自团队关键词研究员关宇霖的竞品实测。</p>
+</blockquote>
+
+<div class="summary-card">
+  <h3>核心结论（TL;DR）</h3>
+  <ul class="key-points">
+    <li><strong>北极星：</strong><span class="key">不拼头部词，赢长尾才是正道</span>——"OEM/ODM + 品类 + 地理/合规"长尾 KD 仅 25–40，意图强、易转化。</li>
+    <li><strong>预算分配：</strong>7 成压「商业调查型 + 交易型」长尾，3 成用「信息型指南」养权重。</li>
+    <li><strong>内容架构：</strong>1 个 Pillar 枢纽页串 8 篇 Cluster，并把现有 News 升级为主题集群，避免内容孤岛。</li>
+    <li><strong>差异化核武器：</strong>"中国 vs 印度制造 / 反倾销关税"近零竞争、极高价值，做成支柱级内容。</li>
+    <li><strong>超车缝隙：</strong>竞品普遍"有 FAQ 无指南、有产品无教育"，正是 PXID 可抢的位置。</li>
+  </ul>
+</div>
+
+<h2 id="sec1">一、关键词与意图布局</h2>
+<p>PXID 的搜索主战场在英文 Google。头部词被 Alibaba、雅迪、巨大等占坑，KD 高、ROI 低；<span class="key">真正能赢的是长尾区间</span>——"OEM/ODM + 细分品类(cargo/fat tire/folding) + 地理/合规(China/India/CE/UL)"。</p>
+
+<h3>1.1 核心词（8 个）</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>关键词</th><th>语言</th><th>月搜索量(估)</th><th>KD</th><th>商业价值</th></tr></thead>
+<tbody>
+<tr><td>electric bike manufacturer</td><td>EN</td><td>2,400</td><td>45</td><td>高</td></tr>
+<tr><td>e-bike manufacturer</td><td>EN</td><td>1,900</td><td>47</td><td>高</td></tr>
+<tr><td>electric bicycle manufacturer</td><td>EN</td><td>1,000</td><td>42</td><td>中高</td></tr>
+<tr><td>electric bike manufacturer China</td><td>EN</td><td>1,200</td><td>40</td><td>高</td></tr>
+<tr><td>e-bike factory / electric bike factory</td><td>EN</td><td>700</td><td>38</td><td>高</td></tr>
+<tr><td>electric bike OEM / e-bike OEM</td><td>EN</td><td>600</td><td>35</td><td>极高</td></tr>
+<tr><td>electric bike ODM / e-bike ODM</td><td>EN</td><td>350</td><td>30</td><td>极高</td></tr>
+<tr><td>cargo / fat tire e-bike manufacturer</td><td>EN</td><td>300–400</td><td>28–30</td><td>高</td></tr>
+</tbody>
+</table>
+</div>
+<p>中文补充：电助力自行车 OEM/ODM 厂家 ≈150–300/月(KD25)；电动自行车代工/贴牌 ≈400/月(KD28)。（以上为估算，落地前用 Ahrefs/Semrush 校准。）</p>
+
+<h3>1.2 意图分类与主攻</h3>
+<ul>
+<li><strong>信息型</strong>：what is OEM/ODM、certifications explained → 主攻（顶部漏斗养信任）</li>
+<li><strong>商业调查型</strong>：best OEM manufacturer、OEM vs ODM、how to choose partner → <span class="key">核心主攻</span>（B2B 决策前必搜，竞品薄弱）</li>
+<li><strong>交易型</strong>：e-bike OEM manufacturer China、custom e-bike factory、cargo e-bike OEM → <span class="key">核心主攻</span>（承接产品页+询盘，意图最强）</li>
+<li><strong>导航型</strong>：PXID、pxid.com → 守住品牌词即可</li>
+</ul>
+<p><strong>关键长尾方向（高价值、低竞争）</strong>：<code>custom e-bike manufacturer</code>、<code>private label e-bike manufacturer</code>、<code>China e-bike OEM/ODM</code>、<code>electric bike OEM supplier China</code>、<code>white label e-bike manufacturer</code>、<code>fat tire e-bike manufacturer China</code>、<code>folding e-bike OEM manufacturer</code>、<code>electric delivery bike manufacturer</code>。</p>
+
+<h2 id="sec2">二、内容引擎：Pillar–Cluster 主题集群</h2>
+<p>把"写一堆散文章"升级为"一个枢纽页串起 N 篇集群"，既养权重又防内容蚕食。</p>
+<h3>2.1 架构</h3>
+<div class="code-block">PILLAR: Electric Bike OEM/ODM Manufacturing (3000–4000 词, /electric-bike-oem-odm-manufacturing/)
+├─ C1. E-bike OEM vs ODM: Differences & Which to Choose      〔商业调查·新品牌/分销商〕
+├─ C2. How to Choose an E-bike OEM/ODM Partner (10-Point)    〔商业调查·严肃采购〕
+├─ C3. Custom E-Bike Development Process: Concept→Mass Prod  〔信息+商业·自有设计品牌〕
+├─ C4. E-Bike Certifications & Compliance by Market          〔信息高信任·合规进口商〕
+├─ C5. Electric Cargo Bike OEM/ODM: Sourcing & Spec Guide    〔交易品类·货运/车队〕
+├─ C6. Fat Tire & Folding E-Bike Manufacturing Guide         〔交易品类·全地形/城市折叠〕
+├─ C7. China vs India E-Bike Manufacturing: Tariffs & Anti   〔商业调查·差异化王炸〕
+└─ C8. Top 10 E-Bike Manufacturers in China for OEM/ODM 2026 〔商业调查高流量·比对者〕</div>
+<p><strong>蚕食防护</strong>：C5/C6 按品类、C1/C2/C8 按决策阶段、C4/C7 按合规/地理切面切分，主词唯一、互不重叠；内链用描述性锚文本回指正确页面。</p>
+
+<h3>2.2 把现有"新闻"升级为"主题集群"</h3>
+<p>PXID 已有高质量 News（EUROBIKE 2026、印度策略、营收 +484%），质量已超多数竞品 Blog。WordPress 迁移后，将 News 重分类打上聚类标签，描述为 Pillar–Cluster 并做描述性互链，<span class="key">避免内容孤岛</span>。</p>
+
+<h2 id="sec3">三、站内技术 SEO（结合 WordPress 迁移 + COS 部署）</h2>
+<p>这是"开展"的硬落地部分，直接对应你正在做的迁移：</p>
+<ul>
+<li><strong>Core Web Vitals</strong>：迁移后重点看 LCP / CLS / INP。COS 静态托管对速度友好，但 WP 动态页需配缓存 + CDN（腾讯云 CDN 或 COS+CDN）。图片统一 WebP + 懒加载。</li>
+<li><strong>URL 结构与 301 重定向</strong>：迁移时<span class="key">务必做旧 slug → 新 slug 的 301 映射表</span>，避免丢历史权重。产品页用 <code>/products/[category]/[model]/</code> 层级。</li>
+<li><strong>多语言 / 区域 (hreflang)</strong>：出口 30+ 国，建议 <code>hreflang</code> 标注 en / zh / 小语种（WPML 或子目录 <code>/en/ /de/</code>）。hreflang 做对可避免重复内容惩罚。</li>
+<li><strong>结构化数据 (Schema.org)</strong>：标注 <code>Organization</code> / <code>Manufacturer</code> / <code>Product</code> / <code>Offer</code> / <code>Breadcrumb</code>，争取富媒体结果（星级、面包屑）。</li>
+<li><strong>XML Sitemap + robots.txt</strong>：迁移后<strong>重新提交 sitemap 到 Google Search Console (GSC)</strong>。</li>
+<li><strong>阿里国际站内容同步的 canonical 处理</strong>：原阿里站产品图文同步到官网时，官网文案须做<strong>差异化</strong>（官网侧重 OEM/ODM 能力 + 案例，阿里侧重规格 + 价格），并对可能重复的部分设 <code>canonical</code> 指向官网，避免被判复制阿里内容。</li>
+<li><strong>HTTPS 全站</strong>：COS + 证书，混合内容清零。</li>
+<li><strong>整站紧凑布局</strong>：你已把模块间距缩 50%，利于阅读密度；但需确保移动端（B2B 买家常手机查厂）响应式无误、按钮可点。</li>
+</ul>
+
+<h2 id="sec4">四、内链与架构（基于聚类）</h2>
+<ul>
+<li>Pillar 回链所有 C1–C8；Cluster 间按语义互链（C1 OEM vs ODM ↔ C2 选型清单 ↔ C7 中印对比）。</li>
+<li>锚文本用描述性短语（如 "custom e-bike development process"），<span class="key">禁用"点击这里"</span>。</li>
+<li>主导航 / 首页增加 "OEM/ODM Guide" 入口，承接顶部漏斗流量。</li>
+</ul>
+
+<h2 id="sec5">五、站外 / 外链（B2B 出口）</h2>
+<ul>
+<li><strong>高价值外链来源</strong>：行业目录、电助力车媒体（Electrek / Bike Europe / EV25）、展会官网（EUROBIKE 参展商页）、LinkedIn 公司页、客户案例互链（经授权）。</li>
+<li><strong>数字公关</strong>：把 C7「中国 vs 印度制造 / 反倾销关税」做成独家角度，易被行业媒体引用 → 自然外链（这是 PXID 的<span class="key">差异化核武器</span>）。</li>
+<li><strong>平台侧重</strong>：阿里国际站 / 中国制造网作次级曝光，但外链权重低，<strong>官网为主</strong>。</li>
+<li><strong>严禁</strong>：PBN、垃圾目录、买链。</li>
+</ul>
+
+<h2 id="sec6">六、内容生产节奏（前 3 个月）</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>优先级</th><th>内容</th><th>月搜索量(估)</th><th>KD</th><th>月份</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>C2. How to Choose an E-bike OEM/ODM Partner</td><td>~500</td><td>30</td><td>第1月</td></tr>
+<tr><td>2</td><td>C1. E-bike OEM vs ODM</td><td>~600</td><td>28</td><td>第1月</td></tr>
+<tr><td>3</td><td>PILLAR. OEM/ODM 完整指南</td><td>聚合</td><td>35</td><td>第1–2月</td></tr>
+<tr><td>4</td><td>C4. 认证与合规指南(分市场)</td><td>~400</td><td>25</td><td>第2月</td></tr>
+<tr><td>5</td><td>C3. 定制开发流程(概念→量产)</td><td>~400</td><td>30</td><td>第2月</td></tr>
+<tr><td>6</td><td>C5. 货运电助力车 OEM 采购指南</td><td>~300</td><td>28</td><td>第2–3月</td></tr>
+<tr><td>7</td><td>C7. 中vs印制造/关税/反倾销</td><td>~350</td><td>25</td><td>第3月</td></tr>
+<tr><td>8</td><td>C8. Top 10 中国 OEM/ODM 厂(2026)</td><td>~800</td><td>35</td><td>第3月</td></tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>月1 打地基（C1+C2+Pillar 互链成首簇）；月2 做信任与流程（C4+C3+C5）；月3 做差异化与截流（C7+C8）。</li>
+<li>每篇 1500–3000 词，配流程表/数据图，文末 CTA 指向询盘表单。</li>
+</ul>
+
+<h2 id="sec7">七、Meta 与基础优化（初稿）</h2>
+<div class="info-box">
+  <div class="info-box-title">首页（EN）</div>
+  <p><strong>Title</strong>：<code>PXID | Custom E-Bike OEM/ODM Factory for Global Brands</code>（57字符）</p>
+  <p><strong>Desc</strong>：<code>PXID is a China+India e-bike OEM/ODM manufacturer with 100% in-house tooling, 200+ patents &amp; 200K units/yr. Build your custom electric bike from concept to mass production.</code>（158字符）</p>
+</div>
+<div class="info-box">
+  <div class="info-box-title">产品分类页 · 电动货运车</div>
+  <p><strong>Title</strong>：<code>Custom Cargo E-Bike Factory | OEM/ODM Solutions | PXID</code>（54字符）</p>
+  <p><strong>Desc</strong>：<code>Source electric cargo bikes from PXID's OEM/ODM factory. Fat-tire &amp; longtail cargo e-bikes, 200kg+ load, in-house tooling, India+China production to cut tariffs.</code>（157字符）</p>
+</div>
+<div class="info-box">
+  <div class="info-box-title">关于页（About）</div>
+  <p><strong>Title</strong>：<code>About PXID | E-Bike OEM/ODM Manufacturer Since 2013</code>（51字符）</p>
+  <p><strong>Desc</strong>：<code>PXID is a B2B e-bike &amp; scooter OEM/ODM manufacturer with R&amp;D in China and production in China+India. 40+ engineers, 200+ patents, 200K units/yr, 30+ export markets.</code>（159字符）</p>
+</div>
+
+<h2 id="sec8">八、监测与迭代</h2>
+<ul>
+<li><strong>工具</strong>：Google Search Console（必备免费）+ Google Analytics 4；付费用 Ahrefs/Semrush <span class="key">拉真实搜索量校准估算值</span>。</li>
+<li><strong>指标</strong>：自然流量、长尾词排名、询盘转化（表单/WhatsApp/邮件）、Core Web Vitals。</li>
+<li><strong>节奏</strong>：每月复盘，季度调整聚类。</li>
+</ul>
+
+<h2 id="sec9">九、本周就能做的 5 件事</h2>
+<ol>
+<li>建 GSC 并验证 pxid.com，准备提交 sitemap。</li>
+<li>WordPress 迁移时做好 <strong>301 重定向映射表</strong>（旧 slug → 新 slug）。</li>
+<li>把现有 News 文章打上聚类标签，准备重组为主题集群。</li>
+<li>列出现有量化素材（营收 +484%、上市 -30%、售后 -40%、200+ 专利、印度工厂）做案例库。</li>
+<li>用 Ahrefs 拉一次真实搜索量，校准研究 Brief 的估算值。</li>
+</ol>
+
+<div class="script-card">
+  <h4>想聊 PXID 的 OEM/ODM 合作？</h4>
+  <p>本路线图是「怎么开展」的方法论，落地执行（写 C1–C8 集群、技术审计、外链拓展）可逐步推进。</p>
+  <p>官网入口：<a href="https://www.pxid.com" target="_blank" rel="noopener">www.pxid.com</a></p>
+</div>
+
+<div class="tag-cloud">
+  <span>SEO</span><span>PXID</span><span>内容营销</span><span>B2B出海</span><span>电助力车</span><span>关键词策略</span><span>WordPress</span>
+</div>
+
+<hr />
+<p><em>本文由 SEO 内容营销团队研究支撑，关键词与竞品底座来自研究员关宇霖的核心研究 Brief（已实测竞品 Top 10）。数据搜索量为估算，落地前建议用 Ahrefs/Semrush 校准。</em></p>
+
+</article>
+
+<div class="footer">
+  <p>© 2026 李坤 · <a href="/">appin.site</a> · <a href="/notes/">返回随笔</a></p>
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var nav = document.getElementById('nav');
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+});
+</script>
+</body>
+</html>
