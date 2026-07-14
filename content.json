@@ -1369,6 +1369,29 @@
       "status": "published",
       "link": "/notes/multi-channel-content-plan.html",
       "template": "B"
+    },
+    {
+      "id": "article-63",
+      "title": "NCRE 三级网络技术备考方案",
+      "slug": "ncre-level3-network-tech-plan",
+      "category": "notes",
+      "featured": true,
+      "image": "",
+      "excerpt": "面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16 周三阶段计划与四级晋级路径。",
+      "content": "详见独立文章页：/notes/ncre-level3-network-tech-plan.html",
+      "tags": [
+        "NCRE",
+        "三级网络技术",
+        "备考",
+        "网络技术",
+        "路由交换",
+        "晋级路径"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-15",
+      "status": "published",
+      "link": "/notes/ncre-level3-network-tech-plan.html",
+      "template": "C"
     }
   ],
   "projects": [

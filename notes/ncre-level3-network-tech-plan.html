@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCRE 三级网络技术备考方案</title>
+<meta name="description" content="一份面向有路由交换实操基础考生的三级网络技术备考方案：考纲、知识体系、理论短板精讲、16周三阶段计划与四级晋级路径。">
+<style>
+/* ========== 模板C：暗色沉浸风格（适配 notes 栏目） ========== */
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 540px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body .key { color: #00b3a4; font-weight: 700; }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/notes/" class="nav-logo">← 随笔</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+      <li><a href="/notes/" class="active">随笔</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+
+<nav class="page-dot" id="pageDots"></nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>三级网络技术 · 备考</div>
+    <h1>NCRE <em>三级网络技术</em> · 考生定制备考方案</h1>
+    <p class="hero-desc">面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16 周三阶段计划与四级晋级路径。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-15</span><span class="sep"></span>
+      <span>约 2800 字</span>
+    </div>
+  </div>
+</section>
+
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#profile">考生画像</a>
+    <a href="#overview">考纲概览</a>
+    <a href="#framework">知识体系</a>
+    <a href="#keypoints">重点考点</a>
+    <a href="#roadmap">学习路线</a>
+    <a href="#practice">实战建议</a>
+    <a href="#resources">资源推荐</a>
+    <a href="#upgrade">晋级路径</a>
+    <a href="#strategy">策略总谏</a>
+  </div>
+</div>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2 id="profile">一、考生画像与定位</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>情况</th><th>辅导对策</th></tr></thead>
+        <tbody>
+          <tr><td>优势</td><td>计算机科班 + 前端代码阅读力 + 路由交换实操经验</td><td>配置类、实操类内容上手快，可带着过</td></tr>
+          <tr><td>短板</td><td>网络理论未系统化（协议栈原理、地址规划数学、路由协议机理、规划设计方法论、安全/管理理论）</td><td>理论洼地重点补</td></tr>
+          <tr><td>目标</td><td>能力提升为主，非纯拿证</td><td>以「理解闭环」代替「刷题记忆」</td></tr>
+          <tr><td>核心策略</td><td>—</td><td>把"会配"升级为"懂为什么这么配"；用模拟器把命令变成可验证现象</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="overview">二、考纲概览</h2>
+    <ul>
+      <li><strong>考试形式</strong>：上机考试（电脑答题），120 分钟，满分 100</li>
+      <li><strong>题型与分值</strong>：单项选择题 60 题 × 1 分 = 60 分；综合题约 5 道大题 = 40 分（命令填空、场景分析、地址规划计算、配置输出分析）</li>
+      <li><strong>获证线</strong>：一般 60 分合格（以当次公告为准）</li>
+      <li><strong>报考条件</strong>：三级可直接报考，无前置证书要求</li>
+    </ul>
+    <div class="info-box">
+      <div class="info-title">重要澄清</div>
+      <p>三级网络技术<span class="key">「不考真机操作」</span>——综合题是默写/补全命令或分析配置输出，不是登录设备实时配置。</p>
+    </div>
+
+    <h2 id="framework">三、知识体系框架</h2>
+    <p>以下权重为考情估算（官方不逐模块公布精确分值），用于排定优先级。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>模块</th><th>教材章节</th><th>估算权重</th><th>主要题型</th><th>优先级</th><th>考生适配</th></tr></thead>
+        <tbody>
+          <tr><td>网络系统结构与设计原则</td><td>第1章</td><td>~6%</td><td>选择</td><td>中</td><td>略讲</td></tr>
+          <tr><td>中小型网络总体规划设计</td><td>第2章</td><td>~6%</td><td>选择/综合</td><td>中高</td><td>重点补</td></tr>
+          <tr><td>IP地址规划技术</td><td>第3章</td><td>~13%</td><td>选择/综合</td><td>高</td><td>重点补</td></tr>
+          <tr><td>路由设计基础</td><td>第4章</td><td>~8%</td><td>选择/综合</td><td>高</td><td>重点补</td></tr>
+          <tr><td>局域网技术</td><td>第5章</td><td>~10%</td><td>选择</td><td>中</td><td>带着过</td></tr>
+          <tr><td>交换机及其配置</td><td>第6章</td><td>~11%</td><td>综合</td><td>高</td><td>带着过+补命令</td></tr>
+          <tr><td>路由器及其配置</td><td>第7章</td><td>~11%</td><td>综合</td><td>高</td><td>带着过+补命令</td></tr>
+          <tr><td>无线局域网设备安装与调试</td><td>第8章</td><td>~4%</td><td>选择</td><td>低</td><td>略讲</td></tr>
+          <tr><td>网络信息服务系统安装配置</td><td>第9章</td><td>~13%</td><td>综合</td><td>高</td><td>重点补</td></tr>
+          <tr><td>网络安全技术</td><td>第10章</td><td>~12%</td><td>选择/综合</td><td>高</td><td>重点补</td></tr>
+          <tr><td>网络管理技术</td><td>第11章</td><td>~6%</td><td>选择/综合</td><td>中</td><td>重点补</td></tr>
+          <tr><td>（附）IPv6基础</td><td>散见</td><td>~1-2%</td><td>选择</td><td>低</td><td>略讲</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="keypoints">四、重点考点精讲</h2>
+
+    <h3>4.1 可「略讲 / 带着过」（已有实操基础）</h3>
+    <ul>
+      <li>局域网物理介质与设备（双绞线/光纤、集线器 vs 交换机、冲突域/广播域）</li>
+      <li>交换机基本连接、VLAN 基本划分、Trunk 概念（只需熟记 Cisco IOS / 华为 VRP 命令差异）</li>
+      <li>路由器基本配置（接口 IP、静态路由 <code>ip route</code> / <code>ip route-static</code>）</li>
+      <li>综合布线系统组成（工作区/水平/垂直/设备间子系统）</li>
+      <li>物理接口与线缆（RJ45、光纤接口、Console 口、交叉/直通线）</li>
+      <li>无线局域网基本标准（802.11 a/b/g/n/ac，记忆性内容）</li>
+    </ul>
+
+    <h3>4.2 必须「重点补」的理论短板（考生风险区）</h3>
+    <h4>【A】TCP/IP 协议栈细节（最大盲区）</h4>
+    <p>OSI 七层 ↔ TCP/IP 四层映射、封装/解封装、ARP 过程、TCP 三次握手/四次挥手/滑动窗口/拥塞控制、UDP 特点、知名端口号。风险：<span class="key">会配 IP 却讲不清封装流程、ARP 如何工作、TCP 为何可靠</span>。</p>
+    <h4>【B】IP 地址规划与子网划分（必考综合题）</h4>
+    <p>A/B/C/D/E 类与私有地址段、掩码/网络地址/广播地址计算、VLSM、CIDR 路由聚合（超网）、NAT（静态/动态/NAPT/Easy IP）。风险：会设 IP 但不懂掩码数学、不会做地址规划与路由汇总。</p>
+    <h4>【C】路由协议原理（会配不会讲的典型）</h4>
+    <p>RIP（跳数/15跳/防环）、OSPF（Area/Router-ID/Cost/DR-BDR/LSA/管理距离 110）、BGP（AS/属性）、路由表要素与管理距离（AD）。风险：<span class="key">讲不清 RIP 与 OSPF 本质区别</span>、不会设计 OSPF 多区域。</p>
+    <h4>【D】网络规划与设计方法论（第2章，纯理论易忽视）</h4>
+    <p>需求→逻辑设计→物理设计→实施测试；核心/汇聚/接入三层模型；冗余/可用性/可扩展/安全/性能原则。</p>
+    <h4>【E】服务器配置理论（第9章，前端出身未必懂部署）</h4>
+    <p>DHCP（地址池/租约/中继）、DNS（递归迭代/A/AAAA/CNAME/MX/PTR/NS）、WWW/FTP（主动21+20/被动）、邮件（SMTP/POP3/IMAP）。</p>
+    <h4>【F】网络安全技术（理论密集）</h4>
+    <p>对称(DES/AES) vs 非对称(RSA)、哈希(MD5/SHA)、数字签名；防火墙（包过滤/代理/状态检测/DMZ/ACL）；IDS vs IPS；VPN（IPSec/SSL）；攻击类型（DoS/DDoS/ARP欺骗/嗅探/端口扫描）。</p>
+    <h4>【G】网络管理（概念抽象易丢分）</h4>
+    <p>SNMP（Manager/Agent/MIB/SMI/v1/v2c/v3/Polling/Trap）、FCAPS 五大功能、RMON。</p>
+
+    <h3>4.3 高频易失分难点</h3>
+    <ul>
+      <li>子网划分 / VLSM / CIDR 计算</li>
+      <li>OSPF 区域设计与特性</li>
+      <li>交换机 VLAN / Trunk / STP 配置</li>
+      <li>服务器（DHCP/DNS/FTP）配置命令填空</li>
+      <li>网络安全 ACL / 防火墙与攻击识别</li>
+    </ul>
+
+    <h2 id="roadmap">五、学习路线图与时间计划</h2>
+    <p>典型 16 周，在职每周约 10 小时；若每周仅 6 小时则拉长至 5–6 个月，脱产可压缩至 2 个月。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>阶段</th><th>周次</th><th>核心章节</th><th>周投入</th><th>里程碑</th></tr></thead>
+        <tbody>
+          <tr><td><strong>基础期</strong></td><td>第 1–6 周</td><td>第1–5章（结构原则 / 规划设计 / IP规划 / 路由基础 / 局域网）</td><td>8–10 h</td><td>能不查表独立完成任意子网划分与 CIDR 计算；能口述 OSI/TCP-IP 映射与 TCP 可靠机制</td></tr>
+          <tr><td><strong>强化期</strong></td><td>第 7–11 周</td><td>第6–11章（交换/路由配置 / 无线 / 服务器 / 安全 / 管理）</td><td>10–12 h</td><td>能独立写出 VLAN/静态路由/OSPF/ACL 配置；能解释 DHCP/DNS/FTP 工作原理</td></tr>
+          <tr><td><strong>冲刺期</strong></td><td>第 12–16 周</td><td>近 5 年真题套卷 + 错题本</td><td>12–15 h</td><td>选择题正确率 ≥ 80%，综合题步骤完整不丢过程分</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="practice">六、实战建议</h2>
+    <p>考试虽不考真机，但你目标是要真懂——<span class="key">强烈建议搭配实操</span>，这正是把理论短板补成闭环的关键：</p>
+    <ul>
+      <li><strong>模拟器</strong>：Packet Tracer（Cisco 命令直观，入门首选）、eNSP（华为 VRP，贴近国内考试设备风格）。把第6/7章每个实验真做一遍：VLAN、Trunk、STP、静态路由、RIP、OSPF、ACL、NAT。</li>
+      <li><strong>现有设备</strong>：手头路由/交换直接练；对照 Cisco IOS vs 华为 VRP 命令差异（考试常混考）。</li>
+      <li><strong>服务器</strong>：VMware + Windows Server 或 Linux 搭 DHCP/DNS/FTP，对应第9章，理解「服务如何工作」而非只背命令。</li>
+      <li><strong>理论验证闭环（关键）</strong>：每配一个功能，用 <code>show</code> / <code>ipconfig</code> / <code>ping</code> / <code>traceroute</code> 验证现象，再把「现象」和「协议原理」对应起来。例如配通 OSPF 后看邻居状态、看路由表，理解 LSA 如何变成路由——这是你要补的理论闭环。</li>
+    </ul>
+
+    <h2 id="resources">七、教材与资源推荐</h2>
+    <ul>
+      <li><strong>官方教程</strong>：《全国计算机等级考试三级教程——网络技术》（教育部考试中心编）</li>
+      <li><strong>真题</strong>：近 5 年真题及详解（综合题务必按步骤完整作答）</li>
+      <li><strong>模拟器</strong>：Cisco Packet Tracer、华为 eNSP</li>
+      <li><strong>服务器实验</strong>：VMware Workstation + Windows Server / Linux</li>
+      <li><strong>刷题</strong>：选择题专项训练 + 综合题步骤分训练</li>
+    </ul>
+
+    <h2 id="upgrade">八、三级 → 四级晋级路径</h2>
+    <ul>
+      <li><strong>四级网络工程师</strong>：需「已获（或同时获得）三级网络技术证书」方可取证。</li>
+      <li><strong>四级侧重</strong>：网络规划、网络构建、网络安全、网络管理的高阶工程能力。</li>
+      <li><strong>四级含【模拟器上机操作】考题（真配设备）</strong>，<span class="key">实操与难度明显高于三级</span>。</li>
+      <li><strong>建议</strong>：把三级当作通往四级网络工程师的扎实底座来学，理论-实操双线并进；先扎实拿下三级，再冲击含真机操作的四级。</li>
+    </ul>
+
+    <h2 id="strategy">九、学习策略总谏</h2>
+    <div class="pull-quote">
+      <p>你最大的优势是「手上有活」——路由交换实操经验能让配置类综合题事半功倍，但请把精力重点砸向「会配却讲不清为什么」的理论洼地：TCP/IP 协议栈、子网规划数学、路由协议原理、规划设计方法论、安全与管理。用模拟器把每一条命令变成「可验证的现象」，让实操反哺理论，而非止于照猫画虎。三级只是资格门槛，目标若真在能力提升，建议把它当作通往四级网络工程师（含真机操作）的扎实底座来学。备考节奏上以「理解闭环」代替「刷题记忆」，每周固定复盘一个原理盲区，比考前突击更有效。</p>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="/notes/">NCRE</a>
+      <a href="/notes/">三级网络技术</a>
+      <a href="/notes/">备考</a>
+      <a href="/notes/">网络技术</a>
+      <a href="/notes/">路由交换</a>
+      <a href="/notes/">晋级路径</a>
+    </div>
+    <a href="/notes/" class="back-link">返回随笔</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/notes/">随笔</a></p>
+</footer>
+
+<script>
+(function() {
+  var pb = document.getElementById('progressBar');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    var pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
+    pb.style.setProperty('--progress', pct + '%');
+  });
+  var tocLinks = document.querySelectorAll('#tocScroll a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({ id: id, el: el, link: a });
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 140;
+    var active = headings[0];
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+    if (active && active.link) {
+      active.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+  window.addEventListener('scroll', updateTOC);
+  var dotContainer = document.getElementById('pageDots');
+  var dotLinks = [];
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.id;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      h.el.scrollIntoView({ behavior: 'smooth' });
+    });
+    dotContainer.appendChild(a);
+    dotLinks.push({ el: h.el, link: a });
+  });
+  function updateDots() {
+    var scrollY = window.scrollY + window.innerHeight / 2;
+    var active = dotLinks[0];
+    for (var i = dotLinks.length - 1; i >= 0; i--) {
+      if (dotLinks[i].el.offsetTop <= scrollY) { active = dotLinks[i]; break; }
+    }
+    dotLinks.forEach(function(d) { d.link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateDots);
+  updateTOC();
+  updateDots();
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    var saved = localStorage.getItem('craft-theme');
+    if (saved === 'dark') { root.setAttribute('data-theme','dark'); btn.textContent='☀️'; }
+    else { root.setAttribute('data-theme','light'); btn.textContent='🌙'; }
+    btn.addEventListener('click', function(){
+      var dark = root.getAttribute('data-theme') === 'dark';
+      if (dark) { root.setAttribute('data-theme','light'); localStorage.setItem('craft-theme','light'); btn.textContent='🌙'; }
+      else { root.setAttribute('data-theme','dark'); localStorage.setItem('craft-theme','dark'); btn.textContent='☀️'; }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
