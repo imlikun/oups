@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的多端内容矩阵规划：公众号 + 网站 + 两个视频号 — 李坤的随笔</title>
-<meta name="description" content="把公众号、个人网站、两个视频号整合成一套「一次生产、多端分发」的内容矩阵：渠道分工、内容支柱、更新节奏、跨渠道流水线、命名合规护栏与 90 天路线图，附可直接照抄的样例框架。">
+<title>全渠道内容战略总纲：从 4 渠道矩阵到 9 平台分发 — 李坤的随笔</title>
+<meta name="description" content="一次生产、多端分发：把公众号、网站、两个视频号与 9 大平台整合成一套内容战略。含渠道分工、内容支柱、平台适配速查卡、每周排期 SOP、命名合规护栏、90 天路线与可直接照抄的样例框架。">
 <style>
-/* ========== 模板C：暗色沉浸风格（霓虹青 #00f5d4）========== */
+/* ========== 模板B：紫色宽屏风格（#7c3aed）========== */
 :root {
   --bg: #f9f8f6;
   --bg-card: rgba(124,58,237,0.03);
@@ -162,7 +162,11 @@ tr:hover td { background:var(--bg-card); }
   .toc { padding:18px 18px; }
   .hero h1 { font-size:24px; }
 }
+  .content h4 { font-size:15px; font-weight:600; margin:18px 0 8px; color:var(--heading); }
+  .content code { background:var(--code-bg); color:var(--code-text); font-family:'SF Mono',SFMono-Regular,Consolas,Menlo,monospace; font-size:12.5px; padding:2px 6px; border-radius:6px; border:1px solid var(--border); }
+  .content table td { vertical-align:top; }
 </style>
+
 </head>
 <body>
 
@@ -184,69 +188,102 @@ tr:hover td { background:var(--bg-card); }
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge"><span class="dot"></span> 内容规划 · 多端矩阵</div>
-    <h1>我的多端内容矩阵规划<br><em>公众号 + 网站 + 两个视频号</em></h1>
-    <p class="hero-desc">一次生产、多端分发：把最贵的「调研与思考」只做一次，让长文与短文互为上下游，让视频号只做「翻译与裁剪」。</p>
+    <div class="hero-badge"><span class="dot"></span> 内容战略 · 总纲</div>
+    <h1>全渠道内容战略总纲<br><em>一次生产、多端分发</em></h1>
+    <p class="hero-desc">从 4 个核心渠道（公众号 + 网站 + 2 视频号）起步，逐步扩到 9 大平台：把最贵的调研与思考只做一次，让长文、短文、脚本共享同一座事实素材库。</p>
     <div class="hero-meta">
       <span>📅 2026-07-14</span>
-      <span>🏷️ 内容规划 · 多端矩阵</span>
-      <span>⏱️ 阅读约 12 分钟</span>
+      <span>🏷️ 内容战略 · 总纲</span>
+      <span>⏱️ 阅读约 18 分钟</span>
     </div>
   </div>
 </div>
-
-<!-- TOC -->
 <div class="toc-wrap">
   <div class="toc">
     <div class="toc-title">目录导航</div>
     <ul class="toc-list">
-      <li><span class="num">01</span><a href="#why">为什么要搭矩阵</a></li>
-      <li><span class="num">02</span><a href="#channels">四个渠道怎么分工</a></li>
-      <li><span class="num">03</span><a href="#pillars">每个渠道讲什么</a></li>
-      <li><span class="num">04</span><a href="#cadence">更新频率与产能</a></li>
-      <li><span class="num">05</span><a href="#pipeline">跨渠道协同流水线</a></li>
-      <li><span class="num">06</span><a href="#guard">三道护栏：命名/合规/质量</a></li>
-      <li><span class="num">07</span><a href="#roadmap">90 天启动路线图</a></li>
-      <li><span class="num">08</span><a href="#samples">附：可直接照抄的样例框架</a></li>
-      <li><span class="num">09</span><a href="#end">结语</a></li>
+      <li><span class="num">01</span><a href="#s01">为什么搭内容矩阵</a></li>
+      <li><span class="num">02</span><a href="#s02">核心骨架：一次生产、多端分发</a></li>
+      <li><span class="num">03</span><a href="#s03">渠道与平台分工</a></li>
+      <li><span class="num">04</span><a href="#s04">更新频率与产能规划</a></li>
+      <li><span class="num">05</span><a href="#s05">跨渠道协同流水线</a></li>
+      <li><span class="num">06</span><a href="#s06">每周发布排期与批量编排</a></li>
+      <li><span class="num">07</span><a href="#s07">三道护栏：命名 / 合规 / 质量</a></li>
+      <li><span class="num">08</span><a href="#s08">风险与优化建议</a></li>
+      <li><span class="num">09</span><a href="#s09">90 天启动路线图</a></li>
+      <li><span class="num">10</span><a href="#s10">样例库</a></li>
+      <li><span class="num">11</span><a href="#s11">结语</a></li>
     </ul>
   </div>
 </div>
-
-<!-- Article -->
 <div class="content">
 
-<!-- ====== Section 1 ====== -->
-<section id="why">
-<h2><span class="sec-num">01</span>为什么要搭多端内容矩阵</h2>
+<section id="s01">
+<h2><span class="sec-num">01</span>为什么搭内容矩阵</h2>
+
 <p>做内容大半年，最大的体会是：<span class="key">你在一个平台发的内容，产权和入口都不完全在你手里，算法一调，触达可能说没就没。</span>公众号、视频号、甚至第三方平台，本质都是「别人的地盘」。</p>
 <p>所以我越来越认定一件事——<span class="key">个人内容资产要从「平台寄居」转向「自建中枢」。</span>网站 appin.site 是我的「老家」，所有内容在这里生产、归档；公众号和视频号只是把内容「翻译」给不同受众的派生渠道。</p>
 <p>这次规划把盘子铺成四块：一个公众号做深度长文、一个网站做资讯中枢、两个视频号做轻量触角（其中一个专门养老）。核心不是「多开几个号」，而是<span class="key">用一套生产流程，喂饱四个渠道</span>。</p>
-<blockquote>
-<p>一句话总纲：以网站为中枢、公众号为深度、两个视频号为轻量触角，所有内容遵循「一次生产、多端分发」。</p>
-</blockquote>
+<p>更往前想一步：这 4 个核心渠道只是起点，未来还能扩到 9 个平台（见 03.3）。但无论扩到多少端，底层只有一条逻辑——下一节展开讲。</p>
+
 </section>
 
-<!-- ====== Section 2 ====== -->
-<section id="channels">
-<h2><span class="sec-num">02</span>四个渠道怎么分工</h2>
-<div class="table-wrap">
-<table>
-<tr><th>渠道</th><th>定位</th><th>形态</th><th>在矩阵中的角色</th></tr>
+<section id="s02">
+<h2><span class="sec-num">02</span>核心骨架：一次生产、多端分发</h2>
+
+<blockquote>
+<p>定位：综合科技随笔（长文 + 视频双形态）· 目标：专业影响力 + 个人品牌 · 节奏：每周 1–2 更 · 覆盖 9 平台：微信生态（公众号 / 视频号）、小红书、B站、抖音、YouTube、TikTok、Instagram、X、LinkedIn。制定：全域内容分发专家团。</p>
+</blockquote>
+<p>整套打法的底层只有一句话：<span class="key">一次生产、多端分发</span>。意思是——把最贵的「调研与思考」只做一次，产出一个「主稿」，再按每个平台的调性做改造后分发，而不是每个平台都从头写一遍。</p>
+<h3>核心骨架怎么转起来</h3>
+<p>每周产出 <span class="key">1 篇主稿长文（硬指标）</span> + 每 2 周 1 支中视频，再按平台做「比例 + 调性 + 标签」三件套改造，<span class="key">严禁原样搬运</span>（各平台有查重去重机制，直接复制粘贴会被限流）。</p>
+<h3>内容形态 × 平台分工矩阵</h3>
+<table class="data-table">
+<thead><tr><th>生产主稿</th><th>分发到</th><th>形态</th></tr></thead>
+<tbody>
+<tr><td>长文主稿</td><td>微信公众号 + appin.site 技艺录</td><td>深度长文（品牌资产沉淀）</td></tr>
+<tr><td>图文拆解版</td><td>小红书</td><td>干货卡片 / 清单体</td></tr>
+<tr><td>中长视频</td><td>B站 + YouTube</td><td>同主题，中 / 英字幕</td></tr>
+<tr><td>短视频切片</td><td>抖音 + 视频号 + TikTok + IG Reels</td><td>60s 金句 / 演示</td></tr>
+<tr><td>观点短评</td><td>X + LinkedIn</td><td>英文面向海外开发者，反引流长文</td></tr>
+</tbody>
+</table>
+<h3>平台优先级分层（先打透核心层，再外扩）</h3>
+<ul>
+<li>🔴 <strong>核心层（做深）</strong>：微信公众号、B站、小红书</li>
+<li>🟡 <strong>增长层</strong>：视频号、抖音、YouTube</li>
+<li>🟢 <strong>出海层</strong>：X、LinkedIn、TikTok、Instagram</li>
+</ul>
+<h3>预期心智</h3>
+<ul>
+<li>国内开发者 = 微信 + B站 + 小红书 三件套</li>
+<li>海外开发者 = X + LinkedIn + YouTube + TikTok</li>
+<li>长尾资产 = appin.site 技艺录（网站搜索沉淀）</li>
+</ul>
+<p>落地时，我们并不要求一上来就铺满 9 端。下一节先讲从 4 个最可控的核心渠道起步，再按 03.3 逐步扩到 9 平台。</p>
+
+</section>
+
+<section id="s03">
+<h2><span class="sec-num">03</span>渠道与平台分工</h2>
+
+
+<h3>3.1 四个核心渠道怎么分工</h3>
+<p>先把盘子铺成 4 块——一个公众号做深度长文、一个网站做资讯中枢、两个视频号做轻量触角（其中一个专门养老）。</p>
+<table class="data-table">
+<thead><tr><th>渠道</th><th>定位</th><th>形态</th><th>在矩阵中的角色</th></tr></thead>
+<tbody>
 <tr><td><strong>公众号</strong></td><td>新型技术分享</td><td>图文长文</td><td>深度层（源 / 沉淀）</td></tr>
 <tr><td><strong>网站</strong>（appin.site 新增栏目）</td><td>个人关注的资讯</td><td>短文 / 聚合</td><td>中枢母矿（源 / 归档）</td></tr>
 <tr><td><strong>视频号 1</strong></td><td>养老垂直</td><td>短视频脚本</td><td>派生层（只出脚本）</td></tr>
 <tr><td><strong>视频号 2</strong></td><td>泛知识 / 个人资讯</td><td>短视频脚本</td><td>派生层（只出脚本）</td></tr>
+</tbody>
 </table>
-</div>
 <p>协同逻辑：<span class="key">网站 = 中枢（源）→ 公众号 = 深度长文（源/沉淀）→ 两个视频号 = 轻量脚本（派生）。</span>公众号与网站可双向：网站选题扩写为公众号长文，公众号长文也可回链网站归档。</p>
-</section>
 
-<!-- ====== Section 3 ====== -->
-<section id="pillars">
-<h2><span class="sec-num">03</span>每个渠道讲什么（内容支柱）</h2>
+<h3>3.2 每个渠道讲什么 · 内容支柱</h3>
 
-<h3>① 公众号「新型技术分享」（小白视角）</h3>
+<h4>① 公众号「新型技术分享」（小白视角）</h4>
 <ul>
 <li><strong>AI 工具实测</strong>：零基础视角真实测评能上手用的 AI 工具与流程</li>
 <li><strong>前端 / 开发提效</strong>：非程序员也能懂的前端概念、学习路径、提效技巧</li>
@@ -254,7 +291,7 @@ tr:hover td { background:var(--bg-card); }
 <li><strong>技术资讯解读</strong>：把行业大事件翻译成「对我有什么用」</li>
 </ul>
 
-<h3>② 网站「个人关注的资讯」（短文 / 聚合）</h3>
+<h4>② 网站「个人关注的资讯」（短文 / 聚合）</h4>
 <ul>
 <li><strong>AI / 科技快讯聚合</strong>：每日 / 每周扫一遍值得关注的动态</li>
 <li><strong>前端 / 设计资源速览</strong>：新框架、好用的库、设计灵感短评</li>
@@ -262,7 +299,7 @@ tr:hover td { background:var(--bg-card); }
 <li><strong>行业交叉观察</strong>：地产 × 科技、银发 × 数字化等跨界视角</li>
 </ul>
 
-<h3>③ 视频号 1「养老垂直」</h3>
+<h4>③ 视频号 1「养老垂直」</h4>
 <ul>
 <li><strong>养老政策解读</strong>：把政策翻译成「普通家庭能拿什么实惠」</li>
 <li><strong>适老化产品测评</strong>：扶手、呼叫器、穿戴设备等真实测评</li>
@@ -271,154 +308,327 @@ tr:hover td { background:var(--bg-card); }
 <li><strong>养老金融 / 规划</strong>：个人养老金、长护险、养老理财避坑（只科普不荐股）</li>
 </ul>
 
-<h3>④ 视频号 2「泛知识 / 个人资讯」</h3>
+<h4>④ 视频号 2「泛知识 / 个人资讯」</h4>
 <ul>
 <li><strong>技术资讯口播</strong>：把网站 AI / 科技快讯「念出来」</li>
 <li><strong>效率工具安利</strong>：30 秒讲清一个工具解决什么痛点</li>
 <li><strong>个人成长 / 学习方法</strong>：卡片笔记、信息极简、自学路径</li>
 <li><strong>跨界转型故事</strong>：房地产策划 → 前端 + 视频剪辑的真实复盘</li>
 </ul>
+
+<h3>3.3 从 4 渠道扩到 9 平台</h3>
+<p>4 个核心渠道是地基；当产能跑顺、模板固化后，再按下面的分层扩到 9 个平台。优先级分层决定「先打透谁、再外扩谁」，避免一上来精力被摊薄。</p>
+<h4>平台优先级分层</h4>
+<ul>
+<li>🔴 <strong>核心层（做深）</strong>：微信公众号、B站、小红书</li>
+<li>🟡 <strong>增长层</strong>：视频号、抖音、YouTube</li>
+<li>🟢 <strong>出海层</strong>：X、LinkedIn、TikTok、Instagram</li>
+</ul>
+<p>说明：核心层的 4 个渠道（公众号、网站、两个视频号）已在前两节定义；上表中的「视频号」在 9 平台视角下是一个统一入口，落地时可对应视频号 1（养老）与视频号 2（泛知识）两个账号分别投放。</p>
+
+<h4>国内平台适配速查卡</h4>
+<table class="data-table">
+<thead><tr><th>平台</th><th>最佳比例</th><th>标题 / 文案要点</th><th>标签</th><th>发布方式</th><th>算法与注意</th></tr></thead>
+<tbody>
+<tr><td><strong>微信公众号</strong></td><td>封面 2.35:1（1080×460）</td><td>标题≤64字、前15字含关键词；摘要≤120字独立可读；长文主稿</td><td>正文埋 2–3 长尾词</td><td>OAuth2 自动定时（周一 20:30）</td><td>订阅 + 推荐；私域联动枢纽（↔ 视频号 ↔ 企微）；禁外链裸链、禁诱导分享</td></tr>
+<tr><td><strong>微信视频号</strong></td><td>9:16（1080×1920），1–3min</td><td>生活化口语；3–5 话题 + 定位；柔性引导点赞转发</td><td>3–5 话题</td><td>手动 / 助手（周三 12:30）</td><td>社交 + 算法双引擎，冷启动靠首发朋友圈 / 群 24h 互动；禁其他平台水印</td></tr>
+<tr><td><strong>小红书</strong></td><td>封面 3:4（1080×1440），6–9 图</td><td>种草干货、emoji 分段；前 2 行定生死；标题含搜索词</td><td>10–15 个</td><td>草稿手动（周二 12:30）</td><td>搜索权重极高、长尾慢热；禁硬广 / 外链 / 水印；走真实经验分享</td></tr>
+<tr><td><strong>B站</strong></td><td>16:9 1080p，8–20min</td><td>信息密度高；分区科技 / 知识；内置弹幕设问</td><td>分区 + 3–10 标签</td><td>Webhook 自动（周五 19:00）</td><td>内容质量权重高、慢热周级；用户反感硬广 / 标题党</td></tr>
+<tr><td><strong>抖音</strong></td><td>9:16（1080×1920），30s–3min</td><td>前 3 秒强钩子（冲突 / 反差）；口语化</td><td>3–5 个</td><td>草稿手动（视频周 20:00）</td><td>完播率 &gt; 互动 &gt; 分享，小时级起量衰退快；无完整 API 需手动</td></tr>
+</tbody>
+</table>
+
+<h4>海外平台适配速查卡（目标受众：北美开发者为主）</h4>
+<table class="data-table">
+<thead><tr><th>平台</th><th>最佳比例</th><th>标题 / 文案要点（英文）</th><th>标签</th><th>发布方式</th><th>算法与注意</th></tr></thead>
+<tbody>
+<tr><td><strong>YouTube</strong></td><td>16:9 1080p；Shorts 9:16</td><td>标题≤60字符含关键词；描述前 2 行钩子 + 时间戳；缩略图大字强对比</td><td>8–15（描述末 3–5 原生）</td><td>原生定时（周六 03:00 BJT = 周五 15:00 ET）</td><td>CTR × 观看时长 × 互动；SEO 重标题前置；FTC 赞助披露</td></tr>
+<tr><td><strong>TikTok</strong></td><td>9:16，15–60s</td><td>前 1 秒钩子；Caption ≤150 字符</td><td>3–5（1 泛 + 2 垂 + 1 细分）</td><td>Later 定时（周四 08:00 BJT = 周三 20:00 ET）</td><td>FYP 推荐；音乐用内置曲库（地区授权）；欧美偏好自嘲真实感</td></tr>
+<tr><td><strong>Instagram</strong></td><td>Reels 9:16 ≤90s / Carousel 4:5</td><td>Caption 首行钩子；视觉优先</td><td>8–15 三级混合</td><td>Meta 定时（周三 23:00 BJT = 11:00 ET）</td><td>Reels 权重最高；Save（收藏）长尾好；Bio 挂 Linktree 反引流</td></tr>
+<tr><td><strong>X / Twitter</strong></td><td>图文 16:9 / 1:1；视频 ≤2:20</td><td>首条钩子 + 🧵；Thread 展开；英文直给带锋芒</td><td>1–2 个（不堆砌）</td><td>Buffer 定时（周二–四 20:30 / 21:00）</td><td>即时性 + 互动；外链略降权 → 长文放 bio；可日更观点</td></tr>
+<tr><td><strong>LinkedIn</strong></td><td>16:9 横图 / 原生 PDF</td><td>150–300 词「故事 + 洞察」；首 2 行抛结论</td><td>3–5 专业词</td><td>原生定时（周二 / 四 20:30）</td><td>Dwell Time + 评论质量；原生 &gt; 外链；B2B 专业语境，限工作日</td></tr>
+</tbody>
+</table>
+
 </section>
 
-<!-- ====== Section 4 ====== -->
-<section id="cadence">
+<section id="s04">
 <h2><span class="sec-num">04</span>更新频率与产能规划</h2>
-<div class="table-wrap">
-<table>
-<tr><th>渠道</th><th>建议频率</th><th>单次产能口径</th></tr>
+
+<table class="data-table">
+<thead><tr><th>渠道</th><th>建议频率</th><th>单次产能口径</th></tr></thead>
+<tbody>
 <tr><td>公众号</td><td>周更 / 双周更（保质量优先）</td><td>1 篇深度长文（1500–3000 字）</td></tr>
 <tr><td>网站新增资讯栏目</td><td>每日聚合（轻）或 每周 2–3 篇短文</td><td>1 篇短文 / 1 份聚合列表（300–800 字）</td></tr>
 <tr><td>视频号 1（养老）</td><td>每周 2–3 条</td><td>1 份脚本框架</td></tr>
 <tr><td>视频号 2（泛知识）</td><td>每周 2–3 条</td><td>1 份脚本框架</td></tr>
+</tbody>
 </table>
-</div>
 <p><span class="key">视频号脚本均为派生、几乎零额外调研成本</span>——这是整套矩阵能「单人可持续」的关键。</p>
 <div class="info-box">
 <h4>复用示例：一篇「AI 工具实测」如何裂变 4 端</h4>
 <p>① 源（网站）：先发 600 字短文《本周实测：XX 工具能帮文案提效 50%》；② 源（公众号）：扩写成 2500 字长文；③ 派生（视频号 2）：抽 3 个高光点 → 60 秒口播；④ 再派生一条 30 秒「工具安利」。一次核心调研，产出 1 短文 + 1 长文 + 2 脚本。</p>
 </div>
+
 </section>
 
-<!-- ====== Section 5 ====== -->
-<section id="pipeline">
+<section id="s05">
 <h2><span class="sec-num">05</span>跨渠道协同流水线</h2>
+
 <p>调研 / 探访 / 实测只做一次，沉淀进「事实素材库」（Markdown）；长文与短文互为上下游，视频号只做「翻译 + 裁剪」。</p>
-<div class="table-wrap">
-<table>
-<tr><th>层级</th><th>渠道</th><th>是否原创调研</th></tr>
-<tr class="highlight-row"><td>源 / 沉淀层</td><td>网站 appin.site（中枢）、公众号（深度长文）</td><td>是</td></tr>
+<table class="data-table">
+<thead><tr><th>层级</th><th>渠道</th><th>是否原创调研</th></tr></thead>
+<tbody>
+<tr><td>源 / 沉淀层</td><td>网站 appin.site（中枢）、公众号（深度长文）</td><td>是</td></tr>
 <tr><td>派生 / 分发层</td><td>视频号 1（养老）、视频号 2（泛知识）</td><td>否（只出脚本）</td></tr>
+</tbody>
 </table>
-</div>
 <blockquote>
 <p>铁律：视频号只产出脚本框架，图片 / 视频由我自行拍摄剪辑；公众号与网站只出正文稿，不配图。所有内容最终回链 / 归档到 appin.site。</p>
 </blockquote>
+
 </section>
 
-<!-- ====== Section 6 ====== -->
-<section id="guard">
-<h2><span class="sec-num">06</span>三道护栏：命名 / 合规 / 质量</h2>
+<section id="s06">
+<h2><span class="sec-num">06</span>每周发布排期与批量编排</h2>
 
-<h3>6.1 命名规范（全局强制）</h3>
-<p>格式：<span class="kb-shortcut">【WB】【平台】主题关键词 | YYYY-MM-DD v版本号</span></p>
+
+<h3>6.1 A 方案（满血版 · 覆盖 9 平台）/ B 方案（最小可行版 · 聚焦核心层 3 平台）</h3>
+<p><strong>A 方案 · 主稿分发骨架（每周）</strong></p>
+<table class="data-table">
+<thead><tr><th>星期</th><th>时间 (BJT)</th><th>平台</th><th>形态</th><th>发布方式</th><th>海外时区</th></tr></thead>
+<tbody>
+<tr><td>周一</td><td>20:30</td><td>微信公众号</td><td>主稿长文</td><td>自动 OAuth2</td><td>国内晚高峰</td></tr>
+<tr><td>周二</td><td>12:30</td><td>小红书</td><td>主稿图文</td><td>草稿手动</td><td>国内午间</td></tr>
+<tr><td>周二</td><td>20:30</td><td>LinkedIn</td><td>英文摘要 + 链接</td><td>定时</td><td>ET 周二 08:30</td></tr>
+<tr><td>周二</td><td>21:00</td><td>X</td><td>观点 Thread</td><td>Buffer</td><td>ET 周二 09:00</td></tr>
+<tr><td>周三</td><td>12:30</td><td>视频号</td><td>金句卡 / 短切片</td><td>手动</td><td>国内午间</td></tr>
+<tr><td>周三</td><td>20:30</td><td>X</td><td>日常观点</td><td>Buffer</td><td>ET 周三 08:30</td></tr>
+<tr><td>周四</td><td>20:30</td><td>X</td><td>日常观点</td><td>Buffer</td><td>ET 周四 08:30</td></tr>
+</tbody>
+</table>
+<p><strong>A 方案 · 视频周附加（双周，如第 1 / 3 / 5 周）</strong></p>
+<table class="data-table">
+<thead><tr><th>星期</th><th>时间 (BJT)</th><th>平台</th><th>形态</th><th>发布方式</th><th>海外时区</th></tr></thead>
+<tbody>
+<tr><td>周三</td><td>23:00</td><td>Instagram</td><td>Reel 切片</td><td>Meta 定时</td><td>ET 周三 11:00</td></tr>
+<tr><td>周四</td><td>08:00</td><td>TikTok</td><td>视频切片</td><td>Later 定时</td><td>ET 周三 20:00</td></tr>
+<tr><td>周四</td><td>20:00</td><td>抖音</td><td>切片 1</td><td>草稿手动</td><td>国内黄金</td></tr>
+<tr><td>周四</td><td>20:30</td><td>LinkedIn</td><td>视频英文摘要</td><td>定时</td><td>ET 周四 08:30</td></tr>
+<tr><td>周五</td><td>19:00</td><td>B站</td><td>中视频正片</td><td>Webhook 自动</td><td>国内周五晚</td></tr>
+<tr><td>周六</td><td>03:00</td><td>YouTube</td><td>中视频正片</td><td>原生定时</td><td>ET 周五 15:00</td></tr>
+<tr><td>周六</td><td>20:00</td><td>抖音</td><td>切片 2（可选）</td><td>草稿手动</td><td>国内黄金</td></tr>
+</tbody>
+</table>
+<p>A 方案视频周仅需手动：小红书、视频号、抖音；其余全自动，坤哥无需熬夜。</p>
+<p><strong>B 方案 · 最小可行版（聚焦核心层 3 平台）</strong></p>
+<table class="data-table">
+<thead><tr><th>星期</th><th>时间 (BJT)</th><th>平台</th><th>形态</th><th>发布方式</th></tr></thead>
+<tbody>
+<tr><td>周一</td><td>20:30</td><td>微信公众号</td><td>主稿长文</td><td>自动 OAuth2</td></tr>
+<tr><td>周二</td><td>12:30</td><td>小红书</td><td>主稿图文</td><td>草稿手动</td></tr>
+<tr><td>周五</td><td>19:00</td><td>B站</td><td>中视频（视频周）</td><td>Webhook 自动</td></tr>
+</tbody>
+</table>
+<p>B 方案下，视频号金句卡可作零成本加项在周三 12:30 补发。精力恢复后切回 A。</p>
+
+<h3>6.2 批量编排 SOP（排期日集中处理）</h3>
+<div class="steps">
+<ol>
+<li><strong>排期日</strong>（建议周日 21:00 或周一 09:00）：确认主稿主题与形态，调取各平台适配稿。</li>
+<li><strong>录入定时</strong>，区分自动 / 手动：自动（排期日一次性设）— 公众号、B站、YouTube、TikTok、Instagram、LinkedIn、X；手动（到点发）— 小红书、视频号、抖音。</li>
+<li><strong>海外统一入口</strong>：所有海外平台 Bio / 置顶放 Linktree（聚合公众号 / Newsletter / B站），避免重复导流文案。</li>
+<li><strong>发布日只做确认 + 互动</strong>：自动项核查是否发出；手动项到点发，视频号首发 24h 朋友圈 + 群互动（冷启动关键）。</li>
+</ol>
+</div>
+
+<h3>6.3 跨时区错峰策略</h3>
+<p>国内黄金 12–13、19–23 点与北美 08–10、17–19 ET 天然错开 12h。</p>
+<p><span class="key">坤哥睡前 1 小时（BJT 20:00–22:00）= 北美起床第 1 小时（ET 08:00–10:00）</span>：周一主稿周二同时驱动公众号（国内晚）+ LinkedIn / X（北美早），一次生产喂饱两时区。</p>
+<p>夏令时 EDT 按 BJT = ET + 12h；冬令时 EST 整体 +1h，排期日前强制核对一次偏移。</p>
+
+<h3>6.4 发布频率红线 / 发布检查清单 / 异常处理预案</h3>
+<p><strong>发布频率与节奏红线</strong></p>
+<ul>
+<li><strong>硬指标</strong>：主稿 1 篇 / 周（断更不超 1 周）；中视频 1 支 / 双周（可延至 3 周，别断超 1 月）。</li>
+<li>可日更观点：X（3–5 条 / 周，重质不硬凑）。</li>
+<li>慢养型（质量 &gt; 数量）：B站、小红书、YouTube。</li>
+<li>社交驱动：视频号（求冷启动互动）、抖音（切片为主）。</li>
+<li>低频精准：LinkedIn（1–2 条 / 周）、Instagram / TikTok（双周切片）。</li>
+<li><strong>断更保护</strong>：至少发 1 条 X 短评 + 重发 1 篇小红书 evergreen 旧文，维持算法信任。</li>
+</ul>
+<p><strong>发布检查清单</strong></p>
+<ul>
+<li>[ ] 主稿定稿，各平台适配稿到位</li>
+<li>[ ] 公众号 OAuth2 定时（周一 20:30）已设</li>
+<li>[ ] 海外 5 平台定时已设（YT 六 03:00 / LinkedIn 二 &amp; 四 20:30 / X 三发 / TikTok 四 08:00 / IG 三 23:00）</li>
+<li>[ ] B站 Webhook 定时（视频周 五 19:00）已设</li>
+<li>[ ] 小红书 / 视频号 / 抖音 草稿已存、手机提醒已设</li>
+<li>[ ] 发布日：自动项核查、手动项到点发、视频号首发 24h 朋友圈 + 群互动、评论区互动 30min</li>
+<li>[ ] 周末：记录数据、标记优质内容（下周公号 / 小红书 evergreen 重发）、预填下周排期</li>
+</ul>
+<p><strong>异常处理预案</strong></p>
+<ul>
+<li>公众号 OAuth2 失效 → 当天 20:30 前手动群发，检查 token。</li>
+<li>B站 Webhook 失败 → 后台手动上传定时。</li>
+<li>海外定时未发 → 查 Later / Meta / Buffer 登录态，手动补最近窗口。</li>
+<li>抖音 / 小红书 / 视频号忘发 → 当日 20:00 前补，错过则次日补。</li>
+<li>主稿延产 → 启动断更保护（X 短评 + 小红书旧文重发）。</li>
+<li>跨时区算错 → 排期日强制核对 ET ↔ BJT 偏移；X 可即时救场。</li>
+<li>国内大节假日 → 国内平台顺延 / 做节日版；海外照常。</li>
+</ul>
+
+</section>
+
+<section id="s07">
+<h2><span class="sec-num">07</span>三道护栏：命名 / 合规 / 质量</h2>
+
+
+<h3>7.1 命名规范（全局强制）</h3>
+<p>格式：<code>【WB】【平台】主题关键词 | YYYY-MM-DD v版本号</code></p>
 <ul>
 <li>平台标记：公众号用 <code>【公众号】</code>、视频号用 <code>【视频号】</code>；网站文件以 <code>【WB】</code> 起头。</li>
 <li>版本号从 <code>v1</code> 起，重大修订递增 <code>v2 / v3</code>。</li>
 </ul>
 <p>示例：<code>【WB】【公众号】零基础搞懂API | 2026-07-14 v1</code>　/　<code>【WB】【视频号】个人养老金账户值不值得开 | 2026-07-14 v1</code></p>
 
-<h3>6.2 微信内容红线（最高优先级）</h3>
+<h3>7.2 微信内容红线（最高优先级）</h3>
 <p><span class="key">绝对禁止：任何「手把手教翻墙 / 用代理 / VPN / 加速工具访问被墙海外服务」的实操步骤；金融类「荐股 / 承诺收益」。</span>养老理财只做科普与风险揭示。</p>
 <p>安全区（可发）：海外平台评测汇总（讲功能、不讲怎么访问）、API 介绍 / 纯前端 / 通用技术内容、养老政策解读与适老化测评等真实资讯。</p>
 
-<h3>6.3 排版 / 质量规范</h3>
+<h3>7.3 排版 / 质量规范</h3>
 <ul>
 <li><strong>重要句加粗</strong>：核心结论、数据、风险点、行动建议一律加粗，便于 skim 阅读。</li>
 <li>公众号长文：开头 3 行给「你能得到什么」，结尾给「下一步行动」。</li>
 <li>网站短文：标题即结论，正文不超过 3 段。</li>
 <li>视频号脚本：明确标注【画面】【口播】【字幕】【时长】，方便直接拍摄剪辑。</li>
 </ul>
+
 </section>
 
-<!-- ====== Section 7 ====== -->
-<section id="roadmap">
-<h2><span class="sec-num">07</span>90 天启动路线图</h2>
+<section id="s08">
+<h2><span class="sec-num">08</span>风险与优化建议</h2>
 
-<h3>第 1 月 · 蓄水（搭骨架、定节奏）</h3>
+
+<h3>8.1 优化建议</h3>
+<ol>
+<li><strong>固定视觉 IP</strong>：1 个主色 + 1 套字体 + 真人出镜，9 端封面 / 头像统一，强化识别。</li>
+<li><strong>模板化降负担</strong>：小红书图文卡、视频号金句卡、X Thread 用固定模板，每周适配成本大降。</li>
+<li><strong>视频周前置生产</strong>：非视频周末拍剪，视频周只切片，平摊精力避免当周透支。</li>
+<li><strong>evergreen 复用</strong>：小红书 / B站 / YouTube 旧文可周期性重发，吃长尾搜索红利。</li>
+<li><strong>数据驱动迭代</strong>：每周记录核心指标（公众号打开率、B站完播、YouTube CTR、X 互动），下轮调整选题与标题公式。</li>
+</ol>
+
+<h3>8.2 风险提示</h3>
+<ul>
+<li>⚠️ <strong>合规红线</strong>：微信禁诱导分享 / 外链裸链；小红书禁硬广 / 水印；YouTube / X / LinkedIn 含品牌合作须 FTC 披露（#ad）。</li>
+<li>⚠️ <strong>版权</strong>：海外 BGM 用平台内置曲库（TikTok / IG）或 YouTube Audio Library；勿用国内平台音乐（海外无授权）；客户项目需脱敏。</li>
+<li>⚠️ <strong>时区陷阱</strong>：每年 11 月–次年 3 月切换冬令时，海外北京时间点整体 +1h，排期日前务必核对。</li>
+<li>⚠️ <strong>账号安全</strong>：抖音 / 小红书 / 视频号无完整自动 API，手动发布注意账号登录态与设备风控。</li>
+</ul>
+
+</section>
+
+<section id="s09">
+<h2><span class="sec-num">09</span>90 天启动路线图</h2>
+
+
+<h3>9.1 第 1 月 · 蓄水（搭骨架、定节奏）</h3>
 <ul>
 <li>appin.site 上线「个人关注的资讯」新增栏目；公众号确定 4 大支柱并发布 3–4 篇长文。</li>
 <li>两个视频号各备 4–6 条脚本框架（先攒库存，不急着发）。</li>
 <li>里程碑：网站资讯栏稳定更新 2 周；公众号首批 3 篇；脚本库 ≥ 10 条；命名规范跑通。</li>
 </ul>
 
-<h3>第 2 月 · 起量（拉频率、跑协同）</h3>
+<h3>9.2 第 2 月 · 起量（拉频率、跑协同）</h3>
 <ul>
 <li>公众号进入周更；网站资讯日更 / 周更常态化；视频号 1、2 各开启每周 2–3 条发布。</li>
 <li>落地「一篇源 → 多端派生」流水线，验证复用效率。</li>
 </ul>
 
-<h3>第 3 月 · 固化（标准化、看数据）</h3>
+<h3>9.3 第 3 月 · 固化（标准化、看数据）</h3>
 <ul>
 <li>把选题池、脚本模板、命名 / 合规清单固化为 SOP；复盘数据，砍低效支柱、加注高效支柱。</li>
 <li>里程碑：多端分发 SOP 成文；任意单篇素材平均派生 ≥ 3 端；内容产出进入「低焦虑、可持续」状态。</li>
 </ul>
+
 </section>
 
-<!-- ====== Section 8 ====== -->
-<section id="samples">
-<h2><span class="sec-num">08</span>附：可直接照抄的样例框架</h2>
+<section id="s10">
+<h2><span class="sec-num">10</span>样例库</h2>
+
+
+<h3>10.1 四渠道样例框架（可直接照抄）</h3>
 <p>下面 4 个框架是规划落地的「模板」，每个都含规范文件名与结构骨架，照着扩写即可。</p>
 
-<h3>8.1 公众号长文大纲（小白视角）</h3>
+<h4>10.1.1 公众号长文大纲（小白视角）</h4>
 <p><strong>文件名</strong>：<code>【WB】【公众号】零基础搞懂API不用写代码也能调用大模型能力 | 2026-07-14 v1</code></p>
 <p>6 章骨架：① API＝餐厅服务员（生活比喻消除恐惧）② 大模型 API＝雇了个不会累的「外包大脑」③ 不写代码 3 个零门槛入口（国内合规平台 / 低代码工具 / 官方调试台）④ 真实例子：会议纪要自动变待办清单 ⑤ 新手 3 坑（把 API 当神 / 敏感内容直喂第三方 / 一上来就全自动）⑥ 今天就能动手的 1 件小事。结尾 CTA 回链 appin.site。</p>
 <blockquote><p>红线规避示范：只通过各官网正规渠道申请与调用，<span class="key">别信网上「一键翻墙调用海外模型」的教程——那既违规，也可能泄露你的账号与数据。</span></p></blockquote>
 
-<h3>8.2 视频号 1（养老）脚本框架 · 75 秒</h3>
+<h4>10.1.2 视频号 1（养老）脚本框架 · 75 秒</h4>
 <p><strong>文件名</strong>：<code>【WB】【视频号】个人养老金账户到底值不值得开 | 2026-07-14 v1</code></p>
-<div class="table-wrap">
-<table class="shoot-table">
-<tr><th>时间</th><th>画面建议</th><th>口播文案</th><th>字幕 / 花字</th></tr>
+<table class="data-table">
+<thead><tr><th>时间</th><th>画面建议</th><th>口播文案</th><th>字幕 / 花字</th></tr></thead>
+<tbody>
 <tr><td>0–3s</td><td>手举工资条，眉头一皱</td><td>每年往里存 1 万 2，退休能多拿多少？别急着开，先算账。</td><td>存 1 万 2，退休多拿多少？</td></tr>
 <tr><td>3–12s</td><td>手机展示官方介绍页</td><td>个人养老金是国家推的第三支柱，自愿参加，每年最高存 12000。</td><td>每年最高存 12000</td></tr>
 <tr><td>12–35s</td><td>白板：左边存钱，右边两个好处</td><td>好处就两个：缴费抵税、强制储蓄。</td><td>① 抵税　② 强制储蓄</td></tr>
 <tr><td>35–55s</td><td>计算器：12000 × 税率</td><td>税率 10% 一年先省 1200 税。<span class="key">但账户里的钱买什么产品，赚亏没人保底，风险自己担。</span></td><td>⚠ 账户不保本，风险自担</td></tr>
 <tr><td>55–70s</td><td>镜头回到人</td><td>个税 10% 以上、又存不下钱，它挺合适；本来没交税，意义不大。</td><td>个税 ≥ 10% 才划算</td></tr>
 <tr><td>70–75s</td><td>指屏幕下方</td><td>更多养老避坑科普，去 appin.site 搜「养老」。</td><td>关注 + 回 appin.site</td></tr>
+</tbody>
 </table>
-</div>
 <p>合规备注：全程不推荐任何具体产品 / 基金 / 保险，不出现「稳赚」「保本保收益」。</p>
 
-<h3>8.3 视频号 2（泛知识）脚本框架 · 78 秒</h3>
+<h4>10.1.3 视频号 2（泛知识）脚本框架 · 78 秒</h4>
 <p><strong>文件名</strong>：<code>【WB】【视频号】为什么我坚持写个人网站而不是只发公众号 | 2026-07-14 v1</code></p>
-<div class="table-wrap">
-<table class="shoot-table">
-<tr><th>时间</th><th>画面建议</th><th>口播文案</th><th>字幕 / 花字</th></tr>
+<table class="data-table">
+<thead><tr><th>时间</th><th>画面建议</th><th>口播文案</th><th>字幕 / 花字</th></tr></thead>
+<tbody>
 <tr><td>0–3s</td><td>屏幕两个标签页：公众号后台 / 个人网站</td><td>我公众号粉丝不少，但还是花周末搭了自己的网站。为什么？</td><td>有公众号，为啥还搭网站？</td></tr>
 <tr><td>3–18s</td><td>切公众号「已群发」列表</td><td>公众号流量现成，但<span class="key">内容不在自己手里，算法一调触达说没就没。</span></td><td>内容不在自己手里</td></tr>
 <tr><td>18–40s</td><td>切个人网站首页</td><td>搭了 appin.site：文章永在我这、排版自由、它成了我所有内容的「老家」。</td><td>① 永在我手　② 自由排版　③ 内容老家</td></tr>
 <tr><td>40–58s</td><td>坤哥近景</td><td>工具很成熟，一个周末零基础也能上线。我从房地产策划半路学的，踩坑但值得。</td><td>零基础周末也能搭</td></tr>
 <tr><td>58–70s</td><td>展示「个人关注的资讯」栏目</td><td>现在每天看的 AI、养老、效率资讯都丢进网站这个栏目，公众号反而成了其中一环。</td><td>网站是中枢，公众号是分支</td></tr>
 <tr><td>70–78s</td><td>指屏幕下方</td><td>想看我怎么从 0 搭起来，去 appin.site 搜「个人网站」。</td><td>关注 + 回 appin.site</td></tr>
+</tbody>
 </table>
-</div>
 
-<h3>8.4 网站资讯栏目结构 ＋ 1 期样例 digest</h3>
+<h4>10.1.4 网站资讯栏目结构 ＋ 1 期样例 digest</h4>
 <p><strong>栏目定位</strong>：appin.site 新增「个人关注的资讯」＝全矩阵的中枢母矿。更新节奏：每日轻聚合（300–500 字）+ 周更《坤哥周记》（500–800 字）。单条规范：标题即结论、正文 ≤ 3 段、重要数据加粗。</p>
 <p><strong>样例（节选）</strong>：</p>
 <blockquote>
 <p>本周把 AI、养老、效率三条线揉在一起看，<span class="key">个人内容资产正在从「平台寄居」转向「自建中枢」</span>。4 条值得扫一眼的资讯：</p>
 <p>① <strong>国内大模型开放平台继续「卷」免费额度</strong>，普通人调用门槛再降低；② <strong>个人养老金缴存进入年中节点</strong>，抵税额度别浪费（个税 10% 以上更划算）；③ <strong>独立博客 / 个人网站回潮</strong>，建站工具越来越零基础友好；④ <strong>效率工具「自动化」成主流</strong>，但别一上来就追求全自动——先跑通一个最小场景。</p>
 </blockquote>
+
+<h3>10.2 同一主题 × 9 端示例</h3>
+<p>主稿：《我用 Vue 重写了公司官网，踩了这 5 个坑》</p>
+<table class="data-table">
+<thead><tr><th>平台</th><th>标题 / 开头示例</th></tr></thead>
+<tbody>
+<tr><td>微信公众号</td><td>《我用 Vue 重写了公司官网，踩了这 5 个坑》+ 深度复盘（SSR / 构建体积 / SEO…）</td></tr>
+<tr><td>小红书</td><td>「程序员必看｜用 Vue 重写官网，我踩的 5 个坑🚫」+ 6–9 图清单</td></tr>
+<tr><td>B站</td><td>【实战】用 Vue 重写公司官网，这 5 个坑别踩（8–20min 中视频）</td></tr>
+<tr><td>抖音</td><td>「千万别用 Vue 直接上 SSR，除非你想加班到凌晨」（前 3 秒钩子切片）</td></tr>
+<tr><td>视频号</td><td>「做独立开发第 8 年，我最后悔的一次技术选型」（金句口播短片）</td></tr>
+<tr><td>YouTube</td><td>I Rebuilt Our Company Site in Vue — 5 Pitfalls to Avoid（英文字幕中视频）</td></tr>
+<tr><td>TikTok</td><td>I rewrote our entire company site in Vue and made 5 stupid mistakes 💀 + POV 切片</td></tr>
+<tr><td>Instagram</td><td>We rebuilt our site in Vue. 5 pitfalls that ate 2 weeks 👇 + Reel / Carousel</td></tr>
+<tr><td>X</td><td>I rebuilt our company website in Vue. 5 pitfalls that cost me 2 weeks. A thread 🧵</td></tr>
+<tr><td>LinkedIn</td><td>Last quarter, I rebuilt our corporate site in Vue 3 as a solo dev. 5 lessons: + 专业复盘</td></tr>
+</tbody>
+</table>
+
 </section>
 
-<!-- ====== Section 9 ====== -->
-<section id="end">
-<h2><span class="sec-num">09</span>结语</h2>
-<p>这套规划的本质，是<span class="key">用「一次生产、多端分发」把单人产能放大</span>——把最贵的调研与思考只做一次，让四个渠道共享同一座事实素材库。</p>
-<p>三道护栏（命名规范、微信红线、栏目按主题判定）保证内容既能被微信安全分发，又能沉淀为可长期增值的个人资产。下一步就是：先把网站资讯栏目建起来，公众号发出首批 3 篇，两个视频号攒够脚本库存——然后让流水线自己转起来。</p>
-<p style="margin-top:18px;">🔗 本文归档于 <a href="https://www.appin.site/notes/multi-channel-content-plan.html">appin.site / 随笔</a>　·　相关脚本与素材将陆续回链至此。</p>
-</section>
+<section id="s11">
+<h2><span class="sec-num">11</span>结语</h2>
+
+<p>这套规划的本质，是<span class="key">用「一次生产、多端分发」把单人产能放大</span>——把最贵的调研与思考只做一次，让四个渠道共享同一座事实素材库，再按平台调性扩到 9 端。</p>
+<p>三道护栏（命名规范、微信红线、排版质量规范）保证内容既能被微信与各平台安全分发，又能沉淀为可长期增值的个人资产；而 6.4 的发布红线、检查清单与异常预案，则让「可持续」不只是口号。</p>
+<p>下一步就是：先把网站资讯栏目建起来，公众号发出首批 3 篇，两个视频号攒够脚本库存，排期日一次性把定时录好——然后让流水线自己转起来。实现执行时可对接团队技能：<code>mp-draft-push</code>（公众号草稿）、<code>xiaohongshu</code>（小红书发布）、<code>libtv-skill</code>（素材生成）、<code>humanizer</code>（文案去 AI 化）。</p></section>
 
 </div><!-- /.content -->
 
