@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCRE 三级网络技术备考方案</title>
-<meta name="description" content="一份面向有路由交换实操基础考生的三级网络技术备考方案：考纲、知识体系、理论短板精讲、16周三阶段计划与四级晋级路径。">
+<title>NCRE 三级网络技术备考方案 + 专项突破</title>
+<meta name="description" content="面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16周三阶段计划、四级晋级路径，外加子网划分/VLSM/CIDR 计算题集与 OSPF 多区域实战。">
 <style>
-/* ========== 模板C：暗色沉浸风格（适配 notes 栏目） ========== */
 :root {
   --bg: #f6f7f9;
   --bg-card: rgba(0,0,0,0.02);
@@ -191,7 +190,7 @@ body {
 .code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
   padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
   overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
-  border: 1px solid var(--border); }
+  border: 1px solid var(--border); white-space: pre; }
 .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
   padding-top: 32px; border-top: 1px solid var(--border); }
 .tag-cloud a { font-size: 11px; color: var(--text-secondary);
@@ -255,13 +254,13 @@ body {
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge"><span class="dot"></span>三级网络技术 · 备考</div>
-    <h1>NCRE <em>三级网络技术</em> · 考生定制备考方案</h1>
-    <p class="hero-desc">面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16 周三阶段计划与四级晋级路径。</p>
+    <div class="hero-badge"><span class="dot"></span>三级网络技术 · 备考 + 专项突破</div>
+    <h1>NCRE <em>三级网络技术</em> · 备考方案 + 专项突破</h1>
+    <p class="hero-desc">面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16周三阶段计划、四级晋级路径，外加子网划分/VLSM/CIDR 计算题集与 OSPF 多区域实战。</p>
     <div class="hero-meta">
       <span>李坤</span><span class="sep"></span>
       <span>2026-07-15</span><span class="sep"></span>
-      <span>约 2800 字</span>
+      <span>约 5200 字</span>
     </div>
   </div>
 </section>
@@ -277,6 +276,8 @@ body {
     <a href="#resources">资源推荐</a>
     <a href="#upgrade">晋级路径</a>
     <a href="#strategy">策略总谏</a>
+    <a href="#part-a">专项·子网计算</a>
+    <a href="#part-b">专项·OSPF</a>
   </div>
 </div>
 
@@ -411,12 +412,361 @@ body {
       <p>你最大的优势是「手上有活」——路由交换实操经验能让配置类综合题事半功倍，但请把精力重点砸向「会配却讲不清为什么」的理论洼地：TCP/IP 协议栈、子网规划数学、路由协议原理、规划设计方法论、安全与管理。用模拟器把每一条命令变成「可验证的现象」，让实操反哺理论，而非止于照猫画虎。三级只是资格门槛，目标若真在能力提升，建议把它当作通往四级网络工程师（含真机操作）的扎实底座来学。备考节奏上以「理解闭环」代替「刷题记忆」，每周固定复盘一个原理盲区，比考前突击更有效。</p>
     </div>
 
+    <h2 id="part-a">十、专项突破（一）：子网划分 / VLSM / CIDR 计算题集</h2>
+    <div class="highlight-box">
+      <p>本篇针对你画像里的最大数学短板之一——「子网规划数学」。共 10 道题由易到难，计算步骤完整，落笔前先写 2^h−2 与块大小两行就不会乱。可直接照着练。</p>
+    </div>
+
+    <h3>核心公式速记</h3>
+    <ul>
+      <li>可用主机数 = 2^h − 2（h = 主机位数；减 2 是去掉网络地址与广播地址）</li>
+      <li>子网数 = 2^n（n = 借位数）</li>
+      <li>块大小（Block Size）= 256 − 该八位组掩码值（只在"最后一个非 255 的八位组"上算）</li>
+      <li>子网地址 = 块大小的整倍数</li>
+    </ul>
+
+    <h3>题1（基础·定长子网划分·借位）</h3>
+    <p><strong>题干</strong>：将 192.168.10.0/24 划分为 4 个等长子网，求每个子网的子网掩码、网络地址、广播地址、可用主机范围。</p>
+    <p><strong>考查点</strong>：借位计算（2^n ≥ 子网数）、块大小、网络/广播地址推算。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>/24 主机位 8 位。需 4 个子网：2^n ≥ 4 → n=2，借 2 位。</li>
+      <li>新掩码 = /26，十进制 255.255.255.192。</li>
+      <li>块大小 = 256 − 192 = 64。子网从 .0 起每 64 跳一个。</li>
+      <li>四个子网：
+        <ul>
+          <li>192.168.10.0/26 ：广播 .63 ，可用 .1 ~ .62（62台）</li>
+          <li>192.168.10.64/26 ：广播 .127，可用 .65 ~ .126</li>
+          <li>192.168.10.128/26 ：广播 .191，可用 .129 ~ .190</li>
+          <li>192.168.10.192/26 ：广播 .255，可用 .193 ~ .254</li>
+        </ul>
+      </li>
+    </ol>
+    <p><strong>答案</strong>：掩码 255.255.255.192（/26）；四段如上。每段可用主机 62 台。</p>
+
+    <h3>题2（定长·同时满足子网数与主机数）</h3>
+    <p><strong>题干</strong>：公司获 172.16.0.0/16，需至少 8 个子网，每子网至少 800 台主机。求子网掩码，并列出前 3 个子网的地址范围。</p>
+    <p><strong>考查点</strong>：先按子网数定借位，再验证主机位是否够。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>8 个子网：2^n ≥ 8 → n=3，借 3 位 → /19。</li>
+      <li>主机位 = 32−19 = 13 位，可用主机 2^13−2 = 8190 ≥ 800 ✓。</li>
+      <li>掩码 255.255.224.0；第三八位组块大小 = 256−224 = 32。</li>
+      <li>前三段：
+        <ul>
+          <li>172.16.0.0/19 ：广播 172.16.31.255 ，可用 172.16.0.1 ~ 172.16.31.254</li>
+          <li>172.16.32.0/19 ：广播 172.16.63.255 ，可用 172.16.32.1 ~ 172.16.63.254</li>
+          <li>172.16.64.0/19 ：广播 172.16.95.255 ，可用 172.16.64.1 ~ 172.16.95.254</li>
+        </ul>
+      </li>
+    </ol>
+    <p><strong>答案</strong>：掩码 255.255.224.0（/19）；前三段如上。</p>
+
+    <h3>题3（定长·A类大网）</h3>
+    <p><strong>题干</strong>：给定 10.0.0.0/8，要至少 1000 个子网、每子网至少 50 台主机。求掩码。</p>
+    <p><strong>考查点</strong>：大类网络借位、子网/主机需求同时满足。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>1000 子网：2^n ≥ 1000 → n=10（2^10=1024），借 10 位 → /18。</li>
+      <li>主机位 = 32−18 = 14 位，2^14−2 = 16382 ≥ 50 ✓。</li>
+      <li>掩码 = /18 = 255.255.192.0。</li>
+    </ol>
+    <p><strong>答案</strong>：255.255.192.0（/18）。</p>
+
+    <h3>题4（VLSM·经典多部门）</h3>
+    <p><strong>题干</strong>：公司分到 192.168.5.0/24，需分配给：研发120台、市场50台、财务20台、行政10台，另有 3 条点到点链路各需 2 个地址。用 VLSM 分配，写出每个网段的网络地址、CIDR 掩码、可用范围。</p>
+    <p><strong>考查点</strong>：VLSM 从大到小分配；点到点用 /30。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>各需求所需主机位：
+        <ul>
+          <li>120台 → 2^h−2 ≥ 120 → h=7（126）→ /25（255.255.255.128）</li>
+          <li>50台 → h=6（62）→ /26</li>
+          <li>20台 → h=5（30）→ /27</li>
+          <li>10台 → h=4（14）→ /28</li>
+          <li>点到点 → /30（2 可用）</li>
+        </ul>
+      </li>
+      <li>从大到小、从 192.168.5.0 连续分配（互不重叠）：
+        <ul>
+          <li>研发 /25 ：192.168.5.0/25 ，可用 .1 ~ .126</li>
+          <li>市场 /26 ：192.168.5.128/26 ，可用 .129 ~ .190</li>
+          <li>财务 /27 ：192.168.5.192/27 ，可用 .193 ~ .222</li>
+          <li>行政 /28 ：192.168.5.224/28 ，可用 .225 ~ .238</li>
+          <li>WAN1 /30 ：192.168.5.240/30 ，可用 .241 ~ .242</li>
+          <li>WAN2 /30 ：192.168.5.244/30 ，可用 .245 ~ .246</li>
+          <li>WAN3 /30 ：192.168.5.248/30 ，可用 .249 ~ .250</li>
+        </ul>
+      </li>
+      <li>（验证：.0/25→.0~.127；.128/26→.128~.191；.192/27→.192~.223；.224/28→.224~.239；.240/30→.240~.243；.244/30→.244~.247；.248/30→.248~.251，无重叠。剩余 .252~.255 可作备用 /30。）</li>
+    </ol>
+    <p><strong>答案</strong>：分配表如上。共节约大量地址（若用定长 /25 须 4 段、浪费明显）。</p>
+
+    <h3>题5（VLSM·B类网多校区）</h3>
+    <p><strong>题干</strong>：ISP 分给某单位 172.20.0.0/16，需：主校区1000台、分校A500台、分校B200台、3条点到点/30。用 VLSM 分配。</p>
+    <p><strong>考查点</strong>：B类网 VLSM、跨八位组分块。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>主机位：1000→h=10（/22）；500→h=9（/23）；200→h=8（/24）；WAN ×3 /30。</li>
+      <li>从 172.20.0.0 分配：
+        <ul>
+          <li>主校区 /22 ：172.20.0.0/22 → 第三八位组块4，覆盖 .0.0~.3.255，可用 172.20.0.1 ~ 172.20.3.254</li>
+          <li>分校A /23 ：172.20.4.0/23 → 覆盖 .4.0~.5.255，可用 172.20.4.1 ~ 172.20.5.254</li>
+          <li>分校B /24 ：172.20.6.0/24 → 可用 172.20.6.1 ~ 172.20.6.254</li>
+          <li>WAN1 /30 ：172.20.7.0/30</li>
+          <li>WAN2 /30 ：172.20.7.4/30</li>
+          <li>WAN3 /30 ：172.20.7.8/30</li>
+        </ul>
+      </li>
+    </ol>
+    <p><strong>答案</strong>：分配表如上。</p>
+
+    <h3>题6（CIDR·路由聚合/超网）</h3>
+    <p><strong>题干</strong>：某路由器有以下路由，用一条 CIDR 聚合：192.168.0.0/24、192.168.1.0/24、192.168.2.0/24、192.168.3.0/24</p>
+    <p><strong>考查点</strong>：找共同前缀、超网合并。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>看第三八位组二进制：0=00000000、1=00000001、2=00000010、3=00000011。</li>
+      <li>前 6 位相同（000000），即前 16+6 = 22 位共同 → 聚合 /22。</li>
+      <li>范围 192.168.0.0 ~ 192.168.3.255，块大小4，正好覆盖 0~3 ✓。</li>
+    </ol>
+    <p><strong>答案</strong>：192.168.0.0/22。</p>
+
+    <h3>题7（CIDR·对齐边界）</h3>
+    <p><strong>题干</strong>：将以下 4 个网段聚合成最小超网：192.168.16.0/24、192.168.17.0/24、192.168.18.0/24、192.168.19.0/24</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>16=00010000、17=00010001、18=00010010、19=00010011。</li>
+      <li>前 6 位相同（000100）→ /22，起点 16 是 4 的整数倍（对齐边界）。</li>
+      <li>聚合 192.168.16.0/22，覆盖 16~19 ✓。</li>
+    </ol>
+    <p><strong>答案</strong>：192.168.16.0/22。</p>
+
+    <h3>题8（CIDR·边界陷阱，常考）</h3>
+    <p><strong>题干</strong>：以下网段能否聚合成"一条"精确超网？若能写出；若不能说明原因：192.168.20.0/24、192.168.21.0/24、192.168.22.0/24、192.168.23.0/24、192.168.24.0/24</p>
+    <p><strong>考查点</strong>：连续≠可单条聚合；必须落在 2^n 边界上。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>20~23 可聚合成 192.168.20.0/22（块4，起点20对齐）。</li>
+      <li>但加 24 后共 5 个 /24。要单条覆盖需 /21（块8）；/21 必须起在 16 或 24 的倍数。
+        <ul>
+          <li>192.168.16.0/21 覆盖 16~23（不含24）</li>
+          <li>192.168.24.0/21 覆盖 24~31（含25~31多余）</li>
+        </ul>
+      </li>
+      <li>20~24 不落在同一 /21 块内（跨 16~23 与 24~31 两个块），无法用"一条"精确聚合而不引入非目标网段（路由黑洞/越界）。</li>
+    </ol>
+    <p><strong>答案</strong>：不能单条精确聚合。可用 192.168.20.0/22 + 192.168.24.0/24 两条；或接受更大范围（但会含多余地址）。——这正是三级高频陷阱。</p>
+
+    <h3>题9（NAT·NAPT/Easy IP 地址规划，简答+思路）</h3>
+    <p><strong>题干</strong>：企业内网 192.168.1.0/24，出口路由器外网口 IP 200.1.1.1/30（对端 ISP 200.1.1.2）。50 台主机要同时上公网，但只有一个公网 IP。说明 NAPT 规划思路并给出 Cisco/华为关键配置。</p>
+    <p><strong>考查点</strong>：NAPT 端口复用、Easy IP（用出接口地址转换）、ACL 定义内网。</p>
+    <p><strong>解题（简答）</strong>：</p>
+    <ol>
+      <li>原理：多个 私网IP:私网端口 → 同一 公网IP:不同公网端口。一个公网 IP 靠 TCP/UDP 端口（1~65535，可用约 6 万+）可承载海量并发会话。</li>
+      <li>地址池 vs Easy IP：只有一个公网 IP 且与出接口同 IP，用 Easy IP 最省——直接拿出接口地址做转换，无需单独地址池。</li>
+      <li>ACL 定义需转换的内网 192.168.1.0/24。</li>
+    </ol>
+    <p><strong>Cisco 思路</strong>：</p>
+    <div class="code-block">access-list 1 permit 192.168.1.0 0.0.0.255
+ip nat inside  source list 1 interface GigabitEthernet0/1 overload   ! overload = PAT/NAPT
+interface g0/0   ! 内网口
+  ip nat inside
+interface g0/1   ! 外网口
+  ip nat outside</div>
+    <p><strong>华为思路（VRP）</strong>：</p>
+    <div class="code-block">acl 2000
+  rule permit source 192.168.1.0 0.0.0.255
+interface GigabitEthernet0/0/1     ! 出接口
+  nat outbound 2000               ! 不带 address-group = Easy IP，用接口IP转换
+! 内网口无需特别命令，仅出接口配 nat outbound 即可</div>
+    <p><strong>答案</strong>：用 NAPT（PAT）端口复用 + Easy IP；Cisco 用 <code>ip nat inside source list ... interface ... overload</code>，华为用出接口 <code>nat outbound &lt;acl&gt;</code>。</p>
+
+    <h3>题10（综合·地址规划与聚合联动，设计题）</h3>
+    <p><strong>题干</strong>：集团总部用 192.168.0.0/22（已聚合），下属分支各 /24：分支1 192.168.1.0、分支2 192.168.2.0、分支3 192.168.3.0。请在核心路由器把 4 个 /24 聚合为一条回程路由。若分支4 实际用了 192.168.5.0/24（跳过了 .4），还能聚合进同一超网吗？</p>
+    <p><strong>考查点</strong>：聚合前提是"连续 + 边界对齐"；规划阶段就要连续分配。</p>
+    <p><strong>解题</strong>：</p>
+    <ol>
+      <li>0、1、2、3 → 前 22 位同，聚合 192.168.0.0/22 ✓（块4，起点0对齐）。</li>
+      <li>若分支4 用 192.168.5.0/24，则 0、1、2、3、5 不连续（缺4）。要含 0~5 需 /21 起在 0（覆盖0~7，含6、7非目标），或拆成 192.168.0.0/22 + 192.168.5.0/24。无法单条精确聚合。</li>
+      <li>结论：地址规划必须"连续分配、对齐边界"，否则聚合失效、路由表膨胀。</li>
+    </ol>
+    <p><strong>答案</strong>：4分支可聚 192.168.0.0/22；加入跳号的 .5 后不能单条精确聚合，需拆分或扩大范围。</p>
+
+    <h3>★ Part A 易错点提醒（考生自查清单）</h3>
+    <ol>
+      <li>主机位全0（网络地址）与全1（广播地址）不可用 → 可用数 = 2^h − 2，很多人忘减2。</li>
+      <li>借位后主机位不够：先满足"主机数"再满足"子网数"，冲突时须扩大网络（如 /24 装不下大主机数就用 /23 或更大）。</li>
+      <li>块大小算错：块大小 = 256 − 掩码值（作用在那个非255的八位组）；子网地址必为块大小整倍数。</li>
+      <li>CIDR 聚合边界：网段须连续且起点是块大小整数倍；"5个连续/24"不能简单并成一条（除非接受/21含多余）——先做二进制对齐再下结论。</li>
+      <li>VLSM 必须从大到小分，否则小网段插在大网段中间造成重叠/浪费；点到点用 /30（有的设备支持 /31，RFC3021）。</li>
+      <li>反掩码≠正掩码：Cisco <code>network</code> 用反掩码（0=匹配，1=忽略），华为 <code>network</code> 用正掩码——别混。</li>
+      <li>NAT：NAPT 靠端口复用，一个公网 IP 可撑大量内网主机；Easy IP 直接用出接口 IP，无需地址池；别忘了 inside/outside 接口划分。</li>
+    </ol>
+
+    <h2 id="part-b">十一、专项突破（二）：OSPF 多区域设计详解与配置实验</h2>
+
+    <h3>1. 多区域设计原则（原理补强）</h3>
+
+    <h4>Area 0 骨干区</h4>
+    <p>OSPF 规定：所有非骨干区域必须"直接"连到 Area 0（物理或虚链路）。区域间路由一律经 Area 0 中转，形成单棵骨干树，借此防环。非骨干区之间禁止直接交换路由。</p>
+
+    <h4>ABR（区域边界路由器）</h4>
+    <p>连两个及以上区域、且至少一个接口在 Area 0 的路由器。ABR 为所连每个区域维护独立 LSDB；把所在非骨干区域的明细"摘要"成 Type3 LSA 注入 Area 0，也把其他区域的 Type3 转发进本地区域。它是区域间路由的"翻译官"。</p>
+
+    <h4>三类路由区别</h4>
+    <ul>
+      <li>区域内（Intra-area）：同区域内部，由 Type1/2 LSA 算得，最优先，路由标记 O。</li>
+      <li>区域间（Inter-area）：ABR 的 Type3 LSA 通告的其他区域路由，标记 O IA。</li>
+      <li>外部（External）：ASBR 引入的自治系统外路由（静态/其他IGP），Type5 LSA，标记 O E1/E2。</li>
+    </ul>
+
+    <h4>LSA 类型（大白话）</h4>
+    <ul>
+      <li>Type1 Router LSA：每台路由器"自报家门"——我有哪些接口、连到哪些网、链路代价多少。只在自己区域内泛洪。</li>
+      <li>Type2 Network LSA：DR 产生，报"这个广播网段上都挂了哪些路由器（邻居清单）"。只在区域内泛洪。</li>
+      <li>Type3 Summary LSA（网络汇总）：ABR 产生，把一个区域的网段"摘要"成一条路由通告给其他区域（跨区路由信息）。</li>
+      <li>Type4 ASBR Summary LSA：ABR 产生，告诉其他区域"去某个 ASBR 该怎么走"（通告 ASBR 的位置）。</li>
+      <li>Type5 External LSA：ASBR 产生，描述引入的外部路由（静态、RIP/BGP 等），洪泛到整个 OSPF 域（特殊区域除外）。</li>
+    </ul>
+
+    <h4>Cost（路径代价）</h4>
+    <p>接口 Cost = 参考带宽 ÷ 接口带宽；默认参考带宽 10^8 bps（100 Mbps）。</p>
+    <ul>
+      <li>100M 链路 → cost 1；10M → cost 10；T1(1.544M) → 64。</li>
+      <li>1G 在默认参考带宽下算 0.1，取整也为 1（与 100M 同价，这是缺陷）→ 现代网络常改 <code>auto-cost reference-bandwidth 1000</code>（10^9），使 1G=1、10G=10。</li>
+      <li>路径 Cost = 沿途"入方向"接口 Cost 累加；选路比总 Cost 最小。相等则等价负载分担。</li>
+    </ul>
+
+    <h4>DR/BDR 选举（为何广播网段需要）</h4>
+    <p>若以太网段 N 台路由器两两建全邻接，需 N(N−1)/2 条邻接、LSA 泛洪量爆炸。于是选 DR（指定路由器）+ BDR（备份），其余 DROTHER 只和 DR/BDR 建全邻接，DR 负责网段内转发 LSA。</p>
+    <ul>
+      <li>选举规则：①比接口优先级（priority 0~255，0=不参与），高者胜；②同优先级比 Router-ID 大者胜。选举不抢占（稳定后新加入的高优先级不会抢 DR）。</li>
+      <li>Router-ID 选举：手动配置 > 最大 Loopback IP > 最大物理口 IP。</li>
+      <li>（点到点链路无 DR/BDR。）</li>
+    </ul>
+
+    <h3>2. 多区域实验（总部-分支拓扑，可真做）</h3>
+
+    <p><strong>拓扑与角色</strong></p>
+    <ul>
+      <li>R1：Area 0（总部核心），含总部 LAN</li>
+      <li>R2：ABR，左连 Area 0、右连 Area 1</li>
+      <li>R3：Area 1（分支），含分支 LAN</li>
+      <li>链路：R1─(Area0)─R2─(Area1)─R3</li>
+    </ul>
+
+    <p><strong>IP 规划表</strong></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>设备</th><th>接口</th><th>IP 地址</th><th>OSPF区域</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>R1</td><td>Loopback0</td><td>1.1.1.1/32</td><td>—</td><td>Router-ID</td></tr>
+          <tr><td>R1</td><td>G0/0</td><td>10.1.1.1/24</td><td>Area 0</td><td>总部LAN网关</td></tr>
+          <tr><td>R1</td><td>G0/1</td><td>192.168.12.1/24</td><td>Area 0</td><td>连 R2</td></tr>
+          <tr><td>R2</td><td>Loopback0</td><td>2.2.2.2/32</td><td>—</td><td>Router-ID</td></tr>
+          <tr><td>R2</td><td>G0/0</td><td>192.168.12.2/24</td><td>Area 0</td><td>连 R1</td></tr>
+          <tr><td>R2</td><td>G0/1</td><td>192.168.23.2/24</td><td>Area 1</td><td>连 R3</td></tr>
+          <tr><td>R3</td><td>Loopback0</td><td>3.3.3.3/32</td><td>—</td><td>Router-ID</td></tr>
+          <tr><td>R3</td><td>G0/0</td><td>192.168.23.3/24</td><td>Area 1</td><td>连 R2</td></tr>
+          <tr><td>R3</td><td>G0/1</td><td>10.3.3.3/24</td><td>Area 1</td><td>分支LAN网关</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>预期效果：R3 学到 10.1.1.0 为 O IA；R1 学到 10.3.3.0 为 O IA。</p>
+
+    <p><strong>Cisco IOS 配置</strong>（注意：router ospf 进程号 + network 反掩码 area）</p>
+    <div class="code-block">! ---- R1 (Area 0) ----
+router ospf 1
+ router-id 1.1.1.1
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.1.1.0 0.0.0.255 area 0
+ network 192.168.12.0 0.0.0.255 area 0
+ passive-interface GigabitEthernet0/0        ! 总部LAN无邻居，静默省资源/安全
+
+! ---- R2 (ABR: Area0 + Area1) ----
+router ospf 1
+ router-id 2.2.2.2
+ network 2.2.2.2 0.0.0.0 area 0
+ network 192.168.12.0 0.0.0.255 area 0
+ network 192.168.23.0 0.0.0.255 area 1
+
+! ---- R3 (Area 1) ----
+router ospf 1
+ router-id 3.3.3.3
+ network 3.3.3.3 0.0.0.0 area 1
+ network 192.168.23.0 0.0.0.255 area 1
+ network 10.3.3.0 0.0.0.255 area 1
+ passive-interface GigabitEthernet0/1        ! 分支LAN无邻居</div>
+
+    <p><strong>华为 VRP 配置</strong>（注意：先 ospf 进程+router-id，再 area，再 network 正掩码）</p>
+    <div class="code-block"># ---- R1 (Area 0) ----
+ospf 1 router-id 1.1.1.1
+ area 0
+  network 1.1.1.1 0.0.0.0
+  network 10.1.1.0 0.0.0.255
+  network 192.168.12.0 0.0.0.255
+ silent-interface GigabitEthernet0/0/1       # 对应LAN口静默
+
+# ---- R2 (ABR) ----
+ospf 1 router-id 2.2.2.2
+ area 0
+  network 2.2.2.2 0.0.0.0
+  network 192.168.12.0 0.0.0.255
+ area 1
+  network 192.168.23.0 0.0.0.255
+
+# ---- R3 (Area 1) ----
+ospf 1 router-id 3.3.3.3
+ area 1
+  network 3.3.3.3 0.0.0.0
+  network 192.168.23.0 0.0.0.255
+  network 10.3.3.0 0.0.0.255
+ silent-interface GigabitEthernet0/0/1</div>
+    <div class="info-box">
+      <div class="info-title">Cisco / 华为关键差异</div>
+      <ul>
+        <li>①Cisco <code>router ospf &lt;进程号&gt;</code> 后直接 <code>network 地址 反掩码 area &lt;区域&gt;</code>；华为先 <code>ospf &lt;进程&gt; router-id</code> → <code>area &lt;区域&gt;</code> → <code>network 地址 正掩码</code>。</li>
+        <li>②Cisco 静默叫 <code>passive-interface</code>，华为叫 <code>silent-interface</code>。</li>
+        <li>③Cisco network 用反掩码（0匹配1忽略），华为用正掩码，绝不可混抄。</li>
+      </ul>
+    </div>
+
+    <p><strong>验证 / 排错命令</strong></p>
+    <p><strong>Cisco</strong>：</p>
+    <ul>
+      <li><code>show ip ospf neighbor</code>：看 Neighbor ID（对端Router-ID）、State 是否 Full（邻接成功；以太网DROTHER间卡 2-Way 属正常）、Priority、DR/BDR 地址、接口。</li>
+      <li><code>show ip ospf interface</code>：各接口是否参与OSPF、所属区域、Cost、是否为 DR/BDR。</li>
+      <li><code>show ip route ospf</code>：O = 区域内路由；O IA = 区域间路由（来自ABR的Type3）；O E1/E2 = 外部路由。</li>
+    </ul>
+    <div class="code-block">Neighbor ID   Pri  State        Dead Time  Address        Interface
+2.2.2.2       1    FULL/DR      00:00:35   192.168.12.2   Gig0/1</div>
+    <p><strong>华为</strong>：</p>
+    <ul>
+      <li><code>display ospf peer</code>：邻居 Router-ID、状态 State=Full、优先级、对端地址。</li>
+      <li><code>display ospf interface</code>：接口 OSPF 信息、Cost、DR/BDR。</li>
+      <li><code>display ip routing-table protocol ospf</code>：OSPF 路由条目；配合 <code>display ospf routing</code> 可看类型 Intra/Inter/ASE。注：华为表中区域间路由也标 OSPF，想区分 O/O IA 看 <code>display ospf routing</code> 的 Type 列。</li>
+    </ul>
+
+    <p><strong>盲区点透（针对"会配不会讲"）</strong></p>
+    <ul>
+      <li>为什么要有 Area 0：区域间路由被强制在 Area 0 上"中转"，非骨干区不能两两直连交换，从而构成单骨干树、靠骨干防环（OSPF 区域间本质是距离矢量行为，必须靠骨干约束）。</li>
+      <li>ABR 怎么产生 Type3 LSA：ABR 算完本地区域 SPF 树后，把"到达该区域各网段的可达性（网络号+掩码+到ABR的cost）"以 Type3 Summary LSA 注入 Area 0 及其他区域；别区路由器据此算出"经此ABR到那个网段"的区域间路由。</li>
+      <li>Cost 怎么影响选路：OSPF 只比到目标的总 Cost（路径入接口累加）。改接口带宽或手动 <code>ip ospf cost</code> 即改选路；两条等 Cost 则等价负载分担——所以"真懂选路"要先会算沿途 Cost。</li>
+    </ul>
+
+    <div class="pull-quote">
+      <p>子网数学的命门是"先算主机位再算网络位、二进制对齐才敢聚合"，每题落笔前先写 2^h−2 与块大小两行就不会乱；OSPF 的命门是"Area 0 是防环骨架、ABR 用 Type3 做区域间翻译、选路只看 Cost 累加"——把这三句挂在嘴边，配命令时你就能同步讲清每一步在干什么，而不只是照敲。</p>
+    </div>
+
     <div class="tag-cloud">
       <a href="/notes/">NCRE</a>
       <a href="/notes/">三级网络技术</a>
       <a href="/notes/">备考</a>
       <a href="/notes/">网络技术</a>
       <a href="/notes/">路由交换</a>
+      <a href="/notes/">子网划分</a>
+      <a href="/notes/">OSPF</a>
       <a href="/notes/">晋级路径</a>
     </div>
     <a href="/notes/" class="back-link">返回随笔</a>
