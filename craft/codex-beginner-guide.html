@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codex 小白使用教程：零基础也能让 AI 帮你写代码</title>
-<meta name="description" content="一份给没写过多少代码的人的 Codex（OpenAI AI 程序员）上手教程：4 种入口、3 步开始、下指令技巧、审批模式与 Git 存档安全、与 WorkBuddy 的区别，以及 30 分钟上手路线。">
+<meta name="description" content="一份给没写过多少代码的人的 Codex（OpenAI AI 程序员）上手教程：4 种入口、3 步开始、价格与用量、下指令技巧、审批模式安全、插件/MCP/子Agent 扩展、与 WorkBuddy 的组合拳，以及 30 分钟上手路线。">
 <style>
 /* ========== 模板B：现代宽屏风格 ========== */
 :root {
@@ -184,16 +184,16 @@ body {
   <div class="hero-inner">
     <div class="hero-badge"><span class="dot"></span>AI 编程工具</div>
     <h1>Codex 小白使用教程：<em>零基础</em>也能让 AI 帮你写代码</h1>
-    <p class="hero-desc">一份给「没写过多少代码、但想用 AI 帮自己写程序 / 改网站 / 自动化重复活」的人的上手指南。看完你能独立让 Codex 帮你干一件实事。</p>
+    <p class="hero-desc">一份给「没写过多少代码、但想用 AI 帮自己写程序 / 改网站 / 自动化重复活」的人的上手指南。看完你能独立让 Codex 帮你干一件实事，并知道它要花多少钱、能跟什么组合变「外挂级」。</p>
     <div class="hero-meta">
       <span>李坤</span><span class="sep"></span>
       <span>2026-07-15</span><span class="sep"></span>
-      <span>约 2800 字</span>
+      <span>约 4500 字</span>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">10</div><div class="label">个章节</div></div>
-      <div class="hero-stat"><div class="num">7</div><div class="label">个标签</div></div>
-      <div class="hero-stat"><div class="num">15</div><div class="label">分钟阅读</div></div>
+      <div class="hero-stat"><div class="num">12</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">10</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">25</div><div class="label">分钟阅读</div></div>
     </div>
   </div>
 </section>
@@ -203,13 +203,14 @@ body {
     <div class="summary-icon">🤖</div>
     <div class="summary-text">
       <h3>文章摘要</h3>
-      <p>Codex 是 OpenAI 的「AI 程序员」——你用大白话下指令，它去读代码、改代码、跑命令、甚至自己验证结果。它和你正在用的 WorkBuddy 思路一模一样，区别只是更专注写代码、深度绑定 GitHub。本教程覆盖 4 种入口、3 步上手、下指令技巧、审批模式与 Git 存档安全，以及一条 30 分钟实操路线。</p>
+      <p>Codex 是 OpenAI 的「AI 程序员」——你用大白话下指令，它去读代码、改代码、跑命令、甚至自己验证结果。它和你正在用的 WorkBuddy 思路一模一样，区别只是更专注写代码、深度绑定 GitHub。本教程覆盖 4 种入口、3 步上手、<span class="key">价格与用量</span>、下指令技巧、审批模式与 Git 存档安全，以及一套「自定义栈」（AGENTS.md / Skills / MCP / 子 Agent）——把 Codex 配好，它就成了你的专属工程台。</p>
       <div class="key-points">
-        <span>网页版零安装</span>
+        <span>Free 档零成本试水</span>
+        <span>API Key 按 token 付费</span>
         <span>审批模式保平安</span>
-        <span>Git 存档防翻车</span>
-        <span>好指令 = 目标+文件+约束+验收</span>
-        <span>与 WorkBuddy 同源</span>
+        <span>无插件市场但有自定义栈</span>
+        <span>MCP 接外部工具</span>
+        <span>配 GitHub Actions 最猛</span>
       </div>
     </div>
   </div>
@@ -243,8 +244,8 @@ body {
     <h2>怎么开始（3 步）</h2>
     <ol class="step-list">
       <li><span class="step-label">有账号额度</span>
-        <p>ChatGPT <strong>Plus / Pro / Team / Edu / Enterprise</strong> 订阅都含 Codex 额度；</p>
-        <p>或者准备一个 <strong>OpenAI API Key</strong>（按量付费，无订阅也能用）。</p>
+        <p>ChatGPT <strong>Free / Go / Plus / Pro / Business / Edu / Enterprise</strong> 订阅都含 Codex 额度；</p>
+        <p>或者准备一个 <strong>OpenAI API Key</strong>（按量付费，无订阅也能用，特别适合接 CI 自动化）。</p>
       </li>
       <li><span class="step-label">打开并登录</span>
         <p>网页版：浏览器开 <code>chatgpt.com/codex</code>，用 ChatGPT 账号登录；</p>
@@ -260,6 +261,55 @@ body {
       <div class="info-title">温馨提示</div>
       <p>访问 <code>chatgpt.com</code> 需要你能正常打开该网站的网络环境（此处不展开）。</p>
     </div>
+
+    <h2>价格与用量（要花多少钱）</h2>
+    <p>这是很多人最关心的。结论先说：<strong>轻度玩白嫖也能用，认真干按月订阅，接自动化按 token 付费最划算。</strong></p>
+
+    <h3>套餐怎么选</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>套餐</th><th>价格</th><th>适合谁</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Free</strong></td><td>$0/月</td><td>轻量快速任务试水</td></tr>
+          <tr><td><strong>Go</strong></td><td>$8/月</td><td>少量编码任务</td></tr>
+          <tr><td><strong>Plus</strong></td><td>$20/月</td><td>个人每周几次专注会话（含网页/CLI/IDE/iOS）</td></tr>
+          <tr><td><strong>Pro</strong></td><td>$100/月起（可选 5x / 20x 更高额度）</td><td>重度日常使用</td></tr>
+          <tr><td><strong>Business</strong></td><td>$20/用户/月（月付 $25，含 SSO/MFA）</td><td>小团队</td></tr>
+          <tr><td><strong>Enterprise / Edu</strong></td><td>定制报价</td><td>企业 / 学校</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Codex 已包含在上面所有 ChatGPT 订阅里，<strong>订阅即送额度</strong>，不用单独买。</p>
+
+    <h3>两种计费方式</h3>
+    <ul>
+      <li><strong>订阅含额度</strong>：上面各档套餐每月给一定的 Codex 使用量，超了可用 ChatGPT credits 灵活续。</li>
+      <li><strong>API Key 按量付费</strong>：在 CLI / SDK / IDE 插件里用 API Key，<span class="key">只为你实际消耗的 token 付钱，没有月费</span>。这是接 CI/CD 自动化最划算的方式。</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>重要变化</strong>：2026-04-02 起，Codex 计费从「按条数」改成「按 token」——和 API 一致。一个典型 GPT-5.5 任务消耗约 <strong>5–45 credits</strong>；整体下来行业平均约 <strong>$100–200 / 开发者 / 月</strong>（模型、并发、是否开高速模式差异很大）。</p>
+    </div>
+
+    <h3>用量上限（每天 UTC 0 点重置）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>套餐</th><th>每日任务数</th><th>并发任务</th><th>单任务超时</th><th>仓库上限</th></tr></thead>
+        <tbody>
+          <tr><td>Plus</td><td>~25</td><td>1</td><td>10 分钟</td><td>500 MB</td></tr>
+          <tr><td>Pro</td><td>~250</td><td>3</td><td>30 分钟</td><td>2 GB</td></tr>
+          <tr><td>Team</td><td>~100 / 人</td><td>2</td><td>15 分钟</td><td>1 GB</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>注意：限制是「基于算力」的——简单任务耗的配额比复杂任务少，所以不是死板的条数。</p>
+
+    <h3>给小白的省钱建议</h3>
+    <ul class="checklist">
+      <li>只想试试：用 <strong>Free</strong> 跑几个轻任务，零成本。</li>
+      <li>接自动化（定时跑、CI 审查）：用 <strong>API Key 按 token 付费</strong>，比开订阅便宜且可控。</li>
+      <li>日常本地聊天多：Plus 里用 <strong>GPT-5.4-mini</strong> 本地消息额度更高、更便宜。</li>
+      <li>复杂任务才上 GPT-5.5 / codex 大模型，别什么都用最贵的。</li>
+    </ul>
 
     <h2>第一次让它干啥（从最简单的开始）</h2>
     <p>别一上来就「给我做个网站」。先感受它怎么<strong>读</strong>代码：</p>
@@ -315,6 +365,47 @@ body {
       <li><strong>切模型 / 推理档</strong>：TUI 里 <code>/model</code> 切模型；复杂任务把推理档调到 high</li>
     </ul>
 
+    <h2>进阶扩展：能装插件吗？和什么联合更狠</h2>
+    <p>这是 Codex 拉开差距的地方。先回答你最关心的——<strong>「能装插件吗？」</strong></p>
+    <p>严格说，Codex <strong>没有一个像手机应用商店那样的「插件市场」</strong>。但它有一套<strong>自定义栈</strong>，效果类似、甚至更灵活：你把规则、流程、外部工具「装」进 Codex，它就越用越像你的专属工程师。</p>
+
+    <h3>AGENTS.md：给项目写「说明书」</h3>
+    <p>在仓库根目录放一个 <code>AGENTS.md</code>，相当于「写给 AI 同事看的项目手册」：项目怎么启动、怎么测试、代码风格、哪些目录不能乱动、提交前要跑什么。它随仓库走，每次 Codex 进这个目录自动生效。<strong>最该先加的就是它</strong>——不用每次在对话里重复念规矩。</p>
+    <div class="code-block"><span class="comment"># AGENTS.md 示例</span>
+<span class="cmd">## Setup commands</span>
+- Install deps: pnpm install
+- Start dev server: pnpm dev
+- Run tests: pnpm test
+<span class="cmd">## Code style</span>
+- TypeScript strict mode
+- Single quotes, no semicolons</div>
+
+    <h3>Skills：把重复流程打包</h3>
+    <p>把常用工作流（如「生成迁移脚本」「按规范补测试」）写成 <strong>Skill</strong>，以后一句话就能调用，不用每次重新解释。放在 <code>.agents/skills/</code> 或 <code>~/.codex/skills/</code>。</p>
+
+    <h3>MCP：把外部工具接进来（这才是「外挂」）</h3>
+    <p>通过 <strong>MCP（Model Context Protocol）</strong> 把 Codex 连到你工作区之外的系统：数据库、Figma、GitHub Issues、文档库、邮件、浏览器……一行命令就能加：</p>
+    <div class="code-block"><span class="cmd">codex mcp add</span> docs --url https://example.com/mcp</div>
+    <p>接上后，你可以直接说「把 Figma 这个设计稿实现成组件」「查一下数据库里超时的订单」，Codex 就能真去调那些系统。</p>
+
+    <h3>子 Agent：把任务派给专家</h3>
+    <p>用 <code>.codex/agents/*.toml</code> 定义专门角色（如「安全审查员」「调试员」），让 Codex 把子任务派给对应专家并发跑，主上下文还干净。</p>
+
+    <h3>和什么联合起来更狠（组合拳）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>联合对象</th><th>能干什么</th><th>为什么猛</th></tr></thead>
+        <tbody>
+          <tr><td><strong>GitHub Actions</strong><br><code>openai/codex-action@v1</code></td><td>每个 PR 自动审查、CI 失败时自动定位修复、定时跑依赖更新</td><td>AI 变成 24h 在岗的 code reviewer，人只管合并</td></tr>
+          <tr><td><strong>测试套件 + CI</strong></td><td>Codex 改完自己跑测试，不绿不提交</td><td>质量门禁自动挡，不怕它乱改</td></tr>
+          <tr><td><strong>WorkBuddy</strong></td><td>代码归 Codex，文章 / 建站 / 做图 / 视频归 WorkBuddy</td><td>一个全栈产品从「写代码」到「对外发布」一条龙</td></tr>
+          <tr><td><strong>MCP 接 Figma</strong></td><td>设计图直接变代码</td><td>设计即生产，跳过手动还原</td></tr>
+          <tr><td><strong>第二个 AI 评审</strong></td><td>Codex 写，另一个模型审</td><td>双模型互校，漏掉的 bug 更少</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <blockquote class="pull-quote"><p>最实用的入门组合：先把 <b>AGENTS.md</b> 写好 + 接上 GitHub（网页版自带 code review / Slack 集成），你已经比大多数团队自动化了。要更进一步，再上 <b>MCP</b> 和 <b>codex-action</b>。</p></blockquote>
+
     <h2>和 WorkBuddy 的区别（你已经会 80%）</h2>
     <div class="table-wrap">
       <table>
@@ -326,30 +417,34 @@ body {
         </tbody>
       </table>
     </div>
-    <p><strong>结论</strong>：你用 WorkBuddy 建 appin.site 那套「说人话 → 它动手 → 看结果 → 迭代」的流程，原样搬到 Codex 就对了。</p>
+    <p><strong>结论</strong>：你用 WorkBuddy 建 appin.site 那套「说人话 → 它动手 → 看结果 → 迭代」的流程，原样搬到 Codex 就对了。两者配合——Codex 写代码，WorkBuddy 做内容发布——基本覆盖一个独立开发者 90% 的活。</p>
 
     <h2>常见问题</h2>
     <h3>Q：我不会编程能用吗？</h3>
     <p>A：能用。让它「解释代码」「生成小程序」完全没问题；但想改对方向，懂点基础概念会更稳。把它当「24 小时在线的程序员同事」。</p>
     <h3>Q：要钱吗？</h3>
-    <p>A：ChatGPT 订阅含 Codex 额度；用 API Key 则按量计费。具体看 OpenAI 定价页。</p>
+    <p>A：Free 档零成本试水；Plus $20/月够个人用；接 CI 自动化用 API Key 按 token 付费，约 $100–200/开发者/月。具体看 OpenAI 定价页。</p>
     <h3>Q：它会搞坏我电脑吗？</h3>
     <p>A：默认只在你选的目录里操作，Full Access 才联网；配合 Git 存档基本零风险。</p>
     <h3>Q：和 GitHub 绑定麻烦吗？</h3>
-    <p>A：网页版按提示点几下授权即可，之后就能直接改仓库、出 PR。</p>
+    <p>A：网页版按提示点几下授权即可，之后就能直接改仓库、出 PR；还能在 PR 里 @codex 让它改东西。</p>
+    <h3>Q：能装插件扩展吗？</h3>
+    <p>A：没有应用商店式插件，但有更灵活的自定义栈：AGENTS.md（项目规则）、Skills（流程包）、MCP（接外部工具）、子 Agent（专家分工）。把这套配好，Codex 就成了你的专属工程台。</p>
 
     <h2>30 分钟上手路线</h2>
     <ol class="step-list">
-      <li><span class="step-label">登录</span><p>登录 <code>chatgpt.com/codex</code>。</p></li>
+      <li><span class="step-label">登录</span><p>登录 <code>chatgpt.com/codex</code>（Free 档即可）。</p></li>
       <li><span class="step-label">连项目</span><p>连一个 GitHub 测试仓库（或本机小文件夹）。</p></li>
       <li><span class="step-label">看它读代码</span><p>发：「介绍一下这个项目」 → 看它怎么读代码。</p></li>
       <li><span class="step-label">看它改代码</span><p>发：「给 README 加一节安装说明」 → 看它改了什么（diff）。</p></li>
-      <li><span class="step-label">完整任务</span><p>发一个完整任务：「用 HTML 做个单页个人主页，含姓名和一段自我介绍」。确认结果，体验「说人话 → 出东西」的爽感。</p></li>
+      <li><span class="step-label">完整任务</span><p>发一个完整任务：「用 HTML 做个单页个人主页，含姓名和一段自我介绍」。</p></li>
+      <li><span class="step-label">加说明书</span><p>在仓库根目录加一个 <code>AGENTS.md</code>，写清「怎么跑测试」。</p></li>
+      <li><span class="step-label">体验爽感</span><p>确认结果，体验「说人话 → 出东西」的爽感；有余力再接 MCP / codex-action。</p></li>
     </ol>
 
     <div class="info-box">
       <div class="info-title">说明</div>
-      <p>Codex 产品迭代快，命令行与界面细节以 OpenAI 官方文档（developers.openai.com/codex）为准。本教程基于 2026-07 产品形态整理。</p>
+      <p>Codex 产品迭代快，命令行与界面细节以 OpenAI 官方文档（developers.openai.com/codex）为准。本教程基于 2026-07 产品形态整理，定价数据来自 OpenAI Codex 定价页与 Codex rate card（2026-04 起改为 token 计费）。</p>
     </div>
 
   </article>
@@ -362,6 +457,9 @@ body {
     <a href="/craft/?cat=新手入门">新手入门</a>
     <a href="/craft/?cat=AI助手">AI 助手</a>
     <a href="/craft/?cat=自动化">自动化</a>
+    <a href="/craft/?cat=定价">定价</a>
+    <a href="/craft/?cat=MCP">MCP</a>
+    <a href="/craft/?cat=GitHub Actions">GitHub Actions</a>
   </div>
   <a href="/craft/" class="back-link">返回技艺录</a>
 </div>
