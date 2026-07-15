@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex 小白使用教程：零基础也能让 AI 帮你写代码</title>
+<meta name="description" content="一份给没写过多少代码的人的 Codex（OpenAI AI 程序员）上手教程：4 种入口、3 步开始、下指令技巧、审批模式与 Git 存档安全、与 WorkBuddy 的区别，以及 30 分钟上手路线。">
+<style>
+/* ========== 模板B：现代宽屏风格 ========== */
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-18px; left:0; right:0; height:2px; background:var(--accent); border-radius:1px; }
+
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%);
+  pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px;
+  position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body h4 { font-size:15px; font-weight:600; margin:24px 0 10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body .key, .content .key { color:#5b21b6; font-weight:700; }
+
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08));
+  border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+
+.step-list { counter-reset:step; list-style:none; margin:28px 0 40px; }
+.step-list li { counter-increment:step; margin-bottom:20px; padding:24px 28px; background:#fff;
+  border:1px solid var(--border); border-radius:var(--radius); position:relative; box-shadow:0 2px 8px rgba(0,0,0,0.02); }
+.step-list li::before { content:counter(step); position:absolute; top:-10px; left:20px;
+  background:var(--accent); color:#fff; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+.step-list li .step-label { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; display:block; padding-top:8px; }
+.step-list li p { margin-bottom:4px; font-size:15px; }
+
+.checklist { list-style:none; margin:24px 0 36px; }
+.checklist li { padding:12px 18px; margin-bottom:8px; border-radius:10px; background:var(--bg-card); display:flex; align-items:center; gap:10px; font-size:14px; border:1px solid var(--border); }
+.checklist li::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:800; flex-shrink:0; }
+
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7;
+  overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; }
+.code-block .comment { color:#6c7086; }
+.code-block .cmd { color:#89b4fa; }
+
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+  .pull-quote p { font-size:15px; }
+}
+
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; max-height:460px; object-fit:cover; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>AI 编程工具</div>
+    <h1>Codex 小白使用教程：<em>零基础</em>也能让 AI 帮你写代码</h1>
+    <p class="hero-desc">一份给「没写过多少代码、但想用 AI 帮自己写程序 / 改网站 / 自动化重复活」的人的上手指南。看完你能独立让 Codex 帮你干一件实事。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-15</span><span class="sep"></span>
+      <span>约 2800 字</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">10</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">7</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">15</div><div class="label">分钟阅读</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">🤖</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>Codex 是 OpenAI 的「AI 程序员」——你用大白话下指令，它去读代码、改代码、跑命令、甚至自己验证结果。它和你正在用的 WorkBuddy 思路一模一样，区别只是更专注写代码、深度绑定 GitHub。本教程覆盖 4 种入口、3 步上手、下指令技巧、审批模式与 Git 存档安全，以及一条 30 分钟实操路线。</p>
+      <div class="key-points">
+        <span>网页版零安装</span>
+        <span>审批模式保平安</span>
+        <span>Git 存档防翻车</span>
+        <span>好指令 = 目标+文件+约束+验收</span>
+        <span>与 WorkBuddy 同源</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hero-cover">
+  <img src="/uploads/codex-beginner-guide-cover.jpg" alt="Codex 小白使用教程封面">
+</div>
+
+<div class="article-wrap">
+  <article class="article-body">
+
+    <h2>一句话理解 Codex</h2>
+    <p><strong>Codex 是 OpenAI 的「AI 程序员」</strong>——你用大白话下指令，它去读代码、改代码、跑命令、甚至自己验证结果。</p>
+    <p>它和你正在用的 WorkBuddy 思路一模一样（都是「对话式 AI 助手 + 能动手改文件 / 跑命令」），区别只是 Codex 更专注写代码、深度绑定 GitHub 和本地代码仓库。把它当成<span class="key">「只干代码活的 WorkBuddy」</span>就行，你已经会一大半了。</p>
+
+    <h2>Codex 有几种用法（挑最省事的）</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>入口</th><th>怎么用</th><th>适合谁</th></tr></thead>
+        <tbody>
+          <tr><td><strong>网页版</strong></td><td>打开 <code>chatgpt.com/codex</code>，连 GitHub 仓库，云端跑任务</td><td>小白首选，零安装</td></tr>
+          <tr><td><strong>桌面 App</strong></td><td>下载安装，选本地项目文件夹，本地运行</td><td>想在本机项目上用</td></tr>
+          <tr><td><strong>终端 CLI</strong></td><td>装 <code>codex</code> 命令，在终端里对话</td><td>程序员 / 爱折腾</td></tr>
+          <tr><td><strong>IDE 插件</strong></td><td>VS Code / Cursor / Windsurf 侧边栏</td><td>写代码的人</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <blockquote class="pull-quote"><p>小白建议：先从<b>网页版</b>上手，不用装任何东西，登录就能用。</p></blockquote>
+
+    <h2>怎么开始（3 步）</h2>
+    <ol class="step-list">
+      <li><span class="step-label">有账号额度</span>
+        <p>ChatGPT <strong>Plus / Pro / Team / Edu / Enterprise</strong> 订阅都含 Codex 额度；</p>
+        <p>或者准备一个 <strong>OpenAI API Key</strong>（按量付费，无订阅也能用）。</p>
+      </li>
+      <li><span class="step-label">打开并登录</span>
+        <p>网页版：浏览器开 <code>chatgpt.com/codex</code>，用 ChatGPT 账号登录；</p>
+        <p>桌面 / CLI：首次运行会提示登录，选「Sign in with ChatGPT」。</p>
+      </li>
+      <li><span class="step-label">选一个项目</span>
+        <p>网页版要连一个 <strong>GitHub 仓库</strong>（按提示授权即可）；</p>
+        <p>桌面 / CLI 选一个<strong>本地文件夹</strong>作为工作目录。</p>
+        <p>发第一条消息，比如：「介绍一下这个项目」。</p>
+      </li>
+    </ol>
+    <div class="info-box">
+      <div class="info-title">温馨提示</div>
+      <p>访问 <code>chatgpt.com</code> 需要你能正常打开该网站的网络环境（此处不展开）。</p>
+    </div>
+
+    <h2>第一次让它干啥（从最简单的开始）</h2>
+    <p>别一上来就「给我做个网站」。先感受它怎么<strong>读</strong>代码：</p>
+    <ul>
+      <li>「用一句话介绍这个项目是干嘛的」</li>
+      <li>「解释一下 <code>src/main.py</code> 第 10–30 行在做什么」</li>
+      <li>「这个仓库用了什么技术栈？」</li>
+    </ul>
+    <p>等它读明白了，再让它<strong>动手</strong>：</p>
+    <ul>
+      <li>「在这个仓库里做一个贪吃蛇小游戏」</li>
+      <li>「找出并修复 bug，尽量少改动」</li>
+      <li>「给 README 加一节『安装说明』」</li>
+    </ul>
+
+    <h2>怎么下指令才靠谱（核心技巧）</h2>
+    <p>Codex 很强，但<span class="key">指令越清楚，结果越准</span>。好指令 = 目标 + 相关文件 + 约束 + 验收方式。</p>
+    <div class="highlight-box">
+      <p><strong>模板：</strong>在 <code>src/</code> 目录下用 Python 写一个脚本，把 CSV 转成 JSON，保留原表头；写完跑 <code>python convert.py test.csv</code> 验证能出结果。</p>
+    </div>
+    <ul class="checklist">
+      <li>❌「做个网站」 → ✅「用纯 HTML+CSS 做一个个人简历页，含头像、经历、技能三块，深色背景」</li>
+      <li>❌ 一次塞 5 个任务 → ✅ 一次一个明确目标，做完再下一个</li>
+      <li>❌ 直接让它乱改 → ✅ 先让它「列个计划」，你点头再动手</li>
+      <li>✅ 给它<strong>截图 / 设计稿</strong>：把图直接贴进对话框，说「照这个做」</li>
+    </ul>
+
+    <h2>安全：审批模式 + Git 存档（重要！）</h2>
+    <p>Codex 会改你电脑上的文件，<strong>管好权限</strong>就不会出事。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>模式</th><th>行为</th><th>小白建议</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Read Only</strong></td><td>只聊、只读，不改文件</td><td>先用来「看它打算怎么改」</td></tr>
+          <tr><td><strong>Auto</strong>（默认）</td><td>自动读 / 改 / 跑当前目录，目录外或联网需你同意</td><td>日常用，关键操作会问你</td></tr>
+          <tr><td><strong>Full Access</strong></td><td>全自动含联网，不询问</td><td>⚠️ 谨慎，别随便开</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="checklist">
+      <li><strong>改之前先存档</strong>：让 Codex 动手前先 <code>git commit</code>，或你自己建个 Git 存档点，出错一键回退。</li>
+      <li><strong>别贴密钥</strong>：密码、API Key 别发给 AI；它默认只看你授权的那个目录。</li>
+    </ul>
+    <blockquote class="pull-quote"><p>小白最稳的姿势：<b>先用 Read Only 模式让它说计划 → 你确认 → 切 Auto 放行</b>。</p></blockquote>
+
+    <h2>进阶小技巧（用熟了再玩）</h2>
+    <ul>
+      <li><strong>贴图下达</strong>：报错截图 / 设计稿直接贴对话框。CLI 里：<code>codex -i shot.png "按这个图实现界面"</code></li>
+      <li><strong>非交互脚本</strong>：<code>codex exec "修复 CI 报错"</code> 可写进自动化流程，不在终端守着</li>
+      <li><strong>发布前评审</strong>：改完后让 <code>/review</code> 再查一遍（lint / 类型 / 测试），再提交</li>
+      <li><strong>联网搜最新文档</strong>：让它搜当前技术的最新用法，避免用旧 API</li>
+      <li><strong>复杂任务拆并行</strong>：用 subagents 同时处理多个子任务</li>
+      <li><strong>切模型 / 推理档</strong>：TUI 里 <code>/model</code> 切模型；复杂任务把推理档调到 high</li>
+    </ul>
+
+    <h2>和 WorkBuddy 的区别（你已经会 80%）</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>Codex</th><th>WorkBuddy（你正在用）</th></tr></thead>
+        <tbody>
+          <tr><td>强项</td><td>写代码、改仓库、提 PR、连 GitHub</td><td>写文章、做图、建站、跑本地命令、综合任务</td></tr>
+          <tr><td>入口</td><td>网页 / App / CLI / IDE</td><td>对话界面 + 工具链</td></tr>
+          <tr><td>心智</td><td>「对话式 AI 程序员」</td><td>「对话式全能助手」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>结论</strong>：你用 WorkBuddy 建 appin.site 那套「说人话 → 它动手 → 看结果 → 迭代」的流程，原样搬到 Codex 就对了。</p>
+
+    <h2>常见问题</h2>
+    <h3>Q：我不会编程能用吗？</h3>
+    <p>A：能用。让它「解释代码」「生成小程序」完全没问题；但想改对方向，懂点基础概念会更稳。把它当「24 小时在线的程序员同事」。</p>
+    <h3>Q：要钱吗？</h3>
+    <p>A：ChatGPT 订阅含 Codex 额度；用 API Key 则按量计费。具体看 OpenAI 定价页。</p>
+    <h3>Q：它会搞坏我电脑吗？</h3>
+    <p>A：默认只在你选的目录里操作，Full Access 才联网；配合 Git 存档基本零风险。</p>
+    <h3>Q：和 GitHub 绑定麻烦吗？</h3>
+    <p>A：网页版按提示点几下授权即可，之后就能直接改仓库、出 PR。</p>
+
+    <h2>30 分钟上手路线</h2>
+    <ol class="step-list">
+      <li><span class="step-label">登录</span><p>登录 <code>chatgpt.com/codex</code>。</p></li>
+      <li><span class="step-label">连项目</span><p>连一个 GitHub 测试仓库（或本机小文件夹）。</p></li>
+      <li><span class="step-label">看它读代码</span><p>发：「介绍一下这个项目」 → 看它怎么读代码。</p></li>
+      <li><span class="step-label">看它改代码</span><p>发：「给 README 加一节安装说明」 → 看它改了什么（diff）。</p></li>
+      <li><span class="step-label">完整任务</span><p>发一个完整任务：「用 HTML 做个单页个人主页，含姓名和一段自我介绍」。确认结果，体验「说人话 → 出东西」的爽感。</p></li>
+    </ol>
+
+    <div class="info-box">
+      <div class="info-title">说明</div>
+      <p>Codex 产品迭代快，命令行与界面细节以 OpenAI 官方文档（developers.openai.com/codex）为准。本教程基于 2026-07 产品形态整理。</p>
+    </div>
+
+  </article>
+
+  <div class="tag-cloud">
+    <a href="/craft/?cat=AI编程">AI 编程</a>
+    <a href="/craft/?cat=Codex">Codex</a>
+    <a href="/craft/?cat=OpenAI">OpenAI</a>
+    <a href="/craft/?cat=工具教程">工具教程</a>
+    <a href="/craft/?cat=新手入门">新手入门</a>
+    <a href="/craft/?cat=AI助手">AI 助手</a>
+    <a href="/craft/?cat=自动化">自动化</a>
+  </div>
+  <a href="/craft/" class="back-link">返回技艺录</a>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+})();
+</script>
+
+</body>
+</html>

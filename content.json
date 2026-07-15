@@ -1470,6 +1470,30 @@
       "status": "published",
       "link": "/craft/seedance-2.html",
       "template": "A"
+    },
+    {
+      "id": "article-66",
+      "title": "Codex 小白使用教程：零基础也能让 AI 帮你写代码",
+      "slug": "codex-beginner-guide",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/codex-beginner-guide-cover.jpg",
+      "excerpt": "一份给没写过多少代码的人的 Codex（OpenAI AI 程序员）上手教程：4 种入口、3 步开始、下指令技巧、审批模式与 Git 存档安全、与 WorkBuddy 的区别，以及 30 分钟上手路线。",
+      "content": "详见独立文章页：/craft/codex-beginner-guide.html",
+      "tags": [
+        "AI 编程",
+        "Codex",
+        "OpenAI",
+        "工具教程",
+        "新手入门",
+        "AI 助手",
+        "自动化"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-15",
+      "status": "published",
+      "link": "/craft/codex-beginner-guide.html",
+      "template": "B"
     }
   ],
   "projects": [
