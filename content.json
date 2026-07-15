@@ -1372,12 +1372,12 @@
     },
     {
       "id": "article-63",
-      "title": "NCRE 三级网络技术备考方案 + 专项突破",
+      "title": "NCRE 三级网络技术备考方案 + 专项突破（子网·OSPF·网络安全）",
       "slug": "ncre-level3-network-tech-plan",
       "category": "notes",
       "featured": true,
       "image": "",
-      "excerpt": "面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16周三阶段计划、四级晋级路径，外加子网划分/VLSM/CIDR计算题集与OSPF多区域实战。",
+      "excerpt": "面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16周三阶段计划、四级晋级路径，外加子网划分/VLSM/CIDR计算题集、OSPF多区域实战，以及网络安全（ACL双厂商命令行/防火墙/VPN/密码学/攻击识别）专项突破。",
       "content": "详见独立文章页：/notes/ncre-level3-network-tech-plan.html",
       "tags": [
         "NCRE",
@@ -1385,6 +1385,9 @@
         "备考",
         "网络技术",
         "路由交换",
+        "子网划分",
+        "OSPF",
+        "网络安全",
         "晋级路径"
       ],
       "videoUrl": "",

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCRE 三级网络技术备考方案 + 专项突破</title>
+<title>NCRE 三级网络技术备考方案 + 专项突破（子网·OSPF·网络安全）</title>
 <meta name="description" content="面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16周三阶段计划、四级晋级路径，外加子网划分/VLSM/CIDR 计算题集与 OSPF 多区域实战。">
 <style>
 :root {
@@ -254,8 +254,8 @@ body {
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge"><span class="dot"></span>三级网络技术 · 备考 + 专项突破</div>
-    <h1>NCRE <em>三级网络技术</em> · 备考方案 + 专项突破</h1>
+    <div class="hero-badge"><span class="dot"></span>三级网络技术 · 备考 + 专项突破（子网·OSPF·网络安全）</div>
+    <h1>NCRE <em>三级网络技术</em> · 备考方案 + 专项突破（子网·OSPF·网络安全）</h1>
     <p class="hero-desc">面向有路由交换实操基础、目标为「真懂原理」的考生：考纲、知识体系、理论短板精讲、16周三阶段计划、四级晋级路径，外加子网划分/VLSM/CIDR 计算题集与 OSPF 多区域实战。</p>
     <div class="hero-meta">
       <span>李坤</span><span class="sep"></span>
@@ -759,6 +759,251 @@ ospf 1 router-id 3.3.3.3
       <p>子网数学的命门是"先算主机位再算网络位、二进制对齐才敢聚合"，每题落笔前先写 2^h−2 与块大小两行就不会乱；OSPF 的命门是"Area 0 是防环骨架、ABR 用 Type3 做区域间翻译、选路只看 Cost 累加"——把这三句挂在嘴边，配命令时你就能同步讲清每一步在干什么，而不只是照敲。</p>
     </div>
 
+    <h2 id="part-c">十二、专项突破（三）：网络安全技术</h2>
+    <p>对象：38 岁、科班出身、会简单组网、目标"真懂原理"的考生。定位：本专项针对"会配不会讲"盲区——ACL 能敲但讲不清匹配逻辑、防火墙与 ACL 混淆、VPN/密码学概念模糊、攻击停留在名词层面。每节先点透原理，再给能真敲的配置，最后标出考试坑。</p>
+
+    <h3>一、ACL 访问控制列表（重点，必考综合题）</h3>
+
+    <h4>1. 标准 ACL vs 扩展 ACL：到底差在哪</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>标准 ACL</th><th>扩展 ACL</th></tr></thead>
+        <tbody>
+          <tr><td>匹配依据</td><td>只看源 IP 地址</td><td>源 IP、目的 IP、协议(tcp/udp/icmp/ip)、源/目的端口、established 等</td></tr>
+          <tr><td>Cisco 编号</td><td>1–99（标准）；1300–1999（扩展标准范围）</td><td>100–199；2000–2699</td></tr>
+          <tr><td>华为 编号</td><td>acl 2000 基本</td><td>acl 3000 高级</td></tr>
+          <tr><td>放置位置原则</td><td>靠近目的（只能看源，放源端会误伤去其他目的地的流量）</td><td>靠近源（尽早过滤，省带宽、早丢包）</td></tr>
+          <tr><td>精确度</td><td>粗（整段网段一刀切）</td><td>细（精确到"谁→去哪→用什么端口"）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>大白话：标准 ACL "看你是谁（从哪来）"，扩展 ACL "看你从哪来、去哪、干嘛（什么协议/端口）"。"禁止某网段访问某服务器 80 端口"必须扩展 ACL，标准 ACL 看不到目的端口。</p>
+
+    <h4>2. Cisco IOS 配置（重点写准确）</h4>
+    <p>标准 ACL：</p>
+    <div class="code-block">access-list 1 permit 192.168.1.0 0.0.0.255
+access-list 1 deny   any
+!
+interface GigabitEthernet0/1
+ ip access-group 1 out</div>
+    <p>access-list 1：编号 1 = 标准；0.0.0.255 是反掩码（通配符掩码），非子网掩码；接口下用 ip access-group 1 out。</p>
+    <p><strong>反掩码核心规则（必考）</strong>：</p>
+    <ul>
+      <li>0 = 这一位必须精确匹配；255（8个1）= 这一位忽略/不关心</li>
+      <li>例：192.168.1.0 0.0.0.255 → 匹配 192.168.1.0~255 整个 /24</li>
+      <li>反掩码 0 和 1 可非连续（和正掩码完全不同！）如 0.0.0.254 只匹配偶数主机，0.0.0.1 只匹配奇数主机。考题常拿非连续反掩码挖坑。</li>
+    </ul>
+    <p>扩展 ACL：</p>
+    <div class="code-block">access-list 100 permit tcp 192.168.1.0 0.0.0.255 10.0.0.0 0.0.0.255 eq 80
+access-list 100 deny   ip  any any
+!
+interface GigabitEthernet0/0
+ ip access-group 100 in</div>
+    <p>eq 80 = 目的端口 80；也可 range 20 21、gt 1023。末尾 deny ip any any 收尾（Cisco 隐式 deny，显式写是高分写法）。</p>
+    <p><strong>命名 ACL（推荐，支持删单条）</strong>：</p>
+    <div class="code-block">ip access-list extended BLOCK-TELNET
+ permit tcp 192.168.2.0 0.0.0.255 any eq 23
+ deny   tcp any any eq 23
+ exit
+!
+interface Gi0/0
+ ip access-group BLOCK-TELNET in</div>
+    <p>命名 ACL 用 ip access-list extended/standard 名字 进子模式，可用 no 序号 删单条（编号 ACL 删一条要整体重敲，工程现实考点）。</p>
+    <p><strong>in/out 方向含义与陷阱（高频坑）</strong>：</p>
+    <div class="code-block">   [网络A]  ---(in)--&gt;  [路由器接口]  ---(out)--&gt;  [网络B]
+               ↑数据包进入路由器         ↑数据包离开路由器</div>
+    <ul>
+      <li>in：该接口上流入路由器的包；out：该接口上流出路由器的包。</li>
+      <li>陷阱：in/out 相对接口，不是相对内外网。同一 ACL 放 in/out 效果可能相反。考试给拓扑问"哪个接口、哪个方向"——先定流量从哪进/出哪个接口，再定方向。</li>
+      <li>额外坑：过滤到路由器自身流量（Telnet/SSH 到设备）用 access-class 配 line vty，不是 access-group。</li>
+    </ul>
+
+    <h4>3. 华为 VRP 配置（与 Cisco 严格对照，别混）</h4>
+    <p>华为用"基本/高级"ACL。基本 2000–2999，高级 3000–3999。</p>
+    <p><strong>基本 ACL（对应标准）</strong>：</p>
+    <div class="code-block">acl 2000
+ rule 5 permit source 192.168.1.0 0.0.0.255
+ rule 10 deny   source any
+!
+interface GigabitEthernet0/0/1
+ traffic-filter inbound acl 2000</div>
+    <p>要点：华为 ACL 内用 rule 逐条写，默认 rule-id 步长 5，按 rule-id 从小到大顺序匹配；末尾隐含 deny（所有未匹配默认拒绝）——想"允许一部分、其余放行"必须显式写 permit，否则被末尾 deny 干掉；接口下用 traffic-filter inbound/outbound acl 编号（不是 ip access-group）。</p>
+    <p><strong>高级 ACL（对应扩展）</strong>：</p>
+    <div class="code-block">acl 3000
+ rule 5 permit tcp source 192.168.1.0 0.0.0.255 destination 10.0.0.0 0.0.0.255 destination-port eq 80
+ rule 10 deny ip
+!
+interface GigabitEthernet0/0/2
+ traffic-filter outbound acl 3000</div>
+    <p><strong>Cisco IOS vs 华为 VRP 严格对照表</strong>：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项目</th><th>Cisco IOS</th><th>华为 VRP</th></tr></thead>
+        <tbody>
+          <tr><td>标准/基本 编号</td><td>1–99, 1300–1999</td><td>2000–2999</td></tr>
+          <tr><td>扩展/高级 编号</td><td>100–199, 2000–2699</td><td>3000–3999</td></tr>
+          <tr><td>配置入口</td><td>access-list 编号 ...（全局）</td><td>acl 编号 内建 rule（子模式）</td></tr>
+          <tr><td>匹配源</td><td>access-list 1 permit 源 反掩码</td><td>rule permit source 源 反掩码</td></tr>
+          <tr><td>匹配目的+端口</td><td>... destination 反掩码 eq 端口</td><td>destination 反掩码 destination-port eq 端口</td></tr>
+          <tr><td>接口应用</td><td>ip access-group 编号 in/out</td><td>traffic-filter inbound/outbound acl 编号</td></tr>
+          <tr><td>过设备自身</td><td>access-class 编号 in（line vty）</td><td>VTY 下 acl 编号 inbound</td></tr>
+          <tr><td>末尾默认</td><td>隐式 deny any</td><td>隐式 deny（所有）</td></tr>
+          <tr><td>命名方式</td><td>ip access-list extended 名字</td><td>acl name 名字 或 acl 编号</td></tr>
+          <tr><td>反掩码语义</td><td>0=精确/255=忽略，可非连续</td><td>完全相同</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>4. ACL 综合配置题（2 道，含答案+考查点）</h4>
+    <p><strong>题1（Cisco）</strong>——扩展 ACL 靠近源 + 过滤到设备自身</p>
+    <p>场景：路由器 R 三口——G0/0 连财务 192.168.10.0/24，G0/1 连研发 192.168.20.0/24，G0/2 连服务器区（含 Web 10.0.0.10:80）。要求：①研发禁止访问财务，但都能访问服务器 Web；②禁止任何 Telnet(23) 登录路由器。</p>
+    <div class="code-block">! ① 阻断研发→财务，其余放行（扩展ACL放研发接口入方向，靠近源）
+access-list 101 deny   ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 101 permit ip any any
+!
+interface G0/1
+ ip access-group 101 in
+!
+! ② 禁止 Telnet 到本机（用 access-class，不是 access-group）
+access-list 1 deny   tcp any any eq 23
+!
+line vty 0 4
+ access-class 1 in</div>
+    <p>考查点：扩展 ACL 靠近源（研发接口 in）；deny ip 后必须 permit ip any any 否则全断；过滤到路由器自身用 access-class（高频坑）。</p>
+    <p><strong>题2（华为）</strong>——高级 ACL 出方向 + 华为隐式 deny</p>
+    <p>场景：内网 172.16.0.0/16，市场部 172.16.30.0/24 禁止上外网（任意目的），其余内网允许。在连接外网的 G0/0/1 出方向应用。</p>
+    <div class="code-block">acl 3000
+ rule 5  deny   ip source 172.16.30.0 0.0.0.255 destination any
+ rule 10 permit ip source 172.16.0.0 0.0.255.255 destination any
+!
+interface GigabitEthernet0/0/1
+ traffic-filter outbound acl 3000</div>
+    <p>考查点：高级 ACL 出方向(outbound)应用；destination any 简写；华为隐含 deny——rule 10 必须显式 permit 其余网段，否则被末尾 deny 全部拦掉。</p>
+
+    <h3>二、防火墙技术</h3>
+    <h4>1. 三类防火墙原理对比（大白话点透）</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>类型</th><th>工作层次</th><th>能干啥</th><th>致命弱点</th></tr></thead>
+        <tbody>
+          <tr><td>包过滤</td><td>网络层</td><td>按源/目的 IP、端口、协议放行/丢弃；极快、对应用透明</td><td>看不了内容；无状态每包独立判；易被 IP 欺骗绕过</td></tr>
+          <tr><td>应用代理</td><td>应用层</td><td>内外不直接连，代理"代你收发"；深度检查应用内容；隔离最彻底</td><td>每种协议写代理、性能差延迟大、难支持新应用</td></tr>
+          <tr><td>状态检测</td><td>网络层+会话</td><td>维护连接状态表，首包建会话、后续凭状态表快放；兼具速度与识别力（主流）</td><td>对极复杂应用层攻击不如代理深入（现代常叠加 UTM/IPS）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>一句话比喻：包过滤=看门牌号放人（快但不看包里装啥）；应用代理=保安替你收发所有东西（最安全但慢）；状态检测=记了来访登记本的看门人（快且认得回头客/返回包）。关键认知：路由器上的 ACL 本质就是"包过滤防火墙"的一种实现——ACL 那节和这节是连着的。</p>
+    <h4>2. DMZ 非军事区（三区隔离）</h4>
+    <div class="code-block">            Internet
+                |
+            [防火墙]
+           /    |    \
+      Outside   DMZ    Inside
+      (WAN)   (Web/   (内网/金库)
+              Mail/    财务/研发
+              DNS)
+规则：外→DMZ 只开 80/443；内→DMZ/外 允许；DMZ→内 默认 deny</div>
+    <p>作用：把需对外提供服务的服务器（Web/Mail/DNS）放 DMZ，与内网、外网三区隔离。外网只能访问 DMZ 指定服务；内网可访问 DMZ 和外网；DMZ 一般禁止主动访问内网（防 DMZ 被攻陷后横向打内网）。</p>
+    <p>为什么不把 Web 服务器放内网（考试常问）：Web 是对外暴露、被攻击概率最高的资产。放内网且被拿下，攻击者直接在内网心脏里。放 DMZ 等于把"可能被炸的店面"放独立隔离区，炸了也炸不到金库（内网）。配合防火墙：外→DMZ 只开 80/443；DMZ→内 默认拒绝。</p>
+    <h4>3. 防火墙 vs ACL：关系与区别（易混点澄清）</h4>
+    <ul>
+      <li>ACL：路由器/交换机上的访问控制手段，属包过滤，规则简单（五元组），大多无状态。</li>
+      <li>防火墙：专用安全设备/功能，核心是状态检测，能跟踪会话、做应用识别、VPN、IPS，能力远超 ACL。</li>
+      <li>澄清：ACL 不是"小防火墙"，而是防火墙"包过滤"能力的底层实现之一。考题问"路由器 ACL 能否替代防火墙"——答案：仅能做基础包过滤，无法提供状态检测、应用层防护，不能替代专用防火墙。</li>
+    </ul>
+
+    <h3>三、VPN 虚拟专用网</h3>
+    <h4>1. IPSec VPN（网络层）</h4>
+    <p>层次：网络层，对 IP 包加密/认证，对上层应用透明。两大协议：AH（认证头，只认证不加密，保数据源+完整性，不保密）；ESP（封装安全载荷，既加密又认证，主流）。两种模式：传输模式（只保护载荷）、隧道模式（保护整个原 IP 包并加新 IP 头，用于站点到站点）。IKE（密钥交换）：分两阶段协商 SA（安全关联）——阶段1建管理通道，阶段2建数据通道。场景：站点到站点（总部↔分支）、远程接入（出差员工）。</p>
+    <h4>2. SSL VPN（应用层）</h4>
+    <p>层次：基于 SSL/TLS（即 HTTPS）。特点：浏览器访问 https://vpn.xxx.com 即可，无需装客户端，适合远程接入、移动办公、伙伴临时访问。与 IPSec 区别：IPSec 需客户端、配置复杂、常被 NAT/防火墙挡；SSL VPN 基于 Web、穿透性好、控制粒度可到某 URL/某应用。</p>
+    <h4>3. 隧道技术大白话</h4>
+    <p>数据被"套了一层壳"在公网传输：原始包（含私网地址）被封装进新公网 IP 包里，像快递套外箱，公网只认外箱地址传输；到达对端 VPN 网关后"拆箱"还原原始包。端点（VPN 网关）负责加壳/拆壳。</p>
+
+    <h3>四、密码学基础（选择题高频）</h3>
+    <h4>1. 对称 vs 非对称</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>对称加密</th><th>非对称加密</th></tr></thead>
+        <tbody>
+          <tr><td>密钥</td><td>加解密同一把</td><td>公钥+私钥成对，公钥加密私钥解密</td></tr>
+          <tr><td>算法</td><td>DES、3DES、AES</td><td>RSA、ECC、DSA</td></tr>
+          <tr><td>速度</td><td>快，适合大数据量</td><td>慢，CPU 开销大</td></tr>
+          <tr><td>痛点</td><td>密钥分发难</td><td>解决分发 + 数字签名</td></tr>
+          <tr><td>用途</td><td>加密传输/存储的大量数据</td><td>密钥交换、数字签名、证书</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>2. 哈希（摘要）</h4>
+    <p>MD5（128 位，已不安全）、SHA-1（160 位，已弱化）、SHA-256 等。单向不可逆、定长输出、雪崩效应（改 1 位输出全变）。用途：完整性校验（比对文件 hash）、口令存储（存 hash 不存明文）。</p>
+    <h4>3. 数字签名与数字证书</h4>
+    <ul>
+      <li>数字签名：发送方用私钥对消息 hash 签名，接收方用发送方公钥验证。保证：①不可否认（只有你有私钥）②完整性（hash 对得上）③身份认证。</li>
+      <li>数字证书：CA（证书颁发机构）签发，把"公钥 + 持有者身份"绑定并签名。解决"我怎么确定这把公钥真的是对方的"——信任 CA 这条链。</li>
+    </ul>
+    <h4>4. 点透组合原理（考试最爱）</h4>
+    <p>"HTTPS = 非对称协商密钥 + 对称加密传输数据"：</p>
+    <ul>
+      <li>握手阶段用 RSA/ECDHE 等非对称算法，安全协商出一个对称会话密钥（解决对称加密的密钥分发难题）；</li>
+      <li>之后海量数据用 AES 等对称算法加密传输（解决非对称太慢的问题）。</li>
+    </ul>
+    <p>一句话：用非对称的"慢但安全"解决密钥怎么给，用对称的"快"解决数据怎么传。</p>
+
+    <h3>五、攻击类型与识别</h3>
+    <h4>1. DoS / DDoS</h4>
+    <ul>
+      <li>DoS（拒绝服务）：单点发海量请求/畸形包，耗尽 CPU、带宽、连接表，使服务不可用。</li>
+      <li>DDoS（分布式）：控制大量"肉鸡"（僵尸网络）同时打，流量更大更难溯源；常见 DNS/NTP 反射放大攻击。</li>
+      <li>防护：流量清洗、限速、黑洞路由、CDN 分散、源头 ACL 过滤。</li>
+    </ul>
+    <h4>2. ARP 欺骗（结合你懂的交换机，讲清二层怎么发生）</h4>
+    <ul>
+      <li>前提：ARP 无认证、广播请求；交换机是二层转发（按 MAC 表），不验证 ARP 真伪——这是根因。</li>
+      <li>过程：攻击者周期性伪造"ARP 应答"，声称"网关 IP 对应的 MAC 是我"，发给受害者。受害者 ARP 缓存被篡改，之后发往网关的流量全送到攻击者 MAC → 攻击者成中间人（可嗅探/篡改）或直接断网。</li>
+      <li>为什么在二层发生：ARP 是二层协议，交换机只按 MAC 转发，不校验"这个 IP 真属于这个 MAC 吗"，伪造 ARP 畅通无阻。</li>
+      <li>防护：交换机端口安全、DAI（动态 ARP 检测，绑定 IP-MAC）、静态 ARP 绑定、DHCP Snooping。</li>
+    </ul>
+    <h4>3. 嗅探与端口扫描</h4>
+    <ul>
+      <li>嗅探（Sniffer）：网卡设混杂模式，抓本网段所有包。风险：Telnet/FTP/HTTP 明文协议会被直接看到账号密码。防护：用 SSH/HTTPS 加密、VLAN 隔离广播域。</li>
+      <li>端口扫描：用 nmap 等向目标大量端口发探测，按响应判断开放端口/服务，是攻击前的 reconnaissance。防护：关不必要端口/服务、防火墙限制、IDS 检测扫描行为。</li>
+    </ul>
+    <h4>4. 病毒 / 蠕虫 / 木马 区别</h4>
+    <ul>
+      <li>病毒：依附宿主文件，用户运行才激活，不能自我传播，靠人为复制扩散。</li>
+      <li>蠕虫：独立程序，自我复制、主动传播（利用漏洞），不需人为干预，爆发快。</li>
+      <li>木马：伪装成有用程序诱骗安装，隐藏控制（开后门远程控制），重在潜伏控制，未必自我复制。</li>
+    </ul>
+    <h4>5. IDS vs IPS（区别要点透）</h4>
+    <ul>
+      <li>IDS（入侵检测）：旁路部署，监听镜像流量，只检测告警、不阻断（像监控摄像头）。</li>
+      <li>IPS（入侵防御）：串联部署（在线），实时检测并阻断恶意流量（像安检门直接拦人）。</li>
+      <li>易混点：IDS 接镜像口、不影响流量；IPS 串在链路中、可能影响性能且故障会断网（需 bypass 机制）。</li>
+    </ul>
+
+    <h3>六、典型真题（3 道，含答案与解析）</h3>
+    <p><strong>真题 1（ACL 综合配置/分析，综合题）</strong></p>
+    <p>题干：路由器 R 三接口——G0/0 连内网 192.168.1.0/24，G0/1 连服务器区 192.168.2.0/24（其中 192.168.2.10 是 Web 服务器:80），G0/2 连外网。要求：内网主机只能访问 Web 服务器 80 端口，禁止访问服务器区其他服务和外网；外网禁止主动访问内网。用 Cisco 扩展 ACL 实现，并说明应用接口与方向。</p>
+    <div class="code-block">access-list 100 permit tcp 192.168.1.0 0.0.0.255 host 192.168.2.10 eq 80
+access-list 100 deny   ip any any
+!
+interface G0/0
+ ip access-group 100 in</div>
+    <p>考查点：扩展 ACL 放源端接口 in 方向（靠近源）；host 关键字 = 反掩码 0.0.0.0；deny ip any any 收尾阻断其余；外网主动访问内网也被该 deny all 挡住（ACL 无方向记忆，入口已拦）。</p>
+    <p>解题思路：先写"允许的精确流量" → 再"deny all 收尾"；应用位置选离源最近的接口入方向。</p>
+    <p><strong>真题 2（防火墙/攻击识别，选择题）</strong></p>
+    <p>题干：以下哪项措施主要用于防御 ARP 欺骗攻击？</p>
+    <p>A. 路由器上配置 ACL 禁止 ICMP　B. 交换机上启用 DAI（动态 ARP 检测）并配合 DHCP Snooping　C. 部署 IDS 旁路监听　D. 增加防火墙包过滤规则</p>
+    <p>答案：B。考查点：ARP 欺骗发生在二层，路由器 ACL/防火墙（三层+）管不到；DAI 校验 ARP 报文中的 IP-MAC 绑定，从源头拦伪造 ARP。IDS 旁路不阻断；防火墙管不了二层 ARP。解题思路：先定位攻击发生的层次（二层 ARP）→ 选二层防护手段（DAI/端口安全/静态绑定）。</p>
+    <p><strong>真题 3（密码学/VPN，选择题）</strong></p>
+    <p>题干：关于 HTTPS 的安全机制，下列说法正确的是？</p>
+    <p>A. HTTPS 全程用 RSA 加密传输所有数据　B. HTTPS 用非对称加密协商会话密钥，再用对称加密传输数据　C. HTTPS 用 MD5 对网页内容加密　D. HTTPS 不需要 CA 证书也能保证安全</p>
+    <p>答案：B。考查点：HTTPS = TLS 握手用非对称（ECDHE/RSA）协商对称密钥 + 后续用对称（AES）加密数据；MD5 是哈希不可逆，不是加密；CA 证书用于验证服务器公钥身份。解题思路：记住"非对称慢用于协商、对称快用于传输"的组合模型，即可排除 A；MD5 不可逆排除 C；CA 是信任锚排除 D。</p>
+
+    <div class="pull-quote">
+      <p>ACL 的本质是"在正确位置、用正确方向，按五元组写允许、用 deny all 收尾"——配置前先在脑中画好流量方向与接口，比背命令更重要。防火墙、VPN、密码学、攻击防护要串成一条线理解：网络层用 ACL/防火墙 + IPSec 挡住非法接入，应用层用状态检测 + IDS/IPS 拦住威胁，密码学为这一切提供"身份可信 + 数据保密"的底层保障。安全没有银弹，考试考的正是你能否在"哪一层、用什么手段、为什么"之间做出正确判断。</p>
+    </div>
+
     <div class="tag-cloud">
       <a href="/notes/">NCRE</a>
       <a href="/notes/">三级网络技术</a>
@@ -767,6 +1012,9 @@ ospf 1 router-id 3.3.3.3
       <a href="/notes/">路由交换</a>
       <a href="/notes/">子网划分</a>
       <a href="/notes/">OSPF</a>
+      <a href="/notes/">网络安全</a>
+      <a href="/notes/">ACL</a>
+      <a href="/notes/">防火墙</a>
       <a href="/notes/">晋级路径</a>
     </div>
     <a href="/notes/" class="back-link">返回随笔</a>
