@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>video-autopilot-kit：开源短视频批量生产工具，一条流水线干完矩阵号</title>
+<meta name="description" content="video-autopilot-kit（Hao0321/video-autopilot-kit，v0.8.0，721 Star）是一套开源短视频批量生产工具：同时提供「程序化（Python+ffmpeg，跨平台、交付前自动质检）」与「剪映辅助（CapCut 草稿 + 桌面自动化，保留平台特效）」两条技术路线，用填空式问卷把筛素材、剪视频、加特效、质检交付编排成流水线，专为矩阵号和小团队设计。">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 560px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; vertical-align: top; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: var(--body-strong); }
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block;  max-height:460px; object-fit:cover;}
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px;  max-height:460px; object-fit:cover;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+<nav class="page-dot" id="pageDots"></nav>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>开源 · 短视频批量生产</div>
+    <h1>video-autopilot-kit：把短视频批量生产，变成一条<em>填空式流水线</em></h1>
+    <p class="hero-desc">video-autopilot-kit（github.com/Hao0321/video-autopilot-kit，v0.8.0，721 ⭐）是一套开源短视频批量生产工具。它同时给出「程序化」和「剪映辅助」两条技术路线，用一份填空式问卷把筛素材、剪视频、加特效、质检交付的重复劳动编排成流水线，专为矩阵号和小团队设计。</p>
+    <div class="hero-meta">
+      <span>Hao0321 开源</span><span class="sep"></span>
+      <span>721 ⭐ · v0.8.0</span><span class="sep"></span>
+      <span>2026-07-16</span><span class="sep"></span>
+      <span>约 7 分钟阅读</span>
+    </div>
+  </div>
+</section>
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#s1">它是什么</a>
+    <a href="#s2">两条技术路线</a>
+    <a href="#s3">关键特性</a>
+    <a href="#s4">快速开始</a>
+    <a href="#s5">适用场景</a>
+    <a href="#s6">我的判断</a>
+  </div>
+</div>
+<div class="hero-cover">
+  <img src="/uploads/video-autopilot-kit-cover.jpg" alt="video-autopilot-kit 短视频批量生产工具" loading="eager" />
+</div>
+<div class="article-wrap">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p>短视频生产最痛的环节，往往不是「剪一条」，而是「每天要剪 N 条，还要质量稳定」。视频号矩阵、电商混剪、口播批量更新，本质都是高重复的机械劳动——同样的剪辑动作、同样的质检清单，日复一日。</p>
+    <p>video-autopilot-kit 的定位很直接：<strong>把「一条视频的制作流程」抽象成可配置、可复用的流水线</strong>。你填一份问卷，它跑完整条流程。它不替你写脚本、出创意，而是把最该被自动化的制作与交付环节批量干完。</p>
+    <div class="highlight-box">
+      <p>一句话定位：用一份填空式问卷 + 自动化流水线，把「筛素材 → 剪视频 → 加特效 → 质检交付」的重复劳动批量完成，同时支持「程序化（ffmpeg）」与「剪映辅助（CapCut）」两条互补路线。</p>
+    </div>
+
+    <h2 id="s2">二、两条技术路线</h2>
+    <p>它最特别的设计，是<strong>不绑死某一种生产方式</strong>，而是给了两条互补的路线，让你按团队实际的工具链选：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>程序化路线</th><th>CapCut 辅助路线</th></tr></thead>
+        <tbody>
+          <tr><td><strong>技术栈</strong></td><td>Python + ffmpeg</td><td>对接剪映草稿 + 桌面自动化</td></tr>
+          <tr><td><strong>平台</strong></td><td>Win / Mac / Linux 全跨</td><td>Windows 优先</td></tr>
+          <tr><td><strong>能力</strong></td><td>横竖屏、无损压缩、动态特效，交付前自动质检（频闪 / 空档 / 字幕同步）</td><td>保留剪映平台特有特效与云端模板</td></tr>
+          <tr><td><strong>自动质检</strong></td><td>内置：频闪、空档、字幕不同步自动拦截</td><td>依赖剪映自身能力</td></tr>
+          <tr><td><strong>适合</strong></td><td>追求可控、可批处理、跨平台的纯自动化</td><td>想用剪映现成特效与模板、低门槛上手</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>怎么选</strong>：要「纯自动化、批量、跨平台、带质检」走程序化路线；团队已在剪映、想保留剪映味和云端模板，走 CapCut 辅助路线。两条路线共用同一份问卷配置，切换成本不高。</p>
+
+    <h2 id="s3">三、关键特性</h2>
+    <ul class="checklist">
+      <li>填空式问卷配置：不用写代码，填表即生成生产参数</li>
+      <li>零私人数据绑定：本地运行，不强制上传隐私素材</li>
+      <li>素材体系自由二开：素材库结构开放，可按业务自行扩展</li>
+      <li>交付前自动质检：频闪、空档、字幕不同步自动拦截，避免「发出去才发现问题」</li>
+      <li>横竖屏通吃：一次配置，多比例输出，覆盖不同平台版式</li>
+    </ul>
+    <div class="info-box">
+      <div class="info-title">为什么强调「零私人数据绑定」</div>
+      <p>对矩阵号和小团队而言，素材（口播录音、商品图、客户素材）往往敏感。该工具定位本地运行、不强制回传数据，等于把素材控制权留在你自己手里——这也是它相比某些 SaaS 剪辑平台的核心差异点。</p>
+    </div>
+
+    <h2 id="s4">四、快速开始</h2>
+    <p>仓库自带文档与可运行示例，新手可照着跑通第一个 Demo：</p>
+    <div class="code-block">
+<span class="comment"># 文档与示例（均在仓库根目录）</span>
+SETUP.md                        <span class="comment"># 配置指南：环境、问卷字段、路线选择</span>
+knowledge/premium-motion-fx.md  <span class="comment"># 特效说明：动态特效清单与参数</span>
+examples/                       <span class="comment"># 可运行 Demo：竖屏短片 / 字幕-B-roll 联动等</span>
+    </div>
+    <p>上手建议：<strong>先看 <code>examples/</code> 里的竖屏短片与「字幕-B-roll 联动」两个 Demo</strong>，跑通后再读 <code>SETUP.md</code> 改自己的问卷。v0.8.0 仍为早期版本，具体安装命令以仓库 <code>SETUP.md</code> 为准（程序化路线需 Python + ffmpeg 环境）。</p>
+
+    <h2 id="s5">五、适用场景</h2>
+    <p><strong>矩阵号运营</strong>：同一条母带，多账号、多版本批量产出，统一质检后分发。</p>
+    <p><strong>小团队内容工厂</strong>：把剪辑师从「每天重复同样的剪辑动作」里解放出来，人力转向选题与创意。</p>
+    <p><strong>口播 / 混剪批量化</strong>：固定模板 + 变量替换（标题、B-roll、字幕），一条流水线吃下整批需求。</p>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：有稳定批量产出需求、想保留剪映特效又要自动化的人；重视本地数据与交付质检的团队；跑矩阵号、需要「同母带多版本」的人。</p>
+    <p><strong>注意</strong>：① CapCut 辅助路线 <strong>Windows 优先</strong>，Mac / Linux 用此路线能力有限；② 程序化路线依赖 ffmpeg 环境，没装就跑不起来；③ <strong>v0.8.0 仍早期</strong>，API 与目录结构可能变动，生产环境需锁定版本；④ 它是「生产工具」不是「生成引擎」，不替你写脚本、出创意，定位是让制作与交付环节自动化。</p>
+    <p><strong>定位</strong>：它把短视频生产里「最重复、最该被自动化」的环节做成了流水线，并罕见地同时照顾了「ffmpeg 极客」和「剪映用户」两类人。如果你卡在「创意有了，但剪不动、剪不完」，它会把最耗时的中段流程接起来。</p>
+
+    <div class="tag-cloud">
+      <a href="#">video-autopilot-kit</a><a href="#">短视频</a><a href="#">批量生产</a><a href="#">ffmpeg</a>
+      <a href="#">剪映</a><a href="#">CapCut</a><a href="#">矩阵号</a><a href="#">自动化</a>
+      <a href="#">开源</a><a href="#">视频质检</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/Hao0321/video-autopilot-kit">Hao0321/video-autopilot-kit</a> 开源项目（v0.8.0）</p>
+</footer>
+<script>
+(function(){
+  var bar = document.getElementById('progressBar');
+  var toc = document.getElementById('tocScroll');
+  var dotsWrap = document.getElementById('pageDots');
+  var links = toc ? [].slice.call(toc.querySelectorAll('a')) : [];
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if(dotsWrap && sections.length){
+    sections.forEach(function(s){
+      var d = document.createElement('a');
+      d.href = '#' + s.id; d.textContent = s.id;
+      dotsWrap.appendChild(d);
+    });
+  }
+  var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('a')) : [];
+  function onScroll(){
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (sc / max) * 100 : 0;
+    if(bar) bar.style.setProperty('--progress', p + '%');
+    var idx = 0;
+    sections.forEach(function(s, i){ if(s.getBoundingClientRect().top <= 120) idx = i; });
+    links.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  var tg = document.getElementById('themeToggle');
+  if(tg){
+    tg.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      tg.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+  }
+})();
+</script>
+</body>
+</html>

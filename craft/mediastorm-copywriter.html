@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mediastorm-copywriter：把影视飓风的「配方」做成可复用的口播稿生成技能</title>
+<meta name="description" content="mediastorm-copywriter（imfangli/mediastorm-copywriter，MIT）是一个生成「影视飓风(Mediastorm)」风格中文口播稿的 Claude Code / Agent Skill：基于对影视飓风最新 19 条视频口播字幕的结构化分析，提炼开头钩子、黄金七段式骨架、节奏转场、数据换算与金句 CTA 规律，让 AI 按同样的「配方」产出成稿。仅生成稿子，不碰画面。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 880px;
+  --max-wide: 920px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { max-width:var(--max-text); margin:0 auto; padding:0 28px 100px; }
+.toc-overlay { position:absolute; top:50%; right:24px; transform:translateY(-50%); z-index:5;
+  background:rgba(255,255,255,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:10px;
+  padding:16px 20px; min-width:170px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  animation:tocFadeIn 0.5s ease 0.3s both; }
+@keyframes tocFadeIn { from{opacity:0; transform:translateY(-50%) translateX(8px);} to{opacity:1; transform:translateY(-50%) translateX(0);} }
+.toc-overlay .toc-title { font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+.toc-overlay .toc-list { list-style:none; }
+.toc-overlay .toc-list li { margin-bottom:4px; }
+.toc-overlay .toc-list a { font-size:12px; color:var(--text-secondary); text-decoration:none; display:block;
+  padding:3px 8px; border-radius:5px; transition:all 0.15s; line-height:1.5; border-left:2px solid transparent; }
+.toc-overlay .toc-list a:hover, .toc-overlay .toc-list a.active { color:var(--accent); background:rgba(26,111,245,0.08); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .toc-overlay { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; max-height:460px; object-fit:cover;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源 · Claude Code Skill</div>
+  <h1>mediastorm-copywriter：用影视飓风<strong>风格</strong>批量产出中文口播稿</h1>
+  <p class="hero-desc">一个生成「影视飓风(Mediastorm)」风格中文口播稿的 Claude Code / Agent Skill（github.com/imfangli/mediastorm-copywriter，MIT）。它基于对影视飓风最新 19 条视频口播字幕的结构化分析，提炼出开头钩子、黄金七段式骨架、节奏转场、数据换算与金句 CTA 规律，让 AI 按同样的「配方」产出成稿。</p>
+  <div class="hero-meta">
+    <span>Claude Code 技能</span><span class="dot"></span>
+    <span>口播稿生成</span><span class="dot"></span>
+    <span>MIT 协议</span><span class="dot"></span>
+    <span>2026.07.16</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/mediastorm-copywriter-cover.jpg" alt="mediastorm-copywriter 影视飓风风格口播稿 Skill">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">它是什么</a></li>
+      <li><a href="#s2">背后的方法</a></li>
+      <li><a href="#s3">黄金七段式</a></li>
+      <li><a href="#s4">关键能力</a></li>
+      <li><a href="#s5">安装与使用</a></li>
+      <li><a href="#s6">我的判断</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p>先说清楚边界：<strong>它不是视频生成器，而是一个「口播稿生成 Skill」</strong>——给 Claude Code 用的一种技能插件。你给它一个选题，它产出一篇「影视飓风味」的中文口播稿，画面、剪辑、配音都不归它管。</p>
+    <p>它的目标很具体：把影视飓风视频里「为什么好看、为什么抓人」的规律，从「只可意会」变成「可显式复用」的写作配方。你不需要反复研究人家怎么写，直接让 AI 按配方出第一稿。</p>
+    <div class="info-box">
+      <p><strong>一句话定位</strong>：把影视飓风 19 条视频口播稿的「结构规律」提炼成 Skill，让 AI 按影视飓风味产出成稿。仅生成稿子，不碰画面与剪辑。</p>
+    </div>
+
+    <h2 id="s2">二、背后的方法：19 条视频的结构化分析</h2>
+    <p>这个 Skill 不是凭感觉写的提示词，而是建立在<strong>对影视飓风最新 19 条视频口播字幕的结构化分析</strong>之上。它从真实样本里提炼出几个可复用的维度：</p>
+    <ul>
+      <li><strong>开头钩子</strong>：用什么方式在 3 秒内把人留住；</li>
+      <li><strong>黄金七段式骨架</strong>：一篇稿子的主干结构（见下节）；</li>
+      <li><strong>节奏 / 转场</strong>：段落之间怎么过渡才不塌；</li>
+      <li><strong>数据换算 / 类比</strong>：抽象数字怎么变成「人话」；</li>
+      <li><strong>金句与 CTA</strong>：收尾怎么升华、怎么引导互动。</li>
+    </ul>
+    <div class="pull-quote"><p>规律提炼自影视飓风公开视频的自动字幕。Skill 内仅含用于说明规律的「短句引用」，完整视频与口播内容版权归影视飓风所有——它定位是「学习规律、二次创作参考」，不是照搬原稿。</p></div>
+
+    <h2 id="s3">三、一篇稿子的骨架：黄金七段式</h2>
+    <p>核心骨架叫「黄金七段式」，一篇合格口播稿按这个顺序铺开（评测 / vlog 类有变体）：</p>
+    <div class="pipeline">
+      <span class="step">钩子</span><span class="arrow">→</span>
+      <span class="step">升维</span><span class="arrow">→</span>
+      <span class="step">植入</span><span class="arrow">→</span>
+      <span class="step">分点主体</span><span class="arrow">→</span>
+      <span class="step">转折</span><span class="arrow">→</span>
+      <span class="step">升华</span><span class="arrow">→</span>
+      <span class="step">CTA</span>
+    </div>
+    <ul>
+      <li><strong>钩子</strong>：开头 3 秒抓住注意力（见下节 6 类钩子）；</li>
+      <li><strong>升维</strong>：把具体话题抬到更大的视角，制造「值得看下去」的悬念；</li>
+      <li><strong>植入</strong>：自然地带出合作方 / 产品，不硬切；</li>
+      <li><strong>分点主体</strong>：核心信息分点展开，配数据换算与类比；</li>
+      <li><strong>转折</strong>：用反差 / 意外推进节奏，避免平铺直叙；</li>
+      <li><strong>升华</strong>：金句收尾，把话题拉回价值观或情绪高点；</li>
+      <li><strong>CTA</strong>：标志性收尾（如「点点小心心…那么我们下次再见」）。</li>
+    </ul>
+
+    <h2 id="s4">四、关键能力</h2>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">6 类开头钩子</span></div>
+      <p class="mc-desc">实物特写 / 反常识设问 / 观众代入 / 极端场景 / 人物前置 / 栏目仪式——按需选用，避免每篇都用同一种开场。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">强第二人称「你」+ 自问自答</span></div>
+      <p class="mc-desc">通篇用「你」拉近距离，并以自问自答制造对话感与节奏，避免念稿腔。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">数据必换算 · 概念必打比方</span></div>
+      <p class="mc-desc">抽象数字换算成可感知的量（时间、金钱、体积），抽象概念用生活类比落地，降低理解门槛。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">4</span><span class="mc-title">金句收尾 + 标志性 CTA</span></div>
+      <p class="mc-desc">结尾给一句能截图的金句，并带上辨识度高的行动召唤，强化账号记忆点。</p>
+    </div>
+
+    <h2 id="s5">五、安装与使用</h2>
+    <p>它是一个标准 Claude Code Skill，安装即用：</p>
+    <div class="info-box">
+      <p><strong>1. 克隆到 skills 目录</strong></p>
+      <p class="mc-desc">git clone git@github.com:imfangli/mediastorm-copywriter.git ~/.claude/skills/mediastorm-copywriter</p>
+      <p><strong>2. 触发</strong></p>
+      <p class="mc-desc">对 Claude 说：「用影视飓风风格写一篇关于 XX 的口播稿」（可选指定内容类型 / 时长 / 合作方 / 素材）</p>
+      <p><strong>3. 结构</strong></p>
+      <p class="mc-desc">SKILL.md（入口 + 10 条硬规则 + 自检清单）＋ references/（structure.md 骨架、hooks.md 钩子、transitions.md 转场、style-guide.md 语气、examples.md 真实片段拆解）</p>
+    </div>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：做科技 / 数码 / 测评 / 知识类口播、想稳定产出「影视飓风味」的人；已经把 Claude Code 当工作流载体、希望写作也「技能化」的人。</p>
+    <p><strong>注意</strong>：① 仅生成口播稿，<strong>不生成视频 / 画面</strong>，下游还需自己拍剪；② 规律提炼自公开字幕，二次创作需规避直接照搬，<strong>尊重原 UP 主版权</strong>；③ 单 commit 早期项目（2026-07-14），MIT 协议，迭代空间大；④ 本质是 Prompt / Skill 工程，<strong>依赖 Claude Code</strong> 运行。</p>
+    <p><strong>定位</strong>：它把「好口播的结构」显式化、可复用化——不是替你创作，而是给一个稳定高质量骨架，让你把精力放在选题与信息本身。对「知道影视飓风好看、但写不出那味」的人，是低门槛的起步杠杆。</p>
+
+    <div class="tag-cloud">
+      <a href="#">mediastorm-copywriter</a><a href="#">影视飓风</a><a href="#">口播稿</a><a href="#">Claude Code</a>
+      <a href="#">Agent Skill</a><a href="#">文案</a><a href="#">短视频脚本</a><a href="#">MIT</a>
+      <a href="#">开源</a><a href="#">结构化写作</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/imfangli/mediastorm-copywriter">imfangli/mediastorm-copywriter</a> 开源项目（规律提炼自影视飓风公开视频，版权归原 UP 主所有）</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

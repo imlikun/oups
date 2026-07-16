@@ -1497,6 +1497,59 @@
       "status": "published",
       "link": "/craft/codex-beginner-guide.html",
       "template": "B"
+    },
+    {
+      "id": "article-67",
+      "title": "video-autopilot-kit：开源短视频批量生产工具，一条流水线干完矩阵号",
+      "slug": "video-autopilot-kit",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/video-autopilot-kit-cover.jpg",
+      "excerpt": "开源短视频批量生产工具（Hao0321/video-autopilot-kit，v0.8.0，721 Star）：同时提供「程序化（Python+ffmpeg 跨平台、交付前自动质检）」与「剪映辅助（CapCut 草稿 + 桌面自动化）」两条路线，用填空式问卷把筛素材、剪视频、加特效、质检交付编排成流水线，专为矩阵号和小团队设计。",
+      "content": "详见独立文章页：/craft/video-autopilot-kit.html",
+      "tags": [
+        "短视频",
+        "批量生产",
+        "ffmpeg",
+        "剪映",
+        "CapCut",
+        "矩阵号",
+        "自动化",
+        "开源",
+        "视频质检"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-16",
+      "status": "published",
+      "link": "/craft/video-autopilot-kit.html",
+      "template": "C"
+    },
+    {
+      "id": "article-68",
+      "title": "mediastorm-copywriter：把影视飓风的「配方」做成可复用的口播稿生成技能",
+      "slug": "mediastorm-copywriter",
+      "category": "craft",
+      "featured": false,
+      "image": "uploads/mediastorm-copywriter-cover.jpg",
+      "excerpt": "生成「影视飓风(Mediastorm)」风格中文口播稿的 Claude Code / Agent Skill（imfangli/mediastorm-copywriter，MIT）：基于 19 条视频口播字幕的结构化分析，提炼开头钩子、黄金七段式骨架、节奏转场、数据换算与金句 CTA 规律，让 AI 按同样配方产出成稿。仅生成稿子，不碰画面。",
+      "content": "详见独立文章页：/craft/mediastorm-copywriter.html",
+      "tags": [
+        "mediastorm-copywriter",
+        "影视飓风",
+        "口播稿",
+        "Claude Code",
+        "Agent Skill",
+        "文案",
+        "短视频脚本",
+        "MIT",
+        "开源",
+        "结构化写作"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-16",
+      "status": "published",
+      "link": "/craft/mediastorm-copywriter.html",
+      "template": "A"
     }
   ],
   "projects": [
