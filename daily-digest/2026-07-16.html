@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日阅读 | 2026-07-16 — 李坤</title>
+<meta name="description" content="SHEIN 拟在港 IPO，4560 亿最大电商 IPO 要来了——2026-07-16阅读简报。">
+<style>
+:root{
+  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
+  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
+  --card-bg:#fff;--radius:14px;--radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
+
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+    .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#fff;text-decoration:none;
+  font-weight:600;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
+  box-shadow:0 1px 2px rgba(48,209,88,.25);transition:all .2s}
+.news-link:hover{background:#26b94a;gap:10px;box-shadow:0 3px 8px rgba(48,209,88,.35)}
+
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
+.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
+
+<header class="article-header">
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-16 星期四</div>
+  <h1>每日阅读</h1>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 25 条</p>
+  <div class="section-tags">
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
+        <span class="tag-elderly" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业 ×4</span>
+        <span class="tag-psych" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#e54d66"></span> 心理学 ×2</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
+    <div class="section-title" style="color:#2997ff;">一、社会 / 商业热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>SHEIN 拟在港 IPO，4560 亿最大电商 IPO 要来了</strong></h3></div>
+    <div class="news-summary">- 跨境电商巨头 SHEIN 获境外上市备案，拟在港 IPO，估值约 4560 亿元，或成史上最大电商 IPO。 -</div>
+    <a href="https://www.36kr.com/p/3897710454048393" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>DeepSeek 估值 4800 亿，梁文锋登顶全球 AI 首富</strong></h3></div>
+    <div class="news-summary">- DeepSeek 三个月估值翻七倍，从"零融资"冲刺 IPO，创始人梁文锋身家达 2400 亿元。 -</div>
+    <a href="https://www.tmtpost.com/8066516.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>九部门发文"力挺"实体商业，支持新型优质零售企业 IPO</strong></h3></div>
+    <div class="news-summary">- 政策红利明确支持新型优质零售企业上市，实体商业迎来融资窗口。 -</div>
+    <a href="https://www.36kr.com/p/3897720673994629" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>德国十万大裁员，隐形冠军正在批量阵亡</strong></h3></div>
+    <div class="news-summary">- 德国"隐形冠军"企业面临大规模裁员与生存危机，制造业护城河被系统性侵蚀。 -</div>
+    <a href="https://www.huxiu.com/article/4875574.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>史上最大牛市，让 32 万韩国人一夜破产</strong></h3></div>
+    <div class="news-summary">- 韩国股市散户遭遇"屠宰场"，约 32 万散户在杠杆交易中破产，监管酝酿保护举措。 -</div>
+    <a href="https://www.36kr.com/p/3897620977583750" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>贾浅浅硕士学位被撤销，学术不端通报引热议</strong></h3></div>
+    <div class="news-summary">- 贾浅浅因学术问题被撤销硕士学位，博士学位仍存疑，引发对学术评价机制的讨论。 -</div>
+    <a href="https://www.huxiu.com/article/4875655.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
+    <div class="section-title" style="color:#e08600;">二、汽车行业热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">1</span><h3><strong>乘联会：7月1-12日乘用车零售44.3万辆，新能源渗透率63.1%</strong></h3></div>
+    <div class="news-summary">- 7月前两周全国乘用车新能源零售28万辆、渗透率63.1%；燃油车零售约16.3万辆同比跌约25%，成下滑最大出血点。 -</div>
+    <a href="https://weibo.com/1912222221/5321255340212978" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">2</span><h3><strong>上半年乘用车国内销量双降：新能源车销量509万辆同比降13.4%</strong></h3></div>
+    <div class="news-summary">- 2026上半年乘用车国内销量828.8万辆同比降24.3%；其中新能源509万辆降13.4%，传统燃料车降31.9%。 -</div>
+    <a href="https://weibo.com/3190081570/5321207869081578" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>合资新能源"不再陪跑"：6月合资新能源销量同比增45%</strong></h3></div>
+    <div class="news-summary">- 乘联分会数据：6月合资新能源份额提升1.4个百分点，主流合资（大众ID.、日产NX8、丰田铂智3X）集体起势。 -</div>
+    <a href="https://k.sina.com.cn/article_1296119181_4d41358d00103cls0.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>新能源销量两极分化：比亚迪上半年份额26.2%居首，多合资不足1%</strong></h3></div>
+    <div class="news-summary">- 乘联分会6月数据：比亚迪以22.45万辆居首，上半年份额26.2%；一汽-大众份额仅0.1%、同比下滑54.8%。 -</div>
+    <a href="https://new.qq.com/rain/a/20260716A01ZRO00?refer=cp_1009" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>两项电动汽车安全新国标7月1日正式实施</strong></h3></div>
+    <div class="news-summary">- 《电动汽车用动力蓄电池安全要求》《电动汽车安全要求》两项强制性国标实施，新增底部撞击、快充循环老化短路等测试，落后产能加速出清。 -</div>
+    <a href="https://new.qq.com/rain/a/20260716A01XTW00?refer=cp_1009" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
+    <div class="section-title" style="color:#bf5af2;">三、科技热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>国行苹果 AI 来了：千问作底层模型，"AI 手机"首批备案名单公布</strong></h3></div>
+    <div class="news-summary">- 网信办发布7款手机端侧生成式 AI 服务备案，苹果、华为、三星、小米、OPPO、vivo、中兴同批获准，7月成"AI 手机"主战场。 -</div>
+    <a href="https://www.geekpark.net/news/367346" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>2026 WAIC：国产 AI 软硬件协同突破，第三代人形机器人将亮相</strong></h3></div>
+    <div class="news-summary">- 矩阵超智第三代全尺寸人形机器人、东方算芯首颗近存计算3D AI 芯片 DF1000 等国产原创技术集中展示。 -</div>
+    <a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?_tentrees_trans=0&id=SN20260716084021a47fd008" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>英伟达黄仁勋否认 Vera Rubin 延期：已投入生产</strong></h3></div>
+    <div class="news-summary">- 黄仁勋称下一代 AI 加速平台正按计划量产交付，回应此前因专用电路板导致的延期传闻。 -</div>
+    <a href="https://www.toutiao.com/article/7662925151398511167" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>曝 DeepSeek 筹备 IPO，最快今年提交申请</strong></h3></div>
+    <div class="news-summary">- 极客早知道披露 DeepSeek 筹备 IPO，估值或达 4800 亿元，引发 AI 估值与资本化的新一轮讨论。 -</div>
+    <a href="https://www.geekpark.net/news/367344" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>阶跃星辰被两面夹击，大模型公司亲自下场造 AI 手机</strong></h3></div>
+    <div class="news-summary">- 阶跃星辰在激烈竞争中面临困境，创始人印奇揭秘"为大模型造手机"的战略逻辑，端侧 AI 成必争之地。 -</div>
+    <a href="https://www.tmtpost.com/8066568.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(200,122,30,0.1);color:#c87a1e;">🏠</div>
+    <div class="section-title" style="color:#c87a1e;">四、养老产业</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">1</span><h3><strong>【养老产业】辽宁印发《"十五五"老龄事业发展规划》，全面推开失能老人服务消费补贴</strong></h3></div>
+    <div class="news-summary">- 辽宁明确全面推开中度以上失能老年人服务消费补贴，实施"人工智能+养老"行动，将每年10月设为"养老服务消费促进月"，并发展养老金融专项"银发贷"。 -</div>
+    <a href="https://www.cncaprc.gov.cn/pages/2026/07/14/772079.shtml" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">2</span><h3><strong>【养老产业】长护险覆盖3.2亿人，17省出台省级实施方案</strong></h3></div>
+    <div class="news-summary">- 国家医保局披露：长护险已覆盖3.2亿人，100个统筹地区落地运行；经评估认定可享20项生活照护与16项医疗护理服务，照护保障短板加速补齐。 -</div>
+    <a href="https://m.ageclub.net/article-detail/9852" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">3</span><h3><strong>【养老产业】"适老化改造设计师"等12个新职业公示，投身路径再拓宽</strong></h3></div>
+    <div class="news-summary">- 人社部拟新增数字孪生工程技术人员、具身智能机器人应用技术员等新职业，以及适老化改造设计师、智能体开发员等新工种，银发经济人才赛道扩容。 -</div>
+    <a href="https://m.ageclub.net/article-detail/9852" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">4</span><h3><strong>【养老产业】适老家居智能化升级，厨卫品类领跑，补贴按成交价15%</strong></h3></div>
+    <div class="news-summary">- 消费品以旧换新将适老化家居纳入补贴，智能适老家电、健康监测设备、康复辅具等获15%补贴；东部已将毫米波跌倒雷达、助行外骨骼、护理机器人列入目录。 -</div>
+    <a href="https://business.cctv.com/2026/07/08/ARTIjvxm8d7hVErVJ2kMis7I260708.shtml" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,69,89,0.1);color:#e54d66;">🧠</div>
+    <div class="section-title" style="color:#e54d66;">五、心理学</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">1</span><h3><strong>【心理学】人一旦沉迷这种爱好，日子只会越过越顺（轻心理）</strong></h3></div>
+    <div class="news-summary">- 微信读书评分 **8.42 分**（脍炙人口，1128 人评价）。KnowYourself知我心理出品，从微小习惯切入，拆解"复利式爱好"如何重塑生活状态。 -</div>
+    <a href="https://weread.qq.com/book-detail?type=1&v=98c32350813aba8cfg0115bd" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">2</span><h3><strong>【心理学】越努力越自责？警惕成长型思维的"阴暗面"</strong></h3></div>
+    <div class="news-summary">- 2026 年两项心理学研究（Ahn & Sheu, Journal of Experimental Psychology: General）揭示：成长型思维在带来韧性的同时，也可能让人更易将失败归于"不够努力"，从而产生自责与对他人的苛责。 -</div>
+    <a href="https://cj.sina.com.cn/articles/view/7096020377/1a6f4ad9901901j8cq" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
+    <div class="section-title" style="color:#2ea043;">六、好书推荐</div>
+  </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">1</span>
+        <div class="book-info">
+          <h3><em>《追风筝的人》</em> — 卡勒德·胡赛尼</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=0d332e805856230d3bebc23" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "许多年过去了，人们说陈年旧事可以被埋葬，然而我终于明白这是错的，因为往事会自行爬上来。"</p>
+          <span class="highlight-count">69660人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "那天早些时候，我确信无人注意，做了一件二十六年前就已经做过的事情：将一把皱皱的钞票塞在草席下面。"</p>
+          <span class="highlight-count">55404人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "也许每个人心中都有一个风筝，无论它意味着什么，让我们勇敢地追。"</p>
+          <span class="highlight-count">39564人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">2</span>
+        <div class="book-info">
+          <h3><em>《你当像鸟飞往你的山》</em> — 塔拉·韦斯特弗</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=8b832b5071979d0b8b86c0d" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "过去是一个幽灵，虚无缥缈，没什么影响力。只有未来才有分量。"</p>
+          <span class="highlight-count">95424人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "如果你在美国，无论你在哪个角落，我们都可以去找你……但要是你去了大洋彼岸……"</p>
+          <span class="highlight-count">85860人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "想起汇而构成人一生的所有决定——人们共同或者独自做出的那些决定，聚合起来，制造了每一桩单独事件。"</p>
+          <span class="highlight-count">47152人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">3</span>
+        <div class="book-info">
+          <h3><em>《穷查理宝典》</em> — 查理·芒格 / 彼得·考夫曼 编</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=2e0320e05cc92c2e0796c5a" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "查理论吸引客户：关键是把手头的事情做好……把已经拥有的客户照顾好，其他的自然会来找你。"</p>
+          <span class="highlight-count">32202人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "我只想知道将来我会死在什么地方，这样我就不去那儿了。"</p>
+          <span class="highlight-count">28380人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > "我这辈子遇到的聪明人（来自各行各业的聪明人）没有不每天阅读的——没有，一个都没有。"</p>
+          <span class="highlight-count">26673人划线</span>
+        </blockquote>
+      </div>
+    </div>
+</section>
+<div class="divider">— END OF DIGEST —</div>
+</article>
+
+<div class="footer-nav">
+  <a href="2026-07-14.html">← 上一篇（07-14）</a>
+  <a href="index.html">返回列表</a>
+  <span class="disabled">下一篇 →</span>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
+</script>
+</body>
+</html>
