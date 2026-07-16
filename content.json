@@ -1550,6 +1550,32 @@
       "status": "published",
       "link": "/craft/mediastorm-copywriter.html",
       "template": "A"
+    },
+    {
+      "id": "article-69",
+      "title": "从资源盘点到转化闭环：我的一人公司（内容带课）完整规划",
+      "slug": "opc-one-person-company-plan",
+      "category": "notes",
+      "featured": true,
+      "image": "",
+      "excerpt": "用 OPC 一人公司方法论，从资源盘点一路走到转化闭环，把「公众号+视频号+网站内容运营、终局带课」做成一张完整的生意地图。",
+      "content": "详见独立文章页：/notes/opc-one-person-company-plan.html",
+      "tags": [
+        "一人公司",
+        "OPC方法论",
+        "利基定位",
+        "价值主张",
+        "商业模式",
+        "MVP",
+        "转化闭环",
+        "带课变现",
+        "AI工作流"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-16",
+      "status": "published",
+      "link": "/notes/opc-one-person-company-plan.html",
+      "template": "C"
     }
   ],
   "projects": [
