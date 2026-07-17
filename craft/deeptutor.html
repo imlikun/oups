@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepTutor：把辅导、解题、测验装进同一个 Agent 引擎的开源教育平台</title>
+<meta name="description" content="DeepTutor 是香港大学 HKUDS 实验室开发的开源 AI 教育平台（deep-tutor/deep-tutor，25.8k Stars，Apache 2.0）：Agent-Native 架构把辅导、解题、测验、研究等六大能力整合进统一引擎，支持 GraphRAG / LightRAG / Obsidian 多引擎知识检索，具备三层可检查记忆（L1-L3），提供 CLI、Docker 一键部署，适配飞书 / Telegram / Slack。">
+<style>
+:root {
+  --bg: #f6f7f9;
+  --bg-card: rgba(0,0,0,0.02);
+  --bg-raised: #ffffff;
+  --text: #1d1d22;
+  --text-secondary: #56565e;
+  --text-tertiary: #8c8c95;
+  --accent: #00f5d4;
+  --accent-ink: #0d9488;
+  --accent-glow: rgba(0,245,212,0.14);
+  --accent-strong: rgba(0,245,212,0.20);
+  --border: rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --nav-bg: rgba(246,247,249,0.86);
+  --toc-bg: rgba(246,247,249,0.92);
+  --heading: #14141a;
+  --heading-2: #1d1d22;
+  --body-text: #3a3a42;
+  --body-strong: #14141a;
+  --code-bg: #eef1f4;
+  --code-text: #2d3340;
+  --sep: #d4d4da;
+  --thead-bg: rgba(0,0,0,0.03);
+  --hl-text: #2f4858;
+  --hero-title-a: #14141a;
+  --hero-title-b: #6b6b75;
+  --hero-em-a: #0d9488;
+  --hero-em-b: #0e7490;
+  --radius: 12px;
+  --max-text: 720px;
+}
+html[data-theme="dark"] {
+  --bg: #0a0a10;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-raised: #12121c;
+  --text: #d4d4d8;
+  --text-secondary: #8b8b96;
+  --text-tertiary: #5c5c66;
+  --accent: #00f5d4;
+  --accent-ink: #00f5d4;
+  --accent-glow: rgba(0,245,212,0.12);
+  --accent-strong: rgba(0,245,212,0.18);
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --nav-bg: rgba(10,10,16,0.88);
+  --toc-bg: rgba(10,10,16,0.92);
+  --heading: #e8e8ec;
+  --heading-2: #d0d0d6;
+  --body-text: #b0b0b8;
+  --body-strong: #e4e4e8;
+  --code-bg: #0d0d18;
+  --code-text: #c9d1d9;
+  --sep: #3a3a44;
+  --thead-bg: rgba(255,255,255,0.03);
+  --hl-text: #c8c8d0;
+  --hero-title-a: #ffffff;
+  --hero-title-b: #c0c0c8;
+  --hero-em-a: #00f5d4;
+  --hero-em-b: #0ea5e9;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.9; font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background: var(--nav-bg); backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; height: 52px; }
+.nav-logo { font-size: 15px; font-weight: 700; color: var(--accent-ink); text-decoration: none; letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 6px; }
+.nav-logo .arrow { color: var(--text-tertiary); font-weight: 400; }
+.nav-logo span { color: var(--text-tertiary); font-weight: 400; font-size: 11px; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; list-style: none; }
+.nav-links a { color: var(--text-tertiary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent-ink); }
+.progress-bar { position: fixed; top: 52px; left: 0; right: 0; height: 2px; z-index: 199; background: transparent; }
+.progress-bar::after { content: ''; position: absolute; left: 0; top: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), #0ea5e9); border-radius: 0 1px 1px 0;
+  width: var(--progress, 0%); transition: width 0.1s linear; }
+.hero { padding: 130px 0 70px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%);
+  pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent); }
+.hero-inner { position: relative; max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent-ink); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; margin-bottom: 28px; border: 1px solid rgba(0,245,212,0.15); }
+.hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 6px var(--accent); }
+.hero h1 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.18; max-width: 700px; margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--hero-title-a) 30%, var(--hero-title-b) 70%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 em { background: linear-gradient(135deg, var(--hero-em-a), var(--hero-em-b));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+.hero-desc { color: var(--text-secondary); font-size: 15px; max-width: 560px; margin: 0 auto 30px; line-height: 1.7; }
+.hero-meta { display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--text-tertiary); flex-wrap: wrap; }
+.hero-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--sep); }
+.toc-bar { position: sticky; top: 52px; z-index: 100; background: var(--toc-bg);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 40px; }
+.toc-scroll { max-width: var(--max-text); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.toc-scroll::-webkit-scrollbar { display: none; }
+.toc-scroll a { flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+  text-decoration: none; padding: 5px 14px; border-radius: 16px;
+  border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.toc-scroll a:hover { color: var(--text-secondary); border-color: var(--border); }
+.toc-scroll a.active { color: var(--accent-ink); border-color: rgba(0,245,212,0.25);
+  background: var(--accent-glow); }
+.article-wrap { max-width: var(--max-text); margin: 0 auto; padding: 0 24px 100px; }
+.article-body h2 { font-size: 26px; font-weight: 700; margin: 60px 0 20px;
+  color: var(--heading); letter-spacing: -0.5px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.article-body h2:first-of-type { margin-top: 0; }
+.article-body h3 { font-size: 18px; font-weight: 600; margin: 36px 0 14px; color: var(--heading-2); }
+.article-body h4 { font-size: 14px; font-weight: 600; margin: 24px 0 8px; color: var(--accent-ink);
+  text-transform: uppercase; letter-spacing: 0.05em; }
+.article-body p { margin-bottom: 20px; color: var(--body-text); }
+.article-body strong { font-weight: 700; color: var(--body-strong); }
+.article-body ul, .article-body ol { margin: 0 0 20px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 1.85; color: var(--body-text); }
+.article-body a { color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px solid rgba(0,245,212,0.2); transition: border-color 0.2s; }
+.article-body a:hover { border-bottom-color: var(--accent); }
+.pull-quote { margin: 40px 0; padding: 24px 28px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow); border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 20px rgba(0,245,212,0.04); }
+.pull-quote p { font-size: 16px; font-weight: 500; color: var(--body-strong); margin: 0;
+  line-height: 1.75; }
+.info-box { margin: 32px 0; padding: 22px 28px;
+  background: var(--bg-raised); border-radius: var(--radius);
+  border: 1px solid var(--border); }
+.info-box .info-title { font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+.info-box p { margin-bottom: 6px; font-size: 14px; color: var(--text-secondary); }
+.info-box ul { margin: 6px 0 0 18px; }
+.info-box li { color: var(--text-secondary); font-size: 14px; margin-bottom: 4px; }
+.highlight-box { margin: 32px 0; padding: 22px 28px;
+  background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(14,165,233,0.04));
+  border-radius: var(--radius); border: 1px solid rgba(0,245,212,0.12); }
+.highlight-box p { margin-bottom: 0; font-size: 15px; color: var(--hl-text); line-height: 1.75; }
+.step-list { counter-reset: step; list-style: none; margin: 28px 0 40px; }
+.step-list li { counter-increment: step; margin-bottom: 18px; padding: 20px 24px;
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); position: relative; }
+.step-list li::before { content: counter(step); position: absolute; top: -10px; left: 20px;
+  background: var(--accent); color: #0a0a10; width: 26px; height: 26px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; }
+.step-list li .step-label { font-size: 12px; font-weight: 700; color: var(--accent-ink);
+  margin-bottom: 6px; display: block; padding-top: 6px; }
+.step-list li p { margin-bottom: 4px; font-size: 14px; }
+.checklist { list-style: none; margin: 24px 0 36px; }
+.checklist li { padding: 12px 18px; margin-bottom: 8px; border-radius: 10px;
+  background: var(--bg-raised); display: flex; align-items: center; gap: 10px;
+  font-size: 14px; border: 1px solid var(--border-subtle); }
+.checklist li::before { content: "✓"; display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent-glow);
+  color: var(--accent); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.table-wrap { margin: 32px 0; overflow-x: auto;
+  border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap thead { background: var(--thead-bg); }
+.table-wrap th { padding: 14px 18px; text-align: left; font-weight: 700; font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border); }
+.table-wrap td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--body-text); line-height: 1.65; vertical-align: top; }
+.table-wrap tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--accent-glow); }
+.table-wrap td strong { color: var(--body-strong); }
+.code-block { margin: 28px 0; background: var(--code-bg); color: var(--code-text);
+  padding: 20px 24px; border-radius: var(--radius); font-size: 12px; line-height: 1.7;
+  overflow-x: auto; font-family: "SF Mono","Fira Code","Menlo",monospace;
+  border: 1px solid var(--border); }
+.code-block .comment { color: #5c6370; }
+.code-block .cmd { color: #56d4a7; }
+.section-img { margin: 32px 0; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); }
+.section-img img { width: 100%; display: block; }
+.section-img .caption { font-size: 11px; color: var(--text-tertiary);
+  padding: 9px 16px; background: var(--bg-card); text-align: center; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 48px 0 0;
+  padding-top: 32px; border-top: 1px solid var(--border); }
+.tag-cloud a { font-size: 11px; color: var(--text-secondary);
+  background: var(--bg-raised); padding: 5px 13px; border-radius: 16px;
+  text-decoration: none; border: 1px solid var(--border-subtle); transition: all 0.2s; }
+.tag-cloud a:hover { background: var(--accent); color: #0a0a10; border-color: var(--accent); }
+.back-link { display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; margin: 40px 0 0; transition: color 0.2s; }
+.back-link:hover { color: var(--accent-ink); }
+.back-link::before { content: "←"; font-size: 15px; }
+.page-dot { position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+  z-index: 150; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.page-dot a { width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+  transition: all 0.3s; display: block; text-indent: -9999px; overflow: hidden; }
+.page-dot a:hover, .page-dot a.active { background: var(--accent);
+  box-shadow: 0 0 8px rgba(0,245,212,0.5); width: 8px; height: 8px; }
+.footer { text-align: center; padding: 36px 24px;
+  border-top: 1px solid var(--border); color: var(--text-tertiary); font-size: 12px; }
+.footer a { color: var(--accent-ink); text-decoration: none; }
+@media (max-width: 768px) {
+  .hero { padding: 110px 0 50px; }
+  .hero h1 { font-size: 24px; }
+  .hero-desc { font-size: 14px; }
+  .article-body h2 { font-size: 22px; }
+  .page-dot { display: none; }
+  .toc-bar { top: 52px; padding: 10px 0; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 100px 0 40px; }
+  .hero h1 { font-size: 21px; }
+  .toc-scroll a { font-size: 10px; padding: 4px 10px; }
+  .article-wrap { padding: 0 16px 80px; }
+  .article-body h2 { font-size: 20px; }
+}
+.theme-toggle { margin-left: 18px; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-secondary);
+  cursor: pointer; font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0; }
+.theme-toggle:hover { color: var(--accent-ink); border-color: var(--accent); }
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block;  max-height:460px; object-fit:cover;}
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px;  max-height:460px; object-fit:cover;}
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+<nav class="page-dot" id="pageDots"></nav>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>HKUDS 实验室 · 开源 AI 教育</div>
+    <h1>DeepTutor：把辅导、解题、测验装进同一个 <em>Agent 引擎</em></h1>
+    <p class="hero-desc">香港大学 HKUDS 实验室开发的开源 AI 教育平台（deep-tutor/deep-tutor，25.8k Stars，Apache 2.0）。Agent-Native 架构把辅导、解题、测验、研究等六大能力整合进统一引擎，支持 GraphRAG / LightRAG / Obsidian 多引擎知识检索，具备三层可检查记忆（L1-L3），提供 CLI、Docker 一键部署，适配飞书 / Telegram / Slack。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-17</span><span class="sep"></span>
+      <span>约 6 分钟阅读</span>
+    </div>
+  </div>
+</section>
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll">
+    <a href="#s1">它是什么</a>
+    <a href="#s2">六大能力整合</a>
+    <a href="#s3">Agent-Native 架构</a>
+    <a href="#s4">三层记忆与多引擎检索</a>
+    <a href="#s5">部署与集成</a>
+    <a href="#s6">我的判断</a>
+  </div>
+</div>
+<div class="hero-cover">
+  <img src="/uploads/deeptutor-cover.jpg" alt="DeepTutor 开源 AI 教育平台" loading="eager" />
+</div>
+<div class="article-wrap">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p>大多数 AI 教育工具是「单点」的：这道题不会，丢给一个解题机器人；要复习，再开一个测验生成器；查资料，又切到另一个检索框。能力是碎的，记忆是各管各的。</p>
+    <p>DeepTutor 的定位是反过来——<strong>一个 Agent-Native 的统一引擎，把辅导、解题、测验、研究等能力当作同一套系统里的「可调用的能力」</strong>，由引擎根据学生的状态决定下一步该用哪个。它由香港大学 HKUDS 实验室开发，GitHub 25.8k Stars，Apache 2.0 协议，论文编号 arXiv 2604.26962。</p>
+    <div class="highlight-box">
+      <p>一句话定位：不是六个独立工具拼起来的教育套件，而是一个「会判断该用哪种能力」的 Agent 引擎——辅导、解题、测验、研究、记忆调用、多轮对话复盘，全部跑在同一个引擎上，共享同一份可检查记忆。</p>
+    </div>
+
+    <h2 id="s2">二、六大能力整合于统一引擎</h2>
+    <p>DeepTutor 把教育场景里最常见的六类动作，做成引擎内可调度的能力，而不是六个独立 App：</p>
+    <ul>
+      <li><strong>智能辅导（Tutoring）</strong>：不直接给答案，而是根据学生水平做引导式讲解；</li>
+      <li><strong>解题推演（Problem Solving）</strong>：一步步展示推导过程，而非只抛结果；</li>
+      <li><strong>测验生成（Quiz）</strong>：按知识点自动出题、批改、追错；</li>
+      <li><strong>研究检索（Research）</strong>：检索外部资料与知识库，支撑讲解与求证；</li>
+      <li><strong>记忆调用（Memory Recall）</strong>：从学生的三层记忆里取回历史上下文；</li>
+      <li><strong>多轮对话复盘（Reflection）</strong>：跨轮次总结薄弱点，调整后续辅导策略。</li>
+    </ul>
+    <p>关键不在「这六个能力分别多强」，而在引擎能<strong>按学生的实时状态自动编排它们</strong>——做错题就切到引导式解题，连续答对就转去测验加压，概念模糊就调出记忆与资料。这正是 Agent-Native 相对「单点工具堆叠」的核心差异。</p>
+
+    <h2 id="s3">三、Agent-Native 架构：引擎调度，而非工具堆叠</h2>
+    <p>传统做法是「学生 ↔ 解题器」「学生 ↔ 测验器」两两直连；DeepTutor 中间多了一个<strong>统一引擎层</strong>，所有能力都挂在引擎下，由引擎做编排与状态管理：</p>
+    <ol class="step-list">
+      <li><span class="step-label">感知 · 学生建模</span><p>引擎持续维护学生的知识状态与三层记忆，作为后续所有能力调用的上下文输入。</p></li>
+      <li><span class="step-label">决策 · 能力路由</span><p>根据当前问题与学生状态，引擎判断该走辅导、解题、测验还是检索——而不是靠用户手动切换工具。</p></li>
+      <li><span class="step-label">执行 · 能力调用</span><p>调用对应能力，过程中可跨能力串联（如先检索资料、再做引导式解题、最后生成测验）。</p></li>
+      <li><span class="step-label">沉淀 · 记忆回写</span><p>本轮交互的结论与薄弱点写回三层记忆，供下一轮复盘与个性化使用。</p></li>
+    </ol>
+
+    <h2 id="s4">四、三层可检查记忆 + 多引擎知识检索</h2>
+    <p>DeepTutor 的记忆系统是「可检查」的——每一层都能被查看、审计、调试，而不是黑盒：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>记忆层</th><th>存放内容</th><th>可检查性</th></tr></thead>
+        <tbody>
+          <tr><td><strong>L1 · 工作记忆</strong></td><td>当前会话的上下文、正在处理的题目与对话状态</td><td>会话级可见、可回放</td></tr>
+          <tr><td><strong>L2 · 知识记忆</strong></td><td>学生的知识点掌握度、错题与薄弱点画像</td><td>可查看掌握度曲线、错题库</td></tr>
+          <tr><td><strong>L3 · 长期记忆</strong></td><td>跨课程、跨时间的稳定认知模型与学习轨迹</td><td>可审计、可导出复盘</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>知识检索侧，DeepTutor 支持<strong>多引擎并行</strong>：</p>
+    <ul>
+      <li><strong>GraphRAG</strong>：基于知识图谱的关系检索，适合概念网络类内容；</li>
+      <li><strong>LightRAG</strong>：轻量级 RAG，资源占用低、部署简单；</li>
+      <li><strong>Obsidian</strong>：直接对接个人知识库（Markdown 笔记），把学生自己的笔记纳入检索。</li>
+    </ul>
+    <div class="info-box">
+      <p class="info-title">为什么强调「可检查」</p>
+      <p>教育场景里，AI 给的引导对不对、记忆里记了什么，都关系到学习有效性。可检查意味着教师或学生能打开记忆看「它为什么这么判断」，而不是盲信黑盒输出。</p>
+    </div>
+
+    <h2 id="s5">五、部署与集成</h2>
+    <p>DeepTutor 面向「愿意配置环境」的用户，提供 CLI 与容器化部署，并能接入多个即时通讯平台：</p>
+    <div class="code-block">
+<span class="comment"># Docker 一键启动（推荐）</span>
+docker run -p 8000:8000 deeptutor/deeptutor
+
+<span class="comment"># 或克隆后本地运行（需 Python 3.11+）</span>
+git clone https://github.com/deep-tutor/deep-tutor.git
+cd deep-tutor
+pip install -e .
+deeptutor --help   <span class="comment"># CLI 入口</span>
+    </div>
+    <ul>
+      <li><strong>CLI 接口</strong>：命令行直接驱动辅导 / 解题 / 测验流程，便于集成进脚本与教学流水线；</li>
+      <li><strong>平台适配</strong>：原生适配飞书、Telegram、Slack，把辅导能力直接挂到团队 / 班级群；</li>
+      <li><strong>技术栈</strong>：Python 3.11+，Apache 2.0 许可，可自由修改与再分发。</li>
+    </ul>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：教育机构 / 教师想把 AI 辅导「系统化」而非堆工具；自学者希望有一个能记住自己薄弱点、跨轮次复盘的学习伙伴；研究团队需要可检查、可审计的 Agent 教育架构作为底座。25.8k Stars 与 HKUDS 实验室背书，可信度较高。</p>
+    <p><strong>注意</strong>：① 需要自行部署（Docker / CLI），不是开箱即用的 SaaS，对非技术用户有门槛；② 多引擎检索（GraphRAG / LightRAG / Obsidian）需各自配置数据源，上手成本在「接数据」而非「用功能」；③ 论文 arXiv 2604.26962 的具体结论建议以原文为准；④ Apache 2.0 允许商用与修改，但生产环境仍需自行评估合规与数据隐私。</p>
+    <p><strong>定位</strong>：它代表了一个方向——教育 AI 从「单点解题器」走向「带记忆、会编排、可审计的 Agent 导师」。对重视学习效果可追溯、而非只求快出答案的场景，这套架构比堆工具更有长期价值。</p>
+
+    <div class="tag-cloud">
+      <a href="#">DeepTutor</a><a href="#">HKUDS</a><a href="#">Agent-Native</a><a href="#">AI 教育</a>
+      <a href="#">GraphRAG</a><a href="#">LightRAG</a><a href="#">Obsidian</a><a href="#">多引擎检索</a>
+      <a href="#">可检查记忆</a><a href="#">CLI</a><a href="#">Docker</a><a href="#">开源</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/deep-tutor/deep-tutor">deep-tutor/deep-tutor</a> 开源项目（HKUDS 实验室，Apache 2.0）</p>
+</footer>
+<script>
+(function(){
+  var bar = document.getElementById('progressBar');
+  var toc = document.getElementById('tocScroll');
+  var dotsWrap = document.getElementById('pageDots');
+  var links = toc ? [].slice.call(toc.querySelectorAll('a')) : [];
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if(dotsWrap && sections.length){
+    sections.forEach(function(s){
+      var d = document.createElement('a');
+      d.href = '#' + s.id; d.textContent = s.id;
+      dotsWrap.appendChild(d);
+    });
+  }
+  var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('a')) : [];
+  function onScroll(){
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (sc / max) * 100 : 0;
+    if(bar) bar.style.setProperty('--progress', p + '%');
+    var idx = 0;
+    sections.forEach(function(s, i){ if(s.getBoundingClientRect().top <= 120) idx = i; });
+    links.forEach(function(l,i){ l.classList.toggle('active', i===idx); });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  var tg = document.getElementById('themeToggle');
+  if(tg){
+    tg.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      tg.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+  }
+})();
+</script>
+</body>
+</html>
