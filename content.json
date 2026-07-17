@@ -1680,6 +1680,32 @@
       "status": "published",
       "link": "/craft/comfyui-from-zero-to-pro.html",
       "template": "B"
+    },
+    {
+      "id": "article-74",
+      "title": "VoxCPM 2：清华 OpenBMB 开源「无分词器」语音合成，30 语言 + 中文 9 方言",
+      "slug": "voxcpm",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/voxcpm-cover.jpg",
+      "excerpt": "VoxCPM2（OpenBMB/VoxCPM，Apache-2.0）是清华系 MiniCPM 团队打造的无分词器文本转语音（TTS）系统：端到端扩散自回归直接生成连续语音表征，支持 30 种语言与中文 9 种方言，48kHz 录音室级音质，可免费商用，内置 Voice Design 与可控/极致语音克隆。",
+      "content": "详见独立文章页：/craft/voxcpm.html",
+      "tags": [
+        "VoxCPM",
+        "VoxCPM2",
+        "OpenBMB",
+        "语音合成",
+        "TTS",
+        "MiniCPM",
+        "多语言",
+        "方言",
+        "Apache-2.0"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-17",
+      "status": "published",
+      "link": "/craft/voxcpm.html",
+      "template": "C"
     }
   ],
   "projects": [
