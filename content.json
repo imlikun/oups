@@ -1706,6 +1706,32 @@
       "status": "published",
       "link": "/craft/voxcpm.html",
       "template": "C"
+    },
+    {
+      "id": "article-75",
+      "title": "Understand Anything：一条 /understand 把 20 万行代码库变成可交互知识图谱",
+      "slug": "understand-anything",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/understand-anything-cover.jpg",
+      "excerpt": "开源代码理解神器（longjun-9/Understand-Anything，MIT，约 71.7k Stars）：Tree-sitter 确定性解析 + LLM 语义理解双引擎，7 个 Agent 流水线并行分析，把任意代码库变成可搜索、可追问的结构/业务域/知识库三种视图图谱，支持 Claude Code / Codex / Cursor / Gemini CLI 等 15 平台，图谱 JSON 可提交 Git 共享，支持中文输出。",
+      "content": "详见独立文章页：/craft/understand-anything.html",
+      "tags": [
+        "Understand Anything",
+        "longjun-9",
+        "代码理解",
+        "知识图谱",
+        "Tree-sitter",
+        "LLM 语义",
+        "Agent 流水线",
+        "Claude Code",
+        "MIT"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-17",
+      "status": "published",
+      "link": "/craft/understand-anything.html",
+      "template": "A"
     }
   ],
   "projects": [

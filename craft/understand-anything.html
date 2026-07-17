@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Understand Anything：一条 /understand 把 20 万行代码库变成可交互知识图谱，71.7k Stars</title>
+<meta name="description" content="Understand Anything（longjun-9/Understand-Anything，MIT，约 71.7k Stars）是开源代码理解工具：Tree-sitter 确定性解析 + LLM 语义理解双引擎，7 个 Agent 流水线并行分析，把任意代码库变成可搜索、可追问的结构/业务域/知识库三种视图知识图谱，支持 Claude Code / Codex / Cursor / Gemini CLI 等 15 个平台一键安装，图谱 JSON 可提交 Git 与团队共享，支持中文输出。">
+<style>
+:root {
+  --bg: #fcfcf9;
+  --text: #1a1a1b;
+  --text-secondary: #555;
+  --text-tertiary: #999;
+  --accent: #1a6ff5;
+  --accent-light: rgba(26,111,245,0.06);
+  --accent-glow: rgba(26,111,245,0.12);
+  --border: rgba(0,0,0,0.07);
+  --radius: 10px;
+  --max-text: 880px;
+  --max-wide: 920px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.85; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(252,252,249,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1120px; margin:0 auto; padding:0 28px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:5px; }
+.nav-links { display:flex; gap:26px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.hero { padding:110px 0 50px; text-align:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:24px; }
+.hero-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+.hero h1 { font-size:clamp(24px,4vw,40px); font-weight:700; letter-spacing:-1.2px; line-height:1.2;
+  max-width:760px; margin:0 auto 16px; color:#111; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 28px; line-height:1.65; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .dot { width:3px; height:3px; border-radius:50%; background:#ccc; }
+.hero-divider { width:60px; height:2px; background:var(--accent); margin:32px auto; border-radius:1px; }
+.page { max-width:var(--max-text); margin:0 auto; padding:0 28px 100px; }
+.toc-overlay { position:absolute; top:50%; right:24px; transform:translateY(-50%); z-index:5;
+  background:rgba(255,255,255,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.6); border-radius:10px;
+  padding:16px 20px; min-width:170px; box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  animation:tocFadeIn 0.5s ease 0.3s both; }
+@keyframes tocFadeIn { from{opacity:0; transform:translateY(-50%) translateX(8px);} to{opacity:1; transform:translateY(-50%) translateX(0);} }
+.toc-overlay .toc-title { font-size:10px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+.toc-overlay .toc-list { list-style:none; }
+.toc-overlay .toc-list li { margin-bottom:4px; }
+.toc-overlay .toc-list a { font-size:12px; color:var(--text-secondary); text-decoration:none; display:block;
+  padding:3px 8px; border-radius:5px; transition:all 0.15s; line-height:1.5; border-left:2px solid transparent; }
+.toc-overlay .toc-list a:hover, .toc-overlay .toc-list a.active { color:var(--accent); background:rgba(26,111,245,0.08); border-left-color:var(--accent); }
+.article-body { flex:1; min-width:0; max-width:var(--max-text); }
+.article-body h2 { font-size:24px; font-weight:700; margin:48px 0 18px; color:#111; letter-spacing:-0.6px; position:relative; padding-left:14px; }
+.article-body h2:first-child { margin-top:0; }
+.article-body h2::before { content:""; position:absolute; left:0; top:4px; bottom:4px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h3 { font-size:18px; font-weight:600; margin:36px 0 12px; color:#222; }
+.article-body p { margin-bottom:20px; color:#333; }
+.article-body strong { font-weight:600; color:#111; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(26,111,245,0.3); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+.article-body ul, .article-body ol { margin:0 0 20px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.8; color:#333; }
+.section-img { margin:0 0 32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:#f8f9fb; text-align:center; }
+.mod-card { margin:0 0 16px; padding:18px 22px; background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .2s, box-shadow .2s; }
+.mod-card:hover { border-color:rgba(26,111,245,0.3); box-shadow:0 4px 18px rgba(26,111,245,0.07); }
+.mod-card .mc-head { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mod-card .mc-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+  font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mod-card .mc-title { font-size:16.5px; font-weight:600; color:#111; }
+.mod-card .mc-desc { font-size:14.5px; color:#444; line-height:1.75; margin:0; }
+.pipeline { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 28px; align-items:center; }
+.pipeline .step { font-size:12.5px; font-weight:500; color:var(--accent); background:var(--accent-light);
+  padding:6px 14px; border-radius:20px; border:1px solid rgba(26,111,245,0.12); }
+.pipeline .arrow { color:var(--text-tertiary); font-size:13px; }
+.info-box { margin:28px 0; padding:20px 24px; background:var(--accent-light); border-radius:var(--radius); border:1px solid rgba(26,111,245,0.12); }
+.info-box p { margin-bottom:8px; font-size:14.5px; color:#333; line-height:1.75; }
+.info-box p:last-child { margin-bottom:0; }
+.info-box strong { color:#111; }
+.code-block { margin:24px 0; padding:18px 22px; background:#0f1420; border-radius:var(--radius); overflow-x:auto; }
+.code-block pre { font-family:"SF Mono",Menlo,Consolas,monospace; font-size:13.5px; line-height:1.7; color:#e6edf3; }
+.code-block .c-com { color:#7d8590; }
+.code-block .c-key { color:#79c0ff; }
+.pull-quote { margin:30px 0; padding:20px 24px; border-left:3px solid var(--accent);
+  background:var(--accent-light); border-radius:0 8px 8px 0; }
+.pull-quote p { font-size:16px; font-weight:500; color:#1a1a1b; margin:0; font-style:italic; }
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:40px 0 0; padding-top:32px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:#f0f2f5; padding:5px 12px; border-radius:16px; text-decoration:none; transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; }
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:32px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+.footer { text-align:center; padding:32px 28px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+@media (max-width:900px) {
+  .toc-overlay { display:none; }
+  .hero { padding:100px 20px 40px; }
+}
+@media (max-width:600px) {
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:15px; }
+  .article-body h2 { font-size:21px; }
+  .page { padding:0 16px 60px; }
+}
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; max-height:460px; object-fit:cover;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源 · 代码理解工具</div>
+  <h1>Understand Anything：一条 <strong>/understand</strong> 把 20 万行代码库变成可交互知识图谱</h1>
+  <p class="hero-desc">开源代码理解神器（longjun-9/Understand-Anything，MIT，约 71.7k Stars）。Tree-sitter 确定性解析 + LLM 语义理解双引擎，7 个 Agent 流水线并行分析，把任意代码库变成可搜索、可追问的结构 / 业务域 / 知识库三种视图图谱，支持 Claude Code / Codex / Cursor / Gemini CLI 等 15 个平台一键安装，图谱 JSON 可提交 Git 与团队共享，支持中文输出。</p>
+  <div class="hero-meta">
+    <span>代码理解</span><span class="dot"></span>
+    <span>Tree-sitter + LLM</span><span class="dot"></span>
+    <span>MIT 协议</span><span class="dot"></span>
+    <span>2026.07.17</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/understand-anything-cover.jpg" alt="Understand Anything 代码知识图谱">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">它是什么</a></li>
+      <li><a href="#s2">双引擎与 Agent 流水线</a></li>
+      <li><a href="#s3">命令体系与三种视图</a></li>
+      <li><a href="#s4">团队共享与平台支持</a></li>
+      <li><a href="#s5">快速开始</a></li>
+      <li><a href="#s6">我的判断</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+    <h2 id="s1">一、它是什么</h2>
+    <p>先说清楚边界：<strong>Understand Anything 不是另一个「能读文件的 AI 助手」，而是一台把代码库编译成「持久化知识图谱」的机器</strong>。它解决的是最痛的工程场景——接手一个 20 万行、没人讲得清结构的老仓库，从哪读起？</p>
+    <p>项目由 longjun-9 创建，GitHub 约 <strong>71.7k Stars</strong>（用户圈常称「近 75K」），MIT 协议，一句 <code>/understand</code> 命令即可扫描整个仓库，生成一份可交互、可搜索、可追问的知识图谱。官方 slogan 很直白：<em>Graphs that teach &gt; graphs that impress.</em>（能教会人的图，胜过唬人的图）。</p>
+    <div class="info-box">
+      <p><strong>一句话定位</strong>：把任意代码库变成一份「团队共享、可版本控制、能对话查询」的交互式知识图谱。结构分析确定性可复现，语义理解由 LLM 补全，产物是一个 JSON 文件，提交进 Git 全队通用。</p>
+    </div>
+
+    <h2 id="s2">二、双引擎与 Agent 流水线</h2>
+    <p>它的核心是一套 <strong>Tree-sitter 确定性解析 + LLM 语义理解</strong> 的混合架构，两边各管各的，互不污染：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">Tree-sitter（确定性引擎）</span></div>
+      <p class="mc-desc">把源码解析成语法树，确定性提取 imports、exports、函数定义、调用点、继承关系，并在扫描阶段预解析好 import map。「同样的代码进，同样的骨架边出」——每次重建图谱，结构部分完全一致，可复现。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">LLM（语义理解层）</span></div>
+      <p class="mc-desc">在语法树之上做摘要、架构层划分、业务域映射。语义随模型变化，但对同一代码库保持一致；结构骨架不受模型影响，所以图谱「不会越跑越乱」。</p>
+    </div>
+    <p>分析由 <strong>7 个 Agent</strong> 流水线完成，文件分析器并行跑（最多 5 个并发批次、每批 20–30 个文件）：</p>
+    <div class="pipeline">
+      <span class="step">project-scanner</span><span class="arrow">·</span>
+      <span class="step">file-analyzer</span><span class="arrow">·</span>
+      <span class="step">architecture-analyzer</span><span class="arrow">·</span>
+      <span class="step">tour-builder</span><span class="arrow">·</span>
+      <span class="step">graph-reviewer</span><span class="arrow">·</span>
+      <span class="step">domain-analyzer</span><span class="arrow">·</span>
+      <span class="step">article-analyzer</span>
+    </div>
+    <ul>
+      <li><strong>project-scanner / file-analyzer</strong>：扫描项目、逐文件抽取，并行加速；</li>
+      <li><strong>architecture-analyzer</strong>：识别架构分层（入口、领域、基础设施、边界节点）；</li>
+      <li><strong>tour-builder</strong>：自动生成「按依赖排序」的引导式架构导览；</li>
+      <li><strong>graph-reviewer</strong>：校验图谱完整性与引用完整性（默认内联，<code>--review</code> 触发完整 LLM 复核）；</li>
+      <li><strong>domain-analyzer</strong>：支撑 <code>/understand-domain</code>，把代码映射到业务流程；</li>
+      <li><strong>article-analyzer</strong>：支撑 <code>/understand-knowledge</code>，从 Wiki 类文章抽取实体与隐含关系。</li>
+    </ul>
+
+    <h2 id="s3">三、命令体系与三种视图</h2>
+    <p>图谱建好后，通过一组斜杠命令与 Dashboard 交互。<strong>模糊语义搜索</strong>贯穿始终——不用精确记函数名，用自然语言就能问「支付流程怎么走」。</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">结构视图（Structure）</span></div>
+      <p class="mc-desc">按架构层着色的关系图：入口层、领域层、基础设施、边界节点（数据库 / 缓存 / 队列 / 第三方 SDK / 外部 API）。三类节点看清，系统骨架基本就出来了。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">业务域视图（Domain）</span></div>
+      <p class="mc-desc">把代码映射成业务域、流程、步骤，横向铺开（<code>/understand-domain</code>）。适合向非技术同学讲清「代码到底在干啥」，而不只是「怎么实现」。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">知识库视图（Knowledge）</span></div>
+      <p class="mc-desc">面向 Wiki 式知识库的图谱（<code>/understand-knowledge</code>），像 Karpathy 式 LLM Wiki，把文章里的实体与关系也织进同一张图。</p>
+    </div>
+    <div class="code-block">
+      <pre><span class="c-com"># 一条命令建图，默认中文输出</span>
+<span class="c-key">/understand</span> --language zh
+
+<span class="c-com"># 常用追问与动作</span>
+<span class="c-key">/understand-chat</span>         <span class="c-com"># 基于图谱问答：支付流程怎么走？</span>
+<span class="c-key">/understand-explain</span>     <span class="c-com"># 深挖某个文件 / 函数</span>
+<span class="c-key">/understand-diff</span>        <span class="c-com"># 分析当前改动的波及范围（提交前防回归）</span>
+<span class="c-key">/understand-onboard</span>     <span class="c-com"># 生成新人 onboarding 指南</span>
+<span class="c-key">/understand-domain</span>      <span class="c-com"># 提取业务域 / 流程 / 步骤</span>
+<span class="c-key">/understand-knowledge</span>   <span class="c-com"># 分析知识库 Wiki</span>
+<span class="c-key">/understand-dashboard</span>   <span class="c-com"># 打开浏览器交互式图谱</span>
+<span class="c-key">/understand</span> --auto-update  <span class="c-com"># 每次 commit 后自动增量更新</span></pre>
+    </div>
+    <div class="pull-quote"><p><code>/understand-diff</code> 的价值在于：提交前就能看出「这次改动会扯动哪些依赖模块」，对跨服务的 ripple effect 提前预警——比靠人肉 grep 找调用方靠谱得多。</p></div>
+
+    <h2 id="s4">四、团队共享与平台支持</h2>
+    <p>它和 Cursor / Copilot 内置索引最大的区别是：<strong>那些索引是封闭的黑盒，你看不到、分享不了、也提交不进仓库；Understand Anything 产出的是一个你拥有、可版本控制的显式产物</strong>。</p>
+    <div class="info-box">
+      <p><strong>图谱就是 JSON</strong></p>
+      <p class="mc-desc">分析结果保存在 <code>.understand-anything/knowledge-graph.json</code>。提交一次，队友无需各自跑流水线，全员共享同一张图。大图谱（10 MB+）建议用 Git LFS 跟踪；中间产物 <code>intermediate/</code>、<code>diff-overlay.json</code> 不提交。</p>
+      <p><strong>增量更新</strong></p>
+      <p class="mc-desc">首跑后只重新分析变更文件；<code>--auto-update</code> 挂上 post-commit hook，每次提交自动保持图谱最新。</p>
+      <p><strong>15 个平台一键安装</strong></p>
+      <p class="mc-desc">Claude Code、Codex、Cursor、Copilot、Copilot CLI、Gemini CLI、OpenCode、Kiro 等，同一行安装脚本即可接入；原生主场是 Claude Code（<code>/plugin install understand-anything</code>），其他平台通过插件 / CLI 挂载。它不替代这些助手，而是坐在它们之上。</p>
+    </div>
+
+    <h2 id="s5">五、快速开始</h2>
+    <p>以 Claude Code 为例，最简单的路径：</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 1. 在 Claude Code 里安装插件</span>
+<span class="c-key">/plugin install</span> understand-anything
+
+<span class="c-com"># 2. 进入你的项目，跑一条命令（中文输出）</span>
+<span class="c-key">/understand</span> --language zh
+
+<span class="c-com"># 3. 打开 Dashboard 浏览交互式图谱</span>
+<span class="c-key">/understand-dashboard</span>
+
+<span class="c-com"># 4. 把图谱提交进仓库，团队共享</span>
+git add .understand-anything/knowledge-graph.json
+git commit -m "chore: add code knowledge graph"</pre>
+    </div>
+    <p>首次扫描建议先排除巨型 <code>node_modules</code> / 编译产物，或在 <code>.understand-anything/config.yaml</code> 里配置 ignore 规则，避免第一次跑「等到怀疑人生」。中文界面下，节点摘要、导览说明、Dashboard 的按钮与 tooltip 都会变成中文。</p>
+
+    <h2 id="s6">六、我的判断</h2>
+    <p><strong>适合</strong>：刚接手大型 / 遗留代码库的团队与个人；需要把架构「讲清楚」给新人或非技术方的人；希望把代码理解沉淀成团队资产、而非每人各建各的脑内模型；已经在用 Claude Code / Cursor / Codex 等主流 Agent 工具、想叠加一层持久化图谱的人。MIT 协议，可自由修改与自托管。</p>
+    <p><strong>注意</strong>：① 约 71.7k Stars 属现象级热度，但工具相对新颖，<strong>长期维护节奏与跨语言支持的成熟度需自行评估</strong>；② 语义层质量<strong>取决于你接入的 LLM 模型</strong>，弱模型产出的摘要可能不够可信，大团队尤其要试跑验证；③ 图谱会随代码演化，<strong>必须配合 <code>--auto-update</code> 才不脱节</strong>，否则就是份会过期的快照；④ 它产出「共享图」而非「自动改代码」，定位是理解层、不是生成层。</p>
+    <p><strong>定位</strong>：它把「读懂一个陌生代码库」这件最耗时、最 undocumented 的事，变成一条命令 + 一份可提交的 JSON。对「接手即读源码、读得慢还记不住」的痛点，是当下少有的、把产物交还给你自己的方案。</p>
+
+    <div class="tag-cloud">
+      <a href="#">Understand Anything</a><a href="#">longjun-9</a><a href="#">代码理解</a><a href="#">知识图谱</a>
+      <a href="#">Tree-sitter</a><a href="#">LLM 语义</a><a href="#">Agent 流水线</a><a href="#">Claude Code</a>
+      <a href="#">Cursor</a><a href="#">Codex</a><a href="#">Gemini CLI</a><a href="#">Git 共享</a><a href="#">MIT</a><a href="#">开源</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/longjun-9/Understand-Anything">longjun-9/Understand-Anything</a> 开源项目（MIT，约 71.7k Stars）</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>
