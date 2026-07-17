@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ComfyUI 从零到熟练：纯新手保姆级教程（2026）</title>
+<meta name="description" content="ComfyUI 节点式 AI 图像生成工具纯新手保姆级教程：从硬件认知、三种安装方式、界面概念，到文生图/图生图/重绘/放大/ControlNet/LoRA 工作流实操，含模型管理与排错手册，照着做即可从零到熟练。">
+<style>
+/* ========== 模板B：现代宽屏风格 ========== */
+/* 配色：紫色强调 #7c3aed，背景白色+浅灰卡片 */
+:root {
+  --bg: #ffffff;
+  --bg-card: #f8f9fb;
+  --bg-section: #f1f3f5;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --accent: #7c3aed;
+  --accent-light: rgba(124,58,237,0.06);
+  --accent-glow: rgba(124,58,237,0.12);
+  --border: rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-text: 800px;
+  --max-wide: 1200px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.9; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Nav ---- */
+.nav { position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+.nav.scrolled { box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.nav-inner { max-width:var(--max-wide); margin:0 auto; padding:0 32px;
+  display:flex; align-items:center; justify-content:space-between; height:56px; }
+.nav-logo { font-size:16px; font-weight:700; color:var(--accent); text-decoration:none; letter-spacing:-0.3px; }
+.nav-logo span { color:var(--text-tertiary); font-weight:400; font-size:12px; margin-left:6px; }
+.nav-links { display:flex; gap:28px; align-items:center; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; position:relative; }
+.nav-links a:hover, .nav-links a.active { color:var(--accent); }
+.nav-links a.active::after { content:''; position:absolute; bottom:-18px; left:0; right:0; height:2px; background:var(--accent); border-radius:1px; }
+
+/* ---- Hero ---- */
+.hero { padding:120px 32px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-60%; left:-20%; width:140%; height:200%;
+  background:radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%);
+  pointer-events:none; }
+.hero-inner { max-width:800px; margin:0 auto; position:relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:var(--accent-light); color:var(--accent); font-size:11px; font-weight:600; letter-spacing:0.08em; margin-bottom:20px; }
+.hero-badge .dot { width:5px; height:5px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.hero h1 { font-size:clamp(26px,4.5vw,42px); font-weight:800; letter-spacing:-1.5px; line-height:1.15;
+  max-width:780px; margin:0 auto 20px; color:#0f172a; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero-desc { color:var(--text-secondary); font-size:16px; max-width:600px; margin:0 auto 32px; line-height:1.7; }
+.hero-meta { display:flex; justify-content:center; align-items:center; gap:16px; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; }
+.hero-meta .sep { width:3px; height:3px; border-radius:50%; background:#d1d5db; }
+.hero-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.hero-stat { text-align:center; }
+.hero-stat .num { font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-1px; }
+.hero-stat .label { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+
+/* ---- Summary Card (between Hero and Article) ---- */
+.summary-card { max-width:var(--max-wide); margin:-20px auto 0; padding:0 32px; position:relative; z-index:1; }
+.summary-inner { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 40px;
+  display:flex; gap:32px; align-items:flex-start; box-shadow:0 4px 24px rgba(0,0,0,0.03); }
+.summary-icon { font-size:36px; flex-shrink:0; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent-light); border-radius:12px; }
+.summary-text h3 { font-size:14px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
+.summary-text p { font-size:15px; color:var(--text-secondary); line-height:1.75; margin:0; }
+.summary-text .key-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.summary-text .key-points span { font-size:12px; padding:4px 12px; background:#fff; border:1px solid var(--border); border-radius:16px; color:var(--text-secondary); }
+
+/* ---- Article Body ---- */
+.article-wrap { max-width:var(--max-wide); margin:0 auto; padding:40px 32px 100px; }
+.article-body { max-width:var(--max-text); margin:0 auto; }
+.article-body h2 { font-size:28px; font-weight:800; margin:64px 0 24px; color:#0f172a; letter-spacing:-0.7px;
+  position:relative; padding-left:20px; }
+.article-body h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; border-radius:2px; background:var(--accent); }
+.article-body h2:first-child { margin-top:0; }
+.article-body h3 { font-size:19px; font-weight:700; margin:36px 0 14px; color:#1e293b; }
+.article-body h4 { font-size:15px; font-weight:600; margin:24px 0 10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; }
+.article-body p { margin-bottom:22px; color:#334155; }
+.article-body strong { font-weight:700; color:#0f172a; }
+.article-body ul, .article-body ol { margin:0 0 22px 20px; }
+.article-body li { margin-bottom:8px; line-height:1.85; color:#334155; }
+.article-body a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(124,58,237,0.25); transition:border-color 0.2s; }
+.article-body a:hover { border-bottom-color:var(--accent); }
+
+/* Section Image (generated illustration) */
+.section-img { margin:32px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); }
+.section-img img { width:100%; display:block; }
+.section-img .caption { font-size:12px; color:var(--text-tertiary); padding:10px 16px; background:var(--bg-card); text-align:center; }
+
+/* Pull Quote */
+.pull-quote { margin:40px 0; padding:24px 28px; border-left:4px solid var(--accent);
+  background:var(--accent-light); border-radius:0 10px 10px 0; }
+.pull-quote p { font-size:17px; font-weight:500; color:#0f172a; margin:0; font-style:italic; line-height:1.7; }
+
+/* Info Box */
+.info-box { margin:32px 0; padding:22px 28px; background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--border); }
+.info-box .info-title { font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.07em; }
+.info-box p { margin-bottom:0; font-size:14px; color:var(--text-secondary); }
+
+/* Highlight Box */
+.highlight-box { margin:32px 0; padding:24px 30px; background:linear-gradient(135deg,rgba(124,58,237,0.04),rgba(124,58,237,0.08));
+  border-radius:var(--radius); border:1px solid rgba(124,58,237,0.12); }
+.highlight-box p { margin-bottom:0; font-size:15px; color:#1e293b; line-height:1.75; }
+
+/* Steps */
+.step-list { counter-reset:step; list-style:none; margin:28px 0 40px; }
+.step-list li { counter-increment:step; margin-bottom:20px; padding:24px 28px; background:#fff;
+  border:1px solid var(--border); border-radius:var(--radius); position:relative; box-shadow:0 2px 8px rgba(0,0,0,0.02); }
+.step-list li::before { content:counter(step); position:absolute; top:-10px; left:20px;
+  background:var(--accent); color:#fff; width:28px; height:28px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+.step-list li .step-label { font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px; display:block; padding-top:8px; }
+.step-list li p { margin-bottom:4px; font-size:15px; }
+
+/* QA Checklist */
+.checklist { list-style:none; margin:24px 0 36px; }
+.checklist li { padding:12px 18px; margin-bottom:8px; border-radius:10px; background:var(--bg-card); display:flex; align-items:center; gap:10px; font-size:14px; border:1px solid var(--border); }
+.checklist li::before { content:"✓"; display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; border-radius:50%; background:var(--accent-light); color:var(--accent); font-size:12px; font-weight:800; flex-shrink:0; }
+
+/* Tables */
+.table-wrap { margin:32px 0; overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+.table-wrap table { width:100%; border-collapse:collapse; font-size:14px; }
+.table-wrap thead { background:var(--bg-section); }
+.table-wrap th { padding:14px 18px; text-align:left; font-weight:700; font-size:12px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:2px solid var(--border); }
+.table-wrap td { padding:14px 18px; border-bottom:1px solid var(--border); color:#334155; line-height:1.65; }
+.table-wrap tr:last-child td { border-bottom:none; }
+.table-wrap tbody tr:hover { background:var(--accent-light); }
+
+/* Code Block */
+.code-block { margin:28px 0; background:#1e1e2e; color:#cdd6f4; padding:20px 24px; border-radius:var(--radius); font-size:13px; line-height:1.7;
+  overflow-x:auto; font-family:"SF Mono","Fira Code","Menlo",monospace; }
+.code-block .comment { color:#6c7086; }
+.code-block .cmd { color:#89b4fa; }
+
+/* Tag Cloud */
+.tag-cloud { display:flex; flex-wrap:wrap; gap:8px; margin:48px 0 0; padding-top:36px; border-top:1px solid var(--border); }
+.tag-cloud a { font-size:12px; color:var(--text-secondary); background:var(--bg-card); padding:6px 14px; border-radius:18px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
+.tag-cloud a:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* Back */
+.back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; margin:40px 0 0; transition:color 0.2s; }
+.back-link:hover { color:var(--accent); }
+.back-link::before { content:"←"; font-size:16px; }
+
+/* Footer */
+.footer { text-align:center; padding:36px 32px; border-top:1px solid var(--border); color:var(--text-tertiary); font-size:13px; }
+.footer a { color:var(--accent); text-decoration:none; }
+
+/* Responsive */
+@media (max-width:900px) {
+  .summary-inner { flex-direction:column; padding:24px; }
+  .hero h1 { font-size:28px; }
+  .article-wrap { padding:24px 16px 80px; }
+  .article-body h2 { font-size:24px; }
+}
+@media (max-width:600px) {
+  .hero { padding:100px 16px 40px; }
+  .hero h1 { font-size:24px; }
+  .hero-desc { font-size:14px; }
+  .hero-stats { gap:20px; }
+  .summary-inner { padding:20px; }
+  .article-body h2 { font-size:21px; padding-left:16px; }
+  .article-body h3 { font-size:17px; }
+  .pull-quote p { font-size:15px; }
+}
+
+/* ---- Hero Cover (首图) ---- */
+.hero-cover { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.hero-cover img { width:100%; height:auto; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); display:block; }
+@media(max-width:640px) {
+  .hero-cover { margin-top:-16px; padding:0 12px; }
+  .hero-cover img { border-radius:10px; }
+}
+
+
+/* ===== 教程组件兼容样式（保留原教程视觉语义） ===== */
+:root{
+  --brand:var(--accent);
+  --sub:var(--text-tertiary);
+  --line:var(--border);
+  --panel:var(--bg-card);
+  --brand-soft:var(--accent-light);
+  --bad:#d23f3f; --ok:#1f9d55; --warn:#c47d00;
+  --code-bg:#1e2430; --code-ink:#e8edf5;
+}
+.article-body section{margin-bottom:12px;scroll-margin-top:84px;}
+.note,.tip,.warn,.danger{border-radius:10px;padding:14px 16px;margin:16px 0;border-left:4px solid;}
+.note{background:#eef4ff;border-color:#5b8bff;}
+.tip{background:#eafaf0;border-color:var(--ok);}
+.warn{background:#fff6e6;border-color:var(--warn);}
+.danger{background:#fdecec;border-color:var(--bad);}
+.note b,.tip b,.warn b,.danger b{display:inline-block;margin-right:6px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:16px 0;}
+.card{border:1px solid var(--border);border-radius:12px;padding:16px 18px;background:var(--bg-card);}
+.card h4{margin-top:0;color:var(--accent);}
+.step{display:flex;gap:12px;align-items:flex-start;margin:12px 0;}
+.step .num{flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+.step .body{flex:1;}
+.pill{display:inline-block;background:var(--accent-light);color:var(--accent);border-radius:20px;padding:2px 11px;font-size:12.5px;font-weight:600;margin-right:6px;}
+.kbd{display:inline-block;background:#fff;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:13px;font-family:monospace;}
+.toc-top{font-size:13px;color:var(--text-tertiary);margin-bottom:8px;}
+figure{margin:16px 0;}
+figure img{border-radius:12px;border:1px solid var(--border);}
+figcaption{font-size:13px;color:var(--text-tertiary);margin-top:6px;}
+.article-body pre{background:var(--code-bg);color:var(--code-ink);padding:16px 18px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.6;margin:28px 0;}
+.article-body pre code{background:none;color:inherit;padding:0;font-family:"SF Mono",Consolas,monospace;}
+.article-body code{background:#eef1f6;color:#c2255b;padding:2px 6px;border-radius:5px;font-size:13.5px;font-family:"SF Mono",Consolas,monospace;}
+.toc{margin:0 0 36px;padding:16px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);}
+.toc summary{cursor:pointer;font-weight:700;color:var(--accent);font-size:14px;}
+.toc-list{margin:14px 0 4px;padding-left:20px;}
+.toc-list li{margin:6px 0;}
+.toc-list a{color:var(--text-secondary);text-decoration:none;font-size:14px;}
+.toc-list a:hover{color:var(--accent);}
+.article-body .key{color:#5b21b6;font-weight:700;}
+
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>AI 生图 · 节点式工作流</div>
+    <h1>ComfyUI 从零到熟练<br><em>纯新手保姆级教程</em></h1>
+    <p class="hero-desc">ComfyUI 节点式 AI 图像生成工具纯新手保姆级教程：从硬件认知、三种安装方式、界面概念，到文生图/图生图/重绘/放大/ControlNet/LoRA 工作流实操，含模型管理与排错手册，照着做即可从零到熟练。</p>
+    <div class="hero-meta">
+      <span>李坤</span><span class="sep"></span>
+      <span>2026-07-17</span><span class="sep"></span>
+      <span>约 1.3 万字</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">12</div><div class="label">个章节</div></div>
+      <div class="hero-stat"><div class="num">6</div><div class="label">个标签</div></div>
+      <div class="hero-stat"><div class="num">35</div><div class="label">分钟阅读</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Summary Card -->
+<div class="summary-card">
+  <div class="summary-inner">
+    <div class="summary-icon">📋</div>
+    <div class="summary-text">
+      <h3>文章摘要</h3>
+      <p>一份面向零基础用户的 ComfyUI 保姆级教程。用大白话讲清“节点式工作流”是什么，手把手带你装好软件、跑通第一次出图，并逐步掌握文生图、图生图、局部重绘、高清放大、ControlNet、LoRA 等核心玩法，最后附模型清单与排错手册。</p>
+      <div class="key-points"><span>安装部署</span><span>文生图</span><span>图生图/重绘</span><span>ControlNet</span><span>LoRA</span><span>排错手册</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Article -->
+
+<div class="hero-cover"><img src="/uploads/comfyui-cover.jpg" alt="ComfyUI 教程封面"></div>
+<div class="article-wrap">
+  <article class="article-body">
+    <p class="toc-top">本文共 12 节（含附录），点击展开目录可快速跳转：</p>
+<details class="toc"><summary>📑 本文目录</summary>
+<ul class="toc-list">
+<li><a href="#p0">第零章 · ComfyUI 到底是什么</a></li>
+<li><a href="#p1">第一章 · 硬件认知与术语扫盲</a></li>
+<li><a href="#p2">第二章 · 三种安装方式</a></li>
+<li><a href="#p3">第三章 · 界面与核心概念</a></li>
+<li><a href="#p4">第四章 · 第一次出图（文生图）</a></li>
+<li><a href="#p5">第五章 · 吃透核心参数</a></li>
+<li><a href="#p6">第六章 · 常用工作流实操</a></li>
+<li><a href="#p7">第七章 · 模型管理</a></li>
+<li><a href="#p8">第八章 · 自定义节点与 Manager</a></li>
+<li><a href="#p9">第九章 · 进阶技巧</a></li>
+<li><a href="#p10">第十章 · 排错手册</a></li>
+<li><a href="#app">附录 · 模型清单与资源</a></li>
+</ul></details>
+<!-- 第零章 -->
+<section id="p0">
+  <h2>第零章 · ComfyUI 到底是什么</h2>
+  <p class="toc-top">先建立心智模型，后面每一步才不会迷路。</p>
+
+  <h3>一句话定义</h3>
+  <p><b>ComfyUI 是一个<span class="key">“节点式”的 AI 图像生成工作流工具</span>。</b>你不再面对一个挤满滑块的网页，而是像搭积木一样，把一个个“节点”（加载模型、写提示词、采样、保存图片）用线连起来，组成一条流水线，它替你跑完并出图。</p>
+
+  <h3>为什么新手更应该学它（而不是老牌 WebUI）</h3>
+  <div class="grid">
+    <div class="card"><h4>可控</h4><p>每一步都看得见、改得了。想换采样器、加一个 ControlNet、叠两个 LoRA，直接连线就行。</p></div>
+    <div class="card"><h4>可复用</h4><p>工作流保存成一个 <code>.json</code> 文件，下次双击就还原，参数一分不差。社区几万个现成工作流能直接拿用。</p></div>
+    <div class="card"><h4>可扩展</h4><p>靠“自定义节点”生态（6 万+ 节点）几乎能接任何新模型、新玩法，永远跟得上最新技术。</p></div>
+    <div class="card"><h4>省显存</h4><p>相比传统网页界面，节点式按需加载，对低配显卡更友好。</p></div>
+  </div>
+
+  <h3>你可能会担心的几件事（先打消顾虑）</h3>
+  <ul>
+    <li><b>“要会编程吗？”</b> <span class="key">不需要。连线操作是鼠标拖拽，和流程图一样。</span>真正要学的不是代码，是“图像是怎么被生成出来的”。</li>
+    <li><b>“要懂 AI / 深度学习吗？”</b> 不需要。本教程会把每个参数用大白话讲清楚，不懂原理也能出好图。</li>
+    <li><b>“节点图看起来好吓人。”</b> 官方已经内置了 <b>App Mode（简化视图）</b>：怕节点的人可以一键切到“只填提示词和按钮”的极简界面。学到后面自然就不怕了。</li>
+  </ul>
+
+  <div class="note"><b>它现在能做什么：</b> 以 AI 生图为核心（文生图、图生图、局部重绘、高清放大、姿态/构图控制、风格迁移）。2026 年也支持视频、音频等，但本教程聚焦最常用、最值得先掌握的图像部分。</div>
+
+  <h3>三个最常见的误解</h3>
+  <table>
+    <tr><th>误解</th><th>真相</th></tr>
+    <tr><td>“ComfyUI 太难，是给程序员用的”</td><td><span class="key">它只是“长相”专业。逻辑比满是滑块的界面更清晰，照教程做新手也能上手。</span></td></tr>
+    <tr><td>“必须先装 WebUI（A1111）”</td><td>不需要。ComfyUI 是独立软件，装好就能用，和 WebUI 互不依赖。</td></tr>
+    <tr><td>“模型要自己训练”</td><td>完全不用。模型从社区下载（Civitai 等），你只负责“用”。</td></tr>
+  </table>
+</section>
+
+<!-- 第一章 -->
+<section id="p1">
+  <h2>第一章 · 硬件认知与术语扫盲</h2>
+  <p class="toc-top">花 5 分钟看懂硬件门槛，能帮你少踩 80% 的坑。</p>
+
+  <h3>1.1 显卡：决定你能不能跑、跑多快</h3>
+  <table>
+    <tr><th>显卡类型</th><th>支持情况</th><th>说明</th></tr>
+    <tr><td>NVIDIA（N 卡，如 RTX 3060/4060/5070…）</td><td>✅ 最佳</td><td>CUDA 加速，速度快、兼容最好。桌面版/便携版都首选。</td></tr>
+    <tr><td>AMD（A 卡）</td><td>⚠️ 可用</td><td>需专用便携版 / 驱动，部分功能慢一点。</td></tr>
+    <tr><td>Apple 芯片（M1/M2/M3/M4）</td><td>✅ 可用</td><td>用 MPS 加速，开箱即用，但出图比同级 N 卡慢。</td></tr>
+    <tr><td>纯 CPU（无独显）</td><td>🐢 能跑</td><td>极慢，仅适合验证安装、学界面，不建议日常出图。</td></tr>
+  </table>
+  <div class="tip"><b>新手建议：</b> 有 N 卡就稳了；只有苹果电脑也能学完全部内容，只是等图久一点；完全没显卡可以先看云方案（见 2.4）。</div>
+
+  <h3>1.2 显存（VRAM）：决定你能用多大的模型</h3>
+  <p>这是最关键的硬件指标。模型越大，吃显存越多。对照下表选模型：</p>
+  <table>
+    <tr><th>显存</th><th>能流畅使用的模型</th><th>代表模型</th></tr>
+    <tr><td>4 GB</td><td>SD 1.5（512 分辨率）</td><td>Anything V5、Realistic Vision</td></tr>
+    <tr><td>8 GB</td><td>SDXL、量化版 Flux</td><td>Juggernaut XL、Flux.1-Schnell(fp8)</td></tr>
+    <tr><td>12 GB</td><td>Flux 量化版、SDXL 全精度</td><td>Flux.1-Dev(fp8)、SDXL 全家</td></tr>
+    <tr><td>16 GB+</td><td>几乎无限制</td><td>Flux.1-Dev 全精度、多 LoRA 叠加</td></tr>
+  </table>
+  <p>查看自己显存：Windows 打开“任务管理器 → 性能 → GPU”看“专用 GPU 内存”；macOS 点左上角  → 关于本机。</p>
+
+  <div class="note"><b>显存 → 模型阶梯（看图更直观）：</b></div>
+  <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:6px auto;">
+    <rect width="680" height="200" fill="#ffffff"/>
+    <text x="20" y="28" font-family="sans-serif" font-size="15" font-weight="700" fill="#1f2430">显存 → 能跑的最大模型</text>
+    <text x="20" y="64" font-family="sans-serif" font-size="13" fill="#1f2430">4 GB</text>
+    <rect x="82" y="50" width="120" height="22" rx="6" fill="#cdd6ea"/>
+    <text x="212" y="66" font-family="sans-serif" font-size="13" fill="#5a6473">SD 1.5（512）</text>
+    <text x="20" y="100" font-family="sans-serif" font-size="13" fill="#1f2430">8 GB</text>
+    <rect x="82" y="86" width="240" height="22" rx="6" fill="#9fb4e8"/>
+    <text x="332" y="102" font-family="sans-serif" font-size="13" fill="#5a6473">SDXL / Flux 量化版</text>
+    <text x="14" y="136" font-family="sans-serif" font-size="13" fill="#1f2430">12 GB</text>
+    <rect x="82" y="122" width="340" height="22" rx="6" fill="#6f8de0"/>
+    <text x="432" y="138" font-family="sans-serif" font-size="13" fill="#5a6473">Flux 量化全功能 / SDXL 全精度</text>
+    <text x="8" y="172" font-family="sans-serif" font-size="13" fill="#1f2430">16 GB+</text>
+    <rect x="82" y="158" width="440" height="22" rx="6" fill="#5b6cff"/>
+    <text x="532" y="174" font-family="sans-serif" font-size="13" fill="#5a6473">Flux 全精度（无妥协）</text>
+  </svg>
+
+  <h3>1.3 硬盘与内存</h3>
+  <ul>
+    <li><b>硬盘：</b> 至少留 15–30 GB 空闲。一个 SDXL 底模约 6–7 GB，Flux 约 12–23 GB，加上一堆 LoRA/ControlNet，很容易上百 GB。<b>强烈建议装在 SSD 上</b>，模型加载快很多。</li>
+    <li><b>内存（RAM）：</b> 16 GB 起步，32 GB 更舒服。</li>
+  </ul>
+
+  <h3>1.4 术语扫盲（这一节建议反复回看）</h3>
+  <table>
+    <tr><th>术语</th><th>大白话解释</th></tr>
+    <tr><td>底模 / Checkpoint</td><td>AI 的“大脑”，决定画风、画质、对提示词的理解。没有它什么都生不出来。常见：SD1.5、SDXL、Flux、Pony。</td></tr>
+    <tr><td>LoRA</td><td>给底模“打补丁”，注入特定风格/角色/人物。体积小（几十 MB），可叠加多个。需要触发词激活。</td></tr>
+    <tr><td>VAE</td><td>“颜色解码器”。把 AI 内部模糊的潜表示翻译成看得见的图片，影响色彩和细节。多数底模自带，但好的 VAE 能提色。</td></tr>
+    <tr><td>ControlNet</td><td>“精确控制器”。用一张参考图（姿势图、线稿、深度图）强制 AI 按指定姿态/构图出图。</td></tr>
+    <tr><td>IPAdapter</td><td>“参考图迁移”。让生成结果学习参考图的人物长相或整体风格。</td></tr>
+    <tr><td>节点（Node）</td><td>工作流里的一个个方框，每个负责一件事（加载模型、写提示词、采样…）。</td></tr>
+    <tr><td>连线 / 端口</td><td>节点之间的“管道”。输出端口连到另一个节点的输入端口，数据就流过去了。</td></tr>
+    <tr><td>工作流（Workflow）</td><td>一串连好的节点 = 一条完整生图流水线。保存为 <code>.json</code>。</td></tr>
+    <tr><td>采样（Sampling）</td><td>AI 从“噪声”一步步去噪、画出图像的过程。步数越多越精细但越慢。</td></tr>
+    <tr><td>潜空间（Latent）</td><td>AI 内部“压缩版”的图像空间，运算快。最后由 VAE 解码回正常图片。</td></tr>
+    <tr><td>提示词（Prompt）</td><td>你用文字告诉 AI“画什么”。正向=要的，负向=不要的（模糊、多手指等）。</td></tr>
+    <tr><td>种子（Seed）</td><td>决定“随机”起点的数字。<span class="key">同一套参数 + 同种子 = 同一张图，方便复现。</span></td></tr>
+  </table>
+</section>
+
+<!-- 第二章 -->
+<section id="p2">
+  <h2>第二章 · 三种安装方式（一步一步）</h2>
+  <p class="toc-top">选一种照做即可。绝大多数新手直接看 <b>2.1 桌面版</b>。</p>
+
+  <div class="grid">
+    <div class="card"><h4>方式 A · 桌面版</h4><p>最推荐新手。像装普通软件，自动配环境。Windows / macOS 都有。</p></div>
+    <div class="card"><h4>方式 B · 便携版</h4><p>Windows 绿色解压即跑，不占 C 盘、好备份、更新可控。</p></div>
+    <div class="card"><h4>方式 C · 手动装</h4><p>适合爱折腾 / 要排查问题的玩家（含 macOS 手动）。</p></div>
+  </div>
+
+  <div class="note"><b>安装方式怎么选（一图看懂）：</b></div>
+  <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:6px auto;">
+    <defs><marker id="ar3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/></marker></defs>
+    <rect width="680" height="300" fill="#ffffff"/>
+    <text x="20" y="26" font-family="sans-serif" font-size="15" font-weight="700" fill="#1f2430">安装方式决策树</text>
+    <rect x="225" y="40" width="230" height="46" rx="10" fill="#5b6cff"/>
+    <text x="340" y="68" font-family="sans-serif" font-size="13.5" fill="#fff" text-anchor="middle">我该怎么装 ComfyUI？</text>
+    <path d="M300 86 L150 130" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#ar3)"/>
+    <path d="M340 86 L340 130" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#ar3)"/>
+    <path d="M380 86 L530 130" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#ar3)"/>
+    <rect x="20" y="132" width="200" height="120" rx="12" fill="#eef0ff" stroke="#5b6cff"/>
+    <text x="120" y="162" font-family="sans-serif" font-size="14" font-weight="700" fill="#5b6cff" text-anchor="middle">① 桌面版</text>
+    <text x="120" y="188" font-family="sans-serif" font-size="12" fill="#5a6473" text-anchor="middle">最省事 · 像装软件</text>
+    <text x="120" y="208" font-family="sans-serif" font-size="12" fill="#5a6473" text-anchor="middle">Win / Mac 都有</text>
+    <text x="120" y="232" font-family="sans-serif" font-size="11.5" fill="#1f9d55" text-anchor="middle">★ 新手首选</text>
+    <rect x="240" y="132" width="200" height="120" rx="12" fill="#fbfcff" stroke="#c9d2e6"/>
+    <text x="340" y="162" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f2430" text-anchor="middle">② 便携版</text>
+    <text x="340" y="188" font-family="sans-serif" font-size="12" fill="#5a6473" text-anchor="middle">解压即跑 · 不占 C 盘</text>
+    <text x="340" y="208" font-family="sans-serif" font-size="12" fill="#5a6473" text-anchor="middle">好备份 · 更新可控</text>
+    <text x="340" y="232" font-family="sans-serif" font-size="11.5" fill="#5a6473" text-anchor="middle">Windows 绿色包</text>
+    <rect x="460" y="132" width="200" height="120" rx="12" fill="#fbfcff" stroke="#c9d2e6"/>
+    <text x="560" y="162" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f2430" text-anchor="middle">③ 手动 Git</text>
+    <text x="560" y="188" font-family="sans-serif" font-size="12" fill="#5a6473" text-anchor="middle">爱折腾 · 要排查</text>
+    <text x="560" y="208" font-family="sans-serif" font-size="12" fill="#5a6473" text-anchor="middle">含 macOS 手动</text>
+    <text x="560" y="232" font-family="sans-serif" font-size="11.5" fill="#5a6473" text-anchor="middle">玩家向</text>
+    <rect x="460" y="266" width="200" height="26" rx="8" fill="#fff6e6" stroke="#c47d00"/>
+    <text x="560" y="284" font-family="sans-serif" font-size="11.5" fill="#c47d00" text-anchor="middle">没显卡 / 不想装 → 云端(2.4)</text>
+  </svg>
+
+  <h3>2.1 方式 A：Comfy Desktop 官方桌面版（★ 首选）</h3>
+  <div class="step"><div class="num">1</div><div class="body"><b>下载。</b> 打开 <code>https://www.comfy.org/download</code>，页面会自动识别系统。Windows 下文件是 <code>.exe</code>，macOS 是 <code>.dmg</code>。</div></div>
+  <div class="step"><div class="num">2</div><div class="body"><b>安装。</b> 双击安装包，按向导点“下一步”。Windows 默认装在 C 盘且<b>不能改路径</b>；想自己定位置请改用 2.2 便携版。</div></div>
+  <div class="step"><div class="num">3</div><div class="body"><b>首次启动。</b> 打开后看到“Welcome / Get Started”，点开始。程序会自动下载 Python 环境与依赖（首次约 10–20 分钟，耐心等）。</div></div>
+  <div class="step"><div class="num">4</div><div class="body"><b>选择 GPU 模式（Windows）。</b> N 卡选“NVIDIA 显卡（推荐）”；没显卡选 CPU 模式（仅验证用）；macOS 选 MPS。</div></div>
+  <div class="step"><div class="num">5</div><div class="body"><b>新建实例。</b> 在桌面版里创建一个绘图实例（Installation）。它会自动识别你已有的模型，缺什么会提示一键下载。</div></div>
+  <div class="step"><div class="num">6</div><div class="body"><b>打开界面。</b> 启动后会自动弹出浏览器，地址是 <code>http://127.0.0.1:8188</code>。看到节点画布就成功了。</div></div>
+  <div class="note"><b>桌面版模型放哪？</b> 默认在用户目录 <code>%USERPROFILE%\ComfyUI-Shared</code>（Win）/ <code>~/Library/Application Support/ComfyUI</code>（Mac），<b>不在安装目录里</b>。想直接打开：菜单 <code>Help → Open folder → Open models folder</code>。</div>
+
+  <h3>2.2 方式 B：Portable 便携版（Windows 绿色包）</h3>
+  <div class="step"><div class="num">1</div><div class="body"><b>下载压缩包。</b> 到 ComfyUI GitHub（Comfy-Org/ComfyUI）Releases 找最新稳定版。按显卡选：
+    <ul>
+      <li>N 卡通用：<code>ComfyUI_windows_portable_nvidia.7z</code></li>
+      <li>老显卡/旧驱动：cu126 旧版包</li>
+      <li>A 卡：<code>ComfyUI_windows_portable_amd.7z</code></li>
+    </ul>体积约 7 GB，可用迅雷等分流加速。</div></div>
+  <div class="step"><div class="num">2</div><div class="body"><b>解压到纯英文路径。</b> 例如 <code>D:\ComfyUI_portable</code>。<span class="danger" style="border:none;padding:0;color:var(--bad);">不要放桌面 / C 盘 / 中文路径</span>，否则容易出权限或编码错误。</div></div>
+  <div class="step"><div class="num">3</div><div class="body"><b>放入基础模型（否则启动是空的）。</b> 进入 <code>ComfyUI\models\checkpoints</code>，放一个底模（.safetensors，见第七章去哪下载）。</div></div>
+  <div class="step"><div class="num">4</div><div class="body"><b>启动。</b> 回到根目录，双击 <code>run_nvidia_gpu.bat</code>（A 卡用对应 amd 脚本；没显卡用 <code>run_cpu.bat</code>）。首次等待 2–5 分钟自动下载前端依赖。</div></div>
+  <div class="step"><div class="num">5</div><div class="body">看到 <code>To see the GUI go to: http://127.0.0.1:8188</code> 即成功，浏览器自动打开。</div></div>
+  <div class="tip"><b>更新便携版：</b> 关闭窗口，运行根目录 <code>update_comfyui.bat</code>，再双击启动脚本即可。</div>
+
+  <h3>2.3 方式 C：手动 Git 安装（macOS / 进阶）</h3>
+  <pre><code># 1) 安装 Git、Python 3.12（略，按系统装好）
+# 2) 克隆仓库
+git clone https://github.com/comfyanonymous/ComfyUI.git
+cd ComfyUI
+# 3) 建虚拟环境并激活
+python3 -m venv venv
+source venv/bin/activate        # Windows 用 venv\Scripts\activate
+# 4) 装 PyTorch（N 卡 CUDA 示例，Apple 芯片用 MPS 版）
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+# 5) 装依赖
+pip install -r requirements.txt
+# 6) 启动
+python main.py</code></pre>
+  <p>启动后浏览器打开 <code>http://127.0.0.1:8188</code>。自定义节点装到 <code>ComfyUI/custom_nodes/</code> 目录下。</p>
+
+  <h3>2.4 补充：云端方案（不想装、没显卡）</h3>
+  <p>如果本地电脑带不动，可用 <b>Comfy Cloud</b>（官方）或国内 <b>RunningHub</b> 等云端 ComfyUI，浏览器里直接跑，按使用时长付费。适合先体验界面和社区工作流，不适合长期高频使用（费钱、且访问海外云不稳定）。</p>
+
+  <h3>✅ 安装后初次启动检查清单</h3>
+  <ul>
+    <li>浏览器打开且地址栏显示 <code>127.0.0.1:8188</code>。</li>
+    <li>右侧有 <code>Queue Prompt</code>（生成）按钮。</li>
+    <li>Load Checkpoint 节点能看到你放进去的模型（若显示 null/空，去刷新或检查路径）。</li>
+    <li>左侧/顶部能找到 <code>ComfyUI-Manager</code> 入口（桌面版通常已自带）。</li>
+  </ul>
+  <div class="warn"><b>别急着点生成！</b> 如果节点是红色的、或 Queue Prompt 没反应，先确认模型已就位，否则只会报错。</div>
+</section>
+
+<!-- 第三章 -->
+<section id="p3">
+  <h2>第三章 · 界面与核心概念</h2>
+  <p class="toc-top">第一次看到节点图别慌，把它当成“流程图”就行。</p>
+
+  <h3>3.1 界面总览</h3>
+  <table>
+    <tr><th>区域</th><th>作用</th></tr>
+    <tr><td>顶部菜单栏</td><td>新建/打开/保存工作流、加载默认模板、进入 App Mode、设置等。</td></tr>
+    <tr><td>左侧（节点库 / 侧边）</td><td>双击画布空白处可搜节点；或通过菜单 <code>Add Node</code> 找。Manager 也常在这里。</td></tr>
+    <tr><td>中间画布</td><td>摆放和连线节点的主舞台。可平移（拖空白处）、缩放（滚轮）。</td></tr>
+    <tr><td>右侧面板</td><td>队列（Queue）、生成按钮、运行历史、设置。</td></tr>
+    <tr><td>底部状态栏</td><td>显示进度、显存占用、报错信息。</td></tr>
+  </table>
+
+  <figure style="margin:16px 0;">
+    <img src="https://mintcdn.com/dripart/ypWEPMPDkbY_QhNi/images/interface/overview/comfyui_new_interface.jpg?fit=max&auto=format&n=ypWEPMPDkbY_QhNi&q=85&s=db199ae509fd06fc6aa9e47fcc4f361c" alt="ComfyUI 基础界面" style="width:100%;border:1px solid var(--line);border-radius:12px;" onerror="this.style.display='none'">
+    <figcaption style="font-size:13px;color:var(--sub);margin-top:6px;">图：ComfyUI 基础界面（截图来自官方文档 docs.comfy.org）</figcaption>
+  </figure>
+  <figure style="margin:16px 0;">
+    <img src="https://mintcdn.com/dripart/qYv6P0RgI3co7-eH/images/interface/overview/side-panel.png?fit=max&auto=format&n=qYv6P0RgI3co7-eH&q=85&s=138181422006bac20c5d092f729f00b3" alt="ComfyUI 侧边面板" style="width:100%;border:1px solid var(--line);border-radius:12px;" onerror="this.style.display='none'">
+    <figcaption style="font-size:13px;color:var(--sub);margin-top:6px;">图：左侧四个面板（Assets / Nodes / Models / Workflows）</figcaption>
+  </figure>
+
+  <h3>3.2 节点与连线：记住这 3 条规则</h3>
+  <ol>
+    <li><b>每个节点是一个“功能块”。</b> 顶部是标题，中间是参数，底部带小圆点的叫<b>端口</b>。</li>
+    <li><b>端口颜色代表数据类型：</b> 常见有 MODEL（模型）、CLIP（文本编码器）、VAE、CONDITIONING（条件/提示词）、LATENT（潜图像）、IMAGE（图片）。颜色对上了才能连。</li>
+    <li><b>连线方向 = 数据流向：</b> 从输出端口（通常在下/右）拖到输入端口（上/左）。拖错就点线中间的小圆点删掉重连。</li>
+  </ol>
+
+  <div class="note"><b>节点解剖：端口与连线长这样（看图）：</b></div>
+  <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:6px auto;">
+    <defs><marker id="ar2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"/></marker></defs>
+    <rect width="680" height="320" fill="#ffffff"/>
+    <text x="20" y="26" font-family="sans-serif" font-size="15" font-weight="700" fill="#1f2430">一个节点的结构：输入端口（左）＋ 输出端口（右）</text>
+    <rect x="30" y="70" width="210" height="140" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="30" y="70" width="210" height="28" rx="10" fill="#5b6cff"/>
+    <text x="135" y="89" font-family="sans-serif" font-size="13" fill="#fff" text-anchor="middle">Load Checkpoint</text>
+    <text x="150" y="132" font-family="sans-serif" font-size="12" fill="#333">MODEL</text>
+    <circle cx="248" cy="126" r="7" fill="#2e9e6e"/>
+    <text x="150" y="166" font-family="sans-serif" font-size="12" fill="#333">CLIP</text>
+    <circle cx="248" cy="160" r="7" fill="#3b82f6"/>
+    <text x="150" y="200" font-family="sans-serif" font-size="12" fill="#333">VAE</text>
+    <circle cx="248" cy="194" r="7" fill="#f59e0b"/>
+    <path d="M255 126 C 340 126, 340 126, 412 126" stroke="#2e9e6e" stroke-width="2.5" fill="none" marker-end="url(#ar2)"/>
+    <rect x="412" y="70" width="210" height="140" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="412" y="70" width="210" height="28" rx="10" fill="#5b6cff"/>
+    <text x="517" y="89" font-family="sans-serif" font-size="13" fill="#fff" text-anchor="middle">KSampler</text>
+    <circle cx="412" cy="126" r="7" fill="#2e9e6e"/>
+    <text x="424" y="131" font-family="sans-serif" font-size="12" fill="#333">model</text>
+    <circle cx="412" cy="160" r="7" fill="#a855f7"/>
+    <text x="424" y="165" font-family="sans-serif" font-size="12" fill="#333">positive</text>
+    <circle cx="412" cy="194" r="7" fill="#a855f7"/>
+    <text x="424" y="199" font-family="sans-serif" font-size="12" fill="#333">negative</text>
+    <text x="30" y="252" font-family="sans-serif" font-size="13" fill="#5a6473">端口颜色 = 数据类型：</text>
+    <circle cx="44" cy="278" r="7" fill="#2e9e6e"/><text x="58" y="283" font-family="sans-serif" font-size="12" fill="#333">MODEL</text>
+    <circle cx="140" cy="278" r="7" fill="#3b82f6"/><text x="154" y="283" font-family="sans-serif" font-size="12" fill="#333">CLIP</text>
+    <circle cx="220" cy="278" r="7" fill="#f59e0b"/><text x="234" y="283" font-family="sans-serif" font-size="12" fill="#333">VAE</text>
+    <circle cx="300" cy="278" r="7" fill="#a855f7"/><text x="314" y="283" font-family="sans-serif" font-size="12" fill="#333">CONDITIONING</text>
+    <circle cx="448" cy="278" r="7" fill="#ec4899"/><text x="462" y="283" font-family="sans-serif" font-size="12" fill="#333">LATENT</text>
+    <circle cx="540" cy="278" r="7" fill="#14b8a6"/><text x="554" y="283" font-family="sans-serif" font-size="12" fill="#333">IMAGE</text>
+  </svg>
+
+  <div class="tip"><b>操作速记：</b> 双击空白=搜索加节点；按住节点标题拖动=移动；滚轮=缩放；拖空白处=平移；点端口拖出=连线；右键节点=删除/转换等菜单。</div>
+
+  <h3>3.3 App Mode：给“怕节点”的人</h3>
+  <p>ComfyUI 从前端 1.41.13 起内置 <b>App Mode</b>。点左上角图标 → <code>Enter app mode</code>，节点图会变成一个极简界面：只显示你（或作者）选定的输入框（如提示词、模型选择）和一个 Run 按钮。</p>
+  <p>你可以把自己的工作流做成 App 分享给别人（生成专属链接，需 Comfy Cloud），对方完全不用懂节点。学完本教程后，这是“交付成果”的优雅方式。</p>
+
+  <h3>3.4 第一个动作：加载默认工作流</h3>
+  <p>菜单 <code>Workflow → Open</code> 或直接启动时若已带默认图，你会看到一串预连好的节点（文生图模板）。先别改，跟着第四章跑通一次，你就真正“会”了。</p>
+</section>
+
+<!-- 第四章 -->
+<section id="p4">
+  <h2>第四章 · 你的第一次出图（文生图）</h2>
+  <p class="toc-top">目标：照着连出一条“文生图”流水线，点一下，得到第一张图。</p>
+
+  <h3>4.1 默认工作流由这 7 个节点组成</h3>
+  <table>
+    <tr><th>#</th><th>节点名</th><th>干什么</th></tr>
+    <tr><td>1</td><td>Load Checkpoint</td><td>加载底模，同时输出 MODEL、CLIP、VAE 三样东西。</td></tr>
+    <tr><td>2</td><td>CLIP Text Encode (Prompt)</td><td>把“正向提示词”变成条件信号。</td></tr>
+    <tr><td>3</td><td>CLIP Text Encode (Negative)</td><td>把“负向提示词”变成条件信号。</td></tr>
+    <tr><td>4</td><td>Empty Latent Image</td><td>生成一块“空画布”（定分辨率/批次）。</td></tr>
+    <tr><td>5</td><td>KSampler</td><td>⭐ 核心采样器，在这里“画画”。</td></tr>
+    <tr><td>6</td><td>VAE Decode</td><td>把潜图像解码成正常图片。</td></tr>
+    <tr><td>7</td><td>Save Image</td><td>保存图片到 output 文件夹。</td></tr>
+  </table>
+
+  <h3>4.2 连线关系（数据流）</h3>
+  <pre><code>Load Checkpoint ──MODEL──▶ KSampler
+       ├─CLIP─▶ CLIP Text Encode(正) ──CONDITIONING─▶ KSampler
+       ├─CLIP─▶ CLIP Text Encode(负) ──CONDITIONING─▶ KSampler
+       └─VAE──▶ VAE Decode
+Empty Latent Image ──LATENT─▶ KSampler
+KSampler ──LATENT─▶ VAE Decode ──IMAGE─▶ Save Image</code></pre>
+
+  <div class="note"><b>文生图数据流（对照上面的文字版看）：</b></div>
+  <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto;display:block;margin:6px auto;">
+    <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#7a8499"/></marker></defs>
+    <rect width="680" height="440" fill="#ffffff"/>
+    <text x="20" y="26" font-family="sans-serif" font-size="15" font-weight="700" fill="#1f2430">文生图默认工作流 · 数据流向图</text>
+    <rect x="15" y="175" width="140" height="62" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="15" y="175" width="140" height="26" rx="10" fill="#5b6cff"/>
+    <text x="85" y="193" font-family="sans-serif" font-size="12.5" fill="#fff" text-anchor="middle">Load Checkpoint</text>
+    <text x="30" y="222" font-family="sans-serif" font-size="11" fill="#5a6473">→ MODEL/CLIP/VAE</text>
+    <rect x="190" y="40" width="150" height="54" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="190" y="40" width="150" height="24" rx="10" fill="#5b6cff"/>
+    <text x="265" y="57" font-family="sans-serif" font-size="12" fill="#fff" text-anchor="middle">CLIP Text +</text>
+    <text x="200" y="82" font-family="sans-serif" font-size="11" fill="#5a6473">正向提示词</text>
+    <rect x="190" y="178" width="150" height="54" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="190" y="178" width="150" height="24" rx="10" fill="#5b6cff"/>
+    <text x="265" y="195" font-family="sans-serif" font-size="12" fill="#fff" text-anchor="middle">Empty Latent</text>
+    <text x="200" y="220" font-family="sans-serif" font-size="11" fill="#5a6473">分辨率/批次</text>
+    <rect x="190" y="316" width="150" height="54" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="190" y="316" width="150" height="24" rx="10" fill="#5b6cff"/>
+    <text x="265" y="333" font-family="sans-serif" font-size="12" fill="#fff" text-anchor="middle">CLIP Text −</text>
+    <text x="200" y="358" font-family="sans-serif" font-size="11" fill="#5a6473">负向提示词</text>
+    <rect x="375" y="175" width="180" height="64" rx="10" fill="#eef0ff" stroke="#5b6cff"/>
+    <rect x="375" y="175" width="180" height="26" rx="10" fill="#5b6cff"/>
+    <text x="465" y="193" font-family="sans-serif" font-size="12.5" fill="#fff" text-anchor="middle">KSampler（核心）</text>
+    <text x="385" y="222" font-family="sans-serif" font-size="11" fill="#5a6473">steps/cfg/sampler</text>
+    <rect x="375" y="316" width="150" height="54" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="375" y="316" width="150" height="24" rx="10" fill="#5b6cff"/>
+    <text x="450" y="333" font-family="sans-serif" font-size="12" fill="#fff" text-anchor="middle">VAE Decode</text>
+    <text x="385" y="358" font-family="sans-serif" font-size="11" fill="#5a6473">潜→可见图</text>
+    <rect x="555" y="316" width="120" height="54" rx="10" fill="#fbfcff" stroke="#c9d2e6"/>
+    <rect x="555" y="316" width="120" height="24" rx="10" fill="#5b6cff"/>
+    <text x="615" y="333" font-family="sans-serif" font-size="12" fill="#fff" text-anchor="middle">Save Image</text>
+    <text x="565" y="358" font-family="sans-serif" font-size="11" fill="#5a6473">存 output</text>
+    <path d="M165 205 C 180 120, 180 67, 190 67" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M165 205 C 180 250, 180 205, 190 205" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M165 205 C 180 320, 180 343, 190 343" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M340 67 C 360 120, 360 205, 375 205" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M340 343 C 360 320, 360 205, 375 205" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M340 205 L 375 205" stroke="#ec4899" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M155 230 C 260 280, 320 320, 375 340" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M465 239 L 450 316" stroke="#ec4899" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M525 343 L 555 343" stroke="#14b8a6" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <text x="20" y="424" font-family="sans-serif" font-size="11" fill="#5a6473">图例：蓝=CLIP条件　紫=CONDITIONING　粉=LATENT　橙=VAE　青=IMAGE</text>
+  </svg>
+
+  <h3>4.3 手把手设置每个节点</h3>
+  <h4>① Load Checkpoint</h4>
+  <p>点节点里的下拉框，选你放进去的底模（如 <code>sd_xl_base_1.0.safetensors</code>）。选中有模型名即成功。</p>
+  <h4>② / ③ 正向 & 负向提示词</h4>
+  <p>在对应文本框里输入：</p>
+  <pre><code>正向：a photo of a cute cat sitting on a desk, soft lighting, high quality, sharp focus
+负向：blurry, low quality, extra fingers, deformed, watermark</code></pre>
+  <h4>④ Empty Latent Image</h4>
+  <p>设 <code>width=1024, height=1024, batch_size=1</code>。（SDXL 用 1024 左右；SD1.5 用 512。）</p>
+  <h4>⑤ KSampler（核心，先照填）</h4>
+  <ul>
+    <li><code>seed</code>：随便填一个数（如 123456789），或点旁边小骰子随机。</li>
+    <li><code>control_after_generate</code>：选 <code>randomize</code>（每次出图换种子，得到不同图）。</li>
+    <li><code>steps</code>：25（步数）。</li>
+    <li><code>cfg</code>：7（提示词遵循强度）。</li>
+    <li><code>sampler_name</code>：<code>dpmpp_2m</code>（常用好用的采样器）。</li>
+    <li><code>scheduler</code>：<code>karras</code>。</li>
+    <li><code>denoise</code>：1（文生图保持 1；图生图才调低）。</li>
+  </ul>
+  <h4>⑥ VAE Decode / ⑦ Save Image</h4>
+  <p>通常已连好且无需改。Save Image 的“前缀”可改文件名。</p>
+
+  <h3>4.4 点生成！</h3>
+  <p>点右侧 <code>Queue Prompt</code>。底部进度条走完，图片出现在 Save Image 节点下方，并自动存到 <code>ComfyUI/output/</code>（桌面版在共享目录的 output）。🎉 你的第一张图出来了。</p>
+  <div class="note"><b>看不懂参数没事：</b> 这一章的目标是“跑通”。每个参数为啥这样设，第五章专门拆。</div>
+
+  <h3>4.5 如果节点是红色 / 报错</h3>
+  <ul>
+    <li>红色节点多数因为<b>模型没加载到</b>：检查 checkpoints 文件夹、点节点刷新（小圆环图标）重选。</li>
+    <li>报错含 <code>CUDA out of memory</code>：显存不够，看第十章。</li>
+    <li>生成全黑/全灰：提示词或底模不匹配，先换官方示例底模重试。</li>
+  </ul>
+</section>
+
+<!-- 第五章 -->
+<section id="p5">
+  <h2>第五章 · 吃透核心参数（从“会点”到“懂调”）</h2>
+
+  <h3>5.1 KSampler 参数全解</h3>
+  <table>
+    <tr><th>参数</th><th>含义</th><th>新手怎么设</th></tr>
+    <tr><td>seed（种子）</td><td>随机起点。同参数同种子=同图。</td><td>先 randomize 多试，挑中喜欢的再固定复现。</td></tr>
+    <tr><td>steps（步数）</td><td>去噪迭代次数。越多越细但越慢。</td><td>SDXL/Flux 20–30；SD1.5 约 20–28。Flux-Schnell 仅 4 步。</td></tr>
+    <tr><td>cfg（引导系数）</td><td>AI 听提示词的“严厉程度”。</td><td>SD 系 5–8；太高画面会过饱和/畸变；Flux 用 1 左右或不设。</td></tr>
+    <tr><td>sampler_name</td><td>采样算法。</td><td>通用好用：<code>dpmpp_2m</code>、<code>euler</code>、<code>dpmpp_sde</code>。Flux 常用 <code>euler</code>。</td></tr>
+    <tr><td>scheduler</td><td>噪声调度曲线。</td><td><code>karras</code> 或 <code>normal</code> 最稳；不同采样器搭配不同调度效果不同，可试。</td></tr>
+    <tr><td>denoise（去噪）</td><td>保留原图程度。1=完全重画，0=不动。</td><td>文生图=1；图生图 0.5–0.8；重绘局部看情况。</td></tr>
+  </table>
+
+  <h3>5.2 提示词怎么写才出好图</h3>
+  <ul>
+    <li><b>自然语言优先（尤其 Flux）：</b> 直接写句子，如 <code>a woman in red dress walking in rain, cinematic lighting</code>。</li>
+    <li><b>SD/SDXL 常用“标签式”：</b> 用逗号分隔关键词，质量词放前：<code>masterpiece, best quality, 8k, detailed</code>。</li>
+    <li><b>权重调节：</b> 用括号加权重，<code>(red dress:1.3)</code> 加强，<code>(blurry:0.8)</code> 减弱。</li>
+    <li><b>负向提示词：</b> 放“不要的东西”，如 <code>worst quality, low quality, extra fingers, deformed hands, text, watermark</code>。</li>
+    <li><b>LoRA 触发词：</b> 很多 LoRA 需要特定词才激活，去模型页面抄它的触发词。</li>
+  </ul>
+
+  <h3>5.3 分辨率与底模原生尺寸</h3>
+  <p>每个底模有“舒服”的出生分辨率（训练尺寸）：</p>
+  <ul>
+    <li>SD 1.5：512×512（或 512×768 竖图）→ 超出易出双头怪。</li>
+    <li>SDXL：1024×1024 左右（864×1152、1344×768 等也行）。</li>
+    <li>Flux：1–1.5 MP 左右（如 1024×1024、880×1168）。</li>
+  </ul>
+  <div class="warn"><b>画面崩坏（多手、畸形、重复）：</b> <span class="key">九成是分辨率错配或步数/CFG 失调。</span>先回到推荐尺寸和默认参数，再逐步微调。</div>
+
+  <h3>5.4 为什么图会“糊 / 崩”→ 排查方向</h3>
+  <ol>
+    <li>底模和 LoRA/ControlNet <b>版本是否匹配</b>（SD1.5 的 LoRA 不能硬套 SDXL）。</li>
+    <li>VAE 是否用了对应版本（SDXL 用 SDXL VAE；Flux 用自己的 ae.safetensors）。</li>
+    <li>CFG 是否过高（>12 容易坏）。</li>
+    <li>分辨率是否远超底模原生尺寸。</li>
+  </ol>
+</section>
+
+<!-- 第六章 -->
+<section id="p6">
+  <h2>第六章 · 常用工作流实操</h2>
+  <p class="toc-top">照着搭，每个都能直接出图。加节点：双击画布 → 搜名字。</p>
+
+  <h3>6.1 文生图（已会，略作强化）</h3>
+  <p>第四章流程。进阶：把 <code>Save Image</code> 换成 <code>Preview Image</code> 可只看不存；加 <code>Image Comparer</code>（需自定义节点）对比不同参数。</p>
+
+  <h3>6.2 图生图（img2img）—— 以图改图</h3>
+  <div class="step"><div class="num">1</div><div class="body">加 <code>Load Image</code> 节点，选一张参考图。</div></div>
+  <div class="step"><div class="num">2</div><div class="body">加 <code>VAE Encode</code> 节点：把 Load Image 的 <code>IMAGE</code> 和 Load Checkpoint 的 <code>VAE</code> 连进去，输出 <code>LATENT</code>。</div></div>
+  <div class="step"><div class="num">3</div><div class="body">把这个 <code>LATENT</code> 连到 KSampler 的 <code>latent_image</code>（<b>替换掉原来的 Empty Latent Image</b>）。</div></div>
+  <div class="step"><div class="num">4</div><div class="body">KSampler 的 <code>denoise</code> 设 0.5–0.8：越低越像原图，越高改动越大。</div></div>
+  <div class="note"><b>用途：</b> 改风格、换姿态、做变体。分辨率会被参考图尺寸约束（或先 Empty Latent 指定后再 encode，看具体接法）。</div>
+
+  <h3>6.3 局部重绘（Inpaint）—— 只改图中一块</h3>
+  <div class="step"><div class="num">1</div><div class="body">用 <code>Load Image</code> 载入图，节点上有个 <code>mask</code> 小按钮，点开在图上涂“要重画的区域”（画笔标黑=重绘区）。</div></div>
+  <div class="step"><div class="num">2</div><div class="body">加 <code>VAE Encode (for Inpainting)</code>，把图的 <code>IMAGE</code>、<code>MASK</code>、底模 <code>VAE</code> 连进去，输出 <code>LATENT</code> 给 KSampler。</div></div>
+  <div class="step"><div class="num">3</div><div class="body">正向提示词写“这块区域要变成什么”（如 <code>a blue sky</code>），KSampler denoise 设 0.7–1。</div></div>
+  <div class="tip"><b>更省事：</b> 社区有现成 Inpaint 工作流 JSON，直接导入（见 8.3），涂 mask 就能用。</div>
+
+  <h3>6.4 高清放大（Upscale）—— 小图变大图</h3>
+  <p><b>方法一：模型放大（最常用，补细节）</b></p>
+  <ol>
+    <li>VAE Decode 后，加 <code>Upscale Image</code> 节点，选放大模型（如 <code>4x-UltraSharp</code>，放进 <code>models/upscale</code>）。</li>
+    <li>再接 <code>VAE Encode</code> → KSampler（denoise 0.3–0.5 做“精修”）→ VAE Decode → Save。这就是“先出小图、放大、再轻微重绘”的经典两步放大。</li>
+  </ol>
+  <p><b>方法二：潜空间放大（更快，适合大尺寸）</b></p>
+  <ol>
+    <li>KSampler 输出 LATENT 后接 <code>Latent Upscale</code> 节点（选 <code>nearest-exact</code> 或模型），放大倍数 1.5–2。</li>
+    <li>再接一个 KSampler（denoise 0.3–0.6）精修，最后 VAE Decode。</li>
+  </ol>
+
+  <h3>6.5 ControlNet —— 精确控制姿势 / 构图</h3>
+  <p>ControlNet 需要 <b>预处理图</b>，建议先装自定义节点包 <code>comfyui_controlnet_aux</code>（见第八章）。流程：</p>
+  <ol>
+    <li>加 <code>Load ControlNet Model</code>，选一个 ControlNet（如 <code>control_v11p_sd15_openpose</code> 控制人体姿态）。</li>
+    <li>加预处理节点（如 <code>OpenPose Preprocessor</code>），输入一张参考图 <code>IMAGE</code>，输出 <code>IMAGE</code> 给 ControlNet 的 <code>image</code> 端口。</li>
+    <li>加 <code>Apply ControlNet</code>（或 Advanced）：把底模 <code>MODEL</code>、ControlNet 模型、预处理图连上，设 <code>strength</code>（强度，0.5–1），输出新 <code>MODEL</code> 回到 KSampler。</li>
+  </ol>
+  <table>
+    <tr><th>ControlNet 类型</th><th>控制什么</th></tr>
+    <tr><td>OpenPose</td><td>人体骨骼姿态</td></tr>
+    <tr><td>Canny</td><td>边缘/线稿轮廓</td></tr>
+    <tr><td>Depth</td><td>前后景深、空间结构</td></tr>
+    <tr><td>Lineart / Scribble</td><td>线稿上色、草图生图</td></tr>
+  </table>
+
+  <h3>6.6 LoRA —— 加风格 / 角色</h3>
+  <div class="step"><div class="num">1</div><div class="body">在 Load Checkpoint 之后加 <code>Load LoRA</code> 节点，把 Checkpoint 的 <code>MODEL</code> 和 <code>CLIP</code> 连进 LoRA 的输入。</div></div>
+  <div class="step"><div class="num">2</div><div class="body">LoRA 输出新的 <code>MODEL</code>、<code>CLIP</code> 连到后续（KSampler / CLIP Text Encode）。</div></div>
+  <div class="step"><div class="num">3</div><div class="body">设 <code>strength_model</code> 和 <code>strength_clip</code>（权重，一般 0.6–1.0；太高易崩）。</div></div>
+  <div class="step"><div class="num">4</div><div class="body">正向提示词加上该 LoRA 的<b>触发词</b>。</div></div>
+  <div class="tip"><b>可叠加多个 LoRA：</b> 一个 LoRA 的输出接下一个 LoRA 的输入，串起来即可（注意都需同底模版本）。</div>
+
+  <h3>6.7 批量出图 & 队列</h3>
+  <ul>
+    <li><code>Empty Latent Image</code> 的 <code>batch_size</code> 设 4 = 一次出 4 张。</li>
+    <li>右侧 Queue 可连续排多个任务；KSampler 设 <code>control_after_generate=increment</code> 可批量换种子出不同图。</li>
+  </ul>
+</section>
+
+<!-- 第七章 -->
+<section id="p7">
+  <h2>第七章 · 模型管理（建立你的素材库）</h2>
+
+  <h3>7.1 模型目录结构</h3>
+  <p>所有模型都放在 <code>ComfyUI/models/</code> 下（桌面版是共享目录的 models）。按类型分目录：</p>
+  <pre><code>models/
+├─ checkpoints/   # 底模（.safetensors / .ckpt）
+├─ loras/        # LoRA
+├─ vae/          # VAE
+├─ controlnet/   # ControlNet
+├─ upscale/      # 放大模型（4x-UltraSharp 等）
+├─ embeddings/   # 文本反演（负面词包）
+└─ ipadapter/    # IPAdapter 相关</code></pre>
+  <div class="tip"><b>按底模版本再分子目录（强烈推荐）：</b> 如 <code>loras/SDXL/</code>、<code>loras/FLUX/</code>，避免把 SD1.5 的 LoRA 误用到 SDXL 上（不会崩，但效果很差）。</div>
+
+  <h3>7.2 各类型放哪、怎么用（速查）</h3>
+  <table>
+    <tr><th>类型</th><th>文件夹</th><th>在节点里怎么用</th></tr>
+    <tr><td>底模 Checkpoint</td><td>checkpoints/</td><td>Load Checkpoint 下拉选</td></tr>
+    <tr><td>LoRA</td><td>loras/</td><td>Load LoRA 下拉选</td></tr>
+    <tr><td>VAE</td><td>vae/</td><td>可单独 Load VAE 接到解码；或底模自带</td></tr>
+    <tr><td>ControlNet</td><td>controlnet/</td><td>Load ControlNet Model 下拉选</td></tr>
+    <tr><td>放大模型</td><td>upscale/</td><td>Upscale Image 节点下拉选</td></tr>
+    <tr><td>Embedding</td><td>embeddings/</td><td>在提示词里写 <code>embedding:文件名</code></td></tr>
+  </table>
+
+  <h3>7.3 去哪下载模型</h3>
+  <div class="grid">
+    <div class="card"><h4>Civitai</h4><p>国外最大社区，底模/LoRA/ControlNet 最全。<code>civitai.com</code></p></div>
+    <div class="card"><h4>Hugging Face</h4><p>官方/开源模型主源，Flux、SDXL 官方发布地。<code>huggingface.co</code></p></div>
+    <div class="card"><h4>LiblibAI 哩布哩布</h4><p>国内站，访问快、中文友好，覆盖主流模型。<code>liblib.art</code></p></div>
+  </div>
+  <div class="note"><b>下载格式：</b> 优先选 <code>.safetensors</code>（不能藏恶意代码、加载快）；<code>.ckpt</code> 是老格式，有微小安全风险，能避就避。文件放错目录或格式不对，节点里就不会出现。</div>
+
+  <h3>7.4 多软件共享模型（省硬盘）</h3>
+  <p>如果你同时用多个 AI 工具，不必每份都下载。编辑 <code>extra_model_paths.yaml</code>（桌面版：菜单 Help → Open folder 找配置；便携版在 ComfyUI 根目录），把别的软件的 models 路径映射进来即可共用。</p>
+
+  <h3>7.5 显存不够怎么办</h3>
+  <ul>
+    <li>换小模型：12 GB 以下优先 SDXL / Flux 量化版（<code>fp8</code>、<code>GGUF</code> 量化文件更小更省显存）。</li>
+    <li>启动参数加 <code>--lowvram</code> 或 <code>--medvram</code>（便携版有对应的 <code>run_nvidia_gpu_lowvram.bat</code>）。</li>
+    <li>降低分辨率、减少同时叠加的 LoRA/ControlNet 数量。</li>
+  </ul>
+</section>
+
+<!-- 第八章 -->
+<section id="p8">
+  <h2>第八章 · 自定义节点与 ComfyUI Manager</h2>
+
+  <h3>8.1 什么是自定义节点</h3>
+  <p>ComfyUI 本体只给“基础积木”。社区贡献的“自定义节点”是额外积木包，提供 ControlNet 预处理、各种新模型支持、效率工具等。装在 <code>ComfyUI/custom_nodes/</code> 目录。</p>
+
+  <h3>8.2 安装 ComfyUI Manager（必备）</h3>
+  <p>Manager 是节点管理神器：能一键安装缺失节点、更新全部自定义节点、补全别人工作流里缺的节点。</p>
+  <ul>
+    <li><b>桌面版：</b> 通常已自带，左侧/菜单找 <code>ComfyUI-Manager</code> 即可。</li>
+    <li><b>便携版/手动版：</b> 进入 <code>ComfyUI/custom_nodes</code>，执行：
+      <pre><code>git clone https://github.com/ltdrdata/ComfyUI-Manager.git</code></pre>
+      重启 ComfyUI 即出现。</li>
+  </ul>
+
+  <h3>8.3 用 Manager 的三种高频操作</h3>
+  <ol>
+    <li><b>安装节点：</b> 打开 Manager → <code>Install Custom Nodes</code> → 搜索（如 <code>ControlNet Aux</code>、<code>IPAdapter</code>）→ 点 Install。</li>
+    <li><b>补全工作流：</b> 导入别人 JSON 后若节点报红/缺失，点 Manager 的 <code>Install Missing Nodes</code>，自动装齐。</li>
+    <li><b>更新：</b> <code>Update All</code> 一键更新全部自定义节点（建议偶尔做，避免版本落后）。</li>
+  </ol>
+
+  <h3>8.4 新手值得先装的几个包</h3>
+  <table>
+    <tr><th>包名</th><th>干嘛用</th></tr>
+    <tr><td>comfyui_controlnet_aux</td><td>ControlNet 的预处理（OpenPose/Canny/Depth 等），第六章必用。</td></tr>
+    <tr><td>ComfyUI-IPAdapter-Plus</td><td>参考图迁移（IPAdapter）。</td></tr>
+    <tr><td>ComfyUI-Custom-Scripts</td><td>一堆效率小工具（节点搜索增强、快捷操作）。</td></tr>
+    <tr><td>效率节点类（如 was-node-suite / easyproject）</td><td>更顺手的界面与批量功能。</td></tr>
+  </table>
+
+  <h3>8.5 从社区导入现成工作流</h3>
+  <ul>
+    <li><b>JSON 文件：</b> 菜单 <code>Workflow → Open</code> 选 <code>.json</code>；或直接把 JSON 拖进画布。</li>
+    <li><b>图片导入：</b> 很多社区图里藏着工作流（PNG 元数据），用 <code>Workflow → Open</code> 选那张图即可还原节点。</li>
+    <li>导入后缺失节点 → 用 8.3 的“Install Missing Nodes”补上。</li>
+  </ul>
+</section>
+
+<!-- 第九章 -->
+<section id="p9">
+  <h2>第九章 · 从“会点”到“熟练”的进阶技巧</h2>
+
+  <h3>9.1 工作流整理（看起来就专业）</h3>
+  <ul>
+    <li><b>分组 Group：</b> 框选多个节点 → 右键 <code>Add Group</code>，给一块功能命名（如“采样区”）。</li>
+    <li><b>注释 Note：</b> 双击空白处输入文字，或加 <code>Note</code> 节点，标记“这里改提示词”。</li>
+    <li><b>重排 Reroute：</b> 加 <code>Reroute</code> 节点整理乱线，让连线清爽。</li>
+  </ul>
+
+  <h3>9.2 保存 / 加载 / 收藏</h3>
+  <ul>
+    <li><code>Ctrl/Cmd + S</code> 保存当前工作流为 <code>.json</code>（建议建个 <code>workflows/</code> 文件夹按风格归类）。</li>
+    <li>App Mode 下可在左侧面板管理“已保存的 App 工作流”。</li>
+    <li>给常用工作流起好名字，比如 <code>写实人像-SDXL.json</code>、<code>线稿上色-ControlNet.json</code>。</li>
+  </ul>
+
+  <h3>9.3 把工作流变成“App”分享</h3>
+  <p>顶部进 <code>App Mode</code> → <code>Build app</code>，四步：选输入（如提示词框、模型下拉）→ 选输出（预览图）→ 预览 → 设默认视图。别人打开就是极简界面，只填要填的。配合 Comfy Cloud 还能生成分享链接。</p>
+
+  <h3>9.4 实用快捷键</h3>
+  <table>
+    <tr><th>操作</th><th>快捷键</th></tr>
+    <tr><td>搜索 / 加节点</td><td>双击画布 或 <span class="kbd">Ctrl</span>+<span class="kbd">Space</span></td></tr>
+    <tr><td>保存工作流</td><td><span class="kbd">Ctrl</span>+<span class="kbd">S</span> / <span class="kbd">Cmd</span>+<span class="kbd">S</span></td></tr>
+    <tr><td>加载工作流</td><td><span class="kbd">Ctrl</span>+<span class="kbd">O</span></td></tr>
+    <tr><td>运行（队列）</td><td><span class="kbd">Ctrl</span>+<span class="kbd">Enter</span></td></tr>
+    <tr><td>删除节点/连线</td><td><span class="kbd">Delete</span> / 点线中小圆点</td></tr>
+    <tr><td>平移画布</td><td>拖空白处</td></tr>
+    <tr><td>缩放</td><td>滚轮</td></tr>
+  </table>
+
+  <h3>9.5 性能与调试</h3>
+  <ul>
+    <li><b>显存优化启动参数：</b> <code>--lowvram</code>、<code>--medvram</code>、<code>--disable-smart-memory</code>（按需）。</li>
+    <li><b>看日志：</b> 启动 ComfyUI 的那个黑色命令行窗口会打印报错，红字就是原因。</li>
+    <li><b>模型刷新：</b> 新放进模型后在节点下拉旁点小圆环“刷新”按钮。</li>
+    <li><b>种子玩法：</b> 找到满意的图，记下它的 seed，把 <code>control_after_generate</code> 改 <code>fixed</code> 固定，调其他参数做精细变体。</li>
+  </ul>
+</section>
+
+<!-- 第十章 -->
+<section id="p10">
+  <h2>第十章 · 排错手册（新手最常踩的坑）</h2>
+
+  <table>
+    <tr><th>现象</th><th>最可能原因</th><th>解决办法</th></tr>
+    <tr><td>节点全是红色</td><td>模型没加载 / 节点缺失</td><td>检查 checkpoints 路径、刷新下拉；缺失节点用 Manager 的 Install Missing Nodes。</td></tr>
+    <tr><td>Queue Prompt 点了没反应</td><td>模型为空 / 工作流不完整</td><td>确认 Load Checkpoint 已选模型；看底部状态有无报错。</td></tr>
+    <tr><td>CUDA out of memory</td><td>显存不足</td><td>换小模型/量化版、降分辨率、加 <code>--lowvram</code>、少叠 LoRA。</td></tr>
+    <tr><td>模型在文件夹里但节点不显示</td><td>放错子目录 / 需刷新</td><td>确认放在正确类型目录（如底模在 checkpoints）；点刷新按钮。</td></tr>
+    <tr><td>出图全黑 / 全灰 / 崩坏脸</td><td>参数失调 / 版本不匹配</td><td>回到推荐分辨率与默认 KSampler 参数；确认底模-LoRA-VAE 同版本。</td></tr>
+    <tr><td>端口被占用（8188 打不开）</td><td>上次没关干净</td><td>任务管理器结束 ComfyUI 进程，或启动时加 <code>--port 8189</code> 换端口。</td></tr>
+    <tr><td>启动失败 / 卡住</td><td>依赖或 Python 问题</td><td>看命令行红色报错；桌面版可“修复/重装实例”；便携版重跑 update。</td></tr>
+    <tr><td>导入别人 JSON 报错</td><td>缺自定义节点</td><td>Manager → Install Missing Nodes 自动补全。</td></tr>
+  </table>
+  <div class="danger"><b>安全提醒：</b> 只从可信来源下载模型和自定义节点。优先 <code>.safetensors</code> 格式，避免来历不明的 <code>.ckpt</code> 与未审核的 Git 仓库。</div>
+</section>
+
+<!-- 附录 -->
+<section id="app">
+  <h2>附录 · 新手模型清单与学习资源</h2>
+
+  <h3>A.1 按用途推荐起步模型</h3>
+  <table>
+    <tr><th>你想做</th><th>推荐底模</th><th>显存</th></tr>
+    <tr><td>写实人像 / 商业摄影</td><td>Flux.1-Schnell（快、可商用）/ Flux.1-Dev（更细腻，非商用）</td><td>8–12 GB+（量化版）</td></tr>
+    <tr><td>插画 / 二次元 / 风格画</td><td>SDXL + Civitai 微调（如 Juggernaut XL、DreamShaper XL）/ Pony（角色向）</td><td>8 GB+</td></tr>
+    <tr><td>低配电脑先跑通</td><td>SD 1.5（Anything V5 / Realistic Vision）</td><td>4 GB+</td></tr>
+    <tr><td>固定姿态 / 构图</td><td>底模 + 对应 ControlNet（OpenPose / Canny / Depth）</td><td>同底模</td></tr>
+  </table>
+
+  <h3>A.2 学习资源</h3>
+  <ul>
+    <li><b>官方文档：</b> <code>https://docs.comfy.org</code>（有中文，安装/界面/节点都有）。</li>
+    <li><b>官方博客：</b> <code>https://blog.comfy.org</code>（App Mode、新特性解读）。</li>
+    <li><b>模型站：</b> Civitai、Hugging Face、LiblibAI（国内）。</li>
+    <li><b>社区工作流：</b> ComfyHub（<code>comfy.org/workflows</code>）、RunningHub。</li>
+    <li><b>视频：</b> B站/YouTube 搜“ComfyUI 入门”，配合本图文教程理解更快。</li>
+  </ul>
+
+  <h3>A.3 速查术语表（贴墙版）</h3>
+  <ul>
+    <li><b>Checkpoint</b> = 底模（大脑）｜ <b>LoRA</b> = 风格补丁｜ <b>VAE</b> = 颜色解码器</li>
+    <li><b>ControlNet</b> = 姿势/构图控制器｜ <b>IPAdapter</b> = 参考图迁移</li>
+    <li><b>KSampler</b> = 核心采样器｜ <b>Latent</b> = 潜空间（压缩图）｜ <b>Seed</b> = 随机种子</li>
+    <li><b>CFG</b> = 提示词遵循强度｜ <b>Steps</b> = 步数｜ <b>Denoise</b> = 去噪程度</li>
+  </ul>
+
+  <h3>A.4 检查清单（跑通第一天该做的）</h3>
+  <ol>
+    <li>✅ 装好 ComfyUI（桌面版最省事），浏览器能开 8188。</li>
+    <li>✅ 放进去至少一个底模到 checkpoints。</li>
+    <li>✅ 照第四章连出文生图，成功出第一张图。</li>
+    <li>✅ 装好 ComfyUI Manager。</li>
+    <li>✅ 试一次改提示词 / 换种子，得到不同图。</li>
+    <li>✅ 保存这个工作流为 <code>.json</code>。</li>
+  </ol>
+  <div class="note"><b>下一步建议：</b> 挑一个你最想做的方向（如“写实人像”或“线稿上色”），去 Civitai/LiblibAI 找一个现成工作流 JSON 导入，用 Manager 补全节点，再照第六章改造它。<span class="key">模仿 + 微调，是到达“熟练”的最快路径。</span></div>
+</section>
+  </article>
+
+  <div class="tag-cloud">
+    <a href="#">ComfyUI</a><a href="#">节点式工作流</a><a href="#">文生图</a><a href="#">ControlNet</a><a href="#">LoRA</a><a href="#">新手教程</a>
+  </div>
+  <a href="/craft/" class="back-link">返回技艺录</a>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a></p>
+</footer>
+
+<script>
+(function() {
+  // Nav scroll shadow
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+})();
+</script>
+
+</body>
+</html>
