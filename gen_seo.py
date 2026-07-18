@@ -13,6 +13,7 @@ from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 BASE = "https://www.appin.site"
+BRAND_OG = BASE + "/assets/og-cover.png"
 LASTMOD = "2026-07-19"
 
 # ---------- pxid 子页清单（快照，稳定客户站） ----------
@@ -163,6 +164,7 @@ def run_meta():
     inject_page(os.path.join(ROOT, "index.html"), BASE + "/",
                 title="李坤 · Appin.site｜实战派技术人，出海品牌操盘",
                 desc="李坤的个人站 Appin.site——实战派技术人的内容工坊与出海品牌操盘。涵盖 AI 工具实战、技术技艺录、每日阅读精选、AI 资讯雷达，以及数字产品与出海品牌咨询。",
+                image=BRAND_OG,
                 jsonld=homepage_jsonld())
 
     # 列表页
@@ -175,7 +177,7 @@ def run_meta():
     }
     for rel, u in lists.items():
         print(f"[meta] {rel}")
-        inject_page(os.path.join(ROOT, rel), u)
+        inject_page(os.path.join(ROOT, rel), u, image=BRAND_OG)
 
     # 文章页（craft + notes）
     for d in ["craft", "notes"]:
