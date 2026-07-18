@@ -5,99 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>每日阅读 | 2026-07-14 — 李坤</title>
 <meta name="description" content="一万亿美元砸向AI，真正赚到钱的只有这三类公司——2026-07-14阅读简报。">
-<style>
-:root{
-  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
-  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
-  --card-bg:#fff;--radius:14px;--radius-sm:10px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
-.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
-.nav-back:hover{gap:10px}
-.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
-.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--accent)}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
 
-.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
-.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
-  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
-.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
-.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
-.article-header h1 .hl{color:var(--accent)}
-.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
-.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
-.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
-.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-
-.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
-.section-block{margin-bottom:36px}
-.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
-.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
-
-.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
-.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
-.news-item:last-child{margin-bottom:0}
-.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
-  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
-.news-item .item-header{display:flex;align-items:flex-start;gap:0}
-.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
-.news-item h3 strong{color:var(--text)}
-.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
-  margin-left:8px;vertical-align:middle;white-space:nowrap}
-.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
-.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
-.src-other{background:var(--accent-light);color:var(--accent)}
-    .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
-.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#fff;text-decoration:none;
-  font-weight:600;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
-  box-shadow:0 1px 2px rgba(48,209,88,.25);transition:all .2s}
-.news-link:hover{background:#26b94a;gap:10px;box-shadow:0 3px 8px rgba(48,209,88,.35)}
-
-.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
-.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
-.book-item:last-child{margin-bottom:0}
-.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
-.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
-  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
-.book-info{flex:1}
-.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
-.book-info h3 em{font-style:normal;color:var(--accent)}
-.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
-.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
-.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
-.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
-.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
-.rating-score{font-weight:800}
-.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
-/* Book Highlights / 金句区 */
-.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
-.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
-.highlight-quote{margin:0 0 10px;padding:0}
-.highlight-quote:last-child{margin-bottom:0}
-.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
-.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
-.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
-.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
-.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
-.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
-.footer-nav a:hover{gap:10px}
-.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
-@media(max-width:640px){
-  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
-  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
-  .news-item .num{display:none}.section-tags{justify-content:flex-start}
-}
-</style>
 </head>
 <body>
 <nav class="nav"><div class="nav-inner">
@@ -403,6 +314,13 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 
 <script>
 window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
 </script>
 </body>
 </html>
