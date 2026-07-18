@@ -187,10 +187,10 @@ nav .actions{display:flex;align-items:center;gap:12px}
 
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.content-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
 .content-card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
-  padding:var(--s5);transition:.25s;display:flex;flex-direction:column;
+  padding:var(--s4);transition:.25s;display:flex;flex-direction:column;
   cursor:pointer;text-decoration:none;color:inherit
 }
 .content-card:hover{border-color:var(--border-bright);transform:translateY(-2px)}
@@ -198,14 +198,27 @@ nav .actions{display:flex;align-items:center;gap:12px}
 .tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--brand-bg);color:var(--brand)}
 .tag.blue{background:rgba(41,151,255,.1);color:var(--blue)}
 .tag.amber{background:var(--amber-bg);color:var(--amber)}
-.content-card h3{font-size:18px;font-weight:700;line-height:1.35;margin-bottom:var(--s2)}
+.content-card h3{font-size:16.5px;font-weight:700;line-height:1.35;margin-bottom:var(--s2)}
 .content-card p{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1}
 .content-footer{display:flex;align-items:center;justify-content:space-between;margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--border)}
 .content-time{font-size:12px;color:var(--fg-dim);font-family:var(--font-mono);display:flex;align-items:center;gap:5px}
 .cat-pill{font-size:11px;font-weight:600;color:var(--fg-muted);padding:2px 8px;border:1px solid var(--border);border-radius:99px}
 /* 动态内容卡封面 + 摘要截断 */
-.content-thumb{margin:calc(-1 * var(--s5)) calc(-1 * var(--s5)) var(--s4);aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated);border-radius:calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0}
+.content-thumb{margin:calc(-1 * var(--s4)) calc(-1 * var(--s4)) var(--s4);aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated);border-radius:calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0}
 .content-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+/* 无图占位带：品牌渐变 + 分类标签，保证每张卡高度一致 */
+.content-thumb.placeholder{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:
+    radial-gradient(circle at 30% 20%, var(--brand-bg), transparent 60%),
+    linear-gradient(135deg, var(--bg-elevated), rgba(255,184,0,.05));
+  border-bottom:1px solid var(--border)
+}
+.content-thumb.placeholder .ph-cat{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--brand);opacity:.9
+}
+.content-thumb.placeholder .ph-glyph{font-size:18px;color:var(--brand);opacity:.55}
 .content-card p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .view-all{
   text-align:center;margin-top:var(--s5)
@@ -268,13 +281,15 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 @media(max-width:1024px){
   .hero-grid{grid-template-columns:1fr}.hero-right{display:none}
   .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
-  .tools-grid,.products-grid,.content-grid,.radar-grid{grid-template-columns:1fr}
+  .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
+  .content-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:640px){
   nav{padding:0 var(--s3)} .hero{padding:var(--s6) var(--s3) var(--s5)}
   .section{padding:var(--s5) var(--s3)} .stats-grid{grid-template-columns:repeat(2,1fr);gap:var(--s2)}
   .stat-num{font-size:24px} .consult-box{padding:var(--s5) var(--s4)}
   .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
+  .content-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -532,6 +547,12 @@ function toggleTheme(){
 
 /* ═══ 最新内容：动态读取 content.json ═══ */
 function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+// 封面图加载失败时降级为品牌占位带
+function thumbFallback(img){
+  var t=img.closest('.content-thumb'); if(!t) return;
+  t.classList.add('placeholder');
+  t.innerHTML='<span class="ph-glyph">✎</span><span class="ph-cat">'+ (img.getAttribute('data-label')||'') +'</span>';
+}
 function renderLatest(){
   var grid=document.getElementById('content-grid');
   if(!grid)return;
@@ -550,7 +571,9 @@ function renderLatest(){
       var href='/'+cat+'/'+(a.slug||'')+'.html';
       var img=a.image?('/'+a.image):'';
       var tags=(a.tags||[]).slice(0,2).map(function(t,i){return '<span class="tag'+(i===0&&catTag[cat]?' '+catTag[cat]:'')+'">'+esc(t)+'</span>';}).join('');
-      var thumb=img?'<div class="content-thumb"><img src="'+img+'" alt="" loading="lazy" onerror="this.closest(\'.content-thumb\').style.display=\'none\'"></div>':'';
+      var thumb=img
+        ? '<div class="content-thumb"><img src="'+img+'" alt="" loading="lazy" data-label="'+catName[cat]+'" onerror="thumbFallback(this)"></div>'
+        : '<div class="content-thumb placeholder"><span class="ph-glyph">✎</span><span class="ph-cat">'+catName[cat]+'</span></div>';
       return '<a class="content-card" href="'+href+'">'+thumb
         +'<div class="content-tags">'+(tags||'<span class="tag">'+catName[cat]+'</span>')+'</div>'
         +'<h3>'+esc(a.title||'')+'</h3>'
