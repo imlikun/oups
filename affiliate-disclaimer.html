@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>广告与返佣政策 · appin.site</title>
+<style>
+:root{
+  --bg:#0a0a0b;--bg-elevated:#111113;--bg-card:#16161a;
+  --border:#222228;--border-bright:#333340;
+  --fg:#e8e8ec;--fg-muted:#8888a0;
+  --brand:#B8FF3C;--amber:#FFB800;--radius-lg:16px;
+  --font-display:'Space Grotesk','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+body.light{
+  --bg:#f5f5f7;--bg-elevated:#fff;--bg-card:#fff;
+  --border:#e0e0e6;--border-bright:#ccc;
+  --fg:#1a1a1e;--fg-muted:#666;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-display);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:80px 24px 120px}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+h1{font-size:34px;margin-bottom:8px;letter-spacing:-.5px}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:12px;color:var(--brand);border:1px solid var(--border-bright);border-radius:999px;padding:4px 12px;margin-bottom:28px}
+h2{font-size:20px;margin:36px 0 12px;color:var(--fg)}
+p,li{color:var(--fg-muted);font-size:16px;margin-bottom:14px}
+ul{padding-left:22px}
+strong{color:var(--fg)}
+.note{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:10px;padding:16px 20px;margin:24px 0;font-size:15px;color:var(--fg-muted)}
+.back{display:inline-block;margin-top:40px;font-family:var(--font-mono);font-size:14px;border:1px solid var(--border-bright);border-radius:999px;padding:10px 18px;color:var(--fg)}
+.back:hover{border-color:var(--brand);color:var(--brand);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">◆ 透明度说明</span>
+  <h1>广告与返佣政策</h1>
+
+  <p>appin.site 是一個人技术站。为维持站点运营，部分工具与产品链接采用<strong>联盟营销（affiliate / 返佣）</strong>形式。</p>
+
+  <div class="note">
+    原则只有一条：<strong>我只推荐自己真实用过、且认为好用的东西。</strong>返佣不会改变我的推荐，也不会让你多付一分钱——你通过链接购买时支付的价格与官方原价一致，返佣由商家从自己的营销预算中支出。
+  </div>
+
+  <h2>哪些链接可能含返佣</h2>
+  <ul>
+    <li>首页「推荐工具」区的 AI 编程工具（如 Codex / Claude Code / Cursor 等）官方链接；</li>
+    <li>数字产品页中标注「广告·返佣」的第三方入口；</li>
+    <li>正文中以「了解 / 官网」形式指向的外部产品站。</li>
+  </ul>
+
+  <h2>哪些不会</h2>
+  <ul>
+    <li>站内原创教程、技艺录、随笔、AI 雷达均为独立内容，不含返佣；</li>
+    <li>我对工具的任何评价、批评或横向对比，不受返佣关系影响。</li>
+  </ul>
+
+  <h2>你的知情权</h2>
+  <p>若你希望确认某条链接是否含返佣，或希望我移除特定合作，欢迎邮件 <a href="mailto:hi@appin.site">hi@appin.site</a> 告知。本页内容会随合作变化更新，最近更新：2026-07。</p>
+
+  <a class="back" href="/">← 返回首页</a>
+</div>
+<script>
+(function(){try{if(localStorage.getItem('theme')==='light')document.body.classList.add('light');}catch(e){}})();
+</script>
+</body>
+</html>
