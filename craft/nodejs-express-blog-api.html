@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Node.js 实战：用 Express 搭建一个个人博客 API</title>
+<meta name="description" content="前端工程师学后端，Express 是最平滑的切入点。从零搭建一个支持文章 CRUD 的 REST API，包括路由设计、中间件、数据持久化。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">李坤<span>/appin.site</span></a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>Node.js 实战：用 Express 搭建一个个人博客 API</h1>
+  <p class="hero-desc">前端工程师学后端，Express 是最平滑的切入点。从零搭建一个支持文章 CRUD 的 REST API，包括路由设计、中间件、数据持久化。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-04-15</span><span class="dot"></span>
+    <span>约 705 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+<div class="page">
+<div class="hero-cover"><img src="/uploads/nodejs-express-blog-api-header.webp" alt="Node.js 实战：用 Express 搭建一个个人博客 API" loading="eager" /></div>
+<article class="article-body">
+<h2>为什么选 Express</h2>
+<ul>
+<li>学习曲线平缓，和前端 JavaScript 语法一致</li>
+<li>生态成熟，中间件非常丰富</li>
+<li>部署简单，一台 VPS 就能跑</li>
+</ul>
+<h2>项目结构</h2>
+<pre><code>my-blog-api/
+├── server.js          # 入口文件
+├── routes/            # 路由定义
+│   ├── articles.js
+│   └── uploads.js
+├── middleware/        # 中间件
+│   └── auth.js
+└── data/             # JSON 文件数据库
+    └── articles.json
+</code></pre>
+<h2>核心代码片段</h2>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+// 获取所有文章
+app.get('/api/articles', (req, res) =&gt; {
+  const articles = JSON.parse(fs.readFileSync('data/articles.json'));
+  res.json(articles);
+});
+
+// 发布新文章
+app.post('/api/articles', authMiddleware, (req, res) =&gt; {
+  // ...
+});
+</code></pre>
+<h2>下一步</h2>
+<p>加上 JWT 认证、用 MongoDB 替换 JSON 文件数据库、部署到云服务器。</p>
+<a href="/craft/" class="back-link">返回技艺录</a>
+<div class="tag-cloud">
+  <a href="#">Node.js</a>
+  <a href="#">Express</a>
+  <a href="#">API</a>
+  <a href="#">后端</a>
+</div>
+</article>
+</div>
+<footer class="footer">
+  <p>&copy; 2026 李坤 &middot; <a href="/">appin.site</a></p>
+</footer>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light');
+    try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐';
+    fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme;
+    document.body.appendChild(fab);
+})();
+</script>
+</body>
+</html>

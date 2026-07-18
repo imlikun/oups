@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canvas API 深入：从涟漪动画到粒子系统的完整实现</title>
+<meta name="description" content="Canvas 是浏览器原生的 2D 绘图 API，功能非常强大。以我的简历页 Hero 动效为例，深入讲解涟漪扩散和粒子系统的实现原理。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">李坤<span>/appin.site</span></a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>Canvas API 深入：从涟漪动画到粒子系统的完整实现</h1>
+  <p class="hero-desc">Canvas 是浏览器原生的 2D 绘图 API，功能非常强大。以我的简历页 Hero 动效为例，深入讲解涟漪扩散和粒子系统的实现原理。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-04-28</span><span class="dot"></span>
+    <span>约 796 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+<div class="page">
+<div class="hero-cover"><img src="/uploads/canvas-api-ripple-particles-header.webp" alt="Canvas API 深入：从涟漪动画到粒子系统的完整实现" loading="eager" /></div>
+<article class="article-body">
+<h2>Canvas 基础回顾</h2>
+<pre><code class="language-javascript">const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+// 清空画布
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// 画一个圆
+ctx.beginPath();
+ctx.arc(x, y, radius, 0, Math.PI * 2);
+ctx.stroke();
+</code></pre>
+<h2>涟漪效果的实现思路</h2>
+<ol>
+<li>用 <code>requestAnimationFrame</code> 驱动动画循环</li>
+<li>每个涟漪是一个对象：<code>{ x, y, radius, alpha, lineWidth }</code></li>
+<li>每帧 <code>radius += speed</code>，<code>alpha -= 0.02</code>，alpha 小于 0 时移除</li>
+<li>多个涟漪同时存在，形成层叠效果</li>
+</ol>
+<h2>粒子系统的核心</h2>
+<p>每个粒子有位置、速度、加速度：</p>
+<pre><code class="language-javascript">particles.push({
+  x: Math.random() * w,
+  y: Math.random() * h,
+  vx: (Math.random() - 0.5) * 2,
+  vy: (Math.random() - 0.5) * 2,
+  size: Math.random() * 3 + 1,
+  color: colors[Math.floor(Math.random() * colors.length)]
+});
+</code></pre>
+<h2>性能优化</h2>
+<ul>
+<li>用 <code>offscreenCanvas</code> 做预渲染</li>
+<li>粒子数量超过 500 时要有衰减机制</li>
+<li>页面不可见时用 <code>document.hidden</code> 暂停动画</li>
+</ul>
+<a href="/craft/" class="back-link">返回技艺录</a>
+<div class="tag-cloud">
+  <a href="#">Canvas</a>
+  <a href="#">动画</a>
+  <a href="#">JavaScript</a>
+  <a href="#">粒子系统</a>
+</div>
+</article>
+</div>
+<footer class="footer">
+  <p>&copy; 2026 李坤 &middot; <a href="/">appin.site</a></p>
+</footer>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light');
+    try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐';
+    fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme;
+    document.body.appendChild(fab);
+})();
+</script>
+</body>
+</html>
