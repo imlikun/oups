@@ -19,3 +19,640 @@
 <meta property="og:image" content="https://www.appin.site/assets/og-cover.png">
 <meta name="twitter:image" content="https://www.appin.site/assets/og-cover.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "Appin.site", "url": "https://www.appin.site/", "description": "李坤的个人站——实战派技术人的内容工坊与出海品牌操盘记录。", "inLanguage": "zh-CN", "author": {"@type": "Person", "name": "李坤"}}, {"@type": "Person", "name": "李坤", "url": "https://www.appin.site/", "jobTitle": "实战派技术人 / 出海品牌操盘", "worksFor": {"@type": "Organization", "name": "Appin.site"}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════ DESIGN TOKENS ═══════════ */
+:root{
+  --bg:#0a0a0b;--bg-elevated:#111113;--bg-card:#16161a;
+  --border:#222228;--border-bright:#333340;
+  --fg:#e8e8ec;--fg-muted:#8888a0;--fg-dim:#555568;
+  --brand:#B8FF3C;--brand-dim:#7ab828;--brand-bg:rgba(184,255,60,.06);
+  --amber:#FFB800;--amber-bg:rgba(255,184,0,.08);
+  --red:#ff4d4f;--blue:#2997ff;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:20px;
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --maxw:1200px;
+  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;
+}
+body.light{
+  --bg:#f5f5f7;--bg-elevated:#fff;--bg-card:#fff;
+  --border:#e0e0e6;--border-bright:#ccc;
+  --fg:#1a1a1e;--fg-muted:#666;--fg-dim:#999;
+  --brand:#4a9c00;--brand-dim:#3a7a00;--brand-bg:rgba(74,156,0,.06);
+  --amber:#c78f00;--amber-bg:rgba(199,143,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-display);background:var(--bg);color:var(--fg);line-height:1.65;font-size:15.5px;overflow-x:hidden}
+
+/* ═══ focus & selection & reduced motion ═══ */
+*:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:2px}
+::selection{background:var(--brand);color:var(--bg)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+[id]{scroll-margin-top:80px}
+
+/* ═══ NAV (solid, no blur) ═══ */
+nav{
+  position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--s5);height:64px;background:var(--bg);border-bottom:1px solid var(--border);
+  font-size:14px;font-weight:500;
+}
+nav .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:var(--fg);text-decoration:none}
+nav .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--brand);flex-shrink:0}
+nav .links{display:flex;align-items:center;gap:0}
+nav a.nav-link{position:relative;color:var(--fg-muted);padding:8px 14px;text-decoration:none;border-radius:var(--radius-sm);transition:.15s}
+nav a.nav-link:hover{color:var(--fg);background:var(--brand-bg)}
+nav a.nav-link.active{color:var(--brand)}
+nav .badge-new{position:absolute;top:-4px;right:-4px;font-size:9px;background:var(--brand);color:var(--bg);padding:1px 5px;border-radius:99px;font-weight:700;line-height:1.4;pointer-events:none}
+nav .badge-aff{position:absolute;top:-4px;right:-4px;font-size:9px;background:var(--amber);color:var(--bg);padding:1px 5px;border-radius:99px;font-weight:700;line-height:1.4;pointer-events:none}
+nav .actions{display:flex;align-items:center;gap:12px}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
+  background:var(--brand);color:var(--bg);font-weight:600;font-size:13px;
+  border-radius:99px;text-decoration:none;border:none;cursor:pointer;transition:.2s;
+  font-family:var(--font-display);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(184,255,60,.25)}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
+  background:transparent;color:var(--fg);font-weight:500;font-size:13px;
+  border:1px solid var(--border-bright);border-radius:99px;text-decoration:none;cursor:pointer;transition:.2s;
+  font-family:var(--font-display);
+}
+.btn-secondary:hover{border-color:var(--brand);color:var(--brand)}
+
+/* ═══ HERO — Bento identity card ═══ */
+.hero{position:relative;padding:var(--s8) var(--s5) var(--s7);overflow:hidden}
+.hero::before{
+  content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;
+  background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);
+  pointer-events:none
+}
+.hero-inner{max-width:var(--maxw);margin:0 auto;position:relative}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 380px;gap:var(--s6);align-items:start;
+}
+.hero-left h1{
+  font-size:clamp(30px,4vw,46px);font-weight:700;line-height:1.15;letter-spacing:-.03em;
+  margin-bottom:var(--s4)
+}
+.hero-left h1 .hl{color:var(--brand)}
+.hero-tagline{
+  font-size:17px;color:var(--fg-muted);line-height:1.7;max-width:520px;margin-bottom:var(--s5)
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-right{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--s5);position:relative;overflow:hidden
+}
+.hero-right::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--brand),var(--amber))
+}
+.term-header{display:flex;align-items:center;gap:8px;margin-bottom:var(--s4);font-size:13px;color:var(--fg-dim)}
+.term-dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
+.term-body{font-family:var(--font-mono);font-size:13px;line-height:2;color:var(--fg-muted)}
+.term-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed var(--border)}
+.term-row:last-child{border:none}
+.term-key{color:var(--fg-dim)}
+.term-val{color:var(--fg);font-weight:500}
+.term-val.hl{color:var(--brand)}
+.term-quote{
+  margin-top:var(--s4);padding:var(--s3);background:var(--brand-bg);
+  border-radius:var(--radius-sm);border-left:3px solid var(--brand);
+  font-style:italic;color:var(--fg);font-family:var(--font-display);font-size:13px;line-height:1.6
+}
+
+/* ═══ STATS RIBBON — 4 number cards ═══ */
+.stats-section{padding:0 var(--s5) var(--s6)}
+.stats-grid{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+.stat-card{
+  text-align:center;padding:var(--s5) var(--s4);
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  transition:.25s
+}
+.stat-card:hover{border-color:var(--brand-bright,var(--border-bright));transform:translateY(-2px)}
+.stat-num{font-size:36px;font-weight:700;color:var(--brand);font-family:var(--font-display);line-height:1}
+.stat-label{font-size:13px;color:var(--fg-muted);margin-top:4px;font-weight:500}
+
+/* ═══ SECTION COMMONS ═══ */
+.section{padding:var(--s7) var(--s5)}
+.section-inner{max-width:var(--maxw);margin:0 auto}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--brand);margin-bottom:var(--s4);font-family:var(--font-mono)
+}
+.section-title{font-size:clamp(24px,3vw,34px);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--s5);line-height:1.2}
+.section-desc{font-size:16px;color:var(--fg-muted);max-width:560px;line-height:1.7;margin-bottom:var(--s6)}
+
+/* ═══ AFFILIATE / TOOLS SECTION ═══ */
+.tools-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.tool-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:var(--s5);transition:.25s;position:relative;display:flex;flex-direction:column
+}
+.tool-card:hover{border-color:var(--border-bright);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.tool-badge{
+  position:absolute;top:14px;right:14px;
+  font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;
+  background:var(--amber-bg);color:var(--amber);letter-spacing:.02em
+}
+.tool-icon{font-size:28px;margin-bottom:var(--s3)}
+.tool-name{font-size:17px;font-weight:600;margin-bottom:6px}
+.tool-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s3)}
+.tool-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none}
+.tool-link:hover{text-decoration:underline}
+.disclosure{
+  grid-column:1/-1;text-align:center;font-size:12px;color:var(--fg-dim);
+  padding:var(--s4) 0 0;border-top:1px dashed var(--border);margin-top:var(--s3)
+}
+.disclosure a{color:var(--fg-dim);text-decoration:underline}
+
+/* ═══ PRODUCTS SECTION ═══ */
+.products-section{}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.prod-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:var(--s5);transition:.25s;display:flex;flex-direction:column;
+  position:relative;overflow:hidden
+}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(184,255,60,.15);border-color:var(--brand)}
+.prod-featured::after{
+  content:'首推';position:absolute;top:16px;right:16px;
+  background:var(--brand);color:var(--bg);font-size:11px;font-weight:700;
+  padding:2px 10px;border-radius:99px
+}
+.prod-type{font-size:11px;font-weight:700;color:var(--fg-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)}
+.prod-title{font-size:19px;font-weight:700;margin-bottom:8px}
+.prod-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s4)}
+.prod-meta{display:flex;align-items:center;justify-content:space-between}
+.prod-price{font-size:22px;font-weight:700}
+.prod-price .old{font-size:14px;color:var(--fg-dim);text-decoration:line-through;font-weight:400;margin-right:6px}
+.prod-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 20px;background:var(--brand);color:var(--bg);
+  font-weight:600;font-size:13px;border-radius:99px;text-decoration:none;
+  transition:.2s;font-family:var(--font-display)
+}
+.prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(184,255,60,.25)}
+
+/* ═══ WORKS / 作品展示 (PXID 等官网项目) ═══ */
+.works-section{}
+.works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+.work-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  overflow:hidden;transition:.25s;display:flex;flex-direction:column;
+  text-decoration:none;color:inherit
+}
+.work-card:hover{border-color:var(--border-bright);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.work-cover{
+  aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  background:
+    radial-gradient(circle at 30% 20%, var(--brand-bg), transparent 60%),
+    linear-gradient(135deg, var(--bg-elevated), rgba(255,184,0,.06));
+  border-bottom:1px solid var(--border)
+}
+.work-cover .wc-mark{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--brand);letter-spacing:.02em}
+.work-cover .wc-sub{font-family:var(--font-mono);font-size:11px;color:var(--fg-dim);letter-spacing:.08em}
+.work-body{padding:var(--s5);display:flex;flex-direction:column;flex:1}
+.work-type{font-size:11px;font-weight:700;color:var(--fg-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)}
+.work-title{font-size:19px;font-weight:700;margin-bottom:8px}
+.work-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s4)}
+.work-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none}
+.work-link:hover{text-decoration:underline}
+
+/* ═══ LATEST CONTENT — card grid ═══ */
+.content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.content-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:var(--s4);transition:.25s;display:flex;flex-direction:column;
+  cursor:pointer;text-decoration:none;color:inherit
+}
+.content-card:hover{border-color:var(--border-bright);transform:translateY(-2px)}
+.content-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s3)}
+.tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--brand-bg);color:var(--brand)}
+.tag.blue{background:rgba(41,151,255,.1);color:var(--blue)}
+.tag.amber{background:var(--amber-bg);color:var(--amber)}
+.content-card h3{font-size:16.5px;font-weight:700;line-height:1.35;margin-bottom:var(--s2)}
+.content-card p{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1}
+.content-footer{display:flex;align-items:center;justify-content:space-between;margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--border)}
+.content-time{font-size:12px;color:var(--fg-dim);font-family:var(--font-mono);display:flex;align-items:center;gap:5px}
+.cat-pill{font-size:11px;font-weight:600;color:var(--fg-muted);padding:2px 8px;border:1px solid var(--border);border-radius:99px}
+/* 动态内容卡封面 + 摘要截断 */
+.content-thumb{margin:calc(-1 * var(--s4)) calc(-1 * var(--s4)) var(--s4);aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated);border-radius:calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0}
+.content-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+/* 无图占位带：品牌渐变 + 分类标签，保证每张卡高度一致 */
+.content-thumb.placeholder{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:
+    radial-gradient(circle at 30% 20%, var(--brand-bg), transparent 60%),
+    linear-gradient(135deg, var(--bg-elevated), rgba(255,184,0,.05));
+  border-bottom:1px solid var(--border)
+}
+.content-thumb.placeholder .ph-cat{
+  font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--brand);opacity:.9
+}
+.content-thumb.placeholder .ph-glyph{font-size:18px;color:var(--brand);opacity:.55}
+.content-card p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.view-all{
+  text-align:center;margin-top:var(--s5)
+}
+.view-all a{
+  color:var(--brand);font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px
+}
+.view-all a:hover{text-decoration:underline}
+
+/* ═══ radar (AI news) cards ═══ */
+.radar-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.radar-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+.radar-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:var(--s4) var(--s5);transition:.25s;display:flex;flex-direction:column;gap:var(--s2);
+  text-decoration:none;color:inherit
+}
+.radar-card:hover{border-color:var(--border-bright);transform:translateY(-2px)}
+.radar-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--fg-dim);font-family:var(--font-mono)}
+.radar-src{display:inline-flex;align-items:center;gap:5px;color:var(--brand)}
+.radar-card h3{font-size:16px;font-weight:600;line-height:1.4}
+.radar-card p{font-size:13.5px;color:var(--fg-muted);line-height:1.6;flex:1}
+
+/* ═══ CONSULT / CTA ═══ */
+.consult-section{position:relative;overflow:hidden}
+.consult-section::before{
+  content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;
+  background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);pointer-events:none
+}
+.consult-box{
+  max-width:720px;margin:0 auto;text-align:center;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);
+  padding:var(--s7) var(--s6);position:relative
+}
+.consult-box h2{font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:var(--s3)}
+.consult-box p{font-size:16px;color:var(--fg-muted);line-height:1.7;margin-bottom:var(--s5)}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:var(--s5)}
+.pill{font-size:13px;padding:8px 18px;border:1px solid var(--border-bright);border-radius:99px;color:var(--fg);font-weight:500}
+
+/* ═══ FOOTER ═══ */
+footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:13px;color:var(--fg-dim)}
+.footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3)}
+.footer-links a{color:var(--fg-dim);text-decoration:none;margin-right:var(--s4)}
+.footer-links a:hover{color:var(--fg)}
+.theme-toggle{
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--border-bright);
+  background:var(--bg-card);color:var(--fg);cursor:pointer;display:inline-flex;
+  align-items:center;justify-content:center;font-size:18px;transition:.2s
+}
+.theme-toggle:hover{border-color:var(--brand);color:var(--brand)}
+
+/* ═══ footer columns (full channel index) ═══ */
+.footer-cols{display:flex;gap:var(--s6);flex-wrap:wrap}
+.footer-col h4{font-size:12px;font-weight:700;color:var(--fg);letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--s3)}
+.footer-col a{display:block;color:var(--fg-dim);text-decoration:none;font-size:13px;padding:3px 0;transition:.15s}
+.footer-col a:hover{color:var(--brand)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid var(--border);font-size:12px;color:var(--fg-dim)}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr}.hero-right{display:none}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
+  .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
+  .content-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  nav{padding:0 var(--s3)} .hero{padding:var(--s6) var(--s3) var(--s5)}
+  .section{padding:var(--s5) var(--s3)} .stats-grid{grid-template-columns:repeat(2,1fr);gap:var(--s2)}
+  .stat-num{font-size:24px} .consult-box{padding:var(--s5) var(--s4)}
+  .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
+  .content-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═════ NAVIGATION ═════ -->
+<nav>
+  <a class="logo" href="/"><span class="dot"></span>Appin<span style="color:var(--fg-dim)">.</span>site</a>
+  <div class="links">
+    <a class="nav-link active" href="#">关于</a>
+    <a class="nav-link" href="#content">内容</a>
+    <a class="nav-link" href="#tools">工具箱<span class="badge-aff">返佣</span></a>
+    <a class="nav-link" href="#products">产品<span class="badge-new">NEW</span></a>
+    <a class="nav-link" href="#works">作品</a>
+    <a class="nav-link" href="#radar">AI 雷达</a>
+  </div>
+  <div class="actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">◐</button>
+    <a class="btn-primary" href="mailto:hi@appin.site">合作 →</a>
+  </div>
+</nav>
+
+<!-- ═════ HERO — Identity Bento ═════ -->
+<section class="hero">
+<div class="hero-inner">
+<div class="hero-grid">
+  <!-- left: headline + cta -->
+  <div class="hero-left">
+    <h1>我是 <span class="hl">李坤</span><br>实战派技术人 · 品牌操盘手</h1>
+    <p class="hero-tagline">
+      懂代码的产品人，懂获客的技术人。写能落地的实战教程，做有信任感的出海品牌。
+      <br><span style="color:var(--brand)">懂技术 + 稍微懂产品 = 扎实的基本盘。</span>
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#content">读我的文章 ↗</a>
+      <a class="btn-secondary" href="#tools">看我推荐的工具</a>
+    </div>
+  </div>
+
+  <!-- right: terminal identity card -->
+  <div class="hero-right">
+    <div class="term-header"><span class="term-dot"></span><code>$ whoami</code></div>
+    <div class="term-body">
+      <div class="term-row"><span class="term-key">name:</span><span class="term-val hl">Li Kun / 李坤</span></div>
+      <div class="term-row"><span class="term-key">role:</span><span class="term-val">独立开发者 × 品牌运营</span></div>
+      <div class="term-row"><span class="term-key">stack:</span><span class="term-val">Node · Vue · AI Tools ·出海</span></div>
+      <div class="term-row"><span class="term-key">exp:</span><span class="term-val">8y 营销策划 + 全栈开发</span></div>
+      <div class="term-row"><span class="term-key">posts:</span><span class="term-val hl">74 published</span></div>
+      <div class="term-row"><span class="term-key">location:</span><span class="term-val">江苏淮安 → 全球客户</span></div>
+    </div>
+    <div class="term-quote">"懂技术 + 稍懂产品 = 扎实。营销弱 = 内容更真诚。"</div>
+  </div>
+</div><!-- /hero-grid -->
+</div>
+</section>
+
+<!-- ═════ STATS RIBBON ═════ -->
+<section class="stats-section">
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-num">47</div><div class="stat-label">技艺录实战</div></div>
+  <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">开源项目拆解</div></div>
+  <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">随笔思考</div></div>
+  <div class="stat-card"><div class="stat-num">74</div><div class="stat-label">全站内容</div></div>
+</div>
+</section>
+
+<!-- ═════ LATEST CONTENT (mixed stream) ═════ -->
+<section id="content" class="section content-section">
+<div class="section-inner">
+  <div class="section-label">◉ 最新内容</div>
+  <h2 class="section-title">真实写出来的，不是搬运</h2>
+  <p class="section-desc">技艺录、随笔、视频、每日阅读——所有栏目的最新一篇都汇到这里。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 自动渲染，你只管更新，首页自动跟着变。</p>
+  <div class="content-grid" id="content-grid"></div>
+  <div class="view-all">
+    <a href="/craft/">技艺录 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="/notes/">随笔 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="/video-lab/">视频 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="/daily-digest/">每日阅读 →</a>
+  </div>
+</div>
+</section>
+
+<!-- ═════ TOOLS / AFFILIATE ═════ -->
+<section id="tools" class="section tools-section">
+<div class="section-inner">
+  <div class="section-label">◆ 推荐工具</div>
+  <h2 class="section-title">我每天在用的 AI 编程工具</h2>
+  <p class="section-desc">下面每一个我都写过实战教程、真金白银付过费。链接可能含返佣，但推荐只因好用。</p>
+  <div class="tools-grid">
+    <article class="tool-card">
+      <span class="tool-badge">广告·返佣</span>
+      <div class="tool-icon">⚡</div>
+      <h3 class="tool-name">Codex（OpenAI）</h3>
+      <p class="tool-desc">聊天网页 / 桌面 App / 终端 CLI 四种入口。审批模式 + Git 自动存档，新手也能安全上手。站内有完整小白教程。</p>
+      <a class="tool-card-link tool-link" href="/craft/codex-beginner-guide.html">看我的教程 →</a>
+    </article>
+    <article class="tool-card">
+      <span class="tool-badge">广告·返佣</span>
+      <div class="tool-icon">✦</div>
+      <h3 class="tool-name">Claude Code（Anthropic）</h3>
+      <p class="tool-desc">终端里的编程 Agent，长上下文理解整个代码库，复杂重构和多文件改动尤其强。Pro / Max 套餐含额度。</p>
+      <a class="tool-card-link tool-link" href="https://claude.com/claude-code" target="_blank" rel="noopener">官方网站 →</a>
+    </article>
+    <article class="tool-card">
+      <span class="tool-badge">广告·返佣</span>
+      <div class="tool-icon">⌘</div>
+      <h3 class="tool-name">Cursor</h3>
+      <p class="tool-desc">AI 优先的代码编辑器，补全 + 对话 + 多文件编辑一体。个人站、小工具开发的最快起点，有推荐返佣机制。</p>
+      <a class="tool-card-link tool-link" href="https://cursor.com" target="_blank" rel="noopener">官方网站 →</a>
+    </article>
+    <div class="disclosure">
+      ⚡ 以上链接部分含联盟营销返佣（affiliate），不影响你支付的任何价格。
+      完整披露请阅读 <a href="/affiliate-disclaimer.html">广告与返佣政策</a>。
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═════ DIGITAL PRODUCTS ═════ -->
+<section id="products" class="section products-section">
+<div class="section-inner">
+  <div class="section-label">◈ 数字产品</div>
+  <h2 class="section-title">一次购买，持续更新</h2>
+  <p class="section-desc">把我的实战经验打包成册，省你自己踩坑的时间。</p>
+  <div class="products-grid">
+    <article class="prod-card prod-featured">
+      <span class="prod-type">电子书 · PDF</span>
+      <h3 class="prod-title">AI 编程工具实战（2026）</h3>
+      <p class="prod-desc">Codex / Cursor / Claude Code / Trae / Gemini CLI 五大工具横评 + 工作流搭建 + 30 天上手路线。整合站内全部教程精华，一次买持续更新。</p>
+      <div class="prod-meta">
+        <div class="prod-price"><span class="old">¥59</span>¥39</div>
+        <a class="prod-btn" href="#" onclick="return false">立即获取</a>
+      </div>
+    </article>
+    <article class="prod-card">
+      <span class="prod-type">模板包 · HTML/CSS</span>
+      <h3 class="prod-title">开发者个人站模板（液态玻璃风）</h3>
+      <p class="prod-desc">本站同款设计系统源文件。双主题、Bento Grid、响应式，开箱即用。</p>
+      <div class="prod-meta">
+        <div class="prod-price">¥69</div>
+        <a class="prod-btn" href="#" onclick="return false">立即获取</a>
+      </div>
+    </article>
+    <article class="prod-card">
+      <span class="prod-type">手册 · PDF</span>
+      <h3 class="prod-title">技术人出海品牌实操手册</h3>
+      <p class="prod-desc">从零搭建海外 B2B 品牌信任体系：四柱模型、小米式透传打法、渠道落地清单。</p>
+      <div class="prod-meta">
+        <div class="prod-price">即将上架</div>
+        <a class="prod-btn" style="opacity:.5;pointer-events:none" href="#">敬请期待</a>
+      </div>
+    </article>
+  </div>
+</div>
+</section>
+
+<!-- ═════ WORKS / 我的作品 (PXID 官网等) ═════ -->
+<section id="works" class="section works-section">
+<div class="section-inner">
+  <div class="section-label">✦ 我的作品</div>
+  <h2 class="section-title">顺手搭的站</h2>
+  <p class="section-desc">帮品牌和客户做的官网项目，独立部署、独立域名形态。点进去看完整站点。</p>
+  <div class="works-grid">
+    <a class="work-card" href="/pxid2/">
+      <div class="work-cover"><span class="wc-mark">PXID</span><span class="wc-sub">EN · OEM / ODM</span></div>
+      <div class="work-body">
+        <div class="work-type">官网 · 英文版</div>
+        <h3 class="work-title">PXID 智能出行官网</h3>
+        <p class="work-desc">电动自行车制造商 OEM/ODM 官网，英文版。产品矩阵、ODM 能力、新闻动态一站式展示。</p>
+        <span class="work-link">访问官网 →</span>
+      </div>
+    </a>
+    <a class="work-card" href="/pxid3/">
+      <div class="work-cover"><span class="wc-mark">PXID</span><span class="wc-sub">CN · 国内版</span></div>
+      <div class="work-body">
+        <div class="work-type">官网 · 中文版</div>
+        <h3 class="work-title">PXID 国内版</h3>
+        <p class="work-desc">面向国内市场的 PXID 品牌站，中文版。内容建设中。</p>
+        <span class="work-link">访问官网 →</span>
+      </div>
+    </a>
+  </div>
+</div>
+</section>
+
+<!-- ═════ AI RADAR (aihot) ═════ -->
+<section id="radar" class="section radar-section">
+<div class="section-inner">
+  <div class="section-label">🔥 AI 雷达</div>
+  <h2 class="section-title">每天自动刷的 AI 圈大事</h2>
+  <p class="section-desc">自动采集 + 人工精选的 AI 行业动态，每天更新。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 动态注入。</p>
+  <div class="radar-grid">
+
+    <a class="radar-card" href="#">
+      <div class="radar-head"><span class="radar-src">↗ OpenAI</span><span>2 小时前</span></div>
+      <h3>Codex 网页版上线「并行任务」：一次开 5 个沙箱同时跑</h3>
+      <p>官方博客更新，Pro 用户可在 chat 界面同时派发多个独立编码任务，结果汇总到同一会话。</p>
+    </a>
+
+    <a class="radar-card" href="#">
+      <div class="radar-head"><span class="radar-src">↗ Anthropic</span><span>5 小时前</span></div>
+      <h3>Claude Code 支持「计划模式」：先出方案再动手</h3>
+      <p>新增 plan 子命令，先生成修改计划等待确认，再执行，降低误改风险。</p>
+    </a>
+
+    <a class="radar-card" href="#">
+      <div class="radar-head"><span class="radar-src">↗ GitHub</span><span>昨天</span></div>
+      <h3>Copilot Workspace 支持自定义 Agent 流程</h3>
+      <p>可在仓库内定义多步 Agent 流水线，配合 Actions 实现 PR 自动预审。</p>
+    </a>
+
+    <a class="radar-card" href="#">
+      <div class="radar-head"><span class="radar-src">↗ 社区</span><span>昨天</span></div>
+      <h3>开源 Understand Anything 登 GitHub Trending</h3>
+      <p>一条命令把 20 万行代码库转成交互知识图谱，本周_star 破 3k。</p>
+    </a>
+
+  </div>
+  <div class="view-all"><a href="/ai-radar/">查看全部 AI 雷达 →</a></div>
+</div>
+</section>
+
+<!-- ═════ CONSULT CTA ═════ -->
+<section class="section consult-section">
+<div class="section-inner">
+  <div class="consult-box">
+    <h2>有项目想聊？</h2>
+    <p>个人站搭建 · 出海品牌轻咨询 · 技术方案评审<br>邮件直达，通常 24h 内回复。</p>
+    <div class="pills">
+      <span class="pill">🏗 个人站 / 作品集</span>
+      <span class="pill">🌏 出海 B2B 品牌</span>
+      <span class="pill">🤖 AI 工作流搭建</span>
+      <span class="pill">📊 技术方案咨询</span>
+    </div>
+    <a class="btn-primary" href="mailto:hi@appin.site" style="font-size:15px;padding:12px 28px">发邮件给 hi@appin.site →</a>
+  </div>
+</div>
+</section>
+
+<!-- ═════ FOOTER ═════ -->
+<footer>
+<div class="footer-inner">
+  <div class="footer-cols">
+    <div class="footer-col">
+      <h4>内容栏目</h4>
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/">随笔</a>
+      <a href="/video-lab/">视频</a>
+      <a href="/daily-digest/">每日阅读</a>
+      <a href="/ai-radar/">AI 雷达</a>
+    </div>
+    <div class="footer-col">
+      <h4>关于</h4>
+      <a href="#content">最新内容</a>
+      <a href="#works">我的作品</a>
+      <a href="#radar">AI 雷达</a>
+      <a href="#tools">推荐工具</a>
+      <a href="#products">数字产品</a>
+      <a href="/affiliate-disclaimer.html">广告与返佣政策</a>
+    </div>
+    <div class="footer-col">
+      <h4>关注</h4>
+      <a href="https://space.bilibili.com/26771758" target="_blank" rel="noopener">哔哩哔哩</a>
+      <a href="mailto:hi@appin.site">邮件合作</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 李坤 · Appin.site</span>
+  </div>
+</div>
+</footer>
+
+<script>
+// 主题切换：CSS 以 body.light 覆盖 :root 暗色变量
+(function(){
+  try{
+    if(localStorage.getItem('theme')==='light') document.body.classList.add('light');
+  }catch(e){}
+})();
+function toggleTheme(){
+  const b=document.body;
+  b.classList.toggle('light');
+  try{localStorage.setItem('theme', b.classList.contains('light')?'light':'dark');}catch(e){}
+}
+
+/* ═══ 最新内容：动态读取 content.json ═══ */
+function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+// 封面图加载失败时降级为品牌占位带
+function thumbFallback(img){
+  var t=img.closest('.content-thumb'); if(!t) return;
+  t.classList.add('placeholder');
+  t.innerHTML='<span class="ph-glyph">✎</span><span class="ph-cat">'+ (img.getAttribute('data-label')||'') +'</span>';
+}
+function renderLatest(){
+  var grid=document.getElementById('content-grid');
+  if(!grid)return;
+  fetch('/content.json').then(function(r){return r.json();}).then(function(d){
+    var arts=(d.articles||[]).filter(function(a){return a.status!=='draft';});
+    arts.sort(function(a,b){return (b.date||'').localeCompare(a.date||'');});
+    var byCat={};
+    arts.forEach(function(a){ if(!byCat[a.category]) byCat[a.category]=a; });
+    var picked=Object.keys(byCat).map(function(k){return byCat[k];});
+    var rest=arts.filter(function(a){return picked.indexOf(a)<0;});
+    var top=picked.concat(rest).slice(0,6);
+    var catName={craft:'技艺录',notes:'随笔',video:'视频','daily-digest':'每日阅读','ai-radar':'AI雷达'};
+    var catTag={craft:'',video:'blue',notes:'amber'};
+    grid.innerHTML=top.map(function(a){
+      var cat=a.category||'craft';
+      var href='/'+cat+'/'+(a.slug||'')+'.html';
+      var img=a.image?('/'+a.image):'';
+      var tags=(a.tags||[]).slice(0,2).map(function(t,i){return '<span class="tag'+(i===0&&catTag[cat]?' '+catTag[cat]:'')+'">'+esc(t)+'</span>';}).join('');
+      var thumb=img
+        ? '<div class="content-thumb"><img src="'+img+'" alt="" loading="lazy" data-label="'+catName[cat]+'" onerror="thumbFallback(this)"></div>'
+        : '<div class="content-thumb placeholder"><span class="ph-glyph">✎</span><span class="ph-cat">'+catName[cat]+'</span></div>';
+      return '<a class="content-card" href="'+href+'">'+thumb
+        +'<div class="content-tags">'+(tags||'<span class="tag">'+catName[cat]+'</span>')+'</div>'
+        +'<h3>'+esc(a.title||'')+'</h3>'
+        +'<p>'+esc(a.excerpt||'')+'</p>'
+        +'<div class="content-footer"><span class="content-time">'+esc(a.date||'')+'</span><span class="cat-pill">'+catName[cat]+'</span></div>'
+        +'</a>';
+    }).join('');
+  }).catch(function(e){console.warn('content.json 加载失败',e);});
+}
+renderLatest();
+</script>
+</body>
+</html>
