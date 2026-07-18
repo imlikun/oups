@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Grid 实战：用 Bento Grid 做不规则卡片布局</title>
+<meta name="description" content="Bento Grid 是近年来非常流行的 UI 布局风格，源自 Apple 的 Keynote 设计。用纯 CSS Grid 实现一个灵活的 Bento 栅格系统。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>CSS Grid 实战：用 Bento Grid 做不规则卡片布局</h1>
+  <p class="hero-desc">Bento Grid 是近年来非常流行的 UI 布局风格，源自 Apple 的 Keynote 设计。用纯 CSS Grid 实现一个灵活的 Bento 栅格系统。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-05-25</span><span class="dot"></span>
+    <span>约 473 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+<div class="hero-cover"><img src="/uploads/css-grid-bento-layout-header.webp" alt="CSS Grid 实战：用 Bento Grid 做不规则卡片布局" loading="eager" /></div>
+<article class="article-body">
+<h2>什么是 Bento Grid</h2>
+<p>Bento Box（便当盒）布局灵感来自日式便当盒的格子分区，每个格子大小不一但整体整齐。Apple 的 Keynote 和 Notion 官网都大量使用了这种布局。</p>
+<h2>核心 CSS</h2>
+<pre><code class="language-css">.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+.span-4 { grid-column: span 4; }
+</code></pre>
+<h2>响应式处理</h2>
+<p>在移动端，全部改为 <code>grid-template-columns: 1fr</code>，所有卡片 <code>grid-column: span 1</code>，保证单列堆叠。</p>
+<h2>心得</h2>
+<p>Bento Grid 的关键在于<strong>内容优先级</strong>——重要的卡片跨更多列，次要的卡片缩小。不能为了好看而平均分配，要根据内容权重来设计。</p>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+<div class="tag-cloud">
+  <a href="#">CSS</a>
+  <a href="#">Grid</a>
+  <a href="#">布局</a>
+  <a href="#">设计</a>
+</div>
+
+</article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤的创意探索 · <a href="/">appin.site</a></p>
+</footer>
+
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+
+</body>
+</html>

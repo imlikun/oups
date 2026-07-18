@@ -1,0 +1,228 @@
+/* ═══════════ APPIN.SITE 列表页共享皮肤 ═══════════
+   2026-07-18 网站整体改版（Developer Publication 风）。
+   覆盖 craft / notes / daily-digest 三个列表页，与新首页 / 文章页同一套设计 token。
+   正文与脚本不动，仅换皮：把三页内联 <style> 换成 <link href="/assets/list.css">。 */
+
+:root{
+  --bg:#0a0a0b;--bg-elevated:#111113;--bg-card:#16161a;
+  --border:#222228;--border-bright:#333340;
+  --fg:#e8e8ec;--fg-muted:#8888a0;--fg-dim:#555568;
+  --brand:#B8FF3C;--brand-dim:#7ab828;--brand-bg:rgba(184,255,60,.06);
+  --amber:#FFB800;--amber-bg:rgba(255,184,0,.08);
+  /* 列表页默认强调色 = 品牌绿；daily-digest 各卡用 .accent-* 覆盖 */
+  --accent:var(--brand);
+  --accent-light:var(--brand-bg);
+  --accent-medium:rgba(184,255,60,.14);
+  --accent-border:rgba(184,255,60,.22);
+  --accent-shadow:rgba(184,255,60,.10);
+  --radius:12px;
+  --maxw:1120px;
+  --font-display:'Space Grotesk','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+/* 浅色主题：与首页 / 文章页互通（body.light + localStorage 'theme'） */
+body.light{
+  --bg:#f5f5f7;--bg-elevated:#fff;--bg-card:#fff;
+  --border:#e0e0e6;--border-bright:#ccc;
+  --fg:#1a1a1e;--fg-muted:#666;--fg-dim:#999;
+  --brand:#4a9c00;--brand-dim:#3a7a00;--brand-bg:rgba(74,156,0,.06);
+  --amber:#c78f00;--amber-bg:rgba(199,143,0,.07);
+  --accent:var(--brand);
+  --accent-light:var(--brand-bg);
+  --accent-medium:rgba(74,156,0,.14);
+  --accent-border:rgba(74,156,0,.22);
+  --accent-shadow:rgba(74,156,0,.10);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-display);background:var(--bg);color:var(--fg);line-height:1.7;font-size:16px;overflow-x:hidden}
+*:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:2px}
+::selection{background:var(--brand);color:var(--bg)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+[id]{scroll-margin-top:90px}
+
+/* ═══ THEME TOGGLE ═══ */
+.theme-toggle{width:40px;height:40px;border-radius:50%;border:1px solid var(--border-bright);
+  background:var(--bg-card);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  font-size:18px;transition:.2s;flex-shrink:0}
+.theme-toggle:hover{border-color:var(--brand);color:var(--brand)}
+
+/* ═══ NAV（纯平无 blur，与首页 / 文章页一致） ═══ */
+.nav{position:sticky;top:0;left:0;right:0;z-index:200;background:var(--bg);
+  border-bottom:1px solid var(--border);backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.nav.scrolled{box-shadow:0 1px 0 var(--border)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;align-items:center;
+  justify-content:space-between;height:64px;gap:20px}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-logo{font-size:16px;font-weight:700;color:var(--brand);text-decoration:none;letter-spacing:-.3px;white-space:nowrap}
+.nav-logo span{color:var(--fg-dim);font-weight:400;font-size:12px;margin-left:5px}
+.nav-links{display:flex;gap:26px;align-items:center;list-style:none}
+.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;
+  position:relative;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--brand)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:2px;
+  background:var(--brand);border-radius:1px}
+
+/* ═══ HERO ═══ */
+.hero{max-width:var(--maxw);margin:0 auto;padding:96px 28px 36px;text-align:left}
+.hero-inner{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.hero-left{flex:1;min-width:260px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;
+  background:var(--brand-bg);color:var(--brand);font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:20px;font-family:var(--font-mono)}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(30px,4.5vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px;color:var(--fg)}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.hero-desc{color:var(--fg-muted);font-size:15px;max-width:480px;line-height:1.65}
+.hero-right{display:flex;gap:32px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:28px;font-weight:700;color:var(--brand);letter-spacing:-.5px;font-family:var(--font-mono)}
+.hero-stat .label{font-size:12px;color:var(--fg-dim);margin-top:2px}
+
+/* ═══ LIST WRAP / HEADER ═══ */
+.list-wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px 80px}
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-top:8px}
+.list-header h2{font-size:15px;font-weight:600;color:var(--fg);letter-spacing:.02em}
+.list-header h2 span{color:var(--fg-dim);font-weight:400;margin-left:6px}
+
+/* ═══ ARTICLE ITEM（craft 横排 + notes 竖排，共用一套类） ═══ */
+.article-item{display:block;padding:24px 0;border-bottom:1px solid var(--border);text-decoration:none;
+  color:inherit;transition:background .2s;border-radius:12px;margin:0 -12px;padding-left:12px;padding-right:12px}
+.article-item:hover{background:var(--brand-bg)}
+.article-item:last-child{border-bottom:none}
+.article-item:has(.article-thumb){display:flex;gap:24px;align-items:center}
+
+.article-thumb{flex-shrink:0;width:260px;height:170px;border-radius:12px;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,#1c1c22,#2a2a33)}
+.article-thumb img,.article-thumb .thumb-img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.article-item:hover .thumb-img{transform:scale(1.04)}
+.article-thumb .cat-tag{position:absolute;top:10px;left:10px;padding:3px 10px;border-radius:8px;
+  background:var(--bg-elevated);color:var(--brand);font-size:11px;font-weight:600;
+  border:1px solid var(--border-bright);backdrop-filter:none;-webkit-backdrop-filter:none}
+.article-thumb.fallback{display:flex;align-items:center;justify-content:center;font-size:48px}
+
+.article-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.article-info .ai-date{font-size:12px;color:var(--fg-dim);font-weight:500;font-family:var(--font-mono)}
+.article-info h3{font-size:18px;font-weight:600;line-height:1.45;color:var(--fg);transition:color .2s;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.article-item:hover h3{color:var(--brand)}
+.article-info .ai-excerpt{font-size:13.5px;color:var(--fg-muted);line-height:1.65;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.article-info .ai-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--fg-dim);margin-top:auto}
+.article-info .ai-meta .ai-tags{display:flex;gap:6px;flex-wrap:wrap}
+.article-info .ai-meta .ai-tags span{padding:2px 9px;border-radius:6px;background:var(--brand-bg);
+  color:var(--brand);font-size:11px;font-weight:500}
+.article-item .meta-row{display:flex;gap:12px;font-size:12px;color:var(--fg-dim);margin-top:auto}
+
+/* Featured（craft 大图卡：每第 4 篇） */
+.article-item.featured{flex-direction:column;gap:0;padding:0;border-bottom:1px solid var(--border);
+  margin-bottom:8px;padding-bottom:28px}
+.article-item.featured .article-thumb{width:100%;height:360px}
+.article-item.featured .article-info{padding:20px 4px 0;gap:10px}
+.article-item.featured .article-info h3{font-size:24px;-webkit-line-clamp:3}
+.article-item.featured .article-info .ai-excerpt{font-size:14.5px;-webkit-line-clamp:3}
+
+/* Notes 专用字段（无缩略图，纯文字块） */
+.article-item .item-title{font-size:18px;font-weight:600;color:var(--fg);letter-spacing:-.3px;margin-bottom:8px;
+  transition:color .2s;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.article-item:hover .item-title{color:var(--brand)}
+.article-item .item-excerpt{font-size:14px;color:var(--fg-muted);line-height:1.6;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.article-item .item-meta{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--fg-dim);flex-wrap:wrap}
+.article-item .item-meta .item-date{display:flex;align-items:center;gap:4px;font-family:var(--font-mono)}
+.article-item .item-meta .item-tags{display:flex;gap:6px;flex-wrap:wrap}
+.article-item .item-meta .item-tag{padding:2px 9px;border-radius:6px;background:var(--brand-bg);
+  color:var(--brand);font-size:11px;font-weight:500}
+
+/* ═══ DAILY DIGEST（6 大板块配色，保留每日轮换） ═══ */
+.accent-0{--accent:#30d158;--accent-light:rgba(48,209,88,.10);--accent-medium:rgba(48,209,88,.16);--accent-border:rgba(48,209,88,.22);--accent-shadow:rgba(48,209,88,.12)}
+.accent-1{--accent:#2997ff;--accent-light:rgba(41,151,255,.10);--accent-medium:rgba(41,151,255,.16);--accent-border:rgba(41,151,255,.22);--accent-shadow:rgba(41,151,255,.12)}
+.accent-2{--accent:#ff9f0a;--accent-light:rgba(255,159,10,.10);--accent-medium:rgba(255,159,10,.16);--accent-border:rgba(255,159,10,.22);--accent-shadow:rgba(255,159,10,.12)}
+.accent-3{--accent:#bf5af2;--accent-light:rgba(191,90,242,.10);--accent-medium:rgba(191,90,242,.16);--accent-border:rgba(191,90,242,.22);--accent-shadow:rgba(191,90,242,.12)}
+.accent-4{--accent:#e54d66;--accent-light:rgba(229,77,102,.10);--accent-medium:rgba(229,77,102,.16);--accent-border:rgba(229,77,102,.22);--accent-shadow:rgba(229,77,102,.12)}
+.accent-5{--accent:#0ea5a1;--accent-light:rgba(14,165,161,.10);--accent-medium:rgba(14,165,161,.16);--accent-border:rgba(14,165,161,.22);--accent-shadow:rgba(14,165,161,.12)}
+.accent-6{--accent:#ff6482;--accent-light:rgba(255,100,130,.10);--accent-medium:rgba(255,100,130,.16);--accent-border:rgba(255,100,130,.22);--accent-shadow:rgba(255,100,130,.12)}
+
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-social{background:rgba(41,151,255,.10);color:#2997ff}
+.tag-auto{background:rgba(255,159,10,.10);color:#e08600}
+.tag-tech{background:rgba(191,90,242,.10);color:#bf5af2}
+.tag-elderly{background:rgba(200,122,30,.12);color:#c87a1e}
+.tag-psych{background:rgba(229,77,102,.10);color:#e54d66}
+.tag-book{background:rgba(90,200,120,.12);color:#2ea043}
+
+.digest-item{display:block;padding:24px 28px;border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--bg-card);text-decoration:none;color:inherit;transition:all .25s cubic-bezier(.16,1,.3,1);
+  margin-bottom:16px;position:relative;overflow:hidden}
+.digest-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);opacity:0;transition:opacity .25s}
+.digest-item:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--accent-shadow);border-color:var(--accent-border)}
+.digest-item:hover::before{opacity:1}
+.digest-date-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.digest-date{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.03em;font-family:var(--font-mono)}
+.digest-weekday{font-size:12px;color:var(--fg-dim);font-weight:400;margin-left:8px}
+.digest-status{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+.status-latest{background:var(--accent-light);color:var(--accent)}
+.digest-title{font-size:18px;font-weight:700;line-height:1.4;color:var(--fg);margin-bottom:10px;transition:color .2s}
+.digest-item:hover .digest-title{color:var(--accent)}
+.digest-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:12px}
+.digest-preview-tag{font-size:11.5px;color:var(--fg-muted);padding:6px 10px;border-radius:8px;background:var(--bg);
+  display:flex;align-items:center;gap:5px}
+.digest-preview-tag .tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.digest-arrow{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);font-weight:600;
+  margin-top:12px;transition:gap .2s}
+.digest-item:hover .digest-arrow{gap:8px}
+
+/* ═══ EMPTY / LOADING ═══ */
+.empty{text-align:center;padding:80px 32px;color:var(--fg-muted)}
+.empty h3{font-size:20px;margin-bottom:8px;color:var(--fg)}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:.5}
+.empty-state{text-align:center;padding:80px 20px;color:var(--fg-muted)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:16px;opacity:.4}
+.empty-state .empty-text{font-size:15px}
+.loading{text-align:center;padding:60px 20px;color:var(--fg-muted);font-size:14px}
+
+/* ═══ FOOTER（与首页风格一致：左版权 + 右切换） ═══ */
+.footer{max-width:var(--maxw);margin:0 auto;padding:24px 28px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--fg-dim);font-size:13px}
+.footer p{margin:0}
+.footer a{color:var(--brand);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ═══ REVEAL（daily-digest 滚动渐入，由 IntersectionObserver 触发） ═══ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ NOTES 入场动画（保留原观感） ═══ */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.list-notes .article-item{animation:fadeInUp .5s ease-out both}
+.list-notes .article-item:nth-child(2){animation-delay:.06s}
+.list-notes .article-item:nth-child(3){animation-delay:.12s}
+.list-notes .article-item:nth-child(4){animation-delay:.18s}
+.list-notes .article-item:nth-child(5){animation-delay:.24s}
+.list-notes .article-item:nth-child(6){animation-delay:.30s}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  .hero-inner{flex-direction:column;gap:24px;align-items:flex-start}
+  .article-item:has(.article-thumb){flex-direction:column;gap:14px;align-items:stretch}
+  .article-thumb{width:100%;height:200px}
+  .article-item.featured .article-thumb{height:220px}
+  .digest-preview{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px;gap:12px}
+  .nav-right{gap:14px}
+  .nav-links{gap:16px}
+  .hero{padding:80px 16px 28px}
+  .list-wrap{padding:0 16px 60px}
+  .hero-right{gap:20px}
+  .article-item.featured .article-info h3{font-size:19px}
+  .digest-item{padding:18px 16px}
+  .digest-title{font-size:16px}
+  .digest-preview{grid-template-columns:1fr}
+  .footer{padding:20px 16px}
+}

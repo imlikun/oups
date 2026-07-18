@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript 异步编程：从回调地狱到 async/await</title>
+<meta name="description" content="回调用嵌套、Promise 链式调用、async/await 语法糖——JavaScript 异步编程的演进过程，以及每种写法的适用场景。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>JavaScript 异步编程：从回调地狱到 async/await</h1>
+  <p class="hero-desc">回调用嵌套、Promise 链式调用、async/await 语法糖——JavaScript 异步编程的演进过程，以及每种写法的适用场景。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-05-18</span><span class="dot"></span>
+    <span>约 842 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+<div class="hero-cover"><img src="/uploads/js-async-await-guide-header.webp" alt="JavaScript 异步编程：从回调地狱到 async/await" loading="eager" /></div>
+<article class="article-body">
+<h2>回调函数的问题</h2>
+<p>早期 JS 异步全靠回调，嵌套一多就陷入「回调地狱」：</p>
+<pre><code class="language-javascript">getUser(id, function(user) {
+  getPosts(user.id, function(posts) {
+    getComments(posts[0].id, function(comments) {
+      console.log(comments);
+    });
+  });
+});
+</code></pre>
+<h2>Promise 的改进</h2>
+<p>Promise 把嵌套改为链式：</p>
+<pre><code class="language-javascript">getUser(id)
+  .then(user =&gt; getPosts(user.id))
+  .then(posts =&gt; getComments(posts[0].id))
+  .then(comments =&gt; console.log(comments))
+  .catch(err =&gt; console.error(err));
+</code></pre>
+<h2>async/await 的乐趣</h2>
+<p>async/await 让异步代码看起来像同步代码：</p>
+<pre><code class="language-javascript">async function loadData(id) {
+  try {
+    const user = await getUser(id);
+    const posts = await getPosts(user.id);
+    const comments = await getComments(posts[0].id);
+    console.log(comments);
+  } catch (err) {
+    console.error(err);
+  }
+}
+</code></pre>
+<h2>总结</h2>
+<ul>
+<li>回调：旧项目维护时可能还会见到，新项目别用</li>
+<li>Promise：需要并行处理（Promise.all）时用</li>
+<li>async/await：大多数场景下最推荐</li>
+</ul>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+<div class="tag-cloud">
+  <a href="#">JavaScript</a>
+  <a href="#">异步</a>
+  <a href="#">Promise</a>
+  <a href="#">async/await</a>
+</div>
+
+</article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤的创意探索 · <a href="/">appin.site</a></p>
+</footer>
+
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+
+</body>
+</html>

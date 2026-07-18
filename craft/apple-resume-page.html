@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页</title>
+<meta name="description" content="从零开始，用纯前端技术搭建一个具有液态玻璃视觉效果和 Canvas 粒子动画的交互式简历页面，分享一下技术选型和踩坑经验。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页</h1>
+  <p class="hero-desc">从零开始，用纯前端技术搭建一个具有液态玻璃视觉效果和 Canvas 粒子动画的交互式简历页面，分享一下技术选型和踩坑经验。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-06-01</span><span class="dot"></span>
+    <span>约 634 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+<div class="hero-cover"><img src="/uploads/apple-resume-page-header.webp" alt="我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页" loading="eager" /></div>
+<article class="article-body">
+<h2>为什么要做这个项目</h2>
+<p>做了 8 年房地产营销策划，我一直对技术和设计有浓厚的兴趣。去年开始自学前端开发，这个简历页面算是我的第一个完整作品。</p>
+<p>选择 Apple 发布会风格，是因为我一直很喜欢 Apple 的极简设计语言——大量留白、精致的排版、克制的配色。我希望自己的简历也能传递出这种质感。</p>
+<h2>技术选型</h2>
+<p>整个页面用<strong>纯 HTML + CSS + 原生 JavaScript</strong> 完成，没有使用任何框架。选这个技术栈有两个原因：</p>
+<ol>
+<li><strong>零依赖</strong>——不需要 npm、webpack、框架，一个文件就能跑</li>
+<li><strong>学习价值</strong>——亲自写每一行代码，才能真正理解 CSS Grid、Intersection Observer、Canvas API 的底层原理</li>
+</ol>
+<h2>几个有意思的技术点</h2>
+<h3>Bento Grid 栅格布局</h3>
+<p>用 CSS Grid 实现不规则卡片排列，每张卡片可以跨 1-4 列，形成杂志般的排版节奏。</p>
+<h3>液态玻璃效果</h3>
+<p>用 <code>backdrop-filter</code> 实现毛玻璃质感，配合高光线叠加增加层次。</p>
+<h3>Canvas 粒子动画</h3>
+<p>Hero 区域做了两个 Canvas 动效——多彩涟漪和时空穿梭，可以一键切换。</p>
+<h2>最大的收获</h2>
+<p>不是技术本身，而是<strong>跨界学习的信心</strong>。从一个完全不懂代码的策划，到能独立做出一个视觉效果不错的页面，这个过程证明了：只要方法对路、持续投入，跨行学习并没有想象中那么难。</p>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+<div class="tag-cloud">
+  <a href="#">HTML</a>
+  <a href="#">CSS</a>
+  <a href="#">JavaScript</a>
+  <a href="#">Canvas</a>
+  <a href="#">个人项目</a>
+</div>
+
+</article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤的创意探索 · <a href="/">appin.site</a></p>
+</footer>
+
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+
+</body>
+</html>

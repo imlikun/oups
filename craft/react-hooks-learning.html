@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React 学习笔记：从 Class 组件到 Hooks 的思维转变</title>
+<meta name="description" content="刚开始学 React 时最困惑的就是函数式组件和 Hooks 的设计哲学。整理一下自己踩过的坑和最终理解。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>React 学习笔记：从 Class 组件到 Hooks 的思维转变</h1>
+  <p class="hero-desc">刚开始学 React 时最困惑的就是函数式组件和 Hooks 的设计哲学。整理一下自己踩过的坑和最终理解。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-06-03</span><span class="dot"></span>
+    <span>约 300 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+<div class="hero-cover"><img src="/uploads/react-hooks-learning-header.webp" alt="React 学习笔记：从 Class 组件到 Hooks 的思维转变" loading="eager" /></div>
+<article class="article-body">
+<h2>为什么 Hooks 让我困惑</h2>
+<p>刚接触 React 的时候，教程用的还是 Class 组件。后来社区全面转向函数式组件 + Hooks，一下子很不适应。</p>
+<p>最大的困惑是：没有 <code>this</code> 了，状态怎么管理？没有生命周期了，副作用怎么处理？</p>
+<h2>核心理解</h2>
+<p><strong>useState</strong>——就是声明一个"会触发重渲染的变量"。
+<strong>useEffect</strong>——就是"当某些值变化时，执行这个副作用"。
+<strong>useRef</strong>——就是一个"跨渲染周期保持不变的盒子"。</p>
+<h2>下一步</h2>
+<p>继续深入 Context + useReducer 做全局状态管理，以及 React Router 做页面路由。</p>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+<div class="tag-cloud">
+  <a href="#">React</a>
+  <a href="#">Hooks</a>
+  <a href="#">学习笔记</a>
+  <a href="#">JavaScript</a>
+</div>
+
+</article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤的创意探索 · <a href="/">appin.site</a></p>
+</footer>
+
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+
+</body>
+</html>

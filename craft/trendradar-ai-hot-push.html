@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信</title>
+<meta name="description" content="TrendRadar 就像一个「AI 私人编辑」——每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到微信/钉钉/飞书上。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信</h1>
+  <p class="hero-desc">TrendRadar 就像一个「AI 私人编辑」——每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到微信/钉钉/飞书上。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-06-12</span><span class="dot"></span>
+    <span>约 1,953 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+<div class="hero-cover"><img src="/uploads/trendradar-header.webp" alt="AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信" loading="eager" /></div>
+<article class="article-body">
+<h2>一句话说明</h2>
+<p>TrendRadar 就像一个「AI 私人编辑」——它每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到你的微信/钉钉/飞书上。你不用再一个个 App 去刷，打开聊天窗口就能看完当天最重要的新闻。</p>
+<h2>这是什么？</h2>
+<p>想象你订了一份「私人报纸」：</p>
+<ul>
+<li>❌ 传统方式：每天买 35 份报纸，每份翻一遍，信息量爆炸但真正想看的只有 3 条</li>
+<li>✅ TrendRadar：一个编辑帮你盯着这 35 份报纸，只剪下你感兴趣的那几条，装进信封送到你桌上</li>
+</ul>
+<h2>项目基本信息</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>名称</td>
+<td>TrendRadar（趋势雷达）</td>
+</tr>
+<tr>
+<td>GitHub</td>
+<td>https://github.com/sansan0/TrendRadar</td>
+</tr>
+<tr>
+<td>Star</td>
+<td>59.3k+</td>
+</tr>
+<tr>
+<td>许可证</td>
+<td>GPL-3.0</td>
+</tr>
+<tr>
+<td>当前版本</td>
+<td>v6.9.1（主程序）/ MCP v4.1.0</td>
+</tr>
+</tbody>
+</table>
+<h2>核心能力</h2>
+<h3>1. 全网热点聚合</h3>
+<p>默认监控 11 个平台：微博、抖音、知乎、B站热搜、今日头条、百度热搜、华尔街见闻、财联社、澎湃新闻、凤凰网、贴吧。基于 newsnow 数据源，可扩展到 35+ 个平台。</p>
+<h3>2. 三种智能推送模式</h3>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>工作方式</th>
+<th>适合谁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>daily（当日汇总）</td>
+<td>推送当天所有匹配新闻</td>
+<td>管理者/普通人</td>
+</tr>
+<tr>
+<td>current（当前榜单）</td>
+<td>推送当前榜单上的匹配新闻</td>
+<td>自媒体/创作者</td>
+</tr>
+<tr>
+<td>incremental（增量监控）</td>
+<td>只推新增的，绝不重复</td>
+<td>投资者/交易员</td>
+</tr>
+</tbody>
+</table>
+<h3>3. 精准关键词筛选</h3>
+<p>6 种筛选语法：</p>
+<ul>
+<li>普通词：基础匹配，包含任一即捕获</li>
+<li><code>+词汇</code>：必须词，必须同时包含</li>
+<li><code>!词汇</code>：过滤词，排除干扰</li>
+<li><code>@数字</code>：数量限制</li>
+<li><code>/pattern/</code>：正则表达式</li>
+<li><code>=文本</code>：备注显示名称</li>
+</ul>
+<h3>4. AI 分析简报（v5.0.0+）</h3>
+<p>让 AI 先读完所有新闻，生成一份深度分析报告，包含：</p>
+<ol>
+<li><strong>核心热点态势</strong>——今天最热门的几个话题</li>
+<li><strong>舆论风向争议</strong>——有争议的观点和讨论</li>
+<li><strong>异动与弱信号</strong>——还没上热搜但值得关注的信息</li>
+<li><strong>研判策略建议</strong>——基于以上分析的行动建议</li>
+</ol>
+<p>支持 100+ AI 提供商（DeepSeek、OpenAI、Gemini、Claude、Ollama 本地等）。</p>
+<h3>5. MCP 对话分析（v3.0.0+）</h3>
+<p>基于 MCP 协议，可以在 Claude Desktop、Cherry Studio 等 AI 客户端里直接和 TrendRadar 对话分析，支持 21+ 种智能分析工具。</p>
+<h2>安装部署</h2>
+<h3>方案一：GitHub Actions（30秒部署）</h3>
+<ol>
+<li>Fork 仓库</li>
+<li>配置 Secrets（WEWORK_WEBHOOK_URL 等）</li>
+<li>手动运行一次 workflow 测试</li>
+<li>⚠️ 每 7 天需要「签到」一次续期</li>
+</ol>
+<h3>方案二：Docker 部署（推荐）</h3>
+<pre><code class="language-bash"># 1. 克隆项目
+git clone https://github.com/sansan0/TrendRadar.git
+cd TrendRadar
+
+# 2. 配置推送渠道和关键词
+nano docker/.env
+nano config/frequency_words.txt
+
+# 3. 启动
+docker compose up -d
+
+# 4. 查看状态
+docker exec -it trendradar python manage.py status
+</code></pre>
+<h2>推送渠道</h2>
+<p>支持 9+ 渠道：企业微信、个人微信、飞书、钉钉、Telegram、邮件、ntfy、Bark、Slack。</p>
+<p>企业微信配置最简单：进入群聊 → 消息推送 → 添加机器人 → 复制 Webhook 地址 → 配置到 <code>WEWORK_WEBHOOK_URL</code>。</p>
+<h2>关键链接</h2>
+<ul>
+<li>📦 GitHub 仓库：https://github.com/sansan0/TrendRadar</li>
+<li>🎛️ 在线配置编辑器：https://sansan0.github.io/TrendRadar/</li>
+<li>🐳 Docker 镜像：wantcat/trendradar</li>
+</ul>
+<hr />
+<blockquote>
+<p>💡 如果你每天要刷多个 App 看热点，或者需要追踪特定关键词（品牌/行业/竞品），这个项目可以帮你省大量时间。</p>
+</blockquote>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+<div class="tag-cloud">
+  <a href="#">AI</a>
+  <a href="#">舆情监控</a>
+  <a href="#">开源</a>
+  <a href="#">自动化</a>
+  <a href="#">GitHub</a>
+  <a href="#">工具</a>
+</div>
+
+</article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤的创意探索 · <a href="/">appin.site</a></p>
+</footer>
+
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+
+</body>
+</html>

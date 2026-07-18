@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeScript 入门：给 JavaScript 项目加上类型安全</title>
+<meta name="description" content="从 JavaScript 切换到 TypeScript 最大的障碍不是语法，而是思维方式的转变。分享一下我是如何克服初期挫折感的。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/craft/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/craft/" class="active">技艺录</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>CRAFT — 技术笔记</div>
+  <h1>TypeScript 入门：给 JavaScript 项目加上类型安全</h1>
+  <p class="hero-desc">从 JavaScript 切换到 TypeScript 最大的障碍不是语法，而是思维方式的转变。分享一下我是如何克服初期挫折感的。</p>
+  <div class="hero-meta">
+    <span>李坤</span><span class="dot"></span>
+    <span>2026-05-10</span><span class="dot"></span>
+    <span>约 419 字</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<div class="page">
+<div class="hero-cover"><img src="/uploads/typescript-intro-header.webp" alt="TypeScript 入门：给 JavaScript 项目加上类型安全" loading="eager" /></div>
+<article class="article-body">
+<h2>为什么要学 TypeScript</h2>
+<p>写了半年纯 JavaScript 之后，最痛苦的是：
+- 函数参数传错类型，运行时才报错
+- 重构时不知道哪些地方用了某个接口
+- 团队协作时，不知道同事写的函数的参数格式</p>
+<p>TypeScript 能在<strong>编译阶段</strong>就发现这些问题。</p>
+<h2>渐进式迁移策略</h2>
+<p>不需要一次性把所有文件改成 <code>.ts</code>/<code>.tsx</code>：</p>
+<ol>
+<li>先给新文件用 TypeScript</li>
+<li>旧文件慢慢改，改一个是一个</li>
+<li>用 <code>// @ts-ignore</code> 临时跳过难改的部分</li>
+</ol>
+<h2>最有用的几个特性</h2>
+<ul>
+<li><strong>interface</strong>：定义数据结构，重构时自动提示</li>
+<li><strong>泛型</strong>：写可复用函数时非常有用</li>
+<li><strong>类型推导</strong>：其实不用每个变量都写类型，TS 能自动推导</li>
+</ul>
+<h2>踩过的坑</h2>
+<p><code>tsconfig.json</code> 的配置项非常多，一开始建议用 <code>strict: true</code>，不要为了省事关掉类型检查。</p>
+
+<a href="/craft/" class="back-link">返回技艺录</a>
+
+<div class="tag-cloud">
+  <a href="#">TypeScript</a>
+  <a href="#">JavaScript</a>
+  <a href="#">类型安全</a>
+  <a href="#">学习笔记</a>
+</div>
+
+</article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 李坤的创意探索 · <a href="/">appin.site</a></p>
+</footer>
+
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='◐'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+
+</body>
+</html>
