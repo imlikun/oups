@@ -1,0 +1,47 @@
+name: Deploy appin.site → ECS
+
+# 触发：任何 push 到 main（含 TRAE 的改动、以及 ai-radar 每日自动提交）都会自动上线
+# 也可在 Actions 页面手动点 Run workflow 触发
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout 仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 安装 ECS 部署私钥（仅存在于 GitHub Secret，不落仓库）
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.ECS_DEPLOY_KEY }}" > ~/.ssh/id_ed25519_appin_server
+          chmod 600 ~/.ssh/id_ed25519_appin_server
+          ssh-keyscan -p 22 101.133.136.140 >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: 同步到 ECS 线上目录 /www/wwwroot/appin.site
+        run: |
+          rsync -az \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='_wechat' \
+            --exclude='outputs' \
+            --exclude='craft_fixed_verify.png' \
+            --exclude='design_tokens_preview.png' \
+            --exclude='pxid_blog_test_local.png' \
+            --exclude='pxid_home_zh_screenshot.png' \
+            --exclude='pxid_zh_screenshot.png' \
+            --exclude='test_pxid_*.png' \
+            -e "ssh -i ~/.ssh/id_ed25519_appin_server -o StrictHostKeyChecking=no" \
+            ./ root@101.133.136.140:/www/wwwroot/appin.site/
+
+      - name: 上线自检
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://www.appin.site/)
+          echo "首页状态码: $code"
+          [ "$code" = "200" ] && echo "✅ 部署成功" || echo "⚠️ 首页返回非 200，请检查"
