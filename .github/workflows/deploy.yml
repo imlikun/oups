@@ -25,8 +25,9 @@ jobs:
           ssh-keyscan -p 22 101.133.136.140 >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: 同步到 ECS 线上目录 /www/wwwroot/appin.site
+        # 用 tar 管道（仅依赖 tar + ssh，ubuntu-latest 自带，无需装 rsync）
         run: |
-          rsync -az \
+          tar czf - \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='_wechat' \
@@ -37,8 +38,9 @@ jobs:
             --exclude='pxid_home_zh_screenshot.png' \
             --exclude='pxid_zh_screenshot.png' \
             --exclude='test_pxid_*.png' \
-            -e "ssh -i ~/.ssh/id_ed25519_appin_server -o StrictHostKeyChecking=no" \
-            ./ root@101.133.136.140:/www/wwwroot/appin.site/
+            . \
+          | ssh -i ~/.ssh/id_ed25519_appin_server -o StrictHostKeyChecking=no root@101.133.136.140 \
+              "cd /www/wwwroot/appin.site && tar xzf -"
 
       - name: 上线自检
         run: |
