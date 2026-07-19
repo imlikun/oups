@@ -86,33 +86,11 @@ nav .actions{display:flex;align-items:center;gap:12px}
 /* ═══ HERO — Bento identity card ═══ */
 .hero{position:relative;padding:var(--s8) var(--s5) var(--s7);overflow:hidden}
 .hero::before{
-  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    linear-gradient(var(--border) 1px,transparent 1px),
-    linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:46px 46px;
-  -webkit-mask-image:radial-gradient(circle at 72% 26%, #000 0%, transparent 70%);
-  mask-image:radial-gradient(circle at 72% 26%, #000 0%, transparent 70%);
-  opacity:.55
+  content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;
+  background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);
+  pointer-events:none
 }
-.hero::after{
-  content:'';position:absolute;top:-160px;right:-80px;width:560px;height:560px;z-index:0;
-  background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);pointer-events:none
-}
-.hero-inner{max-width:var(--maxw);margin:0 auto;position:relative;z-index:1}
-/* Hero 状态条（等宽 + 脉冲点） */
-.hero-kicker{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--brand);
-  padding:7px 15px;border:1px solid var(--border-bright);border-radius:99px;
-  background:var(--brand-bg);margin-bottom:var(--s5)
-}
-.hero-kicker .pulse{width:7px;height:7px;border-radius:50%;background:var(--brand);position:relative;flex-shrink:0}
-.hero-kicker .pulse::after{
-  content:'';position:absolute;inset:0;border-radius:50%;background:var(--brand);
-  animation:pulse-ring 1.8s ease-out infinite
-}
-@keyframes pulse-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}
+.hero-inner{max-width:var(--maxw);margin:0 auto;position:relative}
 .hero-grid{
   display:grid;grid-template-columns:1fr 380px;gap:var(--s6);align-items:start;
 }
@@ -168,17 +146,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 }
 .section-title{font-size:clamp(24px,3vw,34px);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--s5);line-height:1.2}
 .section-desc{font-size:16px;color:var(--fg-muted);max-width:560px;line-height:1.7;margin-bottom:var(--s6)}
-/* 章节大编号 + 标题区 + 滚动揭示 */
-.section-head{display:flex;align-items:flex-start;gap:var(--s5);margin-bottom:var(--s5)}
-.section-index{
-  font-family:var(--font-mono);font-weight:700;font-size:clamp(28px,4.5vw,54px);
-  line-height:.82;color:var(--brand);opacity:.32;flex-shrink:0;user-select:none;letter-spacing:-.03em
-}
-.section-head-main{min-width:0}
 .section-title .hl{color:var(--brand)}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
 /* ═══ AFFILIATE / TOOLS SECTION ═══ */
 .tools-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -384,7 +352,6 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
   .content-grid{grid-template-columns:1fr}
   .content-card{grid-column:1/-1}
-  .section-head{gap:var(--s3)}
 }
 </style>
 </head>
@@ -414,7 +381,6 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <div class="hero-grid">
   <!-- left: headline + cta -->
   <div class="hero-left">
-    <div class="hero-kicker"><span class="pulse"></span>在线 · 接受新项目咨询</div>
     <h1>我是 <span class="hl">李坤</span><br>实战派技术人 · <span class="hl">品牌操盘手</span></h1>
     <p class="hero-tagline">
       懂代码的产品人，懂获客的技术人。写能落地的实战教程，做有信任感的出海品牌。
@@ -445,7 +411,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 
 <!-- ═════ STATS RIBBON ═════ -->
 <section class="stats-section">
-<div class="stats-grid reveal">
+<div class="stats-grid">
   <div class="stat-card"><div class="stat-num">47</div><div class="stat-label">技艺录实战</div></div>
   <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">开源项目拆解</div></div>
   <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">随笔思考</div></div>
@@ -456,15 +422,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ LATEST CONTENT (mixed stream) ═════ -->
 <section id="content" class="section content-section">
 <div class="section-inner">
-  <div class="section-head reveal">
-    <div class="section-index">01</div>
-    <div class="section-head-main">
-      <div class="section-label">◉ 最新内容</div>
-      <h2 class="section-title"><span class="hl">真实</span>写出来的，不是搬运</h2>
-      <p class="section-desc">技艺录、随笔、视频、每日阅读——所有栏目的最新一篇都汇到这里。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 自动渲染，你只管更新，首页自动跟着变。</p>
-    </div>
-  </div>
-  <div class="content-grid reveal" id="content-grid"></div>
+  <div class="section-label">◉ 最新内容</div>
+  <h2 class="section-title"><span class="hl">真实</span>写出来的，不是搬运</h2>
+  <p class="section-desc">技艺录、随笔、视频、每日阅读——所有栏目的最新一篇都汇到这里。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 自动渲染，你只管更新，首页自动跟着变。</p>
+  <div class="content-grid" id="content-grid"></div>
   <div class="view-all">
     <a href="/craft/">技艺录 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
     <a href="/notes/">随笔 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
@@ -477,15 +438,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ TOOLS / AFFILIATE ═════ -->
 <section id="tools" class="section tools-section">
 <div class="section-inner">
-  <div class="section-head reveal">
-    <div class="section-index">02</div>
-    <div class="section-head-main">
-      <div class="section-label">◆ 推荐工具</div>
-      <h2 class="section-title">我每天在用的 <span class="hl">AI 编程</span>工具</h2>
-      <p class="section-desc">下面每一个我都写过实战教程、真金白银付过费。链接可能含返佣，但推荐只因好用。</p>
-    </div>
-  </div>
-  <div class="tools-grid reveal">
+  <div class="section-label">◆ 推荐工具</div>
+  <h2 class="section-title">我每天在用的 <span class="hl">AI 编程</span>工具</h2>
+  <p class="section-desc">下面每一个我都写过实战教程、真金白银付过费。链接可能含返佣，但推荐只因好用。</p>
+  <div class="tools-grid">
     <article class="tool-card">
       <span class="tool-badge">广告·返佣</span>
       <div class="tool-icon">⚡</div>
@@ -518,15 +474,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ DIGITAL PRODUCTS ═════ -->
 <section id="products" class="section products-section">
 <div class="section-inner">
-  <div class="section-head reveal">
-    <div class="section-index">03</div>
-    <div class="section-head-main">
-      <div class="section-label">◈ 数字产品</div>
-      <h2 class="section-title">一次购买，持续更新</h2>
-      <p class="section-desc">把我的实战经验打包成册，省你自己踩坑的时间。</p>
-    </div>
-  </div>
-  <div class="products-grid reveal">
+  <div class="section-label">◈ 数字产品</div>
+  <h2 class="section-title">一次购买，持续更新</h2>
+  <p class="section-desc">把我的实战经验打包成册，省你自己踩坑的时间。</p>
+  <div class="products-grid">
     <article class="prod-card prod-featured">
       <span class="prod-type">电子书 · PDF</span>
       <h3 class="prod-title">AI 编程工具实战（2026）</h3>
@@ -561,15 +512,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ WORKS / 我的作品 (宠急帮) ═════ -->
 <section id="works" class="section works-section">
 <div class="section-inner">
-  <div class="section-head reveal">
-    <div class="section-index">04</div>
-    <div class="section-head-main">
-      <div class="section-label">✦ 我的作品</div>
-      <h2 class="section-title">自己做的<span class="hl">小产品</span></h2>
-      <p class="section-desc">从 0 到 1 动手做的独立产品，点进去看完整站点。</p>
-    </div>
-  </div>
-  <div class="works-grid reveal">
+  <div class="section-label">✦ 我的作品</div>
+  <h2 class="section-title">自己做的<span class="hl">小产品</span></h2>
+  <p class="section-desc">从 0 到 1 动手做的独立产品，点进去看完整站点。</p>
+  <div class="works-grid">
     <a class="work-card" href="https://chongjida.appin.site">
       <div class="work-cover"><span class="wc-mark">宠急帮</span><span class="wc-sub">宠物上门服务</span></div>
       <div class="work-body">
@@ -586,15 +532,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ AI RADAR (aihot) ═════ -->
 <section id="radar" class="section radar-section">
 <div class="section-inner">
-  <div class="section-head reveal">
-    <div class="section-index">05</div>
-    <div class="section-head-main">
-      <div class="section-label">🔥 AI 雷达</div>
-      <h2 class="section-title">每天自动刷的 <span class="hl">AI</span> 圈大事</h2>
-      <p class="section-desc">自动采集 + 人工精选的 AI 行业动态，每天更新。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 动态注入。</p>
-    </div>
-  </div>
-  <div class="radar-grid reveal">
+  <div class="section-label">🔥 AI 雷达</div>
+  <h2 class="section-title">每天自动刷的 <span class="hl">AI</span> 圈大事</h2>
+  <p class="section-desc">自动采集 + 人工精选的 AI 行业动态，每天更新。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 动态注入。</p>
+  <div class="radar-grid">
 
     <a class="radar-card" href="#">
       <div class="radar-head"><span class="radar-src">↗ OpenAI</span><span>2 小时前</span></div>
@@ -628,7 +569,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ CONSULT CTA ═════ -->
 <section class="section consult-section">
 <div class="section-inner">
-  <div class="consult-box reveal">
+  <div class="consult-box">
     <h2>有项目想聊？</h2>
     <p>个人站搭建 · 出海品牌轻咨询 · 技术方案评审<br>邮件直达，通常 24h 内回复。</p>
     <div class="pills">
@@ -736,17 +677,6 @@ function renderLatest(){
   }).catch(function(e){console.warn('content.json 加载失败',e);});
 }
 renderLatest();
-
-/* ═══ 滚动揭示动效（IntersectionObserver + reduced-motion 兜底） ═══ */
-function revealOnScroll(){
-  var els=document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
-  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-  els.forEach(function(e){io.observe(e);});
-}
-revealOnScroll();
 </script>
 </body>
 </html>
