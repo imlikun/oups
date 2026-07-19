@@ -1,6 +1,7 @@
 /* ════════════════════════════════════════════════════════════════
-   FX ENGINE · appin.site 全局动效引擎（提取自 deepseek c38eba 蓝本）
-   鼠标光晕 / 心跳 logo / 点击涟漪 / 背景粒子 / 系统日志 / glitch / 入场
+   FX ENGINE · appin.site 全局动效引擎（提取自 deepseek c38eba / c8248f 蓝本）
+   鼠标光晕 / 网格偏移 / 心跳 logo / 拖尾 / 点击涟漪 / 背景粒子 /
+   系统日志 / glitch / 入场 / 页面切换 / 打字机 / 终端模拟器
    全部尊重 prefers-reduced-motion
    ════════════════════════════════════════════════════════════════ */
 (function () {
@@ -11,6 +12,11 @@
   var isLight = function () {
     return document.body.classList.contains('light');
   };
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+    });
+  }
 
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
@@ -37,7 +43,22 @@
     }, { passive: true });
   }
 
-  /* ── 2. 心跳指示灯（注入到 .logo）── */
+  /* ── 2. 动态网格偏移（写 --grid-offset）── */
+  function initGrid() {
+    var grid = document.createElement('div');
+    grid.className = 'fx-grid';
+    grid.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(grid);
+    if (reduce) return;
+    var root = document.documentElement;
+    window.addEventListener('mousemove', function (e) {
+      var x = (e.clientX / window.innerWidth - 0.5) * 12;
+      var y = (e.clientY / window.innerHeight - 0.5) * 12;
+      root.style.setProperty('--grid-offset', x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px');
+    }, { passive: true });
+  }
+
+  /* ── 3. 心跳指示灯（注入到 .logo）── */
   function initHeartbeat() {
     var logos = document.querySelectorAll('.logo');
     logos.forEach(function (logo) {
@@ -49,7 +70,43 @@
     });
   }
 
-  /* ── 3. 点击涟漪 ── */
+  /* ── 4. 鼠标拖尾光点 ── */
+  function initTrail() {
+    if (reduce) return;
+    var canvas = document.createElement('canvas');
+    canvas.id = 'fx-trail';
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var pts = [];
+    var MAX = 24;
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize);
+    resize();
+    window.addEventListener('mousemove', function (e) {
+      pts.push({ x: e.clientX, y: e.clientY });
+      if (pts.length > MAX) pts.shift();
+    }, { passive: true });
+    document.addEventListener('mouseleave', function () { pts = []; ctx.clearRect(0, 0, canvas.width, canvas.height); });
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var n = pts.length;
+      for (var i = 0; i < n; i++) {
+        var a = (i / n) * 0.35 + 0.05;
+        var r = 1.5 + (i / n) * 2.5;
+        ctx.beginPath();
+        ctx.arc(pts[i].x, pts[i].y, r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,255,65,' + a + ')';
+        ctx.shadowColor = '#00FF41';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  /* ── 5. 点击涟漪 ── */
   function initRipple() {
     if (reduce) return;
     var layer = document.createElement('div');
@@ -76,7 +133,7 @@
     });
   }
 
-  /* ── 4. 背景粒子（仅暗色 + 非 reduce）── */
+  /* ── 6. 背景粒子（仅暗色 + 非 reduce）── */
   function initParticles() {
     if (reduce) return;
     if (isLight()) return; // 浅色主题下不可见，跳过以省性能
@@ -136,7 +193,7 @@
     if (obs) obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 
-  /* ── 5. 系统日志（自动注入到 footer，周期轮换）── */
+  /* ── 7. 系统日志（自动注入到 footer，周期轮换）── */
   function initSystemLog() {
     var logs = [
       '[OK] systemd-networkd.service - Network Configuration',
@@ -178,7 +235,7 @@
     setInterval(rotate, 8000 + Math.random() * 7000);
   }
 
-  /* ── 6. Glitch（周期性故障闪烁 [data-fx-glitch]）── */
+  /* ── 8. Glitch（周期性故障闪烁 [data-fx-glitch]）── */
   function initGlitch() {
     if (reduce) return;
     var targets = document.querySelectorAll('[data-fx-glitch]');
@@ -192,7 +249,7 @@
     });
   }
 
-  /* ── 7. 入场动画（[data-fx-rise] 与 .hero 子元素，错峰）── */
+  /* ── 9. 入场动画（[data-fx-rise] 与 .hero 子元素，错峰）── */
   function initEntrance() {
     if (reduce) return;
     var els = [];
@@ -205,13 +262,105 @@
     });
   }
 
+  /* ── 10. 页面切换：内容上浮 + 淡入 + 缩放（每次加载即入场）── */
+  function initPageEnter() {
+    if (reduce) return;
+    var nodes = document.querySelectorAll(
+      'body > main, body > .container, body > .page, body > section, body > footer, body > .site-footer'
+    );
+    if (!nodes.length) {
+      var alt = document.querySelector('main, .page, .container, section, footer');
+      if (alt) nodes = [alt];
+    }
+    nodes.forEach(function (n) { n.classList.add('fx-page-enter'); });
+  }
+
+  /* ── 11. 打字机（[data-fx-typewriter]，文本来自 data-text）── */
+  function initTypewriter() {
+    var els = document.querySelectorAll('[data-fx-typewriter]');
+    els.forEach(function (el) {
+      var text = el.getAttribute('data-text') || el.textContent;
+      if (reduce) { el.textContent = text; return; }
+      el.textContent = '';
+      var i = 0;
+      function tick() {
+        if (i <= text.length) {
+          el.textContent = text.slice(0, i);
+          i++;
+          setTimeout(tick, 120);
+        }
+      }
+      setTimeout(tick, 700);
+    });
+  }
+
+  /* ── 12. 终端模拟器（注入 footer，支持 help/whoami/date/./change/echo/clear）── */
+  function initTerminal() {
+    var footer = document.querySelector('footer, .site-footer');
+    if (!footer) return;
+    var box = document.createElement('div');
+    box.className = 'fx-terminal';
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML =
+      '<div class="fx-terminal-output">&gt; 欢迎来到 appin 终端，输入 <span style="color:var(--accent-cyan)">help</span> 查看命令。</div>' +
+      '<div class="fx-terminal-input-row"><span class="prompt">$</span>' +
+      '<input class="fx-terminal-input" type="text" placeholder="输入命令..." autocomplete="off" spellcheck="false"></div>';
+    var sl = footer.querySelector('.fx-system-log');
+    if (sl) sl.after(box); else footer.appendChild(box);
+
+    var input = box.querySelector('.fx-terminal-input');
+    var out = box.querySelector('.fx-terminal-output');
+    function append(text, isOut) {
+      var line = document.createElement('div');
+      line.className = 'line';
+      line.innerHTML = isOut
+        ? '<span style="color:var(--accent-green)">→</span> ' + text
+        : '<span style="color:var(--fg-muted)">&gt;</span> ' + text;
+      out.appendChild(line);
+      out.scrollTop = out.scrollHeight;
+      while (out.children.length > 50) out.removeChild(out.firstChild);
+    }
+    input.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var cmd = input.value.trim();
+      input.value = '';
+      if (!cmd) return;
+      append(esc(cmd), false);
+      var lower = cmd.toLowerCase();
+      var reply;
+      if (lower === 'help') {
+        reply = '可用命令: <span style="color:var(--accent-cyan)">whoami</span>, <span style="color:var(--accent-cyan)">date</span>, <span style="color:var(--accent-cyan)">./change</span>, <span style="color:var(--accent-cyan)">echo &lt;text&gt;</span>, <span style="color:var(--accent-cyan)">clear</span>';
+      } else if (lower === 'whoami') {
+        reply = '你是 appin，一个用代码改变世界的极客。';
+      } else if (lower === './change') {
+        reply = '正在执行变革... 其实已经改变了。';
+      } else if (lower === 'date') {
+        reply = esc(new Date().toString());
+      } else if (lower === 'clear') {
+        out.innerHTML = '';
+        return;
+      } else if (lower.indexOf('echo ') === 0) {
+        reply = esc(cmd.slice(5));
+      } else {
+        reply = '命令 "<span style="color:var(--accent-cyan)">' + esc(cmd) + '</span>" 未找到，输入 <span style="color:var(--accent-cyan)">help</span> 查看帮助。';
+      }
+      append(reply, true);
+    });
+    box.addEventListener('click', function () { input.focus(); });
+  }
+
   ready(function () {
     initGlow();
+    initGrid();
     initHeartbeat();
+    initTrail();
     initRipple();
     initParticles();
     initSystemLog();
     initGlitch();
     initEntrance();
+    initPageEnter();
+    initTypewriter();
+    initTerminal();
   });
 })();

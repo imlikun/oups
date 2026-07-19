@@ -1,14 +1,28 @@
 /* ════════════════════════════════════════════════════════════════
-   FX LAYER · appin.site 全局动效层（提取自 deepseek c38eba 蓝本）
-   作用：鼠标光晕 / 心跳 logo / 点击涟漪 / glitch / 系统日志 / 入场
+   FX LAYER · appin.site 全局动效层（提取自 deepseek c38eba / c8248f 蓝本）
+   鼠标光晕 / 网格偏移 / 心跳 logo / 拖尾 / 涟漪 / 粒子 / glitch /
+   系统日志 / 入场 / 页面切换 / 卡片悬停 / 终端模拟器
    加载顺序：请置于 article.css / list.css / 内联样式 之后
    ════════════════════════════════════════════════════════════════ */
 
 :root{
   --mouse-x: 50%;
   --mouse-y: 50%;
+  --grid-offset: 0px, 0px;
   --fx-glow-dark: rgba(0,255,65,.07);
   --fx-glow-light: rgba(0,168,46,.10);
+}
+
+/* 提升内容层级，使其位于 fixed 动效层（网格/粒子/拖尾 z-index:0）之上 */
+nav,
+main,
+footer,
+.container,
+.page,
+.site-footer,
+section{
+  position: relative;
+  z-index: 1;
 }
 
 /* ── 1. 鼠标追踪光晕（body 背景层，fixed 跟随视口，不遮挡内容）── */
@@ -22,7 +36,27 @@ body.light{
       var(--fx-glow-light) 0%, transparent 70%);
 }
 
-/* ── 2. 心跳指示灯（自动注入到 .logo）── */
+/* ── 2. 动态网格偏移（JS 写 --grid-offset；鼠标移动产生物理流动感）── */
+.fx-grid{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .5;
+  background-image:
+    linear-gradient(rgba(0,255,65,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,65,.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: translate(var(--grid-offset));
+  transition: transform .15s ease-out;
+}
+body.light .fx-grid{
+  background-image:
+    linear-gradient(rgba(0,168,46,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,168,46,.05) 1px, transparent 1px);
+}
+
+/* ── 3. 心跳指示灯（自动注入到 .logo）── */
 .heartbeat-dot{
   display:inline-block;
   width:9px; height:9px;
@@ -37,7 +71,13 @@ body.light{
   50%{transform:scale(1.18);opacity:1;box-shadow:0 0 26px var(--accent-green),0 0 50px rgba(0,255,65,.3)}
 }
 
-/* ── 3. 点击涟漪 ── */
+/* ── 4. 鼠标拖尾光点（#fx-trail canvas，JS 绘制）── */
+#fx-trail{
+  position:fixed; inset:0;
+  pointer-events:none; z-index:0;
+}
+
+/* ── 5. 点击涟漪 ── */
 .ripple-layer{
   position:fixed; inset:0;
   pointer-events:none; z-index:9999;
@@ -57,7 +97,7 @@ body.light{
   100%{width:120px;height:120px;opacity:0}
 }
 
-/* ── 4. Glitch 文字故障（JS 周期性给 [data-fx-glitch] 加 .fx-glitch）── */
+/* ── 6. Glitch 文字故障（JS 周期性给 [data-fx-glitch] 加 .fx-glitch）── */
 .fx-glitch{
   animation:fx-glitch .15s steps(2,end) 3;
 }
@@ -69,7 +109,7 @@ body.light{
   100%{transform:translate(0);text-shadow:0 0 10px var(--accent-green);color:var(--accent-green)}
 }
 
-/* ── 5. 系统日志栏（footer 内，fx.js 注入/填充）── */
+/* ── 7. 系统日志栏（footer 内，fx.js 注入/填充）── */
 .fx-system-log{
   margin-top:24px;
   padding:12px 16px;
@@ -102,18 +142,7 @@ body.light{
   100%{opacity:1;transform:translateX(0)}
 }
 
-/* ── 6. 入场动画（fx.js 给 [data-fx-rise] / .hero>* 加 .fx-rise）── */
-.fx-rise{
-  opacity:0;
-  transform:translateY(26px) scale(.985);
-  filter:blur(2px);
-  animation:fx-rise .55s cubic-bezier(.16,1,.3,1) forwards;
-}
-@keyframes fx-rise{
-  to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
-}
-
-/* ── 7. 背景粒子 canvas（fx.js 仅在暗色 + 非 reduce 下创建）── */
+/* ── 8. 背景粒子 canvas（fx.js 仅在暗色 + 非 reduce 下创建）── */
 #fx-particles{
   position:fixed; inset:0;
   pointer-events:none;
@@ -122,13 +151,164 @@ body.light{
   mix-blend-mode:screen;
 }
 
-/* ── 8. 减少动态偏好：全局门控（兜底，主站已有同款规则）── */
+/* ── 9. 链接下划线滑入 ── */
+nav a, .nav-links a, .quick-nav a{
+  position:relative;
+}
+nav a::after, .nav-links a::after, .quick-nav a::after{
+  content:'';
+  position:absolute; left:0; bottom:-2px;
+  height:2px; width:0;
+  background:var(--accent-green);
+  transition:width .25s ease;
+}
+nav a:hover::after, .nav-links a:hover::after, .quick-nav a:hover::after{
+  width:100%;
+}
+.article-body a, .content a, .page a{
+  color:var(--accent-cyan);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease;
+}
+.article-body a:hover, .content a:hover, .page a:hover{
+  border-bottom-color:var(--accent-cyan);
+}
+
+/* ── 10. 卡片悬停上浮 + 发光 ── */
+.card,
+.article-item,
+.content-card,
+.stat-card,
+.blog-item,
+.project-card,
+.product-item{
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.card:hover,
+.article-item:hover,
+.content-card:hover,
+.stat-card:hover,
+.blog-item:hover,
+.project-card:hover,
+.product-item:hover{
+  transform:translateY(-5px);
+  border-color:var(--accent-green);
+  box-shadow:0 0 24px rgba(0,255,65,.12);
+}
+
+/* ── 11. 按钮悬停上浮 + 发光 ── */
+.btn-primary, .btn-secondary, .btn-ghost{
+  transition:transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
+}
+.btn-primary:hover, .btn-secondary:hover, .btn-ghost:hover{
+  transform:translateY(-2px);
+}
+.btn-primary:hover{
+  box-shadow:0 6px 18px rgba(0,255,65,.25);
+}
+.btn-ghost:hover{
+  background:var(--accent-dim);
+  border-color:var(--accent-green);
+  color:var(--accent-green);
+  box-shadow:0 0 20px rgba(0,255,65,.12);
+}
+
+/* ── 12. 标签悬停发光 ── */
+.tag{
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.tag:hover{
+  border-color:var(--accent-cyan);
+  box-shadow:0 0 12px rgba(0,212,255,.18);
+}
+
+/* ── 13. 页面切换：内容上浮 + 淡入 + 缩放入场 ── */
+.fx-page-enter{
+  animation:fx-page-enter .55s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fx-page-enter{
+  0%{opacity:0;transform:translateY(26px) scale(.99);filter:blur(2px)}
+  100%{opacity:1;transform:none;filter:none}
+}
+
+/* ── 14. 打字机（./change 等 [data-fx-typewriter]）── */
+.fx-typed{
+  color:var(--accent-green);
+  text-shadow:0 0 18px rgba(0,255,65,.2);
+  white-space:nowrap;
+}
+.fx-cmd{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:18px 0 4px;
+  font-family:var(--font-mono);
+  font-size:18px;
+}
+.fx-cmd .prompt{
+  color:var(--accent-green);
+  font-weight:600;
+}
+
+/* ── 15. 终端模拟器（footer 注入）── */
+.fx-terminal{
+  margin-top:20px;
+  border-top:1px solid var(--border);
+  padding-top:14px;
+  width:100%;
+}
+.fx-terminal-output{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--fg-muted);
+  min-height:54px;
+  max-height:120px;
+  overflow-y:auto;
+  padding:4px 0;
+  scroll-behavior:smooth;
+}
+.fx-terminal-output .line{
+  padding:2px 0;
+  word-break:break-word;
+}
+.fx-terminal-input-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+}
+.fx-terminal-input-row .prompt{
+  color:var(--accent-green);
+  font-weight:600;
+  font-size:16px;
+}
+.fx-terminal-input{
+  flex:1;
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  color:var(--fg);
+  padding:6px 12px;
+  border-radius:4px;
+  font-family:var(--font-mono);
+  font-size:14px;
+  outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.fx-terminal-input:focus{
+  border-color:var(--accent-green);
+  box-shadow:0 0 15px rgba(0,255,65,.1);
+}
+
+/* ── 16. 减少动态偏好：全局门控（兜底，主站已有同款规则）── */
 @media (prefers-reduced-motion: reduce){
   .heartbeat-dot,
   .ripple,
   .fx-glitch,
   .fx-rise,
-  #fx-particles{
+  #fx-particles,
+  .fx-page-enter,
+  .fx-grid{
     animation:none !important;
     transition:none !important;
   }
