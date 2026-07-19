@@ -102,8 +102,13 @@ def load_articles():
 
 def make_article_card(a):
     cat = a.get('category', 'craft')
-    link = a.get('link') or ('/' + cat + '/' + (a.get('slug') or a.get('id')) + '.html')
+    # 目录映射：content.json 中的 video 分类对应 video-lab 目录
+    link_cat = 'video-lab' if cat == 'video' else cat
+    link = a.get('link') or ('/' + link_cat + '/' + (a.get('slug') or a.get('id')) + '.html')
     img = a.get('image') or ''
+    # 图片路径标准化：非 URL 的相对路径统一补前导斜杠
+    if img and not re.match(r'^https?://', img, re.I) and not img.startswith('/'):
+        img = '/' + img
     date = a.get('date', '')
     tags = a.get('tags', [])[:2]
     tag_html = ''.join('<span class="item-tag">' + esc(t) + '</span>' for t in tags) if tags else ''
@@ -148,12 +153,16 @@ def generate_content_page(cat, cfg, articles):
     with open(path, 'r', encoding='utf-8') as f:
         raw = f.read().strip()
     head = raw.split('<body', 1)[0]
-    if '/assets/list.css' in head and '</body>' in raw:
+    if '/assets/list.css' in head and '</body>' in raw and 'src="uploads/' not in raw:
         print('skip (already correct):', path)
         return
     head = inject_assets(head)
 
-    cat_articles = [a for a in articles if a.get('category') == cat]
+    # content.json 中的分类名与目录名的映射
+    content_cat = cat
+    if cat == 'video-lab':
+        content_cat = 'video'
+    cat_articles = [a for a in articles if a.get('category') == content_cat]
     cat_articles.sort(key=lambda x: x.get('date', ''), reverse=True)
 
     if cat_articles:
