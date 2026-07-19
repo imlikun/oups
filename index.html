@@ -330,6 +330,9 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 .theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
 body.light .theme-toggle .ic-moon{display:none}
 body.light .theme-toggle .ic-sun{display:block}
+.caret{display:inline-block;color:var(--brand);font-weight:400;margin-left:2px;animation:caret-blink 1.05s steps(1) infinite}
+@keyframes caret-blink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.caret{display:none}}
 
 /* ═══ footer columns (full channel index) ═══ */
 .footer-cols{display:flex;gap:var(--s6);flex-wrap:wrap}
@@ -389,7 +392,7 @@ body.light .theme-toggle .ic-sun{display:block}
 <div class="hero-grid">
   <!-- left: headline + cta -->
   <div class="hero-left">
-    <h1>我是 <span class="hl">李坤</span><br>独立开发者 · <span class="hl">把想法做成产品</span></h1>
+    <h1>我是 <span class="hl">李坤</span><br><span id="typed"></span><span class="caret" aria-hidden="true">▋</span></h1>
     <p class="hero-tagline">
       懂代码的产品人，懂获客的技术人。写能落地的实战教程，做有信任感的出海品牌。
       <br><span style="color:var(--brand)">懂技术 + 稍微懂产品 = 扎实的基本盘。</span>
@@ -684,6 +687,26 @@ function renderLatest(){
     grid.innerHTML = top.length ? (cardHTML(top[0],true) + top.slice(1).map(function(a){return cardHTML(a,false);}).join('')) : '';
   }).catch(function(e){console.warn('content.json 加载失败',e);});
 }
+/* ═══ Hero 打字机效果（终端光标，循环切换，尊重 reduced-motion） ═══ */
+(function(){
+  var el=document.getElementById('typed'); if(!el) return;
+  var phrases=['独立开发者','把想法做成产品','独立开发者 · 把想法做成产品'];
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){el.textContent=phrases[0];return;}
+  var pi=0,ci=0,deleting=false;
+  function tick(){
+    var full=phrases[pi];
+    if(!deleting){
+      el.textContent=full.slice(0,++ci);
+      if(ci>=full.length){deleting=true;return setTimeout(tick,1700);}
+    }else{
+      el.textContent=full.slice(0,--ci);
+      if(ci<=0){deleting=false;pi=(pi+1)%phrases.length;return setTimeout(tick,380);}
+    }
+    setTimeout(tick, deleting?34:62);
+  }
+  tick();
+})();
 renderLatest();
 </script>
 </body>
