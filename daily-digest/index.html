@@ -78,6 +78,17 @@
 <script>
 (function(){try{if(localStorage.getItem('theme')==='light')document.body.classList.add('light');}catch(e){}})();
 function toggleTheme(){var b=document.body;b.classList.toggle('light');try{localStorage.setItem('theme',b.classList.contains('light')?'light':'dark');}catch(e){}}
+/* reveal 入场：页面加载后按顺序给卡片加 visible，避免 fx.js 未处理 reveal 导致卡片不可见 */
+(function(){
+  function run(){
+    var items=document.querySelectorAll('.reveal');
+    items.forEach(function(el,i){
+      setTimeout(function(){el.classList.add('visible');}, 80*i+80);
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
+  else run();
+})();
 </script>
 </body>
 </html>
