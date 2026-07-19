@@ -199,6 +199,31 @@ nav .actions{display:flex;align-items:center;gap:12px}
 }
 .prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(184,255,60,.25)}
 
+/* ═══ WORKS / 作品展示 (宠急帮等独立产品) ═══ */
+.works-section{}
+.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,360px));gap:var(--s4);justify-content:start}
+.work-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
+  overflow:hidden;transition:.25s;display:flex;flex-direction:column;
+  text-decoration:none;color:inherit
+}
+.work-card:hover{border-color:var(--border-bright);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.work-cover{
+  aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  background:
+    radial-gradient(circle at 30% 20%, var(--brand-bg), transparent 60%),
+    linear-gradient(135deg, var(--bg-elevated), rgba(255,184,0,.06));
+  border-bottom:1px solid var(--border)
+}
+.work-cover .wc-mark{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--brand);letter-spacing:.02em}
+.work-cover .wc-sub{font-family:var(--font-mono);font-size:11px;color:var(--fg-dim);letter-spacing:.08em}
+.work-body{padding:var(--s5);display:flex;flex-direction:column;flex:1}
+.work-type{font-size:11px;font-weight:700;color:var(--fg-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)}
+.work-title{font-size:19px;font-weight:700;margin-bottom:8px}
+.work-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s4)}
+.work-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none}
+.work-link:hover{text-decoration:underline}
+
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
@@ -317,7 +342,9 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     <a class="nav-link" href="#content">内容</a>
     <a class="nav-link" href="#tools">工具箱<span class="badge-aff">返佣</span></a>
     <a class="nav-link" href="#products">产品<span class="badge-new">NEW</span></a>
-    <a class="nav-link" href="https://chongjida.appin.site">宠急帮</a>
+    <a class="nav-link" href="/pxid2/">PXID 国际</a>
+    <a class="nav-link" href="/pxid3/">PXID 国内</a>
+    <a class="nav-link" href="#works">作品</a>
     <a class="nav-link" href="#radar">AI 雷达</a>
   </div>
   <div class="actions">
@@ -460,6 +487,26 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 </div>
 </section>
 
+<!-- ═════ WORKS / 我的作品 (宠急帮) ═════ -->
+<section id="works" class="section works-section">
+<div class="section-inner">
+  <div class="section-label">✦ 我的作品</div>
+  <h2 class="section-title">自己做的小产品</h2>
+  <p class="section-desc">从 0 到 1 动手做的独立产品，点进去看完整站点。</p>
+  <div class="works-grid">
+    <a class="work-card" href="https://chongjida.appin.site">
+      <div class="work-cover"><span class="wc-mark">宠急帮</span><span class="wc-sub">宠物上门服务</span></div>
+      <div class="work-body">
+        <div class="work-type">微信小程序 · 独立产品</div>
+        <h3 class="work-title">宠急帮 · 上门喂宠</h3>
+        <p class="work-desc">宠物上门喂养 / 看护预约小程序，深色 Bento 风格，含登录、联系、分享。后端已迁至阿里云自建。</p>
+        <span class="work-link">访问小程序 →</span>
+      </div>
+    </a>
+  </div>
+</div>
+</section>
+
 <!-- ═════ AI RADAR (aihot) ═════ -->
 <section id="radar" class="section radar-section">
 <div class="section-inner">
@@ -529,11 +576,17 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     <div class="footer-col">
       <h4>关于</h4>
       <a href="#content">最新内容</a>
-      <a href="https://chongjida.appin.site">宠急帮</a>
+      <a href="#works">我的作品</a>
       <a href="#radar">AI 雷达</a>
       <a href="#tools">推荐工具</a>
       <a href="#products">数字产品</a>
       <a href="/affiliate-disclaimer.html">广告与返佣政策</a>
+    </div>
+    <div class="footer-col">
+      <h4>产品 / 站点</h4>
+      <a href="https://chongjida.appin.site" target="_blank" rel="noopener">宠急帮</a>
+      <a href="/pxid2/" target="_blank" rel="noopener">PXID 国际版</a>
+      <a href="/pxid3/" target="_blank" rel="noopener">PXID 国内版</a>
     </div>
     <div class="footer-col">
       <h4>关注</h4>
