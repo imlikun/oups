@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-修复 appin.site 5 个栏目列表页：原本 index.html 只有 <head> 没有 <body>，导致页面空白。
+修复 Appin.site 5 个栏目列表页：原本 index.html 只有 <head> 没有 <body>，导致页面空白。
 本脚本保留现有 SEO head，补全 body，并接入统一的 list.css + fx.css/fx.js 皮肤与动效。
 """
 import json
@@ -43,7 +43,7 @@ CATS = {
 }
 
 NAV = '''<nav class="nav"><div class="nav-inner">
-  <a href="/" class="nav-logo">appin<span>.site</span></a>
+  <a href="/" class="nav-logo">Appin<span>.site</span></a>
   <div class="nav-right">
     <div class="nav-links">
       <a href="/craft/">技艺录</a>
@@ -65,7 +65,7 @@ function toggleTheme(){var b=document.body;b.classList.toggle('light');try{local
 </script>'''
 
 FOOTER = '''<footer class="footer">
-  <p>© 2026 李坤 · <a href="/">appin.site</a></p>
+  <p>© 2026 李坤 · <a href="/">Appin.site</a></p>
   <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
     <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -229,4 +229,4 @@ if __name__ == '__main__':
     for cat in ['craft', 'notes', 'video-lab']:
         generate_content_page(cat, CATS[cat], articles)
     generate_daily_digest_page(CATS['daily-digest'])
-    generate_ai_radar_page(CATS['ai-radar'])
+    # ai-radar 由 update.py 流水线管理（注入 ai-data JSON + 前端渲染），本脚本不重写，避免覆盖其内容

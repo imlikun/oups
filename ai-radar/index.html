@@ -5,69 +5,469 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 新闻雷达 — 每日 AI 资讯精选</title>
 <meta name="description" content="AI 新闻雷达，每天自动从 AI HOT 精选全球 AI 资讯。覆盖模型发布、产品更新、行业动态、论文研究、技巧观点五大板块。">
-<!--SEO-->
-<link rel="icon" href="/favicon.ico">
-<link rel="canonical" href="https://www.appin.site/ai-radar/">
-<meta property="og:type" content="website">
 <meta property="og:title" content="AI 新闻雷达 — 每日 AI 资讯精选">
-<meta property="og:description" content="AI 新闻雷达，每天自动从 AI HOT 精选全球 AI 资讯。覆盖模型发布、产品更新、行业动态、论文研究、技巧观点五大板块。">
-<meta property="og:url" content="https://www.appin.site/ai-radar/">
-<meta property="og:site_name" content="Appin.site">
-<meta property="og:locale" content="zh_CN">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AI 新闻雷达 — 每日 AI 资讯精选">
-<meta name="twitter:description" content="AI 新闻雷达，每天自动从 AI HOT 精选全球 AI 资讯。覆盖模型发布、产品更新、行业动态、论文研究、技巧观点五大板块。">
-<meta property="og:image" content="https://www.appin.site/assets/og-cover.png">
-<meta name="twitter:image" content="https://www.appin.site/assets/og-cover.png">
+<meta property="og:description" content="每天自动更新，精选全球 AI 资讯。模型发布、产品更新、行业动态、论文研究、技巧观点一站浏览。">
+<meta property="og:type" content="website">
+<style>
+/* ═════════════════════════════════════
+   AI 新闻雷达 — Cyber UI v2
+   深空紫 · 玻璃拟态 · 点阵背景
+   ═════════════════════════════════════ */
+:root {
+  --bg: #06060e;
+  --card-bg: rgba(255,255,255,0.025);
+  --card-hover: rgba(255,255,255,0.045);
+  --text: #e8e8ed;
+  --text-secondary: #9898a8;
+  --text-tertiary: #646478;
+  --accent: #7c3aed;
+  --border: rgba(255,255,255,0.05);
+  --border-hover: rgba(255,255,255,0.1);
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px;
+  --cat-model: #818cf8; --cat-model-bg: rgba(129,140,248,0.12);
+  --cat-product: #c084fc; --cat-product-bg: rgba(192,132,252,0.12);
+  --cat-industry: #34d399; --cat-industry-bg: rgba(52,211,153,0.12);
+  --cat-paper: #fbbf24; --cat-paper-bg: rgba(251,191,36,0.12);
+  --cat-tip: #f472b6; --cat-tip-bg: rgba(244,114,182,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.72;font-size:15px;
+  -webkit-font-smoothing:antialiased;position:relative;
+}
+/* Dot grid + ambient glow */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.09;
+  background-image:radial-gradient(rgba(124,58,237,0.16) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+body::after{
+  content:'';position:fixed;top:-20%;right:-10%;width:70%;height:70%;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(124,58,237,0.05),transparent 70%);
+}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/list.css">
-<link rel="stylesheet" href="/assets/fx.css">
-<script src="/assets/fx.js" defer></script>
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(6,6,14,0.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,0.04);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;height:52px;}
+.nav-logo{font-size:14px;font-weight:600;color:var(--text);text-decoration:none;
+  display:flex;align-items:center;gap:7px;opacity:0.72;transition:opacity 0.2s;}
+.nav-logo:hover{opacity:1}
+.nav-logo svg{width:17px;height:17px;stroke:var(--accent)}
+.nav-title{font-size:12px;font-weight:500;color:var(--text-tertiary);letter-spacing:0.03em}
+.nav-pulse{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-tertiary)}
+.nav-pulse .dot{width:6px;height:6px;border-radius:50%;background:#34d399;
+  box-shadow:0 0 8px rgba(52,211,153,0.4);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+
+/* ── Hero ── */
+.hero{position:relative;z-index:1;padding:140px 0 84px;text-align:center;overflow:hidden;
+  background:linear-gradient(180deg,rgba(124,58,237,0.07) 0%,transparent 65%);}
+.hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:640px;height:440px;
+  background:radial-gradient(ellipse at center,rgba(124,58,237,0.14),transparent 70%);
+  pointer-events:none;}
+.hero::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.06;
+  background-image:radial-gradient(rgba(255,255,255,0.15) 0.5px,transparent 0.5px);
+  background-size:26px 26px;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;
+  padding:6px 18px;border-radius:20px;background:rgba(124,58,237,0.15);
+  border:1px solid rgba(124,58,237,0.25);color:rgba(255,255,255,0.85);
+  font-size:11px;font-weight:600;letter-spacing:0.06em;margin-bottom:28px;
+  position:relative;z-index:1}
+.hero-badge .bdot{width:6px;height:6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 8px var(--accent)}
+.hero h1{font-size:clamp(30px,6vw,54px);font-weight:700;letter-spacing:-1.8px;
+  line-height:1.12;max-width:700px;margin:0 auto 18px;position:relative;z-index:1;
+  background:linear-gradient(180deg,#f0e6ff 0%,#c4b5fd 40%,#a78bfa 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-desc{color:#a1a1b8;font-size:15px;max-width:500px;margin:0 auto 36px;
+  line-height:1.7;position:relative;z-index:1}
+.hero-stats{display:flex;justify-content:center;gap:52px;position:relative;z-index:1}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:44px;font-weight:700;letter-spacing:-1.5px;
+  font-variant-numeric:tabular-nums;font-family:"SF Mono","Fira Code","Menlo",monospace;
+  color:#e0d8f0}
+.hero-stat .num.purple{background:linear-gradient(135deg,#c084fc,#818cf8,#00d4ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-stat .label{font-size:11px;color:var(--text-tertiary);margin-top:6px;letter-spacing:0.04em}
+
+/* ── Filters ── */
+.filters-wrap{position:relative;z-index:1;display:flex;justify-content:center;gap:6px;
+  padding:0 28px 48px;flex-wrap:wrap;}
+.f-chip{padding:8px 20px;border-radius:22px;border:1px solid rgba(255,255,255,0.05);
+  background:rgba(255,255,255,0.02);color:var(--text-secondary);font-size:12px;font-weight:500;
+  cursor:pointer;transition:all 0.25s;user-select:none;white-space:nowrap;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.f-chip:hover{border-color:rgba(255,255,255,0.1);color:#d4d4dc;background:rgba(255,255,255,0.035)}
+.f-chip.active{background:rgba(124,58,237,0.12);border-color:rgba(124,58,237,0.3);
+  color:#c4b5fd;box-shadow:0 0 20px rgba(124,58,237,0.06)}
+.f-chip .count{font-size:10px;margin-left:4px;opacity:0.5}
+
+/* ── Grid ── */
+.grid{position:relative;z-index:1;max-width:1200px;margin:0 auto;
+  padding:0 28px 80px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:14px;}
+.card{background:var(--card-bg);border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,0.04);padding:24px 26px;
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+  cursor:pointer;position:relative;display:flex;flex-direction:column;gap:16px;
+  overflow:hidden;text-decoration:none;color:inherit;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+/* category accent left-bar */
+.card::before{content:'';position:absolute;top:12px;left:0;bottom:12px;width:2px;
+  border-radius:0 2px 2px 0;opacity:0.35;transition:opacity 0.3s,width 0.3s}
+.card:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,0.45),
+  0 0 0 1px rgba(255,255,255,0.04) inset;border-color:rgba(255,255,255,0.07);background:var(--card-hover)}
+.card:hover::before{opacity:1;width:3px}
+/* category color mApping */
+.card.cat-model::before{background:#818cf8}
+.card.cat-product::before{background:#c084fc}
+.card.cat-industry::before{background:#34d399}
+.card.cat-paper::before{background:#fbbf24}
+.card.cat-tip::before{background:#f472b6}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.card-cat{font-size:10px;font-weight:700;padding:4px 12px;border-radius:12px;
+  letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.cat-model{background:var(--cat-model-bg);color:var(--cat-model)}
+.cat-product{background:var(--cat-product-bg);color:var(--cat-product)}
+.cat-industry{background:var(--cat-industry-bg);color:var(--cat-industry)}
+.cat-paper{background:var(--cat-paper-bg);color:var(--cat-paper)}
+.cat-tip{background:var(--cat-tip-bg);color:var(--cat-tip)}
+.card-score{font-size:11px;color:var(--text-tertiary);white-space:nowrap;
+  display:flex;align-items:center;gap:3px;letter-spacing:0.02em}
+.card-title{font-size:15px;font-weight:600;line-height:1.5;color:#e0e0e8;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-summary{font-size:13px;color:var(--text-secondary);line-height:1.72;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:12px;border-top:1px solid rgba(255,255,255,0.04)}
+.card-source{font-size:11px;color:var(--text-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-time{font-size:11px;color:var(--text-tertiary);white-space:nowrap;flex-shrink:0}
+
+/* ── Empty ── */
+.empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-tertiary)}
+.empty svg{width:52px;height:52px;margin-bottom:18px;opacity:0.18;stroke:var(--text-tertiary)}
+.empty p{font-size:15px}
+
+/* ── Sources ── */
+.sources-section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 28px 80px}
+.sources-divider{width:60px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(124,58,237,0.3),transparent);
+  margin:0 auto 48px}
+.sources-header{text-align:center;margin-bottom:44px}
+.sources-header h2{font-size:26px;font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-bottom:10px}
+.sources-header p{font-size:14px;color:var(--text-tertiary);max-width:520px;margin:0 auto;line-height:1.7}
+.sources-header strong{color:#c4b5fd;font-weight:700}
+.sources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:14px}
+.src-card{background:var(--card-bg);border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,0.04);padding:22px 26px 18px;
+  transition:all 0.25s;position:relative;overflow:hidden;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.src-card:hover{border-color:rgba(255,255,255,0.08);background:var(--card-hover);transform:translateY(-1px)}
+.src-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.src-card.cat-labs::before{background:linear-gradient(90deg,#818cf8,#6366f1)}
+.src-card.cat-cn::before{background:linear-gradient(90deg,#f472b6,#fb923c)}
+.src-card.cat-overseas::before{background:linear-gradient(90deg,#c084fc,#818cf8)}
+.src-card.cat-dev::before{background:linear-gradient(90deg,#34d399,#10b981)}
+.src-card.cat-biz::before{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+.src-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.src-card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:16px;flex-shrink:0}
+.src-card.cat-labs .src-card-icon{background:rgba(129,140,248,0.12);color:#818cf8}
+.src-card.cat-cn .src-card-icon{background:rgba(244,114,182,0.12);color:#f472b6}
+.src-card.cat-overseas .src-card-icon{background:rgba(192,132,252,0.12);color:#c084fc}
+.src-card.cat-dev .src-card-icon{background:rgba(52,211,153,0.12);color:#34d399}
+.src-card.cat-biz .src-card-icon{background:rgba(251,191,36,0.12);color:#fbbf24}
+.src-card-title{font-size:14px;font-weight:600;color:var(--text)}
+.src-card-count{font-size:11px;color:var(--text-tertiary);margin-left:auto}
+.src-tags{display:flex;flex-wrap:wrap;gap:6px}
+.src-tag{display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:14px;font-size:11px;font-weight:500;
+  background:rgba(255,255,255,0.03);color:var(--text-secondary);
+  border:1px solid rgba(255,255,255,0.05);transition:all 0.2s;white-space:nowrap}
+.src-tag:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:#d4d4dc}
+.src-tag .sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.src-card.cat-labs .src-tag .sdot{background:#818cf8}
+.src-card.cat-cn .src-tag .sdot{background:#f472b6}
+.src-card.cat-overseas .src-tag .sdot{background:#c084fc}
+.src-card.cat-dev .src-tag .sdot{background:#34d399}
+.src-card.cat-biz .src-tag .sdot{background:#fbbf24}
+
+/* ── Footer ── */
+.footer{position:relative;z-index:1;text-align:center;padding:40px 0 60px;
+  border-top:1px solid rgba(255,255,255,0.04)}
+.footer p{font-size:12px;color:var(--text-tertiary);line-height:1.8}
+.footer a{color:#a78bfa;text-decoration:none;transition:color 0.2s}
+.footer a:hover{color:#c4b5fd}
+
+/* ── Mobile ── */
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr;padding:0 20px 60px}
+  .sources-grid{grid-template-columns:1fr}
+  .hero{padding:110px 0 56px}
+  .hero-stats{gap:32px}
+  .hero-stat .num{font-size:32px}
+  .sources-section{padding:0 20px 60px}
+  .sources-header h2{font-size:22px}
+}
+
+.card-enter{animation:cardIn 0.45s cubic-bezier(0.16,1,0.3,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
 </head>
-<body class="list-ai-radar">
-<nav class="nav"><div class="nav-inner">
-  <a href="/" class="nav-logo">appin<span>.site</span></a>
-  <div class="nav-right">
-    <div class="nav-links">
+<body>
+<div class="sgn-bar" id="sgnBar">
+  <div class="sgn-inner">
+    <a href="/" class="sgn-logo">李坤</a>
+    <nav class="sgn-links" aria-label="站点导航">
+      <a href="/">首页</a>
       <a href="/craft/">技艺录</a>
+      <a href="/video-lab/">视频剪辑</a>
       <a href="/notes/">随笔</a>
-      <a href="/video-lab/">视频</a>
       <a href="/daily-digest/">每日阅读</a>
-      <a href="/ai-radar/">AI 雷达</a>
-    </div>
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
-      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
+      <a href="/ai-radar/" class="active">AI 雷达</a>
+      <a href="/bigbang/">大爆炸</a>
+      <a href="/neuroflow/">NeuroFlow</a>
+      <a href="/yunlan/">云澜</a>
+      <a href="/pet-paws/">宠迹</a>
+      <a href="/宠急帮/">宠急帮</a>
+    </nav>
   </div>
-</div></nav>
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <span class="hero-badge"><span class="dot"></span>AI 雷达</span>
-      <h1><em>每日 AI 资讯</em></h1>
-      <p class="hero-desc">自动采集 + 人工精选的 AI 行业动态。内容正在同步建设中。</p>
-    </div>
-  </div>
-</section>
-<section class="list-wrap">
-  <div class="empty-state">
-  <div class="empty-icon">📡</div>
-  <div class="empty-text">AI 雷达内容正在同步建设中，敬请期待。</div>
 </div>
+<style>
+.sgn-bar{position:sticky;top:0;z-index:1000;background:rgba(18,18,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;}
+.sgn-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 20px;height:52px;box-sizing:border-box;}
+.sgn-logo{color:#fff;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;letter-spacing:.5px;flex-shrink:0;}
+.sgn-logo:hover{color:#2997ff;}
+.sgn-links{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;flex:1;}
+.sgn-links::-webkit-scrollbar{display:none;}
+.sgn-links a{color:rgba(255,255,255,.62);text-decoration:none;font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:8px;white-space:nowrap;transition:color .18s,background .18s;}
+.sgn-links a:hover{color:#fff;background:rgba(255,255,255,.08);}
+.sgn-links a.active{color:#fff;background:rgba(41,151,255,.22);}
+@media(max-width:640px){.sgn-inner{gap:10px;padding:8px 14px;}.sgn-links a{padding:6px 9px;font-size:13px;}}
+</style>
+
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      李坤
+    </a>
+    <div class="nav-pulse">
+      <span class="dot"></span>
+      自动更新中
+    </div>
+    <div class="nav-title">AI 新闻雷达</div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge"><span class="bdot"></span> DAILY AI DIGEST</div>
+  <h1>今天的 AI 世界<br>发生了什么？</h1>
+  <p class="hero-desc">每天自动从 AI HOT 精选全球人工智能资讯，模型发布、产品更新、行业动态、论文研究、技巧观点，一站浏览。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num" id="totalCount">--</div><div class="label">精选资讯</div></div>
+    <div class="hero-stat"><div class="num purple" id="catCount">--</div><div class="label">覆盖板块</div></div>
+    <div class="hero-stat"><div class="num" id="topSource">--</div><div class="label">资讯来源</div></div>
+  </div>
 </section>
+
+<!-- Filters -->
+<div class="filters-wrap" id="filters">
+  <div class="f-chip active" data-cat="all">全部<span class="count" id="cnt-all">0</span></div>
+  <div class="f-chip" data-cat="ai-models">模型发布<span class="count" id="cnt-models">0</span></div>
+  <div class="f-chip" data-cat="ai-products">产品更新<span class="count" id="cnt-products">0</span></div>
+  <div class="f-chip" data-cat="industry">行业动态<span class="count" id="cnt-industry">0</span></div>
+  <div class="f-chip" data-cat="paper">论文研究<span class="count" id="cnt-paper">0</span></div>
+  <div class="f-chip" data-cat="tip">技巧观点<span class="count" id="cnt-tip">0</span></div>
+</div>
+
+<!-- Grid -->
+<div class="grid" id="grid"></div>
+
+<!-- Sources -->
+<section class="sources-section">
+  <div class="sources-divider"></div>
+  <div class="sources-header">
+    <h2>信源追踪</h2>
+    <p>实时追踪全球 <strong id="srcTotal">34</strong> 个核心 AI 信源，覆盖官方实验室、中文媒体、海外科技媒体、开发者社区与投资机构。</p>
+  </div>
+  <div class="sources-grid" id="sourcesGrid"></div>
+</section>
+
+<!-- Footer -->
 <footer class="footer">
-  <p>© 2026 李坤 · <a href="/">appin.site</a></p>
-  <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
-    <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-  </button>
+  <p>数据来源 <a href="https://aihot.virxact.com" target="_blank">AI HOT</a> · 每天自动更新 · 本站由 WorkBuddy 自动化程序驱动</p>
+  <p style="margin-top:6px;opacity:0.45;">Powered by <a href="https://www.Appin.site" target="_blank">Appin.site</a></p>
 </footer>
+
+<!-- Data -->
+<script id="ai-data" type="application/json">{"count":13,"hasNext":false,"nextCursor":null,"items":[{"id":"cmrp97h7o0020biuxh7pzewro","title":"Apple 起诉 OpenAI：诉讼背后是竞争焦虑还是时机博弈？","title_en":"Apple's plot to crush OpenAI","url":"https://www.theverge.com/podcast/967244/apple-openai-lawsuit-vergecast","permalink":"https://aihot.virxact.com/items/cmrp97h7o0020biuxh7pzewro","source":"The Verge：AI（RSS）","publishedAt":"2026-07-17T17:41:32.000Z","summary":"Apple 对 OpenAI 提起诉讼，指控其存在多项不当行为，尽管许多专家认为部分指控属于行业惯例。此举正值 Apple 发布新版软件公测版（以新 Siri AI 为核心）之际，外界猜测 Apple 究竟是担忧 OpenAI 成为潜在竞争对手，还是想利用 OpenAI 的弱势期获利。","category":"industry","score":75,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrp97h7o0020biuxh7pzewro"}},{"id":"cmrp8wsr10bhobitotnd5hzeq","title":"月之暗面在GTC 2026披露Kimi K2.5技术路线：用MuonClip、线性注意力与Agent Swarm重构三大基础组件","title_en":"杨植麟在 GTC 2026 的一次演讲\"How We Scaled Kimi K2.5\"：月之暗面想把 AI 训练中三个沿用了近十年的基础组件，重新做一遍。优化器 Adam（2014 年）、注意力机制…","url":"https://x.com/dotey/status/2078172517085085951","permalink":"https://aihot.virxact.com/items/cmrp8wsr10bhobitotnd5hzeq","source":"X：宝玉 (@dotey)","publishedAt":"2026-07-17T17:38:33.000Z","summary":"月之暗面CEO杨植麟在GTC 2026演讲中提出用MuonClip优化器替代Adam，可将数据利用效率提升近一倍。同时推出Kimi Linear线性注意力，在百万Token上下文下全面超越全注意力；Agent Swarm已支持300个Agent并行工作。","category":"paper","score":81,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrp8wsr10bhobitotnd5hzeq"}},{"id":"cmrp7cwpv0ay9bitoudhrgt7k","title":"八天四款前沿模型发布，Kimi K3 跻身第三","title_en":"The frontier has opened up： four frontier launches in eight days - Grok 4.5， GPT-5.6， Muse Spark 1.1…","url":"https://x.com/ArtificialAnlys/status/2078165665278730490","permalink":"https://aihot.virxact.com/items/cmrp7cwpv0ay9bitoudhrgt7k","source":"X：Artificial Analysis (@ArtificialAnlys)","publishedAt":"2026-07-17T17:11:19.000Z","summary":"过去八天内，Grok 4.5、GPT-5.6、Muse Spark 1.1 与 Kimi K3 四款前沿模型相继发布，使 Artificial Analysis Intelligence Index 得分超 50 的实验室从 6 月初的 2 家增至 6 家。","category":"tip","score":76,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrp7cwpv0ay9bitoudhrgt7k"}},{"id":"cmrp6rlcn0aq5bitortofd0cp","title":"Sora 2 视频克隆效果惊人，真假难辨","title_en":"nothing comes close to the perfect video deep clone of sora a year later. it catches mine and sams e…","url":"https://x.com/gabriel1/status/2078156277247881438","permalink":"https://aihot.virxact.com/items/cmrp6rlcn0aq5bitortofd0cp","source":"X：Gabriel (@gabriel1)","publishedAt":"2026-07-17T16:34:01.000Z","summary":"一年后，没有任何东西能接近 Sora 的完美视频深度克隆。它捕捉到了我和 Sam 的每一块面部肌肉运动以及我们走路的方式。\n\n如果你从这段关于我或 Sam 的视频中截取一帧，根本无法判断它是真是假。","category":"ai-models","score":78,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrp6rlcn0aq5bitortofd0cp"}},{"id":"cmrp5pfjw0af6bitoudv35oqk","title":"Cursor 评估负责人确认 Claude Fable 5 在 CursorBench 达 72.9% 新高","title_en":"Working at the frontier： How Cursor knew Claude Fable 5 was ready for the hardest 1% of problems","url":"https://claude.com/blog/working-at-the-frontier-cursor","permalink":"https://aihot.virxact.com/items/cmrp5pfjw0af6bitoudv35oqk","source":"Claude：Blog（网页）","publishedAt":"2026-07-17T16:32:51.023Z","summary":"Cursor 的模型评估负责人 Nate Schmidt 发现，Claude Fable 5 在其内部基准 CursorBench 上以 Max effort 模式达到 72.9%，创下新高。该模型在模糊的真实编程任务中表现出全局推理能力，例如在航天模拟器中仅凭一句提示自主规划并成功登月，而此前 Claude Opus 运行 12 小时以上仍无结果。","category":"tip","score":64,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrp5pfjw0af6bitoudv35oqk"}},{"id":"cmrp0qw3s090ybitorwj6diwi","title":"美团LongCat发布LoHoSearch：更难搜索智能体基准","title_en":"BrowseComp went from 30% → 90% in 10 months. Search-agent benchmarks are saturating. So we built Lo…","url":"https://x.com/Meituan_LongCat/status/2078119654632124547","permalink":"https://aihot.virxact.com/items/cmrp0qw3s090ybitorwj6diwi","source":"X：美团 LongCat (@Meituan_LongCat)","publishedAt":"2026-07-17T14:08:29.000Z","summary":"美团LongCat推出LoHoSearch，一个基于762万实体维基百科知识图谱自动生成问题的搜索智能体基准，旨在解决BrowseComp等现有基准趋于饱和的问题。在11个前沿模型测试中，最佳得分仅34.74%，远低于当前模型在BrowseComp上约90%的成绩；上下文策略仅带来+6.8个百分点的提升。该基准包含544道问题、11个领域，采用树与图结构，已开源。","category":"paper","score":75,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrp0qw3s090ybitorwj6diwi"}},{"id":"cmrove64p07imbitof1v9rzwz","title":"苹果与 OpenAI 法律战升级：约 40 名前员工收到苹果律师函","title_en":null,"url":"https://www.ithome.com/0/978/277.htm","permalink":"https://aihot.virxact.com/items/cmrove64p07imbitof1v9rzwz","source":"IT之家（RSS）","publishedAt":"2026-07-17T11:10:01.000Z","summary":"苹果已向约40名就职于OpenAI的前员工发出律师函，要求保存相关文件。此前苹果起诉OpenAI及两名前员工，指控其通过挖角获取商业机密以加速AI硬件研发。苹果称已有超400名前员工在OpenAI工作，正寻求法院禁令阻止OpenAI使用苹果信息并要求归还机密。","category":"industry","score":73,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrove64p07imbitof1v9rzwz"}},{"id":"cmrozfoiv08mhbitofbllzxl4","title":"OpenAI 提出 AI 时代记分卡：\"有用智能每美元\"衡量实际工作价值","title_en":"A scorecard for the AI age","url":"https://openai.com/index/a-scorecard-for-the-ai-age","permalink":"https://aihot.virxact.com/items/cmrozfoiv08mhbitofbllzxl4","source":"OpenAI：官网动态（RSS · 排除企业/客户案例）","publishedAt":"2026-07-17T10:00:00.000Z","summary":"OpenAI 提出\"Useful Intelligence per Dollar\"（有用智能每美元）作为衡量 AI 投资回报的核心指标，从完成的有用工作量、成功任务的实际成本、结果可靠性三个维度评估。","category":"tip","score":64,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrozfoiv08mhbitofbllzxl4"}},{"id":"cmrorbywu06cebitoixzgpb5l","title":"首届\"小有可为\"大赛乡村教育一等奖作品\"智绘科普\"技术拆解","title_en":"小有可为实战教程|乡村教育一等奖作品拆解","url":"https://mp.weixin.qq.com/s/a2YKWmyMoyIc3GKLbXffpQ","permalink":"https://aihot.virxact.com/items/cmrorbywu06cebitoixzgpb5l","source":"公众号：通义实验室（千问）","publishedAt":"2026-07-17T09:41:25.000Z","summary":"首届\"小有可为\"大赛乡村教育赛道一等奖作品\"智绘科普\"采用 Qwen3.5-397B-A17B 大语言模型与 Manim 动画引擎，通过多Agent分阶段协作与自动修复机制，将知识主题转化为可控、可编辑的教学动画。系统包含规划、草稿、实现、审查、合成五个阶段，渲染失败时可自动提取日志并修复，该工程范式可迁移至其他赛道。","category":"tip","score":74,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrorbywu06cebitoixzgpb5l"}},{"id":"cmropqooe05tqbitodvnqnc6u","title":"Schema Harness 在 ARC-AGI-3 公开集上取得约 99% 成绩","title_en":"Schema Harness 在 Arc-AGI-3 公开数据集上取得约 99% 的成绩","url":"https://schema-harness.github.io/","permalink":"https://aihot.virxact.com/items/cmropqooe05tqbitodvnqnc6u","source":"Hacker News 热门（buzzing.cc 中文翻译）","publishedAt":"2026-07-17T08:41:53.383Z","summary":"Schema 框架在 ARC-AGI-3 公开集上，使用 Claude Opus 4.8 和 Fable 5 达到 99% RHAE 分数，使用 GPT-5.6 Sol 达到 95.35%。该框架不修改模型权重，而是将原始观测转化为可编辑程序，联合解决状态归因和机制发现问题。此前最强模型 GPT-5.6 Sol 在半私有集上仅得 7.78%。","category":"paper","score":78,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmropqooe05tqbitodvnqnc6u"}},{"id":"cmronvv4105bdbitohe86a4un","title":"NVIDIA 发布 Nemotron 3 Embed 系列，8B 版本在 RTEB 基准上排名第一","title_en":"NVIDIA AI Releases Nemotron 3 Embed： An Open Embedding Collection Whose 8B Checkpoint Ranks #1 on RTEB","url":"https://www.marktechpost.com/2026/07/17/nvidia-ai-releases-nemotron-3-embed-an-open-embedding-collection-whose-8b-checkpoint-ranks-1-on-rteb","permalink":"https://aihot.virxact.com/items/cmronvv4105bdbitohe86a4un","source":"MarkTechPost（RSS）","publishedAt":"2026-07-17T07:53:02.000Z","summary":"NVIDIA 发布 Nemotron 3 Embed 系列，包含三个开源 checkpoint，其中 8B-BF16 版本在 RTEB 基准上以 78.46 的平均 NDCG@10 排名第一。1B-NVFP4 版本在 Blackwell 上吞吐量比 BF16 高 2 倍，精度保留 99.5%，所有模型最大序列长度 32，768 tokens。","category":"ai-models","score":70,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmronvv4105bdbitohe86a4un"}},{"id":"cmrolz26304oqbito42v7oeaz","title":"通义实验室发布 Wan-Streamer v0.2，端到端响应延迟仅 550ms","title_en":"Wan-Streamer v0.2：响应延迟仅550ms，让 AI 真正与你\"面对面\"","url":"https://mp.weixin.qq.com/s/_eaO0wmsiQFGsrE2_zW_Dg","permalink":"https://aihot.virxact.com/items/cmrolz26304oqbito42v7oeaz","source":"公众号：通义实验室（千问）","publishedAt":"2026-07-17T07:14:00.000Z","summary":"通义实验室发布 Wan-Streamer v0.2，这是一款将\"听、看、说、演\"统一进单个 Transformer 的端到端全模态模型。其端到端响应延迟仅 550ms，输出分辨率从 v0.1 的 192×336 提升至 640×368 @ 25FPS，并采用 Thinker-Performer 双通路架构在提升画质的同时维持了极低延迟。","category":"ai-models","score":69,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmrolz26304oqbito42v7oeaz"}},{"id":"cmroipdr803rvbito8t018vr1","title":"Kimi K3 登顶前端编码榜，开放权重挑战闭源双巨头","title_en":"谁能想到Claude和GPT双头统治的时代，居然就这么被中国模型撕开了口子。 Kimi K3登顶Frontend Code Arena总榜第一，1679分同时力压Claude Fable 5与GPT…","url":"https://x.com/AYi_AInotes/status/2077981025905316253","permalink":"https://aihot.virxact.com/items/cmroipdr803rvbito8t018vr1","source":"X：阿易 AI Notes (@AYi_AInotes)","publishedAt":"2026-07-17T04:57:38.000Z","summary":"Kimi K3 在 Frontend Code Arena 以 1679 分登顶，力压 Claude Fable 5 与 GPT-5.6 Sol，7 个前端细分赛道拿下 6 个第一。该模型为 2.8 万亿参数 MoE 架构，百万上下文窗口，7 月 27 日开放权重。K3 的 API 定价为输入每百万 tokens 15 美元，对标前沿闭源模型，放弃低价路线，转向长上下文智能体编码场景的定价策略。","category":"ai-models","score":76,"selected":true,"attribution":{"source":"AI HOT","canonical":"https://aihot.virxact.com/items/cmroipdr803rvbito8t018vr1"}}]}</script>
+
 <script>
-(function(){try{if(localStorage.getItem('theme')==='light')document.body.classList.add('light');}catch(e){}})();
-function toggleTheme(){var b=document.body;b.classList.toggle('light');try{localStorage.setItem('theme',b.classList.contains('light')?'light':'dark');}catch(e){}}
+(function(){
+  var raw = document.getElementById('ai-data').textContent.trim();
+
+  var catMap = {
+    'ai-models':  { label:'模型发布', css:'cat-model' },
+    'ai-products':{ label:'产品更新', css:'cat-product' },
+    'industry':   { label:'行业动态', css:'cat-industry' },
+    'paper':      { label:'论文研究', css:'cat-paper' },
+    'tip':        { label:'技巧观点', css:'cat-tip' }
+  };
+
+  function init(data) {
+    var items = data && data.items || [];
+    if (!items.length) {
+      document.getElementById('grid').innerHTML =
+        '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>暂无最新资讯，稍后再来看看</p></div>';
+      return;
+    }
+
+    items.sort(function(a,b){ return new Date(b.publishedAt) - new Date(a.publishedAt); });
+
+    var cats = {};
+    var sources = {};
+    items.forEach(function(it){
+      cats[it.category] = (cats[it.category]||0) + 1;
+      sources[it.source] = true;
+    });
+    document.getElementById('totalCount').textContent = items.length;
+    document.getElementById('catCount').textContent = Object.keys(cats).length;
+    document.getElementById('topSource').textContent = Object.keys(sources).length;
+
+    ['all','ai-models','ai-products','industry','paper','tip'].forEach(function(c){
+      var el = document.getElementById('cnt-' + (c === 'all' ? 'all' : c.replace('ai-','')));
+      if (el) el.textContent = c === 'all' ? items.length : (cats[c] || 0);
+    });
+
+    function timeAgo(iso) {
+      var diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      if (diff < 60) return '刚刚';
+      if (diff < 3600) return Math.floor(diff/60) + ' 分钟前';
+      if (diff < 86400) return Math.floor(diff/3600) + ' 小时前';
+      if (diff < 172800) return '昨天';
+      var d = new Date(iso);
+      return (d.getMonth()+1) + '月' + d.getDate() + '日';
+    }
+
+    function catLabel(c) { return catMap[c] ? catMap[c].label : c; }
+    function catCSS(c) { return catMap[c] ? catMap[c].css : ''; }
+
+    function scoreStars(s) {
+      var c = Math.round((s||50)/20);
+      var html = '';
+      for (var i=0;i<5;i++) html += i < c ? '★' : '☆';
+      return html;
+    }
+
+    renderGrid(items, catLabel, catCSS, timeAgo, scoreStars);
+
+    document.getElementById('filters').addEventListener('click', function(e){
+      var chip = e.target.closest('.f-chip');
+      if (!chip) return;
+      document.querySelectorAll('.f-chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var cat = chip.dataset.cat;
+      var filtered = cat === 'all' ? items : items.filter(function(i){ return i.category === cat; });
+      renderGrid(filtered, catLabel, catCSS, timeAgo, scoreStars);
+    });
+  }
+
+  function renderGrid(items, catLabel, catCSS, timeAgo, scoreStars) {
+    var idx = 0;
+    var html = items.length === 0
+      ? '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>该分类暂无内容</p></div>'
+      : items.map(function(it){
+          idx++;
+          return '<a href="'+ it.url +'" target="_blank" class="card card-enter '+ catCSS(it.category) +'" style="animation-delay:'+ (idx*0.03) +'s">' +
+            '<div class="card-top">' +
+              '<span class="card-cat '+ catCSS(it.category) +'">'+ catLabel(it.category) +'</span>' +
+              '<span class="card-score">'+ scoreStars(it.score) +' '+ (it.score||'') +'</span>' +
+            '</div>' +
+            '<div class="card-title">'+ it.title +'</div>' +
+            '<div class="card-summary">'+ (it.summary || '') +'</div>' +
+            '<div class="card-footer">' +
+              '<span class="card-source">'+ it.source +'</span>' +
+              '<span class="card-time">'+ timeAgo(it.publishedAt) +'</span>' +
+            '</div>' +
+          '</a>';
+        }).join('');
+    document.getElementById('grid').innerHTML = html;
+  }
+
+  try {
+    var data = JSON.parse(raw);
+    if (data && typeof data === 'object' && !data.items && !data.count) {
+      init(data);
+    } else {
+      init(data);
+    }
+  } catch(e) {
+    // 尝试清洗非法控制字符后重试
+    try {
+      var cleaned = raw.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+      var data = JSON.parse(cleaned);
+      init(data);
+    } catch(e2) {
+      document.getElementById('grid').innerHTML =
+        '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p>数据加载失败，请稍后刷新</p></div>';
+    }
+  }
+
+  var sourcesData = [
+    {
+      id: 'labs', css: 'cat-labs', icon: '🔬', label: 'Official AI Labs',
+      items: ['OpenAI','Anthropic','DeepMind','Google AI','Meta','NVIDIA','HuggingFace','Stability','Mistral','Cohere']
+    },
+    {
+      id: 'cn', css: 'cat-cn', icon: '🗞', label: '中文 AI 媒体',
+      items: ['机器之心','量子位','InfoQ','宝玉','少数派','36氪']
+    },
+    {
+      id: 'overseas', css: 'cat-overseas', icon: '🌐', label: '海外科技媒体',
+      items: ['The Verge','TechCrunch','Ars Technica','Wired','VentureBeat','MIT Tech Review']
+    },
+    {
+      id: 'dev', css: 'cat-dev', icon: '💻', label: '开发者 & 学术',
+      items: ['Simon Willison','Karpathy','ArXiv','PapersWithCode','Hacker News']
+    },
+    {
+      id: 'biz', css: 'cat-biz', icon: '💼', label: '商业 & 投资',
+      items: ['a16z','Sequoia','DeepLearning.AI','Import AI']
+    }
+  ];
+
+  function renderSources() {
+    var total = 0;
+    var html = sourcesData.map(function(cat) {
+      total += cat.items.length;
+      var tags = cat.items.map(function(s) {
+        return '<span class="src-tag"><span class="sdot"></span>' + s + '</span>';
+      }).join('');
+      return '<div class="src-card ' + cat.css + '">' +
+        '<div class="src-card-header">' +
+          '<div class="src-card-icon">' + cat.icon + '</div>' +
+          '<div class="src-card-title">' + cat.label + '</div>' +
+          '<div class="src-card-count">' + cat.items.length + ' 个信源</div>' +
+        '</div>' +
+        '<div class="src-tags">' + tags + '</div>' +
+      '</div>';
+    }).join('');
+    document.getElementById('sourcesGrid').innerHTML = html;
+    document.getElementById('srcTotal').textContent = total;
+  }
+
+  renderSources();
+})();
 </script>
 </body>
 </html>
