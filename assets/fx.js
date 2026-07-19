@@ -179,38 +179,28 @@
   /* ── 7. 打字机 + 周期性 glitch（蓝本机制：120ms/字，打完每 10000+random*8000 触发 glitch）
         文本取自站点 hero 的真实文案（data-fx-text），而非蓝本的 ./change ── */
   function initTypewriter() {
-    var targets = [
-      document.getElementById('slogan-text'),
-      document.getElementById('typed')
-    ].filter(Boolean);
-    if (!targets.length) return;
-    var texts = targets.map(function (el) {
-      return (el.getAttribute('data-fx-text') || el.textContent || '').trim() || './change';
-    });
-    var li = 0, ci = 0, timer = null;
+    var el = document.getElementById('slogan-text');
+    if (!el) { console.warn('[typewriter] #slogan-text not found'); return; }
+    var text = (el.getAttribute('data-fx-text') || el.textContent || '').trim() || './change';
+    var ci = 0, timer = null;
 
     function typeLine() {
-      if (li >= targets.length) { startRandomGlitch(); return; }
-      var el = targets[li];
       el.textContent = '';
       ci = 0;
       timer = setInterval(function () {
-        if (ci < texts[li].length) {
-          el.textContent += texts[li].charAt(ci);
+        if (ci < text.length) {
+          el.textContent += text.charAt(ci);
           ci++;
         } else {
           clearInterval(timer);
           timer = null;
-          li++;
-          if (li < targets.length) typeLine();
-          else startRandomGlitch();
+          startRandomGlitch();
         }
       }, 120);
     }
 
     function startRandomGlitch() {
       setInterval(function () {
-        var el = targets[0];
         el.classList.remove('fx-glitch');
         void el.offsetHeight;
         el.classList.add('fx-glitch');
