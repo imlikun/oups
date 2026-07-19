@@ -101,7 +101,7 @@
     document.body.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var particles = [];
-    var PARTICLE_COUNT = 22;
+    var PARTICLE_COUNT = 44;
 
     function resizeParticleCanvas() {
       canvas.width = window.innerWidth;
@@ -114,23 +114,38 @@
     Particle.prototype.reset = function () {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 1;
-      this.speedX = (Math.random() - 0.5) * 0.25;
-      this.speedY = (Math.random() - 0.5) * 0.25;
-      this.opacity = Math.random() * 0.3 + 0.1;
+      // 大小更随机：右偏分布，多数偏小、偶尔偏大（约 0.6 ~ 5.6）
+      this.size = Math.random() * Math.random() * 5 + 0.6;
+      // 独立方向 + 缓慢转向，形成蜿蜒浮动
+      this.angle = Math.random() * Math.PI * 2;
+      this.angularSpeed = (Math.random() - 0.5) * 0.02;
+      // 速度差异更大（0.1 ~ 0.7）
+      this.speed = Math.random() * 0.6 + 0.1;
+      // 垂直摆动，让轨迹更随机
+      this.wobbleAmp = Math.random() * 0.5 + 0.05;
+      this.wobbleFreq = Math.random() * 0.05 + 0.01;
+      this.phase = Math.random() * Math.PI * 2;
+      this.opacity = Math.random() * 0.5 + 0.1;
     };
     Particle.prototype.update = function () {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      this.angle += this.angularSpeed;
+      this.phase += this.wobbleFreq;
+      var wobX = Math.cos(this.phase) * this.wobbleAmp;
+      var wobY = Math.sin(this.phase) * this.wobbleAmp;
+      this.x += Math.cos(this.angle) * this.speed + wobX;
+      this.y += Math.sin(this.angle) * this.speed + wobY;
+      // 边界回绕，连续漂浮而非硬反弹
+      if (this.x < -this.size) this.x = canvas.width + this.size;
+      if (this.x > canvas.width + this.size) this.x = -this.size;
+      if (this.y < -this.size) this.y = canvas.height + this.size;
+      if (this.y > canvas.height + this.size) this.y = -this.size;
     };
     Particle.prototype.draw = function () {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(0, 255, 65, ' + this.opacity + ')';
       ctx.shadowColor = '#00FF41';
-      ctx.shadowBlur = 12;
+      ctx.shadowBlur = this.size * 3;
       ctx.fill();
       ctx.shadowBlur = 0;
     };
