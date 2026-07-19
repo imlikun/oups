@@ -1,21 +1,15 @@
 /* ════════════════════════════════════════════════════════════════
    FX ENGINE · appin.site · 1:1 复刻自 deepseek_html_20260719_c8248f.html
-   逐项对应原文件 <script> 的 11 个模块，数值与行为完全一致：
+   逐项对应原文件 <script> 的动效模块，数值与行为完全一致：
    1 光晕追踪 / 2 网格偏移 / 3 心跳logo / 4 鼠标拖尾 /
-   5 背景粒子 / 6 点击涟漪 / 7 系统日志 / 8 打字机+glitch /
-   9 其它 [data-fx-glitch] / 10 终端模拟器 / 11 初始化
+   5 背景粒子 / 6 点击涟漪 / 7 打字机+glitch / 8 其它 [data-fx-glitch]
    说明：原蓝本【没有任何】prefers-reduced-motion 闸门，本引擎亦不加，
         以保证全站动效始终渲染（与蓝本一致）。
         动效层 z-index 已抬到内容之上，使不透明 section 下依然可见。
+        蓝本中的系统日志 / 终端模拟器属于 demo 装饰，不属于本站，已移除。
    ════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
-
-  function esc(s) {
-    return String(s).replace(/[&<>]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
-    });
-  }
 
   /* ── 1. 鼠标追踪光晕（蓝本：mousemove 直接写 --mouse-x/--mouse-y）── */
   function initGlow() {
@@ -167,46 +161,7 @@
     });
   }
 
-  /* ── 7. 系统日志（蓝本：每 8000+random*7000 轮换）── */
-  function initSystemLog() {
-    var logs = [
-      '[OK] systemd-networkd.service - Network Configuration',
-      '[INFO] appin.site: Server started on 0.0.0.0:443',
-      '[WARN] 127.0.0.1 - GET /./change 200 OK',
-      '[OK] nginx.service - High-performance web server',
-      '[INFO] kernel: Linux version 6.1.0-rc5',
-      '[OK] sshd.service - OpenSSH Daemon',
-      '[INFO] cron: Running daily backup routine',
-      '[OK] docker.service - Docker Container Engine',
-      '[INFO] appin: User logged in (pts/0)',
-      '[OK] postfix.service - Mail Transport Agent',
-      '[WARN] firewall: Allowed incoming traffic on port 443',
-      '[INFO] systemd[1]: Started Session 42 of user appin'
-    ];
-    var bar = document.querySelector('.fx-system-log');
-    if (!bar) {
-      var footer = document.querySelector('footer, .site-footer');
-      if (!footer) return;
-      bar = document.createElement('div');
-      bar.className = 'fx-system-log';
-      bar.setAttribute('aria-hidden', 'true');
-      bar.innerHTML = '<span class="log-prompt">$</span><span class="log-msg"></span>';
-      footer.appendChild(bar);
-    }
-    var msg = bar.querySelector('.log-msg') || bar;
-    var logIndex = 0;
-    function rotateLog() {
-      msg.textContent = logs[logIndex % logs.length];
-      msg.style.animation = 'none';
-      void msg.offsetHeight;
-      msg.style.animation = 'fx-log-slide 0.5s ease';
-      logIndex++;
-    }
-    setInterval(rotateLog, 8000 + Math.random() * 7000);
-    rotateLog();
-  }
-
-  /* ── 8. 打字机 + 周期性 glitch（蓝本机制：120ms/字，打完每 10000+random*8000 触发 glitch）
+  /* ── 7. 打字机 + 周期性 glitch（蓝本机制：120ms/字，打完每 10000+random*8000 触发 glitch）
         文本取自站点 hero 的真实文案（data-fx-text），而非蓝本的 ./change ── */
   function initTypewriter() {
     var targets = [
@@ -251,7 +206,7 @@
     typeLine();
   }
 
-  /* ── 9. 其它 [data-fx-glitch] 元素，周期闪烁 ── */
+  /* ── 8. 其它 [data-fx-glitch] 元素，周期闪烁 ── */
   function initGlitch() {
     var targets = document.querySelectorAll('[data-fx-glitch]');
     Array.prototype.forEach.call(targets, function (el) {
@@ -262,65 +217,6 @@
         setTimeout(function () { el.classList.remove('fx-glitch'); }, 500);
       }, 9000 + Math.random() * 8000);
     });
-  }
-
-  /* ── 10. 终端模拟器（蓝本：help / whoami / ./change / date / echo / clear）── */
-  function initTerminal() {
-    var footer = document.querySelector('footer, .site-footer');
-    if (!footer) return;
-    var box = document.createElement('div');
-    box.className = 'fx-terminal';
-    box.setAttribute('aria-hidden', 'true');
-    box.innerHTML =
-      '<div class="fx-terminal-output">&gt; 欢迎来到 appin 终端，输入 <span style="color:var(--accent-cyan)">help</span> 查看命令。</div>' +
-      '<div class="fx-terminal-input-row"><span class="prompt">$</span>' +
-      '<input class="fx-terminal-input" type="text" placeholder="输入命令..." autocomplete="off" spellcheck="false"></div>';
-    var sl = footer.querySelector('.fx-system-log');
-    if (sl) sl.after(box); else footer.appendChild(box);
-
-    var input = box.querySelector('.fx-terminal-input');
-    var out = box.querySelector('.fx-terminal-output');
-    function appendTerminal(text, isOutput) {
-      var line = document.createElement('div');
-      line.style.fontFamily = 'var(--font-mono)';
-      line.style.fontSize = '13px';
-      line.style.padding = '2px 0';
-      if (isOutput) {
-        line.innerHTML = '<span style="color:var(--accent-green)">→</span> ' + text;
-      } else {
-        line.innerHTML = '<span style="color:var(--text-secondary)">&gt;</span> ' + text;
-      }
-      out.appendChild(line);
-      out.scrollTop = out.scrollHeight;
-      while (out.children.length > 50) out.removeChild(out.firstChild);
-    }
-    input.addEventListener('keydown', function (e) {
-      if (e.key !== 'Enter') return;
-      var cmd = input.value.trim();
-      input.value = '';
-      if (!cmd) return;
-      appendTerminal(cmd, false);
-      var lower = cmd.toLowerCase();
-      var reply;
-      if (lower === 'help') {
-        reply = '可用命令: <span style="color:var(--accent-cyan)">whoami</span>, <span style="color:var(--accent-cyan)">date</span>, <span style="color:var(--accent-cyan)">./change</span>, <span style="color:var(--accent-cyan)">clear</span>, <span style="color:var(--accent-cyan)">echo &lt;text&gt;</span>';
-      } else if (lower === 'whoami') {
-        reply = '你是 李坤，一个用代码把想法做成产品的独立开发者。';
-      } else if (lower === './change') {
-        reply = '正在执行变革... 请稍候 (其实已经改变了)。';
-      } else if (lower === 'date') {
-        reply = new Date().toString();
-      } else if (lower === 'clear') {
-        out.innerHTML = '';
-        return;
-      } else if (lower.indexOf('echo ') === 0) {
-        reply = cmd.slice(5);
-      } else {
-        reply = '命令 "<span style="color:var(--accent-cyan)">' + esc(cmd) + '</span>" 未找到，输入 <span style="color:var(--accent-cyan)">help</span> 查看帮助。';
-      }
-      appendTerminal(reply, true);
-    });
-    box.addEventListener('click', function () { input.focus(); });
   }
 
   function ready(fn) {
@@ -335,9 +231,7 @@
     initTrail();
     initParticles();
     initRipple();
-    initSystemLog();
     initTypewriter();
     initGlitch();
-    initTerminal();
   });
 })();
