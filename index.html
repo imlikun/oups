@@ -420,6 +420,8 @@ body.light .theme-toggle .ic-sun{display:block}
   .content-card{grid-column:1/-1}
 }
 </style>
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
 </head>
 <body>
 
@@ -451,7 +453,7 @@ body.light .theme-toggle .ic-sun{display:block}
   <!-- left: headline + cta -->
   <div class="hero-left">
     <div class="hero-whoami"><span>$</span> whoami <span class="dir">~/appin</span></div>
-    <h1>我是 <span class="hl">李坤</span><br><span id="typed">独立开发者 · 把想法做成产品</span><span class="caret" aria-hidden="true"></span></h1>
+    <h1>我是 <span class="hl" data-fx-glitch>李坤</span><br><span id="typed">独立开发者 · 把想法做成产品</span><span class="caret" aria-hidden="true"></span></h1>
     <p class="hero-tagline">
       懂代码的产品人，懂获客的技术人。写能落地的实战教程，做有信任感的出海品牌。
       <br><span style="color:var(--brand)">懂技术 + 稍微懂产品 = 扎实的基本盘。</span>
@@ -689,6 +691,7 @@ body.light .theme-toggle .ic-sun{display:block}
   <div class="footer-bottom">
     <span>© 2026 李坤 · Appin.site</span>
   </div>
+  <div class="fx-system-log" aria-hidden="true"><span class="log-prompt">$</span><span class="log-msg"></span></div>
 </div>
 </footer>
 

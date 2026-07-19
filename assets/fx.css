@@ -1,0 +1,136 @@
+/* ════════════════════════════════════════════════════════════════
+   FX LAYER · appin.site 全局动效层（提取自 deepseek c38eba 蓝本）
+   作用：鼠标光晕 / 心跳 logo / 点击涟漪 / glitch / 系统日志 / 入场
+   加载顺序：请置于 article.css / list.css / 内联样式 之后
+   ════════════════════════════════════════════════════════════════ */
+
+:root{
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --fx-glow-dark: rgba(0,255,65,.07);
+  --fx-glow-light: rgba(0,168,46,.10);
+}
+
+/* ── 1. 鼠标追踪光晕（body 背景层，fixed 跟随视口，不遮挡内容）── */
+body{
+  background-image: radial-gradient(circle 380px at var(--mouse-x) var(--mouse-y),
+      var(--fx-glow-dark) 0%, transparent 70%);
+  background-attachment: fixed;
+}
+body.light{
+  background-image: radial-gradient(circle 380px at var(--mouse-x) var(--mouse-y),
+      var(--fx-glow-light) 0%, transparent 70%);
+}
+
+/* ── 2. 心跳指示灯（自动注入到 .logo）── */
+.heartbeat-dot{
+  display:inline-block;
+  width:9px; height:9px;
+  border-radius:50%;
+  background:var(--accent-green);
+  box-shadow:0 0 14px var(--accent-green);
+  animation:fx-heartbeat 1.6s ease-in-out infinite;
+  flex:none;
+}
+@keyframes fx-heartbeat{
+  0%,100%{transform:scale(.82);opacity:.65;box-shadow:0 0 8px var(--accent-green)}
+  50%{transform:scale(1.18);opacity:1;box-shadow:0 0 26px var(--accent-green),0 0 50px rgba(0,255,65,.3)}
+}
+
+/* ── 3. 点击涟漪 ── */
+.ripple-layer{
+  position:fixed; inset:0;
+  pointer-events:none; z-index:9999;
+  overflow:hidden;
+}
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  border:2px solid var(--accent-green);
+  box-shadow:0 0 18px rgba(0,255,65,.25);
+  transform:translate(-50%,-50%);
+  animation:fx-ripple .8s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes fx-ripple{
+  0%{width:0;height:0;opacity:1}
+  100%{width:120px;height:120px;opacity:0}
+}
+
+/* ── 4. Glitch 文字故障（JS 周期性给 [data-fx-glitch] 加 .fx-glitch）── */
+.fx-glitch{
+  animation:fx-glitch .15s steps(2,end) 3;
+}
+@keyframes fx-glitch{
+  0%{transform:translate(0);text-shadow:0 0 10px var(--accent-green)}
+  20%{transform:translate(-1px,1px);text-shadow:2px 0 var(--accent-cyan),-2px 0 var(--accent-green);color:#ff00ff}
+  40%{transform:translate(1px,-1px);text-shadow:-2px 0 #00ff41,2px 0 #00d4ff;color:#00ff41}
+  60%{transform:translate(0);text-shadow:0 0 20px var(--accent-green);color:var(--accent-green)}
+  100%{transform:translate(0);text-shadow:0 0 10px var(--accent-green);color:var(--accent-green)}
+}
+
+/* ── 5. 系统日志栏（footer 内，fx.js 注入/填充）── */
+.fx-system-log{
+  margin-top:24px;
+  padding:12px 16px;
+  background:var(--bg-secondary);
+  border:1px solid var(--border);
+  border-radius:4px;
+  font-size:13px;
+  color:var(--fg-muted);
+  min-height:36px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  overflow:hidden;
+}
+.fx-system-log .log-prompt{
+  color:var(--accent-green);
+  font-weight:600;
+  flex:none;
+}
+.fx-system-log .log-msg{
+  font-family:var(--font-mono);
+  color:var(--fg);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  animation:fx-log-slide .5s ease;
+}
+@keyframes fx-log-slide{
+  0%{opacity:0;transform:translateX(10px)}
+  100%{opacity:1;transform:translateX(0)}
+}
+
+/* ── 6. 入场动画（fx.js 给 [data-fx-rise] / .hero>* 加 .fx-rise）── */
+.fx-rise{
+  opacity:0;
+  transform:translateY(26px) scale(.985);
+  filter:blur(2px);
+  animation:fx-rise .55s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes fx-rise{
+  to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+
+/* ── 7. 背景粒子 canvas（fx.js 仅在暗色 + 非 reduce 下创建）── */
+#fx-particles{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.45;
+  mix-blend-mode:screen;
+}
+
+/* ── 8. 减少动态偏好：全局门控（兜底，主站已有同款规则）── */
+@media (prefers-reduced-motion: reduce){
+  .heartbeat-dot,
+  .ripple,
+  .fx-glitch,
+  .fx-rise,
+  #fx-particles{
+    animation:none !important;
+    transition:none !important;
+  }
+  body{background-attachment:scroll}
+}

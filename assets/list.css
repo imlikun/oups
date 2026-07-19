@@ -404,3 +404,14 @@ body.list-ai-radar .hero-stat .num{font-size:40px;font-weight:700;font-family:va
   .sources-section{padding:0 20px 48px}
   .sources-header h2{font-size:20px}
 }
+
+/* ═══ FX: 鼠标追踪光晕（兜底；fx.css 亦会注入，二者同效）═══ */
+body{
+  background-image: radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
+      rgba(0,255,65,.07) 0%, transparent 70%);
+  background-attachment: fixed;
+}
+body.light{
+  background-image: radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
+      rgba(0,168,46,.10) 0%, transparent 70%);
+}
