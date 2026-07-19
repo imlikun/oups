@@ -19,7 +19,7 @@
       "videoUrl": "",
       "date": "2026-06-01",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-2",
@@ -39,7 +39,7 @@
       "videoUrl": "",
       "date": "2026-06-03",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-3",
@@ -79,7 +79,7 @@
       "videoUrl": "",
       "date": "2026-05-25",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-5",
@@ -118,7 +118,7 @@
       "videoUrl": "",
       "date": "2026-05-18",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-7",
@@ -157,7 +157,7 @@
       "videoUrl": "",
       "date": "2026-05-10",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-9",
@@ -196,7 +196,7 @@
       "videoUrl": "",
       "date": "2026-04-28",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-11",
@@ -235,7 +235,7 @@
       "videoUrl": "",
       "date": "2026-04-15",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-13",
@@ -295,7 +295,7 @@
       "videoUrl": "",
       "date": "2026-06-12",
       "status": "published",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-16",
@@ -318,7 +318,7 @@
       "date": "2026-06-16",
       "status": "published",
       "link": "/craft/ian-xiaohei-illustrations.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-17",
@@ -342,7 +342,7 @@
       "date": "2026-06-17",
       "status": "published",
       "link": "/craft/deep-live-cam.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-18",
@@ -365,7 +365,7 @@
       "date": "2026-06-17",
       "status": "published",
       "link": "/craft/xpeng-gx-2698.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-19",
@@ -388,7 +388,7 @@
       "date": "2026-06-18",
       "status": "published",
       "link": "/craft/longcat-video-avatar-1.5.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-21",
@@ -473,7 +473,7 @@
       "date": "2026-06-22",
       "status": "published",
       "link": "/craft/gpt-image-2-prompts.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-24",
@@ -495,7 +495,7 @@
       "date": "2026-06-25",
       "status": "published",
       "link": "/craft/ai-news-radar.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-25",
@@ -517,7 +517,7 @@
       "date": "2026-06-25",
       "status": "published",
       "link": "/craft/aimoneyhunter.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-26",
@@ -539,7 +539,7 @@
       "date": "2026-06-25",
       "status": "published",
       "link": "/craft/ai-design-tools.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-27",
@@ -561,7 +561,7 @@
       "date": "2026-06-25",
       "status": "published",
       "link": "/craft/multipost.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-28",
@@ -584,7 +584,7 @@
       "date": "2026-06-26",
       "status": "published",
       "link": "/craft/ai-news-radar-guide.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-29",
@@ -631,7 +631,7 @@
       "date": "2026-07-01",
       "status": "published",
       "link": "/craft/nomifun-ai-workstation.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-31",
@@ -655,7 +655,7 @@
       "date": "2026-07-01",
       "status": "published",
       "link": "/craft/book-to-skill.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-32",
@@ -679,7 +679,7 @@
       "date": "2026-07-03",
       "status": "published",
       "link": "/craft/yt-dlp-downloader.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-33",
@@ -703,7 +703,7 @@
       "date": "2026-07-03",
       "status": "published",
       "link": "/craft/chatwoot.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-34",
@@ -727,7 +727,7 @@
       "date": "2026-07-05",
       "status": "published",
       "link": "/notes/pxid-gm-report.html",
-      "template": "notes"
+      "template": "DP"
     },
     {
       "id": "article-35",
@@ -752,7 +752,7 @@
       "date": "2026-07-05",
       "status": "published",
       "link": "/notes/pxid-marketing-plan.html",
-      "template": "notes"
+      "template": "DP"
     },
     {
       "id": "article-36",
@@ -778,7 +778,7 @@
       "date": "2026-07-07",
       "status": "published",
       "link": "/craft/agent-reach.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-37",
@@ -807,14 +807,14 @@
       "date": "2026-07-05",
       "status": "published",
       "link": "/notes/pxid-gm-review.html",
-      "template": "notes"
+      "template": "DP"
     },
     {
       "id": "article-38",
       "title": "PXID 海外市场研究报告",
       "slug": "pxid-overseas-market-report",
       "category": "notes",
-      "template": "notes",
+      "template": "DP",
       "status": "published",
       "featured": false,
       "date": "2026-07-07",
@@ -854,7 +854,7 @@
       "date": "2026-07-10",
       "status": "published",
       "link": "/craft/trae-advanced-guide.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-41",
@@ -878,7 +878,7 @@
       "date": "2026-07-10",
       "status": "published",
       "link": "/craft/ai-free-credits-guide-2026-07.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-42",
@@ -903,7 +903,7 @@
       "date": "2026-07-10",
       "status": "published",
       "link": "/craft/aiworkskills-wechat-ai-ops.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-43",
@@ -927,7 +927,7 @@
       "date": "2026-07-10",
       "status": "published",
       "link": "/craft/money-printer-turbo.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-44",
@@ -949,7 +949,7 @@
       "date": "2026-07-10",
       "status": "published",
       "link": "/craft/gemini-api-workbuddy-trae.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-45",
@@ -973,7 +973,7 @@
       "date": "2026-07-10",
       "status": "published",
       "link": "/craft/omniget.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-46",
@@ -999,7 +999,7 @@
       "date": "2026-07-11",
       "status": "published",
       "link": "/craft/webnovel-writer.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-47",
@@ -1025,7 +1025,7 @@
       "date": "2026-07-11",
       "status": "published",
       "link": "/craft/openmontage.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-48",
@@ -1049,7 +1049,7 @@
       "date": "2026-07-11",
       "status": "published",
       "link": "/notes/openrouter-ai-gateway-guide.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-49",
@@ -1074,7 +1074,7 @@
       "date": "2026-07-11",
       "status": "published",
       "link": "/craft/gemini-api-newbie-guide.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-50",
@@ -1097,7 +1097,7 @@
       "date": "2026-07-12",
       "status": "published",
       "link": "/notes/senior-video-content-strategy.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-51",
@@ -1121,7 +1121,7 @@
       "date": "2026-07-12",
       "status": "published",
       "link": "/notes/personal-interest-video-positioning.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-52",
@@ -1166,7 +1166,7 @@
       "date": "2026-07-12",
       "status": "published",
       "link": "/craft/glm-deepseek-workbuddy-trae.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-54",
@@ -1190,7 +1190,7 @@
       "date": "2026-07-13",
       "status": "published",
       "link": "/notes/focusee-tutorial.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-55",
@@ -1215,7 +1215,7 @@
       "date": "2026-07-13",
       "status": "published",
       "link": "/notes/ai-tool-usage-experience.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-56",
@@ -1242,7 +1242,7 @@
       "date": "2026-07-13",
       "status": "published",
       "link": "/craft/firecrawl.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-57",
@@ -1269,7 +1269,7 @@
       "date": "2026-07-13",
       "status": "published",
       "link": "/craft/awesome-llm-apps.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-58",
@@ -1296,7 +1296,7 @@
       "date": "2026-07-14",
       "status": "published",
       "link": "/craft/echo-loop.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-59",
@@ -1319,7 +1319,7 @@
       "date": "2026-07-14",
       "status": "published",
       "link": "/notes/pxid-seo-roadmap.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-60",
@@ -1342,7 +1342,7 @@
       "date": "2026-07-14",
       "status": "published",
       "link": "/notes/monetization-plan-kun.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-62",
@@ -1368,7 +1368,7 @@
       "date": "2026-07-14",
       "status": "published",
       "link": "/notes/multi-channel-content-plan.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-63",
@@ -1394,7 +1394,7 @@
       "date": "2026-07-15",
       "status": "published",
       "link": "/notes/ncre-level3-network-tech-plan.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-61",
@@ -1419,7 +1419,7 @@
       "date": "2026-07-15",
       "status": "published",
       "link": "/craft/ai-job-search.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-64",
@@ -1444,7 +1444,7 @@
       "date": "2026-07-15",
       "status": "published",
       "link": "/craft/skillopt.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-65",
@@ -1469,7 +1469,7 @@
       "date": "2026-07-15",
       "status": "published",
       "link": "/craft/seedance-2.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-66",
@@ -1496,7 +1496,7 @@
       "date": "2026-07-15",
       "status": "published",
       "link": "/craft/codex-beginner-guide.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-67",
@@ -1522,7 +1522,7 @@
       "date": "2026-07-16",
       "status": "published",
       "link": "/craft/video-autopilot-kit.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-68",
@@ -1549,7 +1549,7 @@
       "date": "2026-07-16",
       "status": "published",
       "link": "/craft/mediastorm-copywriter.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-69",
@@ -1575,7 +1575,7 @@
       "date": "2026-07-16",
       "status": "published",
       "link": "/notes/opc-one-person-company-plan.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-70",
@@ -1598,7 +1598,7 @@
       "date": "2026-07-16",
       "status": "published",
       "link": "/notes/tapnow-ai-tutorial.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-71",
@@ -1627,7 +1627,7 @@
       "date": "2026-07-17",
       "status": "published",
       "link": "/craft/deeptutor.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-72",
@@ -1656,7 +1656,7 @@
       "date": "2026-07-17",
       "status": "published",
       "link": "/craft/arya-markdown-editor.html",
-      "template": "A"
+      "template": "DP"
     },
     {
       "id": "article-73",
@@ -1679,7 +1679,7 @@
       "date": "2026-07-17",
       "status": "published",
       "link": "/craft/comfyui-from-zero-to-pro.html",
-      "template": "B"
+      "template": "DP"
     },
     {
       "id": "article-74",
@@ -1705,7 +1705,7 @@
       "date": "2026-07-17",
       "status": "published",
       "link": "/craft/voxcpm.html",
-      "template": "C"
+      "template": "DP"
     },
     {
       "id": "article-75",
@@ -1731,7 +1731,7 @@
       "date": "2026-07-17",
       "status": "published",
       "link": "/craft/understand-anything.html",
-      "template": "A"
+      "template": "DP"
     }
   ],
   "projects": [

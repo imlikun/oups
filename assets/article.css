@@ -21,6 +21,8 @@
   --state-error:#FF3B30;
   --state-success:#34C759;
   --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+  /* 正文阅读用系统无衬线（中文清晰），等宽仅留给代码/终端元素 */
+  --font-sans:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,'Segoe UI',sans-serif;
 
   /* —— 向后兼容别名（存量 HTML 沿用旧名） —— */
   --bg:var(--bg-primary);
@@ -38,7 +40,7 @@
   --amber:#FFB800;
   --amber-bg:rgba(255,184,0,.10);
   --radius:8px;
-  --max-text:720px;
+  --max-text:760px;
 }
 /* 浅色主题：与首页/模板互通（body.light + localStorage 'theme'） */
 body.light{
@@ -72,7 +74,7 @@ body.light{
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{
-  font-family:var(--font-mono);
+  font-family:var(--font-sans);
   background:var(--bg-primary);color:var(--text-primary);line-height:1.85;font-size:16px;
   overflow-x:hidden;
 }
