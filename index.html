@@ -325,6 +325,11 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   align-items:center;justify-content:center;font-size:18px;transition:.2s
 }
 .theme-toggle:hover{border-color:var(--brand);color:var(--brand)}
+.theme-toggle .ic{width:18px;height:18px;display:block}
+.theme-toggle .ic-moon{fill:currentColor;stroke:none}
+.theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
+body.light .theme-toggle .ic-moon{display:none}
+body.light .theme-toggle .ic-sun{display:block}
 
 /* ═══ footer columns (full channel index) ═══ */
 .footer-cols{display:flex;gap:var(--s6);flex-wrap:wrap}
@@ -370,7 +375,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     <a class="nav-link" href="/pxid3/">pxid3</a>
   </div>
   <div class="actions">
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">◐</button>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换明暗主题">
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
     <a class="btn-primary" href="mailto:hi@appin.site">合作 →</a>
   </div>
 </nav>
