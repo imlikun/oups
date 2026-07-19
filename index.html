@@ -692,7 +692,7 @@ function renderLatest(){
   var el=document.getElementById('typed'); if(!el) return;
   var phrases=['独立开发者','把想法做成产品','独立开发者 · 把想法做成产品'];
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){el.textContent=phrases[0];return;}
+  if(reduce){el.textContent=phrases[phrases.length-1];return;}  /* 减弱动效：静态显示完整 slogan */
   var pi=0,ci=0,deleting=false;
   function tick(){
     var full=phrases[pi];
