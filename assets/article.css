@@ -6,48 +6,56 @@
    目标类名：.nav .hero .page .article-body 及各组件 .tag-cloud .footer 等。 */
 
 :root{
-  --bg:#0a0a0b;--bg-elevated:#111113;--bg-card:#16161a;
-  --border:#222228;--border-bright:#333340;
-  --fg:#e8e8ec;--fg-muted:#8888a0;--fg-dim:#555568;
-  --brand:#B8FF3C;--brand-dim:#7ab828;--brand-bg:rgba(184,255,60,.06);
-  --amber:#FFB800;--amber-bg:rgba(255,184,0,.08);
-  --radius:10px;
+  --bg:#0A0A0A;--bg-elevated:#141414;--bg-card:#1E1E1E;
+  --border:#2A2A2A;--border-bright:#444444;
+  --fg:#E8E8E8;--fg-muted:#A0A0A0;--fg-dim:#6B6B6B;
+  --brand:#00FF41;--brand-dim:#00B32C;--brand-bg:rgba(0,255,65,.12);
+  --cyan:#00D4FF;--cyan-bg:rgba(0,212,255,.10);
+  --amber:#FFB800;--amber-bg:rgba(255,184,0,.10);
+  --radius:8px;
   --max-text:760px;
-  --font-display:'Space Grotesk','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
-  --font-mono:'JetBrains Mono',monospace;
+  --font-mono:'JetBrains Mono','PingFang SC',ui-monospace,monospace;
 }
 /* 浅色主题：与首页/模板互通（body.light + localStorage 'theme'） */
 body.light{
-  --bg:#f5f5f7;--bg-elevated:#fff;--bg-card:#fff;
-  --border:#e0e0e6;--border-bright:#ccc;
-  --fg:#1a1a1e;--fg-muted:#666;--fg-dim:#999;
-  --brand:#4a9c00;--brand-dim:#3a7a00;--brand-bg:rgba(74,156,0,.06);
-  --amber:#c78f00;--amber-bg:rgba(199,143,0,.07);
+  --bg:#F5F5F5;--bg-elevated:#FFFFFF;--bg-card:#FFFFFF;
+  --border:#E2E2E2;--border-bright:#CCCCCC;
+  --fg:#0A0A0A;--fg-muted:#555555;--fg-dim:#888888;
+  --brand:#00A82E;--brand-dim:#008F26;--brand-bg:rgba(0,168,46,.10);
+  --cyan:#008CB0;--cyan-bg:rgba(0,140,176,.10);
+  --amber:#B57800;--amber-bg:rgba(181,120,0,.10);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{
-  font-family:var(--font-display);
-  background:var(--bg);color:var(--fg);line-height:1.8;font-size:16px;
+  font-family:var(--font-mono);
+  background:var(--bg);color:var(--fg);line-height:1.85;font-size:16px;
   overflow-x:hidden;
 }
 *:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:2px}
-::selection{background:var(--brand);color:var(--bg)}
+::selection{background:var(--brand-bg);color:var(--brand)}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--brand)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 [id]{scroll-margin-top:90px}
 
-/* ═══ NAV（去 blur，纯平，与首页一致） ═══ */
+/* ═══ NAV（毛玻璃，与首页一致） ═══ */
 .nav{position:sticky;top:0;left:0;right:0;z-index:200;
-  background:var(--bg);border-bottom:1px solid var(--border);
-  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+  background:rgba(10,10,10,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1120px;margin:0 auto;padding:0 28px;
-  display:flex;align-items:center;justify-content:space-between;height:64px;}
-.nav-logo{font-size:16px;font-weight:700;color:var(--brand);text-decoration:none;letter-spacing:-.3px}
-.nav-logo span{color:var(--fg-dim);font-weight:400;font-size:12px;margin-left:5px}
+  display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-size:16px;font-weight:700;color:var(--brand);text-decoration:none;letter-spacing:-.3px;font-family:var(--font-mono)}
+.nav-logo span{color:var(--fg-dim);font-weight:400}
 .nav-links{display:flex;gap:26px;align-items:center;list-style:none}
-.nav-links a{color:var(--fg-muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a{position:relative;color:var(--fg-muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;font-family:var(--font-mono)}
 .nav-links a:hover,.nav-links a.active{color:var(--brand)}
+.nav-links a::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--brand);width:0;transition:width .25s ease}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-links a.active::before{content:'> ';color:var(--brand);opacity:.85}
 
 /* ═══ HERO（改左对齐，对齐首页 .hero-inner） ═══ */
 .hero{padding:96px 0 36px;text-align:left;max-width:var(--max-text);margin:0 auto}
@@ -56,7 +64,7 @@ body{
   letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px;font-family:var(--font-mono)}
 .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
 .hero h1{font-size:clamp(28px,4.2vw,42px);font-weight:700;letter-spacing:-.03em;line-height:1.18;
-  max-width:760px;margin:0 0 16px;color:var(--fg)}
+  max-width:var(--max-text);margin:0 0 16px;color:var(--fg)}
 .hero h1 .hl{color:var(--brand)}
 .hero-desc{color:var(--fg-muted);font-size:17px;max-width:680px;margin:0 0 24px;line-height:1.7}
 .hero-meta{display:flex;justify-content:flex-start;align-items:center;gap:14px;flex-wrap:wrap;
@@ -88,7 +96,7 @@ body{
 .article-body .key,.content .key{color:var(--brand);font-weight:700}
 
 /* ═══ HERO COVER（首图，横图 16:9） ═══ */
-.hero-cover{max-width:900px;margin:8px auto 0;padding:0 28px;position:relative;z-index:2}
+.hero-cover{max-width:var(--max-text);margin:8px auto 0;padding:0 28px;position:relative;z-index:2}
 .hero-cover img{width:100%;height:auto;border-radius:14px;border:1px solid var(--border);
   box-shadow:none;display:block;max-height:460px;object-fit:cover}
 
@@ -148,15 +156,16 @@ body{
   font-size:12px;font-weight:700;flex-shrink:0}
 
 /* 代码块：旧文用 <pre> 直接写，这里对齐 .code-block 观感 */
-.article-body pre{background:#0d0d14;color:#c9d1d9;padding:16px 20px;border-radius:8px;
+.article-body pre{background:#0D0D0D;color:#c9d1d9;padding:16px 20px;border-radius:8px;
   font-size:13px;line-height:1.7;overflow-x:auto;font-family:var(--font-mono);
   border:1px solid var(--border);margin:16px 0}
+.article-body pre::before{content:'$ ';color:var(--brand)}
 
 /* ═══ BUTTONS ═══ */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:99px;
   background:var(--brand);color:var(--bg);font-size:14px;font-weight:600;text-decoration:none;
   transition:transform .2s,box-shadow .2s;border:none;cursor:pointer}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(184,255,60,.25)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,255,65,.25)}
 .btn-outline{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
 .btn-outline:hover{background:var(--brand-bg);box-shadow:none}
 
@@ -178,12 +187,28 @@ body{
 .footer a{color:var(--brand);text-decoration:none}
 .footer a:hover{text-decoration:underline}
 
-/* ═══ THEME FAB（注入的浮动切换按钮，与首页互通） ═══ */
+/* ═══ THEME TOGGLE（nav 内按钮，与首页 sun/moon SVG 一致） ═══ */
+.theme-toggle{width:40px;height:40px;border-radius:50%;border:1px solid var(--border-bright);
+  background:var(--bg-card);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;
+  justify-content:center;transition:.2s;flex-shrink:0;font-size:0}
+.theme-toggle:hover{border-color:var(--brand);color:var(--brand)}
+.theme-toggle .ic{width:18px;height:18px;display:block}
+.theme-toggle .ic-moon{fill:currentColor;stroke:none}
+.theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
+body.light .theme-toggle .ic-moon{display:none}
+body.light .theme-toggle .ic-sun{display:block}
+
+/* ═══ THEME FAB（注入的浮动切换按钮，与首页 sun/moon SVG 一致） ═══ */
 .theme-fab{position:fixed;right:20px;bottom:20px;z-index:300;width:44px;height:44px;border-radius:50%;
   border:1px solid var(--border-bright);background:var(--bg-card);color:var(--fg);cursor:pointer;
-  font-size:18px;display:flex;align-items:center;justify-content:center;transition:.2s;
-  box-shadow:0 4px 16px rgba(0,0,0,.3)}
+  display:flex;align-items:center;justify-content:center;transition:.2s;font-size:0;
+  box-shadow:0 4px 16px rgba(0,0,0,.4)}
 .theme-fab:hover{border-color:var(--brand);color:var(--brand)}
+.theme-fab .ic{width:18px;height:18px;display:block}
+.theme-fab .ic-moon{fill:currentColor;stroke:none}
+.theme-fab .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
+body.light .theme-fab .ic-moon{display:none}
+body.light .theme-fab .ic-sun{display:block}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:900px){
