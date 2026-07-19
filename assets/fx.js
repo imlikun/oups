@@ -78,7 +78,7 @@
     document.body.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var pts = [];
-    var MAX = 24;
+    var MAX = 36;
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener('resize', resize);
     resize();
@@ -91,13 +91,13 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       var n = pts.length;
       for (var i = 0; i < n; i++) {
-        var a = (i / n) * 0.35 + 0.05;
-        var r = 1.5 + (i / n) * 2.5;
+        var a = (i / n) * 0.65 + 0.08;
+        var r = 2.5 + (i / n) * 4;
         ctx.beginPath();
         ctx.arc(pts[i].x, pts[i].y, r, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(0,255,65,' + a + ')';
         ctx.shadowColor = '#00FF41';
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 20;
         ctx.fill();
         ctx.shadowBlur = 0;
       }
@@ -143,7 +143,7 @@
     document.body.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var particles = [];
-    var COUNT = 16;
+    var COUNT = 40;
 
     function resize() {
       canvas.width = window.innerWidth;
@@ -156,10 +156,10 @@
     Particle.prototype.reset = function () {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 1.6 + 0.8;
-      this.sx = (Math.random() - 0.5) * 0.3;
-      this.sy = (Math.random() - 0.5) * 0.3;
-      this.op = Math.random() * 0.35 + 0.1;
+      this.size = Math.random() * 2.6 + 1.4;
+      this.sx = (Math.random() - 0.5) * 0.5;
+      this.sy = (Math.random() - 0.5) * 0.5;
+      this.op = Math.random() * 0.4 + 0.3;
     };
     Particle.prototype.step = function () {
       this.x += this.sx; this.y += this.sy;
@@ -171,7 +171,7 @@
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(0,255,65,' + this.op + ')';
       ctx.shadowColor = '#00FF41';
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = 16;
       ctx.fill();
       ctx.shadowBlur = 0;
     };

@@ -9,8 +9,8 @@
   --mouse-x: 50%;
   --mouse-y: 50%;
   --grid-offset: 0px, 0px;
-  --fx-glow-dark: rgba(0,255,65,.07);
-  --fx-glow-light: rgba(0,168,46,.10);
+  --fx-glow-dark: rgba(0,255,65,.16);
+  --fx-glow-light: rgba(0,168,46,.22);
 }
 
 /* 提升内容层级，使其位于 fixed 动效层（网格/粒子/拖尾 z-index:0）之上 */
@@ -27,13 +27,14 @@ section{
 
 /* ── 1. 鼠标追踪光晕（body 背景层，fixed 跟随视口，不遮挡内容）── */
 body{
-  background-image: radial-gradient(circle 380px at var(--mouse-x) var(--mouse-y),
-      var(--fx-glow-dark) 0%, transparent 70%);
+  background-image: radial-gradient(circle 560px at var(--mouse-x) var(--mouse-y),
+      var(--fx-glow-dark) 0%, transparent 72%);
   background-attachment: fixed;
+  transition: background .12s ease-out;
 }
 body.light{
-  background-image: radial-gradient(circle 380px at var(--mouse-x) var(--mouse-y),
-      var(--fx-glow-light) 0%, transparent 70%);
+  background-image: radial-gradient(circle 560px at var(--mouse-x) var(--mouse-y),
+      var(--fx-glow-light) 0%, transparent 72%);
 }
 
 /* ── 2. 动态网格偏移（JS 写 --grid-offset；鼠标移动产生物理流动感）── */
@@ -147,7 +148,7 @@ body.light .fx-grid{
   position:fixed; inset:0;
   pointer-events:none;
   z-index:0;
-  opacity:.45;
+  opacity:.8;
   mix-blend-mode:screen;
 }
 
@@ -249,6 +250,25 @@ nav a:hover::after, .nav-links a:hover::after, .quick-nav a:hover::after{
 .fx-cmd .prompt{
   color:var(--accent-green);
   font-weight:600;
+}
+.hero-change{
+  display:flex;
+  align-items:baseline;
+  gap:2px;
+  font-family:var(--font-mono);
+  font-size:clamp(46px,9vw,96px);
+  font-weight:700;
+  letter-spacing:-.04em;
+  line-height:1.04;
+  margin:6px 0 var(--s5);
+  color:var(--accent-green);
+  text-shadow:0 0 30px rgba(0,255,65,.35),0 0 64px rgba(0,255,65,.16);
+}
+.hero-change .caret{
+  width:clamp(10px,1.5vw,18px);
+  height:.92em;
+  margin-left:4px;
+  vertical-align:-.08em;
 }
 
 /* ── 15. 终端模拟器（footer 注入）── */
