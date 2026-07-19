@@ -59,7 +59,8 @@
       ],
       "videoUrl": "https://player.bilibili.com/player.html?bvid=BV1xx411c7mD",
       "date": "2026-05-28",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-4",
@@ -98,7 +99,8 @@
       ],
       "videoUrl": "",
       "date": "2026-05-22",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-6",
@@ -137,7 +139,8 @@
       ],
       "videoUrl": "",
       "date": "2026-05-15",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-8",
@@ -176,7 +179,8 @@
       ],
       "videoUrl": "",
       "date": "2026-05-05",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-10",
@@ -215,7 +219,8 @@
       ],
       "videoUrl": "",
       "date": "2026-04-20",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-12",
@@ -254,7 +259,8 @@
       ],
       "videoUrl": "",
       "date": "2026-04-08",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-15",
@@ -273,7 +279,8 @@
       ],
       "videoUrl": "https://player.bilibili.com/player.html?bvid=BV1VfEe6iERt",
       "date": "2026-06-11",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-14",
@@ -407,7 +414,8 @@
       ],
       "videoUrl": "https://player.bilibili.com/player.html?bvid=BV1FSjd6NEW2",
       "date": "2026-06-25",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-22",
@@ -427,7 +435,8 @@
       ],
       "videoUrl": "https://player.bilibili.com/player.html?bvid=BV17LjZ6KEoC",
       "date": "2026-06-25",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-23",
@@ -449,7 +458,8 @@
       "videoUrl": "",
       "directVideo": "video-lab/videos/course10-v2.mp4",
       "date": "2026-06-25",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-20",
@@ -607,7 +617,8 @@
       "videoUrl": "",
       "directVideo": "video-lab/videos/course11-v2.mp4",
       "date": "2026-06-25",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-30",
@@ -1140,7 +1151,8 @@
       ],
       "videoUrl": "https://player.bilibili.com/player.html?bvid=BV1j6Nu6vEtu",
       "date": "2026-07-12",
-      "status": "published"
+      "status": "published",
+      "template": "DP"
     },
     {
       "id": "article-53",
