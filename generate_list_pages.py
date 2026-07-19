@@ -89,7 +89,10 @@ def esc(s):
 def inject_assets(head):
     if '/assets/list.css' in head:
         return head
-    return head.replace('</head>', ASSETS).replace('<body', ASSETS.strip() + '\n<body')
+    if '</head>' in head:
+        return head.replace('</head>', ASSETS)
+    # 占位文件可能缺 </head>：直接在 head 末尾追加资源块（ASSETS 自带 </head> 收尾）
+    return head.rstrip() + '\n' + ASSETS
 
 
 def load_articles():
@@ -143,9 +146,10 @@ def body_html(cfg, list_html):
 def generate_content_page(cat, cfg, articles):
     path = os.path.join(BASE, cat, 'index.html')
     with open(path, 'r', encoding='utf-8') as f:
-        head = f.read().strip()
-    if '</body>' in head:
-        print('skip (already has body):', path)
+        raw = f.read().strip()
+    head = raw.split('<body', 1)[0]
+    if '/assets/list.css' in head and '</body>' in raw:
+        print('skip (already correct):', path)
         return
     head = inject_assets(head)
 
@@ -169,9 +173,10 @@ def generate_content_page(cat, cfg, articles):
 def generate_daily_digest_page(cfg):
     path = os.path.join(BASE, 'daily-digest', 'index.html')
     with open(path, 'r', encoding='utf-8') as f:
-        head = f.read().strip()
-    if '</body>' in head:
-        print('skip (already has body):', path)
+        raw = f.read().strip()
+    head = raw.split('<body', 1)[0]
+    if '/assets/list.css' in head and '</body>' in raw:
+        print('skip (already correct):', path)
         return
     head = inject_assets(head)
 
@@ -202,9 +207,10 @@ def generate_daily_digest_page(cfg):
 def generate_ai_radar_page(cfg):
     path = os.path.join(BASE, 'ai-radar', 'index.html')
     with open(path, 'r', encoding='utf-8') as f:
-        head = f.read().strip()
-    if '</body>' in head:
-        print('skip (already has body):', path)
+        raw = f.read().strip()
+    head = raw.split('<body', 1)[0]
+    if '/assets/list.css' in head and '</body>' in raw:
+        print('skip (already correct):', path)
         return
     head = inject_assets(head)
 
