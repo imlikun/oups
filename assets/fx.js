@@ -2,15 +2,14 @@
    FX ENGINE · appin.site · 1:1 复刻自 deepseek_html_20260719_c8248f.html
    逐项对应原文件 <script> 的 11 个模块，数值与行为完全一致：
    1 光晕追踪 / 2 网格偏移 / 3 心跳logo / 4 鼠标拖尾 /
-   5 背景粒子 / 6 点击涟漪 / 7 系统日志 / 8 ./change 打字机+glitch /
-   9 其它 [data-fx-glitch] / 10 终端模拟器
-   仅保留 prefers-reduced-motion 兜底（不改变正常观感）
+   5 背景粒子 / 6 点击涟漪 / 7 系统日志 / 8 打字机+glitch /
+   9 其它 [data-fx-glitch] / 10 终端模拟器 / 11 初始化
+   说明：原蓝本【没有任何】prefers-reduced-motion 闸门，本引擎亦不加，
+        以保证全站动效始终渲染（与蓝本一致）。
+        动效层 z-index 已抬到内容之上，使不透明 section 下依然可见。
    ════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
-
-  var reduce = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function esc(s) {
     return String(s).replace(/[&<>]/g, function (c) {
@@ -35,7 +34,6 @@
     grid.className = 'fx-grid';
     grid.setAttribute('aria-hidden', 'true');
     document.body.appendChild(grid);
-    if (reduce) return;
     var root = document.documentElement;
     document.addEventListener('mousemove', function (e) {
       var x = (e.clientX / window.innerWidth - 0.5) * 12;
@@ -47,7 +45,7 @@
   /* ── 3. 心跳指示灯（注入 .logo 首个子节点）── */
   function initHeartbeat() {
     var logos = document.querySelectorAll('.logo');
-    logos.forEach(function (logo) {
+    Array.prototype.forEach.call(logos, function (logo) {
       if (logo.querySelector('.heartbeat-dot')) return;
       var dot = document.createElement('span');
       dot.className = 'heartbeat-dot';
@@ -58,7 +56,6 @@
 
   /* ── 4. 鼠标拖尾（蓝本：MAX_POINT_S=25 / alpha .05–.35 / r 1.5–3 / blur 12）── */
   function initTrail() {
-    if (reduce) return;
     var trailCanvas = document.createElement('canvas');
     trailCanvas.id = 'fx-trail';
     document.body.appendChild(trailCanvas);
@@ -104,7 +101,6 @@
 
   /* ── 5. 背景粒子（蓝本：22 个 / size 1–3 / speed .25 / opacity .1–.4 / blur 12 / 画布 opacity .4）── */
   function initParticles() {
-    if (reduce) return;
     var canvas = document.createElement('canvas');
     canvas.id = 'fx-particles';
     canvas.style.opacity = '0.4';
@@ -156,7 +152,6 @@
 
   /* ── 6. 点击涟漪（蓝本：120px / 0.8s；交互元素不触发）── */
   function initRipple() {
-    if (reduce) return;
     var layer = document.createElement('div');
     layer.className = 'ripple-layer';
     layer.setAttribute('aria-hidden', 'true');
@@ -202,57 +197,64 @@
     var logIndex = 0;
     function rotateLog() {
       msg.textContent = logs[logIndex % logs.length];
-      if (!reduce) {
-        msg.style.animation = 'none';
-        void msg.offsetHeight;
-        msg.style.animation = 'fx-log-slide 0.5s ease';
-      }
+      msg.style.animation = 'none';
+      void msg.offsetHeight;
+      msg.style.animation = 'fx-log-slide 0.5s ease';
       logIndex++;
     }
     setInterval(rotateLog, 8000 + Math.random() * 7000);
     rotateLog();
   }
 
-  /* ── 8. ./change 打字机 + 周期性 glitch（蓝本：#slogan-text 打 './change'，120ms；打完每 10000+random*8000 触发 glitch）── */
+  /* ── 8. 打字机 + 周期性 glitch（蓝本机制：120ms/字，打完每 10000+random*8000 触发 glitch）
+        文本取自站点 hero 的真实文案（data-fx-text），而非蓝本的 ./change ── */
   function initTypewriter() {
-    var el = document.getElementById('slogan-text');
-    if (!el) return;
-    if (reduce) { el.textContent = './change'; return; }
-    var sloganText = './change';
-    var typeInterval = null;
-    var currentCharIndex = 0;
+    var targets = [
+      document.getElementById('slogan-text'),
+      document.getElementById('typed')
+    ].filter(Boolean);
+    if (!targets.length) return;
+    var texts = targets.map(function (el) {
+      return (el.getAttribute('data-fx-text') || el.textContent || '').trim() || './change';
+    });
+    var li = 0, ci = 0, timer = null;
 
-    function typeSlogan() {
-      if (typeInterval) { clearInterval(typeInterval); typeInterval = null; }
+    function typeLine() {
+      if (li >= targets.length) { startRandomGlitch(); return; }
+      var el = targets[li];
       el.textContent = '';
-      currentCharIndex = 0;
-      typeInterval = setInterval(function () {
-        if (currentCharIndex < sloganText.length) {
-          el.textContent += sloganText.charAt(currentCharIndex);
-          currentCharIndex++;
+      ci = 0;
+      timer = setInterval(function () {
+        if (ci < texts[li].length) {
+          el.textContent += texts[li].charAt(ci);
+          ci++;
         } else {
-          clearInterval(typeInterval);
-          typeInterval = null;
-          startRandomGlitch();
+          clearInterval(timer);
+          timer = null;
+          li++;
+          if (li < targets.length) typeLine();
+          else startRandomGlitch();
         }
       }, 120);
     }
+
     function startRandomGlitch() {
       setInterval(function () {
+        var el = targets[0];
         el.classList.remove('fx-glitch');
         void el.offsetHeight;
         el.classList.add('fx-glitch');
         setTimeout(function () { el.classList.remove('fx-glitch'); }, 500);
       }, 10000 + Math.random() * 8000);
     }
-    typeSlogan();
+
+    typeLine();
   }
 
   /* ── 9. 其它 [data-fx-glitch] 元素，周期闪烁 ── */
   function initGlitch() {
-    if (reduce) return;
     var targets = document.querySelectorAll('[data-fx-glitch]');
-    targets.forEach(function (el) {
+    Array.prototype.forEach.call(targets, function (el) {
       setInterval(function () {
         el.classList.remove('fx-glitch');
         void el.offsetHeight;
@@ -303,7 +305,7 @@
       if (lower === 'help') {
         reply = '可用命令: <span style="color:var(--accent-cyan)">whoami</span>, <span style="color:var(--accent-cyan)">date</span>, <span style="color:var(--accent-cyan)">./change</span>, <span style="color:var(--accent-cyan)">clear</span>, <span style="color:var(--accent-cyan)">echo &lt;text&gt;</span>';
       } else if (lower === 'whoami') {
-        reply = '你是 appin，一个用代码改变世界的极客。';
+        reply = '你是 李坤，一个用代码把想法做成产品的独立开发者。';
       } else if (lower === './change') {
         reply = '正在执行变革... 请稍候 (其实已经改变了)。';
       } else if (lower === 'date') {
