@@ -392,7 +392,7 @@ body.light .theme-toggle .ic-sun{display:block}
 <div class="hero-grid">
   <!-- left: headline + cta -->
   <div class="hero-left">
-    <h1>我是 <span class="hl">李坤</span><br><span id="typed"></span><span class="caret" aria-hidden="true">▋</span></h1>
+    <h1>我是 <span class="hl">李坤</span><br><span id="typed">独立开发者 · 把想法做成产品</span><span class="caret" aria-hidden="true">▋</span></h1>
     <p class="hero-tagline">
       懂代码的产品人，懂获客的技术人。写能落地的实战教程，做有信任感的出海品牌。
       <br><span style="color:var(--brand)">懂技术 + 稍微懂产品 = 扎实的基本盘。</span>
@@ -687,27 +687,45 @@ function renderLatest(){
     grid.innerHTML = top.length ? (cardHTML(top[0],true) + top.slice(1).map(function(a){return cardHTML(a,false);}).join('')) : '';
   }).catch(function(e){console.warn('content.json 加载失败',e);});
 }
-/* ═══ Hero 打字机效果（终端光标，循环切换，尊重 reduced-motion） ═══ */
-(function(){
-  var el=document.getElementById('typed'); if(!el) return;
-  var phrases=['独立开发者','把想法做成产品','独立开发者 · 把想法做成产品'];
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){el.textContent=phrases[phrases.length-1];return;}  /* 减弱动效：静态显示完整 slogan */
-  var pi=0,ci=0,deleting=false;
-  function tick(){
-    var full=phrases[pi];
-    if(!deleting){
-      el.textContent=full.slice(0,++ci);
-      if(ci>=full.length){deleting=true;return setTimeout(tick,1700);}
-    }else{
-      el.textContent=full.slice(0,--ci);
-      if(ci<=0){deleting=false;pi=(pi+1)%phrases.length;return setTimeout(tick,380);}
-    }
-    setTimeout(tick, deleting?34:62);
-  }
-  tick();
-})();
 renderLatest();
+</script>
+
+<!-- ═══ Hero 打字机（独立脚本块，不依赖其他 JS） ═══ -->
+<script>
+(function(){
+  'use strict';
+  document.addEventListener('DOMContentLoaded', function(){
+    var el = document.getElementById('typed');
+    if (!el) { console.warn('[typewriter] #typed not found'); return; }
+
+    var phrases = ['独立开发者', '把想法做成产品', '独立开发者 · 把想法做成产品'];
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce) {
+      el.textContent = phrases[phrases.length - 1];
+      var caret = el.nextElementSibling;
+      if (caret) caret.style.display = 'none';
+      return;
+    }
+
+    var pi = 0, ci = 0, deleting = false, timer = null;
+
+    function tick() {
+      var full = phrases[pi];
+      if (!deleting) {
+        el.textContent = full.slice(0, ++ci);
+        if (ci >= full.length) { deleting = true; timer = setTimeout(tick, 1700); return; }
+      } else {
+        el.textContent = full.slice(0, --ci);
+        if (ci <= 0) { deleting = false; pi = (pi + 1) % phrases.length; timer = setTimeout(tick, 380); return; }
+      }
+      timer = setTimeout(tick, deleting ? 34 : 62);
+    }
+
+    tick();
+    console.log('[typewriter] started');
+  });
+})();
 </script>
 </body>
 </html>
