@@ -285,47 +285,27 @@ nav .actions{display:flex;align-items:center;gap:12px}
 
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.content-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s4)}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
 .content-card{
-  grid-column:span 2;
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
-  padding:var(--s4);transition:.25s;display:flex;flex-direction:column;
+  overflow:hidden;transition:.25s;display:flex;flex-direction:column;
   cursor:pointer;text-decoration:none;color:inherit
 }
 .content-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
-/* Bento feature（首篇整行横卡：封面左 + 文字右） */
-.content-card.feature{
-  grid-column:1/-1;flex-direction:row;padding:0;overflow:hidden;border-color:var(--border-bright)
-}
-.content-card.feature:hover{transform:none;border-color:var(--brand)}
-.content-card.feature .content-thumb{
-  margin:0;flex:0 0 44%;aspect-ratio:16/9;border-radius:0;
-  border-bottom:none;border-right:1px solid var(--border)
-}
-.content-card.feature .feature-body{
-  flex:1;display:flex;flex-direction:column;justify-content:center;padding:var(--s5) var(--s6)
-}
-.content-card.feature .content-tags{margin-bottom:var(--s3)}
-.content-card.feature h3{font-size:clamp(18px,2vw,25px);margin-bottom:var(--s3);line-height:1.25}
-.content-card.feature p{-webkit-line-clamp:2}
-.content-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s3)}
-.tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--brand-bg);color:var(--brand)}
-.tag.blue{background:rgba(41,151,255,.1);color:var(--blue)}
-.tag.amber{background:var(--amber-bg);color:var(--amber)}
-.content-card h3{font-size:16.5px;font-weight:700;line-height:1.35;margin-bottom:var(--s2)}
-.content-card p{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1}
-.content-footer{display:flex;align-items:center;justify-content:space-between;margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--border)}
-.content-time{font-size:12px;color:var(--fg-dim);font-family:var(--font-mono);display:flex;align-items:center;gap:5px}
-.cat-pill{font-size:11px;font-weight:600;color:var(--fg-muted);padding:2px 8px;border:1px solid var(--border);border-radius:99px}
-/* 动态内容卡封面 + 摘要截断 */
-.content-thumb{margin:calc(-1 * var(--s4)) calc(-1 * var(--s4)) var(--s4);aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated);border-radius:calc(var(--radius-md) - 4px) calc(var(--radius-md) - 4px) 0 0}
-.content-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-/* 无图占位带：品牌渐变 + 分类标签，保证每张卡高度一致 */
+.content-card .content-thumb{margin:0;aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated)}
+.content-card .content-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.content-card:hover .content-thumb img{transform:scale(1.03)}
+.content-card .card-body{padding:var(--s3) var(--s4);display:flex;flex-direction:column;gap:6px;flex:1}
+.content-card .card-body h3{font-size:14.5px;font-weight:700;line-height:1.35;margin:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.content-card .card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px}
+.content-card .card-meta .card-time{font-size:11px;color:var(--fg-dim);font-family:var(--font-mono)}
+.content-card .card-meta .card-cat{font-size:10px;font-weight:600;color:var(--fg-muted);padding:2px 8px;border:1px solid var(--border);border-radius:99px}
+/* 无图占位 */
 .content-thumb.placeholder{
   display:flex;align-items:center;justify-content:center;gap:8px;
-  background:
-    radial-gradient(circle at 30% 20%, var(--brand-bg), transparent 60%),
-    linear-gradient(135deg, var(--bg-elevated), rgba(255,184,0,.05));
+  background:radial-gradient(circle at 30% 20%,var(--brand-bg),transparent 60%),
+    linear-gradient(135deg,var(--bg-elevated),rgba(255,184,0,.05));
   border-bottom:1px solid var(--border)
 }
 .content-thumb.placeholder .ph-cat{
@@ -409,7 +389,7 @@ body.light .theme-toggle .ic-sun{display:block}
   .hero-grid{grid-template-columns:1fr}.hero-right{display:none}
   .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
   .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
-  .content-grid{grid-template-columns:repeat(2,1fr)}
+  .content-grid{grid-template-columns:1fr}
   .content-card{grid-column:span 1}
   .content-card.feature{grid-column:1/-1}
   .content-card.feature{flex-direction:column}
@@ -749,25 +729,21 @@ function renderLatest(){
     var rest=arts.filter(function(a){return picked.indexOf(a)<0;});
     var top=picked.concat(rest).slice(0,5);
     var catName={craft:'技艺录',notes:'随笔',video:'视频','daily-digest':'每日阅读','ai-radar':'AI雷达'};
-    var catTag={craft:'',video:'blue',notes:'amber'};
-    function cardHTML(a,feature){
+    function cardHTML(a){
       var cat=a.category||'craft';
       var href='/'+cat+'/'+(a.slug||'')+'.html';
       var img=a.image?('/'+a.image):'';
-      var tags=(a.tags||[]).slice(0,2).map(function(t,i){return '<span class="tag'+(i===0&&catTag[cat]?' '+catTag[cat]:'')+'">'+esc(t)+'</span>';}).join('');
       var thumb=img
         ? '<div class="content-thumb"><img src="'+img+'" alt="" loading="lazy" data-label="'+catName[cat]+'" onerror="thumbFallback(this)"></div>'
         : '<div class="content-thumb placeholder"><span class="ph-glyph">✎</span><span class="ph-cat">'+catName[cat]+'</span></div>';
       var inner=thumb
-        + (feature?'<div class="feature-body">':'')
-        +'<div class="content-tags">'+(tags||'<span class="tag">'+catName[cat]+'</span>')+'</div>'
+        +'<div class="card-body">'
         +'<h3>'+esc(a.title||'')+'</h3>'
-        +'<p>'+esc(a.excerpt||'')+'</p>'
-        +'<div class="content-footer"><span class="content-time">'+esc(a.date||'')+'</span><span class="cat-pill">'+catName[cat]+'</span></div>'
-        + (feature?'</div>':'');
-      return '<a class="content-card'+(feature?' feature':'')+'" href="'+href+'">'+inner+'</a>';
+        +'<div class="card-meta"><span class="card-time">'+esc(a.date||'')+'</span><span class="card-cat">'+catName[cat]+'</span></div>'
+        +'</div>';
+      return '<a class="content-card" href="'+href+'">'+inner+'</a>';
     }
-    grid.innerHTML = top.length ? (cardHTML(top[0],true) + top.slice(1).map(function(a){return cardHTML(a,false);}).join('')) : '';
+    grid.innerHTML = top.length ? top.map(cardHTML).join('') : '';
   }).catch(function(e){console.warn('content.json 加载失败',e);});
 }
 renderLatest();
