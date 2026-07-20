@@ -593,6 +593,19 @@
 <script>
 (function(){try{if(localStorage.getItem('theme')==='light')document.body.classList.add('light');}catch(e){}})();
 function toggleTheme(){var b=document.body;b.classList.toggle('light');try{localStorage.setItem('theme',b.classList.contains('light')?'light':'dark');}catch(e){}}
+
+// Fix: remove lazy loading & add error fallback for list thumbnails
+(function(){
+  document.querySelectorAll('.article-thumb img').forEach(function(img){
+    img.removeAttribute('loading');
+    img.onerror = function(){
+      this.style.display = 'none';
+      var p = this.parentElement;
+      p.classList.add('fallback');
+      p.innerHTML = '<span>⚒</span>';
+    };
+  });
+})();
 </script>
 </body>
 </html>

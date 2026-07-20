@@ -1769,6 +1769,30 @@
       "status": "published",
       "link": "/craft/quark-to-aliyun-sync.html",
       "template": "DP"
+    },
+    {
+      "id": "article-77",
+      "title": "✎ 随笔 | 一个人做访谈节目：从 VibeVoice 小白试玩到完整 AI 播客制作方案",
+      "slug": "ai-interview-podcast-guide",
+      "category": "notes",
+      "featured": true,
+      "image": "uploads/ai-interview-podcast-guide-cover.webp",
+      "excerpt": "想做1对1访谈节目但只有自己一个人？从 VibeVoice-TTS-Web-UI 小白试玩，到 LLM 写脚本 + AI 配音 + Audacity 混音的完整零成本播客生产线。",
+      "content": "详见独立文章页：/notes/ai-interview-podcast-guide.html",
+      "tags": [
+        "VibeVoice",
+        "AI配音",
+        "Audacity",
+        "播客制作",
+        "TTS",
+        "LLM",
+        "访谈节目",
+        "语音合成"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-20",
+      "status": "published",
+      "template": "DP"
     }
   ],
   "projects": [

@@ -53,7 +53,18 @@
   </div>
 </section>
 <section class="list-wrap">
-  <div class="list-header"><h2>&gt; 全部 随笔 <span>(15)</span></h2></div>
+  <div class="list-header"><h2>&gt; 全部 随笔 <span>(16)</span></h2></div>
+<a class="article-item" href="/notes/ai-interview-podcast-guide.html">
+  <div class="article-thumb"><img class="thumb-img" src="/uploads/ai-interview-podcast-guide-cover.webp" alt="" loading="lazy"></div>
+  <div class="article-info">
+    <span class="ai-date">2026-07-20</span>
+    <h3>一个人做访谈节目：从 VibeVoice 小白试玩到完整 AI 播客制作方案</h3>
+    <p class="ai-excerpt">想做1对1访谈节目但只有自己一个人？从 VibeVoice-TTS-Web-UI 小白试玩，到 LLM 写脚本 + AI 配音 + Audacity 混音的完整零成本播客生产线。</p>
+    <div class="ai-meta">
+      <div class="ai-tags"><span class="item-tag">VibeVoice</span><span class="item-tag">AI配音</span></div>
+    </div>
+  </div>
+</a>
 <a class="article-item" href="/notes/opc-one-person-company-plan.html">
   <div class="article-thumb fallback"><span>✎</span></div>
   <div class="article-info">
@@ -230,6 +241,19 @@
 <script>
 (function(){try{if(localStorage.getItem('theme')==='light')document.body.classList.add('light');}catch(e){}})();
 function toggleTheme(){var b=document.body;b.classList.toggle('light');try{localStorage.setItem('theme',b.classList.contains('light')?'light':'dark');}catch(e){}}
+
+// Fix: remove lazy loading & add error fallback for list thumbnails
+(function(){
+  document.querySelectorAll('.article-thumb img').forEach(function(img){
+    img.removeAttribute('loading');
+    img.onerror = function(){
+      this.style.display = 'none';
+      var p = this.parentElement;
+      p.classList.add('fallback');
+      p.innerHTML = '<span>✎</span>';
+    };
+  });
+})();
 </script>
 </body>
 </html>
