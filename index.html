@@ -232,7 +232,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 
 /* ═══ PRODUCTS SECTION ═══ */
 .products-section{}
-.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
 .prod-card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
   padding:var(--s5);transition:.25s;display:flex;flex-direction:column;
@@ -341,6 +341,11 @@ nav .actions{display:flex;align-items:center;gap:12px}
   color:var(--brand);font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px
 }
 .view-all a:hover{text-decoration:underline}
+/* content section compact header */
+.content-header{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s4);margin-bottom:var(--s5);flex-wrap:wrap}
+.view-all-inline{display:flex;gap:var(--s3);flex-wrap:wrap}
+.view-all-inline a{color:var(--fg-muted);font-size:13px;font-weight:600;text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:99px;transition:.2s}
+.view-all-inline a:hover{color:var(--brand);border-color:var(--brand)}
 
 /* ═══ radar (AI news) cards ═══ */
 .radar-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -459,6 +464,7 @@ body.light .theme-toggle .ic-sun{display:block}
       懂代码的产品人，懂获客的技术人。写能落地的实战教程，做有信任感的出海品牌。
       <br><span style="color:var(--brand)">懂技术 + 稍微懂产品 = 扎实的基本盘。</span>
     </p>
+    <p style="font-size:13px;color:var(--fg-dim);margin-top:8px">免费实战教程 · 付费电子书 · 技术咨询</p>
     <div class="hero-actions">
       <a class="btn-primary" href="#content">读我的文章 ↗</a>
       <a class="btn-secondary" href="#tools">看我推荐的工具</a>
@@ -485,26 +491,10 @@ body.light .theme-toggle .ic-sun{display:block}
 <!-- ═════ STATS RIBBON ═════ -->
 <section class="stats-section">
 <div class="stats-grid">
-  <div class="stat-card"><div class="stat-num">47</div><div class="stat-label">技艺录实战</div></div>
-  <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">开源项目拆解</div></div>
-  <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">随笔思考</div></div>
-  <div class="stat-card"><div class="stat-num">74</div><div class="stat-label">全站内容</div></div>
-</div>
-</section>
-
-<!-- ═════ LATEST CONTENT (mixed stream) ═════ -->
-<section id="content" class="section content-section">
-<div class="section-inner">
-  <div class="section-label">最新内容</div>
-  <h2 class="section-title"><span class="hl">真实</span>写出来的，不是搬运</h2>
-  <p class="section-desc">技艺录、随笔、视频、每日阅读——所有栏目的最新一篇都汇到这里。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 自动渲染，你只管更新，首页自动跟着变。</p>
-  <div class="content-grid" id="content-grid"></div>
-  <div class="view-all">
-    <a href="/craft/">技艺录 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-    <a href="/notes/">随笔 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-    <a href="/video-lab/">视频 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;
-    <a href="/daily-digest/">每日阅读 →</a>
-  </div>
+  <a class="stat-card" href="/craft/" style="text-decoration:none;color:inherit"><div class="stat-num">47</div><div class="stat-label">技艺录实战</div></a>
+  <a class="stat-card" href="/craft/" style="text-decoration:none;color:inherit"><div class="stat-num">22</div><div class="stat-label">工具拆解</div></a>
+  <a class="stat-card" href="/notes/" style="text-decoration:none;color:inherit"><div class="stat-num">15</div><div class="stat-label">随笔思考</div></a>
+  <a class="stat-card" href="/" style="text-decoration:none;color:inherit"><div class="stat-num">74</div><div class="stat-label">全站内容</div></a>
 </div>
 </section>
 
@@ -544,6 +534,25 @@ body.light .theme-toggle .ic-sun{display:block}
 </div>
 </section>
 
+<!-- ═════ LATEST CONTENT (mixed stream) ═════ -->
+<section id="content" class="section content-section">
+<div class="section-inner">
+  <div class="content-header">
+    <div>
+      <div class="section-label">最新内容</div>
+      <h2 class="section-title" style="margin-bottom:0"><span class="hl">真实</span>写出来的，不是搬运</h2>
+    </div>
+    <div class="view-all-inline">
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/">随笔</a>
+      <a href="/video-lab/">视频</a>
+      <a href="/daily-digest/">每日阅读</a>
+    </div>
+  </div>
+  <div class="content-grid" id="content-grid"></div>
+</div>
+</section>
+
 <!-- ═════ DIGITAL PRODUCTS ═════ -->
 <section id="products" class="section products-section">
 <div class="section-inner">
@@ -569,15 +578,7 @@ body.light .theme-toggle .ic-sun{display:block}
         <a class="prod-btn" href="#" onclick="return false">立即获取</a>
       </div>
     </article>
-    <article class="prod-card">
-      <span class="prod-type">手册 · PDF</span>
-      <h3 class="prod-title">技术人出海品牌实操手册</h3>
-      <p class="prod-desc">从零搭建海外 B2B 品牌信任体系：四柱模型、小米式透传打法、渠道落地清单。</p>
-      <div class="prod-meta">
-        <div class="prod-price">即将上架</div>
-        <a class="prod-btn" style="opacity:.5;pointer-events:none" href="#">敬请期待</a>
-      </div>
-    </article>
+
   </div>
 </div>
 </section>
@@ -587,7 +588,7 @@ body.light .theme-toggle .ic-sun{display:block}
 <div class="section-inner">
   <div class="section-label">我的作品</div>
   <h2 class="section-title">自己做的<span class="hl">小产品</span></h2>
-  <p class="section-desc">从 0 到 1 动手做的独立产品，点进去看完整站点。</p>
+  <p class="section-desc">从 0 到 1 动手做的独立产品，也有给客户 / 自己搭的实战项目，点进去看。</p>
   <div class="works-grid">
     <a class="work-card" href="https://chongjida.Appin.site">
       <div class="work-cover"><span class="wc-mark">宠急帮</span><span class="wc-sub">宠物上门服务</span></div>
@@ -596,6 +597,26 @@ body.light .theme-toggle .ic-sun{display:block}
         <h3 class="work-title">宠急帮 · 上门喂宠</h3>
         <p class="work-desc">宠物上门喂养 / 看护预约小程序，深色 Bento 风格，含登录、联系、分享。后端已迁至阿里云自建。</p>
         <span class="work-link">访问小程序 →</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="/pxid2/">
+      <div class="work-cover"><span class="wc-mark">PXID</span><span class="wc-sub">电助力车出海官网</span></div>
+      <div class="work-body">
+        <div class="work-type">客户项目 · 出海 B2B 官网</div>
+        <h3 class="work-title">PXID · 电助力车 OEM/ODM 站</h3>
+        <p class="work-desc">面向欧美与新兴市场的电助力车 / 滑板车制造商官网，含产品矩阵、ODM 服务与 SEO 内容集群。</p>
+        <span class="work-link">查看官网 →</span>
+      </div>
+    </a>
+
+    <a class="work-card" href="/craft/quark-to-aliyun-sync.html">
+      <div class="work-cover"><span class="wc-mark">网盘中转</span><span class="wc-sub">Docker · AList</span></div>
+      <div class="work-body">
+        <div class="work-type">实战案例 · 基础设施</div>
+        <h3 class="work-title">夸克网盘 → 阿里云盘 自动同步</h3>
+        <p class="work-desc">用 ECS 上的 AList + alist-sync 做中转，每天定时把夸克指定文件夹同步到阿里云盘，含 Docker 镜像源绕墙等踩坑实录。</p>
+        <span class="work-link">看完整案例 →</span>
       </div>
     </a>
   </div>
@@ -611,25 +632,25 @@ body.light .theme-toggle .ic-sun{display:block}
   <div class="radar-grid">
 
     <a class="radar-card" href="#">
-      <div class="radar-head"><span class="radar-src">↗ OpenAI</span><span>2 小时前</span></div>
+      <div class="radar-head"><span class="radar-src">↗ OpenAI</span></div>
       <h3>Codex 网页版上线「并行任务」：一次开 5 个沙箱同时跑</h3>
       <p>官方博客更新，Pro 用户可在 chat 界面同时派发多个独立编码任务，结果汇总到同一会话。</p>
     </a>
 
     <a class="radar-card" href="#">
-      <div class="radar-head"><span class="radar-src">↗ Anthropic</span><span>5 小时前</span></div>
+      <div class="radar-head"><span class="radar-src">↗ Anthropic</span></div>
       <h3>Claude Code 支持「计划模式」：先出方案再动手</h3>
       <p>新增 plan 子命令，先生成修改计划等待确认，再执行，降低误改风险。</p>
     </a>
 
     <a class="radar-card" href="#">
-      <div class="radar-head"><span class="radar-src">↗ GitHub</span><span>昨天</span></div>
+      <div class="radar-head"><span class="radar-src">↗ GitHub</span></div>
       <h3>Copilot Workspace 支持自定义 Agent 流程</h3>
       <p>可在仓库内定义多步 Agent 流水线，配合 Actions 实现 PR 自动预审。</p>
     </a>
 
     <a class="radar-card" href="#">
-      <div class="radar-head"><span class="radar-src">↗ 社区</span><span>昨天</span></div>
+      <div class="radar-head"><span class="radar-src">↗ 社区</span></div>
       <h3>开源 Understand Anything 登 GitHub Trending</h3>
       <p>一条命令把 20 万行代码库转成交互知识图谱，本周_star 破 3k。</p>
     </a>
@@ -644,6 +665,7 @@ body.light .theme-toggle .ic-sun{display:block}
 <div class="section-inner">
   <div class="consult-box">
     <h2>有项目想聊？</h2>
+    <p style="font-size:13px;color:var(--fg-muted);margin-bottom:8px">已帮助 PXID 完成海外官网搭建、独立产品从 0 到 1 上线</p>
     <p>个人站搭建 · 出海品牌轻咨询 · 技术方案评审<br>邮件直达，通常 24h 内回复。</p>
     <div class="pills">
       <span class="pill">🏗 个人站 / 作品集</span>
@@ -726,7 +748,7 @@ function renderLatest(){
     arts.forEach(function(a){ if(!byCat[a.category]) byCat[a.category]=a; });
     var picked=Object.keys(byCat).map(function(k){return byCat[k];});
     var rest=arts.filter(function(a){return picked.indexOf(a)<0;});
-    var top=picked.concat(rest).slice(0,7);
+    var top=picked.concat(rest).slice(0,5);
     var catName={craft:'技艺录',notes:'随笔',video:'视频','daily-digest':'每日阅读','ai-radar':'AI雷达'};
     var catTag={craft:'',video:'blue',notes:'amber'};
     function cardHTML(a,feature){
