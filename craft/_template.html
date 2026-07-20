@@ -1,4 +1,41 @@
 <!DOCTYPE html>
+<!--
+═════════════════════════════════════════════════════════════════════════
+  Appin.site · 技艺录（craft）文章模板  v2（article.css 体系 · 2026-07-20 重制）
+  本模板对齐线上现行文章的视觉结构，直接复制本文件 → 改名 <slug>.html → 替换占位符即可。
+═════════════════════════════════════════════════════════════════════════
+
+【1】占位符清单（全局替换，发布前确保无残留 {{...}}）
+  {{TITLE}}         页面 <title> + og:title + twitter:title（含【WB】前缀）
+  {{EXCERPT}}       description + og:description + twitter:description + hero-desc（一句话摘要）
+  {{SLUG}}          文章短链名，如 quark-to-aliyun-sync（用于 canonical / og:url / 封面路径）
+  {{HERO_COVER}}    封面绝对路径：/uploads/{{SLUG}}-cover.webp
+  {{HERO_BADGE}}    hero 顶部小标签，如「实战案例 · 网盘自动化」
+  {{TITLE_HTML}}    h1 主标题（可含 <strong> 强调）
+  {{HERO_META}}     hero-meta 内若干 <span>分类</span><span class="dot"></span> 组合（3~4 个）
+  {{TOC_LINKS}}      目录浮层 <li><a href="#s1">…</a></li> 列表（每章一条，对应正文 h2 的 id）
+  {{BODY}}           正文全部章节（见下方区块库示例，删掉示例写你自己的）
+  {{TAGS}}           标签云 <a href="/craft/">标签</a> 列表（8~12 个）
+  {{DATE}}           发布日期，如 2026.07.20
+  {{CATEGORY}}      栏目目录名：craft
+  {{CATEGORY_LABEL}} 栏目中文名：技艺录
+
+【2】素材纪律（来自 AGENTS.md，务必遵守）
+  · 封面必须是横图（宽高比 ≥ 1.5，推荐 1.78）；竖图先 center-crop 成 16:9
+  · 封面图放 uploads/<slug>-cover.<ext>，文章页 <img src> 用绝对路径 /uploads/...（子目录页相对路径会 404）
+  · png 封面被 .gitignore 忽略、不会上线；统一用 jpg / webp
+  · 重要句子用 <span class="key">…</span> 强调（品牌绿加粗），不用下划线/纯变色/普通加粗
+  · 不生成 AI 封面图（除非用户当次同意）；真实摄影图优先 Unsplash / Pexels
+  · 凭证（IP / 密码 / Cookie / Token）一律打码为 **** 或示例占位
+
+【3】发布动作
+  1. 复制本文件 → craft/<slug>.html，替换全部 {{...}}
+  2. 封面 uploads/<slug>-cover.webp
+  3. content.json 的 articles 数组末尾追加一条（id = 当前最大 +1，template 固定 "DP"）
+  4. 更新 craft/index.html 静态列表（文章数 + 列表项）
+  5. git add . && git commit -m "feat(craft): ..." && git push   →  GitHub Actions 自动部署，无需手动 SSH 同步
+═════════════════════════════════════════════════════════════════════════
+-->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -7,415 +44,185 @@
 <meta name="description" content="{{EXCERPT}}">
 <!--SEO-->
 <link rel="icon" href="/favicon.ico">
-<link rel="canonical" href="https://www.Appin.site/craft/_template.html">
+<link rel="canonical" href="https://www.appin.site/craft/{{SLUG}}.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{TITLE}}">
 <meta property="og:description" content="{{EXCERPT}}">
-<meta property="og:url" content="https://www.Appin.site/craft/_template.html">
+<meta property="og:url" content="https://www.appin.site/craft/{{SLUG}}.html">
 <meta property="og:site_name" content="Appin.site">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{TITLE}}">
 <meta name="twitter:description" content="{{EXCERPT}}">
+<meta property="og:image" content="https://www.appin.site/uploads/{{SLUG}}-cover.webp">
+<meta name="twitter:image" content="https://www.appin.site/uploads/{{SLUG}}-cover.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-/* ═══════════ APPIN.SITE 文章模板（极客暗黑终端风 · deepseek 细化版 de5545） ═══════════
-   token 采用新蓝本命名(--bg-primary/--text-primary/--accent-green/...) + 旧名别名。
-   组件：太阳/月亮 SVG 主题切换、毛玻璃 nav、.section-title(> marker)、.btn-ghost。 */
-:root{
-  /* —— 新蓝本 token（deepseek 细化版 de5545） —— */
-  --bg-primary:#0A0A0A;
-  --bg-secondary:#141414;
-  --bg-elevated:#1E1E1E;
-  --text-primary:#E8E8E8;
-  --text-secondary:#A0A0A0;
-  --text-inverse:#0A0A0A;
-  --accent-green:#00FF41;
-  --accent-cyan:#00D4FF;
-  --accent-dim:rgba(0,255,65,.15);
-  --border-subtle:#2A2A2A;
-  --border-strong:#444444;
-  --state-error:#FF3B30;
-  --state-success:#34C759;
-  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
-  /* —— 向后兼容别名（本页内联 CSS 沿用旧名） —— */
-  --bg:var(--bg-primary);
-  --bg-card:var(--bg-elevated);
-  --fg:var(--text-primary);
-  --fg-muted:var(--text-secondary);
-  --fg-dim:#6B6B6B;
-  --brand:var(--accent-green);
-  --brand-dim:#00B32C;
-  --brand-bg:var(--accent-dim);
-  --cyan:var(--accent-cyan);
-  --cyan-bg:rgba(0,212,255,.10);
-  --border:var(--border-subtle);
-  --border-bright:var(--border-strong);
-  --amber:#FFB800;
-  --amber-bg:rgba(255,184,0,.10);
-  --red:#FF3B30;--green:#34C759;--blue:#2997ff;
-  --radius-sm:6px;--radius-md:8px;--radius-lg:12px;--radius-xl:20px;
-  --maxw:1200px;--max-text:720px;--nav-h:56px;
-  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;
-}
-body.light{
-  --bg-primary:#F5F5F5;
-  --bg-secondary:#FFFFFF;
-  --bg-elevated:#FFFFFF;
-  --text-primary:#0A0A0A;
-  --text-secondary:#555555;
-  --text-inverse:#F5F5F5;
-  --accent-green:#00A82E;
-  --accent-cyan:#008CB0;
-  --accent-dim:rgba(0,168,46,.12);
-  --border-subtle:#E2E2E2;
-  --border-strong:#CCCCCC;
-  --state-error:#D70015;
-  --state-success:#1A9E3E;
-  --bg:var(--bg-primary);
-  --bg-card:#FFFFFF;
-  --fg:var(--text-primary);
-  --fg-muted:var(--text-secondary);
-  --fg-dim:#888888;
-  --brand:var(--accent-green);
-  --brand-bg:var(--accent-dim);
-  --cyan:var(--accent-cyan);
-  --border:var(--border-subtle);
-  --border-bright:var(--border-strong);
-  --amber:#B57800;
-  --amber-bg:rgba(181,120,0,.10);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:var(--font-mono);background:var(--bg);color:var(--fg);line-height:1.85;font-size:16px;overflow-x:hidden}
-*:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:2px}
-::selection{background:var(--brand-bg);color:var(--brand)}
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-track{background:var(--bg-primary)}
-::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:var(--accent-green)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-[id]{scroll-margin-top:calc(var(--nav-h) + 64px)}
-
-/* ═══ NAV（毛玻璃，与首页一致） ═══ */
-nav{
-  position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;height:var(--nav-h);
-  background:rgba(20,20,20,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border-subtle);font-size:14px;font-weight:500;
-}
-nav .logo{display:flex;align-items:center;gap:2px;font-weight:700;font-size:17px;color:var(--brand);text-decoration:none;letter-spacing:-.5px;font-family:var(--font-mono)}
-nav .logo span{color:var(--fg-dim);font-weight:400}
-nav .links{display:flex;align-items:center;gap:4px}
-nav a.nav-link{position:relative;color:var(--fg-muted);padding:8px 14px;text-decoration:none;border-radius:var(--radius-sm);transition:.15s;font-family:var(--font-mono)}
-nav a.nav-link:hover{color:var(--brand);background:var(--brand-bg)}
-nav a.nav-link.active{color:var(--brand)}
-nav a.nav-link::after{content:'';position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--brand);width:0;transition:width .25s ease}
-nav a.nav-link:hover::after,nav a.nav-link.active::after{width:calc(100% - 28px)}
-nav a.nav-link.active::before{content:'> ';opacity:.85}
-nav .actions{display:flex;align-items:center;gap:12px}
-.theme-toggle{
-  width:40px;height:40px;border-radius:50%;border:1px solid var(--border-bright);
-  background:var(--bg-card);color:var(--fg);cursor:pointer;display:inline-flex;
-  align-items:center;justify-content:center;transition:.2s;flex-shrink:0
-}
-.theme-toggle:hover{border-color:var(--brand);color:var(--brand)}
-.theme-toggle .ic{width:18px;height:18px;display:block}
-.theme-toggle .ic-moon{fill:currentColor;stroke:none}
-.theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
-body.light .theme-toggle .ic-moon{display:none}
-body.light .theme-toggle .ic-sun{display:block}
-
-/* ═══ READING PROGRESS BAR ═══ */
-.progress{position:fixed;top:var(--nav-h);left:0;right:0;height:2px;z-index:199;background:transparent}
-.progress::after{content:'';position:absolute;left:0;top:0;height:2px;width:var(--p,0%);
-  background:linear-gradient(90deg,var(--brand),var(--amber));border-radius:0 1px 1px 0;transition:width .1s linear}
-
-/* ═══ HERO ═══ */
-.hero{position:relative;padding:var(--s7) var(--s5) var(--s5);overflow:hidden}
-.hero::before{content:'';position:absolute;top:-160px;right:-80px;width:520px;height:520px;
-  background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);pointer-events:none}
-.hero-inner{max-width:var(--max-text);margin:0 auto;position:relative}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:var(--s4);
-  font-family:var(--font-mono);background:var(--brand-bg);padding:5px 14px;border-radius:99px}
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
-.hero h1{font-size:clamp(28px,4.2vw,44px);font-weight:700;line-height:1.18;letter-spacing:-.03em;margin-bottom:var(--s4)}
-.hero h1 .hl{color:var(--brand)}
-.hero-desc{font-size:17px;color:var(--fg-muted);line-height:1.7;margin-bottom:var(--s5)}
-.hero-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--fg-dim);font-family:var(--font-mono)}
-.hero-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--fg-dim)}
-.hero-meta .hl{color:var(--brand)}
-
-/* ═══ HERO COVER (首图，横图 16:9) ═══ */
-.hero-cover{position:relative;z-index:2}
-.hero-cover img{width:100%;max-height:460px;object-fit:cover;display:block;border-radius:var(--radius-lg);
-  border:1px solid var(--border);margin-top:var(--s5)}
-
-/* ═══ STICKY TOC PILLS ═══ */
-.toc{position:sticky;top:var(--nav-h);z-index:150;background:var(--bg);
-  border-bottom:1px solid var(--border);padding:12px 0;margin-bottom:var(--s6)}
-.toc-scroll{max-width:var(--max-text);margin:0 auto;padding:0 var(--s5);
-  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
-.toc-scroll::-webkit-scrollbar{display:none}
-.toc-scroll a{flex-shrink:0;font-size:12px;font-weight:500;color:var(--fg-muted);text-decoration:none;
-  padding:6px 14px;border-radius:99px;border:1px solid transparent;transition:.15s;white-space:nowrap}
-.toc-scroll a:hover{color:var(--fg);border-color:var(--border)}
-.toc-scroll a.active{color:var(--brand);border-color:var(--brand-bg);background:var(--brand-bg)}
-
-/* ═══ ARTICLE BODY ═══ */
-.article-wrap{max-width:var(--max-text);margin:0 auto;padding:0 var(--s5) var(--s7)}
-.article-body h2{font-size:clamp(22px,3vw,28px);font-weight:700;letter-spacing:-.02em;
-  margin:var(--s6) 0 var(--s3);padding-left:18px;position:relative;line-height:1.3}
-.article-body h2::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:4px;
-  border-radius:2px;background:var(--brand)}
-.article-body h2:first-child{margin-top:0}
-.article-body h3{font-size:20px;font-weight:600;margin:var(--s5) 0 var(--s2);color:var(--fg)}
-.article-body h4{font-size:14px;font-weight:700;margin:var(--s4) 0 10px;color:var(--brand);
-  text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-mono)}
-.article-body p{margin-bottom:var(--s3);color:var(--fg-muted)}
-.article-body strong{font-weight:700;color:var(--fg)}
-.article-body ul,.article-body ol{margin:0 0 var(--s3) 20px}
-.article-body li{margin-bottom:8px;line-height:1.8;color:var(--fg-muted)}
-.article-body a{color:var(--brand);text-decoration:none;border-bottom:1px solid var(--brand-bg);transition:border-color .2s}
-.article-body a:hover{border-bottom-color:var(--brand)}
-.article-body code{font-family:var(--font-mono);font-size:.88em;background:var(--brand-bg);
-  color:var(--brand);padding:2px 6px;border-radius:var(--radius-sm)}
-/* 重要句子强调（全局规范：取品牌绿，font-weight:700） */
-.article-body .key,.content .key{color:var(--brand);font-weight:700}
-
-/* ═══ COMPONENTS ═══ */
-.pull-quote{margin:var(--s5) 0;padding:var(--s4);border-left:3px solid var(--brand);
-  background:var(--brand-bg);border-radius:0 var(--radius-md) var(--radius-md) 0;font-style:italic}
-.pull-quote p{font-size:17px;font-weight:500;color:var(--fg);margin:0;line-height:1.7}
-
-.info-box{margin:var(--s5) 0;padding:var(--s4);background:var(--bg-card);
-  border:1px solid var(--border);border-radius:var(--radius-md)}
-.info-box .info-title{font-size:12px;font-weight:700;color:var(--brand);margin-bottom:10px;
-  text-transform:uppercase;letter-spacing:.07em;font-family:var(--font-mono)}
-.info-box p{margin-bottom:6px;font-size:15px;color:var(--fg-muted)}
-.info-box ul{margin:6px 0 0 18px}
-.info-box li{color:var(--fg-muted);font-size:15px}
-
-.highlight-box{margin:var(--s5) 0;padding:var(--s4) var(--s5);
-  background:linear-gradient(135deg,var(--brand-bg),var(--amber-bg));
-  border:1px solid var(--border-bright);border-radius:var(--radius-md)}
-.highlight-box p{margin-bottom:0;font-size:15px;color:var(--fg);line-height:1.75}
-
-.step-list{counter-reset:step;list-style:none;margin:var(--s4) 0 var(--s5)}
-.step-list li{counter-increment:step;margin-bottom:var(--s3);padding:var(--s4);
-  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);position:relative}
-.step-list li::before{content:counter(step);position:absolute;top:-10px;left:20px;
-  background:var(--brand);color:var(--bg);width:28px;height:28px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--font-mono)}
-.step-list li .step-label{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:6px;display:block;padding-top:6px}
-.step-list li p{margin-bottom:4px;font-size:15px}
-
-.checklist{list-style:none;margin:var(--s4) 0 var(--s5)}
-.checklist li{padding:12px 18px;margin-bottom:8px;border-radius:var(--radius-md);
-  background:var(--bg-card);display:flex;align-items:center;gap:10px;font-size:15px;
-  border:1px solid var(--border);color:var(--fg-muted)}
-.checklist li::before{content:"✓";display:inline-flex;align-items:center;justify-content:center;
-  width:22px;height:22px;border-radius:50%;background:var(--brand-bg);color:var(--brand);
-  font-size:12px;font-weight:700;flex-shrink:0}
-
-.table-wrap{margin:var(--s5) 0;overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius-md)}
-.table-wrap table{width:100%;border-collapse:collapse;font-size:14px}
-.table-wrap thead{background:var(--bg-elevated)}
-.table-wrap th{padding:14px 18px;text-align:left;font-weight:700;font-size:12px;color:var(--fg-dim);
-  text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--border)}
-.table-wrap td{padding:14px 18px;border-bottom:1px solid var(--border);color:var(--fg-muted);line-height:1.65}
-.table-wrap tr:last-child td{border-bottom:none}
-.table-wrap tbody tr:hover{background:var(--brand-bg)}
-
-.code-block{margin:var(--s4) 0;background:#0d0d14;color:#c9d1d9;padding:var(--s4);
-  border-radius:var(--radius-md);font-size:13px;line-height:1.7;overflow-x:auto;
-  font-family:var(--font-mono);border:1px solid var(--border)}
-.code-block .comment{color:#6c7086}
-.code-block .cmd{color:var(--brand)}
-
-.section-img{margin:var(--s5) 0;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border)}
-.section-img img{width:100%;display:block}
-.section-img .caption{font-size:12px;color:var(--fg-dim);padding:10px 16px;background:var(--bg-card);text-align:center}
-
-/* ═══ AFFILIATE / TOOL CTA (工具文可选) ═══ */
-.tool-cta{margin:var(--s6) 0;background:var(--bg-card);border:1px solid var(--border-bright);
-  border-radius:var(--radius-lg);padding:var(--s5);position:relative;overflow:hidden}
-.tool-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--brand),var(--amber))}
-.tool-cta .badge{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;
-  padding:3px 8px;border-radius:99px;background:var(--amber-bg);color:var(--amber)}
-.tool-cta h3{font-size:19px;font-weight:700;margin-bottom:8px}
-.tool-cta p{font-size:14px;color:var(--fg-muted);line-height:1.6;margin-bottom:var(--s3)}
-.tool-cta a.cta-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
-  color:var(--brand);text-decoration:none}
-.tool-cta a.cta-link:hover{text-decoration:underline}
-.tool-cta .disclosure{grid-column:1/-1;font-size:11px;color:var(--fg-dim);margin-top:var(--s3);
-  padding-top:var(--s3);border-top:1px dashed var(--border)}
-
-/* ═══ SECTION TITLE（蓝本 .section-title：> marker） ═══ */
-.section-title{font-size:28px;font-weight:600;margin:var(--s6) 0 var(--s4);
-  display:flex;align-items:center;gap:12px;color:var(--text-primary);font-family:var(--font-mono)}
-.section-title .marker{color:var(--accent-green);font-weight:400}
-
-/* ═══ BTN-GHOST（蓝本 .btn-ghost：> 前缀） ═══ */
-.btn-ghost{background:transparent;border:1px solid var(--border-subtle);color:var(--text-primary);
-  padding:8px 20px;border-radius:4px;font-family:var(--font-mono);font-size:14px;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:6px;width:fit-content;text-decoration:none}
-.btn-ghost::before{content:'> ';color:var(--accent-green)}
-.btn-ghost:hover{background:var(--accent-dim);border-color:var(--accent-green);color:var(--accent-green)}
-
-/* ═══ TAGS + BACK ═══ */
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin:var(--s6) 0 0;padding-top:var(--s5);border-top:1px solid var(--border)}
-.tags a{font-size:12px;color:var(--fg-muted);background:var(--bg-card);padding:6px 14px;
-  border-radius:99px;text-decoration:none;border:1px solid var(--border);transition:.15s}
-.tags a:hover{background:var(--brand);color:var(--bg);border-color:var(--brand)}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--fg-muted);text-decoration:none;
-  font-size:14px;font-weight:500;margin:var(--s5) 0 0;transition:color .2s}
-.back-link:hover{color:var(--brand)}
-.back-link::before{content:"←";font-size:16px}
-
-/* ═══ FOOTER ═══ */
-footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:13px;color:var(--fg-dim)}
-.footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;
-  justify-content:space-between;flex-wrap:wrap;gap:var(--s3)}
-.footer-links a{color:var(--fg-dim);text-decoration:none;margin-right:var(--s4)}
-.footer-links a:hover{color:var(--fg)}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3);
-  margin-top:var(--s5);padding-top:var(--s4);border-top:1px solid var(--border);font-size:12px;color:var(--fg-dim)}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1024px){nav{padding:0 var(--s3)}.hero{padding:var(--s6) var(--s3) var(--s4)}}
-@media(max-width:640px){
-  nav .links a.nav-link{padding:8px 10px}
-  .hero h1{font-size:24px}.hero-desc{font-size:15px}
-  .article-wrap{padding:0 var(--s3) var(--s6)}.article-body h2{font-size:21px;padding-left:14px}
-  .article-body h3{font-size:17px}.pull-quote p{font-size:15px}
-  .footer-inner{flex-direction:column;align-items:flex-start}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
 <link rel="stylesheet" href="/assets/fx.css">
 <script src="/assets/fx.js" defer></script>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a class="logo" href="/">Appin<span>.site</span></a>
-  <div class="links">
-    <a class="nav-link" href="/">首页</a>
-    <a class="nav-link active" href="/craft/">{{CATEGORY_LABEL}}</a>
-    <a class="nav-link" href="/notes/">随笔</a>
-    <a class="nav-link" href="/ai-radar/">AI 雷达</a>
-    <a class="nav-link" href="/video/">视频</a>
-  </div>
-  <div class="actions">
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换明暗主题">
-      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-    <a class="btn-primary" href="mailto:hi@Appin.site" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--brand);color:var(--bg);font-weight:600;font-size:13px;border-radius:99px;text-decoration:none">合作 →</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>{{CATEGORY_LABEL}}</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
   </div>
 </nav>
 
-<!-- READING PROGRESS -->
-<div class="progress" id="progress"></div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge"><span class="dot"></span>{{BADGE}}</div>
-    <h1>{{TITLE_HTML}}</h1>
-    <p class="hero-desc">{{EXCERPT}}</p>
-    <div class="hero-meta">
-      <span>李坤</span><span class="sep"></span>
-      <span>{{DATE}}</span><span class="sep"></span>
-      <span class="hl">{{READ_TIME}} 阅读</span><span class="sep"></span>
-      <span>{{WORD_COUNT}}</span>
-    </div>
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>{{HERO_BADGE}}</div>
+  <h1>{{TITLE_HTML}}</h1>
+  <p class="hero-desc">{{EXCERPT}}</p>
+  <div class="hero-meta">
+    {{HERO_META}}
   </div>
-</section>
+  <div class="hero-divider"></div>
+</header>
 
-<!-- {{HERO_COVER}} 首图将替换此位置 -->
-
-<!-- STICKY TOC -->
-<div class="toc" id="toc">
-  <div class="toc-scroll" id="tocScroll">{{TOC_LINKS}}</div>
+<div class="hero-cover">
+  <img src="{{HERO_COVER}}" alt="{{TITLE}}">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      {{TOC_LINKS}}
+    </ul>
+  </aside>
 </div>
 
-<!-- ARTICLE -->
-<div class="article-wrap">
+<div class="page">
   <article class="article-body">
-    {{BODY}}
+
+<!-- ════════════ 正文区块库：以下为「可删示例」，照抄或删掉写你自己的 ════════════ -->
+<!--
+  可用区块一览（class 名已与 /assets/article.css 对齐）：
+    · 章节标题：<h2 id="sN">一、标题</h2> / <h3>子标题</h3>
+    · 正文段落：<p>…</p>
+    · 强调金句：<span class="key">…</span>（品牌绿加粗，用于一句话结论）
+    · 提示框：  <div class="info-box"><p><strong>标题</strong></p><p class="mc-desc">内容</p></div>
+    · 代码块：  <div class="code-block"><pre>…<span class="c-com"># 注释</span> <span class="c-key">命令</span>…</pre></div>
+    · 模块卡：  <div class="mod-card"><div class="mc-head"><span class="mc-num">1</span><span class="mc-title">标题</span></div><p class="mc-desc">…</p></div>
+    · 引述框：  <div class="pull-quote"><p>…</p></div>
+    · 示意图：  <div class="section-img"><svg viewBox="0 0 680 H">…</svg><div class="caption">图 N：说明</div></div>
+    · 表格：    <div class="table-wrap"><table>…</table></div>
+    · 列表：    <ul>/<ol> 常规 <li>
+    · 标签云：  <div class="tag-cloud"><a href="/craft/">标签</a>…</div>
+    · 返回：    <a href="/craft/" class="back-link">返回技艺录</a>
+-->
+
+    <h2 id="s1">一、为什么需要它</h2>
+    <p>开篇先说清痛点与本文要解决的问题。<span class="key">一句话结论放到这里，绿色加粗凸显。</span></p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">用一两句说明读者读完能得到什么（方案 / 脚本 / 思路）。</p>
+    </div>
+
+    <h2 id="s2">二、整体架构</h2>
+    <p>讲清楚各环节怎么串起来。复杂链路建议配一张示意图。</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 160" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="架构示意图">
+        <defs>
+          <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:14px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#5b6b62}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw)}
+          </style>
+        </defs>
+        <!-- 左：源；中：中转；右：目标。按需改文字/加框 -->
+        <rect class="bx" x="14" y="44" width="150" height="72" rx="10"></rect>
+        <text class="t" x="89" y="78" text-anchor="middle">源</text>
+        <text class="ts" x="89" y="98" text-anchor="middle">说明</text>
+        <path class="ln" d="M164,80 L226,80"></path>
+        <rect class="bxg" x="230" y="24" width="220" height="112" rx="12"></rect>
+        <text class="t" x="340" y="56" text-anchor="middle">中转 / 核心</text>
+        <text class="ts" x="340" y="76" text-anchor="middle">组件一</text>
+        <text class="ts" x="340" y="94" text-anchor="middle">组件二</text>
+        <text class="ts" x="340" y="112" text-anchor="middle">关键参数</text>
+        <path class="ln" d="M450,80 L512,80"></path>
+        <rect class="bx" x="516" y="44" width="150" height="72" rx="10"></rect>
+        <text class="t" x="591" y="78" text-anchor="middle">目标</text>
+        <text class="ts" x="591" y="98" text-anchor="middle">说明</text>
+      </svg>
+      <div class="caption">图 1：一句话说明这张图在表达什么。</div>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">核心组件一</span></div>
+      <p class="mc-desc">它负责什么、为什么选它。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">核心组件二</span></div>
+      <p class="mc-desc">它负责什么、怎么和组件一配合。</p>
+    </div>
+
+    <h2 id="s3">三、实操步骤</h2>
+    <p>分步写，关键命令放代码块。命令用 <span class="c-key">高亮</span>，注释用 <span class="c-com">灰色</span>。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 步骤一说明</span>
+<span class="c-key">command</span> arg1 arg2
+<span class="c-com"># 步骤二说明</span>
+<span class="c-key">another</span> --flag value</pre>
+    </div>
+    <div class="info-box">
+      <p><strong>坑：常见报错</strong></p>
+      <p class="mc-desc">现象 → 原因 → 解法，排错经验最有价值，单独拎出来。</p>
+    </div>
+
+    <h2 id="s4">四、验证与收尾</h2>
+    <p>怎么确认做对了（列目录 / 跑一次 / 看日志）。</p>
+    <div class="pull-quote"><p>一句大实话总结，或给读者的提醒（如凭证会过期、要定期维护）。</p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>示例 A</td><td>说明 A</td></tr>
+          <tr><td>示例 B</td><td>说明 B</td></tr>
+        </tbody>
+      </table>
+    </div>
+<!-- ════════════ 正文区块库示例结束 ════════════ -->
+
+    <div class="tag-cloud">
+      {{TAGS}}
+    </div>
+    <a href="/{{CATEGORY}}/" class="back-link">返回{{CATEGORY_LABEL}}</a>
   </article>
-
-  <!-- 可选：工具文 affiliate CTA（|TOOL_CTA| 占位，无则整段删除） -->
-  <!-- |TOOL_CTA| -->
-
-  <div class="tags">
-    {{TAGS}}
-  </div>
-  <a href="/{{CATEGORY}}/" class="back-link">返回{{CATEGORY_LABEL}}</a>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-links">
-      <a href="/">首页</a>
-      <a href="/craft/">技艺录</a>
-      <a href="/notes/">随笔</a>
-      <a href="/ai-radar/">AI 雷达</a>
-      <a href="/video/">视频</a>
-    </div>
-    <span>© 2026 李坤 · Appin.site</span>
-  </div>
-  <div class="footer-bottom">
-    <span>懂技术 + 稍懂产品 = 扎实的基本盘</span>
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换明暗主题">
-      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-  </div>
-  <div class="fx-system-log" aria-hidden="true"><span class="log-prompt">$</span><span class="log-msg"></span></div>
+<footer class="footer">
+  <p>© {{DATE}} Appin.site · {{CATEGORY_LABEL}} &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</p>
 </footer>
 
 <script>
-// 主题切换：与首页一致（body.light + localStorage 'theme'）
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
 (function(){
   try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
-})();
-function toggleTheme(){
-  const b=document.body;
-  b.classList.toggle('light');
-  try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){}
-}
-// 阅读进度条
-(function(){
-  var p=document.getElementById('progress');
-  window.addEventListener('scroll',function(){
-    var h=document.documentElement, total=h.scrollHeight-h.clientHeight;
-    var pct=total>0?(h.scrollTop/total)*100:0;
-    p.style.setProperty('--p',pct+'%');
-  });
-})();
-// TOC 高亮
-(function(){
-  var wrap=document.getElementById('tocScroll'); if(!wrap) return;
-  var links=wrap.querySelectorAll('a'); var heads=[];
-  links.forEach(function(a){
-    var id=a.getAttribute('href').replace('#','');
-    var el=document.getElementById(id);
-    if(el) heads.push({el:el,link:a});
-  });
-  function update(){
-    var y=window.scrollY+120, active=heads[0];
-    for(var i=heads.length-1;i>=0;i--){ if(heads[i].el.offsetTop<=y){active=heads[i];break;} }
-    links.forEach(function(a){a.classList.remove('active');});
-    if(active) active.link.classList.add('active');
-  }
-  window.addEventListener('scroll',update); update();
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='<svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
 })();
 </script>
 </body>
