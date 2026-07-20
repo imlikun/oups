@@ -1,10 +1,11 @@
 /* ═══════════════════════════════════════════════════════════════
-   FX LAYER · appin.site · 1:1 复刻自 deepseek_html_20260719_c8248f.html
-   仅实现蓝本的动效层，数值与蓝本 <style> 完全一致。
-   关键修正（相对此前版本）：
-   · 去掉 prefers-reduced-motion 闸门（蓝本本就没有），保证始终渲染；
-   · 光晕/网格/拖尾/粒子 抬到 z-index:50+，位于不透明 section 之上，
-     使全站（含首屏）都能看见绿点、绿尾、光标扩散光晕。
+   FX LAYER · appin.site · 动效层（提取自 deepseek c8248f 蓝本）
+   层级原则（修复「动效压在正文之上导致糊字」的回退）：
+   · 所有环境类动效（光晕/网格/拖尾/粒子）置于内容【之下】 z-index:0；
+   · 内容容器统一抬到 z-index:1（含随笔/技艺录的阅读容器），确保文字永远在最上层；
+   · 阅读型页面（随笔/技艺录）关闭网格+粒子+拖尾这三类会穿透正文的重装饰，
+     仅保留轻微透出文字的鼠标光晕 + 心跳 + glitch + 涟漪；
+   · 首页/列表页不受影响，动效全开。
    ═══════════════════════════════════════════════════════════════ */
 
 :root{
@@ -13,23 +14,24 @@
   --grid-offset: 0px, 0px;
 }
 
-/* 内容层级压在动效层之下（动效层在 z-index:50+） */
+/* 内容容器统一抬到动效层之上（含阅读页容器，保证文字永不被动效覆盖） */
 nav, main, footer, .container, .page, .site-footer, section,
 .hero-inner, .hero-grid, .hero-left, .hero-right,
 .stats-grid, .section-inner, .footer-inner, .footer-cols, .footer-bottom,
-.consult-box, .content-grid, .tools-grid, .products-grid, .works-grid, .radar-grid{
+.consult-box, .content-grid, .tools-grid, .products-grid, .works-grid, .radar-grid,
+.toc-wrap, .toc, .content, article, .article-body, .post-body, .footer{
   position: relative;
   z-index: 1;
 }
 
-/* ── 1. 鼠标追踪光晕（蓝本 body::before：400px / 0.06）── */
+/* ── 1. 鼠标追踪光晕（蓝本 body::before：400px / 0.06）—— 置于内容之下，透出轻微 CRT 辉光 ── */
 body::before{
   content: '';
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
-  z-index: 50;
+  z-index: 0;
   background: radial-gradient(circle 400px at var(--mouse-x) var(--mouse-y),
       rgba(0, 255, 65, 0.06) 0%, transparent 70%);
   transition: background 0.1s ease-out;
@@ -39,14 +41,14 @@ body.light::before{
       rgba(0, 168, 46, 0.05) 0%, transparent 70%);
 }
 
-/* ── 2. 动态网格偏移（蓝本 body::after：0.04 / 50px / 0.6）── */
+/* ── 2. 动态网格偏移（蓝本 body::after：0.04 / 50px / 0.6）—— 置于内容之下 ── */
 body::after{
   content: '';
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
-  z-index: 50;
+  z-index: 0;
   background-image:
     linear-gradient(rgba(0, 255, 65, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 255, 65, 0.04) 1px, transparent 1px);
@@ -60,6 +62,8 @@ body.light::after{
     linear-gradient(rgba(0, 168, 46, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 168, 46, 0.04) 1px, transparent 1px);
 }
+/* 阅读型页面关闭网格（避免绿线穿透正文） */
+body.fx-reading::after{ display: none; }
 
 /* ── 3. 心跳指示灯（蓝本 .heartbeat-dot）── */
 .heartbeat-dot{
@@ -84,16 +88,16 @@ body.light::after{
   }
 }
 
-/* ── 4. 鼠标拖尾 canvas（JS 绘制，#fx-trail）── */
+/* ── 4. 鼠标拖尾 canvas（JS 绘制，#fx-trail）—— 置于内容之下 ── */
 #fx-trail{
   position: fixed; inset: 0;
-  pointer-events: none; z-index: 51;
+  pointer-events: none; z-index: 0;
 }
 
-/* ── 5. 背景粒子 canvas（JS 绘制，#fx-particles，画布整体 opacity 0.4）── */
+/* ── 5. 背景粒子 canvas（JS 绘制，#fx-particles）—— 置于内容之下 ── */
 #fx-particles{
   position: fixed; inset: 0;
-  pointer-events: none; z-index: 52;
+  pointer-events: none; z-index: 0;
   opacity: 0.4;
 }
 

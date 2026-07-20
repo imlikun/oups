@@ -5,7 +5,9 @@
    5 背景粒子 / 6 点击涟漪 / 7 打字机+glitch / 8 其它 [data-fx-glitch]
    说明：原蓝本【没有任何】prefers-reduced-motion 闸门，本引擎亦不加，
         以保证全站动效始终渲染（与蓝本一致）。
-        动效层 z-index 已抬到内容之上，使不透明 section 下依然可见。
+        动效层一律置于内容【之下】(z-index:0)，内容容器统一 z-index:1，
+        绝不在正文之上绘制，避免长文页糊字。
+        阅读型页面（随笔/技艺录）额外关闭网格/拖尾/粒子，仅留光晕(透出文字)+心跳+glitch+涟漪。
         蓝本中的系统日志 / 终端模拟器属于 demo 装饰，不属于本站，已移除。
    ════════════════════════════════════════════════════════════════ */
 (function () {
@@ -224,17 +226,26 @@
     });
   }
 
+  /* ── 阅读型页面判定：随笔/技艺录等长文页，正文容器透明，
+        网格/粒子/拖尾会穿透文字，故归类为「阅读页」并关闭重装饰 ── */
+  function isReadingPage() {
+    return !!document.querySelector('.toc-wrap, article.content, .article-body, .post-body');
+  }
+
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
 
   ready(function () {
+    var reading = isReadingPage();
+    if (reading) document.body.classList.add('fx-reading');
+
     initHeartbeat();
     initGlow();
-    initGrid();
-    initTrail();
-    initParticles();
+    if (!reading) initGrid();        // 阅读页关闭：网格穿透正文
+    if (!reading) initTrail();       // 阅读页关闭：拖尾干扰阅读
+    if (!reading) initParticles();   // 阅读页关闭：粒子穿透正文
     initRipple();
     initTypewriter();
     initGlitch();
