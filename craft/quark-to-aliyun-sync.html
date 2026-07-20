@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定</title>
+<meta name="description" content="用 AList 在阿里云 ECS 上同时挂载夸克网盘与阿里云盘，再靠 alist-sync 容器每天定时把指定文件夹从夸克拷到阿里云盘。本文记录从装 Docker、绕开被墙镜像源、到 API 配置与验证落地的完整过程，凭证全部打码，适合小白照做。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/quark-to-aliyun-sync.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定">
+<meta property="og:description" content="用 AList 在阿里云 ECS 上同时挂载夸克网盘与阿里云盘，再靠 alist-sync 容器每天定时把指定文件夹从夸克拷到阿里云盘。完整实操 + 踩坑，凭证全部打码。">
+<meta property="og:url" content="https://www.appin.site/craft/quark-to-aliyun-sync.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定">
+<meta name="twitter:description" content="用 AList + Docker 在 ECS 上把夸克网盘定时同步到阿里云盘，完整实操与踩坑，凭证打码。">
+<meta property="og:image" content="https://www.appin.site/uploads/quark-to-aliyun-sync-cover.webp">
+<meta name="twitter:image" content="https://www.appin.site/uploads/quark-to-aliyun-sync-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>实战案例 · 网盘自动化</div>
+  <h1>【WB】把夸克网盘定时同步到阿里云盘：<strong>一台 ECS + Docker</strong> 帮我搞定</h1>
+  <p class="hero-desc">夸克和阿里云盘之间没有官方互转通道，手动「下载再上传」又慢又占本地。本文用一台阿里云 ECS 当中转站：AList 同时挂载两个网盘，alist-sync 容器每天定时把夸克指定文件夹拷到阿里云盘。从装 Docker、绕开被墙的镜像源，到 API 配置与验证落地，全程记录，<strong>凭证全部打码</strong>，小白能照着做。</p>
+  <div class="hero-meta">
+    <span>网盘同步</span><span class="dot"></span>
+    <span>AList + Docker</span><span class="dot"></span>
+    <span>阿里云 ECS</span><span class="dot"></span>
+    <span>2026.07.20</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/quark-to-aliyun-sync-cover.webp" alt="服务器机房与云同步">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">为什么需要它</a></li>
+      <li><a href="#s2">整体架构</a></li>
+      <li><a href="#s3">装 Docker（被墙的坑）</a></li>
+      <li><a href="#s4">起 AList（只绑本地）</a></li>
+      <li><a href="#s5">挂载两个网盘</a></li>
+      <li><a href="#s6">配定时同步</a></li>
+      <li><a href="#s7">踩坑清单</a></li>
+      <li><a href="#s8">安全与收尾</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、为什么需要它</h2>
+    <p>先说清楚痛点：夸克网盘和阿里云盘是两家产品，<strong>官方没有任何「一键互转」的通道</strong>。要把夸克里的东西弄到阿里云盘，普通人只能先下载到电脑、再上传——文件大一点就慢到怀疑人生，还白白占用本地磁盘。</p>
+    <p>思路很直接：<span class="key">找一台一直在线的服务器当中转站，让数据在云端「夸克 → 服务器 → 阿里云盘」自己流动</span>，你完全不用动手。夸克和阿里云盘都是国内服务，<span class="key">整条链路不需要代理 / 科学上网</span>。</p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">一套跑在阿里云 ECS 上的 Docker 方案：AList 挂载两个网盘 + alist-sync 每天定时拷贝。你只需要最初配一次，之后每天自动同步。</p>
+    </div>
+
+    <h2 id="s2">二、整体架构</h2>
+    <p>中转逻辑：数据从夸克拉到 ECS、再由 AList 推到阿里云盘，ECS 全程只做 relay（转发），不长期存你的文件。</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 200" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="同步架构示意图">
+        <defs>
+          <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:14px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#5b6b62}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw)}
+          </style>
+        </defs>
+        <rect class="bx" x="14" y="64" width="150" height="72" rx="10"></rect>
+        <text class="t" x="89" y="98" text-anchor="middle">夸克网盘</text>
+        <text class="ts" x="89" y="118" text-anchor="middle">源文件夹</text>
+        <path class="ln" d="M164,100 L226,100"></path>
+        <rect class="bxg" x="230" y="40" width="220" height="120" rx="12"></rect>
+        <text class="t" x="340" y="72" text-anchor="middle">阿里云 ECS（中转）</text>
+        <text class="ts" x="340" y="92" text-anchor="middle">Docker</text>
+        <text class="ts" x="340" y="110" text-anchor="middle">AList 挂载两盘</text>
+        <text class="ts" x="340" y="128" text-anchor="middle">alist-sync 每天 03:00</text>
+        <text class="ts" x="340" y="148" text-anchor="middle" fill="#c0392b">端口仅绑 127.0.0.1</text>
+        <path class="ln" d="M450,100 L512,100"></path>
+        <rect class="bx" x="516" y="64" width="150" height="72" rx="10"></rect>
+        <text class="t" x="591" y="98" text-anchor="middle">阿里云盘</text>
+        <text class="ts" x="591" y="118" text-anchor="middle">目标文件夹</text>
+      </svg>
+      <div class="caption">图 1：夸克 → ECS 中转（AList + alist-sync）→ 阿里云盘。ECS 仅做转发，端口不暴露公网。</div>
+    </div>
+    <p>核心组件就两个容器：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">AList（网盘挂载）</span></div>
+      <p class="mc-desc">一个支持几十种网盘协议的挂载工具。在 ECS 上把它跑起来，把夸克挂到 <code>/quark</code>、阿里云盘挂到 <code>/aliyun</code>，两个盘就像本地目录一样能互拷。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">alist-sync（定时拷贝）</span></div>
+      <p class="mc-desc">专门负责「把 A 目录按计划拷到 B 目录」的小工具。给它一对路径 + 一个 cron 时间，它就每天准时干活。</p>
+    </div>
+
+    <h2 id="s3">三、装 Docker（被墙的坑）</h2>
+    <p>这台 ECS 是 Alibaba Cloud Linux，默认没装 Docker。本来一行官方脚本就能装，但<strong>这台机器出网到 Docker 官网被挡了</strong>（SSL 握手失败）。</p>
+    <div class="info-box">
+      <p><strong>坑 1：Docker 官网 / Docker Hub 被墙</strong></p>
+      <p class="mc-desc">别死磕官方源。引擎用<strong>阿里云自己的镜像源</strong>装，拉镜像用<strong>国内镜像源</strong>。实测 daocloud 的部分镜像有白名单、Docker Hub 直连超时，最终靠「全量代理型」镜像源（如 <code>docker.1ms.run</code>）解决。</p>
+    </div>
+    <div class="code-block">
+      <pre><span class="c-com"># 1. 加阿里云 Docker-CE 镜像源（替代被墙的官网）</span>
+dnf config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sed -i "s#download.docker.com#mirrors.aliyun.com/docker-ce#g" /etc/yum.repos.d/docker-ce.repo
+
+<span class="c-com"># 2. 安装引擎 + compose 插件</span>
+<span class="c-key">dnf install -y</span> docker-ce docker-ce-cli containerd.io docker-compose-plugin
+<span class="c-key">systemctl enable --now</span> docker
+
+<span class="c-com"># 3. 配置国内镜像加速器（只留「可达」的源）</span>
+cat > /etc/docker/daemon.json <<'EOF'
+{
+  "registry-mirrors": ["https://docker.1ms.run", "https://docker.1panel.live"]
+}
+EOF
+<span class="c-key">systemctl restart</span> docker
+
+<span class="c-com"># 4. 拉取两个镜像（镜像源被墙时换全量代理源重试）</span>
+<span class="c-key">docker pull</span> alistv3/alist:latest
+<span class="c-key">docker pull</span> xjxjin/alist-sync:latest</pre>
+    </div>
+    <p><span class="key">关键提醒：配完镜像源一定要 <code>systemctl restart docker</code> 才生效；如果某个镜像源在这台机器上不可达（curl 返回 000），就把它从 daemon.json 里删掉，否则会卡在不可达源上超时。</span></p>
+
+    <h2 id="s4">四、起 AList（只绑本地）</h2>
+    <p>用一份 <code>docker-compose.yml</code> 把 AList 跑起来。安全上我做了一个重要决定：<span class="key">把 5244 端口只绑到 <code>127.0.0.1</code>，不暴露到公网</span>——别人从外网扫不到这个后台。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># docker-compose.yml（节选）</span>
+services:
+  alist:
+    image: alistv3/alist:latest
+    container_name: alist
+    restart: always
+    ports:
+      - "127.0.0.1:5244:5244"   <span class="c-com"># 只绑本地，不暴露公网</span>
+    volumes:
+      - ./alist-data:/opt/alist/data
+    networks: [syncnet]
+  alist-sync:
+    image: xjxjin/alist-sync:latest
+    depends_on: [alist]
+    environment:
+      BASE_URL: "http://alist:5244"
+      USERNAME: "admin"
+      PASSWORD: "********"      <span class="c-com"># 示例已打码，实际用你自己的强密码</span>
+    networks: [syncnet]
+networks: { syncnet: { driver: bridge } }</pre>
+    </div>
+    <p>起好容器后设一个管理员密码（示例已打码：<code>********</code>）。之后要管理后台，在自己电脑上开一条 SSH 隧道即可，不用开放端口：</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 本地终端执行，保持窗口开着，再开浏览器访问</span>
+ssh -L 5244:127.0.0.1:5244 root@你的_ECS_IP
+<span class="c-com"># 浏览器打开 ↓（仅本机可访问）</span>
+<span class="c-key">http://127.0.0.1:5244</span></pre>
+    </div>
+    <p>挂载两个网盘前，先确认 AList 里的驱动名（版本不同名字可能变）：夸克 = <code>Quark</code>，阿里云盘 Open = <code>AliyundriveOpen</code>（<strong>不要用旧的 <code>Aliyundrive</code></strong>）。</p>
+
+    <h2 id="s5">五、挂载两个网盘（AList 配置）</h2>
+    <p>AList 的存储可以在网页后台手动加，也可以用 Admin API 批量加。下面是两个盘各自的「凭证怎么拿」。所有敏感值都已打码。</p>
+
+    <h3>夸克网盘：用 Cookie</h3>
+    <p>打开 <code>pan.quark.cn</code> 并登录，按 F12 → Application → Cookies → 选中全部行复制，把整段粘进 Quark 驱动的 <code>cookie</code> 字段。</p>
+    <div class="pull-quote"><p><span class="key">一定要取「完整 Cookie」：用 Console 里 <code>document.cookie</code> 只返回非 HttpOnly 的字段，会缺 <code>__pus</code>、<code>grey-id</code> 等关键值，导致挂载 init 失败。Application 标签里复制出来的才是全的。</span></p></div>
+    <div class="code-block">
+      <pre><span class="c-com"># 示例（已打码，实际用你自己的完整 Cookie）</span>
+__pus=****; ctoken=****; __uid=****; __puus=****; isg=****; ...</pre>
+    </div>
+
+    <h3>阿里云盘 Open：用 refresh_token（可扫码）</h3>
+    <p>用官方扫码工具（<code>alist.nn.ci</code> 上的 Aliyundrive Open 取 token 页）扫一下，自动拿到 <code>refresh_token</code>，填进 <code>AliyundriveOpen</code> 驱动的 <code>refresh_token</code> 字段。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 示例（已打码，实际用你扫码得到的 token）</span>
+refresh_token = eyJhbGciOiJSUzI1NiJ9.****（已打码）</pre>
+    </div>
+    <div class="info-box">
+      <p><strong>坑 2：布尔字段不能传字符串</strong></p>
+      <p class="mc-desc">用 API 建存储时，<code>addition</code> 要整体序列化成字符串，但里面的<strong>布尔字段必须传真正的 <code>true</code> / <code>false</code></strong>，不能传 <code>"false"</code> 字符串，否则驱动初始化会失败。这是排错排了半天才发现的。</p>
+    </div>
+    <p>挂载完，列一下 <code>/quark</code> 和 <code>/aliyun</code> 目录，能正常列出文件即成功。</p>
+
+    <h2 id="s6">六、配定时同步（alist-sync）</h2>
+    <p>给同步容器两个关键环境变量：<code>DIR_PAIRS</code> 写「源:目标」路径对，<code>CRON_SCHEDULE</code> 写 cron 时间。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># alist-sync 环境变量（节选）</span>
+BASE_URL:      "http://alist:5244"
+USERNAME:      "admin"
+PASSWORD:      "********"          <span class="c-com"># 已打码</span>
+DIR_PAIRS:     "/quark/转阿里云盘:/aliyun/来自夸克"
+CRON_SCHEDULE: "0 3 * * *"      <span class="c-com"># 每天 03:00 自动同步</span></pre>
+    </div>
+    <p><span class="key">目标文件夹不存在会自动创建</span>，不用提前在阿里云盘里建。多对目录用 <code>;</code> 分隔。</p>
+    <p>验证时我另跑了一个「cron 留空」的一次性容器——这样它会<strong>立即拷贝一次</strong>而不是等明天。确认 16 个文件全部「复制成功」，再到阿里云盘侧核对落地，链路就通了。</p>
+
+    <h2 id="s7">七、踩坑清单（小结）</h2>
+    <p>把全程踩过的坑浓缩成一张表，照着避：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>坑</th><th>现象</th><th>解法</th></tr></thead>
+        <tbody>
+          <tr><td>Docker 官网被墙</td><td>官方安装脚本 SSL 失败</td><td>改用阿里云镜像源装引擎</td></tr>
+          <tr><td>Docker Hub 拉不到镜像</td><td>registry-1.docker.io 超时</td><td>国内镜像源 + 全量代理源（如 docker.1ms.run）</td></tr>
+          <tr><td>镜像源不可达 / 有白名单</td><td>curl 返回 000 / 401</td><td>只留可达源；白名单外的镜像换代理源拉</td></tr>
+          <tr><td>夸克 Cookie 不完整</td><td>存储 init 失败，列不出目录</td><td>用 Application 标签复制完整 Cookie，别用 document.cookie</td></tr>
+          <tr><td>布尔字段传成字符串</td><td>驱动初始化失败</td><td>API 建存储时布尔字段用真 true/false</td></tr>
+          <tr><td>alist-sync 偶发随机失败</td><td>某次同步部分文件没拷过去</td><td>每天跑一次，次日定时会自动补齐</td></tr>
+          <tr><td>凭证过期</td><td>同步某天突然断掉</td><td>夸克 Cookie / 阿里云盘 token 失效后重新取一次</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s8">八、安全与收尾</h2>
+    <p><span class="key">AList 千万不要「裸奔」到公网。</span>当前方案端口只绑 127.0.0.1，需要远程管理就用 SSH 隧道本地访问，这是目前最稳的做法。</p>
+    <p>如果以后想「给别人也用」，要分清一件事：<strong>AList 是单租户架构，别人登录看到的是你挂的盘，不是他自己的</strong>。真要让朋友用他自己的夸克 / 阿里云盘，得每人一个独立的 AList 实例（可以做成「开新用户」脚本，后续再谈）。本文的链路是给你自己的私有中转站，不是公共服务。</p>
+    <div class="pull-quote"><p>最后一句大实话：夸克 Cookie 和阿里云盘 token 都会过期，同步「某天自己停了」是常态。失效后重新取一次凭证、在后台改下存储即可，不用重装。</p></div>
+
+    <div class="tag-cloud">
+      <a href="/craft/">夸克网盘</a><a href="/craft/">阿里云盘</a><a href="/craft/">AList</a><a href="/craft/">alist-sync</a>
+      <a href="/craft/">Docker</a><a href="/craft/">ECS</a><a href="/craft/">网盘同步</a><a href="/craft/">自动化</a>
+      <a href="/craft/">镜像源</a><a href="/craft/">实战案例</a><a href="/craft/">小白教程</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <p>© 2026 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒基于真实部署整理，所有账号凭证、IP、密码、Cookie、Token 均已打码。</p>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  function toggleTheme(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} }
+  var fab=document.createElement('button'); fab.className='theme-fab'; fab.innerHTML='<svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'; fab.title='切换主题'; fab.setAttribute('aria-label','切换主题'); fab.onclick=toggleTheme; document.body.appendChild(fab);
+})();
+</script>
+</body>
+</html>

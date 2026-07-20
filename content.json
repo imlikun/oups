@@ -1744,6 +1744,31 @@
       "status": "published",
       "link": "/craft/understand-anything.html",
       "template": "DP"
+    },
+    {
+      "id": "article-76",
+      "title": "【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定",
+      "slug": "quark-to-aliyun-sync",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/quark-to-aliyun-sync-cover.webp",
+      "excerpt": "用 AList 在阿里云 ECS 上同时挂载夸克网盘与阿里云盘，再靠 alist-sync 容器每天定时把指定文件夹从夸克拷到阿里云盘。完整实操 + 踩坑，凭证全部打码。",
+      "content": "详见独立文章页：/craft/quark-to-aliyun-sync.html",
+      "tags": [
+        "夸克网盘",
+        "阿里云盘",
+        "AList",
+        "alist-sync",
+        "Docker",
+        "ECS",
+        "网盘同步",
+        "自动化"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-20",
+      "status": "published",
+      "link": "/craft/quark-to-aliyun-sync.html",
+      "template": "DP"
     }
   ],
   "projects": [
