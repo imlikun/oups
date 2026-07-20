@@ -35,7 +35,7 @@
   /* Noise overlay */
   body::before {
     content: '';
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    position: fixed; inset:0; z-index: 0; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     opacity: 0.4;
   }
@@ -89,14 +89,8 @@
     padding: 6px; position: relative;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
     color: #fff; display: flex; flex-direction: column;
-    height: 540px; overflow: hidden;
-  }
-  .phone-frame img {
-    width: 100%; height: 100%; object-fit: cover; border-radius: 30px; display: block;
-  }
-  .phone-notch {
-    width: 64px; height: 24px; background: #1a1a1d;
-    border-radius: 0 0 14px 14px; margin: 0 auto; position: relative; z-index: 2;
+    height: 560px; overflow: hidden;
+    font-size: 13px;
   }
   .phone-label {
     text-align: center; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-top: 6px;
@@ -110,7 +104,7 @@
     padding: 5px 5px 10px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7);
   }
 
-  /* ====== Screen 1: Home Dashboard (from pet-app) ====== */
+  /* ====== Screen 1: Home Dashboard ====== */
   .p1-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; }
   .p1-header .left { display: flex; align-items: center; gap: 8px; }
   .p1-header .avatar { width: 30px; height: 30px; background: #ffa500; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -123,7 +117,7 @@
   .hero-card {
     background: linear-gradient(135deg, #4a1e1e, #8a2020);
     border-radius: 16px; padding: 16px; position: relative;
-    margin-bottom: 10px; height: 140px; overflow: hidden;
+    margin-bottom: 10px; height: 130px; overflow: hidden;
   }
   .hero-card .canvas-placeholder {
     position: absolute; top: 16px; left: 16px;
@@ -137,9 +131,9 @@
   .hero-card .pet-info p { font-size: 11px; color: rgba(255,255,255,0.6); }
 
   .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .grid-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 10px; position: relative; min-height: 70px; }
+  .grid-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 10px; position: relative; min-height: 64px; }
   .grid-item .label { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
-  .grid-item .value { font-size: 20px; font-weight: 800; line-height: 1.1; }
+  .grid-item .value { font-size: 18px; font-weight: 800; line-height: 1.1; }
   .grid-item .value.red { color: #ea4d4d; }
   .grid-item .value.purple { color: #b388ff; }
   .grid-item .value.green { color: #4caf50; }
@@ -165,16 +159,15 @@
   .bottom-nav .item.active { color: #ea4d4d; }
   .bottom-nav .item i { font-size: 16px; }
 
-  /* ====== Screen 2: Pet Profile (from pet-app) ====== */
+  /* ====== Screen 2: Pet Profile ====== */
   .p2-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; }
   .p2-header .back { color: #ea4d4d; }
   .p2-header .edit { color: #ea4d4d; font-size: 12px; }
 
   .profile-pet-img {
-    height: 140px; background: rgba(255,255,255,0.04); border-radius: 16px;
-    margin-bottom: 12px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden;
+    height: 130px; background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border-radius: 16px;
+    margin-bottom: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 64px;
   }
-  .profile-pet-img img { width: 65%; object-fit: contain; }
 
   .p2-name { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
   .p2-breed { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; }
@@ -196,7 +189,7 @@
   .record-item .dot.red { background: #ea4d4d; }
   .record-item .dot.grey { background: rgba(255,255,255,0.2); }
 
-  /* ====== Screen 3: Vaccination (from pet-app) ====== */
+  /* ====== Screen 3: Vaccination ====== */
   .p3-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; }
   .p3-header .back { color: #ea4d4d; }
   .p3-header h3 { font-size: 15px; font-weight: 700; }
@@ -204,7 +197,7 @@
 
   .stats-row { display: flex; gap: 8px; margin-bottom: 12px; }
   .stat-card { flex: 1; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 10px 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .stat-card .num { font-size: 22px; font-weight: 900; line-height: 1; }
+  .stat-card .num { font-size: 20px; font-weight: 900; line-height: 1; }
   .stat-card .num.green { color: #4caf50; }
   .stat-card .num.red { color: #ea4d4d; }
   .stat-card .num.blue { color: #448aff; }
@@ -230,18 +223,19 @@
   .vaccine-item .status.done { color: #4caf50; }
   .vaccine-item .status.soon { color: #ea4d4d; }
 
-  /* ====== Screen 4: Add Pet (from pet-app) ====== */
+  /* ====== Screen 4: Add Pet ====== */
   .p4-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 13px; }
   .p4-header .cancel { color: rgba(255,255,255,0.4); }
   .p4-header .title { font-size: 15px; font-weight: 700; }
   .p4-header .save { color: #ea4d4d; font-weight: 600; }
 
   .upload-area {
-    height: 100px; background: rgba(255,255,255,0.04); border-radius: 14px;
+    height: 90px; background: rgba(255,255,255,0.04); border-radius: 14px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 6px; margin-bottom: 12px; color: rgba(255,255,255,0.3);
+    border: 1px dashed rgba(255,255,255,0.12);
   }
-  .upload-area .icon-circle { width: 44px; height: 44px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .upload-area .icon-circle { width: 40px; height: 40px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
   .upload-area .hint { font-size: 11px; }
 
   .form-list { background: rgba(255,255,255,0.04); border-radius: 14px; padding: 0 14px; margin-bottom: 12px; }
@@ -256,14 +250,14 @@
     font-size: 14px; font-weight: 700; margin-top: auto; flex-shrink: 0;
   }
 
-  /* ========== Sections below phone mockups (original pet-paws content) ========== */
+  /* ========== Sections below phone mockups ========== */
   .section { padding: 56px 0; }
 
   .section-label {
     font-size: 12px; font-weight: 600; letter-spacing: 2px;
     color: var(--accent-light); text-transform: uppercase; margin-bottom: 8px;
   }
-  .section-title {
+  .section-title-lg {
     font-size: clamp(22px, 4vw, 36px); font-weight: 700;
     letter-spacing: -0.5px; margin-bottom: 24px;
   }
@@ -315,7 +309,7 @@
   .reveal-delay-3 { transition-delay: 0.3s; }
 
   @media (max-width: 768px) {
-    .phone-frame { width: 220px; height: 460px; }
+    .phone-frame { width: 220px; height: 480px; }
     .hero h1 { font-size: 32px; }
     .feature-grid { grid-template-columns: 1fr; }
     .phone-row { gap: 16px; padding-left: 16px; padding-right: 16px; }
@@ -345,41 +339,8 @@
 </style>
 </head>
 <body>
-<div class="sgn-bar" id="sgnBar">
-  <div class="sgn-inner">
-    <a href="/" class="sgn-logo">李坤</a>
-    <nav class="sgn-links" aria-label="站点导航">
-      <a href="/">首页</a>
-      <a href="/craft/">技艺录</a>
-      <a href="/video-lab/">视频剪辑</a>
-      <a href="/notes/">随笔</a>
-      <a href="/daily-digest/">每日阅读</a>
-      <a href="/ai-radar/">AI 雷达</a>
-      <a href="/bigbang/">大爆炸</a>
-      <a href="/neuroflow/">NeuroFlow</a>
-      <a href="/yunlan/">云澜</a>
-      <a href="/pet-paws/" class="active">宠迹</a>
-      <a href="/宠急帮/">宠急帮</a>
-    </nav>
-  </div>
-</div>
-<style>
-.sgn-bar{position:sticky;top:0;z-index:1000;background:rgba(18,18,20,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;}
-.sgn-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 20px;height:52px;box-sizing:border-box;}
-.sgn-logo{color:#fff;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;letter-spacing:.5px;flex-shrink:0;}
-.sgn-logo:hover{color:#2997ff;}
-.sgn-links{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;flex:1;}
-.sgn-links::-webkit-scrollbar{display:none;}
-.sgn-links a{color:rgba(255,255,255,.62);text-decoration:none;font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:8px;white-space:nowrap;transition:color .18s,background .18s;}
-.sgn-links a:hover{color:#fff;background:rgba(255,255,255,.08);}
-.sgn-links a.active{color:#fff;background:rgba(41,151,255,.22);}
-@media(max-width:640px){.sgn-inner{gap:10px;padding:8px 14px;}.sgn-links a{padding:6px 9px;font-size:13px;}}
-</style>
-
 
 <div class="container">
-
-  
 
   <!-- Hero -->
   <section class="hero reveal">
@@ -408,13 +369,38 @@
     </div>
   </section>
 
-  <!-- Phone Mockups — 4 Screens (replaced with pet-app phone style) -->
+  <!-- Phone Mockups — 4 Screens (CSS-rendered, no external images) -->
   <div class="phone-row">
 
     <!-- Screen 1: Home Dashboard -->
     <div class="phone-group reveal reveal-delay-1">
-      <div class="phone-frame" style="padding:6px;overflow:hidden;">
-        <img src="screen-dashboard.jpg" alt="宠迹首页仪表盘" style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+      <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span>📶 &nbsp; 🔋</span></div>
+        <div class="p1-header">
+          <div class="left"><div class="avatar">🐱</div><strong>毛毛</strong></div>
+          <div class="right"><button>+ 添加</button></div>
+        </div>
+        <div class="greeting-area">
+          <h2>Hi，毛毛</h2>
+          <div class="grey-text">今天也要元气满满哦</div>
+        </div>
+        <div class="hero-card">
+          <div class="canvas-placeholder"><i class="fa-solid fa-camera"></i>AI 成长画布</div>
+          <div class="pet-info"><h3>体重 4.2kg</h3><p>较上周 +0.1kg</p></div>
+        </div>
+        <div class="grid-2x2">
+          <div class="grid-item"><div class="label"><i class="fa-solid fa-syringe"></i>疫苗</div><div class="value green">3/4</div><div class="sub green-text">1 项即将到期</div></div>
+          <div class="grid-item"><div class="label"><i class="fa-solid fa-bowl-food"></i>热量</div><div class="value purple">320</div><div class="sub">kcal 今日</div></div>
+          <div class="grid-item"><div class="label"><i class="fa-solid fa-bone"></i>驱虫</div><div class="value red">12天</div><div class="sub">后到期</div></div>
+          <div class="grid-item"><div class="label"><i class="fa-solid fa-star"></i>里程碑</div><div class="value">8</div><div class="sub">已完成</div><div class="progress-small"><div class="fill" style="width:60%;background:#b388ff"></div></div></div>
+        </div>
+        <div class="reminder-bar"><span><i class="fa-solid fa-bell"></i> 体检倒计时 5 天</span><span style="color:#ea4d4d">查看</span></div>
+        <div class="bottom-nav">
+          <div class="item active"><i class="fa-solid fa-house"></i>首页</div>
+          <div class="item"><i class="fa-solid fa-paw"></i>档案</div>
+          <div class="item"><i class="fa-solid fa-syringe"></i>疫苗</div>
+          <div class="item"><i class="fa-solid fa-user"></i>我的</div>
+        </div>
       </div>
       <div class="phone-label">首页 · 成长仪表盘</div>
       <div class="phone-label-sub">渐变红 Hero 卡 / 2×2 数据网格</div>
@@ -422,8 +408,24 @@
 
     <!-- Screen 2: Pet Profile -->
     <div class="phone-group reveal reveal-delay-2">
-      <div class="phone-frame" style="padding:6px;overflow:hidden;">
-        <img src="screen-profile.jpg" alt="宠物档案详情" style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+      <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span>📶 &nbsp; 🔋</span></div>
+        <div class="p2-header"><span class="back"><i class="fa-solid fa-chevron-left"></i></span><span class="edit">编辑</span></div>
+        <div class="profile-pet-img">🐱</div>
+        <div class="p2-name">毛毛</div>
+        <div class="p2-breed">英国短毛猫 · 公 · 1岁4个月</div>
+        <div class="grid-2x2-sm">
+          <div class="grid-item-sm"><div class="lbl"><i class="fa-solid fa-cake-candles"></i>生日</div><div class="val">2025-03-12</div></div>
+          <div class="grid-item-sm"><div class="lbl"><i class="fa-solid fa-tag"></i>昵称</div><div class="val">毛孩子</div></div>
+          <div class="grid-item-sm"><div class="lbl"><i class="fa-solid fa-weight-hanging"></i>体重</div><div class="val purple">4.2 kg</div></div>
+          <div class="grid-item-sm"><div class="lbl"><i class="fa-solid fa-shield-dog"></i>驱虫</div><div class="val green">已做</div></div>
+        </div>
+        <div class="record-section">
+          <div class="record-header"><span>成长时间线</span><span class="more">全部</span></div>
+          <div class="record-item"><span class="dot red"></span> 疫苗 · 猫三联 第3针</div>
+          <div class="record-item"><span class="dot grey"></span> 驱虫 · 体内外同驱</div>
+          <div class="record-item"><span class="dot grey"></span> 体检 · 年度全套</div>
+        </div>
       </div>
       <div class="phone-label">详情 · 宠物档案</div>
       <div class="phone-label-sub">信息卡网格 / 成长时间线</div>
@@ -431,8 +433,31 @@
 
     <!-- Screen 3: Vaccination -->
     <div class="phone-group reveal reveal-delay-2">
-      <div class="phone-frame" style="padding:6px;overflow:hidden;">
-        <img src="screen-vaccine.jpg" alt="疫苗管理" style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+      <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span>📶 &nbsp; 🔋</span></div>
+        <div class="p3-header"><span class="back"><i class="fa-solid fa-chevron-left"></i></span><h3>疫苗管理</h3><span class="add">+</span></div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="num green">3</div><div class="lbl">已完成</div></div>
+          <div class="stat-card"><div class="num red">1</div><div class="lbl">即将到期</div></div>
+          <div class="stat-card"><div class="num blue">1</div><div class="lbl">待接种</div></div>
+        </div>
+        <div class="pet-switcher"><span class="pet-icon">🐱</span> 毛毛 <span class="switch">切换 ▾</span></div>
+        <div class="section-title">接种历史</div>
+        <div class="vaccine-item">
+          <div class="top"><span class="dot" style="background:#4caf50;"></span> 猫三联 第3针</div>
+          <div class="details">2026-05-20 接种 · 有效期 1 年</div>
+          <div class="status done">✓ 已完成</div>
+        </div>
+        <div class="vaccine-item">
+          <div class="top"><span class="dot" style="background:#ea4d4d;"></span> 狂犬疫苗</div>
+          <div class="details">2026-03-12 接种 · 2027-03-12 到期</div>
+          <div class="status soon">⚠ 11 天后到期</div>
+        </div>
+        <div class="vaccine-item">
+          <div class="top"><span class="dot" style="background:rgba(255,255,255,0.2);"></span> 猫瘟加强</div>
+          <div class="details">尚未预约</div>
+          <div class="status" style="color:rgba(255,255,255,0.4);">待接种</div>
+        </div>
       </div>
       <div class="phone-label">疫苗 · 接种管理</div>
       <div class="phone-label-sub">统计面板 / 到期预警</div>
@@ -440,8 +465,22 @@
 
     <!-- Screen 4: Add Pet -->
     <div class="phone-group reveal reveal-delay-3">
-      <div class="phone-frame" style="padding:6px;overflow:hidden;">
-        <img src="screen-add.jpg" alt="添加宠物" style="width:100%;height:100%;object-fit:cover;border-radius:22px;">
+      <div class="phone-frame">
+        <div class="status-bar"><span>9:41</span><span>📶 &nbsp; 🔋</span></div>
+        <div class="p4-header"><span class="cancel">取消</span><span class="title">添加宠物</span><span class="save">保存</span></div>
+        <div class="upload-area">
+          <div class="icon-circle"><i class="fa-solid fa-camera"></i></div>
+          <div class="hint">拍照 / 上传头像</div>
+        </div>
+        <div class="form-list">
+          <div class="form-item"><span>昵称</span><span class="val">毛毛 <i class="fa-solid fa-chevron-right"></i></span></div>
+          <div class="form-item"><span>性别</span><span class="val">公 <i class="fa-solid fa-chevron-right"></i></span></div>
+          <div class="form-item"><span>种类</span><span class="val">猫 <i class="fa-solid fa-chevron-right"></i></span></div>
+          <div class="form-item"><span>品种</span><span class="val">英短 <i class="fa-solid fa-chevron-right"></i></span></div>
+          <div class="form-item"><span>出生</span><span class="val">2025-03-12 <i class="fa-solid fa-chevron-right"></i></span></div>
+          <div class="form-item"><span>到家</span><span class="val">2025-04-01 <i class="fa-solid fa-chevron-right"></i></span></div>
+        </div>
+        <button class="save-btn">保存宠物档案</button>
       </div>
       <div class="phone-label">添加 · 新建档案</div>
       <div class="phone-label-sub">暗玻璃表单 / 樱桃红按钮</div>
@@ -449,10 +488,10 @@
 
   </div>
 
-  <!-- Core Features (original pet-paws content) -->
+  <!-- Core Features -->
   <section class="section">
     <p class="section-label reveal">核心功能</p>
-    <h2 class="section-title reveal reveal-delay-1">4 大功能模块，一屏掌控宠物成长</h2>
+    <h2 class="section-title-lg reveal reveal-delay-1">4 大功能模块，一屏掌控宠物成长</h2>
     <div class="feature-grid">
       <div class="feature-card reveal reveal-delay-1">
         <div class="feature-icon">📊</div>
@@ -477,10 +516,10 @@
     </div>
   </section>
 
-  <!-- Design Language (original pet-paws content) -->
+  <!-- Design Language -->
   <section class="section">
     <p class="section-label reveal">设计语言</p>
-    <h2 class="section-title reveal reveal-delay-1">车厘子红 × 暗黑高级风 × Bento Grid</h2>
+    <h2 class="section-title-lg reveal reveal-delay-1">车厘子红 × 暗黑高级风 × Bento Grid</h2>
     <p style="color:var(--text-secondary);font-size:15px;line-height:1.8;max-width:720px;margin-bottom:24px;" class="reveal reveal-delay-1">
       以 <code style="color:#ff5252;background:rgba(211,47,47,0.1);padding:2px 8px;border-radius:4px;">#D32F2F</code> 樱桃红为主色调，
       <code style="color:var(--text-secondary);background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:4px;">#0A0A0D</code> 纯黑为底。
@@ -497,10 +536,10 @@
     </div>
   </section>
 
-  <!-- Tech Stack (original pet-paws content) -->
+  <!-- Tech Stack -->
   <section class="section">
     <p class="section-label reveal">技术栈</p>
-    <h2 class="section-title reveal reveal-delay-1">微信原生 · Ardot 设计稿直出代码</h2>
+    <h2 class="section-title-lg reveal reveal-delay-1">微信原生 · Ardot 设计稿直出代码</h2>
     <div class="tech-grid reveal reveal-delay-2">
       <div class="tech-card">
         <div class="layer">框架</div>
@@ -525,17 +564,17 @@
     </div>
   </section>
 
-  <!-- Naming (original pet-paws content) -->
+  <!-- Naming -->
   <section class="section">
     <p class="section-label reveal">品牌命名</p>
-    <h2 class="section-title reveal reveal-delay-1">宠迹 · 毛孩子日记</h2>
+    <h2 class="section-title-lg reveal reveal-delay-1">宠迹 · 毛孩子日记</h2>
     <p style="color:var(--text-secondary);font-size:15px;line-height:1.8;max-width:680px;margin-bottom:24px;" class="reveal reveal-delay-1">
       「<strong style="color:#ff5252;">宠迹</strong>」—— 宠物成长的足迹。一字双关（宠 + 轨迹），简短有力，好记好搜。<br><br>
       「<strong style="color:#ff5252;">毛孩子日记</strong>」—— 备选名，更亲切温暖的叫法，贴合养宠人把宠物当家人的情感。
     </p>
   </section>
 
-  <!-- Summary Banner (original pet-paws content) -->
+  <!-- Summary Banner -->
   <section class="section">
     <div class="summary-banner reveal reveal-delay-1">
       <p style="font-size:clamp(15px,2.5vw,18px);color:var(--text-secondary);line-height:1.9;max-width:640px;margin:0 auto;">
@@ -549,10 +588,10 @@
   <!-- Footer -->
   <div class="footer">
     <p style="color:var(--text-secondary);font-size:14px;">
-      项目地址：<a href="/pet-paws/">Appin.site/pet-paws</a>
+      项目地址：<a href="https://www.appin.site/pet-paws/">Appin.site/pet-paws</a>
     </p>
     <p style="color:var(--text-secondary);font-size:13px;margin-top:8px;">
-      <a href="/">← 返回个人主页</a>
+      <a href="https://www.appin.site/">← 返回个人主页</a>
     </p>
   </div>
 </div>
