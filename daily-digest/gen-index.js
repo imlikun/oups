@@ -26,6 +26,15 @@ function cleanTitle(t) {
   return t.replace(/\*\*/g, '').replace(/[（(]来自[^）)]*[）)]/g, '').replace(/\s+/g, ' ').trim();
 }
 
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function getAccentIndex(date) {
   const d = new Date(date + 'T00:00:00');
   const start = new Date(d.getFullYear(), 0, 0);
@@ -65,7 +74,11 @@ function parseDigest(filePath) {
   const d = new Date(date + 'T00:00:00');
   const wd = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][d.getDay()];
 
-  return { date, weekday: wd, sections, title: title || date };
+  // 当日内容简介：markdown 中以 `> 今日速览：……` 单行 blockquote 标注
+  const sumMatch = content.match(/^> 今日速览[：:]\s*(.+)$/m);
+  const summary = sumMatch ? sumMatch[1].trim() : '';
+
+  return { date, weekday: wd, sections, title: title || date, summary };
 }
 
 function cardHtml(item, isLatest) {
@@ -88,7 +101,7 @@ function cardHtml(item, isLatest) {
         </div>${latestBadge}
       </div>
       <div class="digest-title">${item.title}</div>
-      <div class="digest-preview">
+${item.summary ? `      <div class="digest-desc">${esc(item.summary)}</div>\n` : ''}      <div class="digest-preview">
 ${tags}
       </div>
       <div class="digest-arrow">阅读全文 →</div>
@@ -113,10 +126,10 @@ function main() {
   const count = items.length;
 
   const tmpl = fs.readFileSync(INDEX_PATH, 'utf8');
-  const listRe = /<div id="digestList">[\s\S]*?<\/div>\n<\/section>/;
-  const cardsBlock = `<div id="digestList">\n\n${cards}\n</div>\n</section>`;
-  let newHtml = tmpl.replace(listRe, cardsBlock);
-  newHtml = newHtml.replace(/<span id="countLabel">\(\d+\)<\/span>/, `<span id="countLabel">(${count})</span>`);
+  // 现有 index.html 结构：list-header 之后直接是 <a> 卡片列表，直至 </section>（无 digestList 包裹层）
+  const listRe = /(<div class="list-header">[\s\S]*?<\/div>)\n[\s\S]*?(\n<\/section>)/;
+  let newHtml = tmpl.replace(listRe, (m, head, tail) => `${head}\n${cards}${tail}`);
+  newHtml = newHtml.replace(/<span>\(\d+\)<\/span>/, `<span>(${count})</span>`);
 
   fs.writeFileSync(INDEX_PATH, newHtml, 'utf8');
   console.log(`✅ index.html 已重新生成（${count} 期，最新 ${items[0].date}）`);

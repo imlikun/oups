@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日阅读 | 2026-07-20 — 李坤</title>
+<meta name="description" content="虎嗅析 AI 重构消费难变现（来自虎嗅）——2026-07-20阅读简报。">
+<style>
+:root{
+  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
+  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
+  --card-bg:#fff;--radius:14px;--radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
+
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+    .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#fff;text-decoration:none;
+  font-weight:600;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
+  box-shadow:0 1px 2px rgba(48,209,88,.25);transition:all .2s}
+.news-link:hover{background:#26b94a;gap:10px;box-shadow:0 3px 8px rgba(48,209,88,.35)}
+
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
+.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
+
+<header class="article-header">
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-20 星期一</div>
+  <h1>每日阅读</h1>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 25 条</p>
+  <div class="section-tags">
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
+        <span class="tag-elderly" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业 ×4</span>
+        <span class="tag-psych" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#e54d66"></span> 心理学 ×2</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
+    <div class="section-title" style="color:#2997ff;">社会热点与商业</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>虎嗅析 AI 重构消费难变现（来自虎嗅）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">WAIC 2026 显示 AI 正倒置人货关系、消解中间环节，但商业变现仍遥远，隐私与行业分化矛盾待解。</div>
+    <a href="https://view.inews.qq.com/a/20260719A07XOB00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>虎嗅称小红书赌赢世界杯（来自虎嗅）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">小红书世界杯转播时长环比翻两倍、相关笔记增 3 倍，社区「燃料化」巧妙避开了版权回本困局。</div>
+    <a href="https://view.inews.qq.com/a/20260720A02CRC00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>虎嗅探存算一体芯片量产（来自虎嗅）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">后摩智能用存算一体新技术实现大算力芯片量产，中美在该技术起点一致，国产替代有新抓手。</div>
+    <a href="https://view.inews.qq.com/a/20260720A04OLD00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>月之暗面逆势赴港 IPO（来自虎嗅/火星宏观）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">AI 独角兽月之暗面发起上市议案，估值超 300 亿美元，最快半年完成，ARR 三个月飙至 3 亿美元。</div>
+    <a href="https://view.inews.qq.com/a/20260719A09HFZ00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>美股科技股遭遇猛烈抛售（来自虎嗅/九派财经）</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">本周纳指跌 2.9%、费城半导体指数较高位回撤近 20%，高盛称动量因子平仓已近尾声。</div>
+    <a href="https://view.inews.qq.com/a/20260719A07R9Z00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>海艺 AI 完成超亿元 B 轮融资（来自36氪）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="news-summary">全球 AI 全模态内容互动娱乐平台海艺（SeaArt）完成超亿元 B 轮，由视觉中国、华盖创赢、祥峰投资领投。</div>
+    <a href="https://www.36kr.com" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
+    <div class="section-title" style="color:#e08600;">汽车行业热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">1</span><h3><strong>上半年新能源车型销量榜：吉利星愿夺冠（来自中汽数研/鞭牛士）</strong></h3></div>
+    <div class="news-summary">吉利星愿以 19.42 万辆拿下全品类销冠，特斯拉 Model Y 17.25 万辆居次，理想 i6、小米 YU7、钛 7 分列三至五。</div>
+    <a href="http://view.inews.qq.com/a/20260720A04ZLV00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">2</span><h3><strong>中汽协半年报：新能源渗透率近半、出口挑大梁（来自中国汽车报）</strong></h3></div>
+    <div class="news-summary">1~6 月新能源汽车产销 744.6 万辆，新车销量占比 49.6%；出口 235.5 万辆同比增 1.2 倍。</div>
+    <a href="http://view.inews.qq.com/a/20260720A04ZIG00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>新能源「免税」时代将结束，油电同权推进（来自国民经略）</strong></h3></div>
+    <div class="news-summary">财政部等多部门公告：9 月起汽车动力锂电池按 2% 征消费税、一年后恢复 4%，车船税减免同步退出。</div>
+    <a href="http://view.inews.qq.com/a/20260720A04R0Y00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>广汽埃安就中创新航电池故障向营运车用户兜底（来自电动汽车观察家）</strong></h3></div>
+    <div class="news-summary">针对搭载 177Ah 磷酸铁锂电池的营运版 AION S 电池故障，埃安将质保从 8 年 15 万公里延至 8 年 30 万公里并道歉。</div>
+    <a href="http://view.inews.qq.com/a/20260720A053ZG00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>新能源车投诉大涨，续航虚标三电偏差突出（来自驱动之家）</strong></h3></div>
+    <div class="news-summary">南宁上半年家用汽车投诉 1340 起同比增 33.6%，新能源车集中暴露续航虚标、电量衰减、快充不达标等短板。</div>
+    <a href="http://view.inews.qq.com/a/20260720A059GU00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
+    <div class="section-title" style="color:#bf5af2;">科技热点（AI 芯片 · 机器人）</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>WAIC 2026 现场直击：机器人抢镜、芯片上桌，AI 竞争走出大模型（来自网易）</strong></h3></div>
+    <div class="news-summary">行业重心向智能体任务执行、具身机器人复杂场景落地、系统级算力协作三方向迁移。</div>
+    <a href="https://www.163.com/dy/article/L287TJ2U05561FZE.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>WAIC 2026 全维度：算力、智能体、人形机器人三条主线爆发（来自今日头条）</strong></h3></div>
+    <div class="news-summary">全球首个 AI 政府间组织落地上海、华为万卡级超节点真机首秀、全国产十万卡 AI 超集群亮相、数十款量产级人形机器人开放实景作业。</div>
+    <a href="https://www.toutiao.com/article/7664212719565816320" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>高瓴创投「AI 全栈舰队」驶入现实世界（来自新浪财经）</strong></h3></div>
+    <div class="news-summary">东方算芯 DF1000 近存计算 3D 芯片摘 SAIL 奖；高瓴被投企业覆盖基础模型、空间智能、AI 芯片、机器人本体、触觉感知与数据闭环。</div>
+    <a href="https://dy.163.com/article/L28B7UBS05568W0A.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>松应科技发布全球首个多形态机器人协同训练物理 AI 操作系统 ORCA OS（来自中国日报）</strong></h3></div>
+    <div class="news-summary">首次实现人形、四足、无人机等异构智能体在同一数字工厂协同训练，已适配国产 GPU。</div>
+    <a href="http://view.inews.qq.com/a/20260719A075WP00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>启明创投发布 2026 AI 十大展望：算力转向推理、应用聚焦垂直场景（来自36氪/投资界）</strong><span class="news-source-tag src-36kr">36氪</span></h3></div>
+    <div class="news-summary">算力需求重心转向推理，未来两年 AI 基建持续结构性紧缺；AI 应用商业模式从 Freemium 转向以结果定价。</div>
+    <a href="http://gu.qq.com/resources/shy/news/detail-v2/index.html#/?id=nesSN20260719193717a484ce93" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(200,122,30,0.1);color:#c87a1e;">🏠</div>
+    <div class="section-title" style="color:#c87a1e;">养老产业观察</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">1</span><h3><strong>国务院批复《扩大消费「十五五」规划》：系统部署扩大养老消费（来自民政部）</strong></h3></div>
+    <div class="news-summary">加快健全县乡村三级养老服务网络，推动养老服务领域数智化升级；银发经济扩展至银发旅游、康养旅居、老年教育、养老金融等多元场景。</div>
+    <a href="https://www.mca.gov.cn/n152/n166/c1662004999980011969/content.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">2</span><h3><strong>民政部印发《城乡三级养老服务网络建设管理指引》（来自民政部）</strong></h3></div>
+    <div class="news-summary">7 月 8 日发文，明确县级综合平台、乡镇区域中心、村（社区）站点三级功能定位与运行机制，聚焦失能刚需扩大普惠供给。</div>
+    <a href="https://www.mca.gov.cn/gdnps/content.jsp?id=1662004999980011818" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">3</span><h3><strong>从国务院到市县，「抢老人」上升为国家行动（来自决策信息网）</strong></h3></div>
+    <div class="news-summary">八部门文件搭框架、「十五五」规划定蓝图，地方以「候鸟经济」「冬季避寒」等差异化产业竞赛承接银发消费。</div>
+    <a href="https://www.jcxx.cc/show-6-218279-0.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">4</span><h3><strong>养老服务师职业资格制度落地（来自民政部）</strong></h3></div>
+    <div class="news-summary">民政部、人社部联合印发《养老服务师职业资格制度暂行规定》，为银发经济培育专业化人才队伍。</div>
+    <a href="https://www.mca.gov.cn" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,69,89,0.1);color:#e54d66;">🧠</div>
+    <div class="section-title" style="color:#e54d66;">心理学</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">1</span><h3><strong>结婚多年还有性生活的人，做对了什么？（轻心理）【心理学】</strong></h3></div>
+    <div class="news-summary">微信读书评分 7.3 分（263 人评价）</div>
+    <a href="https://weread.qq.com/book-detail?type=1&v=453328b0813abad65g0183fa" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">2</span><h3><strong>先照顾好自己，才有能力好好热爱生活（来自壹心理）</strong></h3></div>
+    <div class="news-summary">总是喊累的人往往有个共性：时间与精力从来不是自己的。文章借温尼科特的「假自体」提醒——停止输出、学会把自己排在前面，才不会被掏空。</div>
+    <a href="https://www.xinli001.com/info/100504555" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
+    <div class="section-title" style="color:#2ea043;">好书推荐</div>
+  </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">1</span>
+        <div class="book-info">
+          <h3><em>《告白》</em> — 湊佳苗</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      <div class="book-desc">湊佳苗的《告白》以初中女教师森口悠子的复仇为轴，用罗生门式多视角告白撕开青少年犯罪、家庭教育与校园霸凌的暗面，是豆瓣热门推理 TOP10 的暗黑经典；同名电影亦拿下 8.8 分。</div>
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=5b63248071c3a8c45b67987" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"好了，渡边同学。你不认为这才是真正的复仇，是你重新做人的第一步吗？"</p>
+          <span class="highlight-count">7462人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"「不是这样的。」直树满面笑容地说道，「我亲眼看见那个小孩儿苏醒了，然后，我把她扔进游泳池里的。」"</p>
+          <span class="highlight-count">6858人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"可见对于同一件事，因角度不同，看法天差地别的情况在这世上比比皆是。"</p>
+          <span class="highlight-count">4870人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">2</span>
+        <div class="book-info">
+          <h3><em>《所罗门王的指环》</em> — [奥] 康拉德·洛伦茨</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      <div class="book-desc">诺贝尔生理医学奖得主洛伦茨以科学家之眼、文学家之笔写就的动物行为学经典；与穴乌、灰雁、寒鸦同居的日常妙趣横生，让人重新看见「动物行为里有人的影子」。</div>
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=1e1321d072971fc21e185d9" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"你能否理解，我所忍受的所有这些麻烦和烦恼，换来的补偿不仅仅是科学成果，还有很多很多？"</p>
+          <span class="highlight-count">960人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"因为从一个人对这些麻烦事的忍耐程度，就能看出他对动物的喜爱程度。"</p>
+          <span class="highlight-count">880人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"科卡张着翅膀，犹豫了一下，然后收起翅膀，一头扎下来，落在我伸开的胳膊上。我再次镇住了全场。"</p>
+          <span class="highlight-count">852人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">3</span>
+        <div class="book-info">
+          <h3><em>《姥姥语录》</em> — 倪萍</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      <div class="book-desc">倪萍用朴素的白话记下姥姥的处世箴言，没有大道理，却句句戳中人心——关于体面、关于认命与不认命、关于怎么好好说话、好好活着，是被 2 万多人打出「神作」的国民读本。</div>
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=c56323d05d152ec56b56a55" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"姥姥说：「用心看着人，用心和人说话。别觉着自己比人家高，也别怕自己比人家矮。」"</p>
+          <span class="highlight-count">6468人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"姥姥说：「天黑了，谁能拉着太阳不让它下山？你就得躺下。孩子，不怕，多黑的天到头了也得亮。」"</p>
+          <span class="highlight-count">6273人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"「孩子你记住，人说话，一半儿是用嘴说，一半儿是用心说。用嘴说的话你倒着听就行了，用心说的话才是真的。」"</p>
+          <span class="highlight-count">4928人划线</span>
+        </blockquote>
+      </div>
+    </div>
+</section>
+<div class="divider">— END OF DIGEST —</div>
+</article>
+
+<div class="footer-nav">
+  <a href="2026-07-18.html">← 上一篇（07-18）</a>
+  <a href="index.html">返回列表</a>
+  <span class="disabled">下一篇 →</span>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
+</script>
+</body>
+</html>
