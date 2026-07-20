@@ -1,4 +1,6 @@
-# appin.site 维护指南（AI 编码助手用）
+# appin.site 维护指南（AI 编码助手全局指令）
+
+> ⚡ **AI 助手必读**：本文件是本仓库的全局指令文件。无论你使用 TRAE、Workbuddy、Claude Code、Cursor 还是其他 AI 编程工具，在操作本仓库前请先读取本文件并遵守所有规则。执行任何修改操作之前，请先完整阅读本文件。
 
 本仓库是 appin.site（个人开发者刊物网站）的源文件。对线上内容的任何修改，最终都通过 GitHub Actions 自动部署，**不需要直接 SSH 服务器**。
 
@@ -30,6 +32,7 @@
 - 重要句子用 `<span class="key">…</span>` 强调（品牌绿加粗），不下划线、不纯变色、不只用普通加粗
 - 封面优先真实摄影图（Unsplash/Pexels），不用 AI 生成图（除非用户当次同意）
 - 图片类：`.gitignore` 忽略 `uploads/*.png`，**png 封面不会随 push 上线**；封面统一存 jpg/webp
+- **PXID 相关内容（pxid2/pxid3/产品站/落地页/导航链接）未经用户明确指示，一律不可修改、删除或移动**
 
 ## 验证
 - push 后到 https://github.com/imlikun/oups/actions 看 `Deploy appin.site → ECS` 是否绿
