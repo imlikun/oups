@@ -6,7 +6,7 @@ async def screenshot_phones():
         browser = await p.chromium.launch(headless=True)
         page = await browser.new_page(viewport={"width": 1500, "height": 900})
         
-        file_path = "/Users/likun/WorkBuddy/2026-05-29-21-25-04/宠急帮_phones.html"
+        file_path = "/Users/likun/WorkBuddy/2026-05-29-21-25-04/宠急达_phones.html"
         await page.goto(f"file://{file_path}", wait_until="networkidle")
         await page.wait_for_timeout(500)
         
@@ -20,7 +20,7 @@ async def screenshot_phones():
         for name, selector in screens.items():
             el = await page.query_selector(selector)
             if el:
-                await el.screenshot(path=f"/Users/likun/WorkBuddy/2026-05-29-21-25-04/宠急帮_{name}.png")
+                await el.screenshot(path=f"/Users/likun/WorkBuddy/2026-05-29-21-25-04/宠急达_{name}.png")
                 print(f"  ✓ {name}")
             else:
                 print(f"  ✗ {name} not found")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""上传宠急帮小程序二维码到 COS"""
+"""上传宠急达小程序二维码到 COS"""
 import os
 from qcloud_cos import CosConfig, CosS3Client
 
@@ -23,9 +23,9 @@ bucket = 'myopus-1253808671'
 with open('/Users/likun/Desktop/gh_6a4d83cb690f_344.jpg', 'rb') as f:
     client.put_object(
         Bucket=bucket,
-        Key='宠急帮/qrcode.jpg',
+        Key='宠急达/qrcode.jpg',
         Body=f,
         ContentType='image/jpeg',
         CacheControl='max-age=86400'
     )
-print('✓ 二维码上传完成: https://www.appin.site/宠急帮/qrcode.jpg')
+print('✓ 二维码上传完成: https://www.appin.site/宠急达/qrcode.jpg')

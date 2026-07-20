@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Upload 宠急帮 landing page + screenshots to COS, then add 6th card to index.html"""
+"""Upload 宠急达 landing page + screenshots to COS, then add 6th card to index.html"""
 import os
 from pathlib import Path
 from qcloud_cos import CosConfig, CosS3Client
@@ -23,23 +23,23 @@ BASE = Path('/Users/likun/WorkBuddy/2026-05-29-21-25-04')
 
 # Upload screenshots
 screenshots = [
-    '宠急帮_screen-welcome.png',
-    '宠急帮_screen-asker-home.png',
-    '宠急帮_screen-publish.png',
-    '宠急帮_screen-helper-pool.png',
+    '宠急达_screen-welcome.png',
+    '宠急达_screen-asker-home.png',
+    '宠急达_screen-publish.png',
+    '宠急达_screen-helper-pool.png',
 ]
 
 for ss in screenshots:
     local = BASE / ss
-    key = f'宠急帮/{ss.replace("宠急帮_","")}'
+    key = f'宠急达/{ss.replace("宠急达_","")}'
     with open(local, 'rb') as fh:
         client.put_object(Bucket=BUCKET, Key=key, Body=fh, ContentType='image/png', CacheControl='public,max-age=604800')
     print(f"  ✓ {key}")
 
 # Upload landing page
-html_path = BASE / '宠急帮/index.html'
+html_path = BASE / '宠急达/index.html'
 with open(html_path, 'rb') as fh:
-    client.put_object(Bucket=BUCKET, Key='宠急帮/index.html', Body=fh, ContentType='text/html; charset=utf-8', CacheControl='no-cache')
-print(f"  ✓ 宠急帮/index.html")
+    client.put_object(Bucket=BUCKET, Key='宠急达/index.html', Body=fh, ContentType='text/html; charset=utf-8', CacheControl='no-cache')
+print(f"  ✓ 宠急达/index.html")
 
-print("Done uploading 宠急帮 files!")
+print("Done uploading 宠急达 files!")

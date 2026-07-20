@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """幂等迁移：把全局动效层 fx.css / fx.js 注入到所有主站 HTML。
-排除：pxid* / pxid-landing / 旧 landing 页（neuroflow, pet-paws, 宠急帮, bigbang, yunlan）。
+排除：pxid* / pxid-landing / 旧 landing 页（neuroflow, congji, 宠急达, bigbang, yunlan）。
 可重复运行，已注入的文件跳过。"""
 import os, sys
 
 ROOT = '/Users/likun/Projects/appin-site'
 
-EXCLUDE_DIRS = ['pxid', 'neuroflow', 'pet-paws', '宠急帮', 'bigbang', 'yunlan',
+EXCLUDE_DIRS = ['pxid', 'neuroflow', 'congji', '宠急达', 'bigbang', 'yunlan',
                'node_modules', '.git']
-EXCLUDE_FILES = {'pet-app.html', '宠急帮_phones.html'}
+EXCLUDE_FILES = {'pet-app.html', '宠急达_phones.html'}
 
 def excluded(path):
     parts = path.split(os.sep)

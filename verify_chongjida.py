@@ -8,7 +8,7 @@ async def verify():
         
         tests = {
             "homepage": "https://www.appin.site/index.html",
-            "chongjida": "https://www.appin.site/宠急帮/index.html",
+            "chongjida": "https://www.appin.site/宠急达/index.html",
         }
         
         all_ok = True
@@ -21,9 +21,9 @@ async def verify():
                 if status != 200: all_ok = False
                 print(f"  {ok} {name}: {status} — {title[:60]}")
                 
-                # For homepage, check for 宠急帮 in the page
+                # For homepage, check for 宠急达 in the page
                 if name == "homepage":
-                    has_card = await page.evaluate("() => document.body.textContent.includes('宠急帮')")
+                    has_card = await page.evaluate("() => document.body.textContent.includes('宠急达')")
                     print(f"     {'✅' if has_card else '❌'} 6th card present: {has_card}")
                     if not has_card: all_ok = False
                     
