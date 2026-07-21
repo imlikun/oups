@@ -1,0 +1,71 @@
+/* ═══════════════════════════════════════════════════════════════
+   BASE.CSS · appin.site 设计系统单一可信源（路线 C 收敛核心）
+   合并自 article.css / list.css / daily-digest.css 的重复 :root token
+   + 全局 reset。各栏目 CSS（article/list/fx/daily-digest）不再定义
+   token，统一依赖本文件。改 token 只改这里。
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  /* —— 新蓝本 token（deepseek 细化版 de5545） —— */
+  --bg-primary:#0A0A0A;
+  --bg-secondary:#141414;
+  --bg-elevated:#1E1E1E;
+  --text-primary:#E8E8E8;
+  --text-secondary:#A0A0A0;
+  --text-inverse:#0A0A0A;
+  --accent-green:#00FF41;
+  --accent-cyan:#00D4FF;
+  --accent-dim:rgba(0,255,65,.15);
+  --border-subtle:#2A2A2A;
+  --border-strong:#444444;
+  --state-error:#FF3B30;
+  --state-success:#34C759;
+  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+  --font-sans:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,'Segoe UI',sans-serif;
+  /* —— 向后兼容别名（存量 HTML 沿用旧名） —— */
+  --bg:var(--bg-primary);
+  --bg-card:var(--bg-elevated);
+  --fg:var(--text-primary);
+  --fg-muted:var(--text-secondary);
+  --fg-dim:#6B6B6B;
+  --brand:var(--accent-green);
+  --brand-dim:#00B32C;
+  --brand-bg:var(--accent-dim);
+  --cyan:var(--accent-cyan);
+  --cyan-bg:rgba(0,212,255,.10);
+  --border:var(--border-subtle);
+  --border-bright:var(--border-strong);
+  --amber:#FFB800;
+  --amber-bg:rgba(255,184,0,.10);
+  /* —— 间距比例（来自 index.html / daily-digest） —— */
+  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;
+  /* —— 圆角（article 用 --radius 默认 8；list 覆盖 10） —— */
+  --radius:8px;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:18px;
+  /* —— 展示字体（daily-digest 标题用） —— */
+  --font-display:'Space Grotesk','PingFang SC',sans-serif;
+  /* —— 间距 / 阅读宽度 —— */
+  --max-text:900px;          /* 默认阅读列宽；daily-digest 覆盖为 960 */
+  --maxw:1120px;             /* 列表/区块最大宽度 */
+  /* —— 列表页强调色（daily-digest 卡用 .accent-* 覆盖，源自 list.css） —— */
+  --accent:var(--accent-green);
+  --accent-light:var(--accent-dim);
+  --accent-medium:rgba(0,255,65,.14);
+  --accent-border:rgba(0,255,65,.22);
+  --accent-shadow:rgba(0,255,65,.10);
+}
+
+/* ═══ 全局 reset（原散落于各 CSS，统一到此） ═══ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);background:var(--bg-primary);color:var(--text-primary);
+  line-height:1.7;font-size:16px;overflow-x:hidden}
+*:focus-visible{outline:2px solid var(--accent-green);outline-offset:3px;border-radius:2px}
+::selection{background:var(--brand-bg);color:var(--brand)}
+a{color:var(--accent-cyan);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent-green)}
+/* 极客风滚动条 */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg-primary)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-green)}
