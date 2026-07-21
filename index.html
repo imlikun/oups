@@ -270,23 +270,25 @@ nav .actions{display:flex;align-items:center;gap:12px}
 
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.content-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);grid-auto-rows:1fr}
+.content-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
 /* Bento 错落：行1 = 3:1（2篇），行2 = 1:1:2（3篇），共5篇 */
 .content-card:nth-child(1){grid-column:span 3}
 .content-card:nth-child(2){grid-column:span 1}
 .content-card:nth-child(3){grid-column:span 1}
 .content-card:nth-child(4){grid-column:span 1}
 .content-card:nth-child(5){grid-column:span 2}
+/* 统一卡片高度：所有卡片等高，避免被单张超高卡片撑开整行 */
 .content-card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
   overflow:hidden;transition:.25s;display:flex;flex-direction:column;
-  cursor:pointer;text-decoration:none;color:inherit
+  cursor:pointer;text-decoration:none;color:inherit;
+  height:320px
 }
 .content-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
-.content-card .content-thumb{margin:0;aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated)}
+.content-card .content-thumb{margin:0;flex:0 0 auto;aspect-ratio:16/9;overflow:hidden;background:var(--bg-elevated)}
 .content-card .content-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .content-card:hover .content-thumb img{transform:scale(1.03)}
-.content-card .card-body{padding:var(--s3) var(--s4);display:flex;flex-direction:column;gap:6px;flex:1}
+.content-card .card-body{padding:var(--s3) var(--s4);display:flex;flex-direction:column;gap:6px;flex:1 1 auto;overflow:hidden}
 .content-card .card-body h3{font-size:14.5px;font-weight:700;line-height:1.35;margin:0;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .content-card .card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px}
@@ -304,11 +306,11 @@ nav .actions{display:flex;align-items:center;gap:12px}
   text-transform:uppercase;color:var(--brand);opacity:.9
 }
 .content-thumb.placeholder .ph-glyph{font-size:18px;color:var(--brand);opacity:.55}
-/* 首篇横向大卡（占 3 列）：左图右文 + 摘要 */
-.content-card.lead{flex-direction:row;max-height:280px;overflow:hidden}
-.content-card.lead .content-thumb{flex:1 1 48%;min-height:0;border-right:1px solid var(--border)}
-.content-card.lead .content-thumb img{width:100%;height:100%;object-fit:cover}
-.content-card.lead .card-body{flex:1 1 52%;padding:calc(var(--s4)*1.3);gap:10px;justify-content:center;min-height:0;overflow:hidden}
+/* 首篇横向大卡（占 3 列）：左图右文 + 摘要 —— 与其他卡片等高 320px */
+.content-card.lead{flex-direction:row;height:320px;overflow:hidden}
+.content-card.lead .content-thumb{flex:1 1 48%;aspect-ratio:auto;border-right:1px solid var(--border);overflow:hidden}
+.content-card.lead .content-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.content-card.lead .card-body{flex:1 1 52%;padding:calc(var(--s4)*1.3);gap:10px;justify-content:center;overflow:hidden}
 .content-card.lead .card-body h3{font-size:20px;line-height:1.35;-webkit-line-clamp:3}
 .content-card.lead .card-cat-top{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--brand);text-transform:uppercase}
 .content-card.lead .card-excerpt{font-size:13.5px;line-height:1.7;color:var(--fg-muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -361,10 +363,6 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 .footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3)}
 .footer-links a{color:var(--fg-dim);text-decoration:none;margin-right:var(--s4)}
 .footer-links a:hover{color:var(--fg)}
-  width:40px;height:40px;border-radius:50%;border:1px solid var(--border-bright);
-  background:var(--bg-card);color:var(--fg);cursor:pointer;display:inline-flex;
-  align-items:center;justify-content:center;font-size:18px;transition:.2s
-}
 .caret{display:inline-block;width:11px;height:.92em;background:var(--brand);margin-left:6px;vertical-align:-.12em;animation:caret-blink 1s step-end infinite}
 @keyframes caret-blink{0%,100%{opacity:1}50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.caret{display:none}}
@@ -382,7 +380,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
   .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
   .content-grid{grid-template-columns:repeat(2,1fr)}
+  .content-card{height:auto}
   .content-card:nth-child(1){grid-column:span 2}
+  .content-card.lead{height:auto;flex-direction:row}
+  .content-card.lead .content-thumb{aspect-ratio:16/9;flex:1 1 45%}
   .content-card:nth-child(2),
   .content-card:nth-child(3),
   .content-card:nth-child(4),
@@ -394,12 +395,13 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .stat-num{font-size:24px} .consult-box{padding:var(--s5) var(--s4)}
   .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
   .content-grid{grid-template-columns:1fr}
+  .content-card{height:auto}
   .content-card:nth-child(1),
   .content-card:nth-child(2),
   .content-card:nth-child(3),
   .content-card:nth-child(4),
   .content-card:nth-child(5){grid-column:1/-1}
-  .content-card.lead{flex-direction:column;max-height:none}
+  .content-card.lead{flex-direction:column;height:auto}
   .content-card.lead .content-thumb{border-right:none;border-bottom:1px solid var(--border);aspect-ratio:16/9}
 }
 </style>
