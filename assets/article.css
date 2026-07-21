@@ -188,8 +188,8 @@ a:hover{color:var(--accent-green)}
   box-shadow:0 0 8px var(--accent-green);animation:fx-heartbeat 2s ease-in-out infinite;
   flex-shrink:0}
 .hero-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:13px;color:var(--fg-dim)}
-/* 摘要卡：对齐阅读列（760−56=704），避免全宽（铁律修复：codex 等 9 篇曾全宽） */
-.summary-card{max-width:calc(var(--max-text) - 56px);margin:28px auto;padding:20px 24px;background:var(--bg-elevated);
+/* 摘要卡：强制对齐阅读列，max-width !important 防止任何样式覆盖导致全宽 */
+body .summary-card{display:block;width:auto;max-width:calc(var(--max-text) - 56px)!important;margin:28px auto!important;padding:20px 24px;background:var(--bg-elevated);
   border:1px solid var(--border-subtle);border-radius:var(--radius);border-left:3px solid var(--accent-green)}
 /* 摘要卡外层包裹（仅 xpeng 用）：对齐阅读列 */
 .summary-wrap{max-width:calc(var(--max-text) - 56px);margin:28px auto}
