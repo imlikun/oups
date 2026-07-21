@@ -139,6 +139,20 @@ nav .actions{display:flex;align-items:center;gap:12px}
 }
 .term-header{display:flex;align-items:center;gap:8px;margin-bottom:var(--s4);font-size:13px;color:var(--fg-dim)}
 .term-dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
+/* 圆形头像：终端卡片内 */
+.term-avatar{
+  display:flex;justify-content:center;margin-bottom:var(--s4);
+}
+.term-avatar img{
+  width:96px;height:96px;border-radius:50%;
+  border:2px solid var(--brand);
+  box-shadow:0 0 0 3px rgba(0,255,65,.12),0 0 20px rgba(0,255,65,.15);
+  object-fit:cover;transition:.3s;
+}
+.term-avatar img:hover{
+  box-shadow:0 0 0 3px rgba(0,255,65,.2),0 0 30px rgba(0,255,65,.25);
+  transform:scale(1.04);
+}
 .term-body{font-family:var(--font-mono);font-size:13px;line-height:2;color:var(--fg-muted)}
 .term-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed var(--border)}
 .term-row:last-child{border:none}
@@ -422,6 +436,9 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   <!-- right: terminal identity card -->
   <div class="hero-right">
     <div class="term-header"><span class="term-dot"></span><code>$ whoami</code></div>
+    <div class="term-avatar">
+      <img src="/uploads/avatar-lkn.jpg" alt="Lkn" width="96" height="96" loading="eager">
+    </div>
     <div class="term-body">
       <div class="term-row"><span class="term-key">name:</span><span class="term-val hl">Li Kun / Lkn</span></div>
       <div class="term-row"><span class="term-key">role:</span><span class="term-val">独立开发者 × 品牌运营</span></div>
