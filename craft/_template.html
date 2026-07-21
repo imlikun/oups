@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <!--
 ═════════════════════════════════════════════════════════════════════════
-  Appin.site · 技艺录（craft）文章模板  v2（article.css 体系 · 2026-07-20 重制）
-  本模板对齐线上现行文章的视觉结构，直接复制本文件 → 改名 <slug>.html → 替换占位符即可。
+  Appin.site · 技艺录（craft）文章模板  v3（三栏布局 · 2026-07-21 重制）
+  布局结构：左常驻目录 / 中阅读栏 / 右元信息栏（沿用 quark 三栏，配色终端绿统一）
+  依赖 assets/craft-threecol.css（复用 base.css token），不引 article.css。
+  直接复制本文件 → 改名 <slug>.html → 替换占位符即可。
 ═════════════════════════════════════════════════════════════════════════
 
 【1】占位符清单（全局替换，发布前确保无残留 {{...}}）
   {{TITLE}}         页面 <title> + og:title + twitter:title（含【WB】前缀）
-  {{EXCERPT}}       description + og:description + twitter:description + hero-desc（一句话摘要）
+  {{EXCERPT}}       description + og:description + twitter:description + 导语 lead
   {{SLUG}}          文章短链名，如 quark-to-aliyun-sync（用于 canonical / og:url / 封面路径）
   {{HERO_COVER}}    封面绝对路径：/uploads/{{SLUG}}-cover.webp
   {{HERO_BADGE}}    hero 顶部小标签，如「实战案例 · 网盘自动化」
   {{TITLE_HTML}}    h1 主标题（可含 <strong> 强调）
-  {{HERO_META}}     hero-meta 内若干 <span>分类</span><span class="dot"></span> 组合（3~4 个）
-  {{TOC_LINKS}}      目录浮层 <li><a href="#s1">…</a></li> 列表（每章一条，对应正文 h2 的 id）
+  {{HERO_META}}     meta 行内若干 <span>分类</span><span class="dot"></span> 组合（3~4 个）
+  {{TOC_LINKS}}      目录 <li><a href="#s1">…</a></li> 列表（每章一条，对应正文 h2 的 id）
   {{BODY}}           正文全部章节（见下方区块库示例，删掉示例写你自己的）
-  {{TAGS}}           标签云 <a href="/craft/">标签</a> 列表（8~12 个）
+  {{TAGS}}           标签云 <a href="/craft/">标签</a> 列表（8~12 个，显示在右栏）
   {{DATE}}           发布日期，如 2026.07.20
+  {{RAIL_READTIME}}  阅读时间，如「约 35 分钟」（右栏展示，手动填）
   {{CATEGORY}}      栏目目录名：craft
   {{CATEGORY_LABEL}} 栏目中文名：技艺录
 
@@ -54,12 +57,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{TITLE}}">
 <meta name="twitter:description" content="{{EXCERPT}}">
-<meta property="og:image" content="https://www.appin.site/uploads/{{SLUG}}-cover.webp">
+<meta name="og:image" content="https://www.appin.site/uploads/{{SLUG}}-cover.webp">
 <meta name="twitter:image" content="https://www.appin.site/uploads/{{SLUG}}-cover.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/base.css">
-    <link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/craft-threecol.css">
 <link rel="stylesheet" href="/assets/fx.css">
 <script src="/assets/fx.js" defer></script>
 </head>
@@ -76,32 +77,29 @@
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-badge"><span class="dot"></span>{{HERO_BADGE}}</div>
-  <h1>{{TITLE_HTML}}</h1>
-  <p class="hero-desc">{{EXCERPT}}</p>
-  <div class="hero-meta">
-    {{HERO_META}}
-  </div>
-  <div class="hero-divider"></div>
-</header>
-
-<div class="hero-cover">
-  <img src="{{HERO_COVER}}" alt="{{TITLE}}">
-  <aside class="toc-overlay">
-    <div class="toc-title">目录</div>
-    <ul class="toc-list">
+<div class="layout">
+  <!-- 左：常驻目录 -->
+  <aside class="doc-nav">
+    <div class="doc-brand"><span class="b-dot"></span>Appin.site <span>{{CATEGORY_LABEL}}</span></div>
+    <div class="doc-nav-title">目录</div>
+    <ul class="doc-toc">
       {{TOC_LINKS}}
     </ul>
   </aside>
-</div>
 
-<div class="page">
-  <article class="article-body">
+  <!-- 中：阅读栏 -->
+  <main class="doc-main">
+    <img class="cover" src="{{HERO_COVER}}" alt="{{TITLE}}">
+    <div class="badge"><span class="dot"></span>{{HERO_BADGE}}</div>
+    <h1>{{TITLE_HTML}}</h1>
+    <div class="meta">{{HERO_META}}</div>
+    <p class="lead">{{EXCERPT}}</p>
+
+    <article class="article-body">
 
 <!-- ════════════ 正文区块库：以下为「可删示例」，照抄或删掉写你自己的 ════════════ -->
 <!--
-  可用区块一览（class 名已与 /assets/article.css 对齐）：
+  可用区块一览（class 名已与 /assets/craft-threecol.css 对齐）：
     · 章节标题：<h2 id="sN">一、标题</h2> / <h3>子标题</h3>
     · 正文段落：<p>…</p>
     · 强调金句：<span class="key">…</span>（品牌绿加粗，用于一句话结论）
@@ -112,7 +110,7 @@
     · 示意图：  <div class="section-img"><svg viewBox="0 0 680 H">…</svg><div class="caption">图 N：说明</div></div>
     · 表格：    <div class="table-wrap"><table>…</table></div>
     · 列表：    <ul>/<ol> 常规 <li>
-    · 标签云：  <div class="tag-cloud"><a href="/craft/">标签</a>…</div>
+    · 标签云：  右栏 rail-tags 由 {{TAGS}} 填充（无需在正文写）
     · 返回：    <a href="/craft/" class="back-link">返回技艺录</a>
 -->
 
@@ -192,16 +190,29 @@
     </div>
 <!-- ════════════ 正文区块库示例结束 ════════════ -->
 
-    <div class="tag-cloud">
-      {{TAGS}}
-    </div>
     <a href="/{{CATEGORY}}/" class="back-link">返回{{CATEGORY_LABEL}}</a>
-  </article>
+    </article>
+  </main>
+
+  <!-- 右：元信息栏 -->
+  <aside class="doc-rail">
+    <div class="rail-card">
+      <h4>文章信息</h4>
+      <div class="rail-row"><span>发布</span><b>{{DATE}}</b></div>
+      <div class="rail-row"><span>栏目</span><b>{{CATEGORY_LABEL}}</b></div>
+      <div class="rail-row"><span>阅读</span><b>{{RAIL_READTIME}}</b></div>
+    </div>
+    <div class="rail-card">
+      <h4>标签</h4>
+      <div class="rail-tags">{{TAGS}}</div>
+    </div>
+  </aside>
 </div>
 
 <footer class="footer">
   <div class="footer-bottom">
     <span>© {{DATE}} Appin.site · {{CATEGORY_LABEL}} &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+    <button class="theme-toggle" aria-label="切换主题" onclick="window.toggleTheme&&window.toggleTheme()">
       <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
@@ -210,7 +221,7 @@
 
 <script>
 (function(){
-  const links = document.querySelectorAll('.toc-list a');
+  const links = document.querySelectorAll('.doc-toc a');
   const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
   if(!sections.length) return;
   const obs = new IntersectionObserver((entries)=>{
@@ -225,9 +236,7 @@
 })();
 </script>
 <script>
-(function(){
-  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
-})();
+(function(){ try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){} })();
 </script>
 </body>
 </html>

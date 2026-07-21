@@ -1,0 +1,108 @@
+/* ═══════════════════════════════════════════════════════════════
+   CRAFT-THREECOL.CSS · 技艺录三栏文章布局（quark 布局 + 终端绿统一）
+   配合 craft/_template.html v3。依赖 base.css 的 token，不引 article.css。
+   左：常驻目录 doc-nav / 中：阅读栏 doc-main / 右：元信息栏 doc-rail
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 三栏骨架 ── */
+.layout{display:grid;grid-template-columns:248px minmax(0,1fr) 248px;gap:32px;
+  max-width:1320px;margin:0 auto;padding:28px 28px 60px;position:relative;z-index:1}
+
+/* 左：常驻目录 */
+.doc-nav{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 110px);overflow-y:auto}
+.doc-brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-bottom:18px}
+.doc-brand .b-dot{width:9px;height:9px;border-radius:50%;background:var(--accent-green);
+  box-shadow:0 0 0 4px var(--accent-dim)}
+.doc-brand span{color:var(--text-secondary);font-weight:500;font-size:12.5px}
+.doc-nav-title{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary);
+  margin:6px 0 10px;font-weight:600}
+.doc-toc{list-style:none;border-left:2px solid var(--border-subtle)}
+.doc-toc li a{display:block;padding:6px 0 6px 14px;margin-left:-2px;border-left:2px solid transparent;
+  color:var(--text-secondary);font-size:14px;transition:.18s}
+.doc-toc li a:hover{color:var(--text-primary)}
+.doc-toc li a.active{color:var(--accent-green);border-left-color:var(--accent-green);font-weight:600}
+
+/* 中：阅读栏 */
+.doc-main{min-width:0}
+.cover{width:100%;height:260px;object-fit:cover;border-radius:var(--radius-lg);
+  border:1px solid var(--border-subtle);margin-bottom:22px}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;
+  color:var(--accent-green);background:var(--accent-dim);padding:5px 12px;border-radius:999px;margin-bottom:14px}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-green)}
+.doc-main h1{font-size:30px;line-height:1.3;font-weight:700;letter-spacing:-.01em;margin-bottom:14px;
+  color:var(--text-primary);max-width:var(--max-text)}
+.doc-main h1 strong{color:var(--accent-green)}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:0;color:var(--text-secondary);
+  font-size:13.5px;margin-bottom:18px;font-family:var(--font-mono)}
+.meta span{padding:0 10px}
+.meta span:first-child{padding-left:0}
+.meta .dot{width:4px;height:4px;border-radius:50%;background:var(--text-secondary);padding:0;opacity:.6}
+.lead{font-size:17px;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-subtle);
+  border-left:3px solid var(--accent-green);border-radius:10px;padding:14px 18px;margin-bottom:30px;
+  max-width:var(--max-text)}
+
+/* 右：元信息栏 */
+.doc-rail{position:sticky;top:84px;align-self:start;display:flex;flex-direction:column;gap:16px}
+.rail-card{background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:16px 18px}
+.rail-card h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);
+  margin-bottom:12px;font-weight:600}
+.rail-row{display:flex;justify-content:space-between;font-size:13.5px;padding:5px 0;color:var(--text-secondary)}
+.rail-row b{color:var(--text-primary);font-weight:600}
+.rail-tags{display:flex;flex-wrap:wrap;gap:7px}
+.rail-tags a{font-size:12.5px;color:var(--accent-green);background:var(--accent-dim);padding:3px 10px;
+  border-radius:999px;transition:.15s}
+.rail-tags a:hover{background:var(--accent-green);color:#0A0A0A}
+
+/* ── 正文区块库（class 与 v2/article.css 同名，1:1 移植） ── */
+.article-body{max-width:var(--max-text)}
+.article-body h2{font-size:23px;font-weight:700;margin:42px 0 16px;padding-top:10px;letter-spacing:-.01em;color:var(--text-primary)}
+.article-body h2:first-child{margin-top:0}
+.article-body h3{font-size:18px;font-weight:600;margin:26px 0 12px;color:var(--text-primary)}
+.article-body p{margin:14px 0;color:var(--text-primary)}
+.article-body strong{color:var(--text-primary);font-weight:700}
+.key{color:var(--accent-green);font-weight:700}
+code{font-family:var(--font-mono);font-size:13.5px;background:var(--bg-secondary);
+  color:var(--accent-cyan);padding:2px 6px;border-radius:6px;border:1px solid var(--border-subtle)}
+.info-box{background:var(--accent-dim);border:1px solid rgba(0,255,65,.3);border-radius:12px;padding:14px 18px;margin:20px 0}
+.info-box p{margin:6px 0}
+.info-box strong{color:var(--accent-green)}
+.mod-card{background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:16px 18px;margin:18px 0}
+.mc-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.mc-num{width:24px;height:24px;border-radius:7px;background:var(--accent-green);color:#0A0A0A;font-weight:700;font-size:13px;
+  display:flex;align-items:center;justify-content:center;flex:none}
+.mc-title{font-weight:700;font-size:15.5px;color:var(--text-primary)}
+.mc-desc{color:var(--text-secondary);font-size:14.5px;margin:0}
+.pull-quote{border-left:4px solid var(--accent-green);background:var(--bg-elevated);padding:14px 20px;
+  border-radius:0 10px 10px 0;margin:22px 0;font-size:16px;color:var(--text-primary)}
+.pull-quote .key{color:var(--accent-green)}
+.code-block{background:#0b0e13;border:1px solid var(--border-subtle);border-radius:12px;overflow:hidden;margin:20px 0}
+.code-block pre{margin:0;padding:16px 18px;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.65;color:#c9d3e0}
+.c-com{color:#5f7a8c}
+.c-key{color:#a78bfa;font-weight:600}
+.section-img{margin:24px 0}
+.section-img svg{width:100%;height:auto;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:12px}
+.caption{font-size:13px;color:var(--text-secondary);text-align:center;margin-top:8px}
+.table-wrap{overflow-x:auto;margin:22px 0;border:1px solid var(--border-subtle);border-radius:12px}
+.table-wrap table{border-collapse:collapse;width:100%;font-size:14px}
+.table-wrap th,.table-wrap td{border-bottom:1px solid var(--border-subtle);padding:11px 14px;text-align:left}
+.table-wrap th{background:var(--accent-dim);color:var(--accent-green);font-weight:700;font-size:13px}
+.table-wrap tr:last-child td{border-bottom:none}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 10px}
+.tag-cloud a{font-size:13px;color:var(--accent-green);background:var(--accent-dim);padding:4px 12px;
+  border-radius:999px;transition:.15s}
+.tag-cloud a:hover{background:var(--accent-green);color:#0A0A0A}
+.back-link{display:inline-block;margin-top:24px;color:var(--accent-green);font-weight:600;font-size:14.5px}
+.back-link:hover{text-decoration:underline}
+
+/* 页脚（与全站一致，宽度对齐三栏） */
+.footer{max-width:1320px;margin:0 auto;padding:26px 28px 50px;border-top:1px solid var(--border-subtle);
+  color:var(--text-secondary);font-size:13px}
+
+/* ── 响应式 ── */
+@media (max-width:1100px){
+  .layout{grid-template-columns:1fr;gap:0;padding:22px 18px 50px}
+  .doc-nav,.doc-rail{position:static;max-height:none;overflow:visible}
+  .doc-nav{margin-bottom:18px}
+  .doc-rail{margin-top:34px}
+  .cover{height:200px}
+}
