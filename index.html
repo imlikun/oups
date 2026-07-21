@@ -85,8 +85,8 @@ nav .logo{display:flex;align-items:center;gap:2px;font-weight:700;font-size:17px
 nav .logo span{color:var(--fg-muted);font-weight:400}
 nav .links{display:flex;align-items:center;gap:0}
 nav a.nav-link{position:relative;color:var(--fg-muted);padding:8px 14px;text-decoration:none;font-weight:500;transition:color .2s}
-nav a.nav-link::after{content:'';position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--brand);width:0;transition:width .25s ease}
-nav a.nav-link:hover{color:var(--brand)}
+nav a.nav-link::after{content:'';position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--cyan);width:0;transition:width .25s ease}
+nav a.nav-link:hover{color:var(--cyan)}
 nav a.nav-link:hover::after{width:calc(100% - 28px)}
 nav a.nav-link.active{color:var(--brand)}
 nav a.nav-link.active::before{content:'> ';opacity:.85}
@@ -208,7 +208,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 .tool-name{font-size:17px;font-weight:600;margin-bottom:6px}
 .tool-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s3)}
 .tool-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none}
-.tool-link:hover{text-decoration:underline}
+.tool-link:hover{color:var(--cyan)}
 .disclosure{
   grid-column:1/-1;text-align:center;font-size:12px;color:var(--fg-dim);
   padding:var(--s4) 0 0;border-top:1px dashed var(--border);margin-top:var(--s3)
@@ -266,7 +266,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 .work-title{font-size:19px;font-weight:700;margin-bottom:8px}
 .work-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s4)}
 .work-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none}
-.work-link:hover{text-decoration:underline}
+.work-link:hover{color:var(--cyan)}
 
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -321,12 +321,12 @@ nav .actions{display:flex;align-items:center;gap:12px}
 .view-all a{
   color:var(--brand);font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px
 }
-.view-all a:hover{text-decoration:underline}
+.view-all a:hover{color:var(--cyan)}
 /* content section compact header */
 .content-header{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s4);margin-bottom:var(--s5);flex-wrap:wrap}
 .view-all-inline{display:flex;gap:var(--s3);flex-wrap:wrap}
 .view-all-inline a{color:var(--fg-muted);font-size:13px;font-weight:600;text-decoration:none;padding:4px 12px;border:1px solid var(--border);border-radius:99px;transition:.2s}
-.view-all-inline a:hover{color:var(--brand);border-color:var(--brand)}
+.view-all-inline a:hover{color:var(--cyan);border-color:var(--cyan)}
 
 /* ═══ radar (AI news) cards ═══ */
 .radar-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -362,7 +362,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:13px;color:var(--fg-dim)}
 .footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3)}
 .footer-links a{color:var(--fg-dim);text-decoration:none;margin-right:var(--s4)}
-.footer-links a:hover{color:var(--fg)}
+.footer-links a:hover{color:var(--cyan)}
 .caret{display:inline-block;width:11px;height:.92em;background:var(--brand);margin-left:6px;vertical-align:-.12em;animation:caret-blink 1s step-end infinite}
 @keyframes caret-blink{0%,100%{opacity:1}50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.caret{display:none}}
@@ -371,7 +371,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 .footer-cols{display:flex;gap:var(--s6);flex-wrap:wrap}
 .footer-col h4{font-size:12px;font-weight:700;color:var(--fg);letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--s3)}
 .footer-col a{display:block;color:var(--fg-dim);text-decoration:none;font-size:13px;padding:3px 0;transition:.15s}
-.footer-col a:hover{color:var(--brand)}
+.footer-col a:hover{color:var(--cyan)}
 .footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid var(--border);font-size:12px;color:var(--fg-dim)}
 
 /* ═══ RESPONSIVE ═══ */
