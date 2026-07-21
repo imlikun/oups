@@ -26,21 +26,6 @@
   --max-text:960px;
   --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;
 }
-  --bg-primary:#F5F5F5;
-  --bg-secondary:#FFFFFF;
-  --bg-elevated:#FFFFFF;
-  --text-primary:#0A0A0A;
-  --text-secondary:#555555;
-  --accent-green:#00A82E;
-  --accent-cyan:#008CB0;
-  --accent-dim:rgba(0,168,46,.12);
-  --border-subtle:#E2E2E2;
-  --border-strong:#CCCCCC;
-  --brand:var(--accent-green);
-  --brand-bg:var(--accent-dim);
-  --cyan:var(--accent-cyan);
-  --fg-dim:#888888;
-}
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
@@ -169,16 +154,6 @@ body{font-family:var(--font-mono);line-height:1.7;font-size:15px;overflow-x:hidd
 .footer-nav a{color:var(--text-secondary);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
 .footer-nav a:hover{color:var(--brand)}
 .footer-nav .disabled{color:var(--fg-dim);font-size:13px;opacity:.5}
-
-/* ═══ THEME FAB（文章页注入的悬浮切换钮）═══ */
-.theme-fab{position:fixed;right:20px;bottom:20px;z-index:300;width:44px;height:44px;
-  border-radius:50%;border:1px solid var(--border-strong);background:var(--bg-elevated);
-  color:var(--text-primary);cursor:pointer;display:inline-flex;align-items:center;
-  justify-content:center;transition:.2s;font-size:0}
-.theme-fab:hover{border-color:var(--brand);color:var(--brand);box-shadow:0 4px 20px var(--brand-bg)}
-.theme-fab .ic{width:18px;height:18px;display:block}
-.theme-fab .ic-moon{fill:currentColor;stroke:none}
-.theme-fab .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:640px){
