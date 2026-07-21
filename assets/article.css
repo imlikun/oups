@@ -179,7 +179,25 @@ a:hover{color:var(--accent-green)}
 .table-wrap tr:last-child td{border-bottom:none}
 .table-wrap tbody tr:hover{background:var(--accent-dim)}
 
-/* ═══ NOTES 专有组件 ═══ */
+/* ═══ 通用 table（裸<table>标签，覆盖 47 页文章） ═══ */
+.article-body table,.content table{width:100%;border-collapse:collapse;font-size:14px;
+  margin:28px 0!important;border:1px solid var(--border-subtle);border-radius:var(--radius);overflow:hidden}
+.article-body table th,.content table th{padding:12px 16px;text-align:left;font-weight:700;font-size:12px;
+  color:var(--fg-dim);text-transform:uppercase;letter-spacing:.05em;
+  background:var(--bg-secondary);border-bottom:2px solid var(--border-subtle)}
+.article-body table td,.content table td{padding:12px 16px;border-bottom:1px solid var(--border-subtle);
+  color:var(--text-secondary);line-height:1.65}
+.article-body table tr:last-child td,.content table tr:last-child td{border-bottom:none}
+.article-body table tbody tr:hover,.content table tbody tr:hover{background:var(--accent-dim)}
+
+/* ═══ 通用块级元素间距（防段落粘连） ═══ */
+.article-body blockquote,.content blockquote{margin:24px 0;padding:16px 20px;
+  border-left:3px solid var(--accent-green);background:var(--accent-dim);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;color:var(--text-secondary)}
+.article-body .note,.content .note{margin:20px 0;padding:14px 18px;
+  background:var(--bg-elevated);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-sm);color:var(--text-secondary);line-height:1.7}
+.article-body img,.content img{max-width:100%;height:auto;margin:24px 0;display:block;border-radius:var(--radius-md)}/* ═══ NOTES 专有组件 ═══ */
 .hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
   color:var(--accent-green);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em;
   padding:6px 14px;border-radius:99px;border:1px solid var(--accent-dim);background:var(--accent-dim);
