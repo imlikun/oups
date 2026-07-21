@@ -217,8 +217,13 @@ a:hover{color:var(--accent-green)}
   box-shadow:0 0 8px var(--accent-green);animation:fx-heartbeat 2s ease-in-out infinite;
   flex-shrink:0}
 .hero-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:13px;color:var(--fg-dim)}
-.summary-card{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);
+/* 摘要卡：对齐阅读列（760−56=704），避免全宽（铁律修复：codex 等 9 篇曾全宽） */
+.summary-card{max-width:calc(var(--max-text) - 56px);margin:28px auto;padding:20px 24px;background:var(--bg-elevated);
   border:1px solid var(--border-subtle);border-radius:var(--radius);border-left:3px solid var(--accent-green)}
+/* 摘要卡外层包裹（仅 xpeng 用）：对齐阅读列 */
+.summary-wrap{max-width:calc(var(--max-text) - 56px);margin:28px auto}
+/* 正文外层包裹（仅 xpeng 用）：对齐阅读列，避免正文全宽 */
+.content-wrap{max-width:var(--max-text);margin:0 auto;padding:0 28px}
 .summary-card h3{font-size:13px;font-weight:700;color:var(--accent-green);margin-bottom:10px;
   font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em}
 .key-points{list-style:none;padding:0;margin:0}
