@@ -5,18 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>每日阅读 | 2026-07-12 — 李坤</title>
 <meta name="description" content="小米终于给中年人造车了——2026-07-12阅读简报。">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
 <style>
 :root{
-  --bg:#f7faf7;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;
-  --accent:#30d158;--accent-light:rgba(48,209,88,0.08);--border:rgba(0,0,0,0.07);
-  --card-bg:#fff;--radius:14px;--radius-sm:10px;
+  --bg:#0A0A0A;--bg-elevated:#1E1E1E;--text:#E8E8E8;--text-secondary:#A0A0A0;--text-muted:#6B6B6B;
+  --accent:#00FF41;--accent-rgb:0,255,65;--accent-light:rgba(0,255,65,0.10);
+  --border:rgba(255,255,255,0.08);--border-strong:#444;--card-bg:#141414;--radius:8px;--radius-sm:8px;
+  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+  --font-sans:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+body.light{
+  --bg:#F5F5F5;--bg-elevated:#FFFFFF;--text:#0A0A0A;--text-secondary:#555;--text-muted:#888;
+  --accent:#00A82E;--accent-rgb:0,168,46;--accent-light:rgba(0,168,46,0.08);
+  --border:rgba(0,0,0,0.08);--border-strong:#CCC;--card-bg:#FFFFFF;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,250,247,0.92);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+body{font-family:var(--font-sans);position:relative;z-index:1;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(20,20,20,0.75);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+body.light .nav{background:rgba(255,255,255,0.75)}
 .nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
 .nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
 .nav-back:hover{gap:10px}
@@ -26,7 +37,7 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 
 .article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
 .article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
-  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px}
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px;font-family:var(--font-mono)}
 .article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
 .article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
@@ -44,7 +55,7 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 
 .news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
   background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
-.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.05);transform:translateY(-1px)}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.25);transform:translateX(3px);border-color:var(--accent)}
 .news-item:last-child{margin-bottom:0}
 .news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
   border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
@@ -57,14 +68,14 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 .src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
 .src-other{background:var(--accent-light);color:var(--accent)}
     .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
-.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#fff;text-decoration:none;
-  font-weight:600;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
-  box-shadow:0 1px 2px rgba(48,209,88,.25);transition:all .2s}
-.news-link:hover{background:#26b94a;gap:10px;box-shadow:0 3px 8px rgba(48,209,88,.35)}
+.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#0A0A0A;text-decoration:none;
+  font-weight:700;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
+  box-shadow:0 1px 2px rgba(var(--accent-rgb),.25);transition:all .2s}
+.news-link:hover{filter:brightness(1.15);gap:10px;box-shadow:0 3px 8px rgba(var(--accent-rgb),.35)}
 
 .book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  background:linear-gradient(135deg,#fff,#f8fdf8);margin-bottom:12px;transition:all .2s ease}
-.book-item:hover{box-shadow:0 4px 20px rgba(48,209,88,.08);transform:translateY(-1px)}
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(var(--accent-rgb),.10);transform:translateY(-1px);border-color:var(--accent)}
 .book-item:last-child{margin-bottom:0}
 .book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
 .book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
@@ -75,18 +86,18 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
 .book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
 .book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
 .rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
-.rating-douban{background:rgba(41,151,255,.08);color:#2997ff}
-.rating-weread{background:rgba(48,209,88,.08);color:#30d158}
+.rating-douban{background:rgba(41,151,255,.10);color:#4aa8ff}
+.rating-weread{background:var(--accent-light);color:var(--accent)}
 .rating-score{font-weight:800}
 .book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
 /* Book Highlights / 金句区 */
-.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(48,209,88,.03),rgba(48,209,88,.06));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(var(--accent-rgb),.04),rgba(var(--accent-rgb),.08));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
 .highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
 .highlight-quote{margin:0 0 10px;padding:0}
 .highlight-quote:last-child{margin-bottom:0}
 .highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
 .highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
-.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:rgba(48,209,88,.1);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:var(--accent-light);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
 .divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
 .footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
 .footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
@@ -97,9 +108,23 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
   .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
   .news-item .num{display:none}.section-tags{justify-content:flex-start}
 }
+/* ═══ THEME TOGGLE + FOOTER（终端风标准，与全站一致）═══ */
+.footer-bottom{max-width:860px;margin:0 auto;padding:24px 32px 60px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--border);font-family:var(--font-mono)}
+.footer-bottom span{color:var(--text-muted);font-size:12px}
+.footer-bottom .theme-toggle{width:34px;height:34px;border-radius:50%;border:1px solid var(--border-strong);
+  background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;align-items:center;
+  justify-content:center;transition:.2s;flex-shrink:0;font-size:0;padding:0}
+.footer-bottom .theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.theme-toggle .ic{width:16px;height:16px;display:block}
+.theme-toggle .ic-moon{fill:currentColor;stroke:none}
+.theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
+body.light .theme-toggle .ic-moon{display:none}
+body.light .theme-toggle .ic-sun{display:block}
+@media(max-width:640px){.footer-bottom{padding:20px 16px 48px}}
 </style>
 </head>
 <body>
+<script>try{if(localStorage.getItem('theme')==='light')document.body.classList.add('light');}catch(e){}</script>
 <nav class="nav"><div class="nav-inner">
   <a href="index.html" class="nav-back">← 返回列表</a>
   <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
@@ -306,7 +331,7 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
         
       </div>
       
-      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=08e325a0813abb806g013ae1" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=08e325a0813abb806g013ae1" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0A0A0A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
       
       <div class="book-highlights">
         <div class="highlights-label">✨ 读者金句</div>
@@ -339,7 +364,7 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
         
       </div>
       
-      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=2a332d10726332f72a34943" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=2a332d10726332f72a34943" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0A0A0A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
       
       <div class="book-highlights">
         <div class="highlights-label">✨ 读者金句</div>
@@ -372,7 +397,7 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
         
       </div>
       
-      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=8b9329607186dc198b9bdab" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:#30d158;color:#fff;font-size:13px;font-weight:600;text-decoration:none;">🔗 打开阅读</a></div>
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=8b9329607186dc198b9bdab" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0A0A0A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
       
       <div class="book-highlights">
         <div class="highlights-label">✨ 读者金句</div>
@@ -401,8 +426,17 @@ body{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-syste
   <a href="2026-07-13.html">下一篇（07-13）→</a>
 </div>
 
+<div class="footer-bottom">
+  <span>© 2026 李坤 · Appin.site · 每日阅读自动生成</span>
+  <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换明暗主题">
+    <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</div>
+
 <script>
-window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true})
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true});
+window.toggleTheme=function(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} };
 </script>
 </body>
 </html>
