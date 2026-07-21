@@ -1793,6 +1793,27 @@
       "date": "2026-07-20",
       "status": "published",
       "template": "DP"
+    },
+    {
+      "id": "article-78",
+      "title": "AI 模型广场：可白嫖的模型与 API 申请指南",
+      "slug": "ai-model-square",
+      "category": "craft",
+      "featured": false,
+      "image": "/assets/og-cover.png",
+      "excerpt": "精选 30+ 国内外可免费或低价调用的 AI 模型与聚合平台，按对话、编码、图像、聚合分类，每张卡片附 API 申请链接与一句话简介，随查随用。",
+      "content": "## 这是什么\n\n一个可随查随用的 AI 模型广场：把可免费 / 低价调用的主流模型与聚合平台做成卡片，每张带模型 ID（可一键复制）、参数量、免费额度标签与申请 API 链接。\n\n## 怎么用\n\n顶部搜索框按名称/厂商过滤，或用「对话 / 编码 / 图像 / 聚合」标签切换；点卡片里的「复制」拿到模型 ID 直接粘进 OpenRouter / 硅基流动等聚合平台；点「申请 API」跳转对应平台注册。\n\n## 省钱要点\n\n优先用永久免费模型（GLM-4-Flash、混元 lite、硅基流动 <9B、Gemini 限速）；多平台轮换薅新用户额度；聚合平台一个 Key 调多个模型。",
+      "tags": [
+        "AI",
+        "模型广场",
+        "免费额度",
+        "API",
+        "大模型"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-21",
+      "status": "published",
+      "template": "DP"
     }
   ],
   "projects": [

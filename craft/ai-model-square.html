@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 模型广场 · 白嫖模型与 API 申请指南</title>
+<meta name="description" content="精选 30+ 可免费/低价调用的 AI 模型与聚合平台，按对话、编码、图像、聚合分类，每张卡片附 API 申请链接与一句话简介，方便日常随查随用。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/ai-model-square.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI 模型广场 · 白嫖模型与 API 申请指南">
+<meta property="og:description" content="精选 30+ 可免费/低价调用的 AI 模型与聚合平台，按对话、编码、图像、聚合分类，每张卡片附 API 申请链接与一句话简介。">
+<meta property="og:url" content="https://www.appin.site/craft/ai-model-square.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 模型广场 · 白嫖模型与 API 申请指南">
+<meta name="twitter:description" content="精选 30+ 可免费/低价调用的 AI 模型与聚合平台，每张卡片附 API 申请链接与简介。">
+<meta property="og:image" content="https://www.appin.site/assets/og-cover.png">
+<meta name="twitter:image" content="https://www.appin.site/assets/og-cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+<style>
+/* ── 模型广场专属布局（复用 design token，脱离 760px 正文宽度） ── */
+.plaza-wrap{max-width:1120px;margin:0 auto;padding:0 24px 80px}
+.hero-models{max-width:1120px;margin:0 auto;padding:88px 24px 28px}
+.hero-models .hb{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:99px;
+  background:var(--accent-dim);color:var(--accent-green);font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:22px;font-family:var(--font-mono)}
+.hero-models .hb .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-green)}
+.hero-models h1{font-size:clamp(30px,4.6vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin:0 0 16px;color:var(--text-primary)}
+.hero-models h1 .hl{color:var(--accent-green)}
+.hero-models p{color:var(--text-secondary);font-size:17px;max-width:720px;line-height:1.7;margin:0 0 8px}
+.hero-models .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--fg-dim);font-family:var(--font-mono);margin-top:18px}
+
+/* 搜索 + 筛选 */
+.toolbar{position:sticky;top:56px;z-index:120;background:rgba(20,20,20,.82);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-subtle);
+  padding:14px 0;margin-bottom:30px}
+body.light .toolbar{background:rgba(245,245,245,.85)}
+.toolbar-inner{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:220px;display:flex;align-items:center;gap:8px;background:var(--bg-elevated);
+  border:1px solid var(--border-subtle);border-radius:8px;padding:9px 13px}
+.search:focus-within{border-color:var(--accent-green)}
+.search svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--text-secondary);stroke-width:2}
+.search input{flex:1;background:none;border:none;outline:none;color:var(--text-primary);font-size:14px;font-family:var(--font-sans)}
+.search input::placeholder{color:var(--fg-dim)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--text-secondary);
+  background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:99px;padding:7px 15px;
+  cursor:pointer;transition:all .18s;white-space:nowrap}
+.tab:hover{color:var(--accent-green);border-color:var(--accent-green)}
+.tab.active{background:var(--accent-dim);color:var(--accent-green);border-color:var(--accent-green)}
+
+/* 分组标题 */
+.group-title{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--text-secondary);
+  margin:34px 0 16px;padding-left:14px;border-left:3px solid var(--accent-green);display:flex;align-items:center;gap:10px}
+.group-title .cnt{font-size:12px;color:var(--fg-dim);font-weight:400}
+
+/* 卡片网格 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.card{background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:18px 18px 16px;
+  display:flex;flex-direction:column;gap:11px;transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--accent-green);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.28)}
+.card.hide{display:none}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.card-name{font-size:17px;font-weight:700;color:var(--text-primary);line-height:1.3;letter-spacing:-.01em}
+.card-vendor{font-size:12px;color:var(--text-secondary);margin-top:2px;font-family:var(--font-mono)}
+.badge{font-size:11px;font-weight:700;font-family:var(--font-mono);padding:4px 9px;border-radius:6px;white-space:nowrap;flex:none}
+.b-chat{background:var(--accent-dim);color:var(--accent-green)}
+.b-code{background:var(--cyan-bg);color:var(--accent-cyan)}
+.b-image{background:var(--amber-bg);color:var(--amber)}
+.b-hub{background:rgba(127,127,127,.18);color:var(--text-secondary)}
+.card-id{font-family:var(--font-mono);font-size:11.5px;color:var(--fg-dim);background:var(--bg-primary);
+  border:1px solid var(--border-subtle);border-radius:6px;padding:5px 9px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+body.light .card-id{background:var(--bg-secondary)}
+.card-id .txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.copy-btn{flex:none;background:none;border:none;color:var(--fg-dim);cursor:pointer;font-family:var(--font-mono);font-size:11px;transition:color .15s}
+.copy-btn:hover{color:var(--accent-green)}
+.card-params{display:flex;gap:8px;flex-wrap:wrap}
+.param{font-size:11px;font-family:var(--font-mono);color:var(--text-secondary);background:var(--bg-primary);
+  border:1px solid var(--border-subtle);border-radius:5px;padding:3px 8px}
+body.light .card-params .param{background:var(--bg-secondary)}
+.card-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.6;flex:1}
+.free-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.free-tag{font-size:11px;font-weight:600;font-family:var(--font-mono);padding:3px 9px;border-radius:99px}
+.free-yes{background:rgba(52,199,89,.14);color:var(--state-success)}
+.free-trial{background:var(--amber-bg);color:var(--amber)}
+.free-paid{background:rgba(127,127,127,.16);color:var(--text-secondary)}
+.card-links{display:flex;gap:9px;margin-top:4px}
+.btn{flex:1;text-align:center;font-size:13px;font-weight:600;font-family:var(--font-mono);padding:9px 10px;border-radius:8px;
+  text-decoration:none;border:1px solid var(--border-strong);transition:all .18s}
+.btn-primary{background:var(--accent-green);color:#04210d;border-color:var(--accent-green)}
+.btn-primary:hover{filter:brightness(1.08);color:#04210d}
+.btn-ghost{background:transparent;color:var(--text-secondary);border-color:var(--border-subtle)}
+.btn-ghost:hover{border-color:var(--accent-green);color:var(--accent-green)}
+.proxy-note{font-size:10.5px;color:var(--fg-dim);font-family:var(--font-mono);margin-top:8px;line-height:1.4}
+
+.empty{text-align:center;color:var(--fg-dim);font-family:var(--font-mono);padding:60px 0;font-size:14px;display:none}
+
+/* 使用说明 */
+.howto{max-width:760px;margin:56px auto 0;padding:28px 26px;background:var(--bg-elevated);
+  border:1px solid var(--border-subtle);border-radius:14px}
+.howto h2{font-size:22px;font-weight:700;color:var(--text-primary);margin:0 0 16px;font-family:var(--font-mono)}
+.howto ol{margin:0;padding-left:20px}
+.howto li{color:var(--text-secondary);font-size:14.5px;line-height:1.85;margin-bottom:10px}
+.howto li b{color:var(--text-primary)}
+.howto code{font-family:var(--font-mono);font-size:.86em;background:var(--accent-dim);color:var(--accent-green);padding:2px 6px;border-radius:5px}
+.related{text-align:center;margin:40px 0 0}
+.related a{display:inline-block;font-family:var(--font-mono);font-size:14px;color:var(--accent-green);
+  border:1px solid var(--accent-green);border-radius:8px;padding:11px 22px;transition:all .2s}
+.related a:hover{background:var(--accent-dim)}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.toolbar{top:56px}.hero-models{padding-top:64px}}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin<span>.site</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/video-lab/">视频</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换主题">
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero-models">
+  <span class="hb"><span class="dot"></span>AI 模型广场</span>
+  <h1>可<em class="hl">白嫖</em>的 AI 模型与 API 申请指南</h1>
+  <p>精选 30+ 国内外可免费或低价调用的 AI 模型 / 聚合平台。按对话、编码、图像、聚合分类，每张卡片附<b>申请入口</b>与一句话简介，随查随用。</p>
+  <p style="font-size:14px;color:var(--fg-dim)">数据整理自《AI 平台免费额度与优惠攻略》（2026-07），政策随时变动，以官网为准。</p>
+  <div class="meta"><span>更新：2026-07-21</span><span>·</span><span id="modelCount">30+ 模型</span><span>·</span><span>点击卡片右上角复制模型 ID</span></div>
+</header>
+
+<!-- Toolbar：搜索 + 筛选 -->
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="搜索模型名 / 厂商 / 关键词…" autocomplete="off">
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-filter="all">全部</button>
+      <button class="tab" data-filter="chat">对话</button>
+      <button class="tab" data-filter="code">编码</button>
+      <button class="tab" data-filter="image">图像</button>
+      <button class="tab" data-filter="hub">聚合</button>
+    </div>
+  </div>
+</div>
+
+<!-- Plaza -->
+<main class="plaza-wrap">
+
+  <!-- 对话 / 通用 -->
+  <div class="group-title" id="g-chat">对话 / 通用大模型 <span class="cnt" data-cnt="chat"></span></div>
+  <div class="grid" data-group="chat">
+
+    <div class="card" data-type="chat" data-key="deepseek v4 pro deepseek 深度求索 推理">
+      <div class="card-top"><div><div class="card-name">DeepSeek V4 Pro</div><div class="card-vendor">DeepSeek · 深度求索</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">deepseek-ai/DeepSeek-V4-Pro</span><button class="copy-btn" data-copy="deepseek-ai/DeepSeek-V4-Pro">复制</button></div>
+      <div class="card-params"><span class="param">671B</span><span class="param">MoE</span><span class="param">推理</span></div>
+      <p class="card-desc">当前主力旗舰，推理与代码强。网页端免费无限，API 谷时输入仅 1 元/百万 token。</p>
+      <div class="free-row"><span class="free-tag free-yes">网页免费</span><span class="free-tag free-trial">API 低价</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.deepseek.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://chat.deepseek.com/" target="_blank" rel="noopener">网页端</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="deepseek v4 flash deepseek 深度求索 低成本">
+      <div class="card-top"><div><div class="card-name">DeepSeek V4 Flash</div><div class="card-vendor">DeepSeek · 深度求索</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">deepseek-ai/DeepSeek-V4-Flash</span><button class="copy-btn" data-copy="deepseek-ai/DeepSeek-V4-Flash">复制</button></div>
+      <div class="card-params"><span class="param">671B</span><span class="param">MoE</span><span class="param">高速</span></div>
+      <p class="card-desc">V4 系列的轻量高速版，成本极低，适合高频调用与批量任务。</p>
+      <div class="free-row"><span class="free-tag free-trial">谷时 1 元/MTok</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.deepseek.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="glm 5.2 智谱 zhipu 通用 免费">
+      <div class="card-top"><div><div class="card-name">智谱 GLM-5.2</div><div class="card-vendor">Z.ai · 智谱 AI</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">zai-org/GLM-5.2</span><button class="copy-btn" data-copy="zai-org/GLM-5.2">复制</button></div>
+      <div class="card-params"><span class="param">355B</span><span class="param">MoE</span></div>
+      <p class="card-desc">智谱新一代旗舰，综合能力均衡。GLM-4-Flash 永久免费，轻量版 128K 上下文无限量免费。</p>
+      <div class="free-row"><span class="free-tag free-yes">GLM-4-Flash 永久免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://open.bigmodel.cn/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://docs.z.ai/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="glm 5.1 智谱 zhipu 轻量 免费">
+      <div class="card-top"><div><div class="card-name">智谱 GLM-5.1</div><div class="card-vendor">Z.ai · 智谱 AI</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">zai-org/GLM-5.1</span><button class="copy-btn" data-copy="zai-org/GLM-5.1">复制</button></div>
+      <div class="card-params"><span class="param">轻量</span><span class="param">128K</span></div>
+      <p class="card-desc">上一代稳定版本，轻量版上下文无限量免费，适合长文档处理与 Agent 闭环。</p>
+      <div class="free-row"><span class="free-tag free-yes">轻量版免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://open.bigmodel.cn/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://docs.z.ai/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="kimi k2.6 月之暗面 moonshot 长文本">
+      <div class="card-top"><div><div class="card-name">Kimi K2.6</div><div class="card-vendor">Moonshot · 月之暗面</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">moonshotai/Kimi-K2.6</span><button class="copy-btn" data-copy="moonshotai/Kimi-K2.6">复制</button></div>
+      <div class="card-params"><span class="param">1T</span><span class="param">MoE</span><span class="param">长文</span></div>
+      <p class="card-desc">超长上下文（20 万字+），长文档 / 研报处理与 Agent 自动化首选。注册送 15 元体验券。</p>
+      <div class="free-row"><span class="free-tag free-trial">送 15 元券</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.moonshot.cn/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://kimi.moonshot.cn/" target="_blank" rel="noopener">网页端</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="qwen 3.6 通义 千问 阿里 开源 35b">
+      <div class="card-top"><div><div class="card-name">通义千问 Qwen3.6-35B</div><div class="card-vendor">Qwen · 阿里</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">Qwen/Qwen3.6-35B-A3B</span><button class="copy-btn" data-copy="Qwen/Qwen3.6-35B-A3B">复制</button></div>
+      <div class="card-params"><span class="param">35B</span><span class="param">MoE</span><span class="param">开源</span></div>
+      <p class="card-desc">阿里开源旗舰，可在百炼 / 魔搭免费调用。开源模型体验入口最全，多模态与文档/PPT 生成。</p>
+      <div class="free-row"><span class="free-tag free-trial">百炼送额度</span><span class="free-tag free-yes">开源</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noopener">阿里云百炼</a><a class="btn btn-ghost" href="https://modelscope.cn/" target="_blank" rel="noopener">魔搭</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="qwen 3.6 27b 通义 千问 阿里 开源 部署">
+      <div class="card-top"><div><div class="card-name">通义千问 Qwen3.6-27B</div><div class="card-vendor">Qwen · 阿里</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">Qwen/Qwen3.6-27B</span><button class="copy-btn" data-copy="Qwen/Qwen3.6-27B">复制</button></div>
+      <div class="card-params"><span class="param">27B</span><span class="param">开源</span><span class="param">可本地</span></div>
+      <p class="card-desc">中等体量开源模型，单卡可本地部署，适合私有化与低成本自托管。</p>
+      <div class="free-row"><span class="free-tag free-yes">开源免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://modelscope.cn/" target="_blank" rel="noopener">魔搭下载</a><a class="btn btn-ghost" href="https://huggingface.co/Qwen" target="_blank" rel="noopener">HF</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="doubao 豆包 字节 火山 引擎">
+      <div class="card-top"><div><div class="card-name">豆包 Doubao</div><div class="card-vendor">字节 · 火山引擎</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">volcengine/Doubao</span><button class="copy-btn" data-copy="volcengine/Doubao">复制</button></div>
+      <div class="card-params"><span class="param">国内直连</span><span class="param">多模态</span></div>
+      <p class="card-desc">网页端基本不限次，API 新用户 19.9 元获千万 token。抖音/剪映生态，语音与多模态强。</p>
+      <div class="free-row"><span class="free-tag free-trial">19.9 元千万 tok</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://www.volcengine.com/product/doubao" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://www.doubao.com/" target="_blank" rel="noopener">网页端</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="hunyuan 混元 腾讯 免费 lite">
+      <div class="card-top"><div><div class="card-name">腾讯混元 Hunyuan</div><div class="card-vendor">Tencent · 腾讯</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">tencent/Hunyuan</span><button class="copy-btn" data-copy="tencent/Hunyuan">复制</button></div>
+      <div class="card-params"><span class="param">100万 tok</span><span class="param">1 年</span></div>
+      <p class="card-desc">注册送 100 万 token + embedding 额度，混元 lite API 完全免费。微信生态整合。</p>
+      <div class="free-row"><span class="free-tag free-yes">lite 永久免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://cloud.tencent.com/product/hunyuan" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://yuanbao.tencent.com/" target="_blank" rel="noopener">元宝</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="ernie 文心 百度 千帆 免费">
+      <div class="card-top"><div><div class="card-name">文心一言 ERNIE</div><div class="card-vendor">Baidu · 百度</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">baidu/ERNIE</span><button class="copy-btn" data-copy="baidu/ERNIE">复制</button></div>
+      <div class="card-params"><span class="param">永久免费</span><span class="param">搜索</span></div>
+      <p class="card-desc">2025-04 起全面永久免费，中文理解强，千帆平台特定模型亦永久免费。</p>
+      <div class="free-row"><span class="free-tag free-yes">永久免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://cloud.baidu.com/product/wenxinworkshop" target="_blank" rel="noopener">千帆申请</a><a class="btn btn-ghost" href="https://yiyan.baidu.com/" target="_blank" rel="noopener">网页端</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="longcat 龙猫 美团 meituan 2.0 大模型">
+      <div class="card-top"><div><div class="card-name">美团 LongCat 2.0</div><div class="card-vendor">Meituan · 美团</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">meituan-longcat/LongCat-2.0</span><button class="copy-btn" data-copy="meituan-longcat/LongCat-2.0">复制</button></div>
+      <div class="card-params"><span class="param">1.4T</span><span class="param">MoE</span></div>
+      <p class="card-desc">美团自研超大参数模型，面向本地生活与 Agent 场景。可在聚合平台调用。</p>
+      <div class="free-row"><span class="free-tag free-trial">聚合平台调用</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a><a class="btn btn-ghost" href="https://siliconflow.cn/" target="_blank" rel="noopener">硅基流动</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="step 阶跃 星辰 stepfun 通用">
+      <div class="card-top"><div><div class="card-name">阶跃星辰 Step</div><div class="card-vendor">StepFun · 阶跃</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">stepfun/Step</span><button class="copy-btn" data-copy="stepfun/Step">复制</button></div>
+      <div class="card-params"><span class="param">多模态</span><span class="param">国内</span></div>
+      <p class="card-desc">国产多模态大模型，图文视频理解均衡，平台送新用户额度。</p>
+      <div class="free-row"><span class="free-tag free-trial">新用户额度</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.stepfun.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://www.stepfun.com/" target="_blank" rel="noopener">官网</a></div>
+    </div>
+
+    <div class="card" data-type="chat" data-key="baichuan 百川 通用 国内">
+      <div class="card-top"><div><div class="card-name">百川 Baichuan</div><div class="card-vendor">Baichuan · 百川智能</div></div><span class="badge b-chat">对话</span></div>
+      <div class="card-id"><span class="txt">baichuan/Baichuan</span><button class="copy-btn" data-copy="baichuan/Baichuan">复制</button></div>
+      <div class="card-params"><span class="param">开源</span><span class="param">国内</span></div>
+      <p class="card-desc">国产开源大模型系列，医疗与知识问答见长，可私有化部署。</p>
+      <div class="free-row"><span class="free-tag free-yes">开源免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.baichuan-ai.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://huggingface.co/baichuan-inc" target="_blank" rel="noopener">HF</a></div>
+    </div>
+
+  </div>
+
+  <!-- 编码 / 代码 -->
+  <div class="group-title" id="g-code">编码 / 代码模型 <span class="cnt" data-cnt="code"></span></div>
+  <div class="grid" data-group="code">
+
+    <div class="card" data-type="code" data-key="kimi k2.7 code 月之暗面 moonshot 编程 代码">
+      <div class="card-top"><div><div class="card-name">Kimi K2.7-Code</div><div class="card-vendor">Moonshot · 月之暗面</div></div><span class="badge b-code">编码</span></div>
+      <div class="card-id"><span class="txt">moonshotai/Kimi-K2.7-Code</span><button class="copy-btn" data-copy="moonshotai/Kimi-K2.7-Code">复制</button></div>
+      <div class="card-params"><span class="param">代码专用</span><span class="param">Agent</span></div>
+      <p class="card-desc">面向代码生成与软件工程 Agent 的专用模型，编程套餐最高 699 元/月，注册送体验券。</p>
+      <div class="free-row"><span class="free-tag free-trial">送体验券</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.moonshot.cn/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://kimi.moonshot.cn/" target="_blank" rel="noopener">网页端</a></div>
+    </div>
+
+    <div class="card" data-type="code" data-key="deepseek coder v4 深度求索 代码 编程">
+      <div class="card-top"><div><div class="card-name">DeepSeek Coder V4</div><div class="card-vendor">DeepSeek · 深度求索</div></div><span class="badge b-code">编码</span></div>
+      <div class="card-id"><span class="txt">deepseek-ai/DeepSeek-Coder-V4</span><button class="copy-btn" data-copy="deepseek-ai/DeepSeek-Coder-V4">复制</button></div>
+      <div class="card-params"><span class="param">代码</span><span class="param">低价</span></div>
+      <p class="card-desc">代码专项模型，补全与仓库级理解强，API 按 V4 峰谷定价，谷时极便宜。</p>
+      <div class="free-row"><span class="free-tag free-trial">API 低价</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.deepseek.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="code" data-key="qwen coder 通义 千问 阿里 代码 开源">
+      <div class="card-top"><div><div class="card-name">Qwen Coder</div><div class="card-vendor">Qwen · 阿里</div></div><span class="badge b-code">编码</span></div>
+      <div class="card-id"><span class="txt">Qwen/Qwen-Coder</span><button class="copy-btn" data-copy="Qwen/Qwen-Coder">复制</button></div>
+      <div class="card-params"><span class="param">开源</span><span class="param">代码</span></div>
+      <p class="card-desc">开源代码模型系列，IDE 补全与 CLI 编码友好，可在魔搭 / 百炼免费调用。</p>
+      <div class="free-row"><span class="free-tag free-yes">开源免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://modelscope.cn/" target="_blank" rel="noopener">魔搭下载</a><a class="btn btn-ghost" href="https://bailian.console.aliyun.com/" target="_blank" rel="noopener">百炼</a></div>
+    </div>
+
+    <div class="card" data-type="code" data-key="glm coder 智谱 zhipu 代码 编程">
+      <div class="card-top"><div><div class="card-name">GLM Coder</div><div class="card-vendor">Z.ai · 智谱 AI</div></div><span class="badge b-code">编码</span></div>
+      <div class="card-id"><span class="txt">zai-org/GLM-Coder</span><button class="copy-btn" data-copy="zai-org/GLM-Coder">复制</button></div>
+      <div class="card-params"><span class="param">代码</span><span class="param">长程</span></div>
+      <p class="card-desc">智谱代码模型，长程 Agent 闭环与工具调用友好，轻量版可免费调用。</p>
+      <div class="free-row"><span class="free-tag free-yes">轻量版免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://open.bigmodel.cn/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://docs.z.ai/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="code" data-key="claude code sonnet anthropic 编码 编程 需代理">
+      <div class="card-top"><div><div class="card-name">Claude (Sonnet)</div><div class="card-vendor">Anthropic · 克劳德</div></div><span class="badge b-code">编码</span></div>
+      <div class="card-id"><span class="txt">anthropic/Claude-Sonnet</span><button class="copy-btn" data-copy="anthropic/Claude-Sonnet">复制</button></div>
+      <div class="card-params"><span class="param">编码强</span><span class="param">$5 额度</span></div>
+      <p class="card-desc">编码与推理质量标杆，Claude Code 终端 Agent 首选。注册送 $5 额度（需身份验证）。</p>
+      <div class="free-row"><span class="free-tag free-trial">送 $5 额度</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://console.anthropic.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://claude.ai/" target="_blank" rel="noopener">网页端</a></div>
+      <p class="proxy-note">海外平台，按当地网络环境访问。</p>
+    </div>
+
+    <div class="card" data-type="code" data-key="gpt codex openai 编码 编程 需代理">
+      <div class="card-top"><div><div class="card-name">OpenAI (GPT / Codex)</div><div class="card-vendor">OpenAI · 欧朋</div></div><span class="badge b-code">编码</span></div>
+      <div class="card-id"><span class="txt">openai/GPT</span><button class="copy-btn" data-copy="openai/GPT">复制</button></div>
+      <div class="card-params"><span class="param">$5 试用</span><span class="param">需绑卡</span></div>
+      <p class="card-desc">生态最全，Codex CLI 编码 Agent 可配国内 Key。新账号送 $5 试用金（3 个月）。</p>
+      <div class="free-row"><span class="free-tag free-trial">送 $5 试用</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://platform.openai.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://chatgpt.com/" target="_blank" rel="noopener">网页端</a></div>
+      <p class="proxy-note">海外平台，按当地网络环境访问。</p>
+    </div>
+
+  </div>
+
+  <!-- 图像 / 视频 -->
+  <div class="group-title" id="g-image">图像 / 视频生成 <span class="cnt" data-cnt="image"></span></div>
+  <div class="grid" data-group="image">
+
+    <div class="card" data-type="image" data-key="z-image turbo 通义 万相 阿里 文生图 图像">
+      <div class="card-top"><div><div class="card-name">通义万相 Z-Image-Turbo</div><div class="card-vendor">Tongyi · 通义</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">Tongyi-MAI/Z-Image-Turbo</span><button class="copy-btn" data-copy="Tongyi-MAI/Z-Image-Turbo">复制</button></div>
+      <div class="card-params"><span class="param">文生图</span><span class="param">国内直连</span></div>
+      <p class="card-desc">阿里通义万相文生图模型，中国大陆直连、质量好，免费调用。</p>
+      <div class="free-row"><span class="free-tag free-yes">免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://modelscope.cn/" target="_blank" rel="noopener">魔搭调用</a><a class="btn btn-ghost" href="https://tongyi.aliyun.com/" target="_blank" rel="noopener">通义官网</a></div>
+    </div>
+
+    <div class="card" data-type="image" data-key="z-image 通义 万相 阿里 文生图 开源">
+      <div class="card-top"><div><div class="card-name">通义万相 Z-Image</div><div class="card-vendor">Tongyi · 通义</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">Tongyi-MAI/Z-Image</span><button class="copy-btn" data-copy="Tongyi-MAI/Z-Image">复制</button></div>
+      <div class="card-params"><span class="param">文生图</span><span class="param">开源</span></div>
+      <p class="card-desc">通义万相开源文生图基础模型，可自部署，适合集成到自有产品。</p>
+      <div class="free-row"><span class="free-tag free-yes">开源免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://modelscope.cn/" target="_blank" rel="noopener">魔搭下载</a><a class="btn btn-ghost" href="https://huggingface.co/Tongyi-MAI" target="_blank" rel="noopener">HF</a></div>
+    </div>
+
+    <div class="card" data-type="image" data-key="ernie image turbo 百度 文心 文生图 图像">
+      <div class="card-top"><div><div class="card-name">百度 ERNIE-Image-Turbo</div><div class="card-vendor">Baidu · 百度</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">baidu/ERNIE-Image-Turbo</span><button class="copy-btn" data-copy="baidu/ERNIE-Image-Turbo">复制</button></div>
+      <div class="card-params"><span class="param">文生图</span><span class="param">高速</span></div>
+      <p class="card-desc">百度文心图像生成高速版，千帆平台调用，中文语义理解准确。</p>
+      <div class="free-row"><span class="free-tag free-trial">千帆额度</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://cloud.baidu.com/product/wenxinworkshop" target="_blank" rel="noopener">千帆申请</a><a class="btn btn-ghost" href="https://yiyan.baidu.com/" target="_blank" rel="noopener">文心一言</a></div>
+    </div>
+
+    <div class="card" data-type="image" data-key="jimeng 即梦 字节 文生图 视频 免费">
+      <div class="card-top"><div><div class="card-name">即梦 AI</div><div class="card-vendor">ByteDance · 字节</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">byteface/Jimeng</span><button class="copy-btn" data-copy="byteface/Jimeng">复制</button></div>
+      <div class="card-params"><span class="param">文生图/视频</span><span class="param">国内直连</span></div>
+      <p class="card-desc">字节出品，文生图与文生视频一体，质量不错，短视频创作首选，免费额度充足。</p>
+      <div class="free-row"><span class="free-tag free-yes">免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://jimeng.jianying.com/" target="_blank" rel="noopener">即梦官网</a><a class="btn btn-ghost" href="https://www.capcut.cn/" target="_blank" rel="noopener">剪映</a></div>
+    </div>
+
+    <div class="card" data-type="image" data-key="kling 可灵 快手 视频 生成 免费">
+      <div class="card-top"><div><div class="card-name">可灵 Kling</div><div class="card-vendor">Kuaishou · 快手</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">kuaishou/Kling</span><button class="copy-btn" data-copy="kuaishou/Kling">复制</button></div>
+      <div class="card-params"><span class="param">视频生成</span><span class="param">第一梯队</span></div>
+      <p class="card-desc">国内视频生成第一梯队，运动稳定性与画质领先，注册送免费额度。</p>
+      <div class="free-row"><span class="free-tag free-trial">送免费额度</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://klingai.kuaishou.com/" target="_blank" rel="noopener">可灵官网</a><a class="btn btn-ghost" href="https://app.klingai.com/" target="_blank" rel="noopener">创作台</a></div>
+    </div>
+
+    <div class="card" data-type="image" data-key="minimax m2.5 稀宇 视频 图像 语音">
+      <div class="card-top"><div><div class="card-name">MiniMax M2.5</div><div class="card-vendor">MiniMax · 稀宇</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">MiniMaxAI/MiniMax-M2.5</span><button class="copy-btn" data-copy="MiniMaxAI/MiniMax-M2.5">复制</button></div>
+      <div class="card-params"><span class="param">多模态</span><span class="param">视频/语音</span></div>
+      <p class="card-desc">国产多模态模型，覆盖文本、图像、视频、语音，M2 系列输入低至 2.1 元/百万 token。</p>
+      <div class="free-row"><span class="free-tag free-trial">百炼领额度</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://www.minimaxi.com/" target="_blank" rel="noopener">申请 API</a><a class="btn btn-ghost" href="https://www.minimaxi.com/platform" target="_blank" rel="noopener">平台</a></div>
+    </div>
+
+    <div class="card" data-type="image" data-key="nex n2 pro nex-agi 多模态 图像">
+      <div class="card-top"><div><div class="card-name">Nex N2-Pro</div><div class="card-vendor">Nex · 未知厂商</div></div><span class="badge b-image">图像</span></div>
+      <div class="card-id"><span class="txt">nex-agi/Nex-N2-Pro</span><button class="copy-btn" data-copy="nex-agi/Nex-N2-Pro">复制</button></div>
+      <div class="card-params"><span class="param">多模态</span><span class="param">聚合调用</span></div>
+      <p class="card-desc">新兴多模态模型，可在聚合平台调用，性价比路线，适合轻量创作与测试。</p>
+      <div class="free-row"><span class="free-tag free-trial">聚合平台调用</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a><a class="btn btn-ghost" href="https://siliconflow.cn/" target="_blank" rel="noopener">硅基流动</a></div>
+    </div>
+
+  </div>
+
+  <!-- 聚合平台 -->
+  <div class="group-title" id="g-hub">聚合平台 / 一站式入口 <span class="cnt" data-cnt="hub"></span></div>
+  <div class="grid" data-group="hub">
+
+    <div class="card" data-type="hub" data-key="siliconflow 硅基流动 聚合 免费 9b">
+      <div class="card-top"><div><div class="card-name">硅基流动 SiliconFlow</div><div class="card-vendor">SiliconFlow · 硅基流动</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">siliconflow.cn</span><button class="copy-btn" data-copy="https://siliconflow.cn/">复制</button></div>
+      <div class="card-params"><span class="param">2000万 tok</span><span class="param">&lt;9B 永久免费</span></div>
+      <p class="card-desc">国内聚合平台，一个 Key 调多个开源模型，9B 以下参数永久免费，送 14 元体验金。</p>
+      <div class="free-row"><span class="free-tag free-yes">&lt;9B 永久免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://siliconflow.cn/" target="_blank" rel="noopener">注册申请</a><a class="btn btn-ghost" href="https://docs.siliconflow.cn/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="hub" data-key="openrouter 聚合 多模型 海外 需代理">
+      <div class="card-top"><div><div class="card-name">OpenRouter</div><div class="card-vendor">OpenRouter · 海外</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">openrouter.ai</span><button class="copy-btn" data-copy="https://openrouter.ai/">复制</button></div>
+      <div class="card-params"><span class="param">多模型</span><span class="param">部分免费</span></div>
+      <p class="card-desc">聚合 300+ 模型（含本页多数模型 ID），统一 API，部分模型免费限速，一个 Key 通吃。</p>
+      <div class="free-row"><span class="free-tag free-trial">部分模型免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://openrouter.ai/" target="_blank" rel="noopener">注册申请</a><a class="btn btn-ghost" href="https://openrouter.ai/models" target="_blank" rel="noopener">模型列表</a></div>
+      <p class="proxy-note">海外平台，按当地网络环境访问。</p>
+    </div>
+
+    <div class="card" data-type="hub" data-key="阿里云 百炼 bailian 聚合 7000万 token">
+      <div class="card-top"><div><div class="card-name">阿里云百炼</div><div class="card-vendor">Alibaba · 阿里云</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">bailian.aliyun.com</span><button class="copy-btn" data-copy="https://bailian.console.aliyun.com/">复制</button></div>
+      <div class="card-params"><span class="param">最高 7000万 tok</span><span class="param">3 个月</span></div>
+      <p class="card-desc">阿里一站式大模型平台，覆盖全系模型，Qwen Turbo 输入仅 0.3 元/百万 token。</p>
+      <div class="free-row"><span class="free-tag free-trial">送 7000万 tok</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noopener">申请入口</a><a class="btn btn-ghost" href="https://help.aliyun.com/zh/model-studio/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="hub" data-key="火山方舟 volcengine 豆包 聚合 字节">
+      <div class="card-top"><div><div class="card-name">火山方舟</div><div class="card-vendor">Volcengine · 火山引擎</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">volcengine.com/ark</span><button class="copy-btn" data-copy="https://www.volcengine.com/product/ark">复制</button></div>
+      <div class="card-params"><span class="param">豆包系列</span><span class="param">新用户特惠</span></div>
+      <p class="card-desc">字节企业级模型平台，托管豆包全系列与开源模型，新用户 19.9 元获千万 token。</p>
+      <div class="free-row"><span class="free-tag free-trial">19.9 元千万 tok</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://www.volcengine.com/product/ark" target="_blank" rel="noopener">申请入口</a><a class="btn btn-ghost" href="https://www.volcengine.com/docs/82379/" target="_blank" rel="noopener">文档</a></div>
+    </div>
+
+    <div class="card" data-type="hub" data-key="modelscope 魔搭 聚合 开源 2000次">
+      <div class="card-top"><div><div class="card-name">ModelScope 魔搭</div><div class="card-vendor">Alibaba · 魔搭</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">modelscope.cn</span><button class="copy-btn" data-copy="https://modelscope.cn/">复制</button></div>
+      <div class="card-params"><span class="param">2000 次/天</span><span class="param">开源</span></div>
+      <p class="card-desc">国内最大开源模型社区，提供免费 API 试用（2000 次/天）与一键部署，中文模型最全。</p>
+      <div class="free-row"><span class="free-tag free-yes">API 免费试用</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://modelscope.cn/" target="_blank" rel="noopener">进入魔搭</a><a class="btn btn-ghost" href="https://modelscope.cn/models" target="_blank" rel="noopener">模型库</a></div>
+    </div>
+
+    <div class="card" data-type="hub" data-key="gemini google ai studio 免费 海外 需代理">
+      <div class="card-top"><div><div class="card-name">Google AI Studio</div><div class="card-vendor">Google · 谷歌</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">aistudio.google.com</span><button class="copy-btn" data-copy="https://aistudio.google.com/">复制</button></div>
+      <div class="card-params"><span class="param">全模型免费</span><span class="param">无需绑卡</span></div>
+      <p class="card-desc">Gemini 官方入口，全模型免费（限速），Flash 每分钟最高 100 万 token，无总量上限。</p>
+      <div class="free-row"><span class="free-tag free-yes">永久免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://aistudio.google.com/" target="_blank" rel="noopener">申请 Key</a><a class="btn btn-ghost" href="https://ai.google.dev/" target="_blank" rel="noopener">文档</a></div>
+      <p class="proxy-note">海外平台，按当地网络环境访问。</p>
+    </div>
+
+    <div class="card" data-type="hub" data-key="groq 极速 推理 海外 免费 需代理">
+      <div class="card-top"><div><div class="card-name">Groq</div><div class="card-vendor">Groq · 海外</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">console.groq.com</span><button class="copy-btn" data-copy="https://console.groq.com/">复制</button></div>
+      <div class="card-params"><span class="param">无限调用</span><span class="param">极速推理</span></div>
+      <p class="card-desc">以极快推理速度著称的免费平台，无需绑卡，适合对延迟敏感的轻量应用。</p>
+      <div class="free-row"><span class="free-tag free-yes">永久免费</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://console.groq.com/" target="_blank" rel="noopener">注册申请</a><a class="btn btn-ghost" href="https://groq.com/" target="_blank" rel="noopener">官网</a></div>
+      <p class="proxy-note">海外平台，按当地网络环境访问。</p>
+    </div>
+
+    <div class="card" data-type="hub" data-key="nvidia nim 英伟达 聚合 免费 70+">
+      <div class="card-top"><div><div class="card-name">NVIDIA NIM</div><div class="card-vendor">NVIDIA · 英伟达</div></div><span class="badge b-hub">聚合</span></div>
+      <div class="card-id"><span class="txt">build.nvidia.com</span><button class="copy-btn" data-copy="https://build.nvidia.com/">复制</button></div>
+      <div class="card-params"><span class="param">70+ 免费 API</span><span class="param">Key 12 个月</span></div>
+      <p class="card-desc">英伟达官方推理微服务，提供 70+ 免费 API（默认 40 RPM），涵盖主流开源模型。</p>
+      <div class="free-row"><span class="free-tag free-yes">70+ 免费 API</span></div>
+      <div class="card-links"><a class="btn btn-primary" href="https://build.nvidia.com/" target="_blank" rel="noopener">申请 Key</a><a class="btn btn-ghost" href="https://build.nvidia.com/models" target="_blank" rel="noopener">模型库</a></div>
+      <p class="proxy-note">海外平台，按当地网络环境访问。</p>
+    </div>
+
+  </div>
+
+  <div class="empty" id="emptyState">没有匹配的模型，换个关键词试试 🔍</div>
+
+  <!-- 使用说明 -->
+  <section class="howto">
+    <h2>怎么用这个广场</h2>
+    <ol>
+      <li><b>选模型</b>：用顶部搜索框按名称/厂商过滤，或用「对话 / 编码 / 图像 / 聚合」标签快速切换。</li>
+      <li><b>复制模型 ID</b>：点卡片里的「复制」按钮，把如 <code>deepseek-ai/DeepSeek-V4-Pro</code> 的 ID 直接粘到 OpenRouter / 硅基流动等聚合平台的请求里。</li>
+      <li><b>申请 API</b>：点「申请 API」跳到对应平台注册，国内平台基本国内直连；标注「按当地网络环境访问」的是海外平台。</li>
+      <li><b>省钱策略</b>：优先用<b>永久免费</b>模型（GLM-4-Flash、混元 lite、硅基流动 &lt;9B、Gemini 限速）；多平台轮换薅新用户额度；聚合平台一个 Key 调多个模型。</li>
+      <li><b>峰谷调用</b>：DeepSeek V4 系列谷时价格仅为峰时一半，缓存命中可降至 1/6，长期用务必错峰。</li>
+    </ol>
+  </section>
+
+  <div class="related">
+    <a href="/craft/ai-free-credits-guide-2026-07.html">📖 配套长文：AI 平台免费额度与优惠攻略（2026-07）</a>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 李坤 · <a href="/">返回首页</a> · <a href="/craft/">技艺录</a> &nbsp;|&nbsp; 模型广场由八戒整理，政策以各官网为准。</p>
+</footer>
+
+<script>
+(function(){
+  /* 主题切换（与全站一致：默认暗色，记忆选择） */
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+  window.toggleTheme=function(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} };
+
+  /* 筛选 + 搜索 */
+  var tabs=document.getElementById('tabs');
+  var cards=Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var search=document.getElementById('searchInput');
+  var empty=document.getElementById('emptyState');
+  var curFilter='all';
+
+  function apply(){
+    var q=(search.value||'').trim().toLowerCase();
+    var shown=0;
+    cards.forEach(function(c){
+      var type=c.getAttribute('data-type');
+      var key=(c.getAttribute('data-key')||'')+' '+(c.querySelector('.card-name').textContent||'')+' '+(c.querySelector('.card-vendor').textContent||'');
+      key=key.toLowerCase();
+      var okType=(curFilter==='all'||type===curFilter);
+      var okQ=(!q || key.indexOf(q)>-1);
+      var vis=okType&&okQ;
+      c.classList.toggle('hide',!vis);
+      if(vis) shown++;
+    });
+    // 分组标题隐藏（当组内无可见卡片）
+    document.querySelectorAll('.grid').forEach(function(g){
+      var any=Array.prototype.slice.call(g.querySelectorAll('.card')).some(function(c){return !c.classList.contains('hide');});
+      var title=document.querySelector('.group-title[id="g-'+g.getAttribute('data-group')+'"]');
+      if(title) title.style.display=any?'flex':'none';
+    });
+    empty.style.display=shown?'none':'block';
+  }
+
+  tabs.addEventListener('click',function(e){
+    var t=e.target.closest('.tab'); if(!t) return;
+    tabs.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');
+    curFilter=t.getAttribute('data-filter');
+    apply();
+  });
+  search.addEventListener('input',apply);
+
+  /* 复制模型 ID */
+  document.querySelectorAll('.copy-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var txt=b.getAttribute('data-copy');
+      var done=function(){ var o=b.textContent; b.textContent='已复制'; setTimeout(function(){b.textContent=o;},1200); };
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(done); }
+      else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
+    });
+  });
+
+  /* 模型计数 */
+  document.getElementById('modelCount').textContent=cards.length+' 个模型';
+  document.querySelectorAll('.cnt[data-cnt]').forEach(function(el){
+    var t=el.getAttribute('data-cnt');
+    var n=cards.filter(function(c){return c.getAttribute('data-type')===t;}).length;
+    el.textContent='· '+n+' 个';
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
