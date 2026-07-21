@@ -270,7 +270,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.content-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
 .content-card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
   overflow:hidden;transition:.25s;display:flex;flex-direction:column;
@@ -299,13 +299,6 @@ nav .actions{display:flex;align-items:center;gap:12px}
 }
 .content-thumb.placeholder .ph-glyph{font-size:18px;color:var(--brand);opacity:.55}
 .content-card p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-/* Bento 错落：首篇横向 Hero 大卡（占 2×2）+ 其余竖卡 */
-.content-card.feature{grid-column:span 2;grid-row:span 2;flex-direction:row}
-.content-card.feature .content-thumb{flex:1 1 50%;aspect-ratio:auto;border-right:1px solid var(--border)}
-.content-card.feature .card-body{flex:1 1 50%;padding:var(--s5);gap:12px;justify-content:center}
-.content-card.feature .card-body h3{font-size:20px;line-height:1.35;-webkit-line-clamp:3}
-.content-card.feature .card-cat-top{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--brand);text-transform:uppercase}
-.content-card.feature .card-excerpt{font-size:13px;line-height:1.65;color:var(--fg-muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .view-all{
   text-align:center;margin-top:var(--s5)
 }
@@ -375,9 +368,6 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
   .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
   .content-grid{grid-template-columns:repeat(2,1fr)}
-  .content-card.feature{grid-column:1/-1;grid-row:auto;flex-direction:row}
-  .content-card.feature .content-thumb{flex:1 1 45%;aspect-ratio:auto;border-right:1px solid var(--border);border-bottom:none}
-  .content-card.feature .card-body{flex:1 1 55%;padding:var(--s4)}
 }
 @media(max-width:640px){
   nav{padding:0 var(--s3)} .hero{padding:var(--s6) var(--s3) var(--s5)}
@@ -385,10 +375,6 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .stat-num{font-size:24px} .consult-box{padding:var(--s5) var(--s4)}
   .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
   .content-grid{grid-template-columns:1fr}
-  .content-card,.content-card.feature{grid-column:1/-1;grid-row:auto;flex-direction:column}
-  .content-card.feature .content-thumb{flex:none;aspect-ratio:16/9;border-right:none;border-bottom:1px solid var(--border)}
-  .content-card.feature .card-body{padding:var(--s4)}
-  .content-card.feature .card-body h3{font-size:17px}
 }
 </style>
 <link rel="stylesheet" href="/assets/fx.css">
@@ -716,22 +702,13 @@ function renderLatest(){
     var rest=arts.filter(function(a){return picked.indexOf(a)<0;});
     var top=picked.concat(rest).slice(0,5);
     var catName={craft:'技艺录',notes:'随笔',video:'视频','daily-digest':'每日阅读','ai-radar':'AI雷达'};
-    function cardHTML(a,isFeature){
+    function cardHTML(a){
       var cat=a.category||'craft';
       var href='/'+cat+'/'+(a.slug||'')+'.html';
-      var img=a.image?('/'+a.image):'';
+      var img=a.image?(a.image.startsWith('/')?a.image:'/'+a.image):'';
       var thumb=img
         ? '<div class="content-thumb"><img src="'+img+'" alt="" loading="lazy" data-label="'+catName[cat]+'" onerror="thumbFallback(this)"></div>'
         : '<div class="content-thumb placeholder"><span class="ph-glyph">✎</span><span class="ph-cat">'+catName[cat]+'</span></div>';
-      if(isFeature){
-        var body='<div class="card-body">'
-          +'<span class="card-cat-top">'+catName[cat]+'</span>'
-          +'<h3>'+esc(a.title||'')+'</h3>'
-          +(a.excerpt?'<p class="card-excerpt">'+esc(a.excerpt)+'</p>':'')
-          +'<div class="card-meta"><span class="card-time">'+esc(a.date||'')+'</span><span class="card-cat">'+catName[cat]+'</span></div>'
-          +'</div>';
-        return '<a class="content-card feature" href="'+href+'">'+thumb+body+'</a>';
-      }
       var inner=thumb
         +'<div class="card-body">'
         +'<h3>'+esc(a.title||'')+'</h3>'
@@ -739,7 +716,7 @@ function renderLatest(){
         +'</div>';
       return '<a class="content-card" href="'+href+'">'+inner+'</a>';
     }
-    grid.innerHTML = top.length ? top.map(function(a,i){return cardHTML(a,i===0);}).join('') : '';
+    grid.innerHTML = top.length ? top.map(cardHTML).join('') : '';
   }).catch(function(e){console.warn('content.json 加载失败',e);});
 }
 renderLatest();

@@ -1618,7 +1618,7 @@
       "slug": "deeptutor",
       "category": "craft",
       "featured": true,
-      "image": "/uploads/deeptutor-cover.jpg",
+      "image": "uploads/deeptutor-cover.jpg",
       "excerpt": "香港大学 HKUDS 实验室开发的开源 AI 教育平台（deep-tutor/deep-tutor，25.8k Stars，Apache 2.0）：Agent-Native 架构整合辅导、解题、测验、研究等六大能力于统一引擎，支持 GraphRAG/LightRAG/Obsidian 多引擎检索，三层可检查记忆（L1-L3），CLI + Docker 一键部署，适配飞书/Telegram/Slack。",
       "content": "详见独立文章页：/craft/deeptutor.html",
       "tags": [
@@ -1647,7 +1647,7 @@
       "slug": "arya-markdown-editor",
       "category": "craft",
       "featured": true,
-      "image": "/uploads/arya-markdown-editor-cover.jpg",
+      "image": "uploads/arya-markdown-editor-cover.jpg",
       "excerpt": "开发者 nicejade 创建的开源 Markdown 编辑器（nicejade/markdown-online-editor，MIT，v3.8.0.0）：浏览器打开即用，支持 Markdown/流程图/甘特图/五线谱编辑，HTML 自动转 Markdown，PDF/PNG/JPEG/Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。",
       "content": "详见独立文章页：/craft/arya-markdown-editor.html",
       "tags": [
