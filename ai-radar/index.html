@@ -31,7 +31,6 @@
   --cat-paper: #fbbf24; --cat-paper-bg: rgba(251,191,36,0.12);
   --cat-tip: #ff6ac1; --cat-tip-bg: rgba(255,106,193,0.12);
 }
-body.light {
   --bg: #F5F5F5;
   --card-bg: rgba(0,0,0,0.02);
   --card-hover: rgba(0,0,0,0.04);
@@ -76,15 +75,8 @@ body::after{
 .nav-pulse .dot{width:6px;height:6px;border-radius:50%;background:#34d399;
   box-shadow:0 0 8px rgba(52,211,153,0.4);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
-.theme-toggle{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
   background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;
   align-items:center;justify-content:center;transition:all .2s;padding:0;margin-left:14px}
-.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
-.theme-toggle .ic{width:16px;height:16px;display:block}
-.theme-toggle .ic-moon{fill:currentColor;stroke:none}
-.theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
-body.light .theme-toggle .ic-moon{display:none}
-body.light .theme-toggle .ic-sun{display:block}
 
 /* ── Hero ── */
 .hero{position:relative;z-index:1;padding:140px 0 84px;text-align:center;overflow:hidden;
@@ -247,7 +239,7 @@ body.light .theme-toggle .ic-sun{display:block}
 <body>
 <div class="sgn-bar" id="sgnBar">
   <div class="sgn-inner">
-    <a href="/" class="sgn-logo">李坤</a>
+    <a href="/" class="sgn-logo">Lkn</a>
     <nav class="sgn-links" aria-label="站点导航">
       <a href="/">首页</a>
       <a href="/craft/">技艺录</a>
@@ -282,17 +274,14 @@ body.light .theme-toggle .ic-sun{display:block}
   <div class="nav-inner">
     <a href="/" class="nav-logo">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      李坤
+      Lkn
     </a>
     <div class="nav-pulse">
       <span class="dot"></span>
       自动更新中
     </div>
     <div class="nav-title">AI 新闻雷达</div>
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换明暗主题">
-      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
+    
   </div>
 </nav>
 
@@ -500,8 +489,7 @@ body.light .theme-toggle .ic-sun{display:block}
 </script>
 <script>
 (function(){
-  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
-  window.toggleTheme=function(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} };
+catch(e){} };
 })();
 </script>
 </body>

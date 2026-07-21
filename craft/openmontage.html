@@ -36,7 +36,7 @@
       <li><a href="/craft/" class="active">技艺录</a></li>
       <li><a href="/video-lab/">视频剪辑</a></li>
     </ul>
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换主题"><svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+    
   </div>
 </nav>
 <nav class="page-dot" id="pageDots"></nav>
@@ -46,7 +46,7 @@
     <h1>OpenMontage：把你的 AI 编程助手，变成<em>一整间视频工作室</em></h1>
     <p class="hero-desc">世界首个开源 Agent 视频生产系统（AGPL-3.0，7k+ stars）：12 条生产管线、52 个工具、500+ 智能体技能，把 Claude Code / Cursor / Copilot 变成涵盖调研、脚本、素材、剪辑、渲染的完整工作室——且零 API Key 也能出片。</p>
     <div class="hero-meta">
-      <span>李坤</span><span class="sep"></span>
+      <span>Lkn</span><span class="sep"></span>
       <span>2026-07-11</span><span class="sep"></span>
       <span>约 7 分钟阅读</span>
     </div>
@@ -154,10 +154,7 @@ cp .env.example .env
 <footer class="footer">
   <div class="footer-bottom">
     <span>© 2026 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理自 <a href="https://github.com/calesthio/OpenMontage">calesthio/OpenMontage</a> 开源项目</span>
-    <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" aria-label="切换明暗主题">
-      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
+    
   </div>
 </footer>
 <script>
@@ -198,8 +195,7 @@ cp .env.example .env
 </script>
 <script>
 (function(){
-  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
-  window.toggleTheme=function(){ var b=document.body; b.classList.toggle('light'); try{ localStorage.setItem('theme', b.classList.contains('light')?'light':'dark'); }catch(e){} };
+catch(e){} };
 })();
 </script>
 </body>

@@ -40,37 +40,8 @@
   --amber:#FFB800;
   --amber-bg:rgba(255,184,0,.10);
   --radius:8px;
-  --max-text:760px;
+  --max-text:900px;
 }
-/* 浅色主题：与首页/模板互通（body.light + localStorage 'theme'） */
-body.light{
-  --bg-primary:#F5F5F5;
-  --bg-secondary:#FFFFFF;
-  --bg-elevated:#FFFFFF;
-  --text-primary:#0A0A0A;
-  --text-secondary:#555555;
-  --text-inverse:#F5F5F5;
-  --accent-green:#00A82E;
-  --accent-cyan:#008CB0;
-  --accent-dim:rgba(0,168,46,.12);
-  --border-subtle:#E2E2E2;
-  --border-strong:#CCCCCC;
-  --state-error:#D70015;
-  --state-success:#1A9E3E;
-  --bg:var(--bg-primary);
-  --bg-card:#FFFFFF;
-  --fg:var(--text-primary);
-  --fg-muted:var(--text-secondary);
-  --fg-dim:#888888;
-  --brand:var(--accent-green);
-  --brand-bg:var(--accent-dim);
-  --cyan:var(--accent-cyan);
-  --border:var(--border-subtle);
-  --border-bright:var(--border-strong);
-  --amber:#B57800;
-  --amber-bg:rgba(181,120,0,.10);
-}
-
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{
@@ -296,33 +267,6 @@ a:hover{color:var(--accent-green)}
 .footer a{color:var(--accent-green);text-decoration:none}
 .footer a:hover{text-decoration:underline}
 
-/* ═══ THEME TOGGLE（nav 内按钮，与首页 sun/moon SVG 一致） ═══ */
-.theme-toggle{width:40px;height:40px;border-radius:50%;border:1px solid var(--border-strong);
-  background:var(--bg-elevated);color:var(--text-primary);cursor:pointer;display:inline-flex;align-items:center;
-  justify-content:center;transition:.2s;flex-shrink:0;font-size:0}
-.theme-toggle:hover{border-color:var(--accent-green);color:var(--accent-green)}
-.theme-toggle .ic{width:18px;height:18px;display:block}
-.theme-toggle .ic-moon{fill:currentColor;stroke:none}
-.theme-toggle .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
-body.light .theme-toggle .ic-moon{display:none}
-body.light .theme-toggle .ic-sun{display:block}
-.footer-bottom .theme-toggle{width:34px;height:34px;border-radius:50%;border:1px solid var(--border-strong);
-  background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;align-items:center;
-  justify-content:center;transition:.2s;flex-shrink:0;font-size:0;padding:0}
-.footer-bottom .theme-toggle:hover{border-color:var(--accent-green);color:var(--accent-green)}
-
-/* ═══ THEME FAB（注入的浮动切换按钮，与首页 sun/moon SVG 一致） ═══ */
-.theme-fab{position:fixed;right:20px;bottom:20px;z-index:300;width:44px;height:44px;border-radius:50%;
-  border:1px solid var(--border-strong);background:var(--bg-elevated);color:var(--text-primary);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:.2s;font-size:0;
-  box-shadow:0 4px 16px rgba(0,0,0,.4)}
-.theme-fab:hover{border-color:var(--accent-green);color:var(--accent-green)}
-.theme-fab .ic{width:18px;height:18px;display:block}
-.theme-fab .ic-moon{fill:currentColor;stroke:none}
-.theme-fab .ic-sun{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:none}
-body.light .theme-fab .ic-moon{display:none}
-body.light .theme-fab .ic-sun{display:block}
-
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:900px){
   .hero{padding:88px 20px 32px}
@@ -345,10 +289,6 @@ body{
   background-image: radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
       rgba(0,255,65,.07) 0%, transparent 70%);
   background-attachment: fixed;
-}
-body.light{
-  background-image: radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
-      rgba(0,168,46,.10) 0%, transparent 70%);
 }
 
 /* ═══ ARTICLE-WRAP（与 .page 等价，补全被遗漏的容器）═══ */

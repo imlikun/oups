@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文章 — 李坤的创意探索</title>
+  <title>文章 — Lkn的创意探索</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -464,7 +464,7 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">李坤的创意探索</a>
+    <a href="index.html" class="nav-logo">Lkn的创意探索</a>
     <ul class="nav-links">
       <li><a href="index.html">首页</a></li>
       <li><a href="article.html?cat=craft">技艺录</a></li>
@@ -550,7 +550,7 @@
 </div>
 
 <footer class="footer">
-  <p>Copyright &copy; 2026 李坤</p>
+  <p>Copyright &copy; 2026 Lkn</p>
 </footer>
 
 <script>
@@ -628,7 +628,7 @@
   }
 
   function renderArticle(article, articles) {
-    document.title = article.title + ' — 李坤的创意探索';
+    document.title = article.title + ' — Lkn的创意探索';
     loading.style.display = 'none';
 
     // Breadcrumb
@@ -759,7 +759,7 @@
     breadcrumbCat.textContent = label;
     breadcrumbTitle.textContent = '';
     document.getElementById('breadcrumbSep').style.display = 'none';
-    document.title = label + ' — 李坤的创意探索';
+    document.title = label + ' — Lkn的创意探索';
 
     // Nav active state
     var navLinks = document.querySelectorAll('.nav-links a');
@@ -835,7 +835,7 @@
         listHtml += '<div class="card-meta-row">';
         listHtml += '<div class="card-meta-left">';
         listHtml += '<div class="card-avatar">李</div>';
-        listHtml += '<span>李坤</span>';
+        listHtml += '<span>Lkn</span>';
         listHtml += '<span>·</span>';
         listHtml += '<span>' + getTimeAgo(art.date, now) + '</span>';
         listHtml += '</div>';
@@ -871,7 +871,7 @@
         listHtml += '<div class="card-meta-row">';
         listHtml += '<div class="card-meta-left">';
         listHtml += '<div class="card-avatar">李</div>';
-        listHtml += '<span>李坤</span>';
+        listHtml += '<span>Lkn</span>';
         listHtml += '<span>·</span>';
         listHtml += '<span>' + getTimeAgo(art.date, now) + '</span>';
         listHtml += '</div>';
