@@ -160,6 +160,11 @@ body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-
 .article-item .item-meta .item-tags{display:flex;gap:6px;flex-wrap:wrap}
 .article-item .item-meta .item-tag{padding:2px 9px;border-radius:6px;background:var(--accent-dim);
   color:var(--accent-green);font-size:11px;font-weight:500}
+/* 置顶徽标：列表页由 JS 注入（content.json 的 pinned 字段驱动） */
+.pin-badge{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:6px;
+  background:rgba(0,255,65,.12);color:var(--accent-green);font-size:11px;font-weight:600;
+  border:1px solid rgba(0,255,65,.30);vertical-align:middle;letter-spacing:.04em}
+.article-item.pinned{border-left-color:var(--accent-green)}
 
 /* ═══ DAILY DIGEST（6 大板块配色，保留每日轮换） ═══ */
 .accent-0{--accent:#30d158;--accent-light:rgba(48,209,88,.10);--accent-medium:rgba(48,209,88,.16);--accent-border:rgba(48,209,88,.22);--accent-shadow:rgba(48,209,88,.12)}

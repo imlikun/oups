@@ -600,5 +600,39 @@
   });
 })();
 </script>
+<script>
+/* 置顶文章：读 content.json 的 pinned 字段，置顶项浮到列表顶部并加「置顶」徽标；同时按发布时间倒序。JS 失效时静态顺序不受影响（已是倒序）。 */
+(function(){
+  function slugFrom(href){var m=href&&href.match(/\/([\w-]+)\.html/);return m?m[1]:'';}
+  function dateOf(el){var d=el.querySelector('.ai-date');return d?d.textContent.trim():'';}
+  function applyPin(wrap){
+    if(!wrap)return;
+    var items=Array.prototype.slice.call(wrap.querySelectorAll('.article-item'));
+    if(!items.length)return;
+    fetch('/content.json').then(function(r){return r.json();}).then(function(d){
+      var pinned=new Set((d.articles||[]).filter(function(a){return a.pinned;}).map(function(a){return a.slug;}));
+      items.sort(function(x,y){
+        var px=pinned.has(slugFrom(x.getAttribute('href')))?1:0;
+        var py=pinned.has(slugFrom(y.getAttribute('href')))?1:0;
+        if(px!==py)return py-px;
+        return dateOf(y).localeCompare(dateOf(x));
+      });
+      items.forEach(function(el){
+        wrap.appendChild(el);
+        var href=el.getAttribute('href');
+        if(pinned.has(slugFrom(href))){
+          el.classList.add('pinned');
+          var info=el.querySelector('.article-info');
+          if(info && !info.querySelector('.pin-badge')){
+            var b=document.createElement('span');b.className='pin-badge';b.textContent='置顶';
+            info.insertBefore(b,info.firstChild);
+          }
+        }
+      });
+    }).catch(function(){});
+  }
+  applyPin(document.querySelector('.list-wrap'));
+})();
+</script>
 </body>
 </html>

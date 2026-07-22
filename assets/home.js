@@ -15,13 +15,13 @@ function renderLatest(){
   fetch('/content.json').then(function(r){return r.json();}).then(function(d){
     // 视频用户后续自加，首页先聚焦图文栏目（技艺录为主）
     var arts=(d.articles||[]).filter(function(a){return a.status!=='draft' && a.category!=='video';});
-    arts.sort(function(a,b){return (b.date||'').localeCompare(a.date||'');});
-    // 每栏目前沿 1 篇，技艺录因发文频繁自然占多数
-    var byCat={};
-    arts.forEach(function(a){ if(!byCat[a.category]) byCat[a.category]=a; });
-    var picked=Object.keys(byCat).map(function(k){return byCat[k];});
-    var rest=arts.filter(function(a){return picked.indexOf(a)<0;});
-    var top=picked.concat(rest).slice(0,5);
+    // 置顶优先，再按发布时间倒序（pinned 字段在 content.json 控制）
+    arts.sort(function(a,b){
+      var pa=a.pinned?1:0, pb=b.pinned?1:0;
+      if(pa!==pb) return pb-pa;
+      return (b.date||'').localeCompare(a.date||'');
+    });
+    var top=arts.slice(0,5);
     var catName={craft:'技艺录',notes:'随笔',video:'视频','daily-digest':'每日阅读','ai-radar':'AI雷达'};
     function cardHTML(a,isLead){
       var cat=a.category||'craft';
