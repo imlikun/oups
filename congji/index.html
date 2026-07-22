@@ -303,11 +303,12 @@
   .footer a:hover { text-decoration: underline; }
 
   /* Reveal animation */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+  .reveal { opacity:1; animation:revealIn .8s cubic-bezier(0.16,1,0.3,1) both; }
+  @keyframes revealIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
   .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-1 { transition-delay: 0.1s; animation-delay:0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; animation-delay:0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; animation-delay:0.3s; }
 
   @media (max-width: 768px) {
     .phone-frame { width: 220px; height: 480px; }

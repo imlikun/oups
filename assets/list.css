@@ -219,7 +219,9 @@ body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-
 .footer a:hover{text-decoration:underline}
 
 /* ═══ REVEAL（daily-digest 滚动渐入） ═══ */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+/* reveal 改为默认可见 + 纯CSS入场动画（不依赖JS显形，JS失效也永不空白） */
+.reveal{opacity:1;animation:revealIn .5s ease both}
+@keyframes revealIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* ═══ NOTES 入场动画 ═══ */
