@@ -243,64 +243,64 @@ nav .actions{display:flex;align-items:center;gap:12px}
 }
 .prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,65,.22)}
 
-/* ═══ WORKS / 用作品说话 (Bento Grid) ═══ */
+/* ═══ WORKS / 用作品说话 (Bento Grid · 4列固定行高) ═══ */
 .works-section{}
 .works-grid{
   display:grid;
-  grid-template-columns:1.3fr 1fr 1fr;
-  gap:var(--s4);
+  grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:128px;
+  gap:14px;
 }
-/* Bento 占位：row1=宠急达(大) PXID(跨2行) 大爆炸(小) | row2=NeuroFlow(小) | row3=三等分 */
-.work-card--chongjida{grid-row:span 1;grid-column:1}
-.work-card--pxid{grid-row:span 2;grid-column:2}
-.work-card--bigbang{grid-row:1;grid-column:3}
-.work-card--neuroflow{grid-row:2;grid-column:3}
-.work-card--yunlan{grid-row:3;grid-column:1}
-.work-card--congji{grid-row:3;grid-column:2}
-.work-card--pantransfer{grid-row:3;grid-column:3}
+/* Bento 占位：row1=宠急达(2×2) PXID(1×2) 大爆炸(1×1) | row2=NeuroFlow(1×1) | row3=三等分(各1×1) */
+.work-card--chongjida{grid-column:span 2;grid-row:span 2}
+.work-card--pxid{grid-row:span 2}
+.work-card--bigbang,.work-card--neuroflow,
+.work-card--yunlan,.work-card--congji,.work-card--pantransfer{grid-column:auto;grid-row:auto}
 
 .work-card{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
-  padding:var(--s5);transition:.25s;display:flex;flex-direction:column;
-  text-decoration:none;color:inherit;position:relative;overflow:hidden;
-  min-height:200px;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:14px;
+  padding:18px;transition:.25s;display:flex;flex-direction:column;
+  justify-content:space-between;text-decoration:none;color:inherit;
+  overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.45)
 }
 .work-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 16px rgba(0,212,255,.08)}
+/* 宠急达大卡特殊padding */
+.work-card--chongjida{padding:20px}
 
-/* 状态灯 + 分类标签行 */
-.work-status{display:flex;align-items:center;gap:10px;margin-bottom:var(--s3)}
-.status-dot{width:8px;height:8px;border-radius:50%;background:var(--brand);flex-shrink:0;box-shadow:0 0 8px rgba(0,255,65,.5)}
-.work-tag{
-  font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase
-}
-/* 标签颜色 */
+/* 状态灯 + 分类标签 */
+.work-status{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px var(--brand)}
+.work-tag{font-family:var(--font-mono);font-size:11px;font-weight:700}
 .tag-green{color:var(--brand)}
-.tag-amber{color:var(--amber)}
+.tag-amber{color:#FF9F1C}
 .tag-cyan{color:var(--cyan)}
-.tag-purple{color:#A78BFA}
+.tag-blue{color:#378ADD}
+.tag-purple{color:#B388FF}
 
 /* 卡片标题 */
-.work-title{font-size:22px;font-weight:700;margin-bottom:var(--s2);line-height:1.25}
-.work-desc{font-size:14px;color:var(--fg-muted);line-height:1.65;flex:1;margin-bottom:var(--s4)}
+.work-title{font-size:17px;font-weight:600;line-height:1.25}
+.work-card--chongjida .work-title{font-size:20px}
+.work-desc{font-size:12px;color:var(--fg-muted);margin-top:6px;line-height:1.5}
+.work-card--chongjida .work-desc{font-size:13px}
 
-/* 底部：技术栈 pills / 链接 */
-.work-tech{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+/* 技术栈 pills */
+.work-tech{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
 .tech-pill{
-  font-family:var(--font-mono);font-size:11px;font-weight:600;padding:4px 12px;
-  background:rgba(255,255,255,.06);border:1px solid var(--border-strong);border-radius:99px;color:var(--fg-secondary)
+  font-family:var(--font-mono);font-size:10px;color:var(--fg-muted);
+  background:var(--bg-primary);border:1px solid var(--border);border-radius:6px;padding:3px 8px
 }
-.work-footer{margin-top:auto;padding-top:var(--s3);display:flex;align-items:center;justify-content:space-between}
+
+/* 底部链接 */
 .work-footer-link{
-  font-size:13px;font-weight:600;color:var(--fg-muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px
+  font-family:var(--font-mono);font-size:10px;color:var(--fg-muted);text-decoration:none
 }
 .work-footer-link:hover{color:var(--cyan)}
 
 /* Works badge */
 .works-badge{
-  display:inline-flex;align-items:center;gap:6px;
   border:1px solid var(--border-strong);border-radius:6px;
-  padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.06em;
-  color:var(--fg-muted);font-family:var(--font-mono);vertical-align:middle;margin-left:10px
+  padding:2px 8px;font-size:11px;color:var(--fg-muted);
+  font-family:var(--font-mono);vertical-align:middle;margin-left:10px
 }
 
 /* ═══ LATEST CONTENT — card grid ═══ */
@@ -415,9 +415,9 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
   .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
   /* Works Bento → 2列 */
-  .works-grid{grid-template-columns:1fr 1fr}
-  .work-card--chongjida,.work-card--pxid,.work-card--bigbang,.work-card--neuroflow,
-  .work-card--yunlan,.work-card--congji,.work-card--pantransfer{grid-column:auto;grid-row:auto}
+  .works-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:auto}
+  .work-card--chongjida{grid-column:auto;grid-row:auto}
+  .work-card--pxid{grid-row:auto}
   .content-grid{grid-template-columns:repeat(2,1fr)}
   .content-card{height:auto}
   .content-card:nth-child(1){grid-column:span 2}
@@ -434,7 +434,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .stat-num{font-size:24px} .consult-box{padding:var(--s5) var(--s4)}
   .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
   /* Works Bento → 单列 */
-  .works-grid{grid-template-columns:1fr}
+  .works-grid{grid-template-columns:1fr;grid-auto-rows:auto}
   .content-grid{grid-template-columns:1fr}
   .content-card{height:auto}
   .content-card:nth-child(1),
