@@ -1793,6 +1793,60 @@
       "date": "2026-07-20",
       "status": "published",
       "template": "DP"
+    },
+    {
+      "id": "article-78",
+      "title": "【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化",
+      "slug": "agency-agents-zh",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/agency-agents-zh-cover.jpg",
+      "excerpt": "agency-agents-zh 是 The Agency 的中文增强版，把 AI 专家角色从 144 扩展到 266 个，新增 50 个中国市场专属智能体，一句话即可调度多专家协作。",
+      "content": "详见独立文章页：/craft/agency-agents-zh.html",
+      "tags": [
+        "AI 智能体",
+        "多智能体编排",
+        "The Agency",
+        "中文开源",
+        "Claude Code",
+        "Cursor",
+        "小红书运营",
+        "跨境电商",
+        "桌面客户端",
+        "工作流自动化"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-24",
+      "status": "published",
+      "link": "/craft/agency-agents-zh.html",
+      "template": "DP"
+    },
+    {
+      "id": "article-79",
+      "title": "【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装",
+      "slug": "fish-audio-heygen-hyperframes",
+      "category": "craft",
+      "featured": true,
+      "image": "uploads/fish-audio-heygen-hyperframes-cover.jpg",
+      "excerpt": "视频里提到的一条 AI 数字人视频生产线：Fish Audio 生成配音，HeyGen V 生成数字人视频，HyperFrames 负责字幕/转场/特效后期包装。三款工具串起来，几分钟产出成片。",
+      "content": "详见独立文章页：/craft/fish-audio-heygen-hyperframes.html",
+      "tags": [
+        "数字人视频",
+        "Fish Audio",
+        "HeyGen",
+        "HyperFrames",
+        "AI 配音",
+        "视频后期",
+        "工作流",
+        "开源工具",
+        "口播视频",
+        "视频制作"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-24",
+      "status": "published",
+      "link": "/craft/fish-audio-heygen-hyperframes.html",
+      "template": "DP"
     }
   ],
   "projects": [

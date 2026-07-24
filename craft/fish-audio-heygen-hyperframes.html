@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装</title>
+<meta name="description" content="视频里提到的一条 AI 数字人视频生产线：Fish Audio 生成配音，HeyGen V 生成数字人视频，HyperFrames 负责字幕/转场/特效后期包装。三款工具串起来，几分钟产出成片。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/fish-audio-heygen-hyperframes.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装">
+<meta property="og:description" content="视频里提到的一条 AI 数字人视频生产线：Fish Audio 生成配音，HeyGen V 生成数字人视频，HyperFrames 负责字幕/转场/特效后期包装。三款工具串起来，几分钟产出成片。">
+<meta property="og:url" content="https://www.appin.site/craft/fish-audio-heygen-hyperframes.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装">
+<meta name="twitter:description" content="视频里提到的一条 AI 数字人视频生产线：Fish Audio 生成配音，HeyGen V 生成数字人视频，HyperFrames 负责字幕/转场/特效后期包装。三款工具串起来，几分钟产出成片。">
+<meta property="og:image" content="https://www.appin.site/uploads/fish-audio-heygen-hyperframes-cover.jpg">
+<meta name="twitter:image" content="https://www.appin.site/uploads/fish-audio-heygen-hyperframes-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>实战测评 · AI 视频流水线</div>
+  <h1>【WB】一条流水线做数字人视频：<strong>Fish Audio</strong> 配音 → <strong>HeyGen V</strong> 数字人 → <strong>HyperFrames</strong> 包装</h1>
+  <p class="hero-desc">视频里提到的一条 AI 数字人视频生产线：Fish Audio 生成配音，HeyGen V 生成数字人视频，HyperFrames 负责字幕 / 转场 / 特效后期包装。三款工具串起来，几分钟产出成片。</p>
+  <div class="hero-meta">
+    <span>开源 + 商业</span><span class="dot"></span><span>数字人视频</span><span class="dot"></span><span>三工具流水线</span><span class="dot"></span><span>后期包装</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/fish-audio-heygen-hyperframes-cover.jpg" alt="AI 数字人视频生产线">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、这是什么流水线</a></li>
+      <li><a href="#s2">二、三款工具逐一拆解</a></li>
+      <li><a href="#s3">三、流水线怎么串起来</a></li>
+      <li><a href="#s4">四、动手跑通</a></li>
+      <li><a href="#s5">五、坑与提醒</a></li>
+      <li><a href="#s6">六、小结与获取</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、这是什么流水线</h2>
+    <p>一句话结论：<span class="key">把「请人拍 + 请人配 + 请人剪」三步合成一条 AI 流水线，一个人就能出数字人口播视频成片。</span></p>
+    <p>视频里提到的玩法分三段，环环相扣：</p>
+    <ul>
+      <li><strong>声音</strong>：Fish Audio 把文案变成自然配音（还能克隆你自己的声音）；</li>
+      <li><strong>形象</strong>：HeyGen V 用这段配音驱动一个数字人，生成对口型说话的视频；</li>
+      <li><strong>包装</strong>：HyperFrames 给视频加字幕、转场、特效、平台 overlay，输出最终成片。</li>
+    </ul>
+    <p>适合做口播视频、知识科普、产品介绍、课程录播——尤其适合不想出镜、又嫌剪辑麻烦的个人创作者和小团队。</p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">一篇把这条流水线讲透的笔记：三款工具各自是什么、怎么串、怎么动手跑通，以及哪些坑（尤其合规）必须先知道。坤哥投了素材，我按上一轮节奏渲染成技艺录文章，你「推」我再上线。</p>
+    </div>
+
+    <h2 id="s2">二、三款工具逐一拆解</h2>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">Fish Audio（fish-speech，开源）</span></div>
+      <p class="mc-desc">开源 TTS + 零样本声音克隆引擎（GitHub <code>fishaudio/fish-speech</code>，代码 Apache-2.0）。S2-Pro 系列用 Dual-AR 架构，支持 80+ 语种、情感标签（如 <code>[excited]</code> <code>[whisper]</code>），TTS-Arena2 排名第一。两条路：在线平台 fishaudio.com 零基础出声，或本地 Docker 私有化部署。⚠️ 模型权重为非商业许可，商用需单独授权。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">HeyGen V（商业 SaaS）</span></div>
+      <p class="mc-desc">HeyGen 第 V 代 Avatar 数字人模型。上传一张照片 + 一段脚本（或音频），生成对口型说话的视频；单次可生成 30 分钟连续口播，形象一致性比上一代强很多。提供 Web 端与 API。把 Fish Audio 的配音喂给它，就能让数字人「用你的声音」开口。注意：这是付费 SaaS，按生成时长 / 订阅计费。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">HyperFrames（HeyGen 开源，Apache-2.0）</span></div>
+      <p class="mc-desc">HeyGen 开源的「video as code」框架（GitHub <code>heygen-com/hyperframes</code>）。用 HTML/CSS/JS 描述视频，渲染成确定性 MP4。正好负责你说的「后期包装」：字幕、转场、特效、平台 overlay、motion graphics。内置 9+ 个 agent skills（captions / beat-sync / website-to-video 等），让 Claude Code / Cursor 直接写视频。CLI：<code>npx hyperframes init/preview/render</code>，需 Node.js 22+ 与 FFmpeg。</p>
+    </div>
+
+    <h2 id="s3">三、流水线怎么串起来</h2>
+    <p>关键点在于<span class="key">每一段的输出是下一段的输入</span>：Fish Audio 出 wav → 喂 HeyGen V 驱动口型 → HeyGen 出 mp4 → 进 HyperFrames 加字幕特效 → 成片。</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 150" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="流水线示意图">
+        <defs>
+          <marker id="arw2" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:13px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:10px;fill:#5b6b62}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw2)}
+          </style>
+        </defs>
+        <rect class="bx" x="6" y="45" width="110" height="60" rx="10"></rect>
+        <text class="t" x="61" y="72" text-anchor="middle">脚本</text>
+        <text class="ts" x="61" y="90" text-anchor="middle">文案</text>
+        <path class="ln" d="M116,75 L148,75"></path>
+        <rect class="bxg" x="150" y="40" width="120" height="70" rx="10"></rect>
+        <text class="t" x="210" y="68" text-anchor="middle">Fish Audio</text>
+        <text class="ts" x="210" y="86" text-anchor="middle">配音 wav</text>
+        <path class="ln" d="M270,75 L302,75"></path>
+        <rect class="bxg" x="304" y="40" width="120" height="70" rx="10"></rect>
+        <text class="t" x="364" y="68" text-anchor="middle">HeyGen V</text>
+        <text class="ts" x="364" y="86" text-anchor="middle">数字人 mp4</text>
+        <path class="ln" d="M424,75 L456,75"></path>
+        <rect class="bxg" x="458" y="40" width="120" height="70" rx="10"></rect>
+        <text class="t" x="518" y="68" text-anchor="middle">HyperFrames</text>
+        <text class="ts" x="518" y="86" text-anchor="middle">字幕/特效</text>
+        <path class="ln" d="M578,75 L610,75"></path>
+        <rect class="bx" x="612" y="45" width="62" height="60" rx="10"></rect>
+        <text class="t" x="643" y="80" text-anchor="middle">成片</text>
+      </svg>
+      <div class="caption">图 1：声音 → 形象 → 包装，三段串成一条流水线。</div>
+    </div>
+    <p>也可以让 HyperFrames 用自己的内置 TTS/transcribe 一条龙搞定，但本流水线单独用 Fish Audio 出声，<span class="key">声音更自然、可复用、能克隆你自己音色</span>，后面做系列视频时人声一致。</p>
+
+    <h2 id="s4">四、动手跑通</h2>
+    <p>下面是一条最小可跑通的路径。我没法在你机器上实跑（环境不在我这边），但每一步都是官方工作流，复制即用。</p>
+
+    <h3>步骤 1 · Fish Audio 出配音</h3>
+    <p>在线最省事：打开 fishaudio.com，粘贴文案、插入情感标签，或上传 10–30 秒音频克隆声音，生成后下载 <code>.wav</code>。本地部署则 <code>git clone fishaudio/fish-speech</code> 起 WebUI / API（需 GPU）。</p>
+
+    <h3>步骤 2 · HeyGen V 生成数字人</h3>
+    <p>在 HeyGen 选 Avatar（或上传你的照片做数字分身），把步骤 1 的配音音频 + 脚本喂进去，生成对口型视频，导出 <code>.mp4</code>。</p>
+
+    <h3>步骤 3 · HyperFrames 包装</h3>
+    <div class="code-block">
+      <pre><span class="c-com"># 给 AI 编程助手装上 HyperFrames 技能（Claude Code / Cursor / Codex 通用）</span>
+<span class="c-key">npx</span> skills add heygen-com/hyperframes
+<span class="c-com"># 初始化项目：拷贝素材 + 自动转录音频</span>
+<span class="c-key">npx</span> hyperframes init my-video
+<span class="c-com"># 让助手用自然语言写 HTML 合成（加字幕/转场/特效）</span>
+<span class="c-com"># 预览（帧精确，热重载）→ 渲染成片</span>
+<span class="c-key">npx</span> hyperframes preview
+<span class="c-key">npx</span> hyperframes render --output final.mp4</pre>
+    </div>
+    <div class="info-box">
+      <p><strong>坑：本地渲染依赖</strong></p>
+      <p class="mc-desc">HyperFrames 需要 <strong>Node.js 22+</strong> 和 <strong>FFmpeg</strong> 在 PATH 里；本地渲染靠 headless Chrome，机器太弱会卡。没环境就先用 HeyGen 自带字幕，等上了 HyperFrames 再精细化。</p>
+    </div>
+
+    <h2 id="s5">五、坑与提醒</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>注意点</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>肖像权 / 声音权</td><td>数字人涉及被代言人的肖像与声音权益，<span class="key">商用必须拿到本人授权</span>，不能拿别人的脸/声随便做商业视频。</td></tr>
+          <tr><td>Fish Audio 商用许可</td><td>代码 Apache-2.0，但模型权重是非商业许可，企业商用需向官方申请授权或使用自有可商用权重。</td></tr>
+          <tr><td>HeyGen 是付费 SaaS</td><td>按生成时长 / 订阅计费，做量产前先看清楚额度和条款，避免账单超预期。</td></tr>
+          <tr><td>HyperFrames 依赖</td><td>需 Node.js 22+ 与 FFmpeg，本地渲染吃资源；CI/CD 可走云端渲染省本机。</td></tr>
+          <tr><td>无需代理</td><td>三款均国内可正常使用：Fish Audio 有国内镜像，HeyGen 国内可访问，HyperFrames 是 npm 包——不用任何额外工具。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pull-quote"><p>合规是第一道槛：先把「肖像 / 声音授权」和「商用许可」确认了，再谈效率和成本。技术能跑通不代表能商用。</p></div>
+
+    <h2 id="s6">六、小结与获取</h2>
+    <p>一句话总结：<span class="key">这条流水线的价值不是「某个工具多强」，而是三段各司其职、输出即输入，一个人就能把口播视频从 0 做到成片。</span></p>
+    <ul>
+      <li>Fish Audio（开源 TTS）：<a href="https://github.com/fishaudio/fish-speech" target="_blank" rel="noopener">github.com/fishaudio/fish-speech</a> ／ 在线 <a href="https://fishaudio.com" target="_blank" rel="noopener">fishaudio.com</a></li>
+      <li>HeyGen V（数字人 SaaS）：<a href="https://www.heygen.com" target="_blank" rel="noopener">heygen.com</a></li>
+      <li>HyperFrames（开源后期）：<a href="https://github.com/heygen-com/hyperframes" target="_blank" rel="noopener">github.com/heygen-com/hyperframes</a> ／ 文档 <a href="https://hyperframes.heygen.com" target="_blank" rel="noopener">hyperframes.heygen.com</a></li>
+    </ul>
+    <p class="mc-desc">坤哥，建议先用三家的在线版跑通最小闭环（Fish Audio 在线配音 → HeyGen 在线数字人 → HyperFrames 本地加字幕），确认效果和人声一致，再决定是否本地私有化部署。玩出成片了记得回来，咱可以再写篇实战记录。</p>
+
+    <div class="tag-cloud">
+      <a href="/craft/">数字人视频</a>
+      <a href="/craft/">Fish Audio</a>
+      <a href="/craft/">HeyGen</a>
+      <a href="/craft/">HyperFrames</a>
+      <a href="/craft/">AI 配音</a>
+      <a href="/craft/">视频后期</a>
+      <a href="/craft/">工作流</a>
+      <a href="/craft/">开源工具</a>
+      <a href="/craft/">口播视频</a>
+      <a href="/craft/">视频制作</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <span>© 2026.07.24 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+})();
+</script>
+</body>
+</html>

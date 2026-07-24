@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化</title>
+<meta name="description" content="agency-agents-zh 是 The Agency 的中文增强版，把 AI 专家角色从 144 扩展到 266 个，新增 50 个中国市场专属智能体，一句话即可调度多专家协作。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/agency-agents-zh.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化">
+<meta property="og:description" content="agency-agents-zh 是 The Agency 的中文增强版，把 AI 专家角色从 144 扩展到 266 个，新增 50 个中国市场专属智能体，一句话即可调度多专家协作。">
+<meta property="og:url" content="https://www.appin.site/craft/agency-agents-zh.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化">
+<meta name="twitter:description" content="agency-agents-zh 是 The Agency 的中文增强版，把 AI 专家角色从 144 扩展到 266 个，新增 50 个中国市场专属智能体，一句话即可调度多专家协作。">
+<meta property="og:image" content="https://www.appin.site/uploads/agency-agents-zh-cover.jpg">
+<meta name="twitter:image" content="https://www.appin.site/uploads/agency-agents-zh-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>实战测评 · AI 专家团队</div>
+  <h1>【WB】266 个 AI 专家任你调遣：<strong>agency-agents-zh</strong> 把 The Agency 汉化 + 本土化</h1>
+  <p class="hero-desc">agency-agents-zh 是 The Agency 的中文增强版，把 AI 专家角色从 144 扩展到 266 个，新增 50 个中国市场专属智能体，一句话即可调度多专家协作。</p>
+  <div class="hero-meta">
+    <span>开源项目</span><span class="dot"></span><span>MIT 许可</span><span class="dot"></span><span>266 智能体</span><span class="dot"></span><span>18 种工具</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/agency-agents-zh-cover.jpg" alt="agency-agents-zh 多智能体协作">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、这是什么</a></li>
+      <li><a href="#s2">二、核心能力拆解</a></li>
+      <li><a href="#s3">三、怎么装到你的工具</a></li>
+      <li><a href="#s4">四、玩一玩：八戒替你梳理的上手路线</a></li>
+      <li><a href="#s5">五、坑与提醒</a></li>
+      <li><a href="#s6">六、获取与结语</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、这是什么</h2>
+    <p>先给一句话结论：<span class="key">agency-agents-zh 不是一份「通用提示词合集」，而是一套「开箱即用的 AI 智能体角色库」——每个角色都有独立人设、专业流程和明确交付物。</span></p>
+    <p>它的上游是 <code>msitarzewski/agency-agents</code>（GitHub 约 127k Stars 的爆款项目，原名 The Agency）。中文版由社区维护者 <code>jnMetaCode</code> 在完整翻译上游的基础上做了本土化增强，所以名字里的「zh」就是 Chinese 的意思。</p>
+    <p>普通提示词只告诉 AI「你是一个专家」；而这里的智能体定义了专家<span class="key">怎么思考、怎么做事、交付什么</span>。例如安全工程师会按 OWASP Top 10 逐项审查代码，小红书运营专家会直接输出完整的种草笔记策略 + 达人合作方案。装进你的 AI 编程工具后，用自然语言点名就能激活。</p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">一篇帮你判断是否值得装、以及「装完先玩哪几个」的测评笔记。坤哥说后面自己玩一玩，所以第四章我专门替你梳理了上手路线，照着复制就能跑。</p>
+    </div>
+
+    <h2 id="s2">二、核心能力拆解</h2>
+    <p>别被「266 个」这个数字吓到，它其实是由两部分拼起来的，理解结构比记数字更重要。</p>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">215 个 = 上游翻译</span></div>
+      <p class="mc-desc">把英文原版 The Agency 的 215 个智能体完整汉化，保留原人设与流程，中文场景下读起来不再拗口。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">50 个 = 中国市场原创</span></div>
+      <p class="mc-desc">这是中文版真正的增量价值：小红书 / 抖音 / 微信 / B站 / 飞书 / 钉钉等平台运营，以及跨境电商、政务 ToG、医疗合规、Qt 工业上位机、机械设计、畜禽养殖档案核对等垂直领域。</p>
+    </div>
+
+    <p>覆盖 <strong>20 个部门</strong>（工程、设计、营销、产品、游戏、安全、GIS、金融、HR、学术等），并支持 <strong>18 种 AI 工具</strong>接入——Claude Code、Cursor、Copilot、Codex、Hermes Agent、OpenClaw 等主流编程助手都能直接挂载。</p>
+
+    <p>最关键的放大器是配套编排器 <strong>agency-orchestrator（简称 AO）</strong>：你一句话下任务，它能让多位专家按 DAG（有向无环图）自动分工协作，几分钟内交付一份「多专家合力」的完整方案，而不是单打独斗。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>原版 The Agency</th><th>中文增强版 agency-agents-zh</th></tr></thead>
+        <tbody>
+          <tr><td>智能体总数</td><td>约 144 / 215</td><td>266（翻译 215 + 原创 50）</td></tr>
+          <tr><td>语言</td><td>英文</td><td>简体中文（含繁中 / 上游英文）</td></tr>
+          <tr><td>本土平台</td><td>无</td><td>小红书 / 抖音 / 微信 / B站 / 飞书 / 钉钉</td></tr>
+          <tr><td>垂直领域</td><td>通用为主</td><td>跨境电商 / 政务 ToG / 医疗合规 / 工业上位机 等</td></tr>
+          <tr><td>多工具接入</td><td>部分</td><td>18 种（含桌面客户端免装 Node）</td></tr>
+          <tr><td>GitHub Stars（约）</td><td>127k</td><td>16.6k（2026-07-05 口径）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mc-desc">注：原版与中文版的 Star 数量级差很大，引用时别混——中文版是社区衍生，体量小一个数量级属正常。</p>
+
+    <h2 id="s3">三、怎么装到你的工具</h2>
+    <p>它有四种上手方式，按「想多快用上」从易到难排：</p>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">方式一</span><span class="mc-title">一键脚本（推荐先试）</span></div>
+      <p class="mc-desc">仓库自带 <code>install.sh</code>，自动检测你本机装了哪些 AI 工具，一键注入全部角色。</p>
+    </div>
+    <div class="code-block">
+      <pre><span class="c-com"># 克隆仓库</span>
+<span class="c-key">git</span> clone https://github.com/jnMetaCode/agency-agents-zh
+<span class="c-key">cd</span> agency-agents-zh
+<span class="c-com"># 自动检测已装工具并安装（如 Claude Code / Cursor / Copilot）</span>
+<span class="c-key">./scripts/install.sh</span>
+<span class="c-com"># 或指定装到某个工具，例如 OpenClaw / claude-code / cursor</span>
+<span class="c-key">./scripts/install.sh</span> --tool claude-code</pre>
+    </div>
+
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">方式二</span><span class="mc-title">桌面客户端（免装 Node）</span></div>
+      <p class="mc-desc">原生 App，macOS / Windows / Linux 都能跑，不用先配 Node 环境。适合「只想马上点开玩」的人。在线体验入口：ao.aiolaola.com/experts。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">方式三</span><span class="mc-title">在线体验（零安装）</span></div>
+      <p class="mc-desc">不想动本地环境，直接到 agents.vibed-lab.com 搜 jnmetacode-agency-agents-zh 即可在网页里试跑角色，适合先观望再决定要不要装。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">方式四</span><span class="mc-title">手动复制</span></div>
+      <p class="mc-desc">把仓库里的 <code>*.md</code> 拷到 <code>~/.claude/agents/</code>（或项目的 <code>.claude/agents/</code>），新开一个会话就能加载，适合想精细控制装哪些的人。</p>
+    </div>
+
+    <div class="info-box">
+      <p><strong>坑：装完识别不到</strong></p>
+      <p class="mc-desc">刚复制进去时，当前会话可能读不到新角色。开一个新的 Claude Code / Cursor 会话（或重启），让它重新加载 agents 目录即可。这是最常见的新手卡点。</p>
+    </div>
+
+    <h2 id="s4">四、玩一玩：八戒替你梳理的上手路线</h2>
+    <p>坤哥说后面自己玩，那我先把「先玩哪几个、怎么玩出东西」给你排好。下面是基于官方 README 与角色定义梳理的可复制路线，<span class="key">我没有在你的机器上真跑（环境不在我这边），但每一步都是官方工作流，你复制就能用。</span></p>
+
+    <h3>1）先玩 3 个「立刻能见产出」的角色</h3>
+    <ul>
+      <li><strong>小红书运营专家</strong>：丢一个产品 / 主题进去，它会产出完整的种草笔记策略 + 标题库 + 达人合作建议。对坤哥做内容分发最直接。</li>
+      <li><strong>安全工程师</strong>：把一段代码或仓库路径给它，按 OWASP Top 10 逐项审，输出风险清单 + 修复建议。适合评估自己项目。</li>
+      <li><strong>跨境电商文案 / 选品</strong>：给品类，产出多平台 listings、卖点提炼、合规提示。中文版 50 个原创里最实用的几块之一。</li>
+    </ul>
+
+    <h3>2）再玩编排器：一句话调度多专家</h3>
+    <p>单个角色只是「请了个专家」，编排器 AO 才是「开了家咨询公司」。试试这种句式：</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 用 AO 编排多专家协作（示例任务）</span>
+用安全工程师 + 小红书运营 + 跨境电商文案 三个角色，
+帮我为「一款国产机械键盘」出一版：安全合规自查清单 +
+小红书种草笔记策略 + 跨境电商上架文案，按 DAG 串行交付。</pre>
+    </div>
+    <p>预期产出是一份「三专家接力」的方案：安全先排雷 → 运营定调性 → 文案出 final 稿。几分钟级别，比你自己一个个问快得多。</p>
+
+    <h3>3）进阶：把角色库当「方法论外挂」</h3>
+    <p>项目 README 里提到配套 180 节免费 AI 编程课 +《AI 编程实战三卷书》。<span class="key">把 266 个角色装进 Claude Code / Cursor 后，再配合这套方法论，效率比单用角色高一个档次</span>——角色解决「谁来做」，方法论解决「怎么做得好」。</p>
+
+    <div class="pull-quote"><p>玩的顺序建议：先单角色出成品 → 再 AO 编排协作 → 最后配方法论沉淀。别一上来就装 266 个全量，按需取用才不会看得头晕。</p></div>
+
+    <h2 id="s5">五、坑与提醒</h2>
+    <p>测评里该泼的冷水也得泼，免得你踩完回头骂我。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>注意点</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>上游更新更快</td><td>中文版基于某一版上游翻译 + 本土增强，上游若有大更新，中文版同步会有延迟，关注仓库 commit 即可。</td></tr>
+          <tr><td>客户端 vs 源码</td><td>桌面客户端免装 Node、上手最快，但深度定制（改人设 / 加字段）还是得用源码仓库。</td></tr>
+          <tr><td>Star 数口径</td><td>上游 127k、中文版约 16.6k（2026-07-05），引用时别把两者混为一谈。</td></tr>
+          <tr><td>密钥安全</td><td>角色接大模型 API 时涉及 Token / Key，注意别把凭证写进会提交的 md 文件里；本地用环境变量更稳。</td></tr>
+          <tr><td>别全量装</td><td>266 个全装进去，会话加载和检索都会变慢，按需挑部门装体验更好。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s6">六、获取与结语</h2>
+    <p>一句话总结：<span class="key">如果你想要「开箱即用的专家团队」而不是从零写提示词，agency-agents-zh 是目前中文圈最完整的那一个</span>——尤其是 50 个本土原创角色，是英文原版给不了的东西。</p>
+    <ul>
+      <li>仓库：<a href="https://github.com/jnMetaCode/agency-agents-zh" target="_blank" rel="noopener">github.com/jnMetaCode/agency-agents-zh</a></li>
+      <li>在线体验：<a href="https://ao.aiolaola.com/experts" target="_blank" rel="noopener">ao.aiolaola.com/experts</a></li>
+      <li>上游原版：<a href="https://github.com/msitarzewski/agency-agents" target="_blank" rel="noopener">msitarzewski/agency-agents</a></li>
+    </ul>
+    <p class="mc-desc">坤哥，装完先按第四章那 3 个角色试，出东西了觉得好用，再上编排器玩协作。玩出有意思的玩法记得回来，咱可以再写篇实战记录。</p>
+
+    <div class="tag-cloud">
+      <a href="/craft/">AI 智能体</a>
+      <a href="/craft/">多智能体编排</a>
+      <a href="/craft/">The Agency</a>
+      <a href="/craft/">中文开源</a>
+      <a href="/craft/">Claude Code</a>
+      <a href="/craft/">Cursor</a>
+      <a href="/craft/">小红书运营</a>
+      <a href="/craft/">跨境电商</a>
+      <a href="/craft/">桌面客户端</a>
+      <a href="/craft/">工作流自动化</a>
+      <a href="/craft/">提示词工程</a>
+      <a href="/craft/">开源工具</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <span>© 2026.07.24 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+})();
+</script>
+</body>
+</html>
