@@ -243,30 +243,65 @@ nav .actions{display:flex;align-items:center;gap:12px}
 }
 .prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,65,.22)}
 
-/* ═══ WORKS / 作品展示 (宠急达等独立产品) ═══ */
+/* ═══ WORKS / 用作品说话 (Bento Grid) ═══ */
 .works-section{}
-.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,360px));gap:var(--s4);justify-content:start}
+.works-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  gap:var(--s4);
+}
+/* Bento 占位：row1=宠急达(大) PXID(跨2行) 大爆炸(小) | row2=NeuroFlow(小) | row3=三等分 */
+.work-card--chongjida{grid-row:span 1;grid-column:1}
+.work-card--pxid{grid-row:span 2;grid-column:2}
+.work-card--bigbang{grid-row:1;grid-column:3}
+.work-card--neuroflow{grid-row:2;grid-column:3}
+.work-card--yunlan{grid-row:3;grid-column:1}
+.work-card--congji{grid-row:3;grid-column:2}
+.work-card--pantransfer{grid-row:3;grid-column:3}
+
 .work-card{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);
-  overflow:hidden;transition:.25s;display:flex;flex-direction:column;
-  text-decoration:none;color:inherit
+  padding:var(--s5);transition:.25s;display:flex;flex-direction:column;
+  text-decoration:none;color:inherit;position:relative;overflow:hidden;
+  min-height:200px;
 }
 .work-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 16px rgba(0,212,255,.08)}
-.work-cover{
-  aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  background:
-    radial-gradient(circle at 30% 20%, var(--brand-bg), transparent 60%),
-    linear-gradient(135deg, var(--bg-elevated), rgba(255,184,0,.06));
-  border-bottom:1px solid var(--border)
+
+/* 状态灯 + 分类标签行 */
+.work-status{display:flex;align-items:center;gap:10px;margin-bottom:var(--s3)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--brand);flex-shrink:0;box-shadow:0 0 8px rgba(0,255,65,.5)}
+.work-tag{
+  font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase
 }
-.work-cover .wc-mark{font-family:var(--font-mono);font-size:30px;font-weight:700;color:var(--brand);letter-spacing:.02em}
-.work-cover .wc-sub{font-family:var(--font-mono);font-size:11px;color:var(--fg-dim);letter-spacing:.08em}
-.work-body{padding:var(--s5);display:flex;flex-direction:column;flex:1}
-.work-type{font-size:11px;font-weight:700;color:var(--fg-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)}
-.work-title{font-size:19px;font-weight:700;margin-bottom:8px}
-.work-desc{font-size:14px;color:var(--fg-muted);line-height:1.6;flex:1;margin-bottom:var(--s4)}
-.work-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);text-decoration:none}
-.work-link:hover{color:var(--cyan)}
+/* 标签颜色 */
+.tag-green{color:var(--brand)}
+.tag-amber{color:var(--amber)}
+.tag-cyan{color:var(--cyan)}
+.tag-purple{color:#A78BFA}
+
+/* 卡片标题 */
+.work-title{font-size:22px;font-weight:700;margin-bottom:var(--s2);line-height:1.25}
+.work-desc{font-size:14px;color:var(--fg-muted);line-height:1.65;flex:1;margin-bottom:var(--s4)}
+
+/* 底部：技术栈 pills / 链接 */
+.work-tech{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.tech-pill{
+  font-family:var(--font-mono);font-size:11px;font-weight:600;padding:4px 12px;
+  background:rgba(255,255,255,.06);border:1px solid var(--border-strong);border-radius:99px;color:var(--fg-secondary)
+}
+.work-footer{margin-top:auto;padding-top:var(--s3);display:flex;align-items:center;justify-content:space-between}
+.work-footer-link{
+  font-size:13px;font-weight:600;color:var(--fg-muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px
+}
+.work-footer-link:hover{color:var(--cyan)}
+
+/* Works badge */
+.works-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--border-strong);border-radius:6px;
+  padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.06em;
+  color:var(--fg-muted);font-family:var(--font-mono);vertical-align:middle;margin-left:10px
+}
 
 /* ═══ LATEST CONTENT — card grid ═══ */
 .content-section{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -319,9 +354,9 @@ nav .actions{display:flex;align-items:center;gap:12px}
   text-align:center;margin-top:var(--s5)
 }
 .view-all a{
-  color:var(--brand);font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px
+  color:var(--cyan);font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px
 }
-.view-all a:hover{color:var(--cyan)}
+.view-all a:hover{color:var(--brand)}
 /* content section compact header */
 .content-header{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s4);margin-bottom:var(--s5);flex-wrap:wrap}
 .view-all-inline{display:flex;gap:var(--s3);flex-wrap:wrap}
@@ -379,6 +414,10 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .hero-grid{grid-template-columns:1fr}.hero-right{display:none}
   .stats-grid{grid-template-columns:repeat(2,1fr)}.stat-num{font-size:28px}
   .tools-grid,.products-grid,.radar-grid{grid-template-columns:1fr}
+  /* Works Bento → 2列 */
+  .works-grid{grid-template-columns:1fr 1fr}
+  .work-card--chongjida,.work-card--pxid,.work-card--bigbang,.work-card--neuroflow,
+  .work-card--yunlan,.work-card--congji,.work-card--pantransfer{grid-column:auto;grid-row:auto}
   .content-grid{grid-template-columns:repeat(2,1fr)}
   .content-card{height:auto}
   .content-card:nth-child(1){grid-column:span 2}
@@ -394,6 +433,8 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .section{padding:var(--s5) var(--s3)} .stats-grid{grid-template-columns:repeat(2,1fr);gap:var(--s2)}
   .stat-num{font-size:24px} .consult-box{padding:var(--s5) var(--s4)}
   .hero-actions{flex-direction:column} .btn-primary,.btn-secondary{justify-content:center}
+  /* Works Bento → 单列 */
+  .works-grid{grid-template-columns:1fr}
   .content-grid{grid-template-columns:1fr}
   .content-card{height:auto}
   .content-card:nth-child(1),
@@ -564,52 +605,71 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 </div>
 </section>
 
-<!-- ═════ WORKS / 我的作品 (宠急达) ═════ -->
+<!-- ═════ WORKS / 用作品说话 (Bento Grid) ═════ -->
 <section id="works" class="section works-section">
 <div class="section-inner">
-  <div class="section-label">我的作品</div>
-  <h2 class="section-title">自己做的<span class="hl">小产品</span></h2>
-  <p class="section-desc">从 0 到 1 动手做的独立产品，也有给客户 / 自己搭的实战项目，点进去看。</p>
+  <div class="content-header" style="margin-bottom:var(--s5)">
+    <div>
+      <div class="section-label">用作品说话<span class="works-badge">WORKS</span></div>
+      <h2 class="section-title" style="margin-bottom:0">自己做的<span class="hl">小产品</span></h2>
+    </div>
+    <div class="view-all"><a href="#works">view all →</a></div>
+  </div>
   <div class="works-grid">
-    <a class="work-card" href="https://chongjida.Appin.site">
-      <div class="work-cover"><span class="wc-mark">宠急达</span><span class="wc-sub">宠物上门服务</span></div>
-      <div class="work-body">
-        <div class="work-type">微信小程序 · 独立产品</div>
-        <h3 class="work-title">宠急达 · 上门喂宠</h3>
-        <p class="work-desc">宠物上门喂养 / 看护预约小程序，深色 Bento 风格，含登录、联系、分享。后端已迁至阿里云自建。</p>
-        <span class="work-link">访问小程序 →</span>
+
+    <!-- 宠急达 — 左大 -->
+    <a class="work-card work-card--chongjida" href="https://chongjida.Appin.site" target="_blank" rel="noopener">
+      <div class="work-status"><span class="status-dot"></span><span class="work-tag tag-green">PET · 上线</span></div>
+      <h3 class="work-title">宠急达</h3>
+      <p class="work-desc">上门喂狗小程序 · 微信云开发平滑迁移至阿里云自建后端</p>
+      <div class="work-tech">
+        <span class="tech-pill">Node 20</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">Express 5</span>
       </div>
     </a>
 
-    <a class="work-card" href="/pxid2/">
-      <div class="work-cover"><span class="wc-mark">PXID</span><span class="wc-sub">电助力车出海官网</span></div>
-      <div class="work-body">
-        <div class="work-type">客户项目 · 出海 B2B 官网</div>
-        <h3 class="work-title">PXID · 电助力车 OEM/ODM 站</h3>
-        <p class="work-desc">面向欧美与新兴市场的电助力车 / 滑板车制造商官网，含产品矩阵、ODM 服务与 SEO 内容集群。</p>
-        <span class="work-link">查看官网 →</span>
+    <!-- PXID — 中大（跨2行） -->
+    <a class="work-card work-card--pxid" href="/pxid2/" target="_blank" rel="noopener">
+      <div class="work-status"><span class="work-tag tag-amber">OEM / ODM</span></div>
+      <h3 class="work-title">PXID</h3>
+      <p class="work-desc">电助力车出海品牌 · 广交会临时站 + 长期官网双线</p>
+      <div class="work-footer">
+        <span></span>
+        <span class="work-footer-link">pxid.com →</span>
       </div>
     </a>
 
-    <a class="work-card" href="/craft/quark-to-aliyun-sync.html">
-      <div class="work-cover"><span class="wc-mark">网盘中转</span><span class="wc-sub">Docker · AList</span></div>
-      <div class="work-body">
-        <div class="work-type">实战案例 · 基础设施</div>
-        <h3 class="work-title">夸克网盘 → 阿里云盘 自动同步</h3>
-        <p class="work-desc">用 ECS 上的 AList + alist-sync 做中转，每天定时把夸克指定文件夹同步到阿里云盘，含 Docker 镜像源绕墙等踩坑实录。</p>
-        <span class="work-link">看完整案例 →</span>
-      </div>
+    <!-- 大爆炸 — 右上小 -->
+    <a class="work-card work-card--bigbang" href="/bigbang/">
+      <div class="work-status"><span class="work-tag tag-cyan">PRODUCT</span></div>
+      <h3 class="work-title">大爆炸</h3>
     </a>
 
-    <a class="work-card" href="/congji/">
-      <div class="work-cover"><span class="wc-mark">宠迹</span><span class="wc-sub">宠物成长记录</span></div>
-      <div class="work-body">
-        <div class="work-type">微信小程序 · 独立产品</div>
-        <h3 class="work-title">宠迹 · 成长足迹</h3>
-        <p class="work-desc">宠物成长的足迹，记录毛孩子每天的瞬间，含时间线、疫苗提醒与照片墙，纯本地存储无后端。</p>
-        <span class="work-link">访问小程序 →</span>
-      </div>
+    <!-- NeuroFlow — 右下小 -->
+    <a class="work-card work-card--neuroflow" href="/neuroflow/">
+      <div class="work-status"><span class="work-tag tag-purple">AI FLOW</span></div>
+      <h3 class="work-title">NeuroFlow</h3>
     </a>
+
+    <!-- 云澜 — 左下中 -->
+    <a class="work-card work-card--yunlan" href="/yunlan/">
+      <div class="work-status"><span class="work-tag tag-cyan">PRODUCT</span></div>
+      <h3 class="work-title">云澜</h3>
+    </a>
+
+    <!-- 宠迹 — 下中 -->
+    <a class="work-card work-card--congji" href="/congji/" target="_blank" rel="noopener">
+      <div class="work-status"><span class="work-tag tag-green">PET</span></div>
+      <h3 class="work-title">宠迹</h3>
+    </a>
+
+    <!-- 网盘中转 — 右下中 -->
+    <a class="work-card work-card--pantransfer" href="/craft/quark-to-aliyun-sync.html">
+      <div class="work-status"><span class="work-tag tag-cyan">TOOL</span></div>
+      <h3 class="work-title">网盘中转</h3>
+    </a>
+
   </div>
 </div>
 </section>
