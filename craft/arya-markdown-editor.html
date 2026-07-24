@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars</title>
-<meta name="description" content="Arya（nicejade/markdown-online-editor，MIT，v3.8.0.0）是开发者 nicejade 创建的开源 Markdown 编辑器：浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。">
+<meta name="description" content="Arya（nicejade/markdown-online-editor，MIT，v3.8.0.0）是开发者 nicejade 创建的开源 Markdown 编辑器：浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 时序图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。">
 <!--SEO-->
 <link rel="icon" href="/favicon.ico">
 <link rel="canonical" href="https://www.Appin.site/craft/arya-markdown-editor.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars">
-<meta property="og:description" content="Arya（nicejade/markdown-online-editor，MIT，v3.8.0.0）是开发者 nicejade 创建的开源 Markdown 编辑器：浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。">
+<meta property="og:description" content="Arya（nicejade/markdown-online-editor，MIT，v3.8.0.0）是开发者 nicejade 创建的开源 Markdown 编辑器：浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 时序图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。">
 <meta property="og:url" content="https://www.Appin.site/craft/arya-markdown-editor.html">
 <meta property="og:site_name" content="Appin.site">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars">
-<meta name="twitter:description" content="Arya（nicejade/markdown-online-editor，MIT，v3.8.0.0）是开发者 nicejade 创建的开源 Markdown 编辑器：浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。">
+<meta name="twitter:description" content="Arya（nicejade/markdown-online-editor，MIT，v3.8.0.0）是开发者 nicejade 创建的开源 Markdown 编辑器：浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 时序图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。">
 <meta property="og:image" content="https://www.Appin.site/uploads/arya-markdown-editor-cover.jpg">
 <meta name="twitter:image" content="https://www.Appin.site/uploads/arya-markdown-editor-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
 <header class="hero">
   <div class="hero-badge"><span class="dot"></span>开源 · Markdown 编辑器</div>
   <h1>Arya：浏览器打开即用，<strong>3.8k Stars</strong> 的开源 Markdown 编辑器</h1>
-  <p class="hero-desc">开发者 nicejade 创建的开源 Markdown 编辑器（nicejade/markdown-online-editor，MIT，v3.8.0.0）。浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。</p>
+  <p class="hero-desc">开发者 nicejade 创建的开源 Markdown 编辑器（nicejade/markdown-online-editor，MIT，v3.8.0.0）。浏览器打开即用，支持 Markdown / 流程图 / 甘特图 / 时序图 / 五线谱编辑，HTML 自动转 Markdown，PDF / PNG / JPEG / Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。</p>
   <div class="hero-meta">
     <span>Markdown 编辑器</span><span class="dot"></span>
     <span>Vue2 + Vditor</span><span class="dot"></span>
@@ -84,6 +84,9 @@
       <li><strong>流程图（Flowchart）</strong>：用文本描述直接渲染流程图，适合画架构与流程；</li>
       <li><strong>甘特图（Gantt）</strong>：项目排期、任务依赖一图说清；</li>
       <li><strong>五线谱（Music / ABC 记谱）</strong>：支持乐谱渲染，对音乐类笔记友好；</li>
+      <li><strong>时序图（Sequence）</strong>：用文本描述渲染 UML 时序图，画服务间调用、交互流程一目了然；</li>
+      <li><strong>PPT 预览（基于 Reveal.js）</strong>：文档可直接切换为幻灯片演示模式，由 <a href="https://github.com/hakimel/reveal.js" target="_blank" rel="noopener">Reveal.js</a> 引擎渲染，适合把笔记当汇报稿讲；</li>
+      <li><strong>音视频解析</strong>：支持在文档中解析与嵌入音视频内容，扩展富媒体写作场景；</li>
       <li><strong>HTML 自动转 Markdown</strong>：把网页复制来的富文本 / HTML 粘贴进去，自动规整成 Markdown——这是它相对很多轻量编辑器的实用差异点。</li>
     </ul>
     <div class="pull-quote"><p>对「从网页抄了一堆格式乱掉的文本、想快速变成干净 Markdown」的人，HTML→Markdown 这一步能省掉大量手动清理时间。</p></div>
@@ -112,8 +115,13 @@
       <p class="mc-desc">编辑内容存于浏览器本地，关页不丢；适合随写随存、不强制登录的轻量写作。</p>
     </div>
     <div class="mod-card">
-      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">实时预览 + 快捷键</span></div>
-      <p class="mc-desc">左写右览的实时预览，配合常用快捷键，写作流不被「点按钮」打断。</p>
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">三种编辑模式 + 快捷键</span></div>
+      <p class="mc-desc">Arya 提供三种编辑模式，可一键切换，快捷键直接上手：</p>
+      <ul style="margin:8px 0 0 18px;font-size:14px;line-height:1.9;color:#c9d1d9">
+        <li><strong>所见即所得</strong>：<code style="background:rgba(184,255,60,.12);padding:1px 6px;border-radius:4px">Ctrl+Alt+7</code></li>
+        <li><strong>即时渲染</strong>：<code style="background:rgba(184,255,60,.12);padding:1px 6px;border-radius:4px">Ctrl+Alt+8</code></li>
+        <li><strong>分屏渲染</strong>：<code style="background:rgba(184,255,60,.12);padding:1px 6px;border-radius:4px">Ctrl+Alt+9</code>（左写右览，默认常用）</li>
+      </ul>
     </div>
 
     <h2 id="s5">五、在线体验</h2>
@@ -123,6 +131,7 @@
       <p class="mc-desc"><a href="https://niceshare.site" target="_blank" rel="noopener">https://niceshare.site</a> —— 浏览器打开即用，粘贴 / 编写 / 导出一条龙。</p>
       <p><strong>自托管（可选）</strong></p>
       <p class="mc-desc">git clone https://github.com/nicejade/markdown-online-editor.git 后本地构建部署，数据完全自己掌控。</p>
+      <p class="mc-desc"><strong>Docker 私有化部署</strong>：仓库根目录提供 Dockerfile / docker-compose.yml，执行 <code style="background:rgba(184,255,60,.12);padding:1px 6px;border-radius:4px">docker-compose up -d</code> 即可一键拉起私有实例，数据、流量全在自己服务器，适合对内网 / 团队分发。</p>
     </div>
 
     <h2 id="s6">六、我的判断</h2>
@@ -133,7 +142,7 @@
     <div class="tag-cloud">
       <a href="/craft/">Arya</a><a href="/craft/">Markdown 编辑器</a><a href="/craft/">nicejade</a><a href="/craft/">Vditor</a>
       <a href="/craft/">Vue2</a><a href="/craft/">流程图</a><a href="/craft/">甘特图</a><a href="/craft/">五线谱</a>
-      <a href="/craft/">HTML 转 Markdown</a><a href="/craft/">多格式导出</a><a href="/craft/">MIT</a><a href="/craft/">开源</a>
+      <a href="/craft/">HTML 转 Markdown</a><a href="/craft/">多格式导出</a><a href="/craft/">时序图</a><a href="/craft/">PPT 预览</a><a href="/craft/">音视频</a><a href="/craft/">Docker</a><a href="/craft/">MIT</a><a href="/craft/">开源</a>
     </div>
     <a href="/craft/" class="back-link">返回技艺录</a>
   </article>
