@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日阅读 | 2026-07-24 — Lkn</title>
+<meta name="description" content="段永平：泡泡玛特"10年内大概率不卖"——2026-07-24阅读简报。">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+<style>
+:root{
+  --bg:#0A0A0A;--bg-elevated:#1E1E1E;--text:#E8E8E8;--text-secondary:#A0A0A0;--text-muted:#6B6B6B;
+  --accent:#00FF41;--accent-rgb:0,255,65;--accent-light:rgba(0,255,65,0.10);
+  --border:rgba(255,255,255,0.08);--border-strong:#444;--card-bg:#141414;--radius:8px;--radius-sm:8px;
+  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+  --font-sans:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);position:relative;z-index:1;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(20,20,20,0.75);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px;font-family:var(--font-mono)}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
+
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.25);transform:translateX(3px);border-color:var(--accent)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+    .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#0A0A0A;text-decoration:none;
+  font-weight:700;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
+  box-shadow:0 1px 2px rgba(var(--accent-rgb),.25);transition:all .2s}
+.news-link:hover{filter:brightness(1.15);gap:10px;box-shadow:0 3px 8px rgba(var(--accent-rgb),.35)}
+
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(var(--accent-rgb),.10);transform:translateY(-1px);border-color:var(--accent)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.10);color:#4aa8ff}
+.rating-weread{background:var(--accent-light);color:var(--accent)}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(var(--accent-rgb),.04),rgba(var(--accent-rgb),.08));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:var(--accent-light);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
+}
+/* ═══ THEME TOGGLE + FOOTER（终端风标准，与全站一致）═══ */
+.footer-bottom{max-width:860px;margin:0 auto;padding:24px 32px 60px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--border);font-family:var(--font-mono)}
+.footer-bottom span{color:var(--text-muted);font-size:12px}
+  background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;align-items:center;
+  justify-content:center;transition:.2s;flex-shrink:0;font-size:0;padding:0}
+@media(max-width:640px){.footer-bottom{padding:20px 16px 48px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
+
+<header class="article-header">
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-24 星期五</div>
+  <h1>每日阅读</h1>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 23 条</p>
+  <div class="section-tags">
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
+        <span class="tag-elderly" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业 ×2</span>
+        <span class="tag-psych" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#e54d66"></span> 心理学 ×2</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
+    <div class="section-title" style="color:#2997ff;">社会商业</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>段永平：泡泡玛特"10年内大概率不卖"</strong></h3></div>
+    <div class="news-summary">知名投资人在社交平台回应称刚起步买入，并谈及减持部分美股头寸转投t-bill，继续看好AI [https://www.sohu.com/a/1053972914_115433]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>月之暗面拟启动Pre-IPO轮融资</strong></h3></div>
+    <div class="news-summary">据知情人士透露目标投前估值500亿美元，落地一轮315亿美元融资后即刻洽谈Pre-IPO [https://so.html5.qq.com/page/real/search_news?docid=70000021_8716a614d1e83452]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>耐克收回滔搏中国内地线上代理权</strong></h3></div>
+    <div class="news-summary">自2027年1月1日起滔搏线上平台销售全面终止，市场预期其需消化大量库存 [https://www.163.com/dy/article/L2J8EKHS0512B07B_pdya11y.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>宜家澄清出售8城物业不代表退出中国</strong></h3></div>
+    <div class="news-summary">官方称正从优化大店、扩张小店、发展局部家装、引入本土资本四方推进调整，适配存量房时代 [https://www.163.com/dy/article/L2J8EKHS0512B07B_pdya11y.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>国务院批复《扩大消费"十五五"规划》</strong></h3></div>
+    <div class="news-summary">明确扩大养老消费、推动银发经济高质量发展，打造银发消费新场景新业态 [https://www.gov.cn/zhengce/zhengceku/202607/content_7075217.htm]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>小红书回应IPO传闻</strong></h3></div>
+    <div class="news-summary">称目前流传的IPO相关信息均不属实，近年商业化提速放大了市场对其时间表预期 [https://so.html5.qq.com/page/real/search_news?docid=70000021_8716a614d1e83452]</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
+    <div class="section-title" style="color:#e08600;">汽车</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">1</span><h3><strong>极氪成唯一上半年进度过半的新势力</strong></h3></div>
+    <div class="news-summary">上半年交付17.84万辆、同比增长97%，完成全年30万辆目标近60%，目标设定克制是主因 [http://jjckb.xinhuanet.com/20260704/c286e1a57da84d259d52e0a19ba33413/c.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">2</span><h3><strong>小米汽车上半年交付超16.9万辆</strong></h3></div>
+    <div class="news-summary">全年55万辆目标完成率约30.7%，6月交付超3万辆稳步爬坡 [http://jjckb.xinhuanet.com/20260704/c286e1a57da84d259d52e0a19ba33413/c.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>鸿蒙智行上半年24.22万辆、完成率仅24.2%</strong></h3></div>
+    <div class="news-summary">新势力阵营内部分化明显，下半年价格竞争或持续升级 [http://jjckb.xinhuanet.com/20260704/c286e1a57da84d259d52e0a19ba33413/c.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>上汽上半年销量破200万辆</strong></h3></div>
+    <div class="news-summary">自主品牌占比升至71.8%，规模优势稳居行业首位，增长逻辑由合资转向自主 [https://www.sohu.com/a/1048271456_120988533]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>新能源渗透率站稳60%以上、年底有望破65%</strong></h3></div>
+    <div class="news-summary">行业专家认为纯电已成唯一同比正增长动力，到年底渗透率或升至65%甚至更高 [https://auto.youth.cn/xw/202607/t20260714_16763587.htm]</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
+    <div class="section-title" style="color:#bf5af2;">科技</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>北京发布《加快智能体引领发展的若干措施》</strong></h3></div>
+    <div class="news-summary">支持驾驭层工程，加快跨模型跨芯片的通用智能体技术攻关，完善中间层软件栈 [https://new.qq.com/rain/a/20260724A03FVA00?refer=cp_1009]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>WAIC 2026：机器人从"跳舞"走向"干活"</strong></h3></div>
+    <div class="news-summary">具身智能展区企业从去年80多家增至200多家，关键词变为"量产、适配、场景交付" [https://new.qq.com/rain/a/20260722A05XA800?refer=cp_1009]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>光轮智能：具身智能缺一场"数据考试"</strong></h3></div>
+    <div class="news-summary">今年具身数据需求达去年百倍甚至千倍，仿真成为评测机器人能力的唯一最优解 [https://new.qq.com/rain/a/20260722A05XA800?refer=cp_1009]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>AMD Instinct MI350系列与ROCm 7开放生态</strong></h3></div>
+    <div class="news-summary">MI350X/M355X基于CDNA 4架构、288GB HBM3E，ROCm 7带来平均3.5倍推理增益 [https://amd.com/en/blogs/2025/amd-instinct-mi350-series-and-beyond-accelerating-the-future-of-ai-and-hpc.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>WAIC多套评测体系各量各的"尺子"</strong></h3></div>
+    <div class="news-summary">Physical IQ"物智"平台与WorldArena 2.0发布，推动评测从画面分转向真机成功率 [https://www.toutiao.com/a7665267588913578537]</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(200,122,30,0.1);color:#c87a1e;">🏠</div>
+    <div class="section-title" style="color:#c87a1e;">养老产业</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">1</span><h3><strong>国务院《扩大消费"十五五"规划》明确扩大养老消费</strong></h3></div>
+    <div class="news-summary">加快健全县乡村三级养老服务网络，推动银发经济高质量发展、强化科技赋能 [https://www.mca.gov.cn/n152/n166/c1662004999980011969/content.html]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">2</span><h3><strong>养老服务师纳入新职业、职业资格制度落地</strong></h3></div>
+    <div class="news-summary">民政部与人社部联合印发暂行规定，夯实养老服务人才底座 [https://www.mca.gov.cn/]</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,69,89,0.1);color:#e54d66;">🧠</div>
+    <div class="section-title" style="color:#e54d66;">心理学</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">1</span><h3><strong>京东调研：超九成青年视"情绪稳定"为能力</strong></h3></div>
+    <div class="news-summary">近六成购买过情绪价值产品，焦虑、疲惫、迷茫为最常见困扰，自救意识显著增强 [http://economy.enorth.com.cn/system/2026/05/06/059375622.shtml]</div>
+    
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">2</span><h3><strong>壹心理推讨好型人格"自我关怀"清单</strong></h3></div>
+    <div class="news-summary">从觉察记录、缓冲句到每天10分钟"我最大"时间，帮人跳出"别人怎么看我"的怪圈 [https://m.xinli001.com/info/100503454]</div>
+    
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
+    <div class="section-title" style="color:#2ea043;">好书</div>
+  </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">1</span>
+        <div class="book-info">
+          <h3><em>《穷查理宝典》</em> — 查理·芒格</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        <span class="rating-pill rating-douban">豆瓣 <span class="rating-score">8.7</span></span>
+        
+      </div>
+      <div class="book-desc">伯克希尔副董事长的多元思维模型集。名句"反过来想，总是反过来想"——用跨学科心智网格规避决策盲点。</div>
+      <div style="padding:12px 0 0 36px"><a href="https://search.douban.com/book/subject_search?search_text=穷查理宝典" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0A0A0A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
+      
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">2</span>
+        <div class="book-info">
+          <h3><em>《置身事内》</em> — 兰小欢</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        <span class="rating-pill rating-douban">豆瓣 <span class="rating-score">9.1</span></span>
+        
+      </div>
+      <div class="book-desc">复旦教授的政经启蒙课。读懂中国经济，必须理解地方政府的行为逻辑与土地财政的来龙去脉。</div>
+      <div style="padding:12px 0 0 36px"><a href="https://search.douban.com/book/subject_search?search_text=置身事内" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0A0A0A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
+      
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">3</span>
+        <div class="book-info">
+          <h3><em>《纳瓦尔宝典》</em> — 埃里克·乔根森</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        <span class="rating-pill rating-douban">豆瓣 <span class="rating-score">8.4</span></span>
+        
+      </div>
+      <div class="book-desc">关于财富与幸福的实操指南。幸福是一种技能，就像健身一样可以通过练习获得；积累专长与杠杆方能长期复利。</div>
+      <div style="padding:12px 0 0 36px"><a href="https://search.douban.com/book/subject_search?search_text=纳瓦尔宝典" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0A0A0A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
+      
+    </div>
+</section>
+<div class="divider">— END OF DIGEST —</div>
+</article>
+
+<div class="footer-nav">
+  <a href="2026-07-23.html">← 上一篇（07-23）</a>
+  <a href="index.html">返回列表</a>
+  <span class="disabled">下一篇 →</span>
+</div>
+
+<div class="footer-bottom">
+  <span>© 2026 Lkn · Appin.site · 每日阅读自动生成</span>
+    <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true});
+</script>
+</body>
+</html>

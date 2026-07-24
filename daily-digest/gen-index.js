@@ -109,13 +109,47 @@ ${tags}
 `;
 }
 
+// 回退解析：当某日期缺 .md 源文件、但 OUT_DIR 已有对应单日页 .html 时，
+// 从 HTML 顶部的板块标记（如「社会商业 ×6」）提取板块与计数，生成列表卡片。
+// 用于跨设备场景——源 md 在另一台机器、本机只有线上同步下来的单日页。
+function parseHtml(filePath, date) {
+  const html = fs.readFileSync(filePath, 'utf8');
+  const secRe = /(社会商业|汽车|科技|养老产业|心理学|好书)\s*×(\d+)/g;
+  const sections = [];
+  let m;
+  while ((m = secRe.exec(html))) {
+    const mm = mapSection(m[1]);
+    sections.push({ label: mm.label, color: mm.color, count: parseInt(m[2], 10) });
+  }
+  if (sections.length === 0) return null;
+  const fm = html.match(/class="news-item"[^>]*>[\s\S]*?<h3><strong>(.*?)<\/strong>/);
+  const firstTitle = fm ? cleanTitle(fm[1]).slice(0, 14) : '';
+  const d = new Date(date + 'T00:00:00');
+  const wd = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][d.getDay()];
+  return { date, weekday: wd, sections, title: firstTitle || date, summary: '' };
+}
+
 function main() {
-  const files = fs
+  const mdDates = fs
     .readdirSync(SRC_DIR)
     .filter((f) => /^(\d{4}-\d{2}-\d{2})\.md$/.test(f))
-    .map((f) => path.join(SRC_DIR, f));
+    .map((f) => f.replace(/\.md$/, ''));
+  const htmlDates = fs
+    .readdirSync(OUT_DIR)
+    .filter((f) => /^(\d{4}-\d{2}-\d{2})\.html$/.test(f) && f !== 'index.html')
+    .map((f) => f.replace(/\.html$/, ''));
+  const allDates = Array.from(new Set([...mdDates, ...htmlDates]));
 
-  const items = files.map(parseDigest).filter(Boolean).sort((a, b) => (a.date < b.date ? 1 : -1));
+  const items = allDates
+    .map((date) => {
+      const mdPath = path.join(SRC_DIR, date + '.md');
+      if (fs.existsSync(mdPath)) return parseDigest(mdPath);
+      const htmlPath = path.join(OUT_DIR, date + '.html');
+      if (fs.existsSync(htmlPath)) return parseHtml(htmlPath, date);
+      return null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
 
   if (items.length === 0) {
     console.error('❌ 未找到任何 YYYY-MM-DD.md');

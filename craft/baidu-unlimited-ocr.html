@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用</title>
+<meta name="description" content="百度开源的端到端长文档 OCR 模型 Unlimited-OCR：基于 DeepEncoder + R-SWA + MoE，单次前向传播解析数十页文档，KV 缓存恒定，OmniDocBench v1.6 达 93.92%，MIT 协议可商用。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/baidu-unlimited-ocr.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用">
+<meta property="og:description" content="百度开源的端到端长文档 OCR 模型 Unlimited-OCR：基于 DeepEncoder + R-SWA + MoE，单次前向传播解析数十页文档，KV 缓存恒定，OmniDocBench v1.6 达 93.92%，MIT 协议可商用。">
+<meta property="og:url" content="https://www.appin.site/craft/baidu-unlimited-ocr.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用">
+<meta name="twitter:description" content="百度开源的端到端长文档 OCR 模型 Unlimited-OCR：基于 DeepEncoder + R-SWA + MoE，单次前向传播解析数十页文档，KV 缓存恒定，OmniDocBench v1.6 达 93.92%，MIT 协议可商用。">
+<meta property="og:image" content="https://www.appin.site/uploads/baidu-unlimited-ocr-cover.jpg">
+<meta name="twitter:image" content="https://www.appin.site/uploads/baidu-unlimited-ocr-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源工具 · 文档 AI</div>
+  <h1>【WB】百度 Unlimited-OCR：<strong>一次性解析整本长文档</strong>的开源 OCR</h1>
+  <p class="hero-desc">百度开源的端到端长文档 OCR 模型 Unlimited-OCR：基于 DeepEncoder + R-SWA + MoE，单次前向传播解析数十页文档，KV 缓存恒定不爆炸，OmniDocBench v1.6 达 93.92%，MIT 协议可商用。</p>
+  <div class="hero-meta">
+    <span>百度开源</span><span class="dot"></span><span>MIT 可商用</span><span class="dot"></span><span>长文档 OCR</span><span class="dot"></span><span>2026-06-22 发布</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/baidu-unlimited-ocr-cover.jpg" alt="百度 Unlimited-OCR 长文档 OCR 开源模型">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、为什么需要它</a></li>
+      <li><a href="#s2">二、它是什么</a></li>
+      <li><a href="#s3">三、核心原理</a></li>
+      <li><a href="#s4">四、怎么跑起来</a></li>
+      <li><a href="#s5">五、实测成绩与选型</a></li>
+      <li><a href="#s6">六、小结与商用注意</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、为什么需要它</h2>
+    <p>几乎所有文档 AI 流程——企业 PDF 的 RAG 检索、合规审查、学术搜索、财务抽取——最后都会撞上同一堵墙：<span class="key">你没法把一本 200 页的文档，喂给一个一次只能看一页的模型。</span></p>
+    <p>在 Unlimited-OCR 之前，标准做法是：把 PDF 按页拆开 → 逐页 OCR → 再把输出拼回去，祈祷跨页的表格没断、第 12 页的脚注没丢锚点、第 30 页的小节标题没串到错章节。这个"拼接"步骤，正是错误被层层放大的地方——它是工程上的权宜之计，不是智能。</p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">用一篇说清 Unlimited-OCR 解决了什么、核心架构怎么做到"整本解析不爆内存"、怎么本地跑起来，以及商用前必须核对的许可细节。读完你能判断它适不适合你的文档流水线。</p>
+    </div>
+
+    <h2 id="s2">二、它是什么</h2>
+    <p>Unlimited-OCR 是百度于 <strong>2026-06-22</strong> 在 GitHub 与 HuggingFace 同步开源的端到端长文档 OCR 模型，国内也有 ModelScope 镜像。一句话定位：<span class="key">把"整本文档"当作一条序列一次性解析，而不是逐页碎处理——像人坐下来抄一本书那样。</span></p>
+    <p>它不是调用外部 API 的封装，而是开源了代码 + 模型权重 + 论文。用户侧数据（你有哪些文档要解析）完全留在本地，不外流。基础信息如下：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>开源协议</td><td>MIT（权重开放、商用 OK；落地前建议再核仓库 LICENSE 文件）</td></tr>
+          <tr><td>参数量</td><td>MoE 总参数 3B，每 token 仅激活约 500M</td></tr>
+          <tr><td>上下文</td><td>32K token（训练/推理一致）；官方计划扩展至 128K</td></tr>
+          <tr><td>Star 数</td><td>发布 5 天破万；截至本文整理约 14.2K（用户提供的口径）</td></tr>
+          <tr><td>获取渠道</td><td>GitHub（<a href="https://github.com/baidu/Unlimited-OCR">baidu/Unlimited-OCR</a>）、HuggingFace、ModelScope 镜像</td></tr>
+          <tr><td>部署形态</td><td>Transformers 本地推理 / SGLang 提供 OpenAI 兼容 API</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s3">三、核心原理</h2>
+    <p>长文档 OCR 真正的瓶颈不在"看一页准不准"，而在"把 200 页当一整篇读"。Unlimited-OCR 用三块技术把这件事啃下来了：</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 160" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Unlimited-OCR 处理链路">
+        <defs>
+          <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:14px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#5b6b62}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw)}
+          </style>
+        </defs>
+        <rect class="bx" x="14" y="44" width="150" height="72" rx="10"></rect>
+        <text class="t" x="89" y="74" text-anchor="middle">长文档</text>
+        <text class="ts" x="89" y="96" text-anchor="middle">多页 PDF / 扫描图</text>
+        <path class="ln" d="M164,80 L226,80"></path>
+        <rect class="bxg" x="230" y="20" width="220" height="120" rx="12"></rect>
+        <text class="t" x="340" y="48" text-anchor="middle">Unlimited-OCR 引擎</text>
+        <text class="ts" x="340" y="70" text-anchor="middle">DeepEncoder · 16× 视觉压缩</text>
+        <text class="ts" x="340" y="90" text-anchor="middle">R-SWA · 恒定 KV 缓存</text>
+        <text class="ts" x="340" y="110" text-anchor="middle">MoE 3B / 激活 500M</text>
+        <path class="ln" d="M450,80 L512,80"></path>
+        <rect class="bx" x="516" y="38" width="150" height="84" rx="10"></rect>
+        <text class="t" x="591" y="68" text-anchor="middle">结构化文本</text>
+        <text class="ts" x="591" y="90" text-anchor="middle">保留章节/表格</text>
+        <text class="ts" x="591" y="108" text-anchor="middle">跨页引用不断裂</text>
+      </svg>
+      <div class="caption">图 1：整本文档一次性解析的链路——视觉压缩在前，恒定缓存的解码在后。</div>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">DeepEncoder：把图压到极小</span></div>
+      <p class="mc-desc">两阶段 ViT 级联（SAM-ViT 窗口注意力 + CLIP-ViT 全局注意力），中间一道 16× 压缩层。一页 1024×1024 的 PDF 能被压到约 256 个视觉 token，且这些 token 只编码一次、全程不变——这正是 R-SWA 能成立的前提。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">R-SWA：KV 缓存恒定不爆</span></div>
+      <p class="mc-desc">把标准全注意力换成"参考滑动窗口注意力"。每个生成 token 都全量关注「参考段」（全部视觉 token + 提示词，固定不变），只在输出侧滑动关注最近 128 个 token。于是 KV 缓存变成固定容量队列——<span class="key">生成 1 万 token 和 10 万 token，内存占用一样。</span></p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">MoE：轻量但够用</span></div>
+      <p class="mc-desc">总参数 3B、每步只激活约 500M。配合 16× 视觉压缩，在单卡 A800/H100 上即可跑，避开逐页付费 API 的"按页征税"。</p>
+    </div>
+
+    <h2 id="s4">四、怎么跑起来</h2>
+    <p>两种主流形态，按场景选。下面命令来自官方文档梳理，<span class="key">我未在本地实跑（本机无对应 GPU 环境），仅作可复制的上手路线；实际以仓库 README 为准。</span></p>
+    <div class="code-block">
+      <pre><span class="c-com"># 方式一：Transformers 本地推理（需 PyTorch，单图 / 多页）</span>
+pip install transformers torch
+<span class="c-key">from</span> transformers import pipeline
+<span class="c-com"># 按仓库 README 调用 OCR pipeline，传入多页 PDF 或扫描图</span>
+
+<span class="c-com"># 方式二：SGLang 提供 OpenAI 兼容 API（生产环境高并发）</span>
+pip install sglang
+python -m sglang.launch_server --model-path baidu/Unlimited-OCR --port 30000
+<span class="c-com"># 启动后按 OpenAI 接口规范 POST 文档，拿回结构化文本</span></pre>
+    </div>
+    <p>国内拉取慢的话，走 ModelScope 镜像拿权重；推理硬件建议先看权重精度与显存占用，再决定单卡还是多卡。文档里提到训练时冻结了 DeepEncoder、只训了解码器 4000 步，说明工程上"视觉编码"是复用成熟的，风险点主要在解码部署。</p>
+    <div class="info-box">
+      <p><strong>坑：别把"100 页"当既定能力</strong></p>
+      <p class="mc-desc">官方主打"长文档一次性解析"，权威基准实测在 40+ 页文档上指标稳定（Distinct-35 达 96.90%）；"100 页级"更像项目宣称的扩展目标，且计划把上下文扩到 128K。落地前用你自己的真实文档长度压测，别直接信宣传数字。</p>
+    </div>
+
+    <h2 id="s5">五、实测成绩与选型</h2>
+    <p>关键数字（来自 OmniDocBench 基准与社区评测，非我本机实测）：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>指标</th><th>数值</th><th>对照</th></tr></thead>
+        <tbody>
+          <tr><td>OmniDocBench v1.6 综合</td><td>93.92%</td><td>v1.5 为 93.23%</td></tr>
+          <tr><td>较 DeepSeek OCR 基线</td><td>+6%（v1.5）</td><td>文本编辑距离 0.038</td></tr>
+          <tr><td>40+ 页文档 Distinct-35</td><td>96.90%</td><td>编辑距离 ≤ 0.1069</td></tr>
+          <tr><td>推理速度</td><td>约 7800+ TPS 且稳定</td><td>6000 token 时较 DeepSeek OCR 快约 35%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>和传统"分页 OCR + 拼接"相比，Unlimited-OCR 的优势不在单页准确率，而在<span class="key">跨页一致性</span>：章节结构、表格续页、脚注锚点、跨页引用关系都能在单次解析里保住，不再依赖易错的后处理拼接。若你的痛点正好是"长文档串起来就乱"，它值得一试。</p>
+    <div class="pull-quote"><p>文档 AI 最难的早已不是"读准一页"，而是"把 200 页读成一整篇"。Unlimited-OCR 是第一个真正要解决这个问题、且权重开放的开源模型。</p></div>
+
+    <h2 id="s6">六、小结与商用注意</h2>
+    <p>一句话总结：Unlimited-OCR 把"长文档端到端解析"从工程 workaround 变成了模型能力，MIT 开源、权重可商用、单卡可跑，对做企业文档 RAG、合规审查、学术库的团队是条值得跟的新基线。</p>
+    <ul>
+      <li><strong>许可要复核</strong>：社区口径为 MIT（商用 OK），但开源模型的"权重条款"有时会单独限制。上线前请打开仓库 LICENSE 文件确认权重商用范围，别只信二手说法。</li>
+      <li><strong>硬件预算</strong>：单卡 A800/H100 可跑是官方表述，实际取决于权重精度与并发；先小文档压测再放量。</li>
+      <li><strong>长度预期</strong>：40+ 页稳定，更长按宣传目标逐步扩展，用真实文档验证。</li>
+      <li><strong>数据合规</strong>：本地推理意味着文档不出域，适合对隐私敏感的政务 / 金融场景——但部署方仍需自行承担内容合规责任。</li>
+    </ul>
+    <div class="tag-cloud">
+      <a href="/craft/">OCR</a><a href="/craft/">长文档解析</a><a href="/craft/">百度开源</a><a href="/craft/">MIT协议</a><a href="/craft/">DeepEncoder</a><a href="/craft/">R-SWA</a><a href="/craft/">MoE</a><a href="/craft/">文档AI</a><a href="/craft/">企业RAG</a><a href="/craft/">模型部署</a><a href="/craft/">免费商用</a><a href="/craft/">开源模型</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <span>© 2026.07.24 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+})();
+</script>
+</body>
+</html>
