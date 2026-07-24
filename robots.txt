@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+Disallow: /admin.html
+Disallow: /outputs/
+
 Sitemap: https://www.appin.site/sitemap.xml
