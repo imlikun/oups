@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>当 Mac 遇见 Windows：让 AI 助手在双端无缝接力</title>
+<meta name="description" content="一台 Mac 在家、一台 Windows 在公司，两台物理隔离的电脑怎么让 AI 助手无缝续上工作？从需求定义、设计原则、方案权衡到落地架构，一篇完整复盘。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.Appin.site/notes/cross-machine-ai-handoff.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="当 Mac 遇见 Windows：让 AI 助手在双端无缝接力">
+<meta property="og:description" content="一台 Mac 在家、一台 Windows 在公司，两台物理隔离的电脑怎么让 AI 助手无缝续上工作？从需求定义、设计原则、方案权衡到落地架构，一篇完整复盘。">
+<meta property="og:url" content="https://www.Appin.site/notes/cross-machine-ai-handoff.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="当 Mac 遇见 Windows：让 AI 助手在双端无缝接力">
+<meta name="twitter:description" content="一台 Mac 在家、一台 Windows 在公司，两台物理隔离的电脑怎么让 AI 助手无缝续上工作？从需求定义、设计原则、方案权衡到落地架构，一篇完整复盘。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/article.css">
+
+  <link rel="stylesheet" href="/assets/fx.css">
+  <script src="/assets/fx.js" defer></script>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/notes/" class="nav-logo">← 返回</a>
+    <ul class="nav-links">
+      <li><a href="/">首页</a></li>
+      <li><a href="/notes/" class="active">随笔</a></li>
+      <li><a href="/video-lab/">视频剪辑</a></li>
+    </ul>
+
+  </div>
+</nav>
+
+<nav class="page-dot" id="pageDots"></nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span>跨端协作 · 设计复盘</div>
+    <h1>当 Mac 遇见 Windows：让 AI 助手<em>双端无缝接力</em></h1>
+    <p class="hero-desc">一台 Mac 在家里、一台 Windows 在公司，两台物理隔离、永不同时在线的电脑，怎么让同一个 AI 助手在切换时「无缝续上」？这不是文件同步题，是协议设计题。把这次从踩坑到闭环的整个过程，按产品经理的视角拆一遍。</p>
+    <div class="hero-meta">
+      <span>Lkn</span><span class="sep"></span>
+      <span>2026-07-24</span><span class="sep"></span>
+      <span>约 3600 字</span>
+    </div>
+  </div>
+</section>
+
+<div class="toc-bar">
+  <div class="toc-scroll" id="tocScroll"><a href="#s1">一、缘起：一个被严重低估的需求</a><a href="#s2">二、需求定义：Job to be Done</a><a href="#s3">三、三个改变设计的洞察</a><a href="#s4">四、设计原则</a><a href="#s5">五、方案权衡</a><a href="#s6">六、架构与实现</a><a href="#s7">七、我作为 PM 走过的弯路</a><a href="#s8">八、顺带聊聊：智能体为什么默认把数据隔死</a></div>
+</div>
+
+<div class="article-wrap">
+  <article class="article-body">
+    <div class="highlight-box"><p>这篇文章是把「Mac ↔ Windows 跨端接力」这个需求，当成一次真实的产品设计来复盘——怎么定义问题、怎么定原则、怎么权衡方案、怎么落地，以及我作为执行方最初想岔了哪些地方。末尾顺带聊一个更根本的问题：这类 AI 编程助手，为什么出厂就把数据隔得这么死。</p></div>
+<hr>
+
+<h2 id="s1">一、缘起：一个被严重低估的需求</h2>
+<p>我日常在两台电脑之间切换：家里一台 macOS，公司一台 Windows。两台机器<strong>物理隔离、永不同时在线上</strong>。我会在某一台上和 AI 助手把项目推进一段，然后换到另一台接着干。</p>
+<p>听起来是个再普通不过的需求——同一人、同一账号、不同终端，状态应该自动跟着人走。但真实体验是：<span class="key">另一台机器上的 AI 助手对之前发生的事一无所知</span>。它不认识我昨天在 Mac 上做的部署、踩的坑、定的约定。等于每次开机都换了个失忆的新人。</p>
+<p>最典型的事故：我在 Windows 上传了 4 个子站、在 nav 加了入口链接，结果 macOS 端一部署就把服务器上的改动整个覆盖掉了——因为 macOS 的部署源（本地 git 仓库）里根本没有那些链接。<strong>不是「不显示」，是「被冲掉」。</strong>根因是两份真相源在互相覆盖。</p>
+
+<h2 id="s2">二、需求定义：Job to be Done</h2>
+<p>产品经理的第一条纪律：先把需求翻译成一句话的「待完成工作」（JTBD），再谈方案。</p>
+<div class="pull-quote"><p>当我从家里的 Mac 切到公司的 Windows（或反过来）时，我希望 AI 助手已经知道我昨天干了啥、项目卡在哪、做了什么决定——不需要我手动复制任何东西，也不用重新解释上下文，工作像在一台机器上连续进行。</p></div>
+<p>把这句话拆成约束，方案形态就出来了：</p>
+<div class="table-wrap"><table>
+<tr><th>约束</th><th>对设计的影响</th></tr>
+<tr><td>两台电脑物理隔离、永不同时在线</td><td>没有「实时冲突」问题，只有「接力传递」问题 → 不需要 CRDT / 实时协作</td></tr>
+<tr><td>AI 助手跨机器无记忆</td><td>痛点不是文件，是「agent 失忆」 → 必须让 agent 在开场读、收工写</td></tr>
+<tr><td>用户拒绝人肉复制</td><td>任何「你拷一下 / 你 clone 一下」都是失败设计，只能一次性接入后全自动</td></tr>
+<tr><td>记忆文件本就单机</td><td>跨端铁律不能存在记忆里，必须进 Git 仓库</td></tr>
+<tr><td>含明文密钥</td><td>同步通道必须避开网站目录、避开公网可读</td></tr>
+</table></div>
+
+<h2 id="s3">三、三个改变设计的洞察</h2>
+<p>真正动手前，有三个认知把方案从「想当然」扭到了「正确」：</p>
+<p><strong>1. 同步「成果」而非「原始数据」。</strong>用户原话点破了：不是复制整个对话框，是复制「当天的成果 + 约定 + 操作日志」。对话历史（SQLite）双端续写会锁坏，而且没必要——要的是「规矩一致」，不是「同一句话两端接着聊」。</p>
+<p><strong>2. 冲突要「结构上消灭」，不是「靠约定规避」。</strong>如果两端写同一个文件（比如一份共享的交接文档），git rebase 在末尾追加时必定撞车，脚本一旦报错就丢更新。<span class="key">正确做法是各写各的独占文件</span>（log-macOS.md / log-Windows.md），数学上不可能冲突。</p>
+<p><strong>3. 持久化载体必须在 Git 里。</strong>记忆（~/.workbuddy/MEMORY.md）是单机专属文件，写在里面等于没跨端。只有把协议、脚本、交接文档都放进 Git 仓库，两端 pull 一次就永久一致。</p>
+
+<h2 id="s4">四、设计原则</h2>
+<p>基于上面三条洞察，定了六条不可让步的原则：</p>
+<ul>
+<li><strong>单一真相源 = Git</strong>，不是记忆、不是云盘、不是复制</li>
+<li><strong>接力而非镜像</strong>——同步蒸馏后的状态，不是原始数据</li>
+<li><strong>机器隔离安全</strong>——假设无并发写，用 append-only 分离文件</li>
+<li><strong>协议强制</strong>——agent 开场读、收工写，且这条铁律本身要双向同步，两端 agent 都执行</li>
+<li><strong>密钥永不出同步通道</strong></li>
+<li><strong>冲突-free by construction</strong>，不靠「记得」</li>
+</ul>
+
+<h2 id="s5">五、方案权衡</h2>
+<p>评估了三个候选，结论很明确：</p>
+<div class="table-wrap"><table>
+<tr><th>方案</th><th>思路</th><th>结论</th></tr>
+<tr><td>A. 整目录云同步（iCloud / OneDrive 软链 WorkBuddy 数据）</td><td>全自动镜像整个数据目录</td><td>❌ SQLite 双端写会损坏；密钥进云盘；本机无同步盘</td></tr>
+<tr><td>B. 实时协作（CRDT / 实时同步）</td><td>像 Google Docs 一样多人同编</td><td>❌ 过度设计，机器永不同时在线的前提下毫无必要</td></tr>
+<tr><td><strong>C. Git 中继交接件</strong></td><td>约定地点放交接文档，两端接力</td><td>✅ 简单、版本化、零冲突、复用现成 ECS</td></tr>
+</table></div>
+<p>选 C，并叠加 deploy.sh（部署互不覆盖）作为同源机制的延伸——它第一步强制 git pull --rebase，把另一端已 push 的改动先合进来，再推服务器。</p>
+
+<h2 id="s6">六、架构与实现</h2>
+<p>最终落地是一套「协议 + 基础设施 + 强制约束」的组合，分五层：</p>
+<div class="code-block"><span class="comment">中央仓库（阿里云 ECS，bare git，仅 root SSH 可访问，避开网站目录）</span>
+ECS /root/wb-sync/wb-mem.git
+        ▲  pull / push
+        │
+   ┌────┴─────┐
+macOS       Windows
+~/wb-sync/   ~/wb-sync/
+ ├ HANDOFF.md       (稳定约定：ECS / Git / 文章 / 设计 / 项目注册表)
+ ├ log-macOS.md     (本端独占操作日志)
+ ├ log-Windows.md   (对端独占操作日志)
+ ├ global-MEMORY.md (全局记忆镜像，双向)
+ └ sync-mem.sh      (pull --rebase → push → 回写)</div>
+<p>实现分五个阶段，已落地 0–3，第 4 阶段（Windows 一次性接入）待用户执行：</p>
+<div class="table-wrap"><table>
+<tr><th>阶段</th><th>内容</th><th>状态</th></tr>
+<tr><td>P0 中央仓库</td><td>ECS 建 bare git（原无 git，已装）</td><td>✅ 完成</td></tr>
+<tr><td>P1 交接 Schema</td><td>多项目注册表 + 分端日志 + 写法约定</td><td>✅ 完成</td></tr>
+<tr><td>P2 Agent 协议</td><td>开场读 / 收工写铁律固化进全局记忆（双向同步后两端都执行）</td><td>✅ 完成</td></tr>
+<tr><td>P3 加固</td><td>.gitattributes（防 CRLF）/ .gitignore（防垃圾）/ 产出物≤5MB 红线 / 密钥不进 git</td><td>✅ 完成</td></tr>
+<tr><td>P4 Windows 接入</td><td>clone 一次 + 私钥就位 + 每日写日志</td><td>⏳ 待用户一次性执行</td></tr>
+</table></div>
+<p>验收标准只有四条：切换机器后 agent 一次 pull 就知状态、人类零手动复制、git 零冲突（已模拟验证）、密钥零泄露。<span class="key">这不是空口——模拟「Windows push → macOS 无冲突 fast-forward 拉到」已 grep 命中通过。</span></p>
+
+<h2 id="s7">七、我作为 PM 走过的弯路</h2>
+<p>说实话，这套方案是我迭代了四轮才到的，前几轮都有盲点：</p>
+<div class="info-box">
+<div class="info-title">四轮收敛</div>
+<ul>
+<li><strong>第一轮</strong>：建 launchd 自动镜像整本记忆 → 过度设计，且没意识到记忆本就单机、镜像无意义</li>
+<li><strong>第二轮</strong>：建 deploy.sh 解决部署冲突，但把规则只写进 macOS 记忆 → 没意识到「记忆不跨端」，等于没防</li>
+<li><strong>第三轮</strong>：写 HANDOFF.md，但双端同写同一文件 §5 → git 模型下的定时炸弹</li>
+<li><strong>第四轮（当前）</strong>：日志拆双文件 + 红线 + 协议强制进 Git → 才真正闭环</li>
+</ul>
+</div>
+<p>根因是前两轮我把「记忆」当成了跨端载体，没先回答「什么该跨端、什么不该」这个产品问题。<span class="key">正确的思考起点应该是：跨端只同步「载体在 Git 里的东西」</span>，记忆只是被同步的对象之一，不是同步机制本身。</p>
+
+<h2 id="s8">八、顺带聊聊：智能体为什么默认把数据隔死</h2>
+<p>这引出一个更根本的疑问——像我这类 AI 编程助手，设计之初为什么要把数据隔绝得这么严格？同一人、同一账号、不同终端，按理说是最普通、需求量最高的场景，为什么出厂不做成 Trae 那种云端模式？</p>
+<p>我的判断：这是<strong>本地优先（local-first）架构的遗产</strong>，不是故意为难用户。</p>
+<div class="table-wrap"><table>
+<tr><th>维度</th><th>严格本地隔离（当前多数助手）</th><th>云端账号模式（Trae）</th></tr>
+<tr><td>状态连续性</td><td>换端即失忆，需自建接力</td><td>同账号任意端读云端任务，开箱即用</td></tr>
+<tr><td>隐私</td><td>数据不出本机，默认最安全</td><td>数据存厂商云，需信任厂商</td></tr>
+<tr><td>离线</td><td>断网可用</td><td>强依赖云端</td></tr>
+<tr><td>基础设施成本</td><td>零（无服务器）</td><td>需账号系统 + 存储 + 合规</td></tr>
+<tr><td>锁死程度</td><td>低（文件你 own）</td><td>高（迁移/导出受厂商限制）</td></tr>
+</table></div>
+<p>早期这些工具把「项目代码、记忆、对话历史」全存本地，是因为隐私默认不外流、不需要账号后端、单机就能跑。<span class="key">它假设的使用模型是「一个人一台主力机」</span>，而不是「一个人在多台隔离机器间游走的现代工作流」。当多端协作成为刚需，本地优先就从优点变成了缺口。</p>
+<p>Trae 的云端模式确实更贴合「多端同一人」这个场景——换多少终端，只要同账号就能读云端任务，还能导出到本地。这是产品方向上的客观进步。但它也用「数据存厂商云 + 强依赖网络」换了连续性。</p>
+<p><strong>我认为正确的产品形态，是本地优先 + 可选项云同步</strong>：默认数据还在你机器上（隐私、离线、own 文件），但提供一个绑定账号的、opt-in 的云同步通道，专门同步「跨端接力需要的那一层状态」——而不是把整个工作区无差别上云。我们这次用 Git 中继手搓的，本质上就是一个穷人版的「opt-in 跨端接力层」。它证明了需求真实存在，也反衬出：这件事本该是产品出厂就给的能力，而不是让用户自己写脚本。</p>
+<p class="pull-quote"><strong>一句话收尾</strong>：跨端接力不是高级功能，是最朴素的刚需。本地优先没错，但它不能成为「换台电脑就失忆」的借口。要么产品出厂给云同步，要么像这次一样，自己用 Git 把缺口补上——前者优雅，后者至少能跑。</p>
+  </article>
+
+  <div class="tag-cloud">
+    <a href="/notes/">跨端协作</a><a href="/notes/">AI 助手</a><a href="/notes/">Git 中继</a><a href="/notes/">产品设计</a><a href="/notes/">工作流</a><a href="/notes/">Trae</a><a href="/notes/">本地优先</a><a href="/notes/">云端模式</a>
+  </div>
+  <a href="/notes/" class="back-link">返回随笔</a>
+</div>
+
+<footer class="footer">
+  <p>© 2026 Lkn · <a href="/">返回首页</a> · <a href="/notes/">随笔</a></p>
+</footer>
+
+<script>
+(function() {
+  var pb = document.getElementById('progressBar');
+  window.addEventListener('scroll', function() {
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    var pct = total > 0 ? (h.scrollTop / total) * 100 : 0;
+    pb.style.setProperty('--progress', pct + '%');
+  });
+
+  var tocLinks = document.querySelectorAll('#tocScroll a');
+  var headings = [];
+  tocLinks.forEach(function(a) {
+    var id = a.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if (el) headings.push({ id: id, el: el, link: a });
+  });
+  function updateTOC() {
+    var scrollY = window.scrollY + 140;
+    var active = headings[0];
+    for (var i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].el.offsetTop <= scrollY) { active = headings[i]; break; }
+    }
+    tocLinks.forEach(function(a) { a.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+    if (active && active.link) {
+      active.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+  window.addEventListener('scroll', updateTOC);
+
+  var dotContainer = document.getElementById('pageDots');
+  var dotLinks = [];
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.id;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      h.el.scrollIntoView({ behavior: 'smooth' });
+    });
+    dotContainer.appendChild(a);
+    dotLinks.push({ el: h.el, link: a });
+  });
+  function updateDots() {
+    var scrollY = window.scrollY + window.innerHeight / 2;
+    var active = dotLinks[0];
+    for (var i = dotLinks.length - 1; i >= 0; i--) {
+      if (dotLinks[i].el.offsetTop <= scrollY) { active = dotLinks[i]; break; }
+    }
+    dotLinks.forEach(function(d) { d.link.classList.remove('active'); });
+    if (active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateDots);
+  updateTOC();
+  updateDots();
+})();
+</script>
+</body>
+</html>

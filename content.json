@@ -1905,6 +1905,31 @@
       "status": "published",
       "link": "/craft/build-your-own-x.html",
       "template": "DP"
+    },
+    {
+      "id": "article-82",
+      "title": "当 Mac 遇见 Windows：让 AI 助手在双端无缝接力",
+      "slug": "cross-machine-ai-handoff",
+      "category": "notes",
+      "featured": true,
+      "image": "",
+      "excerpt": "一台 Mac 在家、一台 Windows 在公司，两台物理隔离的电脑怎么让 AI 助手无缝续上工作？从需求定义、设计原则、方案权衡到落地架构，一篇完整复盘。",
+      "content": "详见独立文章页：/notes/cross-machine-ai-handoff.html",
+      "tags": [
+        "跨端协作",
+        "AI 助手",
+        "Git 中继",
+        "产品设计",
+        "工作流",
+        "Trae",
+        "本地优先",
+        "云端模式"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-24",
+      "status": "published",
+      "link": "/notes/cross-machine-ai-handoff.html",
+      "template": "DP"
     }
   ],
   "projects": [
