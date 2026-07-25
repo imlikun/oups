@@ -71,7 +71,12 @@ def load(p):
         line = line.rstrip('\n')
         if not line.strip():
             continue
-        h, _, path = line.split(' ', 1)
+        parts = line.split(' ', 1)
+        if len(parts) < 2:
+            continue
+        h, path = parts[0], parts[1]
+        if not h:            # 本地 md5 计算失败，跳过该文件
+            continue
         d[path] = h
     return d
 local = load('/tmp/dm_local.txt')
