@@ -1930,6 +1930,28 @@
       "status": "published",
       "link": "/notes/cross-machine-ai-handoff.html",
       "template": "DP"
+    },
+    {
+      "id": "article-83",
+      "title": "【WB】当 nav 上的死链又“回来”：一次网站部署事故的复盘",
+      "slug": "site-deploy-postmortem",
+      "category": "notes",
+      "featured": false,
+      "image": "",
+      "excerpt": "顶部 nav 里 4 个指向空站的 pxid 链接反复出现。根因不是 git，而是“两个写入源并行、铁律只写在纸上”。一次复盘，以及把部署纪律固化进 RULES.md 的全过程。",
+      "content": "详见独立文章页：/notes/site-deploy-postmortem.html",
+      "tags": [
+        "git",
+        "部署",
+        "单一真相源",
+        "ECS",
+        "工作流",
+        "复盘"
+      ],
+      "videoUrl": "",
+      "date": "2026-07-25",
+      "status": "published",
+      "template": "DP"
     }
   ],
   "projects": [
