@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>实验室 · Appin.site｜Lkn 的开源工具橱窗</title>
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.Appin.site/lab/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="实验室 · Appin.site｜Lkn 的开源工具橱窗">
+<meta property="og:description" content="我把日常造的 WorkBuddy 技能和小工具开源出来，随便下载、随便改。">
+<meta property="og:url" content="https://www.Appin.site/lab/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-primary:#0A0A0A;--bg-secondary:#141414;--bg-elevated:#1E1E1E;
+  --text-primary:#E8E8E8;--text-secondary:#A0A0A0;--text-inverse:#0A0A0A;
+  --accent-green:#00FF41;--accent-cyan:#00D4FF;--accent-dim:rgba(0,255,65,.15);
+  --border-subtle:#2A2A2A;--border-strong:#444444;
+  --brand:var(--accent-green);--brand-bg:var(--accent-dim);--cyan:var(--accent-cyan);
+  --border:var(--border-subtle);--border-bright:var(--border-strong);
+  --amber:#FFB800;--amber-bg:rgba(255,184,0,.10);
+  --radius-md:10px;--radius-lg:14px;--radius-xl:18px;--maxw:1200px;
+  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;
+  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;font-size:15px;overflow-x:hidden}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s5);height:56px;background:rgba(20,20,20,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);font-size:14px;font-weight:500}
+nav .logo{display:flex;align-items:center;gap:2px;font-weight:700;font-size:17px;color:var(--brand);text-decoration:none;letter-spacing:-.5px}
+nav .logo span{color:var(--text-secondary);font-weight:400}
+nav .links{display:flex;align-items:center;gap:0}
+nav a.nav-link{position:relative;color:var(--text-secondary);padding:8px 14px;text-decoration:none;font-weight:500;transition:color .2s}
+nav a.nav-link::after{content:'';position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--cyan);width:0;transition:width .25s ease}
+nav a.nav-link:hover{color:var(--cyan)}
+nav a.nav-link:hover::after{width:calc(100% - 28px)}
+nav a.nav-link.active{color:var(--brand)}
+nav a.nav-link.active::before{content:'> ';opacity:.85}
+nav .actions{display:flex;align-items:center;gap:12px}
+.btn-primary{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--brand);color:var(--bg-primary);font-weight:600;font-size:13px;border-radius:99px;text-decoration:none;border:none;cursor:pointer;transition:.2s;font-family:var(--font-mono)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,65,.22)}
+
+.section{padding:var(--s7) var(--s5)}
+.section-inner{max-width:var(--maxw);margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:var(--s4);font-family:var(--font-mono)}
+.section-label::before{content:'>';opacity:.9;margin-right:2px}
+.section-title{font-size:clamp(24px,3vw,34px);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--s5);line-height:1.2}
+.section-desc{font-size:16px;color:var(--text-secondary);max-width:620px;line-height:1.7;margin-bottom:var(--s6)}
+
+.hero{position:relative;padding:var(--s8) var(--s5) var(--s5);overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:var(--maxw);margin:0 auto;position:relative}
+.hero h1{font-size:clamp(34px,5.5vw,60px);font-weight:700;line-height:1.1;letter-spacing:-.04em;margin-bottom:var(--s4)}
+.hero h1 .hl{color:var(--brand)}
+.hero p{font-size:17px;color:var(--text-secondary);max-width:600px;line-height:1.7}
+
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+.prod-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--s5);transition:.25s;display:flex;flex-direction:column;position:relative;overflow:hidden;text-decoration:none;color:inherit}
+.prod-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 16px rgba(0,212,255,.08)}
+.prod-featured::after{content:'首推';position:absolute;top:16px;right:16px;background:var(--brand);color:var(--bg-primary);font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px}
+.prod-type{font-size:11px;font-weight:700;color:var(--text-secondary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s2)}
+.prod-title{font-size:19px;font-weight:700;margin-bottom:8px}
+.prod-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;flex:1;margin-bottom:var(--s4)}
+.prod-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.tag{font-family:var(--font-mono);font-size:10px;color:var(--text-secondary);background:var(--bg-primary);border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.tag.green{color:var(--brand);border-color:rgba(0,255,65,.3)}
+.prod-meta{display:flex;align-items:center;justify-content:space-between}
+.prod-price{font-size:20px;font-weight:700;color:var(--brand)}
+.prod-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 20px;background:var(--brand);color:var(--bg-primary);font-weight:600;font-size:13px;border-radius:99px;text-decoration:none;transition:.2s;font-family:var(--font-mono)}
+.prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,65,.22)}
+.prod-card.soon{opacity:.7}
+.prod-card.soon::after{content:'即将上线';position:absolute;top:16px;right:16px;background:var(--amber);color:var(--bg-primary);font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px}
+
+footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:13px;color:var(--text-secondary)}
+.footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3)}
+.footer-links a{color:var(--text-secondary);text-decoration:none;margin-right:var(--s4)}
+.footer-links a:hover{color:var(--cyan)}
+@media(max-width:1024px){.products-grid{grid-template-columns:1fr}.hero{padding:var(--s6) var(--s3) var(--s5)}.section{padding:var(--s5) var(--s3)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Appin<span>.site</span></a>
+  <div class="links">
+    <a class="nav-link" href="/">关于</a>
+    <a class="nav-link" href="/#content">内容</a>
+    <a class="nav-link" href="/#tools">工具箱</a>
+    <a class="nav-link" href="/#products">产品</a>
+    <a class="nav-link active" href="/lab/">实验室</a>
+    <a class="nav-link" href="/#radar">AI 雷达</a>
+    <a class="nav-link" href="/ai-model-square.html">模型广场</a>
+  </div>
+  <div class="actions">
+    <a class="btn-primary" href="mailto:hi@Appin.site">合作 →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="section-label">实验室 / LAB</div>
+    <h1>把我自己造的工具，<span class="hl">开源给你</span></h1>
+    <p>这里收着我日常在 WorkBuddy 里造的技能和小工具——任务管理系统、看板生成器……
+    不卖课、不收智商税，MIT 协议，随便下载、随便改、随便再分发。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">开源工具</div>
+    <h2 class="section-title">能直接用的<span class="hl">真东西</span></h2>
+    <p class="section-desc">每一个都来自我的真实工作流，不是 demo。</p>
+    <div class="products-grid">
+
+      <a class="prod-card prod-featured" href="/lab/todo-hub.html">
+        <span class="prod-type">WorkBuddy 技能 · 开源</span>
+        <h3 class="prod-title">wb-todo-hub · 跨窗口任务管理</h3>
+        <p class="prod-desc">在任意对话窗口管任务：增删改查、进度、节点、时间提醒、每任务独立文档。配套可交互网页看板，节点可点击勾选、进度实时重算。</p>
+        <div class="prod-tags">
+          <span class="tag green">免费</span>
+          <span class="tag green">MIT</span>
+          <span class="tag">Python</span>
+          <span class="tag">看板</span>
+        </div>
+        <div class="prod-meta">
+          <div class="prod-price">¥0</div>
+          <span class="prod-btn">查看详情 →</span>
+        </div>
+      </a>
+
+      <article class="prod-card soon">
+        <span class="prod-type">即将开源</span>
+        <h3 class="prod-title">更多工具正在整理</h3>
+        <p class="prod-desc">双端同步脚本、站点部署工具链、内容发布流水线……我会一边写文章一边把它们拆成可下载的包放这里。</p>
+        <div class="prod-tags">
+          <span class="tag">敬请期待</span>
+        </div>
+        <div class="prod-meta">
+          <div class="prod-price" style="color:var(--text-secondary)">筹备中</div>
+          <span class="prod-btn" style="background:var(--border-strong);color:var(--text-primary);box-shadow:none">稍后见</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Appin.site · Lkn 的独立开发工坊</div>
+    <div class="footer-links">
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/">随笔</a>
+      <a href="/#products">产品</a>
+      <a href="/lab/">实验室</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

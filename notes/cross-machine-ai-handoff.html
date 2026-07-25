@@ -57,7 +57,7 @@
 </section>
 
 <div class="toc-bar">
-  <div class="toc-scroll" id="tocScroll"><a href="#s1">一、缘起：一个被严重低估的需求</a><a href="#s2">二、需求定义：Job to be Done</a><a href="#s3">三、三个改变设计的洞察</a><a href="#s4">四、设计原则</a><a href="#s5">五、方案权衡</a><a href="#s6">六、架构与实现</a><a href="#s7">七、我作为 PM 走过的弯路</a><a href="#s8">八、顺带聊聊：智能体为什么默认把数据隔死</a></div>
+  <div class="toc-scroll" id="tocScroll"><a href="#s1">一、缘起：一个被严重低估的需求</a><a href="#s2">二、需求定义：Job to be Done</a><a href="#s3">三、三个改变设计的洞察</a><a href="#s4">四、设计原则</a><a href="#s5">五、方案权衡</a><a href="#s6">六、架构与实现</a><a href="#s6-5">六点五、实战落地</a><a href="#s7">七、我作为 PM 走过的弯路</a><a href="#s8">八、顺带聊聊：智能体为什么默认把数据隔死</a></div>
 </div>
 
 <div class="article-wrap">
@@ -134,6 +134,22 @@ macOS       Windows
 <tr><td>P4 Windows 接入</td><td>clone 一次 + 私钥就位 + 每日写日志</td><td>⏳ 待用户一次性执行</td></tr>
 </table></div>
 <p>验收标准只有四条：切换机器后 agent 一次 pull 就知状态、人类零手动复制、git 零冲突（已模拟验证）、密钥零泄露。<span class="key">这不是空口——模拟「Windows push → macOS 无冲突 fast-forward 拉到」已 grep 命中通过。</span></p>
+
+<h3 id="s6-5">六点五、实战落地：跨端任务管理系统</h3>
+<p>前面六节不是空对空的方法论。这套双端接力协议的第一个真刀真枪落地产品，是一个跨窗口任务管理系统——<strong>wb-todo-hub</strong>。它完美体现了上面所有设计原则：单一真相源 = Git、接力而非镜像、机器隔离安全、密钥不出同步通道。</p>
+<p>功能上它覆盖了：对话框内新建/查看/修改/删除任务、进度追踪、节点管理、定时/相对时间提醒、每个任务独立文档写入，以及可视化看板自动生成并推送到 <a href="/tasks/">appin.site/tasks/</a>。一句话：<span class="key">在任何 WorkBuddy 对话框说「记待办」，任务就进系统了，换台电脑照样能接着管。</span></p>
+<p>Mac 端接入只需两条命令：</p>
+<div class="code-block"><span class="comment"># 第一步：拉取同步区最新代码（含 Windows 端已写入的任务数据）</span>
+cd ~/wb-sync &amp;&amp; git pull
+
+<span class="comment"># 第二步：运行一键初始化脚本</span>
+bash ~/wb-sync/todo-hub/setup-mac.sh</div>
+<p>跑完直接在任意对话框说「记到待办：测试一下」，如果回你分配了 T 编号并写了文档，就说明双端闭环了。</p>
+
+<div style="margin-top:18px;padding:16px 18px;background:rgba(0,255,65,.08);border-left:3px solid #00FF41;border-radius:8px;">
+<p style="margin:0 0 8px;"><strong>📦 把这个工具拿走</strong>——wb-todo-hub 已开源，<strong>免费、MIT 协议</strong>。配套可交互网页看板，节点可点击勾选、进度实时重算。</p>
+<p style="margin:0;"><a href="/lab/todo-hub.html" style="color:#00FF41;font-weight:600;text-decoration:none;">查看详情并下载 ↗</a> &nbsp;·&nbsp; <a href="/tasks/" target="_blank" rel="noopener" style="color:#00D4FF;font-weight:600;text-decoration:none;">▶ 在线预览看板 ↗</a></p>
+</div>
 
 <h2 id="s7">七、我作为 PM 走过的弯路</h2>
 <p>说实话，这套方案是我迭代了四轮才到的，前几轮都有盲点：</p>

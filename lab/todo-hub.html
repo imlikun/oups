@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wb-todo-hub · 跨窗口任务管理｜Appin.site 实验室</title>
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.Appin.site/lab/todo-hub.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wb-todo-hub · 跨窗口任务管理">
+<meta property="og:description" content="WorkBuddy 技能：任意对话窗口管任务，配套可交互网页看板。免费、MIT。">
+<meta property="og:url" content="https://www.Appin.site/lab/todo-hub.html/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-primary:#0A0A0A;--bg-secondary:#141414;--bg-elevated:#1E1E1E;
+  --text-primary:#E8E8E8;--text-secondary:#A0A0A0;--text-inverse:#0A0A0A;
+  --accent-green:#00FF41;--accent-cyan:#00D4FF;--accent-dim:rgba(0,255,65,.15);
+  --border-subtle:#2A2A2A;--border-strong:#444444;
+  --brand:var(--accent-green);--brand-bg:var(--accent-dim);--cyan:var(--accent-cyan);
+  --border:var(--border-subtle);--border-bright:var(--border-strong);
+  --amber:#FFB800;--amber-bg:rgba(255,184,0,.10);
+  --radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:18px;--maxw:1100px;
+  --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;
+  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-primary);line-height:1.7;font-size:15px;overflow-x:hidden}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s5);height:56px;background:rgba(20,20,20,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);font-size:14px;font-weight:500}
+nav .logo{display:flex;align-items:center;gap:2px;font-weight:700;font-size:17px;color:var(--brand);text-decoration:none;letter-spacing:-.5px}
+nav .logo span{color:var(--text-secondary);font-weight:400}
+nav .links{display:flex;align-items:center;gap:0}
+nav a.nav-link{position:relative;color:var(--text-secondary);padding:8px 14px;text-decoration:none;font-weight:500;transition:color .2s}
+nav a.nav-link::after{content:'';position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--cyan);width:0;transition:width .25s ease}
+nav a.nav-link:hover{color:var(--cyan)}
+nav a.nav-link:hover::after{width:calc(100% - 28px)}
+nav a.nav-link.active{color:var(--brand)}
+nav a.nav-link.active::before{content:'> ';opacity:.85}
+.crumb{font-size:12px;color:var(--text-secondary);padding:var(--s4) var(--s5) 0;max-width:var(--maxw);margin:0 auto}
+.crumb a{color:var(--cyan);text-decoration:none}
+.crumb a:hover{color:var(--brand)}
+
+.hero{position:relative;padding:var(--s5) var(--s5) var(--s4);overflow:hidden}
+.hero::before{content:'';position:absolute;top:-160px;right:-80px;width:520px;height:520px;background:radial-gradient(circle,var(--brand-bg) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:var(--maxw);margin:0 auto;position:relative}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s3)}
+.badge{font-family:var(--font-mono);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}
+.badge.green{background:var(--brand-bg);color:var(--brand)}
+.badge.cyan{background:rgba(0,212,255,.1);color:var(--cyan)}
+.badge.amber{background:var(--amber-bg);color:var(--amber)}
+.hero h1{font-size:clamp(30px,5vw,52px);font-weight:700;line-height:1.1;letter-spacing:-.04em;margin-bottom:var(--s3)}
+.hero h1 .hl{color:var(--brand)}
+.hero .lead{font-size:17px;color:var(--text-secondary);max-width:680px;line-height:1.7;margin-bottom:var(--s4)}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;background:var(--brand);color:var(--bg-primary);font-weight:600;font-size:14px;border-radius:99px;text-decoration:none;border:none;cursor:pointer;transition:.2s;font-family:var(--font-mono)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,65,.22)}
+.btn-ghost{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;background:transparent;color:var(--text-primary);font-weight:500;font-size:14px;border:1px solid var(--border-bright);border-radius:99px;text-decoration:none;cursor:pointer;transition:.2s;font-family:var(--font-mono)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+
+.section{padding:var(--s6) var(--s5)}
+.section-inner{max-width:var(--maxw);margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:var(--s3);font-family:var(--font-mono)}
+.section-label::before{content:'>';opacity:.9;margin-right:2px}
+.section-title{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--s4);line-height:1.2}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.feat{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--s4)}
+.feat h3{font-size:15px;font-weight:600;margin-bottom:8px;color:var(--brand)}
+.feat p{font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:var(--s3)}
+.step{display:flex;gap:var(--s3);align-items:flex-start}
+.step .n{counter-increment:step;flex:none;width:30px;height:30px;border-radius:50%;background:var(--brand-bg);color:var(--brand);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:1px solid rgba(0,255,65,.3)}
+.step .n::before{content:counter(step)}
+.step .body{flex:1}
+.step .body h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.step .body p{font-size:13.5px;color:var(--text-secondary);line-height:1.6;margin-bottom:8px}
+pre{background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--text-primary)}
+pre .c{color:var(--text-secondary)}
+.note{background:var(--brand-bg);border-left:3px solid var(--brand);border-radius:var(--radius-sm);padding:12px 16px;font-size:13.5px;color:var(--text-primary);line-height:1.6;margin-top:var(--s3)}
+
+.relrow{display:flex;flex-wrap:wrap;gap:var(--s3)}
+.relcard{flex:1;min-width:240px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--s4);text-decoration:none;color:inherit;transition:.25s;display:flex;flex-direction:column;gap:6px}
+.relcard:hover{transform:translateY(-3px);border-color:var(--cyan)}
+.relcard .rt{font-size:14px;font-weight:600;color:var(--cyan)}
+.relcard .rd{font-size:13px;color:var(--text-secondary);line-height:1.6}
+
+.cta{text-align:center;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--s6);margin-top:var(--s5)}
+.cta h2{font-size:clamp(22px,3vw,30px);font-weight:700;margin-bottom:var(--s3)}
+.cta p{font-size:15px;color:var(--text-secondary);margin-bottom:var(--s4)}
+
+footer{border-top:1px solid var(--border);padding:var(--s5);font-size:13px;color:var(--text-secondary)}
+.footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3)}
+.footer-links a{color:var(--text-secondary);text-decoration:none;margin-right:var(--s4)}
+.footer-links a:hover{color:var(--cyan)}
+@media(max-width:1024px){.feat-grid{grid-template-columns:1fr}.section{padding:var(--s5) var(--s3)}.hero{padding:var(--s4) var(--s3)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Appin<span>.site</span></a>
+  <div class="links">
+    <a class="nav-link" href="/">关于</a>
+    <a class="nav-link" href="/#content">内容</a>
+    <a class="nav-link" href="/#tools">工具箱</a>
+    <a class="nav-link" href="/#products">产品</a>
+    <a class="nav-link active" href="/lab/">实验室</a>
+    <a class="nav-link" href="/#radar">AI 雷达</a>
+  </div>
+  <div class="actions"><a class="btn-primary" href="mailto:hi@Appin.site">合作 →</a></div>
+</nav>
+
+<div class="crumb"><a href="/lab/">实验室</a> / wb-todo-hub</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badges">
+      <span class="badge green">免费</span>
+      <span class="badge green">MIT 协议</span>
+      <span class="badge cyan">WorkBuddy 技能</span>
+      <span class="badge amber">v1.0</span>
+    </div>
+    <h1>wb-todo-hub<span class="hl"> 跨窗口任务管理</span></h1>
+    <p class="lead">在任意 WorkBuddy 对话窗口里管任务：新建 / 查看 / 修改 / 删除，跟踪进度、计划、节点，
+    设相对或绝对时间提醒，每个任务还能写一份独立文档。配套一个可交互网页看板，把任务变成一张「依赖关系图」。</p>
+    <div class="actions">
+      <a class="btn-primary" href="/lab/downloads/todo-hub.zip">⬇ 下载（zip · 34KB）</a>
+      <a class="btn-ghost" href="/tasks/" target="_blank" rel="noopener">▶ 在线预览看板 ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">它能做什么</div>
+    <h2 class="section-title">一个对话框，搞定<span class="hl">全套任务流转</span></h2>
+    <div class="feat-grid">
+      <div class="feat"><h3>增删改查</h3><p>说「记到待办：…」就建任务，分配 T 编号；「删任务 T003」一键移除索引与文档。</p></div>
+      <div class="feat"><h3>进度 / 节点 / 计划</h3><p>进度手动设或由节点完成度推导；每个任务一份独立文档，写计划、节点清单、笔记。</p></div>
+      <div class="feat"><h3>时间提醒</h3><p>「三天后」「下周一10点」都能设；相对时间自动换算绝对时间，建一次性或周期提醒。</p></div>
+      <div class="feat"><h3>可交互看板</h3><p>网页看板按项目分组、按时间先后连线；节点小框可点击勾选，进度环实时重算。</p></div>
+      <div class="feat"><h3>跨窗口唯一</h3><p>所有对话共享同一任务索引，ID 全局递增，不会再出现「这个窗口不知道那个窗口的任务」。</p></div>
+      <div class="feat"><h3>纯本地 / 零依赖</h3><p>数据存本地文件，不依赖任何外部连接器；看板是纯静态 HTML，能挂任意静态空间。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="section-inner">
+    <div class="section-label">三步上手</div>
+    <h2 class="section-title">装好就能用</h2>
+    <div class="steps">
+      <div class="step"><div class="n"></div><div class="body">
+        <h4>解压并安装</h4>
+        <p>把包解压到 <code>~/todo-hub/</code>，运行初始化脚本装技能：</p>
+        <pre><span class="c"># macOS / Linux</span>
+bash ~/todo-hub/setup-mac.sh</pre>
+        <p>Windows：把 <code>skill/wb-todo-hub/</code> 复制到 <code>%USERPROFILE%\.workbuddy\skills\wb-todo-hub\</code> 即可。</p>
+      </div></div>
+      <div class="step"><div class="n"></div><div class="body">
+        <h4>在对话框里说一句话</h4>
+        <p>任意 WorkBuddy 对话窗口输入：</p>
+        <pre>记到待办：重构个人站首页
+看待办
+T001 进度 40%</pre>
+        <p>技能会自动分配编号、写索引和文档。</p>
+      </div></div>
+      <div class="step"><div class="n"></div><div class="body">
+        <h4>生成看板（可选）</h4>
+        <p>想看图就重跑生成脚本，浏览器打开产物：</p>
+        <pre><span class="c"># 生成 ~/.workbuddy/task-board.html</span>
+python ~/todo-hub/skill/wb-todo-hub/scripts/generate_board.py</pre>
+        <div class="note">看板里每个节点前面的小框可以直接点击勾选，进度环会实时重算；勾选存在浏览器本地，刷新不丢，点「复制更改」可贴回对话框写入数据源。</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="section-inner">
+    <div class="section-label">延伸阅读</div>
+    <h2 class="section-title">它是怎么被造出来的</h2>
+    <div class="relrow">
+      <a class="relcard" href="/notes/cross-machine-ai-handoff.html#s6-5" target="_blank" rel="noopener">
+        <span class="rt">随笔 · 当 Mac 遇见 Windows</span>
+        <span class="rd">这篇讲双端接力协议，§6.5 用 wb-todo-hub 作首个落地案例，含完整的设计原则对照与 Mac 端三步初始化。</span>
+      </a>
+      <a class="relcard" href="/lab/downloads/todo-hub.zip">
+        <span class="rt">⬇ 下载完整包（34KB）</span>
+        <span class="rd">含 skill 目录、示例数据、安装脚本与 README。MIT 协议，随便用、随便改、随便再分发。</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="section-inner">
+    <div class="cta">
+      <h2>拿去用，改坏算我的（MIT）</h2>
+      <p>不卖课、不收智商税。下载、改、再分发都行——只要你觉得有用。</p>
+      <div class="actions" style="justify-content:center">
+        <a class="btn-primary" href="/lab/downloads/todo-hub.zip">⬇ 下载 wb-todo-hub</a>
+        <a class="btn-ghost" href="/tasks/" target="_blank" rel="noopener">▶ 先看在线预览 ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Appin.site · Lkn 的独立开发工坊</div>
+    <div class="footer-links">
+      <a href="/lab/">实验室</a>
+      <a href="/craft/">技艺录</a>
+      <a href="/notes/">随笔</a>
+      <a href="mailto:hi@Appin.site">合作</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
