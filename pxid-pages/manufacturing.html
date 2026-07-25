@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturing – PXID Electric Mobility</title>
+    <style id="theme-vars">
+/* PXID International Brand CSS — Minimal Industrial */
+:root {
+  /* ── Colors ── */
+  --color-primary: #0052CC;
+  --color-primary-hover: #003D99;
+  --color-primary-light: #E8F0FE;
+  --color-primary-50: rgba(0, 82, 204, 0.04);
+  --color-primary-100: rgba(0, 82, 204, 0.08);
+
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8F9FB;
+  --color-bg-dark: #0A1628;
+  --color-bg-dark-secondary: #111D32;
+
+  --color-text: #1A1A2E;
+  --color-text-secondary: #5F6B7A;
+  --color-text-tertiary: #8C95A3;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border: #E2E6EB;
+  --color-border-light: #F0F2F5;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FFFFFF;
+
+  /* ── State Colors ── */
+  --state-success: #059669;
+  --state-warning: #D97706;
+  --state-error: #DC2626;
+  --state-info: #0284C7;
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.04);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.04);
+
+  /* ── Layout ── */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+  --section-spacing: 120px;
+  --navbar-height: 72px;
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+.dark {
+  --color-bg: #0A1628;
+  --color-bg-alt: #111D32;
+  --color-bg-dark: #060E1A;
+  --color-bg-dark-secondary: #0A1628;
+  --color-text: #F0F2F5;
+  --color-text-secondary: #A0AEC0;
+  --color-text-tertiary: #6B7B8D;
+  --color-border: #1E2D45;
+  --color-border-light: #152238;
+  --color-surface: #111D32;
+  --color-surface-raised: #162340;
+  --color-primary-light: rgba(0, 82, 204, 0.12);
+  --color-primary-50: rgba(0, 82, 204, 0.06);
+  --color-primary-100: rgba(0, 82, 204, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.3);
+}to { opacity: 1; transform: translateY(0); } }
+  </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    
+  </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER / NAVIGATION
+       ═══════════════════════════════════════════════════════════ -->
+  <header
+    class="sticky top-0 z-50 w-full bg-white"
+    style="border-bottom: 1px solid var(--color-border); height: var(--navbar-height);"
+  >
+    <nav class="mx-auto flex items-center justify-between h-full px-6" style="max-width: var(--container-max);">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2 shrink-0" data-dom-id="nav-logo">
+        <span class="text-xl font-extrabold tracking-tight" style="color: var(--color-text); letter-spacing: var(--tracking-tight);">PXID</span>
+        <span class="hidden sm:inline text-xs font-medium" style="color: var(--color-text-tertiary);" data-en="OEM/ODM Manufacturer" data-zh="OEM/ODM 制造商" data-en="OEM/ODM Manufacturer" data-zh="OEM/ODM 制造商">OEM/ODM Manufacturer</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="hidden md:flex items-center gap-4 ml-auto" style="margin-right: 16px;">
+        <li>
+          <a
+            href="index.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="home"
+            data-dom-id="nav-home"
+           data-en="Home" data-zh="首页">Home</a>
+        </li>
+        <li>
+          <a
+            href="products.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="products"
+            data-dom-id="nav-products"
+           data-en="Products" data-zh="产品中心">Products</a>
+        </li>
+        <li>
+          <a
+            href="odm-services.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="odm"
+           data-en="ODM Services" data-zh="ODM 服务">ODM Services</a>
+        </li>
+        <li>
+          <a
+            href="about.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="about"
+           data-en="About Us" data-zh="关于我们">About Us</a>
+        </li>
+        <li>
+          <a
+            href="news.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="news"
+           data-en="News" data-zh="新闻动态">News</a>
+        </li>
+        
+</ul>
+
+      <!-- Desktop CTA + Language Toggle + Mobile Hamburger -->
+      <div class="flex items-center gap-3">
+        <!-- Language Toggle -->
+        <button
+          id="lang-toggle"
+          class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150"
+          style="background-color: #F59E0B;"
+          onmouseover="this.style.backgroundColor='#D97706';"
+          onmouseout="this.style.backgroundColor='#F59E0B';"
+          aria-label="Switch to Chinese"
+        >中文</button>
+        <a
+          href="contact.html"
+          class="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150"
+          style="background-color: var(--color-primary);"
+          onmouseover="this.style.backgroundColor='var(--color-primary-hover)'"
+          onmouseout="this.style.backgroundColor='var(--color-primary)'"
+          data-dom-id="cta-quote"
+         data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+
+        <!-- Hamburger Button (mobile) -->
+        <button
+          id="hamburger-btn"
+          class="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span>
+          <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span>
+          <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="md:hidden bg-white" style="border-bottom: 1px solid var(--color-border);">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="index.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="home" data-en="Home" data-zh="首页">Home</a>
+        <a href="products.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="products" data-en="Products" data-zh="产品中心">Products</a>
+        <a href="odm-services.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="odm" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a>
+        <a href="about.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="about" data-en="About Us" data-zh="关于我们">About Us</a>
+        <a href="news.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="news" data-en="News" data-zh="新闻动态">News</a>
+        
+        
+        <a
+          href="contact.html"
+          class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg mt-2"
+          style="background-color: var(--color-primary);"
+          data-dom-id="cta-quote"
+         data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════ -->
+  <main class="flex-1">
+
+    <!-- ─── Section 1: Hero ─── -->
+    <section class="section-spacing" data-dom-id="hero" style="background-color: var(--color-bg);">
+      <div class="mx-auto px-6 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center" style="max-width: var(--container-max);">
+        <!-- Text — 40% -->
+        <div class="lg:col-span-2">
+          <h1 class="font-semibold" style="font-size: clamp(28px, 3.5vw, 48px); line-height: 1.1; letter-spacing: var(--tracking-tight); color: var(--color-text); text-wrap: balance;" data-dom-id="hero-h1">
+            <span data-en="200,000 Units. Zero Compromise." data-zh="20万台。零妥协。">200,000 Units. Zero Compromise.</span>
+          </h1>
+          <p class="mt-6" style="font-size: 1.125rem; line-height: var(--leading-normal); color: var(--color-text-secondary); max-width: 440px;" data-dom-id="hero-subtitle">
+            <span data-en="25,000m² ISO-certified facility. MES-driven quality control. UL and EN compliant production lines." data-zh="25,000平方米ISO认证工厂。MES驱动质量管控。UL和EN合规生产线。">25,000m² ISO-certified facility. MES-driven quality control. UL and EN compliant production lines.</span>
+          </p>
+          <div class="mt-8">
+            <a
+              href="contact.html"
+              class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white rounded-lg transition-colors duration-150"
+              style="background-color: var(--color-primary);"
+              onmouseover="this.style.backgroundColor='var(--color-primary-hover)'"
+              onmouseout="this.style.backgroundColor='var(--color-primary)'"
+              data-dom-id="hero-cta"
+            >
+              <span data-en="Schedule a Factory Tour" data-zh="预约工厂参观">Schedule a Factory Tour</span>
+            </a>
+          </div>
+          <p class="mt-4" style="font-size: var(--text-sm); color: var(--color-text-tertiary);">
+            <span data-en="Virtual tours available. In-person visits welcome." data-zh="支持线上参观。欢迎实地考察。">Virtual tours available. In-person visits welcome.</span>
+          </p>
+        </div>
+        <!-- Image — 60% -->
+        <div class="lg:col-span-3" data-dom-id="hero-image">
+          <div class="video-container" style="position: relative; width: 100%; border-radius: var(--radius-lg); overflow: hidden; background: #000; margin-top: 32px;">
+            <video
+              src="assets/odevideo.mp4"
+              poster="assets/factory-assembly.jpg"
+              autoplay muted loop playsinline
+              style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: var(--radius-lg); max-height: 520px;"
+            ></video>
+            <div class="video-play-btn" style="position: absolute; bottom: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.2s;" onclick="toggleVideo(this)">
+              <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Section 2: Key Numbers — The Proof ─── -->
+    <section class="section-spacing" style="background-color: var(--color-bg-alt);" data-dom-id="key-numbers">
+      <div class="mx-auto px-6" style="max-width: var(--container-max);">
+        <h2 class="text-center font-semibold" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; letter-spacing: -0.015em; color: var(--color-text);">
+          <span data-en="By the Numbers" data-zh="数据说话">By the Numbers</span>
+        </h2>
+        <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-dom-id="stat-cards">
+          <!-- Stat 1 -->
+          <div class="text-center p-6 rounded-lg" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+            <p class="stat-number font-bold" style="font-size: clamp(32px, 3.5vw, 56px); line-height: 1; color: var(--color-text);">
+              <span data-en="25,000m²" data-zh="25,000m²">25,000m²</span>
+            </p>
+            <p class="mt-3 text-sm font-semibold" style="color: var(--color-text);">
+              <span data-en="Factory Area" data-zh="厂房面积">Factory Area</span>
+            </p>
+            <p class="mt-1 text-sm" style="color: var(--color-text-tertiary);">
+              <span data-en="Integrated manufacturing campus in Huai'an, China" data-zh="位于中国淮安的综合性制造园区">Integrated manufacturing campus in Huai'an, China</span>
+            </p>
+          </div>
+          <!-- Stat 2 -->
+          <div class="text-center p-6 rounded-lg" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+            <p class="stat-number font-bold" style="font-size: clamp(32px, 3.5vw, 56px); line-height: 1; color: var(--color-text);">
+              <span data-en="200,000+" data-zh="200,000+">200,000+</span>
+            </p>
+            <p class="mt-3 text-sm font-semibold" style="color: var(--color-text);">
+              <span data-en="Annual Capacity" data-zh="年产能">Annual Capacity</span>
+            </p>
+            <p class="mt-1 text-sm" style="color: var(--color-text-tertiary);">
+              <span data-en="3 assembly lines running at full capacity" data-zh="3条产线满负荷运转">3 assembly lines running at full capacity</span>
+            </p>
+          </div>
+          <!-- Stat 3 -->
+          <div class="text-center p-6 rounded-lg" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+            <p class="stat-number font-bold" style="font-size: clamp(32px, 3.5vw, 56px); line-height: 1; color: var(--color-text);">
+              <span data-en="48-Point" data-zh="48道">48-Point</span>
+            </p>
+            <p class="mt-3 text-sm font-semibold" style="color: var(--color-text);">
+              <span data-en="QC System" data-zh="质检体系">QC System</span>
+            </p>
+            <p class="mt-1 text-sm" style="color: var(--color-text-tertiary);">
+              <span data-en="Every unit inspected at 48 checkpoints" data-zh="每台产品经过48道检测点">Every unit inspected at 48 checkpoints</span>
+            </p>
+          </div>
+          <!-- Stat 4 -->
+          <div class="text-center p-6 rounded-lg" style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+            <p class="stat-number font-bold" style="font-size: clamp(32px, 3.5vw, 56px); line-height: 1; color: var(--color-text);">
+              <span data-en="100%" data-zh="100%">100%</span>
+            </p>
+            <p class="mt-3 text-sm font-semibold" style="color: var(--color-text);">
+              <span data-en="Component Traceability" data-zh="零部件追溯">Component Traceability</span>
+            </p>
+            <p class="mt-1 text-sm" style="color: var(--color-text-tertiary);">
+              <span data-en="MES real-time tracking from raw material to finished product" data-zh="MES实时追踪从原材料到成品全流程">MES real-time tracking from raw material to finished product</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Section 3: Under One Roof — Capability Grid ─── -->
+    <section class="section-spacing" style="background-color: var(--color-bg);" data-dom-id="capability-grid">
+      <div class="mx-auto px-6" style="max-width: var(--container-max);">
+        <h2 class="text-center font-semibold" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; letter-spacing: -0.015em; color: var(--color-text);">
+          <span data-en="Everything Under One Roof" data-zh="全链路自主可控">Everything Under One Roof</span>
+        </h2>
+        <p class="mt-4 text-center mx-auto" style="font-size: 1.0625rem; line-height: var(--leading-normal); color: var(--color-text-secondary); max-width: 600px;">
+          <span data-en="No outsourcing. No hand-offs. Full control from raw material to shipping container." data-zh="不外包，不交接。从原材料到装箱出货全程自主管控。">No outsourcing. No hand-offs. Full control from raw material to shipping container.</span>
+        </p>
+        <div class="video-container" style="position: relative; width: 100%; border-radius: var(--radius-lg); overflow: hidden; background: #000; max-width: 100%; aspect-ratio: 16/9; margin-bottom: 32px;">
+          <video
+            src="assets/odevideo.mp4"
+            poster="assets/factory-overview.jpg"
+            autoplay muted loop playsinline
+            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+          ></video>
+          <div class="video-play-btn" style="position: absolute; bottom: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.2s;" onclick="toggleVideo(this)">
+            <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          </div>
+        </div>
+        <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-dom-id="capability-cards">
+
+          <!-- Capability 1: In-House Tooling -->
+          <div class="capability-card">
+            <div class="mb-4" style="color: var(--color-primary);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-4.66 2.58a.5.5 0 01-.74-.44V5.69a.5.5 0 01.74-.44l4.66 2.58"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.42 15.17l4.66 2.58a.5.5 0 00.74-.44V5.69a.5.5 0 00-.74-.44l-4.66 2.58"/>
+                <line x1="14.5" y1="8" x2="14.5" y2="16"/>
+                <line x1="12.5" y1="10" x2="16.5" y2="14"/>
+                <line x1="16.5" y1="10" x2="12.5" y2="14"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold" style="font-size: 1.125rem; color: var(--color-text);">
+              <span data-en="In-House Tooling" data-zh="自主开模">In-House Tooling</span>
+            </h3>
+            <p class="mt-2" style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+              <span data-en="CNC, EDM, wire cutting. Micron-level tolerance." data-zh="CNC、EDM、线切割。微米级精度。">CNC, EDM, wire cutting. Micron-level tolerance.</span>
+            </p>
+          </div>
+
+          <!-- Capability 2: Frame Manufacturing -->
+          <div class="capability-card">
+            <div class="mb-4" style="color: var(--color-primary);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 3v18"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold" style="font-size: 1.125rem; color: var(--color-text);">
+              <span data-en="Frame Manufacturing" data-zh="车架制造">Frame Manufacturing</span>
+            </h3>
+            <p class="mt-2" style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+              <span data-en="CNC welding, T4/T6 heat treatment for aluminum frames." data-zh="CNC焊接，T4/T6热处理铝合金车架。">CNC welding, T4/T6 heat treatment for aluminum frames.</span>
+            </p>
+          </div>
+
+          <!-- Capability 3: Integrated Coating -->
+          <div class="capability-card">
+            <div class="mb-4" style="color: var(--color-primary);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m-6-6l6 6 6-6M6 3l6 6 6-6"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold" style="font-size: 1.125rem; color: var(--color-text);">
+              <span data-en="Integrated Coating" data-zh="一体化涂装">Integrated Coating</span>
+            </h3>
+            <p class="mt-2" style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+              <span data-en="Pretreatment, e-coating, powder coating. Mass production consistency." data-zh="前处理、电泳、粉末喷涂。量产一致性。">Pretreatment, e-coating, powder coating. Mass production consistency.</span>
+            </p>
+          </div>
+
+          <!-- Capability 4: Assembly Lines -->
+          <div class="capability-card">
+            <div class="mb-4" style="color: var(--color-primary);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 18l4-4m0 0l4-4m-4 4h8a4 4 0 000-8h-2"/>
+                <circle cx="6" cy="6" r="2"/>
+                <circle cx="18" cy="18" r="2"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold" style="font-size: 1.125rem; color: var(--color-text);">
+              <span data-en="Assembly Lines" data-zh="总装产线">Assembly Lines</span>
+            </h3>
+            <p class="mt-2" style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+              <span data-en="3 fully automated assembly lines. 200K+ annual output." data-zh="3条全自动化装配线。年产量20万+。">3 fully automated assembly lines. 200K+ annual output.</span>
+            </p>
+          </div>
+
+          <!-- Capability 5: Quality Control -->
+          <div class="capability-card">
+            <div class="mb-4" style="color: var(--color-primary);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold" style="font-size: 1.125rem; color: var(--color-text);">
+              <span data-en="Quality Control" data-zh="质量控制">Quality Control</span>
+            </h3>
+            <p class="mt-2" style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+              <span data-en="48-point inspection. 20+ performance tests. Zero-defect target." data-zh="48道检测。20+性能测试。零缺陷目标。">48-point inspection. 20+ performance tests. Zero-defect target.</span>
+            </p>
+          </div>
+
+          <!-- Capability 6: Certified Shipping -->
+          <div class="capability-card">
+            <div class="mb-4" style="color: var(--color-primary);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold" style="font-size: 1.125rem; color: var(--color-text);">
+              <span data-en="Certified Shipping" data-zh="专业出货">Certified Shipping</span>
+            </h3>
+            <p class="mt-2" style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+              <span data-en="Professional packaging. Global logistics. Container loading." data-zh="专业包装。全球物流。集装箱装运。">Professional packaging. Global logistics. Container loading.</span>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Section 4: Quality Deep Dive ─── -->
+    <section class="section-spacing" style="background-color: var(--color-bg-alt);" data-dom-id="quality-deep-dive">
+      <div class="mx-auto px-6" style="max-width: var(--container-max);">
+        <h2 class="text-center font-semibold" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; letter-spacing: -0.015em; color: var(--color-text);">
+          <span data-en="Quality Is Not a Department. It's a System." data-zh="质量不是一个部门，而是一套体系。">Quality Is Not a Department. It's a System.</span>
+        </h2>
+        <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <!-- Image LEFT -->
+          <div data-dom-id="quality-image">
+            <img
+              src="assets/factory-qc.jpg"
+              alt="PXID quality control inspector performing 48-point inspection on production line"
+              class="w-full rounded-lg object-cover"
+              style="border-radius: var(--radius-lg); max-height: 440px;"
+              loading="lazy"
+            >
+          </div>
+          <!-- Text RIGHT -->
+          <div data-dom-id="quality-details">
+            <ul class="space-y-6">
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 mt-1 inline-flex items-center justify-center w-8 h-8 rounded-md text-xs font-bold text-white" style="background-color: var(--color-primary);">01</span>
+                <div>
+                  <h3 class="font-semibold" style="font-size: 1rem; color: var(--color-text);">
+                    <span data-en="MES System" data-zh="MES系统">MES System</span>
+                  </h3>
+                  <p style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                    <span data-en="Real-time production tracking. Every component logged and traceable." data-zh="实时生产追踪。每个零部件可记录、可追溯。">Real-time production tracking. Every component logged and traceable.</span>
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 mt-1 inline-flex items-center justify-center w-8 h-8 rounded-md text-xs font-bold text-white" style="background-color: var(--color-primary);">02</span>
+                <div>
+                  <h3 class="font-semibold" style="font-size: 1rem; color: var(--color-text);">
+                    <span data-en="48-Point QC" data-zh="48道质检">48-Point QC</span>
+                  </h3>
+                  <p style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                    <span data-en="From incoming materials to finished product packaging." data-zh="从进料检测到成品包装的全流程把控。">From incoming materials to finished product packaging.</span>
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 mt-1 inline-flex items-center justify-center w-8 h-8 rounded-md text-xs font-bold text-white" style="background-color: var(--color-primary);">03</span>
+                <div>
+                  <h3 class="font-semibold" style="font-size: 1rem; color: var(--color-text);">
+                    <span data-en="20+ Tests" data-zh="20+项测试">20+ Tests</span>
+                  </h3>
+                  <p style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                    <span data-en="Road testing, endurance, brake, battery, motor, waterproof, drop test." data-zh="路测、耐久、制动、电池、电机、防水、跌落测试。">Road testing, endurance, brake, battery, motor, waterproof, drop test.</span>
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="shrink-0 mt-1 inline-flex items-center justify-center w-8 h-8 rounded-md text-xs font-bold text-white" style="background-color: var(--color-primary);">04</span>
+                <div>
+                  <h3 class="font-semibold" style="font-size: 1rem; color: var(--color-text);">
+                    <span data-en="Certified Standards" data-zh="认证标准">Certified Standards</span>
+                  </h3>
+                  <p style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                    <span data-en="ISO 9001 certified. UL and EN production line compliance." data-zh="ISO 9001认证。UL和EN产线合规。">ISO 9001 certified. UL and EN production line compliance.</span>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p class="mt-6"><a href="case-studies.html" class="cross-link-btn inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-150" style="color: var(--color-primary); border: 1px solid var(--color-primary); padding: 8px 16px; border-radius: var(--radius-md);" onmouseover="this.style.backgroundColor='var(--color-primary-light)'; this.style.borderColor='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='var(--color-primary)';" data-en="Quality in action — see our case studies →" data-zh="质量实践 — 查看案例 →">Quality in action — see our case studies →</a></p>
+      </div>
+    </section>
+
+    <!-- ─── Section 5: Tooling Advantage ─── -->
+    <section class="section-spacing" style="background-color: var(--color-bg);" data-dom-id="tooling-advantage">
+      <div class="mx-auto px-6" style="max-width: var(--container-max);">
+        <h2 class="text-center font-semibold" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; letter-spacing: -0.015em; color: var(--color-text);">
+          <span data-en="100% In-House Tooling" data-zh="100%自主开模">100% In-House Tooling</span>
+        </h2>
+        <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <!-- Text LEFT -->
+          <div data-dom-id="tooling-details">
+            <ul class="space-y-6">
+              <li>
+                <p style="font-size: 1.0625rem; line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                  <span data-en="We don't outsource molds. Every tool is designed, fabricated, and maintained in our own facility." data-zh="我们不外包模具。每个模具都在自有工厂内设计、制造和维护。">We don't outsource molds. Every tool is designed, fabricated, and maintained in our own facility.</span>
+                </p>
+              </li>
+              <li>
+                <p style="font-size: 1.0625rem; line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                  <span data-en="30% faster time-to-market vs. outsourced tooling." data-zh="相比外包模具，上市速度提升30%。">30% faster time-to-market vs. outsourced tooling.</span>
+                </p>
+              </li>
+              <li>
+                <p style="font-size: 1.0625rem; line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                  <span data-en="Full dimensional control. Micron-level tolerance." data-zh="全程尺寸管控。微米级精度。">Full dimensional control. Micron-level tolerance.</span>
+                </p>
+              </li>
+              <li>
+                <p style="font-size: 1.0625rem; line-height: var(--leading-normal); color: var(--color-text-secondary);">
+                  <span data-en="15-day prototype from existing molds. 45 days for new tooling." data-zh="现有模具15天出样。新模具45天交付。">15-day prototype from existing molds. 45 days for new tooling.</span>
+                </p>
+              </li>
+            </ul>
+            <!-- Stat callout -->
+            <div class="mt-10 inline-flex items-center gap-3 px-6 py-4 rounded-lg" style="background: var(--color-primary-light); border-radius: var(--radius-md);" data-dom-id="tooling-stat">
+              <span class="font-bold stat-number" style="font-size: clamp(28px, 3vw, 42px); color: var(--color-primary);">
+                <span data-en="-30%" data-zh="-30%">-30%</span>
+              </span>
+              <span style="font-size: var(--text-sm); font-weight: 600; color: var(--color-text);">
+                <span data-en="Time-to-Market" data-zh="缩短上市周期">Time-to-Market</span>
+              </span>
+            </div>
+          </div>
+          <!-- Image RIGHT -->
+          <div data-dom-id="tooling-image">
+            <img
+              src="assets/factory-tooling.jpg"
+              alt="PXID in-house tooling workshop with CNC and EDM equipment"
+              class="w-full rounded-lg object-cover"
+              style="border-radius: var(--radius-lg); max-height: 440px;"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Section 6: Certifications ─── -->
+    <section class="section-spacing" style="background-color: var(--color-bg-alt);" data-dom-id="certifications">
+      <div class="mx-auto px-6" style="max-width: var(--container-max);">
+        <h2 class="text-center font-semibold" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; letter-spacing: -0.015em; color: var(--color-text);">
+          <span data-en="Certified for Your Market" data-zh="为您的市场做好准备">Certified for Your Market</span>
+        </h2>
+        <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6" data-dom-id="cert-cards">
+          <!-- Europe -->
+          <div class="cert-card">
+            <h3 class="font-semibold mb-4" style="font-size: 0.9375rem; color: var(--color-text);">
+              <span data-en="Europe" data-zh="欧洲">Europe</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">CE</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">EN 15194</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">RoHS</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">E-mark</span>
+            </div>
+          </div>
+          <!-- North America -->
+          <div class="cert-card">
+            <h3 class="font-semibold mb-4" style="font-size: 0.9375rem; color: var(--color-text);">
+              <span data-en="North America" data-zh="北美">North America</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">UL</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">FCC</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">CPSC</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">DOT</span>
+            </div>
+          </div>
+          <!-- Asia-Pacific -->
+          <div class="cert-card">
+            <h3 class="font-semibold mb-4" style="font-size: 0.9375rem; color: var(--color-text);">
+              <span data-en="Asia-Pacific" data-zh="亚太">Asia-Pacific</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">PSE</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">CCC</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">ISO 9001</span>
+              <span class="inline-block px-3 py-1.5 text-xs font-medium rounded-md" style="background: var(--color-bg-alt); border: 1px solid var(--color-border); color: var(--color-text);">CB</span>
+            </div>
+          </div>
+        </div>
+        <p class="mt-8 text-center" style="font-size: var(--text-sm); color: var(--color-text-tertiary);">
+          <span data-en="We assist with market-specific certifications based on your target region." data-zh="我们根据您的目标市场协助办理相关认证。">We assist with market-specific certifications based on your target region.</span>
+        </p>
+        <p class="mt-6 text-center"><a href="certifications.html" class="cross-link-btn inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-150" style="color: var(--color-primary); border: 1px solid var(--color-primary); padding: 8px 16px; border-radius: var(--radius-md);" onmouseover="this.style.backgroundColor='var(--color-primary-light)'; this.style.borderColor='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='var(--color-primary)';" data-en="View detailed certification list →" data-zh="查看详细认证清单 →">View detailed certification list →</a></p>
+      </div>
+    </section>
+
+    <!-- ─── Section 7: CTA Block — Dark ─── -->
+    <section class="py-24 px-6" style="background-color: var(--color-bg-dark);" data-dom-id="cta-block">
+      <div class="mx-auto text-center" style="max-width: var(--container-narrow);">
+        <h2 class="font-semibold text-white" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; letter-spacing: -0.015em;">
+          <span data-en="See It For Yourself." data-zh="亲眼看一看。">See It For Yourself.</span>
+        </h2>
+        <p class="mt-4" style="font-size: 1.0625rem; line-height: var(--leading-normal); color: var(--color-text-tertiary);">
+          <span data-en="Walk our production lines. Meet our engineers. Review our QC process in person." data-zh="走进产线，与工程师面对面，亲身体验质检流程。">Walk our production lines. Meet our engineers. Review our QC process in person.</span>
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="contact.html"
+            class="inline-flex items-center px-6 py-3 text-sm font-semibold text-white rounded-lg transition-colors duration-150"
+            style="background-color: var(--color-primary);"
+            onmouseover="this.style.backgroundColor='var(--color-primary-hover)'"
+            onmouseout="this.style.backgroundColor='var(--color-primary)'"
+            data-dom-id="cta-tour"
+          >
+            <span data-en="Schedule a Factory Tour" data-zh="预约工厂参观">Schedule a Factory Tour</span>
+          </a>
+          <a
+            href="#"
+            class="inline-flex items-center px-6 py-3 text-sm font-semibold rounded-lg transition-colors duration-150"
+            style="border: 1px solid rgba(255,255,255,0.2); color: var(--color-text-inverse); background: transparent;"
+            onmouseover="this.style.borderColor='rgba(255,255,255,0.4)'"
+            onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"
+            data-dom-id="cta-download"
+          >
+            <span data-en="Download Factory Profile" data-zh="下载工厂介绍">Download Factory Profile</span>
+          </a>
+        </div>
+        <p class="mt-6" style="font-size: var(--text-sm); color: var(--color-text-tertiary);">
+          <span data-en="Virtual tours also available via video call." data-zh="也可通过视频会议进行线上参观。">Virtual tours also available via video call.</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer style="background-color: var(--color-bg-dark);">
+    <!-- Main Footer Content -->
+    <div class="mx-auto px-6 pt-16 pb-12" style="max-width: var(--container-max);">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
+
+        <!-- Column 1: Brand Info -->
+        <div>
+          <a href="index.html" class="inline-block mb-4">
+            <span class="text-xl font-extrabold tracking-tight text-white" style="letter-spacing: var(--tracking-tight);">PXID</span>
+          </a>
+          <p class="text-sm leading-relaxed" style="color: var(--color-text-tertiary);">
+            Professional electric vehicle OEM/ODM manufacturer. Your trusted partner for e-bikes, e-motorcycles, and e-scooters.
+          </p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Quick Links" data-zh="快速链接">Quick Links</h4>
+          <ul class="space-y-2.5">
+            <li><a href="index.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Home" data-zh="首页">Home</a></li>
+            <li><a href="products.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-dom-id="cta-products" data-en="Products" data-zh="产品中心">Products</a></li>
+            <li><a href="odm-services.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a></li>
+            <li><a href="about.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="About Us" data-zh="关于我们">About Us</a></li>
+            <li><a href="news.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="News" data-zh="新闻动态">News</a></li>
+            <li><a href="contact.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Contact" data-zh="联系我们">Contact</a></li>
+            <li><a href="manufacturing.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Manufacturing" data-zh="制造能力">Manufacturing</a></li>
+            <li><a href="case-studies.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Case Studies" data-zh="客户案例">Case Studies</a></li>
+            <li><a href="certifications.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Certifications" data-zh="认证资质">Certifications</a></li>
+                        <li><a href="distributor.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Distributor" data-zh="经销商">Distributor</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Product Categories -->
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Product Categories" data-zh="产品分类">Product Categories</h4>
+          <ul class="space-y-2.5">
+            <li><a href="products.html#e-bikes" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Bikes" data-zh="电动自行车">E-Bikes</a></li>
+            <li><a href="products.html#e-motorcycles" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Motorcycles" data-zh="电动摩托车">E-Motorcycles</a></li>
+            <li><a href="products.html#e-scooters" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Scooters" data-zh="电动滑板车">E-Scooters</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact -->
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Contact Us" data-zh="联系我们">Contact Us</h4>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5">
+              <!-- Email icon -->
+              <svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0l-9.75 6.15L2.25 6.75"/>
+              </svg>
+              <a href="mailto:info@pxid.com" class="text-sm footer-link" style="color: var(--color-text-tertiary);">info@pxid.com</a>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <!-- Phone icon -->
+              <svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+              </svg>
+              <a href="tel:+8618888888888" class="text-sm footer-link" style="color: var(--color-text-tertiary);">+86 188-8888-8888</a>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <!-- WhatsApp icon -->
+              <svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              <a href="https://wa.me/8618888888888" target="_blank" rel="noopener noreferrer" class="text-sm footer-link" style="color: var(--color-text-tertiary);">WhatsApp</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3" style="max-width: var(--container-max); border-top: 1px solid rgba(255,255,255,0.08);">
+      <p class="text-xs" style="color: var(--color-text-tertiary);">&copy; 2026 PXID. All rights reserved.</p>
+      <p class="text-xs" style="color: var(--color-text-tertiary);">UL &middot; EN &middot; CE &middot; ISO Compliant Manufacturing</p>
+    </div>
+  </footer>
+
+  <!-- ── Mobile Menu Toggle Script ── -->
+  <script>
+    (function () {
+      const btn = document.getElementById("hamburger-btn");
+      const menu = document.getElementById("mobile-menu");
+      if (!btn || !menu) return;
+
+      btn.addEventListener("click", function () {
+        const isOpen = menu.classList.toggle("open");
+        btn.classList.toggle("hamburger-active", isOpen);
+        btn.setAttribute("aria-expanded", String(isOpen));
+      });
+    })();
+  </script>
+
+
+    <style>
+    /* ── Nav active state ── */
+    [data-active="true"] {
+      color: var(--color-primary) !important;
+      font-weight: 600;
+    }
+
+    /* ── Mobile menu transitions ── */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    #mobile-menu.open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    /* ── Hamburger animation ── */
+    .hamburger-line {
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .hamburger-active .hamburger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger-active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-active .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ── Body offset for sticky nav ── */
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    
+    /* ── Language Toggle ── */
+    #lang-toggle { cursor: pointer; user-select: none; }
+    #lang-toggle:hover { filter: brightness(0.9); }
+
+    /* ── Footer link hover ── */
+    .footer-link {
+      transition: color var(--transition-fast);
+    }
+    .footer-link:hover {
+      color: var(--color-primary-light, #FFFFFF);
+    }
+
+    /* ── Manufacturing page styles ── */
+    .stat-number {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .section-spacing {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+
+    .capability-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
+      transition: border-color var(--transition-fast);
+    }
+    .capability-card:hover {
+      border-color: var(--color-primary);
+    }
+
+    .cert-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .capability-card,
+      .stat-card {
+        transition: none !important;
+      }
+    }
+    .video-container:hover .video-play-btn { opacity: 1; }
+  
+  </style>
+  <!-- ── i18n Language Switcher ── -->
+  <script src="assets/i18n.js"></script>
+<script>
+function toggleVideo(btn) {
+  var video = btn.closest('.video-container').querySelector('video');
+  if (video.paused) { video.play(); btn.querySelector('svg path').setAttribute('d','M6 4h4v16H6zM14 4h4v16h-4z'); }
+  else { video.pause(); btn.querySelector('svg path').setAttribute('d','M8 5v14l11-7z'); }
+}
+</script>
+</body>
+</html>

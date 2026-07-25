@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get a Quote – PXID Electric Mobility</title>
+    <style id="theme-vars">
+/* PXID International Brand CSS — Minimal Industrial */
+:root {
+  /* ── Colors ── */
+  --color-primary: #0052CC;
+  --color-primary-hover: #003D99;
+  --color-primary-light: #E8F0FE;
+  --color-primary-50: rgba(0, 82, 204, 0.04);
+  --color-primary-100: rgba(0, 82, 204, 0.08);
+
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8F9FB;
+  --color-bg-dark: #0A1628;
+  --color-bg-dark-secondary: #111D32;
+
+  --color-text: #1A1A2E;
+  --color-text-secondary: #5F6B7A;
+  --color-text-tertiary: #8C95A3;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border: #E2E6EB;
+  --color-border-light: #F0F2F5;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FFFFFF;
+
+  /* ── State Colors ── */
+  --state-success: #059669;
+  --state-warning: #D97706;
+  --state-error: #DC2626;
+  --state-info: #0284C7;
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.04);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.04);
+
+  /* ── Layout ── */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+  --section-spacing: 120px;
+  --navbar-height: 72px;
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+.dark {
+  --color-bg: #0A1628;
+  --color-bg-alt: #111D32;
+  --color-bg-dark: #060E1A;
+  --color-bg-dark-secondary: #0A1628;
+  --color-text: #F0F2F5;
+  --color-text-secondary: #A0AEC0;
+  --color-text-tertiary: #6B7B8D;
+  --color-border: #1E2D45;
+  --color-border-light: #152238;
+  --color-surface: #111D32;
+  --color-surface-raised: #162340;
+  --color-primary-light: rgba(0, 82, 204, 0.12);
+  --color-primary-50: rgba(0, 82, 204, 0.06);
+  --color-primary-100: rgba(0, 82, 204, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.3);
+}to { opacity: 1; transform: translateY(0); } }
+  </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    
+  </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER / NAVIGATION
+       ═══════════════════════════════════════════════════════════ -->
+  <header
+    class="sticky top-0 z-50 w-full bg-white"
+    style="border-bottom: 1px solid var(--color-border); height: var(--navbar-height);"
+  >
+    <nav class="mx-auto flex items-center justify-between h-full px-6" style="max-width: var(--container-max);">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2 shrink-0" data-dom-id="nav-logo">
+        <span class="text-xl font-extrabold tracking-tight" style="color: var(--color-text); letter-spacing: var(--tracking-tight);">PXID</span>
+        <span class="hidden sm:inline text-xs font-medium" style="color: var(--color-text-tertiary);" data-en="OEM/ODM Manufacturer" data-zh="OEM/ODM 制造商" data-en="OEM/ODM Manufacturer" data-zh="OEM/ODM 制造商">OEM/ODM Manufacturer</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="hidden md:flex items-center gap-4 ml-auto" style="margin-right: 16px;">
+        <li>
+          <a
+            href="index.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="home"
+            data-dom-id="nav-home"
+           data-en="Home" data-zh="首页">Home</a>
+        </li>
+        <li>
+          <a
+            href="products.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="products"
+            data-dom-id="nav-products"
+           data-en="Products" data-zh="产品中心">Products</a>
+        </li>
+        <li>
+          <a
+            href="odm-services.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="odm"
+           data-en="ODM Services" data-zh="ODM 服务">ODM Services</a>
+        </li>
+        <li>
+          <a
+            href="about.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="about"
+           data-en="About Us" data-zh="关于我们">About Us</a>
+        </li>
+        <li>
+          <a
+            href="news.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="news"
+           data-en="News" data-zh="新闻动态">News</a>
+        </li>
+        
+        </ul>
+
+      <!-- Desktop CTA + Language Toggle + Mobile Hamburger -->
+      <div class="flex items-center gap-3">
+        <!-- Language Toggle -->
+        <button
+          id="lang-toggle"
+          class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150"
+          style="background-color: #F59E0B;"
+          onmouseover="this.style.backgroundColor='#D97706';"
+          onmouseout="this.style.backgroundColor='#F59E0B';"
+          aria-label="Switch to Chinese"
+        >中文</button>
+        <a
+          href="contact.html"
+          class="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150"
+          style="background-color: var(--color-primary);"
+          onmouseover="this.style.backgroundColor='var(--color-primary-hover)'"
+          onmouseout="this.style.backgroundColor='var(--color-primary)'"
+          data-dom-id="cta-quote"
+         data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+
+        <!-- Hamburger Button (mobile) -->
+        <button
+          id="hamburger-btn"
+          class="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span>
+          <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span>
+          <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="md:hidden bg-white" style="border-bottom: 1px solid var(--color-border);">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="index.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="home" data-en="Home" data-zh="首页">Home</a>
+        <a href="products.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="products" data-en="Products" data-zh="产品中心">Products</a>
+        <a href="odm-services.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="odm" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a>
+        <a href="about.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="about" data-en="About Us" data-zh="关于我们">About Us</a>
+        <a href="news.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="news" data-en="News" data-zh="新闻动态">News</a>
+        
+        
+        <a
+          href="contact.html"
+          class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg mt-2"
+          style="background-color: var(--color-primary);"
+          data-dom-id="cta-quote"
+         data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT SLOT
+       Leaf pages insert their <main> content here.
+       ═══════════════════════════════════════════════════════════ -->
+  <main class="flex-1">
+
+    <!-- ═══════════════════════════════════════════════════════
+         Section 1: Page Header
+         ═══════════════════════════════════════════════════════ -->
+    <section
+      class="relative"
+      style="background-color: var(--color-bg-alt); padding: var(--space-20) 0 var(--space-20) 0;"
+    >
+      <div class="mx-auto px-6 text-center" style="max-width: var(--container-narrow);">
+        <h1
+          data-en="Get in Touch"
+          data-zh="联系我们"
+          class="font-semibold text-balance"
+          style="font-size: var(--text-3xl); line-height: var(--leading-tight); color: var(--color-text); letter-spacing: var(--tracking-tight);"
+        >Get in Touch</h1>
+        <p
+          data-en="Tell us about your project. We'll respond within 24 hours."
+          data-zh="告诉我们您的项目需求，我们将在24小时内回复您。"
+          class="mt-4"
+          style="font-size: var(--text-lg); line-height: var(--leading-normal); color: var(--color-text-secondary);"
+        >Tell us about your project. We'll respond within 24 hours.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Section 2: Form + Contact Info (Two-Column)
+         ═══════════════════════════════════════════════════════ -->
+    <section style="padding: var(--space-20) 0 var(--space-20) 0;">
+      <div class="mx-auto px-6" style="max-width: var(--container-max);">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
+
+          <!-- Left Column: Contact Form (60%) -->
+          <div class="lg:col-span-3">
+            <div
+              id="form-banner-success"
+              class="form-banner success"
+              role="status"
+            >
+              Thank you! Your inquiry has been submitted. We'll get back to you within 24 hours.
+            </div>
+            <div
+              id="form-banner-error"
+              class="form-banner error"
+              role="alert"
+            >
+              Something went wrong. Please try again or contact us directly via WhatsApp.
+            </div>
+
+            <form id="contact-form" novalidate autocomplete="on">
+              <!-- Name -->
+              <div class="mb-5">
+                <label for="form-name" class="contact-form-label">
+                  <span data-en="Name" data-zh="姓名">Name</span><span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="form-name"
+                  name="name"
+                  required
+                  autocomplete="name"
+                  placeholder="Your full name"
+                  class="contact-form-input"
+                  aria-describedby="name-error"
+                >
+                <p id="name-error" class="error-message" role="alert">Please enter your name.</p>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-5">
+                <label for="form-email" class="contact-form-label">
+                  <span data-en="Email" data-zh="邮箱">Email</span><span class="required">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="form-email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  placeholder="you@company.com"
+                  class="contact-form-input"
+                  aria-describedby="email-error"
+                >
+                <p id="email-error" class="error-message" role="alert">Please enter a valid email address.</p>
+              </div>
+
+              <!-- Company Name -->
+              <div class="mb-5">
+                <label for="form-company" class="contact-form-label">
+                  <span data-en="Company Name" data-zh="公司名称">Company Name</span>
+                </label>
+                <input
+                  type="text"
+                  id="form-company"
+                  name="company"
+                  autocomplete="organization"
+                  placeholder="Your company (optional)"
+                  class="contact-form-input"
+                >
+              </div>
+
+              <!-- Phone / WhatsApp -->
+              <div class="mb-5">
+                <label for="form-phone" class="contact-form-label">
+                  <span data-en="Phone / WhatsApp" data-zh="电话 / WhatsApp">Phone / WhatsApp</span>
+                </label>
+                <input
+                  type="tel"
+                  id="form-phone"
+                  name="phone"
+                  autocomplete="tel"
+                  placeholder="+1 234 567 8900"
+                  class="contact-form-input"
+                >
+              </div>
+
+              <!-- Interest Dropdown -->
+              <div class="mb-5">
+                <label for="form-interest" class="contact-form-label">
+                  <span data-en="I'm interested in" data-zh="我感兴趣的服务">I'm interested in</span>
+                </label>
+                <select
+                  id="form-interest"
+                  name="interest"
+                  class="contact-form-input"
+                  style="appearance: none; background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%235F6B7A%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px;"
+                >
+                  <option value="" disabled selected>Select a service</option>
+                  <option value="odm" data-en="ODM Services" data-zh="ODM 服务">ODM Services</option>
+                  <option value="oem" data-en="OEM Manufacturing" data-zh="OEM 制造">OEM Manufacturing</option>
+                  <option value="fleet" data-en="Fleet Solutions" data-zh="车队解决方案">Fleet Solutions</option>
+                  <option value="distribution" data-en="Product Distribution" data-zh="产品分销">Product Distribution</option>
+                  <option value="other" data-en="Other" data-zh="其他">Other</option>
+                </select>
+              </div>
+
+              <!-- Message -->
+              <div class="mb-6">
+                <label for="form-message" class="contact-form-label">
+                  <span data-en="Message" data-zh="留言">Message</span><span class="required">*</span>
+                </label>
+                <textarea
+                  id="form-message"
+                  name="message"
+                  required
+                  rows="5"
+                  placeholder="Describe your project, requirements, or questions..."
+                  class="contact-form-input"
+                  style="resize: vertical; min-height: 120px;"
+                  aria-describedby="message-error"
+                ></textarea>
+                <p id="message-error" class="error-message" role="alert">Please enter your message.</p>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="submit-btn" id="submit-btn">
+                <span class="spinner"></span>
+                <span class="btn-text" data-en="Send Inquiry" data-zh="发送询盘">Send Inquiry</span>
+                <span class="btn-loading-text">Sending...</span>
+              </button>
+
+              <!-- Privacy Note -->
+              <p
+                class="mt-4"
+                style="font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: var(--leading-normal);"
+              >
+                <span data-en="We respect your privacy. Your information will not be shared with third parties." data-zh="我们尊重您的隐私。您的信息不会与第三方共享。">We respect your privacy. Your information will not be shared with third parties.</span>
+              </p>
+            </form>
+          </div>
+
+          <!-- Right Column: Contact Information (40%) -->
+          <div class="lg:col-span-2">
+            <div class="contact-info-card">
+              <h3
+                data-en="Contact Information"
+                data-zh="联系方式"
+                class="font-semibold mb-6"
+                style="font-size: var(--text-lg); color: var(--color-text);"
+              >Contact Information</h3>
+              <p class="mt-1" style="color: var(--color-text-tertiary); font-size: var(--text-sm);">Not sure yet? <a href="manufacturing.html" class="cross-link-btn inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-150" style="color: var(--color-primary); border: 1px solid var(--color-primary); padding: 8px 16px; border-radius: var(--radius-md);" onmouseover="this.style.backgroundColor='var(--color-primary-light)'; this.style.borderColor='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='var(--color-primary)';" data-en="Tour our factory" data-zh="参观工厂">Tour our factory</a> or <a href="case-studies.html" class="cross-link-btn inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-150" style="color: var(--color-primary); border: 1px solid var(--color-primary); padding: 8px 16px; border-radius: var(--radius-md);" onmouseover="this.style.backgroundColor='var(--color-primary-light)'; this.style.borderColor='var(--color-primary)';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='var(--color-primary)';" data-en="read case studies" data-zh="阅读案例">read case studies</a> first.</p>
+
+              <!-- Email -->
+              <div class="flex items-start gap-3 mb-5">
+                <svg class="w-5 h-5 mt-0.5 shrink-0" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0l-9.75 6.15L2.25 6.75"/>
+                </svg>
+                <div>
+                  <p style="font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 2px;">
+                    <span data-en="Email" data-zh="邮箱">Email</span>
+                  </p>
+                  <a href="mailto:info@pxid.com" class="font-medium" style="font-size: var(--text-sm); color: var(--color-text); text-decoration: none;">info@pxid.com</a>
+                </div>
+              </div>
+
+              <!-- Phone -->
+              <div class="flex items-start gap-3 mb-5">
+                <svg class="w-5 h-5 mt-0.5 shrink-0" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                </svg>
+                <div>
+                  <p style="font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 2px;">
+                    <span data-en="Phone" data-zh="电话">Phone</span>
+                  </p>
+                  <a href="tel:+8675588888888" class="font-medium" style="font-size: var(--text-sm); color: var(--color-text); text-decoration: none;">+86 755 xxxx xxxx</a>
+                </div>
+              </div>
+
+              <!-- WhatsApp -->
+              <div class="flex items-start gap-3 mb-5">
+                <svg class="w-5 h-5 mt-0.5 shrink-0" style="color: var(--color-primary);" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <div>
+                  <p style="font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 2px;">
+                    <span data-en="WhatsApp" data-zh="WhatsApp">WhatsApp</span>
+                  </p>
+                  <a href="https://wa.me/861xxxxxxxxxx" target="_blank" rel="noopener noreferrer" class="font-medium" style="font-size: var(--text-sm); color: var(--color-text); text-decoration: none;">+86 1xx xxxx xxxx</a>
+                </div>
+              </div>
+
+              <!-- Address -->
+              <div class="flex items-start gap-3 mb-5">
+                <svg class="w-5 h-5 mt-0.5 shrink-0" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                </svg>
+                <div>
+                  <p style="font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 2px;">
+                    <span data-en="Address" data-zh="地址">Address</span>
+                  </p>
+                  <p class="font-medium" style="font-size: var(--text-sm); color: var(--color-text);">
+                    <span data-en="Shenzhen, Guangdong, China" data-zh="中国广东省深圳市">Shenzhen, Guangdong, China</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Working Hours -->
+              <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 mt-0.5 shrink-0" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>
+                  <p style="font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 2px;">
+                    <span data-en="Working Hours" data-zh="工作时间">Working Hours</span>
+                  </p>
+                  <p class="font-medium" style="font-size: var(--text-sm); color: var(--color-text);">
+                    <span data-en="Mon-Fri, 9:00-18:00 (GMT+8)" data-zh="周一至周五 9:00-18:00 (GMT+8)">Mon-Fri, 9:00-18:00 (GMT+8)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ghost Buttons -->
+            <div class="mt-6 flex flex-col gap-3">
+              <a
+                href="https://wa.me/861xxxxxxxxxx"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ghost-btn"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                </svg>
+                <span data-en="Schedule a Call" data-zh="预约通话">Schedule a Call</span>
+              </a>
+              <a
+                href="#factory-tour"
+                class="ghost-btn"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                </svg>
+                <span data-en="Factory Tour" data-zh="参观工厂">Factory Tour</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Section 3: FAQ — Contact-Specific
+         ═══════════════════════════════════════════════════════ -->
+    <section style="background-color: var(--color-bg-alt); padding: var(--space-12) 0 var(--space-20) 0;">
+      <div class="mx-auto px-6" style="max-width: var(--container-narrow);">
+        <h2
+          data-en="Common Questions"
+          data-zh="常见问题"
+          class="font-semibold text-balance mb-8"
+          style="font-size: var(--text-2xl); line-height: var(--leading-tight); color: var(--color-text); letter-spacing: var(--tracking-tight);"
+        >Common Questions</h2>
+
+        <div>
+          <!-- FAQ 1 -->
+          <details class="faq-item">
+            <summary>
+              <span data-en="What's your typical response time?" data-zh="你们通常的回复时间是多久？">What's your typical response time?</span>
+              <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p data-en="We respond to all inquiries within 24 hours during business days. For urgent requests, WhatsApp is the fastest way to reach us." data-zh="我们在工作日内会在24小时内回复所有询盘。如需紧急联系，WhatsApp是最快的方式。">We respond to all inquiries within 24 hours during business days. For urgent requests, WhatsApp is the fastest way to reach us.</p>
+            </div>
+          </details>
+
+          <!-- FAQ 2 -->
+          <details class="faq-item">
+            <summary>
+              <span data-en="Can I visit your factory?" data-zh="我可以参观你们的工厂吗？">Can I visit your factory?</span>
+              <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p data-en="Absolutely. We welcome factory visits in Shenzhen and Huai'an. Please schedule in advance so we can prepare product demos and technical discussions. Virtual tours via video call are also available." data-zh="当然欢迎。我们在深圳和淮安设有工厂，欢迎提前预约参观，我们将为您准备产品演示和技术讨论。我们也提供视频通话形式的线上参观。">Absolutely. We welcome factory visits in Shenzhen and Huai'an. Please schedule in advance so we can prepare product demos and technical discussions. Virtual tours via video call are also available.</p>
+            </div>
+          </details>
+
+          <!-- FAQ 3 -->
+          <details class="faq-item">
+            <summary>
+              <span data-en="What's the minimum order quantity?" data-zh="最小起订量是多少？">What's the minimum order quantity?</span>
+              <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              <p data-en="OEM orders start at 50 units. ODM projects start at 100 units. Small-batch trial orders are welcome. Joint development projects have negotiable MOQ." data-zh="OEM订单起订量为50台。ODM项目起订量为100台。欢迎小批量试单。联合开发项目的起订量可协商。">OEM orders start at 50 units. ODM projects start at 100 units. Small-batch trial orders are welcome. Joint development projects have negotiable MOQ.</p>
+            </div>
+          </details>
+
+          <!-- FAQ 4 -->
+          <details class="faq-item" style="border-bottom: none;">
+            <summary>
+              <span data-en="Do you offer samples?" data-zh="你们提供样品吗？">Do you offer samples?</span>
+              <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </summary>
+            <div class="faq-answer" style="border-bottom: none;">
+              <p data-en="Yes, samples are available for most models. Sample fees apply and are refundable against bulk orders. Shipping via DHL/FedEx, typically 5-7 days delivery." data-zh="是的，大多数型号都提供样品。样品需付费，但可在批量订单中抵扣。通过DHL/FedEx发货，通常5-7天送达。">Yes, samples are available for most models. Sample fees apply and are refundable against bulk orders. Shipping via DHL/FedEx, typically 5-7 days delivery.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer style="background-color: var(--color-bg-dark);">
+    <!-- Main Footer Content -->
+    <div class="mx-auto px-6 pt-16 pb-12" style="max-width: var(--container-max);">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
+
+        <!-- Column 1: Brand Info -->
+        <div>
+          <a href="index.html" class="inline-block mb-4">
+            <span class="text-xl font-extrabold tracking-tight text-white" style="letter-spacing: var(--tracking-tight);">PXID</span>
+          </a>
+          <p class="text-sm leading-relaxed" style="color: var(--color-text-tertiary);">
+            Professional electric vehicle OEM/ODM manufacturer. Your trusted partner for e-bikes, e-motorcycles, and e-scooters.
+          </p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Quick Links" data-zh="快速链接">Quick Links</h4>
+          <ul class="space-y-2.5">
+            <li><a href="index.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Home" data-zh="首页">Home</a></li>
+            <li><a href="products.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-dom-id="cta-products" data-en="Products" data-zh="产品中心">Products</a></li>
+            <li><a href="odm-services.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a></li>
+            <li><a href="about.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="About Us" data-zh="关于我们">About Us</a></li>
+            <li><a href="news.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="News" data-zh="新闻动态">News</a></li>
+            <li><a href="contact.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Contact" data-zh="联系我们">Contact</a></li>
+            <li><a href="manufacturing.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Manufacturing" data-zh="制造能力">Manufacturing</a></li>
+            <li><a href="case-studies.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Case Studies" data-zh="客户案例">Case Studies</a></li>
+            <li><a href="certifications.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Certifications" data-zh="认证资质">Certifications</a></li>
+                        <li><a href="distributor.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Distributor" data-zh="经销商">Distributor</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Product Categories -->
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Product Categories" data-zh="产品分类">Product Categories</h4>
+          <ul class="space-y-2.5">
+            <li><a href="products.html#e-bikes" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Bikes" data-zh="电动自行车">E-Bikes</a></li>
+            <li><a href="products.html#e-motorcycles" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Motorcycles" data-zh="电动摩托车">E-Motorcycles</a></li>
+            <li><a href="products.html#e-scooters" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Scooters" data-zh="电动滑板车">E-Scooters</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact -->
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Contact Us" data-zh="联系我们">Contact Us</h4>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5">
+              <!-- Email icon -->
+              <svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0l-9.75 6.15L2.25 6.75"/>
+              </svg>
+              <a href="mailto:info@pxid.com" class="text-sm footer-link" style="color: var(--color-text-tertiary);">info@pxid.com</a>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <!-- Phone icon -->
+              <svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+              </svg>
+              <a href="tel:+8618888888888" class="text-sm footer-link" style="color: var(--color-text-tertiary);">+86 188-8888-8888</a>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <!-- WhatsApp icon -->
+              <svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              <a href="https://wa.me/8618888888888" target="_blank" rel="noopener noreferrer" class="text-sm footer-link" style="color: var(--color-text-tertiary);">WhatsApp</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3" style="max-width: var(--container-max); border-top: 1px solid rgba(255,255,255,0.08);">
+      <p class="text-xs" style="color: var(--color-text-tertiary);">&copy; 2026 PXID. All rights reserved.</p>
+      <p class="text-xs" style="color: var(--color-text-tertiary);">UL &middot; EN &middot; CE &middot; ISO Compliant Manufacturing</p>
+    </div>
+  </footer>
+
+  <!-- ── Mobile Menu Toggle Script ── -->
+  <script>
+    (function () {
+      const btn = document.getElementById("hamburger-btn");
+      const menu = document.getElementById("mobile-menu");
+      if (!btn || !menu) return;
+
+      btn.addEventListener("click", function () {
+        const isOpen = menu.classList.toggle("open");
+        btn.classList.toggle("hamburger-active", isOpen);
+        btn.setAttribute("aria-expanded", String(isOpen));
+      });
+    })();
+  </script>
+
+  <!-- ── Contact Form Validation & Submission ── -->
+  <script>
+    (function () {
+      var form = document.getElementById("contact-form");
+      var submitBtn = document.getElementById("submit-btn");
+      var bannerSuccess = document.getElementById("form-banner-success");
+      var bannerError = document.getElementById("form-banner-error");
+
+      // Helper: show/hide field error
+      function setError(input, errorEl, show) {
+        if (show) {
+          input.classList.add("error");
+          errorEl.classList.add("visible");
+        } else {
+          input.classList.remove("error");
+          errorEl.classList.remove("visible");
+        }
+      }
+
+      // Validate email format
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Validate single field
+      function validateField(input) {
+        var errorEl = document.getElementById(input.id + "-error");
+        if (!errorEl) return true;
+
+        if (input.required && !input.value.trim()) {
+          setError(input, errorEl, true);
+          return false;
+        }
+        if (input.type === "email" && input.value.trim() && !isValidEmail(input.value.trim())) {
+          setError(input, errorEl, true);
+          return false;
+        }
+        setError(input, errorEl, false);
+        return true;
+      }
+
+      // Real-time validation on blur
+      var inputs = form.querySelectorAll("input[required], textarea[required], input[type='email']");
+      inputs.forEach(function (input) {
+        input.addEventListener("blur", function () {
+          validateField(input);
+        });
+        input.addEventListener("input", function () {
+          if (input.classList.contains("error")) {
+            validateField(input);
+          }
+        });
+      });
+
+      // Form submit
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Hide banners
+        bannerSuccess.className = "form-banner success";
+        bannerError.className = "form-banner error";
+
+        // Validate all required fields
+        var nameInput = document.getElementById("form-name");
+        var emailInput = document.getElementById("form-email");
+        var messageInput = document.getElementById("form-message");
+        var nameErr = document.getElementById("name-error");
+        var emailErr = document.getElementById("email-error");
+        var msgErr = document.getElementById("message-error");
+
+        var valid = true;
+        if (!validateField(nameInput)) valid = false;
+        if (!validateField(emailInput)) valid = false;
+        if (!validateField(messageInput)) valid = false;
+
+        if (!valid) return;
+
+        // Simulate submission (replace with actual endpoint)
+        submitBtn.classList.add("loading");
+        submitBtn.disabled = true;
+
+        setTimeout(function () {
+          submitBtn.classList.remove("loading");
+          submitBtn.disabled = false;
+
+          // Randomly show success (in production, check response)
+          bannerSuccess.className = "form-banner success visible";
+          form.reset();
+
+          // Scroll to banner
+          bannerSuccess.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 1500);
+      });
+    })();
+  </script>
+
+
+    <style>
+    /* ── Nav active state ── */
+    /* ── Nav active state ── */
+    [data-active="true"] {
+      color: var(--color-primary) !important;
+      font-weight: 600;
+      border: 1.5px solid var(--color-primary);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+    }
+
+    /* ── Mobile menu transitions ── */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    #mobile-menu.open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    /* ── Hamburger animation ── */
+    .hamburger-line {
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .hamburger-active .hamburger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger-active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-active .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ── Body offset for sticky nav ── */
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    
+    /* ── Language Toggle ── */
+    #lang-toggle { cursor: pointer; user-select: none; }
+    #lang-toggle:hover { filter: brightness(0.9); }
+
+    /* ── Footer link hover ── */
+    .footer-link {
+      transition: color var(--transition-fast);
+    }
+    .footer-link:hover {
+      color: var(--color-primary-light, #FFFFFF);
+    }
+
+    /* ── Contact Page Styles ── */
+    .contact-form-input {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 0.9375rem;
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      outline: none;
+    }
+    .contact-form-input::placeholder {
+      color: var(--color-text-tertiary);
+    }
+    .contact-form-input:hover {
+      border-color: var(--color-text-tertiary);
+    }
+    .contact-form-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px var(--color-primary-100);
+    }
+    .contact-form-input.error {
+      border-color: var(--state-error);
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.08);
+    }
+
+    .contact-form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .contact-form-label .required {
+      color: var(--state-error);
+      margin-left: 2px;
+    }
+
+    .error-message {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--state-error);
+      margin-top: 4px;
+    }
+    .error-message.visible {
+      display: block;
+    }
+
+    .contact-info-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
+    }
+
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      color: var(--color-primary);
+      background-color: transparent;
+      border: 1px solid var(--color-primary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+      text-decoration: none;
+    }
+    .ghost-btn:hover {
+      background-color: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+    .ghost-btn:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* ── FAQ Accordion ── */
+    .faq-item summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--color-border-light);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text);
+      user-select: none;
+      transition: color var(--transition-fast);
+    }
+    .faq-item summary:hover {
+      color: var(--color-primary);
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary .chevron {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--color-text-tertiary);
+      transition: transform var(--transition-base);
+    }
+    .faq-item[open] summary .chevron {
+      transform: rotate(180deg);
+    }
+    .faq-item summary::after {
+      content: '';
+      display: none;
+    }
+    .faq-answer {
+      padding: 0 0 20px 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .faq-answer p {
+      font-size: 0.9375rem;
+      line-height: var(--leading-relaxed);
+      color: var(--color-text-secondary);
+      max-width: 680px;
+    }
+
+    /* ── Submission states ── */
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      color: var(--color-text-inverse);
+      background-color: var(--color-primary);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+    .submit-btn:hover {
+      background-color: var(--color-primary-hover);
+      transform: translateY(-1px);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+    .submit-btn:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .submit-btn .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: var(--color-text-inverse);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    .submit-btn.loading .spinner {
+      display: block;
+    }
+    .submit-btn.loading .btn-text {
+      display: none;
+    }
+    .submit-btn.loading .btn-loading-text {
+      display: inline;
+    }
+    .submit-btn .btn-loading-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Success / Error banners */
+    .form-banner {
+      display: none;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: var(--space-6);
+    }
+    .form-banner.success {
+      display: block;
+      background-color: rgba(5, 150, 105, 0.08);
+      color: var(--state-success);
+      border: 1px solid rgba(5, 150, 105, 0.2);
+    }
+    .form-banner.error {
+      display: block;
+      background-color: rgba(220, 38, 38, 0.08);
+      color: var(--state-error);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq-item summary .chevron,
+      .submit-btn,
+      .ghost-btn,
+      .contact-form-input,
+      .hamburger-line,
+      .submit-btn .spinner {
+        transition-duration: 0.01ms;
+        animation-duration: 0.01ms;
+      }
+    }
+  
+  </style>
+  <!-- ── i18n Language Switcher ── -->
+  <script src="assets/i18n.js"></script>
+</body>
+</html>

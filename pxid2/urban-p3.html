@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URBAN P3 | PXID Smart Electric Scooter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/products/urban-p3.css">
+  <link rel="stylesheet" href="css/products/scooter-mobile-fix.css">
+</head>
+<body data-lang="en" data-scheme="blue">
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="navbar">
+        <div class="container">
+            <a href="首页.html" class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <span class="logo-name">PXID</span>
+                    <span class="logo-sub lang-en">OEM/ODM Manufacturer</span>
+                    <span class="logo-sub lang-zh">OEM/ODM 制造商</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                <a href="产品.html" class="active"><span class="lang-en">Products</span><span class="lang-zh">产品</span></a>
+                <a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                <a href="新闻页.html"><span class="lang-en">News</span><span class="lang-zh">新闻</span></a>
+                <a href="about us.html"><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                <a href="报价页面.html" class="nav-cta"><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                <button class="lang-switch" onclick="toggleLang()"><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                <button class="scheme-switch" onclick="toggleScheme()" title="切换蓝/绿色调"><i class="fas fa-palette"></i></button></div>
+            <button class="mobile-lang-switch" onclick="toggleLang()" aria-label="Toggle language">
+                <i class="fas fa-globe"></i>
+                <span class="lang-label-en">EN</span>
+                <span class="lang-sep">/</span>
+                <span class="lang-label-zh">中文</span>
+            </button>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </div>
+        <div class="mobile-menu-panel" aria-hidden="true">
+            <div class="container mobile-menu-card">
+                <div class="mobile-menu-head">
+                    <div>
+                        <div class="mobile-menu-title"><span class="lang-en">Menu</span><span class="lang-zh">导航菜单</span></div>
+                        <div class="mobile-menu-sub"><span class="lang-en">PXID OEM/ODM Manufacturer</span><span class="lang-zh">PXID OEM/ODM 制造商</span></div>
+                    </div>
+                    <button class="mobile-menu-close" type="button" aria-label="Close menu"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="mobile-menu-list">
+                    <a class="mobile-menu-item" href="首页.html"><i class="fas fa-house"></i><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                    <a class="mobile-menu-item" href="产品.html"><i class="fas fa-bicycle"></i><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a>
+                    <a class="mobile-menu-item" href="odm 服务.html"><i class="fas fa-industry"></i><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                    <a class="mobile-menu-item" href="新闻页.html"><i class="fas fa-newspaper"></i><span class="lang-en">News</span><span class="lang-zh">新闻动态</span></a>
+                    <a class="mobile-menu-item" href="about us.html"><i class="fas fa-building"></i><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                    <a class="mobile-menu-item mobile-menu-quote" href="报价页面.html"><i class="fas fa-paper-plane"></i><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                </div>
+                <div class="mobile-menu-tools">
+                    <button type="button" onclick="toggleLang()"><i class="fas fa-globe"></i><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                    <button type="button" onclick="toggleScheme()"><i class="fas fa-palette"></i><span class="lang-en">Color</span><span class="lang-zh">配色</span></button>
+                </div>
+                <div class="mobile-menu-contact">
+                    <a href="mailto:inquiry@pxid.com"><i class="fas fa-envelope"></i> inquiry@pxid.com</a>
+                    <a href="tel:+8618936381099"><i class="fas fa-phone"></i> +86 189 3638 1099</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <!-- Content -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">Electric Scooter Series</div>
+      <h1 class="hero-title">
+        智能折叠滑板车<br>
+        <span class="blue">URBAN P3</span>
+      </h1>
+      <p class="hero-subtitle">
+        蓝牙APP连接 · 500W电机 · 3秒折叠 · EN17128灯光
+      </p>
+      <div class="hero-specs-inline">
+        <div class="hero-spec">
+          <span class="hero-spec-value blue">45<span style="font-size:16px">km/h</span></span>
+          <span class="hero-spec-label">Max Speed</span>
+        </div>
+        <div class="hero-spec">
+          <span class="hero-spec-value">50<span style="font-size:16px">km</span></span>
+          <span class="hero-spec-label">Max Range</span>
+        </div>
+        <div class="hero-spec">
+          <span class="hero-spec-value">22.1<span style="font-size:16px">kg</span></span>
+          <span class="hero-spec-label">Net Weight</span>
+        </div>
+        <div class="hero-spec">
+          <span class="hero-spec-value">100<span style="font-size:16px">kg</span></span>
+          <span class="hero-spec-label">Max Load</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="报价页面.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          获取定制报价
+        </a>
+        <a class="btn btn-outline spec-download" href="https://www.pxid.com/uploads/URBAN-P3.pdf" target="_blank" rel="noopener noreferrer">下载规格书</a>
+      </div>
+    </div>
+
+    <!-- Visual — URBAN P3 产品视频 -->
+    <div class="hero-visual">
+      <video autoplay muted loop playsinline style="width:100%;max-width:700px;aspect-ratio:700/450;object-fit:cover;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.12);background:#0a1a2f;">
+        <source src="media/urban-p3/urban-p3-product-video.mp4" type="video/mp4" />
+        <!-- 兜底图片（视频加载失败时显示） -->
+        <img src="./media/urban-p3/DM_20260704100429_009.JPEG" alt="URBAN P3 电动滑板车" style="width:100%;max-width:700px;aspect-ratio:700/450;object-fit:cover;border-radius:20px;" loading="eager" decoding="async" />
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MINI STRIP ═══ -->
+<div class="mini-strip">
+  <div class="mini-strip-inner">
+    <div class="mini-item blue">
+      <div class="mini-dot"></div>
+      <strong>500W</strong> Motor Power
+    </div>
+    <div class="mini-item">
+      <div class="mini-dot" style="background: #666;"></div>
+      <strong>48V 15.6Ah</strong> Battery
+    </div>
+    <div class="mini-item blue">
+      <div class="mini-dot"></div>
+      <strong>22.1kg</strong> Net Weight
+    </div>
+    <div class="mini-item">
+      <div class="mini-dot" style="background: #666;"></div>
+      <strong>100kg</strong> Max Load
+    </div>
+    <div class="mini-item blue">
+      <div class="mini-dot"></div>
+      <strong>IP54</strong> Waterproof
+    </div>
+    <div class="mini-item">
+      <div class="mini-dot" style="background: #666;"></div>
+      <strong>3s</strong> Fold Time
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BENEFITS ═══ -->
+<section class="section benefits-section">
+  <div class="section-inner">
+    <div class="section-label">Why PXID Scooters</div>
+    <h2 class="section-title">为城市出行而生</h2>
+    <p class="section-desc">500W强劲动力、50km超长续航、蓝牙APP智控——URBAN P3智能电动滑板车，定义未来出行。</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div class="benefit-title">Smart APP Control</div>
+        <p class="benefit-desc">蓝牙连接手机APP，开关机、控制灯光、锁定车辆及个性化设置一应俱全</p>
+        <span class="benefit-spec">蓝牙APP · 智能操控</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><path d="M21 3l-9 9M10 3H3v7M3 10l9 9"/></svg>
+        </div>
+        <div class="benefit-title">3s Quick Fold</div>
+        <p class="benefit-desc">3秒快速折叠，折叠后仅1180×510×470mm，单手携带放入后备箱</p>
+        <span class="benefit-spec">3秒折叠 · 便携出行</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="benefit-title">Dual Suspension + BMS</div>
+        <p class="benefit-desc">前后双悬架减震，先进BMS电池管理系统，EN17128安全标准灯光</p>
+        <span class="benefit-spec">双悬架 · 安全认证</span>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+        </div>
+        <div class="benefit-title">50km Range</div>
+        <p class="benefit-desc">48V 15.6Ah可拆卸电池，可选21Ah大容量，满足日常通勤及远行需求</p>
+        <span class="benefit-spec">48V 15.6Ah · 可升级至21Ah</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARE MODELS ═══ -->
+<section class="section compare-section">
+  <div class="section-inner">
+    <div class="section-label">Product Line</div>
+    <h2 class="section-title">两大型号，按需选择</h2>
+    <div class="compare-grid">
+      <!-- Lite Model -->
+      <div class="compare-card">
+        <div class="compare-visual light">
+          <div class="compare-badge light">Lite</div>
+          <img src="./media/urban-p3/DM_20260704100429_012.JPEG" alt="URBAN P3 城市轻骑" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async" />
+        </div>
+        <div class="compare-content">
+          <div class="compare-name">城市轻骑</div>
+          <div class="compare-model">URBAN P3 · Lite</div>
+          <div class="compare-specs">
+            <div class="compare-spec"><span class="compare-spec-label">Max Speed</span><span class="compare-spec-value">25 km/h</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Range</span><span class="compare-spec-value">30km</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Motor</span><span class="compare-spec-value">250W</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Weight</span><span class="compare-spec-value">8.5kg</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Battery</span><span class="compare-spec-value">36V 7.5Ah</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Fold Time</span><span class="compare-spec-value">3s</span></div>
+          </div>
+          <div class="compare-price">
+            <div>
+              <div class="compare-price-label">OEM Starting Price</div>
+              <div class="compare-price-value">$199 <span class="compare-price-note">/ unit</span></div>
+            </div>
+            <button class="btn btn-outline" style="padding: 10px 20px; font-size: 13px;">了解详情</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro Model -->
+      <div class="compare-card">
+        <div class="compare-visual pro">
+          <div class="compare-badge pro">Pro</div>
+          <img src="./media/urban-p3/DM_20260704100429_016.JPEG" alt="URBAN P3 城市远行" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async" />
+        </div>
+        <div class="compare-content">
+          <div class="compare-name">城市远行</div>
+          <div class="compare-model">URBAN P3 · Pro</div>
+          <div class="compare-specs">
+            <div class="compare-spec"><span class="compare-spec-label">Max Speed</span><span class="compare-spec-value">35 km/h</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Range</span><span class="compare-spec-value">50km</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Motor</span><span class="compare-spec-value">350W</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Weight</span><span class="compare-spec-value">12kg</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Battery</span><span class="compare-spec-value">36V 10Ah</span></div>
+            <div class="compare-spec"><span class="compare-spec-label">Fold Time</span><span class="compare-spec-value">3s</span></div>
+          </div>
+          <div class="compare-price">
+            <div>
+              <div class="compare-price-label">OEM Starting Price</div>
+              <div class="compare-price-value">$299 <span class="compare-price-note">/ unit</span></div>
+            </div>
+            <button class="btn btn-outline" style="padding: 10px 20px; font-size: 13px;">了解详情</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOLD STEPS ═══ -->
+<section class="section fold-section">
+  <div class="section-inner">
+    <div class="section-label">Design Detail</div>
+    <h2 class="section-title">3秒折叠，随行无拘</h2>
+    <p class="section-desc">URBAN P3快速折叠机制，折叠后仅1180×510×470mm，单手携带放入后备箱</p>
+    <div class="fold-visual-container">
+      <div class="fold-step">
+        <div class="fold-step-num">1</div>
+        <div class="fold-step-title">提起</div>
+        <div class="fold-step-desc">轻拉折叠把手</div>
+        <div class="fold-step-time"></div>
+      </div>
+      <div class="fold-step">
+        <div class="fold-step-num">2</div>
+        <div class="fold-step-title">折叠</div>
+        <div class="fold-step-desc">车身自动贴合</div>
+        <div class="fold-step-time"></div>
+      </div>
+      <div class="fold-step">
+        <div class="fold-step-num">3</div>
+        <div class="fold-step-title">锁定</div>
+        <div class="fold-step-desc">咔嗒一声固定</div>
+        <div class="fold-step-time"></div>
+      </div>
+      <div class="fold-step">
+        <div class="fold-step-num" style="background: rgba(0,102,204,0.15); color: var(--trust-blue);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="fold-step-title">完成</div>
+        <div class="fold-step-desc">放入后备箱出发</div>
+        <div class="fold-step-time">仅 22.1kg</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IMAGE GALLERY ═══ -->
+<section class="section gallery-section">
+  <div class="section-inner">
+    <div class="section-label">Product Gallery</div>
+    <h2 class="section-title">细节之美 · 轻盈可见</h2>
+    <p class="section-desc">每一处线条、每一个按键、每一寸质感，都凝聚着 PXID 对极简出行工具的极致追求</p>
+    <div class="gallery-scroller">
+      <div class="gallery-scroll-item">
+        <div class="scroll-item-visual"><img src="./media/urban-p3/DM_20260704100429_001.JPEG" alt="整体外观" loading="lazy" decoding="async" /></div>
+        <div class="scroll-item-label">整体外观</div>
+        <div class="scroll-item-sub">城市骑行场景</div>
+      </div>
+      <div class="gallery-scroll-item">
+        <div class="scroll-item-visual"><img src="./media/urban-p3/DM_20260704100429_009.JPEG" alt="侧面线条" style="filter:brightness(0.85);" loading="lazy" decoding="async" /></div>
+        <div class="scroll-item-label">侧面线条</div>
+        <div class="scroll-item-sub">URBAN P3</div>
+      </div>
+      <div class="gallery-scroll-item">
+        <div class="scroll-item-visual"><img src="./media/urban-p3/DM_20260704100429_007.JPEG" alt="可定制部件" style="filter:brightness(0.9);" loading="lazy" decoding="async" /></div>
+        <div class="scroll-item-label">可定制部件</div>
+        <div class="scroll-item-sub">Customizable Parts</div>
+      </div>
+      <div class="gallery-scroll-item">
+        <div class="scroll-item-visual"><img src="./media/urban-p3/DM_20260704100429_006.JPEG" alt="电池组" loading="lazy" decoding="async" /></div>
+        <div class="scroll-item-label">电池组</div>
+        <div class="scroll-item-sub">48V 15.6Ah 电池组</div>
+      </div>
+      <div class="gallery-scroll-item">
+        <div class="scroll-item-visual"><img src="./media/urban-p3/DM_20260704100429_003.JPEG" alt="后轮毂电机" style="filter:brightness(0.8);" loading="lazy" decoding="async" /></div>
+        <div class="scroll-item-label">后轮毂电机</div>
+        <div class="scroll-item-sub">500W 驱动系统</div>
+      </div>
+      <div class="gallery-scroll-item">
+        <div class="scroll-item-visual"><img src="./media/urban-p3/DM_20260704100429_015.JPEG" alt="智能仪表" loading="lazy" decoding="async" /></div>
+        <div class="scroll-item-label">智能仪表</div>
+        <div class="scroll-item-sub">蓝牙APP互联</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FULL SPECS TABLE ═══ -->
+<section class="section specs-section">
+  <div class="section-inner">
+    <div class="section-label">Full Specifications</div>
+    <h2 class="section-title">完整参数对比</h2>
+    <div class="specs-table">
+      <div class="specs-table-header">
+        <div>Specification</div>
+        <div>URBAN P3 Standard</div>
+        <div>URBAN P3 Upgrade</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Motor Power</div>
+        <div class="specs-value">500W Brushless Hub</div>
+        <div class="specs-value blue">800W (Customizable)</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Top Speed</div>
+        <div class="specs-value">45 km/h</div>
+        <div class="specs-value blue">45 km/h</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Battery</div>
+        <div class="specs-value">48V 15.6Ah</div>
+        <div class="specs-value blue">Up to 48V 21Ah</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Max Range</div>
+        <div class="specs-value">50 km</div>
+        <div class="specs-value blue">Up to 65 km</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Charge Time</div>
+        <div class="specs-value">6-8 Hours</div>
+        <div class="specs-value blue">8-10 Hours</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Net Weight</div>
+        <div class="specs-value">22.1 kg</div>
+        <div class="specs-value blue">22.1 kg</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Max Load</div>
+        <div class="specs-value">100 kg</div>
+        <div class="specs-value blue">100 kg</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Tire Size</div>
+        <div class="specs-value">10" Tubeless (Color Customizable)</div>
+        <div class="specs-value blue">10" Tubeless (Color Customizable)</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Suspension</div>
+        <div class="specs-value">Front + Rear Dual</div>
+        <div class="specs-value blue">Front + Rear Dual</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Brakes</div>
+        <div class="specs-value">Front Drum + Rear Disc</div>
+        <div class="specs-value blue">Hydraulic Disc Option</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Display</div>
+        <div class="specs-value">LED (LCD Option, Customizable)</div>
+        <div class="specs-value blue">LCD Customizable</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Smart Features</div>
+        <div class="specs-value blue">Bluetooth APP Control</div>
+        <div class="specs-value blue">Bluetooth APP Control</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Dimensions (L×W×H)</div>
+        <div class="specs-value blue">1180×510×1235mm (Unfolded)</div>
+        <div class="specs-value blue">1180×510×1235mm</div>
+      </div>
+      <div class="specs-table-row">
+        <div class="specs-label">Foldable</div>
+        <div class="specs-value blue">Yes · 3s Quick Fold</div>
+        <div class="specs-value blue">Yes · 3s Quick Fold</div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VIDEO SHOWCASE ═══ -->
+<section class="section video-section">
+  <div class="section-inner">
+    <div class="section-label">Video Showcase</div>
+    <h2 class="section-title">轻盈出行 · 眼所见</h2>
+    <p class="section-desc">极简折叠、轻盈重量、卓越续航——PXID电动滑板车城市出行实测</p>
+    <div class="scooter-video-grid">
+      <div class="scooter-video-main">
+        <div class="scooter-video-player" id="mainVideoPlayer">
+          <img id="mainCover" src="./media/urban-p3/DM_20260704100429_001.JPEG" alt="URBAN P3 视频封面" loading="lazy" decoding="async" />
+          <div class="scooter-video-cover-overlay"></div>
+          <div class="scooter-video-play" id="mainPlayBtn">
+            <div class="scooter-play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="scooter-video-duration" id="mainDuration">0:19</div>
+          <video id="mainVideo" style="display:none;" controls playsinline>
+            <source src="media/urban-p3/urban-p3-product-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="scooter-video-caption">
+          <h3>URBAN P3 · 便携出行视频</h3>
+          <p>展示 URBAN P3 电动滑板车的便携骑行、折叠出行与城市通勤场景，适合作为产品详情页主视频。</p>
+        </div>
+      </div>
+      <div class="scooter-video-side">
+        <div class="scooter-video-thumb" data-video-src="media/urban-p3/urban-p3-product-video.mp4" data-cover="./media/urban-p3/DM_20260704100429_013.JPEG" data-duration="0:19" data-title="P3 便携出行">
+          <div class="scooter-thumb-visual">
+            <img src="./media/urban-p3/DM_20260704100429_013.JPEG" alt="3秒折叠" loading="lazy" decoding="async" />
+            <div class="scooter-thumb-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <div class="scooter-thumb-time">0:45</div>
+          </div>
+          <div class="scooter-thumb-info">
+            <div class="scooter-thumb-title">3秒折叠实测</div>
+            <div class="scooter-thumb-sub">单手操作 · 快速上车</div>
+          </div>
+        </div>
+        <div class="scooter-video-thumb" data-video-src="media/urban-p3/urban-p3-product-video.mp4" data-cover="./media/urban-p3/DM_20260704100429_015.JPEG" data-duration="0:19" data-title="P3 产品展示">
+          <div class="scooter-thumb-visual">
+            <img src="./media/urban-p3/DM_20260704100429_015.JPEG" alt="续航测试" loading="lazy" decoding="async" />
+            <div class="scooter-thumb-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <div class="scooter-thumb-time">3:10</div>
+          </div>
+          <div class="scooter-thumb-info">
+            <div class="scooter-thumb-title">续航实测</div>
+            <div class="scooter-thumb-sub">URBAN P3 城市续航测试</div>
+          </div>
+        </div>
+        <div class="scooter-video-thumb" data-video-src="media/urban-p3/urban-p3-product-video.mp4" data-cover="./media/urban-p3/DM_20260704100429_005.JPEG" data-duration="0:19" data-title="P3 城市骑行">
+          <div class="scooter-thumb-visual">
+            <img src="./media/urban-p3/DM_20260704100429_005.JPEG" alt="EN17128 灯光" loading="lazy" decoding="async" />
+            <div class="scooter-thumb-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <div class="scooter-thumb-time">1:55</div>
+          </div>
+          <div class="scooter-thumb-info">
+            <div class="scooter-thumb-title">EN17128 灯光</div>
+            <div class="scooter-thumb-sub">夜间骑行的安心保障</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OEM CAPABILITIES ═══ -->
+<section class="section oem-section">
+  <div class="section-inner">
+    <div class="section-label">OEM/ODM</div>
+    <h2 class="section-title">制造实力 · 灵活定制</h2>
+    <p class="section-desc">从外观到核心部件，全方位OEM/ODM定制，支持小批量起订</p>
+    <div class="oem-grid">
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div class="oem-value">20万㎡</div>
+        <div class="oem-label">Production Area</div>
+        <div class="oem-desc">自有工厂</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="oem-value">50万+</div>
+        <div class="oem-label">Annual Capacity</div>
+        <div class="oem-desc">充足产能</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="oem-value">CE/FCC/UL</div>
+        <div class="oem-label">Certifications</div>
+        <div class="oem-desc">全球合规</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="oem-value">50台</div>
+        <div class="oem-label">Min Order Qty</div>
+        <div class="oem-desc">小批量可订</div>
+      </div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-pill active">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        CE
+      </div>
+      <div class="cert-pill active">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        FCC
+      </div>
+      <div class="cert-pill active">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        UL
+      </div>
+      <div class="cert-pill active">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        EN 17128
+      </div>
+      <div class="cert-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        ROHS 2.0
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">开启合作，从一辆样车开始</h2>
+    <p class="cta-desc">联系我们获取定制方案。最低50台起订，灵活支持品牌定制、功能定制和贴牌生产。</p>
+    <div class="cta-actions">
+      <a href="报价页面.html" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        获取定制报价
+      </a>
+      <button class="btn btn-outline">下载产品目录</button>
+    </div>
+    <div class="cta-trust">
+      <div class="cta-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        48h 内回复
+      </div>
+      <div class="cta-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        最低 50 台起订
+      </div>
+      <div class="cta-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        样机 3 周交付
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo-icon">P</div>
+                        <span class="footer-logo-name">PXID</span>
+                    </div>
+                    <p class="footer-desc lang-en">Global electric mobility OEM/ODM manufacturer. E-bikes, e-motorcycles, and e-scooters for brands worldwide.</p>
+                    <p class="footer-desc lang-zh">全球电动出行 OEM/ODM 制造商。为全球品牌提供电动自行车、电动摩托车和电动滑板车。</p>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Quick Links</span><span class="lang-zh">快速链接</span></h4>
+                    <ul>
+                        <li><a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a></li>
+                        <li><a href="产品.html"><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a></li>
+                        <li><a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a></li>
+                        <li><a href="about us.html"><span class="lang-en">About</span><span class="lang-zh">关于我们</span></a></li>
+                        <li><a href="新闻页.html"><span class="lang-en">Insights</span><span class="lang-zh">新闻动态</span></a></li>
+                        <li><a href="报价页面.html"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></h4>
+                    <ul>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Bikes</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动自行车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Motorcycles</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动摩托车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Scooters</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动滑板车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Custom ODM Solutions</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">定制 ODM 解决方案</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></h4>
+                    <ul>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Email</span><span class="lang-zh">邮箱</span></span>
+                            <span class="footer-contact-val"><a href="mailto:inquiry@pxid.com">inquiry@pxid.com</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Phone</span><span class="lang-zh">电话</span></span>
+                            <span class="footer-contact-val"><a href="tel:+8618936381099">+86 189 3638 1099</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label">WhatsApp</span>
+                            <span class="footer-contact-val"><a href="https://wa.me/8618936381099" target="_blank"><span class="lang-en">Chat on WhatsApp</span><span class="lang-zh">WhatsApp 在线聊天</span></a></span>
+                        </li>
+                        <li class="footer-social-divider">
+                            <span class="footer-contact-label"><span class="lang-en">WeChat Official</span><span class="lang-zh">微信公众号</span></span>
+                            <span class="footer-contact-val"><span>PXID品向制造</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Video Channel</span><span class="lang-zh">视频号</span></span>
+                            <span class="footer-contact-val"><span>品向出行</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Alibaba International</span><span class="lang-zh">阿里巴巴国际站</span></span>
+                            <span class="footer-contact-val"><a href="https://pxid.en.alibaba.com" target="_blank">pxid.en.alibaba.com</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PXID. <span class="lang-en">All rights reserved.</span><span class="lang-zh">保留所有权利。</span></span>
+                <span>UL · EN · CE · ISO <span class="lang-en">Compliant Manufacturing</span><span class="lang-zh">合规制造</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-cta-fixed"><a href="报价页面.html" class="btn-primary"><i class="fas fa-envelope"></i> <span class="lang-en">Get a Quote</span><span class="lang-zh">获取报价</span></a></div>
+
+    <button class="back-to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script src="js/common.js"></script>
+<script src="js/seo.js" data-seo-page="urban-p3" defer></script>
+<script>
+/* ============================================================
+   URBAN P3 视频播放：主播放器 + 缩略图轮播切换
+   ============================================================ */
+(function () {
+    var player = document.getElementById('mainVideoPlayer');
+    var mainCover = document.getElementById('mainCover');
+    var mainPlay = document.getElementById('mainPlayBtn');
+    var mainDuration = document.getElementById('mainDuration');
+    var mainVideo = document.getElementById('mainVideo');
+    var thumbs = document.querySelectorAll('.scooter-video-thumb');
+
+    if (!player || !mainVideo) return;
+
+    /* 切换到某个视频源（cover + src） */
+    function loadVideo(src, cover, duration) {
+        /* 停止当前播放并重置 */
+        mainVideo.pause();
+        mainVideo.currentTime = 0;
+        /* 替换视频源 */
+        mainVideo.querySelector('source').setAttribute('src', src);
+        mainVideo.load();
+        /* 切回封面状态 */
+        mainVideo.style.display = 'none';
+        mainCover.style.display = 'block';
+        if (mainDuration) {
+            mainDuration.textContent = duration || '';
+            mainDuration.style.display = duration ? 'block' : 'none';
+        }
+        var overlay = player.querySelector('.scooter-video-cover-overlay');
+        if (overlay) overlay.style.display = 'block';
+        if (mainPlay) mainPlay.style.display = 'flex';
+        /* 切换封面图 */
+        if (cover) mainCover.src = cover;
+    }
+
+    /* 主播放按钮 → 播放当前主视频 */
+    function playCurrent() {
+        mainCover.style.display = 'none';
+        var overlay = player.querySelector('.scooter-video-cover-overlay');
+        if (overlay) overlay.style.display = 'none';
+        if (mainPlay) mainPlay.style.display = 'none';
+        if (mainDuration) mainDuration.style.display = 'none';
+        mainVideo.style.display = 'block';
+        mainVideo.play().catch(function () {});
+    }
+
+    if (mainPlay) {
+        mainPlay.addEventListener('click', function (e) {
+            e.stopPropagation();
+            playCurrent();
+        });
+    }
+
+    /* 缩略图点击 → 切换主视频源并自动播放 */
+    thumbs.forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+            var src = thumb.getAttribute('data-video-src');
+            var cover = thumb.getAttribute('data-cover');
+            var duration = thumb.getAttribute('data-duration');
+            if (!src) return;
+            loadVideo(src, cover, duration);
+            /* 立即播放新视频 */
+            setTimeout(playCurrent, 50);
+        });
+    });
+})();
+</script>
+</body>
+</html>

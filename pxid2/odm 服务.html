@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODM & OEM Services – PXID Smart Mobility Manufacturing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/pages/odm.css">
+</head>
+
+<body data-lang="en" data-scheme="blue">
+    <nav class="navbar">
+        <div class="container">
+            <a href="首页.html" class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <span class="logo-name">PXID</span>
+                    <span class="logo-sub lang-en">OEM/ODM Manufacturer</span>
+                    <span class="logo-sub lang-zh">OEM/ODM 制造商</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                <a href="产品.html"><span class="lang-en">Products</span><span class="lang-zh">产品</span></a>
+                <a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                <a href="新闻页.html"><span class="lang-en">News</span><span class="lang-zh">新闻</span></a>
+                <a href="about us.html"><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                <a href="报价页面.html" class="nav-cta"><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                <button class="lang-switch" onclick="toggleLang()"><span class="lang-en">中文</span><span
+                        class="lang-zh">English</span></button>
+                <button class="scheme-switch" onclick="toggleScheme()" title="切换蓝/绿色调"><i
+                        class="fas fa-palette"></i></button></div>
+            <button class="mobile-lang-switch" onclick="toggleLang()" aria-label="Toggle language">
+                <i class="fas fa-globe"></i>
+                <span class="lang-label-en">EN</span>
+                <span class="lang-sep">/</span>
+                <span class="lang-label-zh">中文</span>
+            </button>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </div>
+        <!-- 移动端下拉菜单 -->
+        <div class="mobile-menu-panel" aria-hidden="true">
+            <div class="container mobile-menu-card">
+                <div class="mobile-menu-head">
+                    <div>
+                        <div class="mobile-menu-title"><span class="lang-en">Menu</span><span class="lang-zh">导航菜单</span></div>
+                        <div class="mobile-menu-sub"><span class="lang-en">PXID OEM/ODM Manufacturer</span><span class="lang-zh">PXID OEM/ODM 制造商</span></div>
+                    </div>
+                    <button class="mobile-menu-close" type="button" aria-label="Close menu"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="mobile-menu-list">
+                    <a class="mobile-menu-item" href="首页.html"><i class="fas fa-house"></i><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                    <a class="mobile-menu-item" href="产品.html"><i class="fas fa-bicycle"></i><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a>
+                    <a class="mobile-menu-item" href="odm 服务.html"><i class="fas fa-industry"></i><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                    <a class="mobile-menu-item" href="新闻页.html"><i class="fas fa-newspaper"></i><span class="lang-en">News</span><span class="lang-zh">新闻动态</span></a>
+                    <a class="mobile-menu-item" href="about us.html"><i class="fas fa-building"></i><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                    <a class="mobile-menu-item mobile-menu-quote" href="报价页面.html"><i class="fas fa-paper-plane"></i><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                </div>
+                <div class="mobile-menu-tools">
+                    <button type="button" onclick="toggleLang()"><i class="fas fa-globe"></i><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                    <button type="button" onclick="toggleScheme()"><i class="fas fa-palette"></i><span class="lang-en">Color</span><span class="lang-zh">配色</span></button>
+                </div>
+                <div class="mobile-menu-contact">
+                    <a href="mailto:inquiry@pxid.com"><i class="fas fa-envelope"></i> inquiry@pxid.com</a>
+                    <a href="tel:+8618936381099"><i class="fas fa-phone"></i> +86 189 3638 1099</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline
+            poster="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect fill='%230a1a2f' width='800' height='600'/></svg>">
+            <source src="odm-hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-badge"><span class="lang-en">Manufacturing Partner</span><span class="lang-zh">制造伙伴</span>
+            </div>
+            <h1><span class="lang-en">Your <span>Smart Mobility</span> Manufacturing Partner</span><span
+                    class="lang-zh">您的<span>智能出行</span>制造伙伴</span></h1>
+            <p class="lang-en">From concept to delivery, we provide full‑service OEM and ODM solutions for e‑scooters,
+                e‑bikes, and e‑motorcycles.</p>
+            <p class="lang-zh">从概念到交付，我们为电动滑板车、电动自行车和电动摩托车提供一站式OEM和ODM解决方案。</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><span class="val">90</span><span class="lbl lang-en">Days to Mass
+                        Production</span><span class="lbl lang-zh">天量产交付</span></div>
+                <div class="hero-stat-div"></div>
+                <div class="hero-stat"><span class="val">15+</span><span class="lbl lang-en">Int'l Design
+                        Awards</span><span class="lbl lang-zh">项国际设计奖</span></div>
+                <div class="hero-stat-div"></div>
+                <div class="hero-stat"><span class="val">200K+</span><span class="lbl lang-en">Units Annual
+                        Capacity</span><span class="lbl lang-zh">台年产能</span></div>
+            </div>
+            <div class="hero-btns">
+                <a href="#inquiry" class="btn-primary"><i class="fas fa-envelope"></i> <span class="lang-en">Start Your
+                        Project</span><span class="lang-zh">启动项目</span></a>
+                <a href="#services" class="btn-outline"><i class="fas fa-arrow-down"></i> <span class="lang-en">Our
+                        Services</span><span class="lang-zh">服务范围</span></a>
+            </div>
+        </div>
+    </section>
+
+    <div class="trust-strip">
+        <div class="container trust-items">
+            <div class="trust-item">
+                <div class="num">13+</div>
+                <div class="label lang-en">Years OEM/ODM</div>
+                <div class="label lang-zh">年OEM/ODM经验</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">25,000</div>
+                <div class="label lang-en">m² Factory</div>
+                <div class="label lang-zh">平方米工厂</div>
+            </div>
+            <div class="trust-item">
+                <div class="num">30+</div>
+                <div class="label lang-en">Export Countries</div>
+                <div class="label lang-zh">出口国家</div>
+            </div>
+            <div class="trust-item"><i class="fas fa-check-circle" style="color:var(--brand-accent);"></i> ISO 9001<div
+                    class="label lang-en">Certified</div>
+                <div class="label lang-zh">认证</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Our Services</span><span class="lang-zh">我们的服务</span></h2>
+        </div>
+        <div class="service-grid">
+            <div class="service-card"><i class="fas fa-cogs"></i>
+                <h3 class="lang-en">OEM Manufacturing</h3>
+                <h3 class="lang-zh">OEM 贴牌制造</h3>
+                <p class="lang-en">Your design, our factory. MOQ from 50 units with 30‑day lead time. Full production
+                    line dedicated to your brand.</p>
+                <p class="lang-zh">您提供设计，我们制造。50台起订，30天交付。专设产线服务您的品牌。</p>
+            </div>
+            <div class="service-card"><i class="fas fa-pencil-ruler"></i>
+                <h3 class="lang-en">ODM Solutions</h3>
+                <h3 class="lang-zh">ODM 研发方案</h3>
+                <p class="lang-en">We design, you sell. 90‑day concept‑to‑delivery cycle. 15+ international design
+                    awards. Full R&D under your brand.</p>
+                <p class="lang-zh">我们设计，您来销售。90天概念到交付。15+国际设计奖项。贴牌全案研发。</p>
+            </div>
+            <div class="service-card"><i class="fas fa-clipboard-check"></i>
+                <h3 class="lang-en">Quality & Compliance</h3>
+                <h3 class="lang-zh">质量与合规</h3>
+                <p class="lang-en">ISO 9001 factory. 48‑point QC inspection. CE, UL, RoHS, BSCI certified. 100% final
+                    inspection with MES tracking.</p>
+                <p class="lang-zh">ISO 9001工厂。48项质检。CE、UL、RoHS、BSCI认证。100%终检配合MES追踪。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section" id="services">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">R&D Process</span><span class="lang-zh">研发流程</span></h2>
+            <p class="section-sub"><span class="lang-en">Complete product development cycle with 9 key
+                    stages.</span><span class="lang-zh">完整产品开发周期，9个关键阶段。</span></p>
+        </div>
+        <div class="rd-steps-wrapper">
+        <div class="rd-steps-nav">
+            <div class="rd-step-tab active">
+                <div class="rd-step-num">01</div>
+                <div class="rd-step-title"><span class="lang-en">Product Design</span><span class="lang-zh">产品设计</span>
+                </div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">02</div>
+                <div class="rd-step-title"><span class="lang-en">Structural Design</span><span
+                        class="lang-zh">结构设计</span></div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">03</div>
+                <div class="rd-step-title"><span class="lang-en">Electric System</span><span class="lang-zh">电气系统</span>
+                </div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">04</div>
+                <div class="rd-step-title"><span class="lang-en">Prototype Dev</span><span class="lang-zh">样机开发</span>
+                </div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">05</div>
+                <div class="rd-step-title"><span class="lang-en">Mold Development</span><span
+                        class="lang-zh">模具开发</span></div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">06</div>
+                <div class="rd-step-title"><span class="lang-en">Frame Mfg</span><span class="lang-zh">车架制造</span></div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">07</div>
+                <div class="rd-step-title"><span class="lang-en">Paint & Coating</span><span class="lang-zh">喷涂工艺</span>
+                </div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">08</div>
+                <div class="rd-step-title"><span class="lang-en">Quality Inspection</span><span
+                        class="lang-zh">品质检验</span></div>
+            </div>
+            <div class="rd-step-tab">
+                <div class="rd-step-num">09</div>
+                <div class="rd-step-title"><span class="lang-en">Mass Production</span><span class="lang-zh">批量生产</span>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="rd-step-content active">
+            <div class="rd-content-text">
+                <h3>Stage 01</h3>
+                <h2><span class="lang-en">Industrial Design</span><span class="lang-zh">工业设计</span></h2>
+                <p class="lang-en">PXID's design team creates market-oriented electric mobility products through
+                    sketching, 3D rendering, and CMF design.</p>
+                <p class="lang-zh">通过草图、3D渲染和CMF进行面向市场的设计。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">Initial hand-drawn sketches</span><span class="lang-zh">手绘草图</span></li>
+                    <li><span class="lang-en">3D modeling and renderings</span><span class="lang-zh">3D建模与渲染</span></li>
+                    <li><span class="lang-en">CMF design</span><span class="lang-zh">CMF设计</span></li>
+                    <li><span class="lang-en">15+ international awards</span><span class="lang-zh">15+国际奖项</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="media/ODM/产品设计1.webp" alt="Design" loading="eager" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 02</h3>
+                <h2><span class="lang-en">Structural Design</span><span class="lang-zh">结构设计</span></h2>
+                <p class="lang-en">FEA analysis to balance strength, weight, and cost for scalable manufacturing.</p>
+                <p class="lang-zh">通过FEA分析平衡强度、重量和成本。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">FEA optimization</span><span class="lang-zh">FEA优化</span></li>
+                    <li><span class="lang-en">Safety compliant (CE, UL, EN)</span><span class="lang-zh">安全合规</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="media/ODM/Mechanical-Design1.webp" alt="Structural" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 03</h3>
+                <h2><span class="lang-en">Electric System</span><span class="lang-zh">电气系统</span></h2>
+                <p class="lang-en">BMS development, motor controller tuning, and smart connectivity.</p>
+                <p class="lang-zh">BMS开发、电机控制器调校、智能互联。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">BMS development</span><span class="lang-zh">BMS开发</span></li>
+                    <li><span class="lang-en">Motor controller tuning</span><span class="lang-zh">电机控制器调校</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="media/ODM/Electrical-control-system-design11.webp" alt="Electric" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 04</h3>
+                <h2><span class="lang-en">Prototype Development</span><span class="lang-zh">样机开发</span></h2>
+                <p class="lang-en">Real, ride-able prototypes for validation before mass production. We build functional
+                    prototypes to verify every mechanical structure and component performance.</p>
+                <p class="lang-zh">可骑行的真实样机，用于量产前验证。我们构建功能原型以验证每个机械结构和组件性能。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">Functional prototype building</span><span class="lang-zh">功能原型构建</span>
+                    </li>
+                    <li><span class="lang-en">Mechanical verification</span><span class="lang-zh">机械验证</span></li>
+                    <li><span class="lang-en">Component testing</span><span class="lang-zh">组件测试</span></li>
+                    <li><span class="lang-en">14-day prototype delivery</span><span class="lang-zh">14天交付原型</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="DM_20260701102938_013.JPEG" alt="Prototype" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 05</h3>
+                <h2><span class="lang-en">Mold Development</span><span class="lang-zh">模具开发</span></h2>
+                <p class="lang-en">100% in-house tooling for consistent quality and faster time-to-market. PXID is
+                    capable of independent tooling design, manufacturing and injection with micron-level tolerance.</p>
+                <p class="lang-zh">100%自有模具制造，确保质量一致并缩短上市时间。具备独立模具设计、制造和注塑能力，精度达微米级。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">In-house mold design & fabrication</span><span
+                            class="lang-zh">自有模具设计与制造</span></li>
+                    <li><span class="lang-en">Micron-level tolerance</span><span class="lang-zh">微米级精度</span></li>
+                    <li><span class="lang-en">Rapid prototyping</span><span class="lang-zh">快速打样</span></li>
+                    <li><span class="lang-en">Reduce time-to-market by 30%</span><span class="lang-zh">缩短30%上市时间</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="DM_20260701102938_014.JPEG" alt="Mold" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 06</h3>
+                <h2><span class="lang-en">Frame Manufacturing</span><span class="lang-zh">车架制造</span></h2>
+                <p class="lang-en">Advanced CNC/EDM machining with T4/T6 heat treatment for aluminum frames. Our lineup
+                    includes CNC machines, EDM, low-speed wire cutting equipment for precision manufacturing.</p>
+                <p class="lang-zh">先进的CNC/EDM加工配合铝合金T4/T6热处理。设备包括CNC机床、电火花加工、低速线切割机等精密制造设备。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">CNC/EDM machining</span><span class="lang-zh">CNC/EDM加工</span></li>
+                    <li><span class="lang-en">T4/T6 heat treatment</span><span class="lang-zh">T4/T6热处理</span></li>
+                    <li><span class="lang-en">Enhanced strength & durability</span><span class="lang-zh">增强强度与耐用性</span>
+                    </li>
+                    <li><span class="lang-en">Precision manufacturing</span><span class="lang-zh">精密制造</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="DM_20260701102938_015.JPEG" alt="Frame" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 07</h3>
+                <h2><span class="lang-en">Paint & Coating</span><span class="lang-zh">喷涂工艺</span></h2>
+                <p class="lang-en">Full-process coating capabilities including pretreatment, e-coating, spraying, and
+                    curing. Support diverse finishes: powder and water-based coatings meeting global environmental
+                    standards.</p>
+                <p class="lang-zh">全流程涂装能力，包括预处理、电泳、喷涂和固化。支持多种表面处理：粉末和水性涂料，符合全球环保标准。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">Pretreatment & e-coating</span><span class="lang-zh">预处理与电泳</span></li>
+                    <li><span class="lang-en">Powder coating line</span><span class="lang-zh">粉末喷涂线</span></li>
+                    <li><span class="lang-en">Water-based coatings</span><span class="lang-zh">水性涂料</span></li>
+                    <li><span class="lang-en">Environmental compliance</span><span class="lang-zh">环保合规</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="DM_20260701102938_016.JPEG" alt="Paint" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 08</h3>
+                <h2><span class="lang-en">Quality Inspection</span><span class="lang-zh">品质检验</span></h2>
+                <p class="lang-en">Over 20 performance tests exceeding industry standards including road tests. 100%
+                    final inspection with MES-driven quality tracking ensures zero-defect manufacturing.</p>
+                <p class="lang-zh">超过20项性能测试超越行业标准，包括路测。100%终检配合MES驱动的质量追踪，确保零缺陷制造。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">20+ performance tests</span><span class="lang-zh">20+项性能测试</span></li>
+                    <li><span class="lang-en">Road testing</span><span class="lang-zh">路测</span></li>
+                    <li><span class="lang-en">100% final inspection</span><span class="lang-zh">100%终检</span></li>
+                    <li><span class="lang-en">MES quality tracking</span><span class="lang-zh">MES质量追踪</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="DM_20260701102938_018.JPEG" alt="QC" loading="lazy" decoding="async"></div>
+        </div>
+        <div class="rd-step-content">
+            <div class="rd-content-text">
+                <h3>Stage 09</h3>
+                <h2><span class="lang-en">Mass Production</span><span class="lang-zh">批量生产</span></h2>
+                <p class="lang-en">Three dedicated assembly lines with MES-driven quality tracking. Annual capacity of
+                    200,000+ units. Components manufactured in India avoid anti-dumping fees for competitive pricing.
+                </p>
+                <p class="lang-zh">三条专用装配线配备MES质量追踪。年产20万+台。印度制造的组件避免反倾销税，价格更具竞争力。</p>
+                <ul class="rd-features">
+                    <li><span class="lang-en">3 assembly lines</span><span class="lang-zh">3条装配线</span></li>
+                    <li><span class="lang-en">200,000+ annual capacity</span><span class="lang-zh">年产能20万+</span></li>
+                    <li><span class="lang-en">MES-driven tracking</span><span class="lang-zh">MES驱动追踪</span></li>
+                    <li><span class="lang-en">No anti-dumping fees</span><span class="lang-zh">无反倾销税</span></li>
+                </ul>
+            </div>
+            <div class="rd-visual-img"><img src="DM_20260701102938_017.JPEG" alt="Mass Production" loading="lazy" decoding="async"></div>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Why Partner With Us</span><span
+                    class="lang-zh">为什么选择我们</span></h2>
+        </div>
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-drafting-compass"></i></div>
+                <h4 class="lang-en">In‑House R&D</h4>
+                <h4 class="lang-zh">自有研发</h4>
+                <p class="lang-en">Industrial design, mechanical, electronic and software teams.</p>
+                <p class="lang-zh">工业设计、机械、电子和软件团队。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-toolbox"></i></div>
+                <h4 class="lang-en">Tooling & Prototyping</h4>
+                <h4 class="lang-zh">模具与打样</h4>
+                <p class="lang-en">In‑house mold making, 14‑day prototype delivery.</p>
+                <p class="lang-zh">自有模具，14天交付原型。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-robot"></i></div>
+                <h4 class="lang-en">Automated Assembly</h4>
+                <h4 class="lang-zh">自动化产线</h4>
+                <p class="lang-en">Dedicated lines with smart diagnostic, 200,000+ capacity.</p>
+                <p class="lang-zh">专用产线配智能诊断，年产超20万台。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-flask"></i></div>
+                <h4 class="lang-en">Testing & Compliance</h4>
+                <h4 class="lang-zh">测试与认证</h4>
+                <p class="lang-en">48‑point QC, in‑house battery & waterproof lab.</p>
+                <p class="lang-zh">48项质检、自有电池和防水实验室。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-paint-brush"></i></div>
+                <h4 class="lang-en">Custom Branding</h4>
+                <h4 class="lang-zh">品牌定制</h4>
+                <p class="lang-en">Custom colors, frame branding, packaging design.</p>
+                <p class="lang-zh">定制颜色、车身品牌、包装设计。</p>
+            </div>
+            <div class="capability-card">
+                <div class="icon-circle"><i class="fas fa-shipping-fast"></i></div>
+                <h4 class="lang-en">Global Logistics</h4>
+                <h4 class="lang-zh">全球物流</h4>
+                <p class="lang-en">FOB Shenzhen, 30‑45 day to EU/US, 48h spare parts.</p>
+                <p class="lang-zh">FOB深圳，欧美30-45天交付，48小时配件。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="trusted-section section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title"><span class="lang-en">Trusted by Brands Worldwide</span><span
+                        class="lang-zh">全球品牌信赖之选</span></h2>
+                <p class="section-sub"><span class="lang-en">Partnering with leading brands across 30+ countries for
+                        over a decade.</span><span class="lang-zh">十余年来与30多个国家的领先品牌深度合作。</span></p>
+            </div>
+            <div class="trusted-logos">
+                <div class="trusted-logo">🇩🇪 <span class="lang-en">Germany</span><span class="lang-zh">德国</span></div>
+                <div class="trusted-logo">🇺🇸 <span class="lang-en">United States</span><span class="lang-zh">美国</span>
+                </div>
+                <div class="trusted-logo">🇯🇵 <span class="lang-en">Japan</span><span class="lang-zh">日本</span></div>
+                <div class="trusted-logo">🇫🇷 <span class="lang-en">France</span><span class="lang-zh">法国</span></div>
+                <div class="trusted-logo">🇦🇺 <span class="lang-en">Australia</span><span class="lang-zh">澳大利亚</span>
+                </div>
+                <div class="trusted-logo">🇬🇧 <span class="lang-en">United Kingdom</span><span
+                        class="lang-zh">英国</span></div>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="quote"><span class="lang-en">"PXID delivered our first batch of e-scooters in just 90
+                            days. The quality exceeded our expectations and their R&D team was incredibly
+                            responsive."</span><span class="lang-zh">"PXID仅用90天就交付了首批电动滑板车。质量超出预期，研发团队响应非常迅速。"</span>
+                    </div>
+                    <div class="author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <div class="name">Michael K.</div>
+                            <div class="role lang-en">Product Director, EU E-Mobility Brand</div>
+                            <div class="role lang-zh">产品总监，欧洲电动出行品牌</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote"><span class="lang-en">"We've been working with PXID for 3 years on ODM e-bikes.
+                            Their in-house tooling capability saves us at least 30% on development time."</span><span
+                            class="lang-zh">"我们与PXID合作ODM电动自行车已有3年。自有模具能力为我们节省了至少30%的开发时间。"</span></div>
+                    <div class="author">
+                        <div class="author-avatar">T</div>
+                        <div class="author-info">
+                            <div class="name">Takeshi Y.</div>
+                            <div class="role lang-en">CEO, Japan Mobility Startup</div>
+                            <div class="role lang-zh">CEO，日本出行初创企业</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote"><span class="lang-en">"The 48-point QC process gives us confidence. Zero defects
+                            in our last 5,000-unit order. That's remarkable in this industry."</span><span
+                            class="lang-zh">"48项质检流程让我们充满信心。最近5000台订单零缺陷。这在这个行业非常难得。"</span></div>
+                    <div class="author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <div class="name">Sarah L.</div>
+                            <div class="role lang-en">Supply Chain Manager, US Distributor</div>
+                            <div class="role lang-zh">供应链经理，美国分销商</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Common Challenges & Our Solutions</span><span
+                    class="lang-zh">常见痛点与解决方案</span></h2>
+        </div>
+        <div class="pain-grid">
+            <div class="pain-card"><span class="tag red"><span class="lang-en">Pain Point</span><span
+                        class="lang-zh">痛点</span></span>
+                <h4><span class="lang-en">Long Development Cycles</span><span class="lang-zh">开发周期长</span></h4>
+                <p class="lang-en">Traditional ODM takes 6+ months from concept to mass production, missing market
+                    windows.</p>
+                <p class="lang-zh">传统ODM从概念到量产需6个月以上，错过市场窗口期。</p>
+            </div>
+            <div class="pain-card"><span class="tag green"><span class="lang-en">Solution</span><span
+                        class="lang-zh">解决方案</span></span>
+                <h4><span class="lang-en">30% Faster Time-to-Market</span><span class="lang-zh">上市时间缩短30%</span></h4>
+                <p class="lang-en">In-house tooling + rapid prototyping. 90-day concept to mass production cycle.</p>
+                <p class="lang-zh">自有模具+快速原型。90天概念到量产。</p>
+            </div>
+            <div class="pain-card"><span class="tag red"><span class="lang-en">Pain Point</span><span
+                        class="lang-zh">痛点</span></span>
+                <h4><span class="lang-en">Quality Inconsistency</span><span class="lang-zh">质量不稳定</span></h4>
+                <p class="lang-en">Variable quality across batches leads to costly returns and brand damage.</p>
+                <p class="lang-zh">批次间质量波动导致高昂退货和品牌损害。</p>
+            </div>
+            <div class="pain-card"><span class="tag green"><span class="lang-en">Solution</span><span
+                        class="lang-zh">解决方案</span></span>
+                <h4><span class="lang-en">Zero-Defect Manufacturing</span><span class="lang-zh">零缺陷制造</span></h4>
+                <p class="lang-en">MES-driven QC with 48-point inspection + 20+ performance tests. 100% final
+                    inspection.</p>
+                <p class="lang-zh">MES驱动质检，48项检查+20多项性能测试。100%终检。</p>
+            </div>
+            <div class="pain-card"><span class="tag red"><span class="lang-en">Pain Point</span><span
+                        class="lang-zh">痛点</span></span>
+                <h4><span class="lang-en">Communication Delays</span><span class="lang-zh">沟通效率低</span></h4>
+                <p class="lang-en">Time zone gaps and language barriers cause project delays and misunderstandings.</p>
+                <p class="lang-zh">时差和语言障碍导致项目延误和误解。</p>
+            </div>
+            <div class="pain-card"><span class="tag green"><span class="lang-en">Solution</span><span
+                        class="lang-zh">解决方案</span></span>
+                <h4><span class="lang-en">Dedicated Bilingual PM</span><span class="lang-zh">专属双语项目经理</span></h4>
+                <p class="lang-en">English-speaking project manager with 24h response guarantee. Real-time production
+                    updates.</p>
+                <p class="lang-zh">英语项目经理，24小时响应保证。实时更新生产进度。</p>
+            </div>
+            <div class="pain-card"><span class="tag red"><span class="lang-en">Pain Point</span><span
+                        class="lang-zh">痛点</span></span>
+                <h4><span class="lang-en">IP Protection Concerns</span><span class="lang-zh">知识产权保护</span></h4>
+                <p class="lang-en">Fear of design leakage or competitors accessing your proprietary technology.</p>
+                <p class="lang-zh">担心设计泄露或竞争对手获取专有技术。</p>
+            </div>
+            <div class="pain-card"><span class="tag green"><span class="lang-en">Solution</span><span
+                        class="lang-zh">解决方案</span></span>
+                <h4><span class="lang-en">Strict NDA & IP Protocol</span><span class="lang-zh">严格NDA与IP协议</span></h4>
+                <p class="lang-en">Signed NDA before project kickoff. Isolated production lines for competing brands.
+                    Full IP ownership transfer.</p>
+                <p class="lang-zh">项目启动前签署NDA。竞品品牌隔离产线。完整IP所有权转让。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section" id="inquiry">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Get in Touch</span><span class="lang-zh">联系我们</span></h2>
+            <p class="section-sub"><span class="lang-en">Choose the channel that works best for you. We typically
+                    respond within 2 hours.</span><span class="lang-zh">选择最适合您的联系方式。我们通常在2小时内回复。</span></p>
+        </div>
+        <div class="quick-contact">
+            <div class="quick-contact-cards">
+                <a href="https://wa.me/8618936381099" target="_blank" class="qc-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h4>WhatsApp</h4>
+                    <p class="lang-en">Chat with our sales team</p>
+                    <p class="lang-zh">与销售团队在线聊天</p>
+                    <div class="qc-highlight lang-en">⚡ Usually replies in 30 min</div>
+                    <div class="qc-highlight lang-zh">⚡ 通常30分钟内回复</div>
+                </a>
+                <a href="mailto:inquiry@pxid.com" class="qc-card">
+                    <i class="fas fa-envelope"></i>
+                    <h4><span class="lang-en">Email</span><span class="lang-zh">邮箱</span></h4>
+                    <p>inquiry@pxid.com</p>
+                    <div class="qc-highlight lang-en">📎 Send drawings & specs</div>
+                    <div class="qc-highlight lang-zh">📎 发送图纸与规格</div>
+                </a>
+                <a href="报价页面.html" class="qc-card">
+                    <i class="fas fa-file-invoice"></i>
+                    <h4><span class="lang-en">Request Quote</span><span class="lang-zh">获取报价</span></h4>
+                    <p class="lang-en">Fill in project details for a formal quote</p>
+                    <p class="lang-zh">填写项目详情获取正式报价</p>
+                    <div class="qc-highlight lang-en">📋 Detailed pricing in 24h</div>
+                    <div class="qc-highlight lang-zh">📋 24小时内详细报价</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section">
+        <div class="section-header">
+            <h2 class="section-title"><span class="lang-en">Frequently Asked Questions</span><span
+                    class="lang-zh">常见问题</span></h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span><span class="lang-en">What is the minimum
+                            order quantity (MOQ)?</span><span class="lang-zh">最低起订量（MOQ）是多少？</span></span><span
+                        class="faq-icon">+</span></button>
+                <div class="faq-panel">
+                    <div class="faq-panel-inner"><span class="lang-en">For OEM orders, MOQ starts from 50 units. For ODM
+                            projects, we typically require a trial order of 100 units before mass production. Sample
+                            orders are welcome for evaluation purposes.</span><span
+                            class="lang-zh">OEM订单起订量从50台开始。ODM项目通常需要在量产前试产100台。欢迎样品订单用于评估。</span></div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span><span class="lang-en">How long does the
+                            development and production cycle take?</span><span
+                            class="lang-zh">开发和生产周期需要多久？</span></span><span class="faq-icon">+</span></button>
+                <div class="faq-panel">
+                    <div class="faq-panel-inner"><span class="lang-en">From concept approval to mass production:
+                            approximately 90 days. This includes design finalization (15 days), prototype development
+                            (14 days), mold making (30 days), and mass production (30 days). Timelines may vary based on
+                            product complexity.</span><span
+                            class="lang-zh">从概念确认到量产：约90天。包括设计定稿（15天）、样机开发（14天）、模具制造（30天）和批量生产（30天）。具体时间视产品复杂度而定。</span>
+                    </div>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span><span class="lang-en">Who owns the
+                            intellectual property (IP) for ODM designs?</span><span
+                            class="lang-zh">ODM设计的知识产权归谁？</span></span><span class="faq-icon">+</span></button>
+                <div class="faq-panel">
+                    <div class="faq-panel-inner"><span class="lang-en">For exclusive ODM projects, full IP ownership
+                            transfers to the client upon project completion. We sign NDA agreements before project
+                            kickoff and maintain isolated production lines for competing brands. Your designs are fully
+                            protected.</span><span
+                            class="lang-zh">独家ODM项目完成后，完整IP所有权转让给客户。项目启动前签署NDA协议，竞品品牌保持隔离产线。您的设计得到完全保护。</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2><span class="lang-en">Ready to Build Your Product?</span><span class="lang-zh">准备打造您的产品？</span></h2>
+            <p style="color:rgba(255,255,255,0.8); margin-bottom:30px;"><span class="lang-en">Tell us your vision. We'll
+                    handle engineering, certification, and manufacturing.</span><span
+                    class="lang-zh">告诉我们您的愿景，我们负责工程、认证和制造。</span></p>
+            <a href="报价页面.html" class="btn-white"><span class="lang-en">Get Free Quote</span><span
+                    class="lang-zh">免费获取报价</span></a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo-icon">P</div>
+                        <span class="footer-logo-name">PXID</span>
+                    </div>
+                    <p class="footer-desc lang-en">Global electric mobility OEM/ODM manufacturer. E-bikes,
+                        e-motorcycles, and e-scooters for brands worldwide.</p>
+                    <p class="footer-desc lang-zh">全球电动出行 OEM/ODM 制造商。为全球品牌提供电动自行车、电动摩托车和电动滑板车。</p>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Quick Links</span><span class="lang-zh">快速链接</span></h4>
+                    <ul>
+                        <li><a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a></li>
+                        <li><a href="产品.html"><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a>
+                        </li>
+                        <li><a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM
+                                    服务</span></a></li>
+                        <li><a href="about us.html"><span class="lang-en">About</span><span
+                                    class="lang-zh">关于我们</span></a></li>
+                        <li><a href="新闻页.html"><span class="lang-en">Insights</span><span
+                                    class="lang-zh">新闻动态</span></a></li>
+                        <li><a href="报价页面.html"><span class="lang-en">Contact</span><span
+                                    class="lang-zh">联系我们</span></a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></h4>
+                    <ul>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Bikes</span><span
+                                class="lang-zh" style="color:#94A3B8;font-size:14px;">电动自行车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Motorcycles</span><span
+                                class="lang-zh" style="color:#94A3B8;font-size:14px;">电动摩托车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Scooters</span><span
+                                class="lang-zh" style="color:#94A3B8;font-size:14px;">电动滑板车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Custom ODM Solutions</span><span
+                                class="lang-zh" style="color:#94A3B8;font-size:14px;">定制 ODM 解决方案</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></h4>
+                    <ul>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Email</span><span
+                                    class="lang-zh">邮箱</span></span>
+                            <span class="footer-contact-val"><a
+                                    href="mailto:inquiry@pxid.com">inquiry@pxid.com</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Phone</span><span
+                                    class="lang-zh">电话</span></span>
+                            <span class="footer-contact-val"><a href="tel:+8618936381099">+86 189 3638 1099</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label">WhatsApp</span>
+                            <span class="footer-contact-val"><a href="https://wa.me/8618936381099" target="_blank"><span
+                                        class="lang-en">Chat on WhatsApp</span><span class="lang-zh">WhatsApp
+                                        在线聊天</span></a></span>
+                        </li>
+                        <li class="footer-social-divider">
+                            <span class="footer-contact-label"><span class="lang-en">WeChat Official</span><span
+                                    class="lang-zh">微信公众号</span></span>
+                            <span class="footer-contact-val"><span>PXID品向制造</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Video Channel</span><span
+                                    class="lang-zh">视频号</span></span>
+                            <span class="footer-contact-val"><span>品向出行</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Alibaba International</span><span
+                                    class="lang-zh">阿里巴巴国际站</span></span>
+                            <span class="footer-contact-val"><a href="https://pxid.en.alibaba.com"
+                                    target="_blank">pxid.en.alibaba.com</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PXID. <span class="lang-en">All rights reserved.</span><span
+                        class="lang-zh">保留所有权利。</span></span>
+                <span>UL · EN · CE · ISO <span class="lang-en">Compliant Manufacturing</span><span
+                        class="lang-zh">合规制造</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-cta-fixed">
+        <a href="报价页面.html" class="btn-primary"><i class="fas fa-envelope"></i> <span class="lang-en">Get a
+                Quote</span><span class="lang-zh">获取报价</span></a>
+    </div>
+
+        <button class="back-to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script src="js/common.js"></script>
+    <script src="js/seo.js" data-seo-page="odm" defer></script>
+    <script src="js/pages/odm.js"></script>
+</body>
+
+</html>

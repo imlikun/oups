@@ -1,0 +1,38 @@
+# PXID robots.txt
+# https://www.pxid.com
+
+# 允许所有搜索引擎抓取
+User-agent: *
+Allow: /
+
+# 禁止抓取系统/临时文件
+Disallow: /js/seo.js
+Disallow: /._*
+Disallow: /*.DS_Store
+Disallow: /convert-md.ps1
+Disallow: /generate-news-js.ps1
+
+# 允许抓取的资源目录
+Allow: /css/
+Allow: /js/
+Allow: /media/
+
+# 搜索引擎特定规则
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# Sitemap 位置
+Sitemap: https://www.pxid.com/sitemap.xml

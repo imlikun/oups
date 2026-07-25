@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PX-4 | PXID OEM Manufacturer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/products/px-4.css?v=video-list-height">
+  <link rel="stylesheet" href="css/products/motor-mobile-fix.css">
+  <style>
+    /* PX-4 移动端首屏修复：避免头图被导航遮挡，并保证菜单按钮可点击 */
+    @media(max-width:768px){
+      body .hero{
+        height:auto !important;
+        min-height:auto !important;
+        align-items:flex-start !important;
+        overflow:hidden !important;
+        padding:0 !important;
+      }
+      body .hero-inner{
+        display:flex !important;
+        flex-direction:column !important;
+        gap:20px !important;
+        padding:24px 24px 34px !important;
+        text-align:center !important;
+        box-sizing:border-box !important;
+      }
+      body .hero-visual{
+        order:1 !important;
+        width:100% !important;
+        height:auto !important;
+        min-height:0 !important;
+        margin:0 auto 4px !important;
+        transform:none !important;
+        z-index:1 !important;
+        pointer-events:none !important;
+      }
+      body .hero-visual img{
+        width:100% !important;
+        max-width:520px !important;
+        height:auto !important;
+        max-height:220px !important;
+        object-fit:contain !important;
+        object-position:center center !important;
+        display:block !important;
+        margin:0 auto !important;
+      }
+      body .hero-content{
+        order:2 !important;
+        width:100% !important;
+        max-width:360px !important;
+        margin:0 auto !important;
+        padding:0 !important;
+        position:relative !important;
+        z-index:2 !important;
+      }
+      body .hero-eyebrow{
+        justify-content:center !important;
+        margin-bottom:12px !important;
+      }
+      body .hero-title{
+        font-size:34px !important;
+        line-height:1.18 !important;
+        margin-bottom:10px !important;
+      }
+      body .hero-tagline{
+        font-size:15px !important;
+        line-height:1.55 !important;
+      }
+      body .hero-actions{
+        justify-content:center !important;
+        pointer-events:auto !important;
+      }
+      body .navbar,
+      body .navbar .container,
+      body .menu-toggle,
+      body .mobile-lang-switch{
+        position:relative;
+        z-index:2147483000 !important;
+        pointer-events:auto !important;
+      }
+    }
+  </style>
+</head>
+<body data-lang="en" data-scheme="blue">
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="navbar">
+        <div class="container">
+            <a href="首页.html" class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <span class="logo-name">PXID</span>
+                    <span class="logo-sub lang-en">OEM/ODM Manufacturer</span>
+                    <span class="logo-sub lang-zh">OEM/ODM 制造商</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                <a href="产品.html" class="active"><span class="lang-en">Products</span><span class="lang-zh">产品</span></a>
+                <a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                <a href="新闻页.html"><span class="lang-en">News</span><span class="lang-zh">新闻</span></a>
+                <a href="about us.html"><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                <a href="报价页面.html" class="nav-cta"><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                <button class="lang-switch" onclick="toggleLang()"><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                <button class="scheme-switch" onclick="toggleScheme()" title="切换蓝/绿色调"><i class="fas fa-palette"></i></button></div>
+            <button class="mobile-lang-switch" onclick="toggleLang()" aria-label="Toggle language">
+                <i class="fas fa-globe"></i>
+                <span class="lang-label-en">EN</span>
+                <span class="lang-sep">/</span>
+                <span class="lang-label-zh">中文</span>
+            </button>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </div>
+        <div class="mobile-menu-panel" aria-hidden="true">
+            <div class="container mobile-menu-card">
+                <div class="mobile-menu-head">
+                    <div>
+                        <div class="mobile-menu-title"><span class="lang-en">Menu</span><span class="lang-zh">导航菜单</span></div>
+                        <div class="mobile-menu-sub"><span class="lang-en">PXID OEM/ODM Manufacturer</span><span class="lang-zh">PXID OEM/ODM 制造商</span></div>
+                    </div>
+                    <button class="mobile-menu-close" type="button" aria-label="Close menu"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="mobile-menu-list">
+                    <a class="mobile-menu-item" href="首页.html"><i class="fas fa-house"></i><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                    <a class="mobile-menu-item" href="产品.html"><i class="fas fa-bicycle"></i><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a>
+                    <a class="mobile-menu-item" href="odm 服务.html"><i class="fas fa-industry"></i><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                    <a class="mobile-menu-item" href="新闻页.html"><i class="fas fa-newspaper"></i><span class="lang-en">News</span><span class="lang-zh">新闻动态</span></a>
+                    <a class="mobile-menu-item" href="about us.html"><i class="fas fa-building"></i><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                    <a class="mobile-menu-item mobile-menu-quote" href="报价页面.html"><i class="fas fa-paper-plane"></i><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                </div>
+                <div class="mobile-menu-tools">
+                    <button type="button" onclick="toggleLang()"><i class="fas fa-globe"></i><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                    <button type="button" onclick="toggleScheme()"><i class="fas fa-palette"></i><span class="lang-en">Color</span><span class="lang-zh">配色</span></button>
+                </div>
+                <div class="mobile-menu-contact">
+                    <a href="mailto:inquiry@pxid.com"><i class="fas fa-envelope"></i> inquiry@pxid.com</a>
+                    <a href="tel:+8618936381099"><i class="fas fa-phone"></i> +86 189 3638 1099</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<!-- ═══ HERO — DARK FULL BLEED ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <!-- Content: Left -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">Electric Moped Series</div>
+      <h1 class="hero-title">
+        ODM电动摩托车<br>
+        <span class="accent">PX-4</span><br>
+        镁合金一体压铸
+      </h1>
+      <div class="hero-model">72V · 20Ah · 12" Wheels</div>
+      <p class="hero-tagline">
+        镁合金一体化压铸车架，500mm超长座椅，汽车级快充接口。<br>
+        从概念设计到量产交付，全流程ODM支持。
+      </p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value orange">72<span class="perf-unit">V</span></div>
+          <div class="hero-stat-label">Battery Voltage</div>
+        </div>
+        <div>
+          <div class="hero-stat-value green">20<span class="perf-unit">Ah</span></div>
+          <div class="hero-stat-label">Capacity</div>
+        </div>
+        <div>
+          <div class="hero-stat-value yellow">12<span class="perf-unit">"</span></div>
+          <div class="hero-stat-label">Wheel Size</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="报价页面.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          获取定制报价
+        </a>
+        <a class="btn btn-dark spec-download" href="https://www.pxid.com/px-4-product/" target="_blank" rel="noopener noreferrer">下载规格书</a>
+        <button class="btn btn-outline">视频介绍</button>
+      </div>
+    </div>
+
+    <!-- Visual: Right — Moped Illustration -->
+    <div class="hero-visual">
+      <div class="hero-visual-glow"></div>
+      <img src="./media/PX-4/DM_20260704094013_024.JPEG" alt="PX-4 电动摩托车侧面" style="width:100%;max-width:600px;filter:drop-shadow(0 40px 80px rgba(0,0,0,0.8));" loading="eager" decoding="async" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PERFORMANCE STRIP ═══ -->
+<div class="perf-strip">
+  <div class="perf-strip-inner">
+    <div class="perf-item">
+      <div class="perf-value">72<span class="perf-unit">V</span></div>
+      <div class="perf-label">Voltage</div>
+    </div>
+    <div class="perf-item">
+      <div class="perf-value green">20<span class="perf-unit">Ah</span></div>
+      <div class="perf-label">Battery</div>
+    </div>
+    <div class="perf-item">
+      <div class="perf-value yellow">12<span class="perf-unit">"</span></div>
+      <div class="perf-label">Wheels</div>
+    </div>
+    <div class="perf-item">
+      <div class="perf-value">72V 20Ah</div>
+      <div class="perf-label">Battery Pack</div>
+    </div>
+    <div class="perf-item">
+      <div class="perf-value blue">150<span class="perf-unit">kg</span></div>
+      <div class="perf-label">Max Load</div>
+    </div>
+    <div class="perf-item">
+      <div class="perf-value">55<span class="perf-unit">kg</span></div>
+      <div class="perf-label">Weight</div>
+    </div>
+    <div class="perf-item">
+      <div class="perf-value green">4<span class="perf-unit">h</span></div>
+      <div class="perf-label">Fast Charge</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VIDEO SHOWCASE ═══ -->
+<section class="section video-section">
+  <div class="section-inner">
+    <div class="section-label">Video Showcase</div>
+    <h2 class="section-title">真实性能 · 眼见为实</h2>
+    <p class="section-desc">72V 20Ah电池、镁合金一体车架、汽车级快充——每一项数据都经过实测验证</p>
+    <div class="video-grid">
+      <div class="video-hero-item">
+        <div class="video-hero-player" data-video-src="media/PX-4/px-4-product-video.mp4">
+          <img class="video-cover-img" src="./media/PX-4/DM_20260704094013_017.JPEG" alt="PX-4 电动摩托车性能展示" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="eager" decoding="async" />
+          <div class="video-cover-gradient" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.5) 100%);z-index:1;"></div>
+          <div class="video-cover-copy" style="position:absolute;bottom:0;left:0;right:0;padding:40px 60px;z-index:2;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:80px;font-weight:700;color:rgba(255,107,53,0.8);line-height:1;margin-bottom:8px;">PX-4</div>
+            <div style="font-family:'Noto Sans SC',sans-serif;font-size:16px;color:rgba(255,255,255,0.6);letter-spacing:2px;">72V 20Ah · 镁合金一体压铸 · 汽车级快充</div>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-circle">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-overlay-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            0:26 · PX-4 Product Video
+          </div>
+          <video id="px4MainVideo" style="display:none;width:100%;" controls playsinline preload="metadata" poster="./media/PX-4/DM_20260704094013_017.JPEG">
+            <source src="media/PX-4/px-4-product-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div class="video-clips">
+        <div class="video-clip-item active" data-video-src="media/PX-4/px-4-product-video.mp4" data-cover="./media/PX-4/DM_20260704094013_022.JPEG" data-duration="0:26">
+          <div class="video-clip-thumb">
+            <img src="./media/PX-4/DM_20260704094013_022.JPEG" alt="极速性能测试" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6);" loading="lazy" decoding="async" />
+            <div class="clip-play"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <div class="clip-duration">0:26</div>
+          </div>
+          <div class="clip-info">
+            <div class="clip-title">PX-4 产品视频</div>
+            <div class="clip-sub">潮流电摩 · 时尚出行</div>
+          </div>
+        </div>
+        <div class="video-clip-item" data-video-src="media/PX-4/px-4-product-video.mp4" data-cover="./media/PX-4/DM_20260704094013_005.JPEG" data-duration="0:26">
+          <div class="video-clip-thumb">
+            <img src="./media/PX-4/DM_20260704094013_005.JPEG" alt="电池系统" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7);" loading="lazy" decoding="async" />
+            <div class="clip-play"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <div class="clip-duration">0:26</div>
+          </div>
+          <div class="clip-info">
+            <div class="clip-title">城市骑行展示</div>
+            <div class="clip-sub">外观姿态 · 骑行质感</div>
+          </div>
+        </div>
+        <div class="video-clip-item" data-video-src="media/PX-4/px-4-product-video.mp4" data-cover="./media/PX-4/DM_20260704094013_003.PNG" data-duration="0:26">
+          <div class="video-clip-thumb">
+            <img src="./media/PX-4/DM_20260704094013_003.PNG" alt="OEM定制" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.55);" loading="lazy" decoding="async" />
+            <div class="clip-play"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <div class="clip-duration">0:26</div>
+          </div>
+          <div class="clip-info">
+            <div class="clip-title">产品细节展示</div>
+            <div class="clip-sub">个性设计 · 品牌调性</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PERFORMANCE CARDS ═══ -->
+<section class="section perf-section">
+  <div class="section-inner">
+    <div class="section-label">Core Performance</div>
+    <h2 class="section-title">性能标杆 · 不妥协</h2>
+    <div class="perf-grid">
+      <div class="perf-card">
+        <div class="perf-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--power-orange)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="perf-card-title">Motor System</div>
+        <div class="perf-card-value">High-Perf</div>
+        <p class="perf-card-desc">高性能无刷电机，动力输出平顺高效，城市通勤加速响应快，轻松应对日常出行。</p>
+      </div>
+      <div class="perf-card green">
+        <div class="perf-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--electric-green)" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+        </div>
+        <div class="perf-card-title">Battery Pack</div>
+        <div class="perf-card-value">72V 20Ah</div>
+        <p class="perf-card-desc">72V 20Ah高能量密度电池，汽车级快充接口，充电便捷高效，满足日常通勤需求。</p>
+      </div>
+      <div class="perf-card blue">
+        <div class="perf-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--trust-blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="perf-card-title">Mag Frame</div>
+        <div class="perf-card-value">Mg Alloy</div>
+        <p class="perf-card-desc">镁合金一体化压铸车身，轻量化高强度，比传统钢架减重30%，抗腐蚀性能优异。</p>
+      </div>
+      <div class="perf-card">
+        <div class="perf-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--power-orange)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="perf-card-title">Brake System</div>
+        <div class="perf-card-value">High-Perf</div>
+        <p class="perf-card-desc">前后高性能刹车系统，制动响应迅速，12英寸加宽轮胎提供出色的抓地力和稳定性。</p>
+      </div>
+      <div class="perf-card green">
+        <div class="perf-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--electric-green)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="perf-card-title">Suspension</div>
+        <div class="perf-card-value">Front Fork</div>
+        <p class="perf-card-desc">前叉悬挂系统，有效过滤路面震动，配合500mm加长座垫，骑行舒适度全面提升。</p>
+      </div>
+      <div class="perf-card blue">
+        <div class="perf-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--trust-blue)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="perf-card-title">ODM Ready</div>
+        <div class="perf-card-value">Full-Cycle</div>
+        <p class="perf-card-desc">从概念设计到量产的全流程ODM支持，镁合金工艺成熟，支持快速定制化开发。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ POWER SYSTEM DIAGRAM ═══ -->
+<section class="power-visual-section">
+  <div class="power-bg-gradient"></div>
+  <div class="power-visual-inner">
+    <div class="section-label">Power Flow</div>
+    <h2 class="section-title">动力系统 · 全链路解析</h2>
+    <div class="power-diagram">
+      <div class="power-node">
+        <div class="power-node-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--electric-green)" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg>
+        </div>
+        <div class="power-node-title">Battery</div>
+        <div class="power-node-value">72V 20Ah</div>
+      </div>
+      <div class="power-arrow">→</div>
+      <div class="power-node">
+        <div class="power-node-icon" style="background: rgba(255,107,53,0.1);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--power-orange)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="power-node-title">Motor</div>
+        <div class="power-node-value">High-Performance</div>
+      </div>
+      <div class="power-arrow">→</div>
+      <div class="power-node">
+        <div class="power-node-icon" style="background: rgba(0,102,204,0.1);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--trust-blue)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        </div>
+        <div class="power-node-title">Frame</div>
+        <div class="power-node-value">Mg Alloy Cast</div>
+      </div>
+      <div class="power-arrow">→</div>
+      <div class="power-node">
+        <div class="power-node-icon" style="background: rgba(255,184,0,0.1);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-yellow)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="power-node-title">Wheels</div>
+        <div class="power-node-value">12" Wide</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RANGE SECTION ═══ -->
+<section class="section range-section">
+  <div class="section-inner">
+    <div class="section-label">Endurance</div>
+    <h2 class="section-title">续航表现 · 实测数据</h2>
+    <div class="range-visual">
+      <div class="range-bars">
+        <div class="range-bar-item">
+          <div class="range-bar-header">
+            <span class="range-bar-label">城市通勤（35km/h）</span>
+            <span class="range-bar-value">65km</span>
+          </div>
+          <div class="range-bar-track">
+            <div class="range-bar-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="range-bar-item">
+          <div class="range-bar-header">
+            <span class="range-bar-label">标准模式（45km/h）</span>
+            <span class="range-bar-value">50km</span>
+          </div>
+          <div class="range-bar-track">
+            <div class="range-bar-fill" style="width: 77%;"></div>
+          </div>
+        </div>
+        <div class="range-bar-item">
+          <div class="range-bar-header">
+            <span class="range-bar-label">运动模式（55km/h）</span>
+            <span class="range-bar-value">35km</span>
+          </div>
+          <div class="range-bar-track">
+            <div class="range-bar-fill" style="width: 54%;"></div>
+          </div>
+        </div>
+        <div class="range-bar-item">
+          <div class="range-bar-header">
+            <span class="range-bar-label">双人骑行经济模式</span>
+            <span class="range-bar-value">45km</span>
+          </div>
+          <div class="range-bar-track">
+            <div class="range-bar-fill" style="width: 69%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="charging-options">
+        <div class="charging-card">
+          <div class="charging-card-title">Standard Charger</div>
+          <div class="charging-card-value">6h</div>
+          <div class="charging-card-label">0→100% @ 72V 3A</div>
+        </div>
+        <div class="charging-card">
+          <div class="charging-card-title">Auto Fast Charge</div>
+          <div class="charging-card-value" style="color: var(--power-orange);">4h</div>
+          <div class="charging-card-label">汽车级快充接口</div>
+        </div>
+        <div class="charging-card">
+          <div class="charging-card-title">Home Charging</div>
+          <div class="charging-card-value" style="color: var(--accent-yellow);">110-240V</div>
+          <div class="charging-card-label">全球电压兼容</div>
+        </div>
+        <div class="charging-card">
+          <div class="charging-card-title">Swap Ready</div>
+          <div class="charging-card-value">⚡</div>
+          <div class="charging-card-label">支持换电方案</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECHNICAL SPECS ═══ -->
+<section class="section tech-section">
+  <div class="section-inner">
+    <div class="section-label">Full Specifications</div>
+    <h2 class="section-title">完整技术参数</h2>
+    <div class="tech-grid">
+      <div>
+        <div class="tech-col-title">Performance & Motor</div>
+        <div class="tech-row"><span class="tech-label">Motor Type</span><span class="tech-value">Hub Brushless</span></div>
+        <div class="tech-row"><span class="tech-label">Rated Power</span><span class="tech-value">1200W</span></div>
+        <div class="tech-row"><span class="tech-label">Peak Power</span><span class="tech-value highlight">2000W</span></div>
+        <div class="tech-row"><span class="tech-label">Top Speed</span><span class="tech-value highlight">55 km/h</span></div>
+        <div class="tech-row"><span class="tech-label">Max Climb</span><span class="tech-value">18°</span></div>
+        <div class="tech-row"><span class="tech-label">Drive Mode</span><span class="tech-value">Sine Wave Control</span></div>
+      </div>
+      <div>
+        <div class="tech-col-title">Battery & Range</div>
+        <div class="tech-row"><span class="tech-label">Battery Type</span><span class="tech-value">Li-ion</span></div>
+        <div class="tech-row"><span class="tech-label">Voltage</span><span class="tech-value highlight">72V</span></div>
+        <div class="tech-row"><span class="tech-label">Capacity</span><span class="tech-value highlight">20Ah / 1440Wh</span></div>
+        <div class="tech-row"><span class="tech-label">Max Range</span><span class="tech-value green">65km</span></div>
+        <div class="tech-row"><span class="tech-label">Charge Time</span><span class="tech-value">4h (fast) / 6h (std)</span></div>
+        <div class="tech-row"><span class="tech-label">Cycle Life</span><span class="tech-value">&gt;800 cycles</span></div>
+        <div class="tech-row"><span class="tech-label">Charging</span><span class="tech-value">Auto-Grade Port</span></div>
+      </div>
+      <div>
+        <div class="tech-col-title">Dimensions & Structure</div>
+        <div class="tech-row"><span class="tech-label">Dimensions</span><span class="tech-value">1780×700×1100mm</span></div>
+        <div class="tech-row"><span class="tech-label">Wheel Base</span><span class="tech-value">1280mm</span></div>
+        <div class="tech-row"><span class="tech-label">Wheel Size</span><span class="tech-value">12" Wide Tire</span></div>
+        <div class="tech-row"><span class="tech-label">Frame</span><span class="tech-value">Mg Alloy Die-Cast</span></div>
+        <div class="tech-row"><span class="tech-label">Brakes (F/R)</span><span class="tech-value">Disc / Disc</span></div>
+        <div class="tech-row"><span class="tech-label">Seat Length</span><span class="tech-value">500mm</span></div>
+        <div class="tech-row"><span class="tech-label">Suspension</span><span class="tech-value">Front Fork</span></div>
+        <div class="tech-row"><span class="tech-label">Weight</span><span class="tech-value">55kg</span></div>
+        <div class="tech-row"><span class="tech-label">Max Load</span><span class="tech-value">150kg</span></div>
+      </div>
+      <div>
+        <div class="tech-col-title">Smart Features</div>
+        <div class="tech-row"><span class="tech-label">Display</span><span class="tech-value">LCD Dashboard</span></div>
+        <div class="tech-row"><span class="tech-label">Charging</span><span class="tech-value">Auto-Grade Fast Port</span></div>
+        <div class="tech-row"><span class="tech-label">Lights</span><span class="tech-value">Front + Rear + Turn</span></div>
+        <div class="tech-row"><span class="tech-label">Seat</span><span class="tech-value">500mm Extra-Long</span></div>
+        <div class="tech-row"><span class="tech-label">Frame Tech</span><span class="tech-value">Mg Alloy Die-Cast</span></div>
+        <div class="tech-row"><span class="tech-label">Certifications</span><span class="tech-value">CE / FCC / UL</span></div>
+        <div class="tech-row"><span class="tech-label">ODM Support</span><span class="tech-value">Design to Mass Prod</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IMAGE GALLERY ═══ -->
+<section class="section gallery-section">
+  <div class="section-inner">
+    <div class="section-label">Product Gallery</div>
+    <h2 class="section-title">每一处细节 · 匠心可见</h2>
+    <p class="section-desc">高强度车架、大容量电池、精准制动系统——专业级配置成就卓越性能</p>
+    <div class="gallery-mosaic">
+      <div class="gallery-mosaic-main">
+        <div class="gallery-mosaic-visual" style="overflow:hidden;">
+          <img src="./media/PX-4/DM_20260704094013_021.JPEG" alt="PX-4 电动摩托车户外场景" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async" />
+        </div>
+      </div>
+      <div class="gallery-mosaic-grid">
+        <div class="gallery-mini-item">
+          <img src="./media/PX-4/DM_20260704094013_007.JPEG" alt="电机细节" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery-mini-item">
+          <img src="./media/PX-4/DM_20260704094013_005.JPEG" alt="电池系统" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9);" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery-mini-item">
+          <img src="./media/PX-4/DM_20260704094013_006.JPEG" alt="轮毂" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.8);" loading="lazy" decoding="async" />
+        </div>
+        <div class="gallery-mini-item">
+          <img src="./media/PX-4/DM_20260704094013_018.JPEG" alt="车型俯视" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+    <div class="gallery-color-options">
+      <div class="gallery-color-title">Available Colors · 可选颜色</div>
+      <div class="gallery-colors">
+        <div class="color-swatch active">
+          <div class="swatch-circle" style="background: #1a1a1a; border: 2px solid #333;"></div>
+          <span>Carbon Black</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: #e8e8e8;"></div>
+          <span>Pearl White</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: linear-gradient(135deg,#FF6B35,#FF8A5C);"></div>
+          <span>Power Orange</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: linear-gradient(135deg,#00C853,#00E676);"></div>
+          <span>Electric Green</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: linear-gradient(135deg,#0066CC,#3B82F6);"></div>
+          <span>Trust Blue</span>
+        </div>
+        <div class="color-swatch">
+          <div class="swatch-circle" style="background: linear-gradient(135deg,#374151,#6B7280);"></div>
+          <span>Custom RAL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OEM CAPABILITIES ═══ -->
+<section class="section oem-section">
+  <div class="section-inner">
+    <div class="section-label">OEM/ODM</div>
+    <h2 class="section-title">制造实力 · 产能保障</h2>
+    <div class="oem-grid">
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="oem-value">20万㎡</div>
+        <div class="oem-label">Production Area</div>
+        <div class="oem-desc">自有工厂，产能稳定</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="oem-value">50万+</div>
+        <div class="oem-label">Annual Capacity</div>
+        <div class="oem-desc">充足产能，保障交付</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="oem-value">15年</div>
+        <div class="oem-label">Industry Experience</div>
+        <div class="oem-desc">深耕电动出行领域</div>
+      </div>
+      <div class="oem-card">
+        <div class="oem-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="oem-value">100%</div>
+        <div class="oem-label">QC Passed</div>
+        <div class="oem-desc">出厂全检，品质保障</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <h2 class="cta-title">
+      电动摩托车<br>
+      <span class="accent">OEM 解决方案</span>
+    </h2>
+    <p class="cta-desc">
+      从产品定义到批量交付，一站式服务。最低50台起订，3周样机交付，<br>
+      灵活支持品牌定制、功能定制、贴牌生产。
+    </p>
+    <div class="cta-actions">
+      <a href="报价页面.html" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        获取定制报价
+      </a>
+      <a class="btn btn-dark spec-download" href="https://www.pxid.com/px-4-product/" target="_blank" rel="noopener noreferrer">下载规格书</a>
+      <button class="btn btn-outline">预约视频会议</button>
+    </div>
+    <div class="cta-trust">
+      <div class="cta-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        48h 内回复
+      </div>
+      <div class="cta-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        最低 50 台起订
+      </div>
+      <div class="cta-trust-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        样机 3 周交付
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo-icon">P</div>
+                        <span class="footer-logo-name">PXID</span>
+                    </div>
+                    <p class="footer-desc lang-en">Global electric mobility OEM/ODM manufacturer. E-bikes, e-motorcycles, and e-scooters for brands worldwide.</p>
+                    <p class="footer-desc lang-zh">全球电动出行 OEM/ODM 制造商。为全球品牌提供电动自行车、电动摩托车和电动滑板车。</p>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Quick Links</span><span class="lang-zh">快速链接</span></h4>
+                    <ul>
+                        <li><a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a></li>
+                        <li><a href="产品.html"><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a></li>
+                        <li><a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a></li>
+                        <li><a href="about us.html"><span class="lang-en">About</span><span class="lang-zh">关于我们</span></a></li>
+                        <li><a href="新闻页.html"><span class="lang-en">Insights</span><span class="lang-zh">新闻动态</span></a></li>
+                        <li><a href="报价页面.html"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></h4>
+                    <ul>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Bikes</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动自行车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Motorcycles</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动摩托车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Scooters</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动滑板车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Custom ODM Solutions</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">定制 ODM 解决方案</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></h4>
+                    <ul>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Email</span><span class="lang-zh">邮箱</span></span>
+                            <span class="footer-contact-val"><a href="mailto:inquiry@pxid.com">inquiry@pxid.com</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Phone</span><span class="lang-zh">电话</span></span>
+                            <span class="footer-contact-val"><a href="tel:+8618936381099">+86 189 3638 1099</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label">WhatsApp</span>
+                            <span class="footer-contact-val"><a href="https://wa.me/8618936381099" target="_blank"><span class="lang-en">Chat on WhatsApp</span><span class="lang-zh">WhatsApp 在线聊天</span></a></span>
+                        </li>
+                        <li class="footer-social-divider">
+                            <span class="footer-contact-label"><span class="lang-en">WeChat Official</span><span class="lang-zh">微信公众号</span></span>
+                            <span class="footer-contact-val"><span>PXID品向制造</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Video Channel</span><span class="lang-zh">视频号</span></span>
+                            <span class="footer-contact-val"><span>品向出行</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Alibaba International</span><span class="lang-zh">阿里巴巴国际站</span></span>
+                            <span class="footer-contact-val"><a href="https://pxid.en.alibaba.com" target="_blank">pxid.en.alibaba.com</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PXID. <span class="lang-en">All rights reserved.</span><span class="lang-zh">保留所有权利。</span></span>
+                <span>UL · EN · CE · ISO <span class="lang-en">Compliant Manufacturing</span><span class="lang-zh">合规制造</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-cta-fixed"><a href="报价页面.html" class="btn-primary"><i class="fas fa-envelope"></i> <span class="lang-en">Get a Quote</span><span class="lang-zh">获取报价</span></a></div>
+
+    <button class="back-to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script src="js/common.js"></script>
+<script src="js/seo.js" data-seo-page="px-4" defer></script>
+<script>
+/* ---------- PX-4 视频播放交互 ---------- */
+(function () {
+  var player = document.querySelector('.video-hero-player');
+  var video = document.getElementById('px4MainVideo');
+  var source = video ? video.querySelector('source') : null;
+  var cover = player ? player.querySelector('.video-cover-img') : null;
+  var badge = player ? player.querySelector('.video-overlay-badge') : null;
+  var clips = document.querySelectorAll('.video-clip-item[data-video-src]');
+
+  function playVideo(src, coverSrc, duration) {
+    if (!player || !video || !source) return;
+    if (src && source.getAttribute('src') !== src) {
+      source.setAttribute('src', src);
+      video.load();
+    }
+    if (coverSrc && cover) cover.setAttribute('src', coverSrc);
+    if (duration && badge) {
+      badge.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>' + duration + ' · PX-4 Product Video';
+    }
+    player.classList.add('is-playing');
+    video.style.display = 'block';
+    video.play();
+  }
+
+  if (player) {
+    player.addEventListener('click', function () {
+      playVideo(player.getAttribute('data-video-src'), null, '0:26');
+    });
+  }
+
+  clips.forEach(function (clip) {
+    clip.addEventListener('click', function () {
+      clips.forEach(function (item) { item.classList.remove('active'); });
+      clip.classList.add('active');
+      playVideo(
+        clip.getAttribute('data-video-src'),
+        clip.getAttribute('data-cover'),
+        clip.getAttribute('data-duration')
+      );
+    });
+  });
+})();
+</script>
+</body>
+</html>

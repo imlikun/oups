@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Insights – PXID Smart Mobility</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/pages/news.css">
+</head>
+<body data-lang="en" data-scheme="blue">
+    <nav class="navbar">
+        <div class="container">
+            <a href="首页.html" class="logo">
+    <div class="logo-icon">P</div>
+    <div class="logo-text">
+        <span class="logo-name">PXID</span>
+        <span class="logo-sub lang-en">OEM/ODM Manufacturer</span>
+        <span class="logo-sub lang-zh">OEM/ODM 制造商</span>
+    </div>
+</a>
+            <div class="nav-links">
+                                <a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                <a href="产品.html"><span class="lang-en">Products</span><span class="lang-zh">产品</span></a>
+                <a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                <a href="新闻页.html"><span class="lang-en">News</span><span class="lang-zh">新闻</span></a>
+                <a href="about us.html"><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+<a href="报价页面.html" class="nav-cta"><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                <button class="lang-switch" onclick="toggleLang()"><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                <button class="scheme-switch" onclick="toggleScheme()" title="切换蓝/绿色调"><i class="fas fa-palette"></i></button></div>
+            <button class="mobile-lang-switch" onclick="toggleLang()" aria-label="Toggle language">
+                <i class="fas fa-globe"></i>
+                <span class="lang-label-en">EN</span>
+                <span class="lang-sep">/</span>
+                <span class="lang-label-zh">中文</span>
+            </button>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        </div>
+        <!-- 移动端下拉菜单 -->
+    <div class="mobile-menu-panel" aria-hidden="true">
+            <div class="container mobile-menu-card">
+                <div class="mobile-menu-head">
+                    <div>
+                        <div class="mobile-menu-title"><span class="lang-en">Menu</span><span class="lang-zh">导航菜单</span></div>
+                        <div class="mobile-menu-sub"><span class="lang-en">PXID OEM/ODM Manufacturer</span><span class="lang-zh">PXID OEM/ODM 制造商</span></div>
+                    </div>
+                    <button class="mobile-menu-close" type="button" aria-label="Close menu"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="mobile-menu-list">
+                    <a class="mobile-menu-item" href="首页.html"><i class="fas fa-house"></i><span class="lang-en">Home</span><span class="lang-zh">首页</span></a>
+                    <a class="mobile-menu-item" href="产品.html"><i class="fas fa-bicycle"></i><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a>
+                    <a class="mobile-menu-item" href="odm 服务.html"><i class="fas fa-industry"></i><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a>
+                    <a class="mobile-menu-item" href="新闻页.html"><i class="fas fa-newspaper"></i><span class="lang-en">News</span><span class="lang-zh">新闻动态</span></a>
+                    <a class="mobile-menu-item" href="about us.html"><i class="fas fa-building"></i><span class="lang-en">About Us</span><span class="lang-zh">关于我们</span></a>
+                    <a class="mobile-menu-item mobile-menu-quote" href="报价页面.html"><i class="fas fa-paper-plane"></i><span class="lang-en">Get Quote</span><span class="lang-zh">获取报价</span></a>
+                </div>
+                <div class="mobile-menu-tools">
+                    <button type="button" onclick="toggleLang()"><i class="fas fa-globe"></i><span class="lang-en">中文</span><span class="lang-zh">English</span></button>
+                    <button type="button" onclick="toggleScheme()"><i class="fas fa-palette"></i><span class="lang-en">Color</span><span class="lang-zh">配色</span></button>
+                </div>
+                <div class="mobile-menu-contact">
+                    <a href="mailto:inquiry@pxid.com"><i class="fas fa-envelope"></i> inquiry@pxid.com</a>
+                    <a href="tel:+8618936381099"><i class="fas fa-phone"></i> +86 189 3638 1099</a>
+                </div>
+            </div>
+        </div>
+</nav>
+
+    
+
+    <!-- HERO -->
+    <div class="page-hero">
+        <div class="page-hero-bg" style="background-image:url('media/news/news-460.jpg');"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="container">
+           
+            <h1><span class="lang-en">News & Insights</span><span class="lang-zh">新闻与洞察</span></h1>
+            <p class="lang-en">Latest updates, industry insights, and product stories from PXID.</p>
+            <p class="lang-zh">PXID 最新动态、行业洞察和产品故事。</p>
+        </div>
+    </div>
+
+    <!-- STICKY CATEGORY TABS -->
+    <div class="category-tabs">
+        <div class="container">
+            <div class="tabs-container">
+                <button class="tab-btn active" data-filter="all"><span class="lang-en">All</span><span class="lang-zh">全部</span></button>
+                <button class="tab-btn" data-filter="product"><span class="lang-en">Product</span><span class="lang-zh">产品</span></button>
+                <button class="tab-btn" data-filter="event"><span class="lang-en">Events</span><span class="lang-zh">展会</span></button>
+                <button class="tab-btn" data-filter="insight"><span class="lang-en">Insights</span><span class="lang-zh">洞察</span></button>
+                <button class="tab-btn" data-filter="partner"><span class="lang-en">Partners</span><span class="lang-zh">合作</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEWS SECTION -->
+    <section class="section">
+        <div class="container">
+
+            <!-- Featured News -->
+            <div class="featured-news">
+                <div class="featured-card">
+                    <div class="featured-image"><img src="news-1182.jpg" alt="PXID India Manufacturing" style="width:100%;height:100%;object-fit:cover;" loading="eager" decoding="async"></div>
+                    <div class="featured-content">
+                        <span class="featured-tag"><span class="lang-en">Featured · Product</span><span class="lang-zh">精选 · 产品</span></span>
+                        <h2 class="featured-title"><a href="新闻详情.html?id=india-manufacturing"><span class="lang-en">Why PXID Chose India for Electric Bike Manufacturing</span><span class="lang-zh">PXID 为何选择在印度制造电动自行车</span></a></h2>
+                        <p class="featured-excerpt lang-en">PXID is expanding its production footprint in India to build a more resilient global supply chain—combining China's R&D and engineering strength with India's localized manufacturing and export advantages.</p>
+                        <p class="featured-excerpt lang-zh">PXID 正在印度扩展生产布局，构建更具韧性的全球供应链——结合中国的研发工程实力与印度的本地化制造和出口优势。</p>
+                        <div class="featured-meta">
+                            <span class="featured-date">2026-06-27</span>
+                            <a href="新闻详情.html?id=india-manufacturing" class="featured-read"><span class="lang-en">Read Full Article →</span><span class="lang-zh">阅读全文 →</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div class="news-grid">
+
+                <!-- Card 1: Event -->
+                <article class="news-card" data-category="event">
+                    <div class="news-image"><img src="news-1180.jpg" alt="EUROBIKE 2026" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Event</span><span class="lang-zh">展会</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=eurobike-2026"><span class="lang-en">EUROBIKE 2026 Frankfurt: Global E-bike & Mobility Trends</span><span class="lang-zh">EUROBIKE 2026 法兰克福：全球电动自行车与出行趋势</span></a></h3>
+                        <p class="news-excerpt lang-en">Global e-bike, cargo bike and mobility industry trends from Europe's premier cycling exhibition.</p>
+                        <p class="news-excerpt lang-zh">来自欧洲顶级自行车展的全球电动自行车、货运自行车和出行行业趋势。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-06-17</span>
+                            <a href="新闻详情.html?id=eurobike-2026" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-067.jpg" alt="Electric Cargo Bike Delivery" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=cargo-bike-apps"><span class="lang-en">5 Key Urban Applications of Electric Cargo Bike Delivery</span><span class="lang-zh">电动货运自行车配送的5大城市应用场景</span></a></h3>
+                        <p class="news-excerpt lang-en">Exploring how electric cargo bikes are transforming last-mile delivery in urban environments.</p>
+                        <p class="news-excerpt lang-zh">探索电动货运自行车如何改变城市环境中的最后一公里配送。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-29</span>
+                            <a href="新闻详情.html?id=cargo-bike-apps" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-4261.jpg" alt="India E-Bike Supply Chain" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=india-supply-chain"><span class="lang-en">India's Evolving Manufacturing Ecosystem for E-Bikes</span><span class="lang-zh">印度不断发展的电动自行车制造生态系统</span></a></h3>
+                        <p class="news-excerpt lang-en">How India's growing manufacturing ecosystem is becoming a key player in the global e-bike industry.</p>
+                        <p class="news-excerpt lang-zh">印度不断发展的制造生态系统如何成为全球电动自行车行业的关键参与者。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-27</span>
+                            <a href="新闻详情.html?id=india-supply-chain" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-4251.jpg" alt="Freight Volatility Packaging" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=freight-volatility"><span class="lang-en">2026 Freight Volatility: Practical Packaging Strategies to Cut Logistics Costs</span><span class="lang-zh">2026货运波动：降低物流成本的实用包装策略</span></a></h3>
+                        <p class="news-excerpt lang-en">Practical packaging strategies to navigate global freight volatility and reduce logistics costs in 2026.</p>
+                        <p class="news-excerpt lang-zh">应对2026年全球货运波动、降低物流成本的实用包装策略。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-25</span>
+                            <a href="新闻详情.html?id=freight-volatility" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-062.jpg" alt="Electric Mopeds SEA" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=electric-mopeds-sea"><span class="lang-en">Electric Mopeds Reshape Urban Mobility Across Southeast Asia</span><span class="lang-zh">电动助力车重塑东南亚城市出行</span></a></h3>
+                        <p class="news-excerpt lang-en">The growing popularity of electric mopeds is transforming urban mobility across Southeast Asian markets.</p>
+                        <p class="news-excerpt lang-zh">电动助力车日益普及，正在改变东南亚市场的城市出行方式。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-22</span>
+                            <a href="新闻详情.html?id=electric-mopeds-sea" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6: Partner -->
+                <article class="news-card" data-category="partner">
+                    <div class="news-image"><img src="news-056.jpg" alt="China Design Manufacturing" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Partner</span><span class="lang-zh">合作</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=china-design-manufacturing"><span class="lang-en">China Design + Manufacturing Excellence Reshapes Micromobility</span><span class="lang-zh">中国设计+制造卓越重塑微出行格局</span></a></h3>
+                        <p class="news-excerpt lang-en">How the integration of Chinese design innovation with manufacturing excellence is reshaping the micromobility landscape.</p>
+                        <p class="news-excerpt lang-zh">中国设计创新与制造卓越的融合如何重塑微出行格局。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-20</span>
+                            <a href="新闻详情.html?id=china-design-manufacturing" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 7: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-055.jpg" alt="Circular Economy E-Bike" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=circular-economy"><span class="lang-en">Circular Economy 2026: Recyclability of E-Bike Components</span><span class="lang-zh">循环经济2026：电动自行车组件的可回收性</span></a></h3>
+                        <p class="news-excerpt lang-en">Exploring how the e-bike industry is embracing circular economy principles through component recyclability and sustainable design.</p>
+                        <p class="news-excerpt lang-zh">探索电动自行车行业如何通过组件可回收性和可持续设计践行循环经济理念。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-17</span>
+                            <a href="新闻详情.html?id=circular-economy" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 8: Product -->
+                <article class="news-card" data-category="product">
+                    <div class="news-image"><img src="news-4281.jpg" alt="Lithium Battery Range" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Product</span><span class="lang-zh">产品</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=lithium-battery-range"><span class="lang-en">High Energy Density Lithium Batteries Extend Electric Scooter Range</span><span class="lang-zh">高能量密度锂电池延长电动滑板车续航</span></a></h3>
+                        <p class="news-excerpt lang-en">How advanced lithium battery technology is pushing the boundaries of electric scooter range and performance.</p>
+                        <p class="news-excerpt lang-zh">先进锂电池技术如何突破电动滑板车续航和性能的边界。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-14</span>
+                            <a href="新闻详情.html?id=lithium-battery-range" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 9: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-4261.jpg" alt="Urban Two-Wheel Mobility" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=urban-mobility-guide"><span class="lang-en">2026 Urban Two-Wheel Mobility: Market Access Model Guide</span><span class="lang-zh">2026城市两轮出行：市场准入模式指南</span></a></h3>
+                        <p class="news-excerpt lang-en">A comprehensive guide to market access models for urban two-wheel electric mobility in 2026.</p>
+                        <p class="news-excerpt lang-zh">2026年城市两轮电动出行市场准入模式的综合指南。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-11</span>
+                            <a href="新闻详情.html?id=urban-mobility-guide" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 10: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-4251.jpg" alt="Japan E-Bike Market" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=japan-ebike-surge"><span class="lang-en">Japan E-Bike Market Surge: Silver Age and Female Riders</span><span class="lang-zh">日本电动自行车市场激增：银发族与女性骑手</span></a></h3>
+                        <p class="news-excerpt lang-en">Japan's e-bike market is experiencing rapid growth driven by aging population and increasing female ridership.</p>
+                        <p class="news-excerpt lang-zh">日本电动自行车市场在老龄化和女性骑行者增加的推动下快速增长。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-08</span>
+                            <a href="新闻详情.html?id=japan-ebike-surge" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 11: Event -->
+                <article class="news-card" data-category="event">
+                    <div class="news-image"><img src="news-060.jpg" alt="CHINA CYCLE 2026" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Event</span><span class="lang-zh">展会</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=china-cycle-2026"><span class="lang-en">CHINA CYCLE 2026 Highlights Global E-bike Supply Chain</span><span class="lang-zh">CHINA CYCLE 2026 聚焦全球电动自行车供应链</span></a></h3>
+                        <p class="news-excerpt lang-en">China Cycle 2026 showcases the latest innovations in the global e-bike supply chain and manufacturing.</p>
+                        <p class="news-excerpt lang-zh">CHINA CYCLE 2026 展示全球电动自行车供应链和制造的最新创新。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-05</span>
+                            <a href="新闻详情.html?id=china-cycle-2026" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 12: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-059.jpg" alt="Bike to Work Day" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=bike-to-work"><span class="lang-en">Bike to Work Day 2026: E-Bike Commuting Solutions Rise</span><span class="lang-zh">2026骑车上班日：电动自行车通勤方案兴起</span></a></h3>
+                        <p class="news-excerpt lang-en">E-bike commuting solutions are gaining momentum as more cities embrace sustainable transportation.</p>
+                        <p class="news-excerpt lang-zh">随着更多城市拥抱可持续交通，电动自行车通勤方案正获得动力。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-03</span>
+                            <a href="新闻详情.html?id=bike-to-work" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 13: Event -->
+                <article class="news-card" data-category="event">
+                    <div class="news-image"><img src="news-062.jpg" alt="Canton Fair 139" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Event</span><span class="lang-zh">展会</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=canton-fair-139-phase3"><span class="lang-en">Canton Fair 139 Phase 3: PXID Booth Live & Visitor Guide</span><span class="lang-zh">广交会139期第三阶段：PXID展位直击与参观指南</span></a></h3>
+                        <p class="news-excerpt lang-en">PXID showcases latest e-bike and e-scooter OEM/ODM solutions at Canton Fair 139 Phase 3.</p>
+                        <p class="news-excerpt lang-zh">PXID 在广交会139期第三阶段展示最新电动自行车和滑板车OEM/ODM解决方案。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-05-01</span>
+                            <a href="新闻详情.html?id=canton-fair-139-phase3" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 14: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-056.jpg" alt="Labor Day Low Carbon" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=labor-day-lowcarbon"><span class="lang-en">Labor Day 2026: Low-Carbon Mobility and Manufacturing Value</span><span class="lang-zh">2026劳动节：低碳出行与制造价值</span></a></h3>
+                        <p class="news-excerpt lang-en">Celebrating the workers behind the low-carbon mobility revolution and the value of sustainable manufacturing.</p>
+                        <p class="news-excerpt lang-zh">致敬低碳出行革命背后的劳动者和可持续制造的价值。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-04-29</span>
+                            <a href="新闻详情.html?id=labor-day-lowcarbon" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 15: Event -->
+                <article class="news-card" data-category="event">
+                    <div class="news-image"><img src="news-4271.jpg" alt="Canton Fair 139 PXID" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Event</span><span class="lang-zh">展会</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=canton-fair-139-preview"><span class="lang-en">Join PXID at Canton Fair 139: Explore New E-Bikes & Scooters</span><span class="lang-zh">相约广交会139期：探索新款电动自行车与滑板车</span></a></h3>
+                        <p class="news-excerpt lang-en">PXID invites global buyers to explore new e-bike and e-scooter models at Canton Fair 139.</p>
+                        <p class="news-excerpt lang-zh">PXID 邀请全球买家在广交会139期探索新款电动自行车和滑板车。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-04-27</span>
+                            <a href="新闻详情.html?id=canton-fair-139-preview" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 16: Event -->
+                <article class="news-card" data-category="event">
+                    <div class="news-image"><img src="news-4241.jpg" alt="CYCLE MODE TOKYO" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Event</span><span class="lang-zh">展会</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=cycle-mode-tokyo"><span class="lang-en">CYCLE MODE TOKYO 2026: Lightweight Commuters and E-Bike Highlights</span><span class="lang-zh">CYCLE MODE TOKYO 2026：轻量通勤与电动自行车亮点</span></a></h3>
+                        <p class="news-excerpt lang-en">CYCLE MODE TOKYO 2026 showcases lightweight commuter bikes and the latest e-bike innovations for the Japanese market.</p>
+                        <p class="news-excerpt lang-zh">CYCLE MODE TOKYO 2026 展示轻量通勤自行车和日本市场最新电动自行车创新。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-04-24</span>
+                            <a href="新闻详情.html?id=cycle-mode-tokyo" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 17: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-4231.jpg" alt="E-Bike Sharing Fail" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=ebike-sharing-fail"><span class="lang-en">Why 80% of Global E-Bike Sharing Projects Fail by Year Three</span><span class="lang-zh">为何80%全球电动自行车共享项目三年内失败</span></a></h3>
+                        <p class="news-excerpt lang-en">Analyzing the key factors behind e-bike sharing project failures and how to build sustainable shared mobility.</p>
+                        <p class="news-excerpt lang-zh">分析电动自行车共享项目失败的关键因素以及如何构建可持续的共享出行。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-04-23</span>
+                            <a href="新闻详情.html?id=ebike-sharing-fail" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 18: Insight -->
+                <article class="news-card" data-category="insight">
+                    <div class="news-image"><img src="news-4221.jpg" alt="Earth Day E-Mobility" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async"></div>
+                    <div class="news-content">
+                        <span class="news-tag"><span class="lang-en">Insight</span><span class="lang-zh">洞察</span></span>
+                        <h3 class="news-title"><a href="新闻详情.html?id=earth-day-emobility"><span class="lang-en">World Earth Day 2026: E-Mobility Driving Low-Carbon Transportation</span><span class="lang-zh">2026世界地球日：电动出行推动低碳交通</span></a></h3>
+                        <p class="news-excerpt lang-en">How electric mobility is contributing to global carbon reduction goals on World Earth Day 2026.</p>
+                        <p class="news-excerpt lang-zh">2026世界地球日，电动出行如何助力全球碳减排目标。</p>
+                        <div class="news-meta">
+                            <span class="news-date">2026-04-22</span>
+                            <a href="新闻详情.html?id=earth-day-emobility" class="read-more"><span class="lang-en">Read More →</span><span class="lang-zh">阅读更多 →</span></a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SUBSCRIBE -->
+    <div class="container">
+        <div class="subscribe-section">
+            <h2 class="lang-en">Stay Updated with PXID</h2>
+            <h2 class="lang-zh">关注 PXID 最新动态</h2>
+            <p style="color:var(--text-secondary); margin-bottom:24px;" class="lang-en">Subscribe for product launches, industry insights, and event invitations.</p>
+            <p style="color:var(--text-secondary); margin-bottom:24px;" class="lang-zh">订阅以获取产品发布、行业洞察和展会邀请。</p>
+            <form class="subscribe-form">
+                <input type="email" placeholder="Your email / 您的邮箱" required>
+                <button type="submit"><span class="lang-en">Subscribe</span><span class="lang-zh">订阅</span></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo-icon">P</div>
+                        <span class="footer-logo-name">PXID</span>
+                    </div>
+                    <p class="footer-desc lang-en">Global electric mobility OEM/ODM manufacturer. E-bikes, e-motorcycles, and e-scooters for brands worldwide.</p>
+                    <p class="footer-desc lang-zh">全球电动出行 OEM/ODM 制造商。为全球品牌提供电动自行车、电动摩托车和电动滑板车。</p>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Quick Links</span><span class="lang-zh">快速链接</span></h4>
+                    <ul>
+                        <li><a href="首页.html"><span class="lang-en">Home</span><span class="lang-zh">首页</span></a></li>
+                        <li><a href="产品.html"><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></a></li>
+                        <li><a href="odm 服务.html"><span class="lang-en">ODM Services</span><span class="lang-zh">ODM 服务</span></a></li>
+                        <li><a href="about us.html"><span class="lang-en">About</span><span class="lang-zh">关于我们</span></a></li>
+                        <li><a href="新闻页.html"><span class="lang-en">Insights</span><span class="lang-zh">新闻动态</span></a></li>
+                        <li><a href="报价页面.html"><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Products</span><span class="lang-zh">产品中心</span></h4>
+                    <ul>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Bikes</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动自行车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Motorcycles</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动摩托车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Electric Scooters</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">电动滑板车</span></li>
+                        <li><span class="lang-en" style="color:#94A3B8;font-size:14px;">Custom ODM Solutions</span><span class="lang-zh" style="color:#94A3B8;font-size:14px;">定制 ODM 解决方案</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4><span class="lang-en">Contact</span><span class="lang-zh">联系我们</span></h4>
+                    <ul>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Email</span><span class="lang-zh">邮箱</span></span>
+                            <span class="footer-contact-val"><a href="mailto:inquiry@pxid.com">inquiry@pxid.com</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Phone</span><span class="lang-zh">电话</span></span>
+                            <span class="footer-contact-val"><a href="tel:+8618936381099">+86 189 3638 1099</a></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label">WhatsApp</span>
+                            <span class="footer-contact-val"><a href="https://wa.me/8618936381099" target="_blank"><span class="lang-en">Chat on WhatsApp</span><span class="lang-zh">WhatsApp 在线聊天</span></a></span>
+                        </li>
+                        <li class="footer-social-divider">
+                            <span class="footer-contact-label"><span class="lang-en">WeChat Official</span><span class="lang-zh">微信公众号</span></span>
+                            <span class="footer-contact-val"><span>PXID品向制造</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Video Channel</span><span class="lang-zh">视频号</span></span>
+                            <span class="footer-contact-val"><span>品向出行</span></span>
+                        </li>
+                        <li>
+                            <span class="footer-contact-label"><span class="lang-en">Alibaba International</span><span class="lang-zh">阿里巴巴国际站</span></span>
+                            <span class="footer-contact-val"><a href="https://pxid.en.alibaba.com" target="_blank">pxid.en.alibaba.com</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 PXID. <span class="lang-en">All rights reserved.</span><span class="lang-zh">保留所有权利。</span></span>
+                <span>UL · EN · CE · ISO <span class="lang-en">Compliant Manufacturing</span><span class="lang-zh">合规制造</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-cta-fixed">
+        <a href="报价页面.html" class="btn-primary"><i class="fas fa-envelope"></i> <span class="lang-en">Get a Quote</span><span class="lang-zh">获取报价</span></a>
+    </div>
+
+        <button class="back-to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<script src="js/common.js"></script>
+    <script src="js/seo.js" data-seo-page="news" defer></script>
+    <script>
+        /* ---------- 分类筛选 ---------- */
+        (function () {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const newsCards = document.querySelectorAll('.news-card');
+            const featuredCard = document.querySelector('.featured-card');
+
+            function applyFilter(filter) {
+                // 精选卡片：仅在 "all" 时显示
+                if (featuredCard) {
+                    if (filter === 'all') {
+                        featuredCard.parentElement.style.display = '';
+                    } else {
+                        featuredCard.parentElement.style.display = 'none';
+                    }
+                }
+
+                // 过滤普通新闻卡片
+                newsCards.forEach(function (card) {
+                    const category = card.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            tabBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    // 切换 active 状态
+                    tabBtns.forEach(function (b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+
+                    const filter = btn.getAttribute('data-filter');
+                    applyFilter(filter);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

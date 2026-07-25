@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M2 – Sport Electric Motorcycle | PXID</title>
+    <style id="theme-vars">
+/* PXID International Brand CSS — Minimal Industrial */
+:root {
+  /* ── Colors ── */
+  --color-primary: #0052CC;
+  --color-primary-hover: #003D99;
+  --color-primary-light: #E8F0FE;
+  --color-primary-50: rgba(0, 82, 204, 0.04);
+  --color-primary-100: rgba(0, 82, 204, 0.08);
+
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8F9FB;
+  --color-bg-dark: #0A1628;
+  --color-bg-dark-secondary: #111D32;
+
+  --color-text: #1A1A2E;
+  --color-text-secondary: #5F6B7A;
+  --color-text-tertiary: #8C95A3;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border: #E2E6EB;
+  --color-border-light: #F0F2F5;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FFFFFF;
+
+  /* ── State Colors ── */
+  --state-success: #059669;
+  --state-warning: #D97706;
+  --state-error: #DC2626;
+  --state-info: #0284C7;
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.04);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.04);
+
+  /* ── Layout ── */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+  --section-spacing: 120px;
+  --navbar-height: 72px;
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+.dark {
+  --color-bg: #0A1628;
+  --color-bg-alt: #111D32;
+  --color-bg-dark: #060E1A;
+  --color-bg-dark-secondary: #0A1628;
+  --color-text: #F0F2F5;
+  --color-text-secondary: #A0AEC0;
+  --color-text-tertiary: #6B7B8D;
+  --color-border: #1E2D45;
+  --color-border-light: #152238;
+  --color-surface: #111D32;
+  --color-surface-raised: #162340;
+  --color-primary-light: rgba(0, 82, 204, 0.12);
+  --color-primary-50: rgba(0, 82, 204, 0.06);
+  --color-primary-100: rgba(0, 82, 204, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+    
+    /* ── Language Toggle ── */
+    #lang-toggle { cursor: pointer; user-select: none; }
+    #lang-toggle:hover { filter: brightness(0.9); }to { opacity: 1; transform: translateY(0); } }
+  </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    
+    /* ── Language Toggle ── */
+    #lang-toggle { cursor: pointer; user-select: none; }
+    #lang-toggle:hover { filter: brightness(0.9); }
+
+  
+  </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    
+    /* ── Language Toggle ── */
+    #lang-toggle { cursor: pointer; user-select: none; }
+    #lang-toggle:hover { filter: brightness(0.9); }
+
+  
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="sticky top-0 z-50 w-full bg-white" style="border-bottom: 1px solid var(--color-border); height: var(--navbar-height);">
+    <nav class="mx-auto flex items-center justify-between h-full px-6" style="max-width: var(--container-max);">
+      <a href="index.html" class="flex items-center gap-2 shrink-0" data-dom-id="nav-logo"><span class="text-xl font-extrabold tracking-tight" style="color: var(--color-text); letter-spacing: var(--tracking-tight);">PXID</span><span class="hidden sm:inline text-xs font-medium" style="color: var(--color-text-tertiary);" data-en="OEM/ODM Manufacturer" data-zh="OEM/ODM 制造商" data-en="OEM/ODM Manufacturer" data-zh="OEM/ODM 制造商">OEM/ODM Manufacturer</span></a>
+      <ul class="hidden md:flex items-center gap-4 ml-auto" style="margin-right: 16px;">
+        <li><a href="index.html" class="text-sm font-medium transition-colors duration-150" style="color: var(--color-text-secondary);" data-nav-key="home" data-dom-id="nav-home" data-en="Home" data-zh="首页">Home</a></li>
+        <li><a href="products.html" class="text-sm font-medium transition-colors duration-150" style="color: var(--color-text-secondary);" data-nav-key="products" data-active="true" data-dom-id="nav-products" data-en="Products" data-zh="产品中心">Products</a></li>
+        <li><a href="odm-services.html" class="text-sm font-medium transition-colors duration-150" style="color: var(--color-text-secondary);" data-nav-key="odm" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a></li>
+        <li><a href="about.html" class="text-sm font-medium transition-colors duration-150" style="color: var(--color-text-secondary);" data-nav-key="about" data-en="About Us" data-zh="关于我们">About Us</a></li>
+        <li>
+          <a
+            href="news.html"
+            class="text-sm font-medium transition-colors duration-150"
+            style="color: var(--color-text-secondary);"
+            data-nav-key="news"
+           data-en="News" data-zh="新闻动态">News</a>
+        </li>
+        
+</ul>
+      <div class="flex items-center gap-3">
+        <button id="lang-toggle" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150" style="background-color: #F59E0B;" onmouseover="this.style.backgroundColor='#D97706';" onmouseout="this.style.backgroundColor='#F59E0B';" aria-label="Switch to Chinese">中文</button>
+        <a href="contact.html" class="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150" style="background-color: var(--color-primary);" onmouseover="this.style.backgroundColor='var(--color-primary-hover)'" onmouseout="this.style.backgroundColor='var(--color-primary)'" data-dom-id="cta-quote" data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+        <button id="hamburger-btn" class="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5" aria-label="Toggle navigation menu" aria-expanded="false"><span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span><span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span><span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span></button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden bg-white" style="border-bottom: 1px solid var(--color-border);">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="index.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="home" data-en="Home" data-zh="首页">Home</a>
+        <a href="products.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="products" data-active="true" data-dom-id="nav-products" data-en="Products" data-zh="产品中心">Products</a></li>
+        <li><a href="odm-services.html" class="text-sm font-medium transition-colors duration-150" style="color: var(--color-text-secondary);" data-nav-key="odm" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a></li>
+        <li><a href="about.html" class="text-sm font-medium transition-colors duration-150" style="color: var(--color-text-secondary);" data-nav-key="about" data-en="About Us" data-zh="关于我们">About Us</a></li>
+      </ul>
+      <div class="flex items-center gap-3 ml-6">
+        <a href="contact.html" class="hidden md:inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg transition-colors duration-150" style="background-color: var(--color-primary);" onmouseover="this.style.backgroundColor='var(--color-primary-hover)'" onmouseout="this.style.backgroundColor='var(--color-primary)'" data-dom-id="cta-quote" data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+        <button id="hamburger-btn" class="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5" aria-label="Toggle navigation menu" aria-expanded="false"><span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span><span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span><span class="hamburger-line block w-5 h-0.5 rounded-full" style="background-color: var(--color-text);"></span></button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden bg-white" style="border-bottom: 1px solid var(--color-border);">
+      <div class="px-6 py-4 flex flex-col gap-3">
+        <a href="index.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="home" data-en="Home" data-zh="首页">Home</a>
+        <a href="products.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="products" data-en="Products" data-zh="产品中心">Products</a>
+        <a href="odm-services.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="odm" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a>
+        <a href="about.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="about" data-en="About Us" data-zh="关于我们">About Us</a>
+        <a href="news.html" class="block text-sm font-medium py-2" style="color: var(--color-text-secondary);" data-nav-key="news" data-en="News" data-zh="新闻动态">News</a>
+        
+        
+        <a href="contact.html" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-lg mt-2" style="background-color: var(--color-primary);" data-dom-id="cta-quote" data-en="Get a Quote" data-zh="获取报价">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section style="padding: 80px 24px 80px;">
+      <div class="editorial-body" style="text-align: center;">
+        <p class="text-xs font-medium uppercase tracking-widest mb-6" style="color: var(--color-text-tertiary); letter-spacing: 0.12em;" data-en="FEATURED PRODUCT" data-zh="Featured Product">FEATURED PRODUCT</p>
+        <h1 class="product-h1 mb-6" data-en="M2" data-zh="M2">M2</h1>
+        <p class="text-lg font-medium mb-8" style="color: var(--color-text-secondary); text-align: center; line-height: 1.4;" data-en="Sport Electric Motorcycle" data-zh="运动型电动摩托车">Sport Electric Motorcycle</p>
+        <p class="mb-10" style="max-width: 640px; margin-left: auto; margin-right: auto; color: var(--color-text-secondary); line-height: 1.8;" data-en="Dual-battery sport platform. The M2 pairs 4000W output with extended range for riders who never want to stop." data-zh="双电池运动平台。M2 以 4000W 输出搭配超长续航，献给不愿停下的骑手。">Dual-battery sport platform. The M2 pairs 4000W output with extended range for riders who never want to stop.</p>
+      </div>
+      <div class="mx-auto" style="max-width: 960px;">
+        <img src="assets/m2/img01.jpg" alt="M2 side profile" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;" loading="eager">
+        <p class="editorial-caption" style="max-width: 640px;" data-en="M2 — performance electric motorcycle." data-zh="M2 — 高性能电动摩托车。">M2 — performance electric motorcycle.</p>
+      </div>
+    </section>
+    <section style="padding: 64px 24px; max-width: 1200px; margin: 0 auto;">
+      <h2 style="font-size: clamp(20px,2.2vw,28px); font-weight: 700; color: var(--color-text); margin-bottom: 28px; text-wrap: balance;" data-en="Product Gallery" data-zh="产品图集">Product Gallery</h2>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px;">
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img03.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img04.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img05.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img06.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img07.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img08.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img09.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+          <div style="aspect-ratio:4/3; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-alt);"><img src="assets/m2/img10.jpg" alt="m2" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+      </div>
+    </section>
+
+
+    <div class="editorial-rule"></div>
+
+    <section style="padding: 0 24px;">
+      <div class="editorial-body">
+        <h2 class="section-h2 mb-12" data-en="Why Riders Choose It" data-zh="Why Riders Choose It">Why Riders Choose It</h2>
+        <div class="benefit-editorial-block mb-12">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="benefit-number">01</span>
+            <div>
+              <h3 class="benefit-headline" data-en="4000W Sport Output" data-zh="4000W 运动输出">4000W Sport Output</h3>
+              <p class="benefit-body" data-en="High-torque motor with 70 km/h top speed and crisp acceleration." data-zh="高扭矩电机，70 km/h 极速，加速干净利落。">High-torque motor with 70 km/h top speed and crisp acceleration.</p>
+            </div>
+          </div>
+        </div>
+        <div class="editorial-rule" style="margin: 48px 0; width: 120px;"></div>
+
+        <div class="benefit-editorial-block mb-12">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="benefit-number">02</span>
+            <div>
+              <h3 class="benefit-headline" data-en="Dual-Battery Range" data-zh="双电池续航">Dual-Battery Range</h3>
+              <p class="benefit-body" data-en="Twin 72V packs. Up to 120 km between charges." data-zh="双 72V 电池组，两次充电间最高 120 km。">Twin 72V packs. Up to 120 km between charges.</p>
+            </div>
+          </div>
+        </div>
+        <div class="editorial-rule" style="margin: 48px 0; width: 120px;"></div>
+
+        <div class="benefit-editorial-block mb-12">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="benefit-number">03</span>
+            <div>
+              <h3 class="benefit-headline" data-en="Sport-Tuned Chassis" data-zh="运动化底盘">Sport-Tuned Chassis</h3>
+              <p class="benefit-body" data-en="Arrowframe geometry, inverted front fork, and 12&quot; performance tires." data-zh="箭式车架几何、倒立前叉与 12 英寸性能胎。">Arrowframe geometry, inverted front fork, and 12&quot; performance tires.</p>
+            </div>
+          </div>
+        </div>
+        <div class="editorial-rule" style="margin: 48px 0; width: 120px;"></div>
+
+        <div class="benefit-editorial-block mb-12">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="benefit-number">04</span>
+            <div>
+              <h3 class="benefit-headline" data-en="Ready for Your Brand" data-zh="为你的品牌就绪">Ready for Your Brand</h3>
+              <p class="benefit-body" data-en="OEM/ODM: motor, battery, color, and display. 120 days to delivery." data-zh="OEM/ODM：电机、电池、配色与显示屏，120天交付。">OEM/ODM: motor, battery, color, and display. 120 days to delivery.</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <div class="editorial-rule"></div>
+
+    <section style="padding: 0 24px;">
+      <div class="editorial-body">
+        <h2 class="section-h2 mb-12" data-en="Built For" data-zh="Built For">Built For</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="scenario-editorial" style="border: 1px solid var(--color-border); padding: var(--space-8);">
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-3);" data-en="Urban Performance" data-zh="城市性能">Urban Performance</h3>
+            <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6;" data-en="Instant torque, zero noise. Own the city streets." data-zh="瞬时扭矩，零噪音，称霸城市街道。">Instant torque, zero noise. Own the city streets.</p>
+          </div>
+          <div class="scenario-editorial" style="border: 1px solid var(--color-border); padding: var(--space-8);">
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-3);" data-en="Long-Distance Touring" data-zh="长途旅行">Long-Distance Touring</h3>
+            <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6;" data-en="120 km range. Weekend rides without range anxiety." data-zh="120 km 续航，周末骑行无里程焦虑。">120 km range. Weekend rides without range anxiety.</p>
+          </div>
+          <div class="scenario-editorial" style="border: 1px solid var(--color-border); padding: var(--space-8);">
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-3);" data-en="Premium Rental Fleet" data-zh="高端租赁车队">Premium Rental Fleet</h3>
+            <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6;" data-en="Sport styling pulls riders in. OEM branding ready." data-zh="运动造型吸睛，OEM品牌就绪。">Sport styling pulls riders in. OEM branding ready.</p>
+          </div>
+          <div class="scenario-editorial" style="border: 1px solid var(--color-border); padding: var(--space-8);">
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-3);" data-en="Track Day Enthusiast" data-zh="赛道日爱好者">Track Day Enthusiast</h3>
+            <p style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6;" data-en="4000W, dual battery, sport chassis. Built to ride hard." data-zh="4000W、双电池、运动底盘，为硬核骑行打造。">4000W, dual battery, sport chassis. Built to ride hard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="editorial-rule"></div>
+
+    <section style="padding: 0 24px;">
+      <div class="editorial-body">
+        <h2 class="section-h2 mb-12" data-en="By the Numbers" data-zh="By the Numbers">By the Numbers</h2>
+        <div style="max-width: 520px; margin: 0 auto;">
+          <div class="spec-row"><span class="spec-label" data-en="Motor" data-zh="电机">Motor</span><span class="spec-value" data-en="4000W (Peak)" data-zh="4000W (Peak)">4000W (Peak)</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Top Speed" data-zh="最高时速">Top Speed</span><span class="spec-value" data-en="70 km/h" data-zh="70 km/h">70 km/h</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Range" data-zh="续航里程">Range</span><span class="spec-value" data-en="Up to 120 km" data-zh="Up to 120 km">Up to 120 km</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Battery" data-zh="电池">Battery</span><span class="spec-value" data-en="Dual 72V 20Ah" data-zh="Dual 72V 20Ah">Dual 72V 20Ah</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Charging" data-zh="充电时间">Charging</span><span class="spec-value" data-en="6-7 hours" data-zh="6-7 hours">6-7 hours</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Brakes" data-zh="刹车">Brakes</span><span class="spec-value" data-en="Hydraulic Disc 220mm" data-zh="Hydraulic Disc 220mm">Hydraulic Disc 220mm</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Tires" data-zh="轮胎">Tires</span><span class="spec-value" data-en="12&quot; Tubeless" data-zh="12&quot; Tubeless">12&quot; Tubeless</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Frame" data-zh="车架">Frame</span><span class="spec-value" data-en="Aluminum Alloy" data-zh="Aluminum Alloy">Aluminum Alloy</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Weight" data-zh="重量">Weight</span><span class="spec-value" data-en="72 kg" data-zh="72 kg">72 kg</span></div>
+          <div class="spec-row"><span class="spec-label" data-en="Certification" data-zh="认证资质">Certification</span><span class="spec-value" data-en="EEC, CE" data-zh="EEC, CE">EEC, CE</span></div>
+        </div>
+        <div class="mt-16 mx-auto" style="max-width: 720px;">
+          <img src="assets/m2/img02.jpg" alt="M2 detail" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;" loading="lazy">
+          <p class="editorial-caption" data-en="Built to deliver performance and presence." data-zh="为性能与气场而生。">Built to deliver performance and presence.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="editorial-rule"></div>
+
+    <section style="padding: 0 24px;">
+      <div class="editorial-body"><p class="pull-quote" data-en="Two batteries. Zero limits." data-zh="双电池，无极限。">Two batteries. Zero limits.</p></div>
+    </section>
+    <div class="editorial-rule"></div>
+
+    <section style="padding: 0 24px;">
+      <div class="editorial-body" style="text-align: center;">
+        <p class="drop-cap mb-8" style="color: var(--color-text-secondary); text-align: left;" data-en="The M2 platform is available for OEM and ODM customization. Choose your motor configuration, battery capacity, color scheme, and digital display. PXID handles engineering validation, certification support, and mass production." data-zh="The M2 平台支持 OEM 与 ODM 定制。选择你的电机配置、电池容量、配色方案与数字显示屏。PXID 负责工程验证、认证支持与量产。">The M2 platform is available for OEM and ODM customization. Choose your motor configuration, battery capacity, color scheme, and digital display. PXID handles engineering validation, certification support, and mass production.</p>
+        <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
+          <span class="stat-chip" data-en="MOQ 100 Units" data-zh="MOQ 100 Units">MOQ 100 Units</span>
+          <span style="color: var(--color-text-tertiary);">&middot;</span>
+          <span class="stat-chip" data-en="120 Days to Delivery" data-zh="120 Days to Delivery">120 Days to Delivery</span>
+        </div>
+        <a href="contact.html" class="cta-primary" data-en="Request ODM Quote" data-zh="Request ODM Quote">Request ODM Quote</a>
+      </div>
+    </section>
+    <div class="editorial-rule"></div>
+
+    <section style="padding: 80px 24px 80px;">
+      <div class="editorial-body" style="text-align: center;">
+        <h2 class="section-h2 mb-12" data-en="Explore More" data-zh="Explore More">Explore More</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6" style="max-width: 640px; margin: 0 auto;">
+          <a href="product-mota-z3.html" class="related-card-editorial">
+            <p class="text-sm font-semibold mb-1" style="color: var(--color-text);" data-en="MOTA-Z3" data-zh="MOTA-Z3">MOTA-Z3</p>
+            <p class="text-xs" style="color: var(--color-text-tertiary);" data-en="Performance E-Moto" data-zh="Performance E-Moto">Performance E-Moto</p>
+          </a>
+          <a href="product-mota-z1.html" class="related-card-editorial">
+            <p class="text-sm font-semibold mb-1" style="color: var(--color-text);" data-en="MOTA-Z1" data-zh="MOTA-Z1">MOTA-Z1</p>
+            <p class="text-xs" style="color: var(--color-text-tertiary);" data-en="Urban Cruiser" data-zh="Urban Cruiser">Urban Cruiser</p>
+          </a>
+          <a href="product-px-4.html" class="related-card-editorial">
+            <p class="text-sm font-semibold mb-1" style="color: var(--color-text);" data-en="PX-4" data-zh="PX-4">PX-4</p>
+            <p class="text-xs" style="color: var(--color-text-tertiary);" data-en="Performance E-Moto" data-zh="Performance E-Moto">Performance E-Moto</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background-color: var(--color-bg-dark);">
+    <div class="mx-auto px-6 pt-16 pb-12" style="max-width: var(--container-max);">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
+        <div>
+          <a href="index.html" class="inline-block mb-4"><span class="text-xl font-extrabold tracking-tight text-white" style="letter-spacing: var(--tracking-tight);">PXID</span></a>
+          <p class="text-sm leading-relaxed" style="color: var(--color-text-tertiary);">Professional electric vehicle OEM/ODM manufacturer. Your trusted partner for e-bikes, e-motorcycles, and e-scooters.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Quick Links" data-zh="快速链接">Quick Links</h4>
+          <ul class="space-y-2.5">
+            <li><a href="index.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Home" data-zh="首页">Home</a></li>
+            <li><a href="products.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-dom-id="cta-products" data-en="Products" data-zh="产品中心">Products</a></li>
+            <li><a href="odm-services.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="ODM Services" data-zh="ODM 服务">ODM Services</a></li>
+            <li><a href="about.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="About Us" data-zh="关于我们">About Us</a></li>
+            <li><a href="news.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="News" data-zh="新闻动态">News</a></li>
+            <li><a href="contact.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Contact" data-zh="联系我们">Contact</a></li>
+            <li><a href="manufacturing.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Manufacturing" data-zh="制造能力">Manufacturing</a></li>
+            <li><a href="case-studies.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Case Studies" data-zh="客户案例">Case Studies</a></li>
+            <li><a href="certifications.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Certifications" data-zh="认证资质">Certifications</a></li>
+                        <li><a href="distributor.html" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="Distributor" data-zh="经销商">Distributor</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Product Categories" data-zh="产品分类">Product Categories</h4>
+          <ul class="space-y-2.5">
+            <li><a href="products.html#e-bikes" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Bikes" data-zh="电动自行车">E-Bikes</a></li>
+            <li><a href="products.html#e-motorcycles" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Motorcycles" data-zh="电动摩托车">E-Motorcycles</a></li>
+            <li><a href="products.html#e-scooters" class="footer-link text-sm" style="color: var(--color-text-tertiary);" data-en="E-Scooters" data-zh="电动滑板车">E-Scooters</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white uppercase tracking-wider mb-4" data-en="Contact Us" data-zh="联系我们">Contact Us</h4>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5"><svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0l-9.75 6.15L2.25 6.75"/></svg><a href="mailto:info@pxid.com" class="text-sm footer-link" style="color: var(--color-text-tertiary);">info@pxid.com</a></li>
+            <li class="flex items-start gap-2.5"><svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg><a href="tel:+8618888888888" class="text-sm footer-link" style="color: var(--color-text-tertiary);">+86 188-8888-8888</a></li>
+            <li class="flex items-start gap-2.5"><svg class="w-4 h-4 mt-0.5 shrink-0" style="color: var(--color-text-tertiary);" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><a href="https://wa.me/8618888888888" target="_blank" rel="noopener noreferrer" class="text-sm footer-link" style="color: var(--color-text-tertiary);">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3" style="max-width: var(--container-max); border-top: 1px solid rgba(255,255,255,0.08);">
+      <p class="text-xs" style="color: var(--color-text-tertiary);">&copy; 2026 PXID. All rights reserved.</p>
+      <p class="text-xs" style="color: var(--color-text-tertiary);">UL &middot; EN &middot; CE &middot; ISO Compliant Manufacturing</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("hamburger-btn");
+      const menu = document.getElementById("mobile-menu");
+      if (!btn || !menu) return;
+      btn.addEventListener("click", function () {
+        const isOpen = menu.classList.toggle("open");
+        btn.classList.toggle("hamburger-active", isOpen);
+        btn.setAttribute("aria-expanded", String(isOpen));
+      });
+    })();
+  </script>
+
+  <style>
+    /* ── Nav active state ── */
+    [data-active="true"] {
+      color: var(--color-primary) !important;
+      font-weight: 600;
+      border: 1.5px solid var(--color-primary);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+    }
+    #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; opacity: 0; }
+    #mobile-menu.open { max-height: 400px; opacity: 1; }
+    .hamburger-line { transition: transform 0.25s ease, opacity 0.25s ease; }
+    .hamburger-active .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-active .hamburger-line:nth-child(2) { opacity: 0; }
+    .hamburger-active .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    body { font-family: var(--font-sans); color: var(--color-text); background-color: var(--color-bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    .footer-link { transition: color var(--transition-fast); }
+    .footer-link:hover { color: var(--color-primary-light, #FFFFFF); }
+
+    .editorial-body { max-width: 640px; margin-left: auto; margin-right: auto; line-height: 1.8; font-size: 16px; }
+    @media (max-width: 640px) { .editorial-body { font-size: 15px; padding-left: 20px; padding-right: 20px; } }
+    .pull-quote { font-size: clamp(28px, 4vw, 40px); line-height: 1.3; color: var(--color-primary); text-align: center; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
+    .drop-cap::first-letter { float: left; font-size: 3.2em; line-height: 0.85; padding-right: 8px; padding-top: 4px; font-weight: 700; color: var(--color-primary); }
+    .editorial-rule { width: 200px; max-width: 100%; height: 1px; background-color: var(--color-border); margin: 80px auto; }
+    @media (max-width: 640px) { .editorial-rule { margin: 56px auto; } }
+    .editorial-caption { font-size: 13px; color: var(--color-text-tertiary); font-style: italic; line-height: 1.5; letter-spacing: 0.005em; margin-top: 12px; }
+    .spec-row { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--color-border); font-size: 15px; line-height: 1.5; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-label { font-weight: 600; color: var(--color-text); white-space: nowrap; padding-right: 24px; }
+    .spec-value { color: var(--color-text-secondary); text-align: right; }
+    .related-card-editorial { display: block; border: 1px solid var(--color-border); padding: 24px; transition: border-color var(--transition-fast), transform var(--transition-fast); text-decoration: none; color: inherit; }
+    .related-card-editorial:hover { border-color: var(--color-primary); transform: translateY(-2px); }
+    .related-card-editorial:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+    .scenario-editorial { transition: border-color var(--transition-fast); }
+    .scenario-editorial:hover { border-color: var(--color-primary); }
+    .cta-primary { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; font-size: 15px; font-weight: 600; color: var(--color-text-inverse); background-color: var(--color-primary); border-radius: 8px; text-decoration: none; transition: background-color 150ms cubic-bezier(.2,.8,.2,1), transform 150ms cubic-bezier(.2,.8,.2,1); }
+    .cta-primary:hover { background-color: var(--color-primary-hover); transform: translateY(-1px); }
+    .cta-primary:active { transform: translateY(0); }
+    .cta-primary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+    .stat-chip { display: inline-block; padding: 8px 20px; border: 1px solid var(--color-border); font-size: 14px; font-weight: 500; color: var(--color-text-secondary); }
+    .product-h1 { font-size: clamp(48px, 8vw, 64px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; text-align: center; text-wrap: balance; color: var(--color-text); }
+    .section-h2 { font-size: clamp(22px, 2.4vw, 28px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; color: var(--color-text); text-align: center; }
+    .benefit-number { font-size: 13px; font-weight: 700; color: var(--color-primary); letter-spacing: 0.04em; flex-shrink: 0; padding-top: 3px; min-width: 28px; }
+    .benefit-headline { font-size: clamp(20px, 2.2vw, 26px); font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; color: var(--color-text); margin-bottom: 8px; text-wrap: balance; }
+    .benefit-body { font-size: 16px; line-height: 1.65; color: var(--color-text-secondary); }
+    @media (prefers-reduced-motion: reduce) { .related-card-editorial, .scenario-editorial, .cta-primary, .footer-link { transition-duration: 0.01ms !important; } }
+  
+    /* ── Language Toggle ── */
+    #lang-toggle { cursor: pointer; user-select: none; }
+    #lang-toggle:hover { filter: brightness(0.9); }
+
+  
+  </style>
+  <!-- ── i18n Language Switcher ── -->
+  <script src="assets/i18n.js"></script>
+</body>
+</html>

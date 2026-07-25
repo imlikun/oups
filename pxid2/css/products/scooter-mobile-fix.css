@@ -1,0 +1,311 @@
+/* 滑板车详情页统一修复：BESTRIDE / URBAN 系列 */
+@media(min-width:769px){
+  body .hero{
+    min-height:calc(100vh - 72px) !important;
+    height:calc(100vh - 72px) !important;
+    padding-top:72px !important;
+    padding-bottom:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    box-sizing:border-box !important;
+  }
+
+  body .hero-inner{
+    align-items:center !important;
+    transform:translateY(-18px);
+  }
+}
+
+@media(max-width:768px){
+  /* 城市出行而生 / 型号选择 / 折叠步骤 / 制造实力：横向轮播 */
+  body .benefits-grid,
+  body .compare-grid,
+  body .fold-visual-container,
+  body .oem-grid{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    justify-content:flex-start !important;
+    align-items:stretch !important;
+    gap:14px !important;
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    scroll-snap-type:x mandatory !important;
+    -webkit-overflow-scrolling:touch !important;
+    scrollbar-width:none !important;
+    -ms-overflow-style:none !important;
+    padding-left:24px !important;
+    padding-right:18px !important;
+    padding-bottom:12px !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    scroll-padding-left:24px !important;
+    box-sizing:border-box !important;
+  }
+
+  body .benefits-grid::-webkit-scrollbar,
+  body .compare-grid::-webkit-scrollbar,
+  body .fold-visual-container::-webkit-scrollbar,
+  body .oem-grid::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  body .benefit-card,
+  body .compare-card,
+  body .fold-step,
+  body .oem-card{
+    flex:0 0 82vw !important;
+    min-width:82vw !important;
+    max-width:82vw !important;
+    width:82vw !important;
+    scroll-snap-align:start !important;
+    box-sizing:border-box !important;
+  }
+
+  body .benefit-card,
+  body .compare-card,
+  body .fold-step,
+  body .oem-card{
+    min-height:170px !important;
+  }
+
+  /* CTA 底部 3 个承诺项一行显示 */
+  body .cta-trust{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:8px !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:100% !important;
+    max-width:420px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    margin-top:18px !important;
+    padding:0 8px !important;
+    box-sizing:border-box !important;
+  }
+
+  body .cta-trust-item{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:4px !important;
+    min-width:0 !important;
+    white-space:nowrap !important;
+    font-size:11px !important;
+    line-height:1.2 !important;
+    text-align:center !important;
+  }
+
+  body .cta-trust-item svg{
+    width:12px !important;
+    height:12px !important;
+    flex:0 0 12px !important;
+  }
+
+  /* Hero 操作区：重新设计，避免按钮与下方参数条重叠 */
+  body .hero{
+    height:auto !important;
+    min-height:auto !important;
+    padding-top:12px !important;
+    padding-bottom:0 !important;
+    overflow:visible !important;
+  }
+
+  body .hero-inner{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:18px !important;
+    padding-top:0 !important;
+    padding-bottom:20px !important;
+    overflow:visible !important;
+  }
+
+  body .hero-visual{
+    order:-1 !important;
+    width:100% !important;
+    margin:0 auto !important;
+  }
+
+  body .hero-visual video,
+  body .hero-visual img{
+    margin-top:0 !important;
+  }
+
+  body .hero-content{
+    overflow:visible !important;
+  }
+
+  body .hero-actions{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:10px !important;
+    width:100% !important;
+    max-width:330px !important;
+    margin:18px auto 0 !important;
+    padding:8px !important;
+    border-radius:18px !important;
+    background:rgba(248,250,252,.96) !important;
+    border:1px solid rgba(15,23,42,.08) !important;
+    box-shadow:0 10px 28px rgba(15,23,42,.08) !important;
+    box-sizing:border-box !important;
+    position:relative !important;
+    z-index:2 !important;
+    clear:both !important;
+  }
+
+  body .hero-actions > a,
+  body .hero-actions > button{
+    width:100% !important;
+    min-width:0 !important;
+    min-height:40px !important;
+    height:40px !important;
+    max-width:none !important;
+    padding:0 10px !important;
+    border-radius:13px !important;
+    font-size:12px !important;
+    font-weight:700 !important;
+    line-height:1.1 !important;
+    white-space:nowrap !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:5px !important;
+    box-sizing:border-box !important;
+    margin:0 !important;
+  }
+
+  body .hero-actions > a svg,
+  body .hero-actions > button svg{
+    width:13px !important;
+    height:13px !important;
+    flex:0 0 13px !important;
+  }
+
+  body .hero-actions .btn-primary,
+  body .hero-actions > a.btn-primary{
+    background:#0b63f6 !important;
+    color:#fff !important;
+    box-shadow:0 8px 18px rgba(11,99,246,.18) !important;
+  }
+
+  body .hero-actions .btn-outline,
+  body .hero-actions > button.btn-outline{
+    background:#fff !important;
+    color:#111827 !important;
+    border:1px solid rgba(15,23,42,.12) !important;
+  }
+
+  /* 首屏参数条：移动端避免多项挤在一行导致文字重叠 */
+  body .mini-strip{
+    padding:18px 18px 14px !important;
+    overflow:visible !important;
+    margin-top:0 !important;
+    position:relative !important;
+    z-index:1 !important;
+    clear:both !important;
+  }
+
+  body .mini-strip-inner{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px 12px !important;
+    width:100% !important;
+    max-width:360px !important;
+    margin:0 auto !important;
+    padding:0 !important;
+    overflow:visible !important;
+    box-sizing:border-box !important;
+  }
+
+  body .mini-item{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:6px !important;
+    min-width:0 !important;
+    width:100% !important;
+    padding:0 !important;
+    font-size:12px !important;
+    line-height:1.35 !important;
+    white-space:normal !important;
+    overflow:visible !important;
+    text-align:left !important;
+    box-sizing:border-box !important;
+  }
+
+  body .mini-item strong{
+    flex:0 0 auto !important;
+    white-space:nowrap !important;
+    font-size:12px !important;
+    line-height:1.35 !important;
+  }
+
+  body .mini-dot{
+    flex:0 0 6px !important;
+    width:6px !important;
+    height:6px !important;
+  }
+}
+
+@media(max-width:420px){
+  body .benefits-grid,
+  body .compare-grid,
+  body .fold-visual-container,
+  body .oem-grid{
+    padding-left:24px !important;
+    padding-right:18px !important;
+    scroll-padding-left:24px !important;
+  }
+
+  body .benefit-card,
+  body .compare-card,
+  body .fold-step,
+  body .oem-card{
+    flex-basis:84vw !important;
+    min-width:84vw !important;
+    max-width:84vw !important;
+    width:84vw !important;
+  }
+
+  body .cta-trust{
+    gap:6px !important;
+    padding:0 4px !important;
+  }
+
+  body .cta-trust-item{
+    font-size:10px !important;
+    gap:3px !important;
+  }
+
+  body .mini-strip{
+    padding-left:16px !important;
+    padding-right:16px !important;
+  }
+
+  body .hero-actions{
+    max-width:318px !important;
+    gap:8px !important;
+    padding:7px !important;
+  }
+
+  body .hero-actions > a,
+  body .hero-actions > button{
+    height:38px !important;
+    min-height:38px !important;
+    padding:0 8px !important;
+    font-size:11px !important;
+  }
+
+  body .mini-strip-inner{
+    gap:9px 10px !important;
+  }
+
+  body .mini-item{
+    font-size:11px !important;
+    gap:5px !important;
+  }
+
+  body .mini-item strong{
+    font-size:11px !important;
+  }
+}
