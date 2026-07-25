@@ -32,7 +32,7 @@
 - 重要句子用 `<span class="key">…</span>` 强调（品牌绿加粗），不下划线、不纯变色、不只用普通加粗
 - 封面优先真实摄影图（Unsplash/Pexels），不用 AI 生成图（除非用户当次同意）
 - 图片类：`.gitignore` 忽略 `uploads/*.png`，**png 封面不会随 push 上线**；封面统一存 jpg/webp
-- **PXID 相关内容（pxid2/pxid3/产品站/落地页/导航链接）未经用户明确指示，一律不可修改、删除或移动**
+- **pxid2/pxid3 入口受保护**：index.html 中的 pxid2/pxid3 链接（导航、作品卡片、footer）未经用户明确指示，不可修改、删除或移动。其余 pxid 产品站、落地页、商业稿已在 2026-07-25 按用户指示清理。
 
 ## 验证
 - push 后到 https://github.com/imlikun/oups/actions 看 `Deploy appin.site → ECS` 是否绿

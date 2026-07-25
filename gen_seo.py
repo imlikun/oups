@@ -11,7 +11,7 @@ SEO 全站增强生成器 v2（可重跑 / 幂等 / 基于实际文件）：
 相较 v1 修复：
 - 去掉失效的 PXID2/PXID3 硬编码快照（指向已不存在的 URL → 404 伤 SEO）
 - LASTMOD 动态取当天
-- meta 注入扩展到 daily-digest / video-lab / pxid / 各子站首页（v1 只覆盖 craft/notes 文章）
+- meta 注入扩展到 daily-digest / video-lab / pxid2 / pxid3 / 各子站首页（v1 只覆盖 craft/notes 文章）
 """
 import os, re, json, glob
 from datetime import date

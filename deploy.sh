@@ -9,7 +9,7 @@
 #    [1/5] 部署前护栏（铁律 2）：强制 git fetch → 工作区必须已 commit
 #          → 本地必须 = origin/main 最新（落后/分叉即拒绝，领先自动 push）
 #    [3/5] 死链检查（B）：扫描站内所有链接，目标文件不存在则【阻断部署】
-#          从物理上杜绝「pxid 指向不存在子站」这类死链再次出现。
+#          从物理上杜绝「指向不存在子站/空目录」这类死链再次出现。
 #
 #  用法：
 #    ./deploy.sh                 # 增量同步整个仓库（排除 .git/.github/.workbuddy）
@@ -26,7 +26,7 @@
 #     · ❌ 禁止直接 SSH 改 ECS 上的文件、或绕过本脚本上传——
 #           未 commit 的内容下次任何一端部署都会被冲掉，且无法回滚。
 #     · ✅ 若 ECS 上有遗漏的孤儿内容：先手动拉回 git 提交备份，再部署
-#           （参考 commit 66b4fd9e：把 ECS-only 的 pxid2/3/pxid-pages 拉回 git）。
+#           （参考 commit 66b4fd9e：把 ECS-only 的 pxid2/3 拉回 git）。
 #     · ECS↔git 漂移监控见 scripts/drift-monitor.sh（C，可挂 cron 定期跑）。
 # ══════════════════════════════════════════════════════════════════
 set -euo pipefail

@@ -717,55 +717,6 @@
       "template": "DP"
     },
     {
-      "id": "article-34",
-      "title": "¥188万撬动全球：PXID 海外营销破局方案",
-      "slug": "pxid-gm-report",
-      "category": "notes",
-      "featured": true,
-      "image": "uploads/pxid-gm-report-cover.jpg",
-      "excerpt": "五大战区、三个Go/No-Go检查点、¥188万年度预算——一份可以直接给总经理看的海外营销年度计划。",
-      "content": "详见独立文章页：/notes/pxid-gm-report.html",
-      "tags": [
-        "海外营销",
-        "PXID",
-        "GEO战略",
-        "ODM",
-        "印度制造",
-        "总经理汇报",
-        "P&L"
-      ],
-      "videoUrl": "",
-      "date": "2026-07-05",
-      "status": "published",
-      "link": "/notes/pxid-gm-report.html",
-      "template": "DP"
-    },
-    {
-      "id": "article-35",
-      "title": "中国研发×印度制造：12个月海外营销作战全图",
-      "slug": "pxid-marketing-plan",
-      "category": "notes",
-      "featured": true,
-      "image": "uploads/pxid-marketing-plan-cover.jpg",
-      "excerpt": "从公司分析到竞品情报，从12个月月度计划到三档预算方案——一份完整的PXID海外营销推广计划。",
-      "content": "详见独立文章页：/notes/pxid-marketing-plan.html",
-      "tags": [
-        "PXID",
-        "海外营销",
-        "中国研发",
-        "印度制造",
-        "E-bike",
-        "ODM",
-        "12个月计划",
-        "竞品分析"
-      ],
-      "videoUrl": "",
-      "date": "2026-07-05",
-      "status": "published",
-      "link": "/notes/pxid-marketing-plan.html",
-      "template": "DP"
-    },
-    {
       "id": "article-36",
       "title": "Agent Reach：给 AI Agent 一键装上互联网能力，15个平台零API费用",
       "slug": "agent-reach",
@@ -790,58 +741,6 @@
       "status": "published",
       "link": "/craft/agent-reach.html",
       "template": "DP"
-    },
-    {
-      "id": "article-37",
-      "title": "PXID 海外营销计划",
-      "slug": "pxid-gm-review",
-      "category": "notes",
-      "featured": true,
-      "image": "uploads/pxid-gm-review-cover.png",
-      "excerpt": "三大阶段执行路径、月度预算、人力配置、KPI 体系、风险评估与避免踩坑清单——一份可直接给总经理审阅的海外 B2B 营销计划。",
-      "content": "详见独立文章页：/notes/pxid-gm-review.html",
-      "tags": [
-        "海外营销",
-        "PXID",
-        "OEM/ODM",
-        "B2B",
-        "总经理审阅",
-        "印度制造",
-        "反倾销税",
-        "内容营销",
-        "SEO",
-        "GEO",
-        "YouTube",
-        "WhatsApp"
-      ],
-      "videoUrl": "",
-      "date": "2026-07-05",
-      "status": "published",
-      "link": "/notes/pxid-gm-review.html",
-      "template": "DP"
-    },
-    {
-      "id": "article-38",
-      "title": "PXID 海外市场研究报告",
-      "slug": "pxid-overseas-market-report",
-      "category": "notes",
-      "template": "DP",
-      "status": "published",
-      "featured": false,
-      "date": "2026-07-07",
-      "image": "uploads/pxid-overseas-market-report-cover.jpg",
-      "link": "/notes/pxid-overseas-market-report.html",
-      "excerpt": "从海外 B2B 买家画像、网站体验偏好、6 大推广渠道、新站点形式建议到推广路线图——一份系统性的 PXID 海外市场研究报告。",
-      "content": "详见独立文章页：/notes/pxid-overseas-market-report.html",
-      "tags": [
-        "PXID",
-        "海外市场",
-        "海外营销",
-        "市场研究",
-        "B2B",
-        "ODM"
-      ],
-      "videoUrl": ""
     },
     {
       "id": "article-40",
@@ -1308,29 +1207,6 @@
       "date": "2026-07-14",
       "status": "published",
       "link": "/craft/echo-loop.html",
-      "template": "DP"
-    },
-    {
-      "id": "article-59",
-      "title": "PXID 官网 SEO 开展路线图",
-      "slug": "pxid-seo-roadmap",
-      "category": "notes",
-      "featured": true,
-      "image": "",
-      "excerpt": "针对 pxid.com（电助力车 ODM/OEM 出口站）的 SEO 落地策略：长尾制胜、Pillar-Cluster 内容集群、中印制造差异化，以及结合 WordPress 迁移的站内技术要点。",
-      "tags": [
-        "SEO",
-        "PXID",
-        "内容营销",
-        "B2B出海",
-        "电助力车",
-        "关键词策略",
-        "WordPress"
-      ],
-      "videoUrl": "",
-      "date": "2026-07-14",
-      "status": "published",
-      "link": "/notes/pxid-seo-roadmap.html",
       "template": "DP"
     },
     {
