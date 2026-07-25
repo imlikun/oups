@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ══════════════════════════════════════════════════════════════════
 #  appin-site 安全部署脚本（双端通用：macOS / Windows git-bash）
+#  📌 完整维护规则见仓库根 RULES.md（随 git 跟踪，所有维护者必须遵守）
 #  ⚠️ 用途：物理上杜绝「盲覆盖另一端改动」
 #     每次部署前【强制 git pull --rebase】，把 Windows/macOS 另一端
 #     已 push 的改动先合进来，再 tar 推 ECS。
