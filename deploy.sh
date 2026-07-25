@@ -90,9 +90,9 @@ else:
     for root, _, files in os.walk('.'):
         if any(p in root for p in ('/.git', '/.github', '/.workbuddy', '/node_modules')):
             continue
-        for f in files:
-            if f.endswith('.html'):
-                html_files.append(os.path.join(root, f))
+    for f in files:
+        if f.endswith('.html') and not f.startswith('_template'):
+            html_files.append(os.path.join(root, f))
 html_files = list(dict.fromkeys(html_files))  # 去重
 
 broken = []

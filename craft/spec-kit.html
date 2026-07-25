@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱</title>
+<meta name="description" content="GitHub 官方开源的 Spec Kit，把规范驱动开发（SDD）落到 AI 编程工作流：先写清要建什么，再让 AI Agent 实现，告别凭感觉写代码。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/spec-kit.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱">
+<meta property="og:description" content="GitHub 官方开源的 Spec Kit，把规范驱动开发（SDD）落到 AI 编程工作流：先写清要建什么，再让 AI Agent 实现，告别凭感觉写代码。">
+<meta property="og:url" content="https://www.appin.site/craft/spec-kit.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱">
+<meta name="twitter:description" content="GitHub 官方开源的 Spec Kit，把规范驱动开发（SDD）落到 AI 编程工作流：先写清要建什么，再让 AI Agent 实现，告别凭感觉写代码。">
+<meta property="og:image" content="https://www.appin.site/uploads/spec-kit-cover.jpg">
+<meta name="twitter:image" content="https://www.appin.site/uploads/spec-kit-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>GitHub 官方出品 · 规范驱动开发</div>
+  <h1>【WB】GitHub Spec Kit：用「规范驱动」<strong>终结 vibe coding 的混乱</strong></h1>
+  <p class="hero-desc">先写清楚「要建什么」，再让 AI Agent 去实现。Spec Kit 把规范驱动开发（SDD）做成了一套可落地的开源工具包。</p>
+  <div class="hero-meta">
+    <span>规范驱动开发</span><span class="dot"></span><span>AI 编程</span><span class="dot"></span><span>GitHub 官方</span><span class="dot"></span><span>开源</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/spec-kit-cover.jpg" alt="GitHub Spec Kit 规范驱动开发">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、为什么需要它</a></li>
+      <li><a href="#s2">二、它到底是什么</a></li>
+      <li><a href="#s3">三、核心流程与能力</a></li>
+      <li><a href="#s4">四、动手跑通（玩一玩）</a></li>
+      <li><a href="#s5">五、适合谁 & 怎么挑</a></li>
+      <li><a href="#s6">六、小结与提醒</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、为什么需要它</h2>
+    <p>这两年 AI 写代码越来越顺手，但一个坑越来越明显：<span class="key">你直接让 AI「写个 XX 功能」，它确实能写，可「要建什么、为什么这么建」全装在它临时编的上下文里。</span>一旦需求变、人换了、要维护，代码本身成了唯一事实来源——没人说得清当初为什么这么设计。</p>
+    <p>微软的 Den Delimarsky 举过一个例子：做通知系统，PM 以为「偏好」是分渠道开关，后端做成单个总开关，前端以为接的是系统通知，设计师画的稿要重构半个用户服务。这不是谁沟通差，是<span class="key">缺了「共享上下文」</span>。Spec-Driven Development（SDD，规范驱动开发）就是来解决这个的：把「为什么」写进能随项目一起演进的文档里，像给思考做版本控制。</p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">讲清 Spec Kit 是什么、怎么用、适合谁；并给你一条能直接照抄的上手路线。文中上手步骤来自官方文档（2026-07-25 核实），我这台环境访问 GitHub 直连超时，<strong>未在本地实跑</strong>，已如实标注。</p>
+    </div>
+
+    <h2 id="s2">二、它到底是什么</h2>
+    <p>Spec Kit 是 <strong>GitHub 官方开源</strong>的一个工具包，目标是把 SDD 方法论变成 AI 编程里开箱即用的流程。它不替代你的 AI 编码 Agent（Copilot、Claude、Codex 等），而是<strong>在 Agent 前面加一层「规范层」</strong>：你先描述要建什么，经过结构化阶段逐步细化，最后才交给 Agent 实现。</p>
+    <p>核心理念一句话：<span class="key">规格（spec）变成可执行的产物，直接生成实现，而不是写完代码就扔掉的脚手架。</span>和传统「先写需求文档、再写代码」不同，SDD 的每个阶段产出的是 Markdown 文件，会喂给下一阶段、也喂给 Agent 当上下文——是活的，不是一次性的。</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">Specify CLI</span></div>
+      <p class="mc-desc">一个 Python 写的命令行工具，帮你初始化项目、下载官方模板、对接你用的 Agent。一行命令就能把 SDD 脚手架搭好。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">模板与脚本</span></div>
+      <p class="mc-desc">定义「一份 spec 长什么样、技术规划包含什么、怎么拆成任务」。你也可以手动管理模板（从 Releases 下载解压即可），不强制依赖 CLI。</p>
+    </div>
+
+    <h2 id="s3">三、核心流程与能力</h2>
+    <p>核心流程就四步，每一步产出一份 Markdown，喂给下一步：</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 170" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spec Kit 工作流">
+        <defs>
+          <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:14px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#5b6b62}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw)}
+          </style>
+        </defs>
+        <rect class="bx" x="14" y="49" width="150" height="72" rx="10"></rect>
+        <text class="t" x="89" y="83" text-anchor="middle">自然语言需求</text>
+        <text class="ts" x="89" y="103" text-anchor="middle">你要建什么</text>
+        <path class="ln" d="M164,85 L226,85"></path>
+        <rect class="bxg" x="230" y="20" width="220" height="130" rx="12"></rect>
+        <text class="t" x="340" y="50" text-anchor="middle">Spec Kit（SDD 四阶段）</text>
+        <text class="ts" x="340" y="72" text-anchor="middle">① Spec 需求规格</text>
+        <text class="ts" x="340" y="92" text-anchor="middle">② Plan 技术规划</text>
+        <text class="ts" x="340" y="112" text-anchor="middle">③ Tasks 任务拆解</text>
+        <text class="ts" x="340" y="132" text-anchor="middle">④ Implement 实现</text>
+        <path class="ln" d="M450,85 L512,85"></path>
+        <rect class="bx" x="516" y="49" width="150" height="72" rx="10"></rect>
+        <text class="t" x="591" y="83" text-anchor="middle">AI 编码 Agent</text>
+        <text class="ts" x="591" y="103" text-anchor="middle">产出代码</text>
+      </svg>
+      <div class="caption">图 1：需求 → SDD 四阶段产出结构化上下文 → Agent 实现。</div>
+    </div>
+    <p>除了基础流程，几个能力值得记住：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">30+ Agent 集成，无锁定</span></div>
+      <p class="mc-desc">Copilot、Gemini、Codex、Kilo Code、Zed、Claude、Forge、Kiro 等都支持。一条命令切换 Agent，不绑死某家。未列出的也有通用集成兜底。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">105 扩展 / 22 预设，可自托管</span></div>
+      <p class="mc-desc">社区贡献了 105 个扩展、22 套预设（如 AIDE 七步工程生命周期、.NET 迁移等）。企业可自托管扩展/预设目录，控制团队装什么。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">跨平台、可离线</span></div>
+      <p class="mc-desc">Windows / macOS / Linux 都能跑，支持离线、防火墙内运行——对内网开发友好。</p>
+    </div>
+
+    <h2 id="s4">四、动手跑通（玩一玩）</h2>
+    <p>下面这条路线整理自官方 README / 文档（2026-07-25 核实）。<span class="key">说明：我这台环境访问 GitHub 直连超时，以下步骤未在我机器实跑，按官方文档还原，你本地试时以官方实时文档为准。</span></p>
+    <div class="code-block">
+      <pre><span class="c-com"># 1. 前置：装 uv（包管理器，境外源，必要时走代理）</span>
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+<span class="c-com"># 2. 安装 Specify CLI（把 vX.Y.Z 换成 Releases 里的最新 tag）</span>
+<span class="c-key">uv tool install</span> specify-cli --from git+https://github.com/github/spec-kit.git@vX.Y.Z
+
+<span class="c-com"># 3. 初始化项目，并选你用的 AI Agent</span>
+<span class="c-key">specify init</span> my-project --integration copilot
+cd my-project
+
+<span class="c-com"># 4. 在 Agent 里用 /speckit.* 斜杠命令推进各阶段</span>
+/speckit.spec     <span class="c-com"># 写需求规格</span>
+/speckit.plan     <span class="c-com"># 出技术规划</span>
+/speckit.tasks    <span class="c-com"># 拆成可执行任务</span>
+<span class="c-com"># 然后让 Agent 按产物实现；Codex CLI 用 $speckit-* 形式</span></pre>
+    </div>
+    <div class="info-box">
+      <p><strong>坑：安装卡住</strong></p>
+      <p class="mc-desc">Specify CLI 从 GitHub 拉取安装，<strong>需要能访问 github.com</strong>。你本地若访问 GitHub 要挂代理，安装这步也得走代理（我这台就因直连超时没实跑）。装完CLI后日常使用大多走本地，不依赖外网。</p>
+    </div>
+
+    <h2 id="s5">五、适合谁 & 怎么挑</h2>
+    <p>一句话：<span class="key">想让 AI 产出「可控、可预测、好维护」的代码，就值得上加这一层规范。</span></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>维度</th><th>vibe coding（直接让 AI 写）</th><th>Spec Kit（SDD）</th></tr></thead>
+        <tbody>
+          <tr><td>上下文来源</td><td>AI 临时编，散落在对话里</td><td>结构化 spec/plan/tasks 文件，可沉淀</td></tr>
+          <tr><td>需求变更成本</td><td>高（要返工代码）</td><td>低（改文档，几行的事）</td></tr>
+          <tr><td>多人协作</td><td>容易各写各的</td><td>共享 spec 当单一事实来源</td></tr>
+          <tr><td>适合场景</td><td>玩具 demo、一次性脚本</td><td>要长期维护、要交接的项目</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>适合：</strong>个人想把 AI 产出变靠谱、团队要给 Agent 统一上下文、企业内网要可控可审计。<strong>不太适合：</strong>写完就扔的一次性小脚本——那层规范反而是负担。</p>
+
+    <h2 id="s6">六、小结与提醒</h2>
+    <p>Spec Kit 是 GitHub 官方把「先想清楚再写」做成工具的典型尝试：<span class="key">不替你写代码，而是替你把「要建什么」讲清楚，再交给任意 Agent 实现。</span>对受够 vibe coding 混乱的人，值得一试。</p>
+    <div class="pull-quote"><p>规范不是官僚，是给思考做版本控制——早改方向只费几行字，晚改要重写好几周。</p></div>
+    <div class="info-box">
+      <p><strong>三点诚实提醒（基于核实，非官方口径）</strong></p>
+      <p class="mc-desc">① <strong>地址纠错</strong>：你给的 <code>github.com/spec-kit/spec-kit</code> 实际不可达，官方仓库是 <code>github.com/github/spec-kit</code>，文档在 <code>github.github.io/spec-kit</code>；另有中文版 <code>hequan2017/spec-kit-zh</code>。本文已用官方地址。<br>② <strong>Star 数</strong>：官方文档标注 100K+ stars，但仓库 2026-06 才发布（最新 commit Jun 30, 2026），增长口径请以仓库实时数据为准，别把文档数字当既定事实。<br>③ <strong>开源协议</strong>：仓库含 LICENSE 文件（具体类型未逐字核实），商用前打开 LICENSE 确认条款。</p>
+    </div>
+
+    <div class="tag-cloud">
+      <a href="/craft/">Spec Kit</a><a href="/craft/">规范驱动开发</a><a href="/craft/">SDD</a><a href="/craft/">AI 编程</a><a href="/craft/">GitHub</a><a href="/craft/">Specify CLI</a><a href="/craft/">Copilot</a><a href="/craft/"> Claude</a><a href="/craft/">开源</a><a href="/craft/">vibe coding</a><a href="/craft/">AI Agent</a><a href="/craft/">工程化</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <span>© 2026.07.25 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+})();
+</script>
+</body>
+</html>
