@@ -5,22 +5,22 @@
    本文件只负责「形状 / 排版 / 布局 / 交互」。 */
 
 :root{
-  --bg-primary:#0A0A0A;
-  --bg-secondary:#141414;
-  --bg-elevated:#1E1E1E;
-  --text-primary:#E8E8E8;
-  --text-secondary:#A0A0A0;
-  --accent-green:#00FF41;
-  --accent-cyan:#00D4FF;
-  --accent-dim:rgba(0,255,65,.15);
-  --border-subtle:#2A2A2A;
-  --border-strong:#444444;
+  --bg-primary:#0F172A;
+  --bg-secondary:#1A2333;
+  --bg-elevated:#1E293B;
+  --text-primary:#F8FAFC;
+  --text-secondary:#CBD5E1;
+  --accent-green:#8B5CF6;
+  --accent-cyan:#3B82F6;
+  --accent-dim:rgba(139,92,246,.15);
+  --border-subtle:#334155;
+  --border-strong:#475569;
   --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
   --font-display:'Space Grotesk','PingFang SC',sans-serif;
   --brand:var(--accent-green);
   --brand-bg:var(--accent-dim);
   --cyan:var(--accent-cyan);
-  --fg-dim:#6B6B6B;
+  --fg-dim:#64748B;
   --radius-sm:6px;--radius-md:10px;--radius-lg:14px;
   --maxw:1120px;
   --max-text:960px;
@@ -40,7 +40,7 @@ body{font-family:var(--font-mono);line-height:1.7;font-size:15px;overflow-x:hidd
 
 /* ═══ NAV（毛玻璃，与首页 / list.css 一致）═══ */
 .nav{position:sticky;top:0;left:0;right:0;z-index:200;
-  background:rgba(20,20,20,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(30,41,59,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border-subtle)}
 .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 var(--s4);
   display:flex;align-items:center;justify-content:space-between;height:56px;gap:var(--s4)}

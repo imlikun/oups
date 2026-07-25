@@ -33,11 +33,11 @@ body::before{
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(circle 400px at var(--mouse-x) var(--mouse-y),
-      rgba(0, 255, 65, 0.06) 0%, transparent 70%);
+      rgba(139,92,246, 0.06) 0%, transparent 70%);
   transition: background 0.1s ease-out;
 }
   background: radial-gradient(circle 400px at var(--mouse-x) var(--mouse-y),
-      rgba(0, 168, 46, 0.05) 0%, transparent 70%);
+      rgba(124,58,237, 0.05) 0%, transparent 70%);
 }
 
 /* ── 2. 动态网格偏移（蓝本 body::after：0.04 / 50px / 0.6）—— 置于内容之下 ── */
@@ -49,16 +49,16 @@ body::after{
   pointer-events: none;
   z-index: 0;
   background-image:
-    linear-gradient(rgba(0, 255, 65, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 65, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(139,92,246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246, 0.04) 1px, transparent 1px);
   background-size: 50px 50px;
   opacity: 0.6;
   transform: translate(var(--grid-offset));
   transition: transform 0.15s ease-out;
 }
   background-image:
-    linear-gradient(rgba(0, 168, 46, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 168, 46, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(124,58,237, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237, 0.04) 1px, transparent 1px);
 }
 /* 阅读型页面关闭网格（避免绿线穿透正文） */
 body.fx-reading::after{ display: none; }
@@ -82,7 +82,7 @@ body.fx-reading::after{ display: none; }
   50%{
     transform: scale(1.2);
     opacity: 1;
-    box-shadow: 0 0 30px var(--accent-green), 0 0 60px rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 30px var(--accent-green), 0 0 60px rgba(139,92,246, 0.3);
   }
 }
 
@@ -112,7 +112,7 @@ body.fx-reading::after{ display: none; }
   background: transparent;
   animation: fx-rippleAnim 0.8s ease-out forwards;
   pointer-events: none;
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+  box-shadow: 0 0 20px rgba(139,92,246, 0.2);
 }
 @keyframes fx-rippleAnim{
   0%{ width: 0; height: 0; opacity: 1; transform: translate(-50%, -50%) scale(0); }
@@ -135,8 +135,8 @@ body.fx-reading::after{ display: none; }
   }
   40%{
     transform: translate(1px, -1px);
-    text-shadow: -2px 0 #00ff41, 2px 0 #00d4ff;
-    color: #00ff41;
+    text-shadow: -2px 0 #8B5CF6, 2px 0 #3B82F6;
+    color: #8B5CF6;
   }
   60%{
     transform: translate(0);
@@ -158,7 +158,7 @@ body.fx-reading::after{ display: none; }
   letter-spacing: -2px;
   line-height: 1.1;
   margin-bottom: var(--s4);
-  text-shadow: 0 0 30px rgba(0, 255, 65, 0.15);
+  text-shadow: 0 0 30px rgba(139,92,246, 0.15);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -185,7 +185,7 @@ body.fx-reading::after{ display: none; }
   background: var(--accent-green);
   animation: fx-cursor-blink 1s step-end infinite;
   margin-left: 2px;
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 20px rgba(139,92,246, 0.3);
 }
 @keyframes fx-cursor-blink{
   0%, 100%{ opacity: 1; }

@@ -84,8 +84,8 @@
         var radius = 1.5 + (i / len) * 2.5;
         tCtx.beginPath();
         tCtx.arc(p.x, p.y, radius, 0, Math.PI * 2);
-        tCtx.fillStyle = 'rgba(0, 255, 65, ' + alpha + ')';
-        tCtx.shadowColor = '#00FF41';
+        tCtx.fillStyle = 'rgba(139,92,246, ' + alpha + ')';
+        tCtx.shadowColor = '#8B5CF6';
         tCtx.shadowBlur = 12;
         tCtx.fill();
         tCtx.shadowBlur = 0;
@@ -145,8 +145,8 @@
     Particle.prototype.draw = function () {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0, 255, 65, ' + this.opacity + ')';
-      ctx.shadowColor = '#00FF41';
+      ctx.fillStyle = 'rgba(139,92,246, ' + this.opacity + ')';
+      ctx.shadowColor = '#8B5CF6';
       ctx.shadowBlur = this.size * 3;
       ctx.fill();
       ctx.shadowBlur = 0;

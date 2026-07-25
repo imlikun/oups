@@ -5,43 +5,43 @@
 
 :root{
   /* —— 新蓝本 token（deepseek 细化版 de5545） —— */
-  --bg-primary:#0A0A0A;
-  --bg-secondary:#141414;
-  --bg-elevated:#1E1E1E;
-  --text-primary:#E8E8E8;
-  --text-secondary:#A0A0A0;
-  --text-inverse:#0A0A0A;
-  --accent-green:#00FF41;
-  --accent-cyan:#00D4FF;
-  --accent-dim:rgba(0,255,65,.15);
-  --border-subtle:#2A2A2A;
-  --border-strong:#444444;
-  --state-error:#FF3B30;
-  --state-success:#34C759;
+  --bg-primary:#0F172A;
+  --bg-secondary:#1A2333;
+  --bg-elevated:#1E293B;
+  --text-primary:#F8FAFC;
+  --text-secondary:#CBD5E1;
+  --text-inverse:#0F172A;
+  --accent-green:#8B5CF6;
+  --accent-cyan:#3B82F6;
+  --accent-dim:rgba(139,92,246,.15);
+  --border-subtle:#334155;
+  --border-strong:#475569;
+  --state-error:#F43F5E;
+  --state-success:#10B981;
   --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
   /* —— 向后兼容别名（存量 HTML 沿用旧名） —— */
   --bg:var(--bg-primary);
   --bg-card:var(--bg-elevated);
   --fg:var(--text-primary);
   --fg-muted:var(--text-secondary);
-  --fg-dim:#6B6B6B;
+  --fg-dim:#64748B;
   --brand:var(--accent-green);
-  --brand-dim:#00B32C;
+  --brand-dim:#7C3AED;
   --brand-bg:var(--accent-dim);
   --cyan:var(--accent-cyan);
-  --cyan-bg:rgba(0,212,255,.10);
+  --cyan-bg:rgba(59,130,246,.10);
   --border:var(--border-subtle);
   --border-bright:var(--border-strong);
-  --amber:#FFB800;
-  --amber-bg:rgba(255,184,0,.10);
+  --amber:#FCD34D;
+  --amber-bg:rgba(252,211,77,.10);
   --radius:10px;
   --maxw:1120px;
   /* 列表页默认强调色；daily-digest 各卡用 .accent-* 覆盖 */
   --accent:var(--accent-green);
   --accent-light:var(--accent-dim);
-  --accent-medium:rgba(0,255,65,.14);
-  --accent-border:rgba(0,255,65,.22);
-  --accent-shadow:rgba(0,255,65,.10);
+  --accent-medium:rgba(139,92,246,.14);
+  --accent-border:rgba(139,92,246,.22);
+  --accent-shadow:rgba(139,92,246,.10);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -68,9 +68,9 @@ body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-
 .btn-ghost::before{content:'> ';color:var(--accent-green)}
 .btn-ghost:hover{background:var(--accent-dim);border-color:var(--accent-green);color:var(--accent-green)}
 
-/* ═══ NAV（毛玻璃，对齐蓝本 .navbar：56px / rgba(20,20,20,.75)） ═══ */
+/* ═══ NAV（毛玻璃，对齐蓝本 .navbar：56px / rgba(30,41,59,.75)） ═══ */
 .nav{position:sticky;top:0;left:0;right:0;z-index:200;
-  background:rgba(20,20,20,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(30,41,59,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border-subtle)}
 .nav.scrolled{box-shadow:0 1px 0 var(--border-subtle)}
 .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:flex;align-items:center;
@@ -162,8 +162,8 @@ body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-
   color:var(--accent-green);font-size:11px;font-weight:500}
 /* 置顶徽标：列表页由 JS 注入（content.json 的 pinned 字段驱动） */
 .pin-badge{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:6px;
-  background:rgba(0,255,65,.12);color:var(--accent-green);font-size:11px;font-weight:600;
-  border:1px solid rgba(0,255,65,.30);vertical-align:middle;letter-spacing:.04em}
+  background:rgba(139,92,246,.12);color:var(--accent-green);font-size:11px;font-weight:600;
+  border:1px solid rgba(139,92,246,.30);vertical-align:middle;letter-spacing:.04em}
 .article-item.pinned{border-left-color:var(--accent-green)}
 
 /* ═══ DAILY DIGEST（6 大板块配色，保留每日轮换） ═══ */
@@ -373,6 +373,6 @@ body.list-ai-radar .hero-stat .num{font-size:40px;font-weight:700;font-family:va
 /* ═══ FX: 鼠标追踪光晕（兜底；fx.css 亦会注入，二者同效）═══ */
 body{
   background-image: radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
-      rgba(0,255,65,.07) 0%, transparent 70%);
+      rgba(139,92,246,.07) 0%, transparent 70%);
   background-attachment: fixed;
 }
