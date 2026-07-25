@@ -12,7 +12,6 @@ SEO 全站增强生成器 v2（可重跑 / 幂等 / 基于实际文件）：
 - 去掉失效的 PXID2/PXID3 硬编码快照（指向已不存在的 URL → 404 伤 SEO）
 - LASTMOD 动态取当天
 - meta 注入扩展到 daily-digest / video-lab / pxid / 各子站首页（v1 只覆盖 craft/notes 文章）
-- 手动追加线上存在但本地仓库未跟踪的 pxid 4 主题站 URL
 """
 import os, re, json, glob
 from datetime import date
@@ -23,13 +22,9 @@ BASE = "https://www.appin.site"
 BRAND_OG = BASE + "/assets/og-cover.png"
 LASTMOD = date.today().strftime("%Y-%m-%d")
 
-# 线上存在但本地仓库未跟踪（Windows 直传 ECS，未进 git）——手动追加
-EXTRA_URLS = [
-    ("/pxid/black-orange/", "monthly", "0.5"),
-    ("/pxid/red-black/", "monthly", "0.5"),
-    ("/pxid/yellow-trad/", "monthly", "0.5"),
-    ("/pxid/original/", "monthly", "0.5"),
-]
+# 线上存在但本地仓库未跟踪（Windows 直传 ECS，未进 git）的主题站 URL
+# 注：pxid 4 主题站（黑橙/红黑/黄传/原版）页面从未建过 → 死链，已从 sitemap 与 nav 移除
+EXTRA_URLS = []
 
 EXCLUDE_FILES = {"admin.html", "article.html", "404.html"}
 EXCLUDE_DIRS = {"_templates", "outputs", "assets", "uploads", "_videos", "_wechat", "wechat-kit"}
