@@ -13,8 +13,16 @@ function renderLatest(){
   var grid=document.getElementById('content-grid');
   if(!grid)return;
   fetch('/content.json').then(function(r){return r.json();}).then(function(d){
+    // —— 统计各栏目数量，动态填充 Stats Ribbon 与 Hero posts ——
+    var all=d.articles||[];
+    var counts={craft:0,notes:0,video:0};
+    all.forEach(function(a){ if(a.status==='draft')return; if(counts.hasOwnProperty(a.category))counts[a.category]++; });
+    var total=all.filter(function(a){return a.status!=='draft';}).length;
+    var statEls=document.querySelectorAll('[data-stat]');
+    for(var i=0;i<statEls.length;i++){var k=statEls[i].getAttribute('data-stat');statEls[i].textContent=(k==='total')?total:(counts[k]!=null?counts[k]:statEls[i].textContent);}
+    var hp=document.getElementById('hero-posts'); if(hp)hp.textContent=total;
     // 视频用户后续自加，首页先聚焦图文栏目（技艺录为主）
-    var arts=(d.articles||[]).filter(function(a){return a.status!=='draft' && a.category!=='video';});
+    var arts=all.filter(function(a){return a.status!=='draft' && a.category!=='video';});
     // 置顶优先，再按发布时间倒序（pinned 字段在 content.json 控制）
     arts.sort(function(a,b){
       var pa=a.pinned?1:0, pb=b.pinned?1:0;

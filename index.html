@@ -93,6 +93,7 @@ nav a.nav-link.active::before{content:'> ';opacity:.85}
 nav .badge-new{position:absolute;top:-4px;right:-4px;font-size:9px;background:var(--brand);color:#0F172A;padding:1px 5px;border-radius:99px;font-weight:700;line-height:1.4;pointer-events:none}
 nav .badge-aff{position:absolute;top:-4px;right:-4px;font-size:9px;background:var(--amber);color:#0F172A;padding:1px 5px;border-radius:99px;font-weight:700;line-height:1.4;pointer-events:none}
 nav .actions{display:flex;align-items:center;gap:12px}
+.nav-toggle{display:none}
 .btn-primary{
   display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
   background:var(--brand);color:var(--bg);font-weight:600;font-size:13px;
@@ -242,6 +243,10 @@ nav .actions{display:flex;align-items:center;gap:12px}
   transition:.2s;font-family:var(--font-mono)
 }
 .prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(139,92,246,.22)}
+.prod-card.prod-soon{opacity:.92}
+.prod-card.prod-soon::after{content:'即将上架';position:absolute;top:16px;right:16px;background:var(--amber);color:var(--bg-primary);font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px}
+.prod-btn--soon{opacity:.55;cursor:not-allowed;background:var(--border-strong);color:var(--fg-muted)}
+.prod-btn--soon:hover{transform:none;box-shadow:none}
 
 /* ═══ WORKS / 用作品说话 (Bento Grid · 4列固定行高) ═══ */
 .works-section{}
@@ -444,6 +449,14 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
   .content-card:nth-child(5){grid-column:1/-1}
   .content-card.lead{flex-direction:column;height:auto}
   .content-card.lead .content-thumb{border-right:none;border-bottom:1px solid var(--border);aspect-ratio:16/9}
+  /* 移动端汉堡菜单 */
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:transparent;border:1px solid var(--border-bright);border-radius:8px;color:var(--fg);font-size:20px;cursor:pointer}
+  .links{display:none;position:absolute;top:56px;left:0;right:0;flex-direction:column;gap:0;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:var(--s2) var(--s3)}
+  .links.open{display:flex}
+  .links .nav-link{padding:12px 8px;border-bottom:1px solid var(--border)}
+  .links .nav-link::after{display:none}
+  .links .nav-link.active::before{content:''}
+  .actions{display:none}
 }
 </style>
 <link rel="stylesheet" href="/assets/base.css">
@@ -456,7 +469,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <nav>
   <a class="logo" href="/">Appin<span>.site</span></a>
   <div class="links">
-    <a class="nav-link active" href="#">关于</a>
+    <a class="nav-link active" href="/#hero">关于</a>
     <a class="nav-link" href="#content">内容</a>
     <a class="nav-link" href="#tools">工具箱<span class="badge-aff">返佣</span></a>
     <a class="nav-link" href="#products">产品<span class="badge-new">NEW</span></a>
@@ -465,6 +478,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     <a class="nav-link" href="/ai-model-square.html">模型广场</a>
     <a class="nav-link" href="/pxid2/">pxid2</a>
   </div>
+  <button class="nav-toggle" type="button" aria-label="展开菜单" aria-expanded="false">☰</button>
   <div class="actions">
     
     <a class="btn-primary" href="mailto:hi@Appin.site">合作 →</a>
@@ -472,7 +486,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 </nav>
 
 <!-- ═════ HERO — Identity Bento ═════ -->
-<section class="hero">
+<section class="hero" id="hero">
 <div class="hero-inner">
 <div class="hero-grid">
   <!-- left: headline + cta -->
@@ -502,7 +516,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
       <div class="term-row"><span class="term-key">role:</span><span class="term-val">独立开发者 × 品牌运营</span></div>
       <div class="term-row"><span class="term-key">stack:</span><span class="term-val">Node · Vue · AI Tools ·出海</span></div>
       <div class="term-row"><span class="term-key">exp:</span><span class="term-val">8y 营销策划 + 全栈开发</span></div>
-      <div class="term-row"><span class="term-key">posts:</span><span class="term-val hl">74 published</span></div>
+      <div class="term-row"><span class="term-key">posts:</span><span class="term-val hl"><span id="hero-posts">78</span> published</span></div>
       <div class="term-row"><span class="term-key">location:</span><span class="term-val">江苏淮安 → 全球客户</span></div>
     </div>
     <div class="term-quote">"懂技术 + 稍懂产品 = 扎实。做产品的人 = 不空谈。"</div>
@@ -514,50 +528,14 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 <!-- ═════ STATS RIBBON ═════ -->
 <section class="stats-section">
 <div class="stats-grid">
-  <a class="stat-card" href="/craft/" style="text-decoration:none;color:inherit"><div class="stat-num">47</div><div class="stat-label">技艺录实战</div></a>
-  <a class="stat-card" href="/craft/" style="text-decoration:none;color:inherit"><div class="stat-num">22</div><div class="stat-label">工具拆解</div></a>
-  <a class="stat-card" href="/notes/" style="text-decoration:none;color:inherit"><div class="stat-num">15</div><div class="stat-label">随笔思考</div></a>
-  <a class="stat-card" href="/" style="text-decoration:none;color:inherit"><div class="stat-num">74</div><div class="stat-label">全站内容</div></a>
+  <a class="stat-card" href="/craft/" style="text-decoration:none;color:inherit"><div class="stat-num" data-stat="craft">53</div><div class="stat-label">技艺录</div></a>
+  <a class="stat-card" href="/video-lab/" style="text-decoration:none;color:inherit"><div class="stat-num" data-stat="video">12</div><div class="stat-label">视频</div></a>
+  <a class="stat-card" href="/notes/" style="text-decoration:none;color:inherit"><div class="stat-num" data-stat="notes">13</div><div class="stat-label">随笔</div></a>
+  <a class="stat-card" href="/" style="text-decoration:none;color:inherit"><div class="stat-num" data-stat="total">78</div><div class="stat-label">全站内容</div></a>
 </div>
 </section>
 
 <!-- ═════ TOOLS / AFFILIATE ═════ -->
-<section id="tools" class="section tools-section">
-<div class="section-inner">
-  <div class="section-label">推荐工具</div>
-  <h2 class="section-title">我每天在用的 <span class="hl">AI 编程</span>工具</h2>
-  <p class="section-desc">下面每一个我都写过实战教程、真金白银付过费。链接可能含返佣，但推荐只因好用。</p>
-  <div class="tools-grid">
-    <article class="tool-card">
-      <span class="tool-badge">广告·返佣</span>
-      <div class="tool-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 9h6v6H9z"/><path d="M15 2v4M9 2v4M2 9h4M18 9h4"/></svg></div>
-      <h3 class="tool-name">WorkBuddy</h3>
-      <p class="tool-desc">全栈 AI 编程工作站，内置文件读写、终端、浏览器自动化，支持多 Agent 协作与定时任务。我日常开发的主力环境。</p>
-      <a class="tool-card-link tool-link" href="https://www.codebuddy.cn" target="_blank" rel="noopener">官方网站 →</a>
-    </article>
-    <article class="tool-card">
-      <span class="tool-badge">广告·返佣</span>
-      <div class="tool-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-      <h3 class="tool-name">Trae（字节跳动）</h3>
-      <p class="tool-desc">字节出品的 AI IDE，基于 VS Code 深度定制。中文生态友好，内置多模型切换与项目级上下文理解，国内开发者上手门槛最低。</p>
-      <a class="tool-card-link tool-link" href="https://www.trae.ai" target="_blank" rel="noopener">官方网站 →</a>
-    </article>
-    <article class="tool-card">
-      <span class="tool-badge">广告·返佣</span>
-      <div class="tool-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-      <h3 class="tool-name">DeepSeek</h3>
-      <p class="tool-desc">国产大模型标杆，推理能力对标顶级闭源模型但价格极低。API 兼容 OpenAI 格式，自部署成本低，适合作为 Agent 后端或代码生成引擎。</p>
-      <a class="tool-card-link tool-link" href="https://platform.deepseek.com" target="_blank" rel="noopener">官方网站 →</a>
-    </article>
-    <div class="disclosure">
-      ⚡ 以上链接部分含联盟营销返佣（affiliate），不影响你支付的任何价格。
-      完整披露请阅读 <a href="/affiliate-disclaimer.html">广告与返佣政策</a>。
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- ═════ LATEST CONTENT (mixed stream) ═════ -->
 <section id="content" class="section content-section">
 <div class="section-inner">
   <div class="content-header">
@@ -576,46 +554,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 </div>
 </section>
 
-<!-- ═════ DIGITAL PRODUCTS ═════ -->
-<section id="products" class="section products-section">
-<div class="section-inner">
-  <div class="section-label">数字产品</div>
-  <h2 class="section-title">一次购买，持续更新</h2>
-  <p class="section-desc">把我的实战经验打包成册，省你自己踩坑的时间。</p>
-  <div class="products-grid">
-    <article class="prod-card prod-featured">
-      <span class="prod-type">电子书 · PDF</span>
-      <h3 class="prod-title">AI 编程工具实战（2026）</h3>
-      <p class="prod-desc">Codex / Cursor / Claude Code / Trae / Gemini CLI 五大工具横评 + 工作流搭建 + 30 天上手路线。整合站内全部教程精华，一次买持续更新。</p>
-      <div class="prod-meta">
-        <div class="prod-price"><span class="old">¥59</span>¥39</div>
-        <a class="prod-btn" href="#" onclick="return false">立即获取</a>
-      </div>
-    </article>
-    <article class="prod-card">
-      <span class="prod-type">模板包 · HTML/CSS</span>
-      <h3 class="prod-title">开发者个人站模板（液态玻璃风）</h3>
-      <p class="prod-desc">本站同款设计系统源文件。双主题、Bento Grid、响应式，开箱即用。</p>
-      <div class="prod-meta">
-        <div class="prod-price">¥69</div>
-        <a class="prod-btn" href="#" onclick="return false">立即获取</a>
-      </div>
-    </article>
-    <article class="prod-card">
-      <span class="prod-type">开源 · 免费</span>
-      <h3 class="prod-title">wb-todo-hub · 跨窗口任务管理</h3>
-      <p class="prod-desc">WorkBuddy 技能：任意对话窗口管任务，配套可交互网页看板。MIT 协议，随便下载随便改。</p>
-      <div class="prod-meta">
-        <div class="prod-price" style="color:var(--brand)">¥0</div>
-        <a class="prod-btn" href="/lab/todo-hub.html">免费获取 ↗</a>
-      </div>
-    </article>
-
-  </div>
-</div>
-</section>
-
-<!-- ═════ WORKS / 用作品说话 (Bento Grid) ═════ -->
+<!-- ═════ LATEST CONTENT (mixed stream) ═════ -->
 <section id="works" class="section works-section">
 <div class="section-inner">
   <div class="content-header" style="margin-bottom:var(--s5)">
@@ -654,63 +593,68 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     <a class="work-card work-card--bigbang" href="/bigbang/">
       <div class="work-status"><span class="work-tag tag-cyan">PRODUCT</span></div>
       <h3 class="work-title">大爆炸</h3>
+      <p class="work-desc">极简产品落地实验</p>
     </a>
 
     <!-- NeuroFlow — 右下小 -->
     <a class="work-card work-card--neuroflow" href="/neuroflow/">
       <div class="work-status"><span class="work-tag tag-purple">AI FLOW</span></div>
       <h3 class="work-title">NeuroFlow</h3>
+      <p class="work-desc">AI Agent 流程可视化工具</p>
     </a>
 
     <!-- 云澜 — 左下中 -->
     <a class="work-card work-card--yunlan" href="/yunlan/">
       <div class="work-status"><span class="work-tag tag-cyan">PRODUCT</span></div>
       <h3 class="work-title">云澜</h3>
+      <p class="work-desc">团队协作 SaaS 实验</p>
     </a>
 
     <!-- 宠迹 — 下中 -->
     <a class="work-card work-card--congji" href="/congji/" target="_blank" rel="noopener">
       <div class="work-status"><span class="work-tag tag-green">PET</span></div>
       <h3 class="work-title">宠迹</h3>
+      <p class="work-desc">宠物服务小程序</p>
     </a>
 
     <!-- 网盘中转 — 右下中 -->
     <a class="work-card work-card--pantransfer" href="/craft/quark-to-aliyun-sync.html">
       <div class="work-status"><span class="work-tag tag-cyan">TOOL</span></div>
       <h3 class="work-title">网盘中转</h3>
+      <p class="work-desc">夸克转阿里云盘自动化</p>
     </a>
 
   </div>
 </div>
 </section>
 
-<!-- ═════ AI RADAR (aihot) ═════ -->
+<!-- ═════ DIGITAL PRODUCTS ═════ -->
 <section id="radar" class="section radar-section">
 <div class="section-inner">
   <div class="section-label">AI 雷达</div>
   <h2 class="section-title">每天自动刷的 <span class="hl">AI</span> 圈大事</h2>
-  <p class="section-desc">自动采集 + 人工精选的 AI 行业动态，每天更新。上线后由 <code style="font-family:var(--font-mono);color:var(--brand)">content.json</code> 动态注入。</p>
+  <p class="section-desc">自动采集 + 人工精选的 AI 行业动态，每天更新。点下方查看实时雷达。</p>
   <div class="radar-grid">
 
-    <a class="radar-card" href="#">
+    <a class="radar-card" href="/ai-radar/">
       <div class="radar-head"><span class="radar-src">↗ OpenAI</span></div>
       <h3>Codex 网页版上线「并行任务」：一次开 5 个沙箱同时跑</h3>
       <p>官方博客更新，Pro 用户可在 chat 界面同时派发多个独立编码任务，结果汇总到同一会话。</p>
     </a>
 
-    <a class="radar-card" href="#">
+    <a class="radar-card" href="/ai-radar/">
       <div class="radar-head"><span class="radar-src">↗ Anthropic</span></div>
       <h3>Claude Code 支持「计划模式」：先出方案再动手</h3>
       <p>新增 plan 子命令，先生成修改计划等待确认，再执行，降低误改风险。</p>
     </a>
 
-    <a class="radar-card" href="#">
+    <a class="radar-card" href="/ai-radar/">
       <div class="radar-head"><span class="radar-src">↗ GitHub</span></div>
       <h3>Copilot Workspace 支持自定义 Agent 流程</h3>
       <p>可在仓库内定义多步 Agent 流水线，配合 Actions 实现 PR 自动预审。</p>
     </a>
 
-    <a class="radar-card" href="#">
+    <a class="radar-card" href="/ai-radar/">
       <div class="radar-head"><span class="radar-src">↗ 社区</span></div>
       <h3>开源 Understand Anything 登 GitHub Trending</h3>
       <p>一条命令把 20 万行代码库转成交互知识图谱，本周_star 破 3k。</p>
@@ -718,6 +662,81 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 
   </div>
   <div class="view-all"><a href="/ai-radar/">查看全部 AI 雷达 →</a></div>
+</div>
+</section>
+
+<!-- ═════ WORKS / 用作品说话 (Bento Grid) ═════ -->
+<section id="tools" class="section tools-section">
+<div class="section-inner">
+  <div class="section-label">推荐工具</div>
+  <h2 class="section-title">我每天在用的 <span class="hl">AI 编程</span>工具</h2>
+  <p class="section-desc">下面每一个我都写过实战教程、真金白银付过费。链接可能含返佣，但推荐只因好用。</p>
+  <div class="tools-grid">
+    <article class="tool-card">
+      <span class="tool-badge">广告·返佣</span>
+      <div class="tool-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 9h6v6H9z"/><path d="M15 2v4M9 2v4M2 9h4M18 9h4"/></svg></div>
+      <h3 class="tool-name">WorkBuddy</h3>
+      <p class="tool-desc">全栈 AI 编程工作站，内置文件读写、终端、浏览器自动化，支持多 Agent 协作与定时任务。我日常开发的主力环境。</p>
+      <a class="tool-card-link tool-link" href="https://www.codebuddy.cn" target="_blank" rel="noopener">官方网站 →</a>
+    </article>
+    <article class="tool-card">
+      <span class="tool-badge">广告·返佣</span>
+      <div class="tool-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      <h3 class="tool-name">Trae（字节跳动）</h3>
+      <p class="tool-desc">字节出品的 AI IDE，基于 VS Code 深度定制。中文生态友好，内置多模型切换与项目级上下文理解，国内开发者上手门槛最低。</p>
+      <a class="tool-card-link tool-link" href="https://www.trae.ai" target="_blank" rel="noopener">官方网站 →</a>
+    </article>
+    <article class="tool-card">
+      <span class="tool-badge">广告·返佣</span>
+      <div class="tool-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <h3 class="tool-name">DeepSeek</h3>
+      <p class="tool-desc">国产大模型标杆，推理能力对标顶级闭源模型但价格极低。API 兼容 OpenAI 格式，自部署成本低，适合作为 Agent 后端或代码生成引擎。</p>
+      <a class="tool-card-link tool-link" href="https://platform.deepseek.com" target="_blank" rel="noopener">官方网站 →</a>
+    </article>
+    <div class="disclosure">
+      ⚡ 以上链接部分含联盟营销返佣（affiliate），不影响你支付的任何价格。
+      完整披露请阅读 <a href="/affiliate-disclaimer.html">广告与返佣政策</a>。
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═════ AI RADAR (aihot) ═════ -->
+<section id="products" class="section products-section">
+<div class="section-inner">
+  <div class="section-label">数字产品</div>
+  <h2 class="section-title">一次购买，持续更新</h2>
+  <p class="section-desc">把我的实战经验打包成册，省你自己踩坑的时间。</p>
+  <div class="products-grid">
+    <article class="prod-card prod-featured prod-soon">
+      <span class="prod-type">电子书 · PDF</span>
+      <h3 class="prod-title">AI 编程工具实战（2026）</h3>
+      <p class="prod-desc">Codex / Cursor / Claude Code / Trae / Gemini CLI 五大工具横评 + 工作流搭建 + 30 天上手路线。整合站内全部教程精华，一次买持续更新。</p>
+      <div class="prod-meta">
+        <div class="prod-price"><span class="old">¥59</span>¥39</div>
+        <span class="prod-btn prod-btn--soon">即将上架</span>
+      </div>
+    </article>
+    <article class="prod-card prod-soon">
+      <span class="prod-type">模板包 · HTML/CSS</span>
+      <h3 class="prod-title">开发者个人站模板（液态玻璃风）</h3>
+      <p class="prod-desc">本站同款设计系统源文件。双主题、Bento Grid、响应式，开箱即用。</p>
+      <div class="prod-meta">
+        <div class="prod-price">¥69</div>
+        <span class="prod-btn prod-btn--soon">即将上架</span>
+      </div>
+    </article>
+    <article class="prod-card">
+      <span class="prod-type">开源 · 免费</span>
+      <h3 class="prod-title">wb-todo-hub · 跨窗口任务管理</h3>
+      <p class="prod-desc">WorkBuddy 技能：任意对话窗口管任务，配套可交互网页看板。MIT 协议，随便下载随便改。</p>
+      <div class="prod-meta">
+        <div class="prod-price" style="color:var(--brand)">¥0</div>
+        <a class="prod-btn" href="/lab/todo-hub.html">免费获取 ↗</a>
+      </div>
+    </article>
+
+  </div>
 </div>
 </section>
 
@@ -753,11 +772,11 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     </div>
     <div class="footer-col">
       <h4>关于</h4>
-      <a href="#content">最新内容</a>
-      <a href="#works">我的作品</a>
-      <a href="#radar">AI 雷达</a>
-      <a href="#tools">推荐工具</a>
-      <a href="#products">数字产品</a>
+      <a href="/#content">最新内容</a>
+      <a href="/#works">我的作品</a>
+      <a href="/#radar">AI 雷达</a>
+      <a href="/#tools">推荐工具</a>
+      <a href="/#products">数字产品</a>
       <a href="/affiliate-disclaimer.html">广告与返佣政策</a>
     </div>
     <div class="footer-col">
@@ -772,6 +791,7 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
     </div>
     <div class="footer-col">
       <h4>关注</h4>
+      <a href="https://github.com/imlikun" target="_blank" rel="noopener">GitHub</a>
       <a href="https://space.bilibili.com/26771758" target="_blank" rel="noopener">哔哩哔哩</a>
       <a href="mailto:hi@Appin.site">邮件合作</a>
     </div>
@@ -783,6 +803,9 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 </footer>
 
 
+<script>
+(function(){var t=document.querySelector('.nav-toggle'),l=document.querySelector('nav .links');if(t&&l){t.addEventListener('click',function(){var o=l.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');});l.addEventListener('click',function(e){if(e.target.classList.contains('nav-link')){l.classList.remove('open');t.setAttribute('aria-expanded','false');}});}})();
+</script>
 <script src="/assets/home.js" defer></script>
 </body>
 </html>
