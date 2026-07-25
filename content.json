@@ -1828,6 +1828,19 @@
       "date": "2026-07-25",
       "status": "published",
       "template": "DP"
+    },
+    {
+      "id": "article-84",
+      "slug": "spec-kit",
+      "title": "【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱",
+      "category": "craft",
+      "date": "2026.07.25",
+      "status": "published",
+      "link": "/craft/spec-kit.html",
+      "template": "DP",
+      "videoUrl": "",
+      "featured": true,
+      "image": "uploads/spec-kit-cover.jpg"
     }
   ],
   "projects": [
