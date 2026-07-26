@@ -346,6 +346,15 @@ nav .actions{display:flex;align-items:center;gap:12px}
   text-transform:uppercase;color:var(--brand);opacity:.9
 }
 .content-thumb.placeholder .ph-glyph{font-size:18px;color:var(--brand);opacity:.55}
+/* 小卡片标题覆盖在图片底部 */
+.content-card:not(.lead) .content-thumb{position:relative;height:100%;min-height:220px;aspect-ratio:auto}
+.content-card:not(.lead) .content-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.content-card:not(.lead):hover .content-thumb img{transform:scale(1.03)}
+.thumb-overlay{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--s3) var(--s4);background:linear-gradient(transparent 38%,rgba(0,0,0,.72) 100%);color:#fff;pointer-events:none}
+.thumb-overlay h3{font-size:15px;font-weight:700;line-height:1.35;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#fff}
+.thumb-overlay .thumb-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.thumb-overlay .thumb-meta .card-time{font-size:11px;color:rgba(255,255,255,.72);font-family:var(--font-mono)}
+.thumb-overlay .thumb-meta .card-cat{font-size:10px;font-weight:600;color:#fff;padding:2px 8px;border:1px solid rgba(255,255,255,.35);border-radius:99px;background:rgba(0,0,0,.2);backdrop-filter:blur(4px)}
 /* 首篇横向大卡（占 3 列）：左图右文 + 摘要 —— 与其他卡片等高 320px */
 .content-card.lead{flex-direction:row;height:320px;overflow:hidden}
 .content-card.lead .content-thumb{flex:1 1 48%;aspect-ratio:auto;border-right:1px solid var(--border);overflow:hidden}

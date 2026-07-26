@@ -47,11 +47,12 @@ function renderLatest(){
           +'</div>';
         return '<a class="content-card lead" href="'+href+'">'+thumb+body+'</a>';
       }
-      var inner=thumb
-        +'<div class="card-body">'
+      // 小卡片：标题覆盖在图片底部（与有图占位保持视觉统一）
+      var overlay='<div class="thumb-overlay">'
         +'<h3>'+esc(a.title||'')+'</h3>'
-        +'<div class="card-meta"><span class="card-time">'+esc(a.date||'')+'</span><span class="card-cat">'+catName[cat]+'</span></div>'
+        +'<div class="thumb-meta"><span class="card-time">'+esc(a.date||'')+'</span><span class="card-cat">'+catName[cat]+'</span></div>'
         +'</div>';
+      var inner=thumb.replace('</div>', overlay+'</div>');
       return '<a class="content-card" href="'+href+'">'+inner+'</a>';
     }
     grid.innerHTML = top.length ? top.map(function(a,i){return cardHTML(a,i===0);}).join('') : '';
