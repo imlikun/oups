@@ -26,6 +26,30 @@
 <link rel="stylesheet" href="/assets/fx.css">
 <script src="/assets/fx.js" defer></script>
 <style>
+/* ── 模型广场设计系统：按 appin-site-color-sys 覆盖为 indigo + amber ── */
+:root{
+  /* Primary / 主色（indigo 色板） */
+  --accent-green:#4F46E5;
+  --accent-dim:rgba(79,70,229,.12);
+  --accent-medium:rgba(79,70,229,.14);
+  --accent-border:rgba(79,70,229,.22);
+  --brand:var(--accent-green);
+  --brand-bg:var(--accent-dim);
+  /* Info / 信息蓝 */
+  --accent-cyan:#3B82F6;
+  --cyan-bg:rgba(59,130,246,.12);
+  /* Accent / 强调琥珀 */
+  --amber:#F59E0B;
+  --amber-bg:rgba(245,158,11,.12);
+  /* Semantic */
+  --state-success:#10B981;
+  --state-success-bg:rgba(16,185,129,.12);
+  --state-error:#EF4444;
+  --state-error-bg:rgba(239,68,68,.12);
+  /* Neutral 微调 */
+  --fg-dim:#64748B;
+}
+
 /* ── 模型广场专属布局（复用 design token，脱离 760px 正文宽度） ── */
 .plaza-wrap{max-width:1120px;margin:0 auto;padding:0 24px 80px}
 .hero-models{max-width:1120px;margin:0 auto;padding:88px 24px 28px}
@@ -75,7 +99,7 @@ body.light .toolbar{background:rgba(245,245,245,.85)}
 .b-chat{background:var(--accent-dim);color:var(--accent-green)}
 .b-code{background:var(--cyan-bg);color:var(--accent-cyan)}
 .b-image{background:var(--amber-bg);color:var(--amber)}
-.b-hub{background:rgba(127,127,127,.18);color:var(--text-secondary)}
+.b-hub{background:rgba(100,116,139,.16);color:var(--text-secondary)}
 .card-id{font-family:var(--font-mono);font-size:11.5px;color:var(--fg-dim);background:var(--bg-primary);
   border:1px solid var(--border-subtle);border-radius:6px;padding:5px 9px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 body.light .card-id{background:var(--bg-secondary)}
@@ -89,14 +113,14 @@ body.light .card-params .param{background:var(--bg-secondary)}
 .card-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.6;flex:1}
 .free-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .free-tag{font-size:11px;font-weight:600;font-family:var(--font-mono);padding:3px 9px;border-radius:99px}
-.free-yes{background:rgba(52,199,89,.14);color:var(--state-success)}
+.free-yes{background:var(--state-success-bg);color:var(--state-success)}
 .free-trial{background:var(--amber-bg);color:var(--amber)}
-.free-paid{background:rgba(127,127,127,.16);color:var(--text-secondary)}
+.free-paid{background:rgba(100,116,139,.14);color:var(--text-secondary)}
 .card-links{display:flex;gap:9px;margin-top:4px}
 .btn{flex:1;text-align:center;font-size:13px;font-weight:600;font-family:var(--font-mono);padding:9px 10px;border-radius:8px;
   text-decoration:none;border:1px solid var(--border-strong);transition:all .18s}
-.btn-primary{background:var(--accent-green);color:#04210d;border-color:var(--accent-green)}
-.btn-primary:hover{filter:brightness(1.08);color:#04210d}
+.btn-primary{background:var(--accent-green);color:#fff;border-color:var(--accent-green)}
+.btn-primary:hover{filter:brightness(1.08);color:#fff}
 .btn-ghost{background:transparent;color:var(--text-secondary);border-color:var(--border-subtle)}
 .btn-ghost:hover{border-color:var(--accent-green);color:var(--accent-green)}
 .proxy-note{font-size:10.5px;color:var(--fg-dim);font-family:var(--font-mono);margin-top:8px;line-height:1.4}
