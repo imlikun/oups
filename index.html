@@ -31,12 +31,12 @@
   --text-primary:#F8FAFC;
   --text-secondary:#CBD5E1;
   --text-inverse:#0F172A;
-  --accent-green:#8B5CF6;
+  --accent-green:#4F46E5;
   --accent-cyan:#3B82F6;
-  --accent-dim:rgba(139,92,246,.15);
+  --accent-dim:rgba(79,70,229,.15);
   --border-subtle:#334155;
   --border-strong:#475569;
-  --state-error:#F43F5E;
+  --state-error:#EF4444;
   --state-success:#10B981;
   --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
   /* —— 向后兼容别名 —— */
@@ -46,15 +46,15 @@
   --fg-muted:var(--text-secondary);
   --fg-dim:#64748B;
   --brand:var(--accent-green);
-  --brand-dim:#7C3AED;
+  --brand-dim:#4338CA;
   --brand-bg:var(--accent-dim);
   --cyan:var(--accent-cyan);
   --cyan-bg:rgba(59,130,246,.10);
   --border:var(--border-subtle);
   --border-bright:var(--border-strong);
-  --amber:#FCD34D;
-  --amber-bg:rgba(252,211,77,.10);
-  --red:#F43F5E;--green:#10B981;
+  --amber:#F59E0B;
+  --amber-bg:rgba(245,158,11,.10);
+  --red:#EF4444;--green:#10B981;
   --radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:18px;
   --maxw:1200px;
   --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;
@@ -100,7 +100,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
   border-radius:99px;text-decoration:none;border:none;cursor:pointer;transition:.2s;
   font-family:var(--font-mono);
 }
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(139,92,246,.22)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(79,70,229,.22)}
 .btn-secondary{
   display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
   background:transparent;color:var(--fg);font-weight:500;font-size:13px;
@@ -147,11 +147,11 @@ nav .actions{display:flex;align-items:center;gap:12px}
 .term-avatar img{
   width:96px;height:96px;border-radius:50%;
   border:2px solid var(--brand);
-  box-shadow:0 0 0 3px rgba(139,92,246,.12),0 0 20px rgba(139,92,246,.15);
+  box-shadow:0 0 0 3px rgba(79,70,229,.12),0 0 20px rgba(79,70,229,.15);
   object-fit:cover;transition:.3s;
 }
 .term-avatar img:hover{
-  box-shadow:0 0 0 3px rgba(139,92,246,.2),0 0 30px rgba(139,92,246,.25);
+  box-shadow:0 0 0 3px rgba(79,70,229,.2),0 0 30px rgba(79,70,229,.25);
   transform:scale(1.04);
 }
 .term-body{font-family:var(--font-mono);font-size:13px;line-height:2;color:var(--fg-muted)}
@@ -242,7 +242,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
   font-weight:600;font-size:13px;border-radius:99px;text-decoration:none;
   transition:.2s;font-family:var(--font-mono)
 }
-.prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(139,92,246,.22)}
+.prod-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(79,70,229,.22)}
 .prod-card.prod-soon{opacity:.92}
 .prod-card.prod-soon::after{content:'即将上架';position:absolute;top:16px;right:16px;background:var(--amber);color:var(--bg-primary);font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px}
 .prod-btn--soon{opacity:.55;cursor:not-allowed;background:var(--border-strong);color:var(--fg-muted)}
@@ -338,7 +338,7 @@ nav .actions{display:flex;align-items:center;gap:12px}
 .content-thumb.placeholder{
   display:flex;align-items:center;justify-content:center;gap:8px;
   background:radial-gradient(circle at 30% 20%,var(--brand-bg),transparent 60%),
-    linear-gradient(135deg,var(--bg-elevated),rgba(252,211,77,.05));
+    linear-gradient(135deg,var(--bg-elevated),rgba(245,158,11,.05));
   border-bottom:1px solid var(--border)
 }
 .content-thumb.placeholder .ph-cat{

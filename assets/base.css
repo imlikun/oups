@@ -13,12 +13,12 @@
   --text-primary:#F8FAFC;
   --text-secondary:#CBD5E1;
   --text-inverse:#0F172A;
-  --accent-green:#8B5CF6;
+  --accent-green:#4F46E5;
   --accent-cyan:#3B82F6;
-  --accent-dim:rgba(139,92,246,.15);
+  --accent-dim:rgba(79,70,229,.15);
   --border-subtle:#334155;
   --border-strong:#475569;
-  --state-error:#F43F5E;
+  --state-error:#EF4444;
   --state-success:#10B981;
   --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
   --font-sans:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -29,14 +29,14 @@
   --fg-muted:var(--text-secondary);
   --fg-dim:#64748B;
   --brand:var(--accent-green);
-  --brand-dim:#7C3AED;
+  --brand-dim:#4338CA;
   --brand-bg:var(--accent-dim);
   --cyan:var(--accent-cyan);
   --cyan-bg:rgba(59,130,246,.10);
   --border:var(--border-subtle);
   --border-bright:var(--border-strong);
-  --amber:#FCD34D;
-  --amber-bg:rgba(252,211,77,.10);
+  --amber:#F59E0B;
+  --amber-bg:rgba(245,158,11,.10);
   /* —— 间距比例（来自 index.html / daily-digest） —— */
   --s1:8px;--s2:12px;--s3:16px;--s4:24px;--s5:32px;--s6:48px;--s7:64px;--s8:96px;
   /* —— 圆角（article 用 --radius 默认 8；list 覆盖 10） —— */
@@ -50,9 +50,9 @@
   /* —— 列表页强调色（daily-digest 卡用 .accent-* 覆盖，源自 list.css） —— */
   --accent:var(--accent-green);
   --accent-light:var(--accent-dim);
-  --accent-medium:rgba(139,92,246,.14);
-  --accent-border:rgba(139,92,246,.22);
-  --accent-shadow:rgba(139,92,246,.10);
+  --accent-medium:rgba(79,70,229,.14);
+  --accent-border:rgba(79,70,229,.22);
+  --accent-shadow:rgba(79,70,229,.10);
 }
 
 /* ═══ 全局 reset（原散落于各 CSS，统一到此） ═══ */

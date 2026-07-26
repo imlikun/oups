@@ -11,12 +11,12 @@
   --text-primary:#F8FAFC;
   --text-secondary:#CBD5E1;
   --text-inverse:#0F172A;
-  --accent-green:#8B5CF6;
+  --accent-green:#4F46E5;
   --accent-cyan:#3B82F6;
-  --accent-dim:rgba(139,92,246,.15);
+  --accent-dim:rgba(79,70,229,.15);
   --border-subtle:#334155;
   --border-strong:#475569;
-  --state-error:#F43F5E;
+  --state-error:#EF4444;
   --state-success:#10B981;
   --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
   /* —— 向后兼容别名（存量 HTML 沿用旧名） —— */
@@ -26,22 +26,22 @@
   --fg-muted:var(--text-secondary);
   --fg-dim:#64748B;
   --brand:var(--accent-green);
-  --brand-dim:#7C3AED;
+  --brand-dim:#4338CA;
   --brand-bg:var(--accent-dim);
   --cyan:var(--accent-cyan);
   --cyan-bg:rgba(59,130,246,.10);
   --border:var(--border-subtle);
   --border-bright:var(--border-strong);
-  --amber:#FCD34D;
-  --amber-bg:rgba(252,211,77,.10);
+  --amber:#F59E0B;
+  --amber-bg:rgba(245,158,11,.10);
   --radius:10px;
   --maxw:1120px;
   /* 列表页默认强调色；daily-digest 各卡用 .accent-* 覆盖 */
   --accent:var(--accent-green);
   --accent-light:var(--accent-dim);
-  --accent-medium:rgba(139,92,246,.14);
-  --accent-border:rgba(139,92,246,.22);
-  --accent-shadow:rgba(139,92,246,.10);
+  --accent-medium:rgba(79,70,229,.14);
+  --accent-border:rgba(79,70,229,.22);
+  --accent-shadow:rgba(79,70,229,.10);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -162,8 +162,8 @@ body{font-family:var(--font-mono);background:var(--bg-primary);color:var(--text-
   color:var(--accent-green);font-size:11px;font-weight:500}
 /* 置顶徽标：列表页由 JS 注入（content.json 的 pinned 字段驱动） */
 .pin-badge{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:6px;
-  background:rgba(139,92,246,.12);color:var(--accent-green);font-size:11px;font-weight:600;
-  border:1px solid rgba(139,92,246,.30);vertical-align:middle;letter-spacing:.04em}
+  background:rgba(79,70,229,.12);color:var(--accent-green);font-size:11px;font-weight:600;
+  border:1px solid rgba(79,70,229,.30);vertical-align:middle;letter-spacing:.04em}
 .article-item.pinned{border-left-color:var(--accent-green)}
 
 /* ═══ DAILY DIGEST（6 大板块配色，保留每日轮换） ═══ */
@@ -373,6 +373,6 @@ body.list-ai-radar .hero-stat .num{font-size:40px;font-weight:700;font-family:va
 /* ═══ FX: 鼠标追踪光晕（兜底；fx.css 亦会注入，二者同效）═══ */
 body{
   background-image: radial-gradient(circle 380px at var(--mouse-x,50%) var(--mouse-y,50%),
-      rgba(139,92,246,.07) 0%, transparent 70%);
+      rgba(79,70,229,.07) 0%, transparent 70%);
   background-attachment: fixed;
 }
