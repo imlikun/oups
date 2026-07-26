@@ -60,6 +60,38 @@ function renderLatest(){
 }
 renderLatest();
 
+/* —— AI 雷达：从 ai-radar/index.html 内嵌数据动态渲染首页卡片 ——
+   数据源为 ai-radar 页内 <script id="ai-data"> JSON（自动更新流程写入），
+   首页同源 fetch 后提取 JSON 渲染前 4 条，不再写死。失败时保留 HTML 内静态降级卡。 */
+function renderRadar(){
+  var grid=document.getElementById('radar-grid');
+  if(!grid) return;
+  fetch('/ai-radar/index.html').then(function(r){return r.text();}).then(function(html){
+    var m=html.match(/<script id="ai-data"[^>]*>([\s\S]*?)<\/script>/);
+    if(!m) return;
+    var raw=m[1].trim();
+    var data;
+    try{ data=JSON.parse(raw); }
+    catch(e){ try{ data=JSON.parse(raw.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g,'')); }catch(e2){ return; } }
+    var items=(data&&data.items)||[];
+    if(!items.length) return;
+    items.sort(function(a,b){ return new Date(b.publishedAt)-new Date(a.publishedAt); });
+    var top=items.slice(0,4);
+    var html2=top.map(function(it){
+      var src=it.source||'AI 雷达';
+      var summary=(it.summary||'').replace(/\s+/g,' ');
+      if(summary.length>90) summary=summary.slice(0,90)+'…';
+      return '<a class="radar-card" href="'+(it.url||'/ai-radar/')+'" target="_blank" rel="noopener">'
+        +'<div class="radar-head"><span class="radar-src">↗ '+esc(src)+'</span></div>'
+        +'<h3>'+esc(it.title||'')+'</h3>'
+        +'<p>'+esc(summary)+'</p>'
+        +'</a>';
+    }).join('');
+    grid.innerHTML=html2;
+  }).catch(function(e){console.warn('ai-radar 数据加载失败，保留静态降级卡片',e);});
+}
+renderRadar();
+
 /* —— Hero 打字机 —— */
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
