@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录</title>
+<meta name="description" content="一份给国内开发者的 Codex CLI 踩坑实录：代理节点为什么被 403、chatgpt.com 和 api.openai.com 的风控差异、用 codex-auth-helper 导出 auth.json 实现 ChatGPT 账号免 API Key 登录、完整安装配置流程。">
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/codex-cli-cn-install.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录">
+<meta property="og:description" content="一份给国内开发者的 Codex CLI 踩坑实录：代理节点为什么被 403、chatgpt.com 和 api.openai.com 的风控差异、用 codex-auth-helper 导出 auth.json 实现 ChatGPT 账号免 API Key 登录、完整安装配置流程。">
+<meta property="og:url" content="https://www.appin.site/craft/codex-cli-cn-install.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录">
+<meta name="twitter:description" content="一份给国内开发者的 Codex CLI 踩坑实录：代理节点为什么被 403、chatgpt.com 和 api.openai.com 的风控差异、用 codex-auth-helper 导出 auth.json 实现 ChatGPT 账号免 API Key 登录、完整安装配置流程。">
+<meta property="og:image" content="https://www.appin.site/uploads/codex-cli-cn-install-cover.jpg">
+<meta name="twitter:image" content="https://www.appin.site/uploads/codex-cli-cn-install-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>实战案例 · AI 开发工具</div>
+  <h1>Codex CLI 国内安装实战：从代理风控到免 API Key 登录</h1>
+  <p class="hero-desc">一份给国内开发者的 Codex CLI 踩坑实录：代理节点为什么被 403、两个域名的风控差异、用 codex-auth-helper 导出 auth.json 实现 ChatGPT 账号免 API Key 登录。</p>
+  <div class="hero-meta">
+    <span>实战教程</span><span class="dot"></span>
+    <span>Codex CLI</span><span class="dot"></span>
+    <span>代理配置</span><span class="dot"></span>
+    <span>2026.07.26</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/codex-cli-cn-install-cover.jpg" alt="Codex CLI 国内安装实战">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、国内装 Codex 为什么难</a></li>
+      <li><a href="#s2">二、代理节点的选择陷阱</a></li>
+      <li><a href="#s3">三、两个域名的风控差异</a></li>
+      <li><a href="#s4">四、安装 Codex CLI</a></li>
+      <li><a href="#s5">五、免 API Key 登录方案</a></li>
+      <li><a href="#s6">六、配置代理与验证</a></li>
+      <li><a href="#s7">七、日常使用速查</a></li>
+      <li><a href="#s8">八、续期与故障排查</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、国内装 Codex 为什么难</h2>
+    <p>OpenAI Codex CLI 是目前最强的终端 AI 编程工具之一，能直接在你的终端里自主写代码、跑测试、修 bug。但国内开发者要装上它，会遇到三层障碍：<span class="key">网络墙、OpenAI 的 IP 风控、ChatGPT 登录困难。</span></p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">一套经过实测的国内 Codex CLI 安装方案，包含代理节点选择、免 API Key 的 ChatGPT 账号登录技巧，以及完整配置流程。读完后你能在本机跑起 Codex，不花一分钱 API 费用。</p>
+    </div>
+    <p>官方提供了三种安装方式：npm 全局安装、Homebrew、官方脚本。其中官方脚本走 <code>chatgpt.com/codex/install.sh</code>，在国内基本打不开。npm 方式走 <code>registry.npmjs.org</code>，国内可达，是首选。</p>
+
+    <h2 id="s2">二、代理节点的选择陷阱</h2>
+    <p>很多人以为"能上 YouTube 就能用 OpenAI"，这是最大的误区。<span class="key">YouTube 不做 IP 风控，OpenAI 做。</span>你的节点能看 4K 视频，不代表能登录 ChatGPT。</p>
+    <p>实测三个不同节点，结果如下：</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>节点</th><th>地区</th><th>IP 类型</th><th>chatgpt.com</th><th>api.openai.com</th></tr></thead>
+        <tbody>
+          <tr><td>某 VPS 商 A</td><td>新加坡</td><td>机房 IP</td><td>403</td><td>421</td></tr>
+          <tr><td>某 VPS 商 B</td><td>美国</td><td>机房 IP</td><td>403</td><td>421</td></tr>
+          <tr><td>某 VPS 商 C</td><td>台湾</td><td>机房 IP</td><td>403</td><td>401（可用）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">
+      <p><strong>关键结论</strong></p>
+      <p class="mc-desc">机房 IP（VPS 自建、廉价机场）基本都会被 chatgpt.com 拦截（403）。但 api.openai.com 的风控更宽松，部分机房 IP 能调通。香港节点完全不支持，OpenAI 明确将其列入不支持地区。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">能用的节点特征</span></div>
+      <p class="mc-desc">住宅 IP、机场里标注"解锁 ChatGPT/OpenAI"的专线节点、部分 IPLC 线路。判断方法：curl 测试 chatgpt.com 返回 200 而非 403。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">不能用的节点特征</span></div>
+      <p class="mc-desc">廉价 VPS 自建节点、免费 VPN、共享人数过多的大路货。主机名暴露 VPS 身份的（如 orangevps.com）几乎必被风控。</p>
+    </div>
+
+    <h2 id="s3">三、两个域名的风控差异</h2>
+    <p>这是本文最核心的发现：<span class="key">chatgpt.com 和 api.openai.com 是两套完全不同的风控策略。</span>理解这一点，就能找到在国内用 Codex 的钥匙。</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 200" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="两域名风控差异示意图">
+        <defs>
+          <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .bxr{fill:#fef0f0;stroke:#dc3545;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:14px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#5b6b62}
+            .tr{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#dc3545}
+            .tg{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#1a8a3e}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw)}
+          </style>
+        </defs>
+        <rect class="bx" x="14" y="70" width="120" height="60" rx="10"></rect>
+        <text class="t" x="74" y="95" text-anchor="middle">机房 IP</text>
+        <text class="ts" x="74" y="115" text-anchor="middle">你的节点</text>
+        <path class="ln" d="M134,100 L226,100"></path>
+        <rect class="bxr" x="230" y="20" width="200" height="70" rx="12"></rect>
+        <text class="t" x="330" y="48" text-anchor="middle">chatgpt.com</text>
+        <text class="tr" x="330" y="70" text-anchor="middle">403 被风控拦截</text>
+        <rect class="bxg" x="230" y="110" width="200" height="70" rx="12"></rect>
+        <text class="t" x="330" y="138" text-anchor="middle">api.openai.com</text>
+        <text class="tg" x="330" y="160" text-anchor="middle">401 能通（带 Key 即可用）</text>
+        <rect class="bx" x="456" y="20" width="200" height="70" rx="10"></rect>
+        <text class="t" x="556" y="48" text-anchor="middle">ChatGPT 网页/App</text>
+        <text class="tr" x="556" y="70" text-anchor="middle">无法登录</text>
+        <rect class="bxg" x="456" y="110" width="200" height="70" rx="10"></rect>
+        <text class="t" x="556" y="138" text-anchor="middle">Codex CLI</text>
+        <text class="tg" x="556" y="160" text-anchor="middle">可以正常使用</text>
+        <path class="ln" d="M430,55 L456,55"></path>
+        <path class="ln" d="M430,145 L456,145"></path>
+      </svg>
+      <div class="caption">图 1：同一个机房 IP，chatgpt.com 被拦，api.openai.com 能通。Codex CLI 走后者。</div>
+    </div>
+    <div class="pull-quote"><p>403 和 401 是本质区别：403 是门都没进（IP 被风控），401 是进门了但没钥匙（只是没带凭证）。</p></div>
+
+    <h2 id="s4">四、安装 Codex CLI</h2>
+    <p>前提：Node.js 18 以上（建议 22+）。macOS 用 Homebrew 装：<code>brew install node</code>。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 全局安装 Codex CLI</span>
+<span class="c-key">npm</span> install -g @openai/codex
+
+<span class="c-com"># 国内网络慢可加镜像</span>
+<span class="c-key">npm</span> install -g @openai/codex --registry=https://registry.npmmirror.com
+
+<span class="c-com"># 验证安装</span>
+<span class="c-key">codex</span> --version
+<span class="c-com"># 应输出 codex-cli 0.145.0 或更高</span></pre>
+    </div>
+    <div class="info-box">
+      <p><strong>坑：PATH 警告</strong></p>
+      <p class="mc-desc">安装后可能出现 <code>WARNING: could not create PATH aliases</code>。不影响使用，npm 全局 bin 已在 PATH 里，<code>codex</code> 命令能正常调用。</p>
+    </div>
+
+    <h2 id="s5">五、免 API Key 登录方案</h2>
+    <p>Codex 支持两种认证：ChatGPT 账号登录（免 API Key）和 API Key 登录。<span class="key">ChatGPT 账号登录更划算——免费版也能用，不需要单独充值 API 额度。</span></p>
+    <p>但问题在于：正常的 ChatGPT 登录流程需要浏览器打开 chatgpt.com 授权，而你的节点可能打不开。解决方案是 <strong>codex-auth-helper</strong>——一个开源 Chrome 扩展，能把浏览器里的 ChatGPT 会话凭证导出成 Codex 需要的 auth.json 文件。</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">原理</span></div>
+      <p class="mc-desc">在任何能登录 chatgpt.com 的环境（哪怕一次），用扩展读取已登录的会话 Cookie，合成 Codex 规范的 auth.json（含 JWT 仿真 id_token）。纯本地处理，不上传任何服务器。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">操作步骤</span></div>
+      <p class="mc-desc">下载 zhishile/codex-auth-helper 仓库，Chrome 加载 extension 目录，确保浏览器已登录 ChatGPT，点扩展图标，生成并保存 auth.json，放到 ~/.codex/auth.json。</p>
+    </div>
+    <div class="code-block">
+      <pre><span class="c-com"># 1. 下载 codex-auth-helper</span>
+<span class="c-key">git</span> clone https://github.com/zhishile/codex-auth-helper.git
+
+<span class="c-com"># 2. Chrome 打开 chrome://extensions/</span>
+<span class="c-com"># 3. 开启右上角"开发者模式"</span>
+<span class="c-com"># 4. 点"加载已解压的扩展程序"，选 extension 文件夹</span>
+
+<span class="c-com"># 5. 在能登录 ChatGPT 的浏览器里，点扩展图标</span>
+<span class="c-com"># 6. 点"生成并保存 auth.json"</span>
+
+<span class="c-com"># 7. 把下载的 auth.json 放到 Codex 配置目录</span>
+<span class="c-key">mkdir</span> -p ~/.codex
+<span class="c-key">cp</span> ~/Downloads/auth.json ~/.codex/auth.json</pre>
+    </div>
+    <div class="info-box">
+      <p><strong>安全说明</strong></p>
+      <p class="mc-desc">codex-auth-helper 只声明 downloads 和 chatgpt.com 两个权限，代码开源可审查。生成的 auth.json 包含你的会话凭证，不要泄露或上传到任何服务器。凭证中的 IP、邮箱、Token 等敏感信息在本文中均已打码。</p>
+    </div>
+
+    <h2 id="s6">六、配置代理与验证</h2>
+    <p>Codex 走 api.openai.com，需要代理把请求转发到能通的地区。把代理变量写入 shell 配置，新开终端自动生效。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 追加到 ~/.zshrc（macOS 默认 shell）</span>
+<span class="c-com"># 根据你的代理软件端口修改，常见：1087/7890/1080</span>
+<span class="c-key">echo</span> 'export https_proxy=http://127.0.0.1:1087' >> ~/.zshrc
+<span class="c-key">echo</span> 'export http_proxy=http://127.0.0.1:1087' >> ~/.zshrc
+<span class="c-key">echo</span> 'export all_proxy=socks5://127.0.0.1:1080' >> ~/.zshrc
+
+<span class="c-com"># 让配置生效</span>
+<span class="c-key">source</span> ~/.zshrc
+
+<span class="c-com"># 验证代理通不通（返回 401 = 正常）</span>
+<span class="c-key">curl</span> -sS -o /dev/null -w "%{http_code}\n" https://api.openai.com/v1/models</pre>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>返回值</th><th>含义</th><th>处理</th></tr></thead>
+        <tbody>
+          <tr><td>401</td><td>代理通了，只是没带凭证</td><td>可以启动 Codex</td></tr>
+          <tr><td>000</td><td>代理没开或网络断</td><td>检查代理软件是否连接</td></tr>
+          <tr><td>403</td><td>IP 被 OpenAI 风控</td><td>换节点，找住宅 IP</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>验证 Codex 登录状态：</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 启动 Codex，日志会显示认证信息</span>
+<span class="c-key">codex</span> exec "say hello"
+<span class="c-com"># 日志出现 auth_mode="Chatgpt" 和 user.email="****@gmail.com" 即成功</span></pre>
+    </div>
+
+    <h2 id="s7">七、日常使用速查</h2>
+    <div class="code-block">
+      <pre><span class="c-com"># 交互模式（最常用）</span>
+<span class="c-key">codex</span>
+
+<span class="c-com"># 单次执行</span>
+<span class="c-key">codex</span> exec "你的指令"
+
+<span class="c-com"># 在项目里用（自动识别 git 仓库）</span>
+<span class="c-key">cd</span> ~/Projects/your-project && codex
+
+<span class="c-com"># 让 Codex 能直接改文件</span>
+<span class="c-key">codex</span> --sandbox workspace-write
+
+<span class="c-com"># 完全自动模式（慎用）</span>
+<span class="c-key">codex</span> --approval-policy always --sandbox workspace-write</pre>
+    </div>
+    <div class="info-box">
+      <p><strong>第一次使用建议</strong></p>
+      <p class="mc-desc">先在测试目录试：mkdir ~/codex-test && cd ~/codex-test && codex，输入"创建一个 hello.py，打印当前时间"。确认能生成文件后，再在真实项目里用。善用 git，不满意就 git checkout . 回滚。</p>
+    </div>
+
+    <h2 id="s8">八、续期与故障排查</h2>
+    <h3>auth.json 过期续期</h3>
+    <p>auth.json 里的 token 大约 10 天后过期。过期后 Codex 会报 401 Unauthorized。续期方法：重新在浏览器登录 chatgpt.com，用 codex-auth-helper 扩展重新导出，覆盖 ~/.codex/auth.json。</p>
+    <h3>常见报错排查</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>报错</th><th>原因</th><th>解法</th></tr></thead>
+        <tbody>
+          <tr><td>Connection timed out</td><td>代理没开或断网</td><td>检查代理软件是否连接</td></tr>
+          <tr><td>HTTP 403</td><td>IP 被 OpenAI 风控</td><td>换住宅 IP 节点</td></tr>
+          <tr><td>HTTP 401</td><td>auth.json 过期</td><td>重新导出 auth.json</td></tr>
+          <tr><td>Operation not permitted</td><td>沙箱权限不足</td><td>在真实终端运行，不在受限环境里跑</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pull-quote"><p>能看 YouTube 不等于能用 OpenAI。机房 IP 看 YouTube 毫无压力，但 OpenAI 会主动风控机房 IP。选节点时优先找"解锁 ChatGPT"标签的线路。</p></div>
+
+    <h3>ChatGPT 桌面 App 要不要装</h3>
+    <p>不装完全不影响 Codex 编程。Codex 走 api.openai.com，不依赖 ChatGPT App。桌面 App 提供 computer use、浏览器联动等高级功能，但安装和登录都需要能解锁 chatgpt.com 的节点。</p>
+
+    <div class="tag-cloud">
+      <a href="/craft/">Codex CLI</a>
+      <a href="/craft/">OpenAI</a>
+      <a href="/craft/">AI 编程</a>
+      <a href="/craft/">代理配置</a>
+      <a href="/craft/">ChatGPT</a>
+      <a href="/craft/">auth.json</a>
+      <a href="/craft/">国内安装</a>
+      <a href="/craft/">免 API Key</a>
+      <a href="/craft/">终端工具</a>
+      <a href="/craft/">IP 风控</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <span>© 2026.07.26 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+    <button class="theme-toggle" onclick="document.body.classList.toggle('light');try{localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark')}catch(e){}">
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+})();
+</script>
+</body>
+</html>

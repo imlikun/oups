@@ -1841,6 +1841,19 @@
       "videoUrl": "",
       "featured": true,
       "image": "uploads/spec-kit-cover.jpg"
+    },
+    {
+      "id": "article-85",
+      "slug": "codex-cli-cn-install",
+      "title": "【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录",
+      "category": "craft",
+      "date": "2026.07.26",
+      "status": "published",
+      "link": "/craft/codex-cli-cn-install.html",
+      "template": "DP",
+      "videoUrl": "",
+      "featured": false,
+      "image": "uploads/codex-cli-cn-install-cover.jpg"
     }
   ],
   "projects": [
