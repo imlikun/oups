@@ -1,0 +1,145 @@
+﻿<!-- ===== Hero ===== -->
+<section class="ct-hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">CONTACT <span class="en">|</span> 联系报价</div>
+    <h1>告诉我们您的需求<br><span class="gold">获取即时报价</span></h1>
+    <p class="lead">无论您处于概念设计、原型验证还是批量生产阶段，填写下方表单或直接联系我们，项目顾问将在 24 小时内与您对接。</p>
+  </div>
+</section>
+
+<!-- ===== Form + Info ===== -->
+<section class="ct-main">
+  <div class="wrap ct-grid">
+    <!-- 表单 -->
+    <div class="ct-form-wrap reveal">
+      <div class="sec-head" style="margin-bottom:28px">
+        <div class="eyebrow">PROJECT BRIEF <span class="en">/ 项目简报</span></div>
+        <h2 class="sec">提交您的项目需求</h2>
+      </div>
+      <form class="ct-form" onsubmit="event.preventDefault();alert('表单已提交，我们的项目顾问将在24小时内与您联系！');">
+        <div class="ct-row">
+          <div class="ct-field">
+            <label>姓名 <b>*</b></label>
+            <input type="text" placeholder="您的姓名" required>
+          </div>
+          <div class="ct-field">
+            <label>公司</label>
+            <input type="text" placeholder="公司名称">
+          </div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-field">
+            <label>邮箱 <b>*</b></label>
+            <input type="email" placeholder="your@email.com" required>
+          </div>
+          <div class="ct-field">
+            <label>电话 <b>*</b></label>
+            <input type="tel" placeholder="+86 1xx xxxx xxxx" required>
+          </div>
+        </div>
+        <div class="ct-field">
+          <label>项目类型</label>
+          <div class="ct-opts">
+            <label class="ct-opt"><input type="checkbox" name="type" value="design"><span>产品设计</span></label>
+            <label class="ct-opt"><input type="checkbox" name="type" value="prototype"><span>原型打样</span></label>
+            <label class="ct-opt"><input type="checkbox" name="type" value="mold"><span>模具开发</span></label>
+            <label class="ct-opt"><input type="checkbox" name="type" value="injection"><span>注塑生产</span></label>
+            <label class="ct-opt"><input type="checkbox" name="type" value="cnc"><span>CNC加工</span></label>
+            <label class="ct-opt"><input type="checkbox" name="type" value="assembly"><span>装配测试</span></label>
+          </div>
+        </div>
+        <div class="ct-field">
+          <label>需求描述</label>
+          <textarea rows="5" placeholder="请简述您的项目：产品用途、材料要求、预计数量、目标交期等，有助于我们更快给出精准方案。"></textarea>
+        </div>
+        <div class="ct-field">
+          <label>上传附件（3D模型 / 图纸 / 参考图）</label>
+          <div class="ct-upload">
+            <input type="file" id="ct-file" multiple style="display:none" onchange="this.nextElementSibling.textContent=this.files.length?('已选择 '+this.files.length+' 个文件'):'点击或拖拽上传文件'"></input>
+            <button type="button" class="ct-upbtn" onclick="document.getElementById('ct-file').click()">点击上传</button>
+            <span>支持 STL、STEP、PDF、JPG 等格式</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:16px">提交需求，获取报价</button>
+        <p class="ct-note">提交即表示您同意我们的 <a href="#">隐私政策</a>。我们会在 24 小时内回复。</p>
+      </form>
+    </div>
+
+    <!-- 联系信息 -->
+    <aside class="ct-info reveal">
+      <div class="ct-card">
+        <h3>直接联系我们</h3>
+        <div class="ct-item">
+          <b>电话咨询</b>
+          <span>400-888-0000</span>
+          <small>工作日 9:00 - 18:00</small>
+        </div>
+        <div class="ct-item">
+          <b>邮箱</b>
+          <span>hello@pxid-mfg.com</span>
+          <small>通常 4 小时内回复</small>
+        </div>
+        <div class="ct-item">
+          <b>总部地址</b>
+          <span>深圳市宝安区</span>
+          <small>欢迎预约工厂参观</small>
+        </div>
+        <div class="ct-item">
+          <b>在线沟通</b>
+          <span>微信 / WhatsApp</span>
+          <small>扫码添加专属顾问</small>
+        </div>
+      </div>
+
+      <div class="ct-card ct-why">
+        <h3>为什么选择我们</h3>
+        <ul>
+          <li><b>24h 响应</b> — 项目顾问快速对接</li>
+          <li><b>免费 DFM</b> — 上传模型即获可制造性分析</li>
+          <li><b>透明报价</b> — 无隐藏费用，预算可控</li>
+          <li><b>1件起做</b> — 打破传统起订量限制</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ===== FAQ teaser ===== -->
+<section class="about faq-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">FAQ <span class="en">/ 常见问题</span></div>
+      <h2 class="sec">您可能想了解的</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+          <span>最低起订量是多少？</span>
+          <div class="faq-icon"></div>
+        </div>
+        <div class="faq-answer"><p>我们支持1件起做。对于3D打印和CNC加工，1件即可下单；对于注塑成型，小批量试产最低100件起，量产订单根据产品结构灵活商议。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+          <span>报价需要多长时间？</span>
+          <div class="faq-icon"></div>
+        </div>
+        <div class="faq-answer"><p>简单零件通常当天即可报价；复杂项目或需要模具开发的，一般在1-3个工作日内提供详细报价单。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+          <span>可以只做设计不做生产吗？</span>
+          <div class="faq-icon"></div>
+        </div>
+        <div class="faq-answer"><p>可以。我们提供独立的设计服务，包括产品概念设计、结构工程设计、电控系统开发等，您可以根据需要选择单项或全流程服务。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+          <span>支持海外订单吗？</span>
+          <div class="faq-icon"></div>
+        </div>
+        <div class="faq-answer"><p>支持。我们产品远销欧美，具备完整的出口报关、国际物流和 CBU/SKD/CKD 包装方案经验。</p></div>
+      </div>
+    </div>
+  </div>
+</section>

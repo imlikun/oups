@@ -1,0 +1,10 @@
+# yellow-trad 媒体资产保留在 ECS，不进 git（避免仓库膨胀 ~210MB）
+# 结构 / html / js / css 纳入真相源；deploy.sh 增量覆盖不会删除服务器已有资源
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.mp4
+*.webm
+*.gif
+*.avif

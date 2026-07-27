@@ -1,0 +1,639 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>汽车注塑解决方案 | 项目案例 | PXID 品向智造</title>
+<meta name="description" content="品向智造为国内头部电动车品牌提供机车配件注塑制造服务，从DFM分析、定制化模具设计到多腔热流道自动化集成，全流程自主可控。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/base.css?v=20260727c">
+<style>
+  :root{--e-gold:#FEDB00;--e-gold-d:#E6C400;--e-ink:#232626;--e-ink-2:#3c4141;--e-ink-3:#6b7171;--e-line:rgba(35,38,38,.10);--e-bg-2:#f6f7f5;--e-bg-3:#f0f1ee;--e-mono:'JetBrains Mono',ui-monospace,monospace}
+
+  .ge{overflow-x:hidden}
+  .ge .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+  /* 面包屑 */
+  .ge-bread{padding:140px 0 16px;font-size:12.5px;color:var(--e-ink-3)}
+  .ge-bread a{color:var(--e-ink-3);text-decoration:none;transition:.2s}
+  .ge-bread a:hover{color:var(--e-gold-d)}
+  .ge-bread span{margin:0 8px;color:var(--e-line)}
+
+  /* 案例 Hero */
+  .ge-case-hero{padding:0 0 60px}
+  .ge-case-hero .tag{display:inline-block;font-size:11px;font-weight:700;color:#1b1b1b;background:var(--e-gold);padding:5px 14px;border-radius:2px;letter-spacing:.04em;margin-bottom:20px}
+  .ge-case-hero h1{font-size:clamp(32px,4.5vw,58px);line-height:1.1;font-weight:800;letter-spacing:-.015em;margin:0 0 20px;max-width:800px}
+  .ge-case-hero .lead{font-size:17.5px;color:var(--e-ink-2);line-height:1.85;max-width:720px;margin-bottom:32px}
+  .ge-case-hero .hero-img{width:100%;height:420px;border-radius:4px;overflow:hidden;background:var(--e-bg-3);margin-top:8px}
+  .ge-case-hero .hero-img img{width:100%;height:100%;object-fit:cover}
+
+  /* 项目数据条 */
+  .ge-meta{padding:28px 0;border-top:1px solid var(--e-line);border-bottom:1px solid var(--e-line);margin-bottom:60px}
+  .ge-meta .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .ge-meta .m .label{font-size:12px;color:var(--e-ink-3);letter-spacing:.06em;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .ge-meta .m .val{font-family:var(--e-mono);font-size:20px;font-weight:700;color:var(--e-ink)}
+
+  /* 章节标题 */
+  .ge-sec-head{margin-bottom:36px;max-width:760px}
+  .ge-sec-head .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--e-ink-3);font-weight:700;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .ge-sec-head .eyebrow::before{content:"";width:28px;height:2px;background:var(--e-gold)}
+  .ge-sec-head h2{font-size:clamp(24px,2.8vw,38px);line-height:1.18;font-weight:800;letter-spacing:-.02em}
+
+  /* 双栏内容 */
+  .ge-split{padding:60px 0}
+  .ge-split .grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+  .ge-split .ph{height:380px;border-radius:4px;overflow:hidden;background:var(--e-bg-3)}
+  .ge-split .ph img{width:100%;height:100%;object-fit:cover}
+  .ge-split h3{font-size:22px;font-weight:800;margin-bottom:16px;line-height:1.35}
+  .ge-split p{color:var(--e-ink-2);font-size:15.5px;line-height:1.9;margin-bottom:18px}
+  .ge-split ul{list-style:none;margin:20px 0;display:grid;gap:12px}
+  .ge-split ul li{position:relative;padding-left:22px;font-size:15px;color:var(--e-ink-2);line-height:1.7}
+  .ge-split ul li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;background:var(--e-gold);border-radius:2px}
+  .ge-split ul li b{color:var(--e-ink);font-weight:800}
+
+  /* 技术流程 */
+  .ge-flow{padding:60px 0;background:var(--e-bg-2);border-top:1px solid var(--e-line);border-bottom:1px solid var(--e-line)}
+  .ge-flow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:20px}
+  .ge-fstep{background:#fff;border:1px solid var(--e-line);border-radius:4px;padding:20px 16px;text-align:center;transition:.25s;position:relative}
+  .ge-fstep:hover{border-color:var(--e-gold);transform:translateY(-4px);box-shadow:0 10px 26px rgba(35,38,38,.10)}
+  .ge-fstep .num{width:32px;height:32px;border-radius:50%;background:var(--e-ink);color:var(--e-gold);display:flex;align-items:center;justify-content:center;font-family:var(--e-mono);font-weight:700;font-size:12px;margin:0 auto 12px}
+  .ge-fstep h4{font-size:14px;font-weight:800;margin-bottom:6px;line-height:1.3}
+  .ge-fstep p{font-size:12.5px;color:var(--e-ink-3);line-height:1.55}
+  .ge-fstep .arrow{position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:20px;height:20px;background:var(--e-gold);color:#1b1b1b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;z-index:2}
+  .ge-fstep:nth-child(5n) .arrow{display:none}
+
+  /* 成果数据 */
+  .ge-results{padding:60px 0}
+  .ge-rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:20px}
+  .ge-rcard{background:#fff;border:1px solid var(--e-line);border-radius:4px;padding:32px 28px;text-align:center;transition:.25s}
+  .ge-rcard:hover{border-color:var(--e-gold)}
+  .ge-rcard .num{font-family:var(--e-mono);font-size:clamp(36px,4vw,52px);font-weight:800;color:var(--e-ink);letter-spacing:-.03em;line-height:1}
+  .ge-rcard .num .u{font-size:24px;color:var(--e-gold-d)}
+  .ge-rcard .label{display:block;margin-top:14px;font-size:15px;font-weight:700;color:var(--e-ink)}
+  .ge-rcard .desc{display:block;margin-top:4px;font-size:13px;color:var(--e-ink-3)}
+
+  /* 相关案例 */
+  .ge-related{padding:60px 0 80px;background:var(--e-bg-2);border-top:1px solid var(--e-line)}
+  .ge-rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:20px}
+  .ge-rel-card{background:#fff;border:1px solid var(--e-line);border-radius:4px;overflow:hidden;transition:.25s}
+  .ge-rel-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(35,38,38,.10);border-color:transparent}
+  .ge-rel-card .ph{height:180px;overflow:hidden;background:var(--e-bg-3)}
+  .ge-rel-card .ph img{width:100%;height:100%;object-fit:cover;transition:.5s}
+  .ge-rel-card:hover .ph img{transform:scale(1.05)}
+  .ge-rel-card .bd{padding:20px}
+  .ge-rel-card .tag{font-size:11px;font-weight:700;color:var(--e-gold-d);background:rgba(254,219,0,.12);padding:3px 10px;border-radius:2px;display:inline-block;margin-bottom:8px}
+  .ge-rel-card h4{font-size:16px;font-weight:800;margin-bottom:6px}
+  .ge-rel-card p{font-size:13.5px;color:var(--e-ink-2);line-height:1.7}
+  .ge-rel-card .link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;font-weight:700;color:var(--e-ink);text-decoration:none;border-bottom:2px solid var(--e-gold);padding-bottom:2px}
+
+  /* CTA */
+  .ge-cta{padding:80px 0;text-align:center}
+  .ge-cta h2{font-size:clamp(24px,3vw,40px);font-weight:800;line-height:1.2;margin-bottom:16px;letter-spacing:-.02em}
+  .ge-cta p{color:var(--e-ink-2);max-width:520px;margin:0 auto 28px;font-size:16px;line-height:1.9}
+  .ge-cta .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 34px;background:var(--e-gold);color:#1b1b1b;font-weight:800;font-size:15px;border-radius:2px;transition:.25s}
+  .ge-cta .btn:hover{background:var(--e-ink);color:var(--e-gold)}
+
+  /* ===== 优势轮播 ===== */
+  .ge-adv-carousel{padding:60px 0;background:var(--e-bg-2);border-top:1px solid var(--e-line);border-bottom:1px solid var(--e-line)}
+  .ge-adv-carousel .ge-sec-head{margin-bottom:0}
+
+  /* 标签导航 */
+  .ge-adv-tabs{display:flex;gap:0;margin:32px 0 0;border-bottom:2px solid var(--e-line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .ge-adv-tabs::-webkit-scrollbar{display:none}
+  .ge-adv-tab{flex:1;min-width:120px;padding:14px 18px;font-size:14px;font-weight:700;color:var(--e-ink-3);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:.25s;white-space:nowrap;text-align:center;letter-spacing:.02em;position:relative;bottom:-2px;font-family:inherit}
+  .ge-adv-tab:hover{color:var(--e-ink-2)}
+  .ge-adv-tab.active{color:var(--e-ink);border-bottom-color:#D4A800}
+
+  /* 轮播轨道 */
+  .ge-adv-track{position:relative;overflow:hidden;margin-top:36px}
+  .ge-adv-slides{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+  .ge-adv-slide{flex:0 0 100%;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .ge-adv-slide .txt h3{font-size:24px;font-weight:800;margin-bottom:14px;line-height:1.3;color:var(--e-ink)}
+  .ge-adv-slide .txt>p{font-size:15px;color:var(--e-ink-2);line-height:1.85;margin-bottom:20px}
+  .ge-adv-slide .txt ul{list-style:none;display:grid;gap:12px}
+  .ge-adv-slide .txt ul li{position:relative;padding-left:22px;font-size:14.5px;color:var(--e-ink-2);line-height:1.65}
+  .ge-adv-slide .txt ul li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;background:var(--e-gold);border-radius:2px}
+  .ge-adv-slide .txt ul li b{color:var(--e-ink);font-weight:800}
+  .ge-adv-slide .vis{height:360px;border-radius:4px;overflow:hidden;background:var(--e-bg-3);border:1px solid var(--e-line)}
+  .ge-adv-slide .vis img{width:100%;height:100%;object-fit:contain;padding:12px;background:#fff}
+
+  /* 轮播导航箭头 */
+  .ge-adv-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:28px}
+  .ge-adv-arrow{width:40px;height:40px;border-radius:50%;border:2px solid var(--e-line);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s;font-size:16px;color:var(--e-ink-2)}
+  .ge-adv-arrow:hover{border-color:var(--e-gold);color:var(--e-ink);background:var(--e-gold)}
+  .ge-adv-arrow:disabled{opacity:.35;cursor:default;pointer-events:none}
+
+  /* 响应式 */
+  @media (max-width:980px){
+    .ge-split .grid{grid-template-columns:1fr;gap:40px}
+    .ge-flow-grid{grid-template-columns:repeat(3,1fr)}
+    .ge-fstep:nth-child(3n) .arrow{display:none}
+    .ge-fstep:nth-child(5n) .arrow{display:flex}
+    .ge-rgrid{grid-template-columns:repeat(2,1fr)}
+    .ge-rel-grid{grid-template-columns:repeat(2,1fr)}
+    .ge-adv-slide{grid-template-columns:1fr;gap:28px}
+    .ge-adv-slide .vis{height:280px}
+    .ge-adv-tab{font-size:13px;padding:12px 14px}
+  }
+  @media (max-width:720px){
+    .ge-meta .grid{grid-template-columns:repeat(2,1fr);gap:16px}
+    .ge-flow-grid{grid-template-columns:repeat(2,1fr)}
+    .ge-fstep:nth-child(2n) .arrow{display:none}
+    .ge-fstep:nth-child(3n) .arrow{display:flex}
+    .ge-rgrid{grid-template-columns:1fr}
+    .ge-rel-grid{grid-template-columns:1fr}
+    .ge-case-hero .hero-img{height:260px}
+    .ge-adv-tab{font-size:12px;padding:10px 10px;min-width:90px}
+    .ge-adv-slide .vis{height:220px}
+    .ge-adv-nav{display:none}
+  }
+</style>
+</head>
+<body class="ge">
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/pxid/yellow-trad/">
+      <span class="mk">PX</span>
+      <span>品向智造</span>
+    </a>
+    <nav class="menu">
+      <div class="has-dropdown">
+        <a href="/pxid/yellow-trad/advantages/adv-overview.html" class="adv-trigger">核心优势<span class="caret">▾</span></a>
+        <ul class="adv-dropdown">
+          <li><a href="/pxid/yellow-trad/advantages/adv-overview.html">全流程自主可控能力</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-edm.html">EDM放电加工</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-wire-cut.html">慢走丝切割</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-deep-hole.html">深孔钻</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-rough.html">精密粗加工</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-electrode.html">电极加工</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-heat-treatment.html">热处理</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-finish.html">精加工</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-mold-design.html">模具设计</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-mold-correction.html">模具整改</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-trial-mold.html">试模验证</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-mold-base.html">模架</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-inspection.html">质量检测</a></li>
+          <li><a href="/pxid/yellow-trad/advantages/adv-assembly.html">装配验证</a></li>
+        </ul>
+      </div>
+      <a href="/pxid/yellow-trad/services/process.html" data-nav="process">服务流程</a>
+      <div class="has-dropdown">
+        <a href="/pxid/yellow-trad/cases/cases.html" class="adv-trigger">项目案例<span class="caret">▾</span></a>
+        <ul class="adv-dropdown">
+          <li><a href="/pxid/yellow-trad/cases/case-auto.html" class="active">汽车注塑解决方案</a></li>
+          <li><a href="/pxid/yellow-trad/cases/case-lighting.html">车灯注塑模具解决方案</a></li>
+          <li><a href="/pxid/yellow-trad/cases/case-p2-frame.html">P2一体压铸镁合金车架</a></li>
+        </ul>
+      </div>
+      <a href="/pxid/yellow-trad/news/news.html" data-nav="news">新闻</a>
+      <a href="/pxid/yellow-trad/about.html" data-nav="about">关于我们</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-gold" href="/pxid/yellow-trad/contact.html" data-nav="contact">获取报价</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- 面包屑 -->
+<div class="wrap ge-bread">
+  <a href="/pxid/yellow-trad/">首页</a> <span>/</span> <a href="/pxid/yellow-trad/cases/cases.html">项目案例</a> <span>/</span> 汽车注塑解决方案
+</div>
+
+<!-- 案例 Hero -->
+<section class="ge-case-hero">
+  <div class="wrap">
+    <span class="tag">汽车与交通</span>
+    <h1>汽车注塑解决方案</h1>
+    <p class="lead">为国内头部电动车品牌提供机车配件全流程注塑制造服务。从 DFM 可制造性分析、定制化模具系统设计，到精密温控与随形冷却流道优化，实现多腔热流道 + 自动化集成的高效量产。</p>
+    <div class="hero-img">
+      <img src="/pxid/yellow-trad/assets/pxid2/case-auto-new.jpg" alt="汽车注塑解决方案">
+    </div>
+  </div>
+</section>
+
+<!-- 项目数据 -->
+<section class="ge-meta">
+  <div class="wrap">
+    <div class="grid">
+      <div class="m">
+        <div class="label">项目周期</div>
+        <div class="val">12 周</div>
+      </div>
+      <div class="m">
+        <div class="label">模具腔数</div>
+        <div class="val">1+1 热流道</div>
+      </div>
+      <div class="m">
+        <div class="label">材料</div>
+        <div class="val">PA66-GF30</div>
+      </div>
+      <div class="m">
+        <div class="label">尺寸精度</div>
+        <div class="val">±0.02mm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 挑战与解决方案 -->
+<section class="ge-split">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="ge-sec-head" style="margin-bottom:28px">
+          <div class="eyebrow">CHALLENGE</div>
+          <h2>项目挑战</h2>
+        </div>
+        <p>机车配件模具制造面临多重技术挑战：产品尺寸大、结构复杂，装配精度要求严苛；材料为玻纤增强尼龙，流动性差且对浇口设计敏感；同时客户要求缩短量产爬坡周期，以配合新车型的上市节点。</p>
+        <ul>
+          <li><b>装配精度严苛：</b>关键配合尺寸公差 ±0.02mm，分型线错位需 <0.05mm</li>
+          <li><b>材料加工难度：</b>PA66-GF30 流动性差，玻纤取向易导致翘曲变形</li>
+          <li><b>交付周期紧张：</b>从模具设计到首批量产仅 12 周</li>
+          <li><b>批量一致性：</b>年产 20 万件，要求 Cpk ≥ 1.67</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ge-sec-head" style="margin-bottom:28px">
+          <div class="eyebrow">SOLUTION</div>
+          <h2>解决方案</h2>
+        </div>
+        <p>品向智造工程团队从 DFM 阶段深度介入，通过模流分析优化浇口位置与流道平衡，采用随形冷却技术缩短成型周期，配合多腔热流道系统实现高效量产。</p>
+        <ul>
+          <li><b>DFM 前置优化：</b>Moldflow 分析确定最优浇口方案，预解决 90% 潜在缺陷</li>
+          <li><b>随形冷却流道：</b>3D 打印随形水路，冷却效率提升 40%，翘曲降低 60%</li>
+          <li><b>多腔热流道集成：</b>1+1 顺序阀浇口控制，消除熔接痕</li>
+          <li><b>自动化在线检测：</b>机器视觉 100% 全检，数据实时上传 MES</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 技术流程 -->
+<section class="ge-flow">
+  <div class="wrap">
+    <div class="ge-sec-head">
+      <div class="eyebrow">PROCESS</div>
+      <h2>制造工艺流程</h2>
+    </div>
+    <div class="ge-flow-grid">
+      <div class="ge-fstep">
+        <div class="num">01</div>
+        <h4>DFM 分析</h4>
+        <p>Moldflow 模流仿真</p>
+        <div class="arrow">›</div>
+      </div>
+      <div class="ge-fstep">
+        <div class="num">02</div>
+        <h4>模具设计</h4>
+        <p>2D/3D 全参数化</p>
+        <div class="arrow">›</div>
+      </div>
+      <div class="ge-fstep">
+        <div class="num">03</div>
+        <h4>CNC 精加工</h4>
+        <p>±0.02mm 精度</p>
+        <div class="arrow">›</div>
+      </div>
+      <div class="ge-fstep">
+        <div class="num">04</div>
+        <h4>EDM 放电</h4>
+        <p>复杂结构成型</p>
+        <div class="arrow">›</div>
+      </div>
+      <div class="ge-fstep">
+        <div class="num">05</div>
+        <h4>试模量产</h4>
+        <p>首试即达标</p>
+        <div class="arrow">›</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 品向在机车注塑部件中的优势 · 轮播 -->
+<section class="ge-adv-carousel">
+  <div class="wrap">
+    <div class="ge-sec-head">
+      <div class="eyebrow">ADVANTAGES</div>
+      <h2>品向在机车注塑部件中的优势</h2>
+    </div>
+
+    <!-- 标签导航 -->
+    <div class="ge-adv-tabs" role="tablist">
+      <button class="ge-adv-tab active" data-index="0" role="tab">协同DFM设计</button>
+      <button class="ge-adv-tab" data-index="1" role="tab">定制化模具系统</button>
+      <button class="ge-adv-tab" data-index="2" role="tab">精密温控与随形冷却</button>
+      <button class="ge-adv-tab" data-index="3" role="tab">多腔热流道+自动化集成</button>
+    </div>
+
+    <!-- 轮播轨道 -->
+    <div class="ge-adv-track">
+      <div class="ge-adv-slides">
+
+        <!-- Slide 0: 协同DFM设计 -->
+        <div class="ge-adv-slide">
+          <div class="txt">
+            <h3>协同DFM设计</h3>
+            <p>在产品设计阶段，模具工程师提前介入，与客户团队进行跨学科协同DFM（面向制造的设计）分析。通过3D数据分阶段结构评审，结合模流仿真，全面评估产品可制造性，从源头规避后期改模风险。</p>
+            <ul>
+              <li><b>模具工程师前置参与：</b>产品设计阶段即介入评审，提前识别潜在制造问题</li>
+              <li><b>Moldflow模流分析：</b>预判填充、冷却、变形风险，优化浇口与流道方案</li>
+              <li><b>结构优化建议：</b>针对性提出拔模角、壁厚、加强筋等设计优化</li>
+              <li><b>缩短开发周期：</b>DFM前置可减少80%以上后期设计变更，加速量产</li>
+            </ul>
+          </div>
+          <div class="vis">
+            <img src="/pxid/yellow-trad/assets/pxid2/carousel-dfm.webp" alt="协同DFM设计 - Moldflow模流分析">
+          </div>
+        </div>
+
+        <!-- Slide 1: 定制化模具系统 -->
+        <div class="ge-adv-slide">
+          <div class="txt">
+            <h3>定制化模具系统</h3>
+            <p>根据产品特性与量产需求，定制化设计全套模具系统。从浇口方案、冷却布局到顶出机构，每个细节都经过精确计算与仿真验证，确保模具在百万次循环中保持稳定精度与一致性。</p>
+            <ul>
+              <li><b>全参数化3D设计：</b>模具结构全参数化，2D图纸自动关联更新</li>
+              <li><b>多腔布局优化：</b>平衡填充与冷却效率，确保各腔一致性</li>
+              <li><b>模块化镶件设计：</b>关键部位可独立更换，便于维护与快速换产</li>
+              <li><b>寿命预测：</b>基于模流数据评估模具寿命，制定预防性维护方案</li>
+            </ul>
+          </div>
+          <div class="vis">
+            <img src="/pxid/yellow-trad/assets/pxid2/carousel-mold.png" alt="定制化模具系统 - 3D模具设计">
+          </div>
+        </div>
+
+        <!-- Slide 2: 精密温控与随形冷却 -->
+        <div class="ge-adv-slide">
+          <div class="txt">
+            <h3>精密温控与随形冷却</h3>
+            <p>温度控制是注塑成型的核心。我们采用3D打印随形冷却水路技术，使冷却水路紧密贴合产品型面轮廓，实现均匀、高效的冷却效果，大幅缩短成型周期并消除翘曲变形。</p>
+            <ul>
+              <li><b>随形冷却水路：</b>3D打印水路贴合产品型面，温差控制在±2°C以内</li>
+              <li><b>冷却效率提升40%：</b>相比传统钻孔水路，冷却时间大幅缩短</li>
+              <li><b>翘曲降低60%：</b>均匀冷却消除内应力，尺寸稳定性显著提升</li>
+              <li><b>模温分区控制：</b>多段温控适配复杂结构，保证各区域同步冷却</li>
+            </ul>
+          </div>
+          <div class="vis">
+            <img src="/pxid/yellow-trad/assets/pxid2/carousel-tempcontrol.webp" alt="精密温控与随形冷却 - 模具温控系统">
+          </div>
+        </div>
+
+        <!-- Slide 3: 多腔热流道+自动化集成 -->
+        <div class="ge-adv-slide">
+          <div class="txt">
+            <h3>多腔热流道+自动化集成</h3>
+            <p>针对大批量生产需求，我们提供多腔热流道系统与自动化产线集成方案。通过顺序阀浇口控制、机器人取件与在线检测，实现从原料到成品的全自动化生产，确保百万件级的一致性与稳定性。</p>
+            <ul>
+              <li><b>多腔热流道系统：</b>一模多穴高效产出，最大化设备利用率</li>
+              <li><b>顺序阀浇口控制：</b>精确控制熔体填充时序，消除熔接痕与流痕</li>
+              <li><b>机器人自动化取件：</b>机械手精准取件+在线视觉检测，100% 全检</li>
+              <li><b>MES系统监控：</b>实时采集生产数据，全流程可追溯</li>
+            </ul>
+          </div>
+          <div class="vis">
+            <img src="/pxid/yellow-trad/assets/pxid2/carousel-hotrunner.png" alt="多腔热流道+自动化集成 - 多腔模具系统">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 成果展示 -->
+<section class="ge-results">
+  <div class="wrap">
+    <div class="ge-sec-head">
+      <div class="eyebrow">RESULTS</div>
+      <h2>项目成果</h2>
+    </div>
+    <div class="ge-rgrid">
+      <div class="ge-rcard">
+        <div class="num">12<span class="u">周</span></div>
+        <span class="label">模具开发周期</span>
+        <span class="desc">比行业平均缩短 30%</span>
+      </div>
+      <div class="ge-rcard">
+        <div class="num">1.82<span class="u"></span></div>
+        <span class="label">过程能力指数 Cpk</span>
+        <span class="desc">超越 1.67 的目标要求</span>
+      </div>
+      <div class="ge-rcard">
+        <div class="num">40<span class="u">%</span></div>
+        <span class="label">冷却效率提升</span>
+        <span class="desc">随形水路 vs 传统钻孔</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 相关案例 -->
+<section class="ge-related">
+  <div class="wrap">
+    <div class="ge-sec-head">
+      <div class="eyebrow">RELATED</div>
+      <h2>相关案例</h2>
+    </div>
+    <div class="ge-rel-grid">
+      <div class="ge-rel-card">
+        <div class="ph"><img src="/pxid/yellow-trad/assets/pxid2/case-lighting-new.jpg" alt="车灯注塑模具解决方案"></div>
+        <div class="bd">
+          <span class="tag">照明</span>
+          <h4>车灯注塑模具解决方案</h4>
+          <p>光学级精度、零缺陷外观和百万级寿命的前大灯模具。</p>
+          <a class="link" href="/pxid/yellow-trad/cases/case-lighting.html">查看详情 →</a>
+        </div>
+      </div>
+      <div class="ge-rel-card">
+        <div class="ph"><img src="/pxid/yellow-trad/assets/pxid2/case-equipment-new.webp" alt="消费电子精密注塑"></div>
+        <div class="bd">
+          <span class="tag">消费电子</span>
+          <h4>消费电子精密注塑</h4>
+          <p>薄壁化设计、多色注塑、金属嵌件一体化成型。</p>
+          <a class="link" href="#">查看详情 →</a>
+        </div>
+      </div>
+      <div class="ge-rel-card">
+        <div class="ph"><img src="/pxid/yellow-trad/assets/pxid2/case-connector-new.webp" alt="工业连接器外壳"></div>
+        <div class="bd">
+          <span class="tag">工业设备</span>
+          <h4>工业连接器外壳</h4>
+          <p>IP67 防护、UL94 V-0 阻燃，适应极端工况。</p>
+          <a class="link" href="#">查看详情 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="ge-cta">
+  <div class="wrap">
+    <h2>有类似的汽车配件项目？</h2>
+    <p>我们的工程师团队在机车配件模具领域拥有丰富经验，从 DFM 分析到自动化量产，为您提供一站式解决方案。</p>
+    <a class="btn" href="/pxid/yellow-trad/contact.html">获取定制方案 →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div class="fbrand">
+      <div class="mk">PX</div>
+      <b>品向智造 PXID</b>
+      <p>源自PXID，专注小件产品设计、快速打样、精密制造与批量生产。用数字化平台和一站式制造能力，让创新落地更简单。</p>
+    </div>
+    <div class="fcol">
+      <h5>服务 / SERVICE</h5>
+      <a href="/pxid/yellow-trad/#services">CNC精密加工</a>
+      <a href="/pxid/yellow-trad/#services">注塑成型</a>
+      <a href="/pxid/yellow-trad/#services">钣金加工</a>
+      <a href="/pxid/yellow-trad/#services">3D打印</a>
+      <a href="/pxid/yellow-trad/#services">模具开发</a>
+    </div>
+    <div class="fcol">
+      <h5>公司 / COMPANY</h5>
+      <a href="/pxid/yellow-trad/about.html">关于我们</a>
+      <a href="/pxid/yellow-trad/#services">工厂实力</a>
+      <a href="/pxid/yellow-trad/news/news.html">新闻动态</a>
+      <a href="/pxid/yellow-trad/contact.html">加入我们</a>
+      <a href="/pxid/yellow-trad/contact.html">联系合作</a>
+    </div>
+    <div class="fcol">
+      <h5>联系 / CONTACT</h5>
+      <p>电话：400-888-0000</p>
+      <p>邮箱：hello@pxid-mfg.com</p>
+      <p>地址：深圳市宝安区</p>
+      <a href="/pxid/yellow-trad/contact.html">在线客服</a>
+    </div>
+  </div>
+  <div class="wrap fbottom">
+    <span>© 2024 品向智造 PXID Manufacturing. All rights reserved.</span>
+    <span>隐私政策 · 服务条款 · 网站地图</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const tabs = document.querySelectorAll('.ge-adv-tab');
+  const slides = document.querySelector('.ge-adv-slides');
+  const slidesAll = document.querySelectorAll('.ge-adv-slide');
+  let current = 0;
+
+  function goTo(idx){
+    current = idx;
+    slides.style.transform = 'translateX(' + (-idx * 100) + '%)';
+    tabs.forEach(function(t,i){ t.classList.toggle('active', i === idx); });
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      goTo(parseInt(this.getAttribute('data-index')));
+    });
+  });
+
+  // 键盘左右切换
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft' && current > 0) goTo(current - 1);
+    if(e.key === 'ArrowRight' && current < tabs.length - 1) goTo(current + 1);
+  });
+
+  // 触摸滑动
+  let touchSX = 0, touchSY = 0, touchEX = 0, touchEY = 0;
+  const track = document.querySelector('.ge-adv-track');
+  track.addEventListener('touchstart', function(e){
+    touchSX = e.touches[0].clientX;
+    touchSY = e.touches[0].clientY;
+  }, {passive:true});
+  track.addEventListener('touchend', function(e){
+    touchEX = e.changedTouches[0].clientX;
+    touchEY = e.changedTouches[0].clientY;
+    const dx = touchSX - touchEX;
+    const dy = Math.abs(touchSY - touchEY);
+    if(Math.abs(dx) > 50 && Math.abs(dx) > dy){
+      if(dx > 0 && current < tabs.length - 1) goTo(current + 1);
+      if(dx < 0 && current > 0) goTo(current - 1);
+    }
+  });
+})();
+</script>
+
+<a class="to-top" href="#top" aria-label="回到顶部" title="回到顶部">↑</a>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(function(){ document.body.classList.add('hero-in'); });
+  function addReveal(sel, stagger){
+    document.querySelectorAll(sel).forEach(function(el, i){
+      el.classList.add('reveal');
+      if(stagger) el.style.setProperty('--i', i % stagger);
+    });
+  }
+  addReveal('.steps .step', 3);
+  addReveal('.cards .card', 4);
+  addReveal('.case-grid .case', 3);
+  addReveal('.plat .pcard', 3);
+  addReveal('.qstats .q', 3);
+  addReveal('.partners .grid .b', 6);
+  addReveal('.faq details', 2);
+  addReveal('.sec-head');
+  addReveal('.about .lead2');
+  addReveal('.about p.body');
+  addReveal('.small .grid > div');
+  if(!('IntersectionObserver' in window) || reduce){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  }
+  function countStrip(){
+    document.querySelectorAll('.strip .s b').forEach(function(b){
+      var html = b.innerHTML;
+      var m = html.match(/^([\d,]+)/);
+      if(!m) return;
+      var target = parseFloat(m[0].replace(/,/g,''));
+      var prefix = html.slice(0, html.indexOf(m[0]));
+      var suffix = html.slice(html.indexOf(m[0]) + m[0].length);
+      var dur = 1500, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - p, 3);
+        var cur = Math.round(target * e);
+        b.innerHTML = prefix + cur.toLocaleString('en-US') + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  }
+  var strip = document.querySelector('.strip');
+  if(strip){
+    if(!('IntersectionObserver' in window) || reduce){ countStrip(); }
+    else {
+      var cio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ countStrip(); cio.disconnect(); } });
+      }, { threshold:.3 });
+      cio.observe(strip);
+    }
+  }
+  var header = document.querySelector('header');
+  var top = document.querySelector('.to-top');
+  function onScroll(){
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    if(header) header.classList.toggle('scrolled', y > 20);
+    if(top) top.classList.toggle('show', y > 500);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>网站目录 | PXID 品向智造</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--e-gold:#FEDB00;--e-gold-d:#E6C400;--e-ink:#232626;--e-ink-2:#3c4141;--e-ink-3:#6b7171;--e-line:rgba(35,38,38,.10);--e-bg-2:#f6f7f5;--e-bg-3:#f0f1ee;--e-mono:'JetBrains Mono',ui-monospace,monospace}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;color:var(--e-ink);background:#fff;line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+
+  header{background:var(--e-ink);color:#fff;padding:60px 0 48px}
+  header h1{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-.015em;margin-bottom:8px}
+  header h1 span{color:var(--e-gold)}
+  header .sub{font-size:15px;color:rgba(255,255,255,.55);margin-top:8px}
+
+  .toc{padding:48px 0 32px;border-bottom:1px solid var(--e-line)}
+  .toc h2{font-size:20px;font-weight:800;margin-bottom:16px}
+  .toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .toc-grid a{display:block;padding:10px 14px;background:var(--e-bg-2);border-radius:4px;font-size:14px;font-weight:700;color:var(--e-ink);text-decoration:none;transition:.2s}
+  .toc-grid a:hover{background:var(--e-gold);color:#1b1b1b}
+
+  .section{padding:48px 0;border-bottom:1px solid var(--e-line)}
+  .section:last-child{border-bottom:none}
+  .section h2{font-size:24px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+  .section h2 .badge{display:inline-block;font-size:11px;font-weight:700;background:var(--e-gold);color:#1b1b1b;padding:3px 10px;border-radius:2px;letter-spacing:.04em}
+  .section h2 .count{font-family:var(--e-mono);font-size:13px;font-weight:500;color:var(--e-ink-3);margin-left:auto}
+  .section .path{font-family:var(--e-mono);font-size:12px;color:var(--e-ink-3);margin-bottom:24px}
+
+  .page-list{display:grid;gap:6px}
+  .page-item{display:flex;align-items:baseline;gap:14px;padding:10px 14px;background:var(--e-bg-2);border-radius:4px;transition:.2s}
+  .page-item:hover{background:rgba(254,219,0,.12)}
+  .page-item .fn{font-family:var(--e-mono);font-size:13px;font-weight:700;color:var(--e-ink);min-width:200px;white-space:nowrap}
+  .page-item .title{font-size:14px;color:var(--e-ink);font-weight:600;min-width:180px}
+  .page-item .desc{font-size:13px;color:var(--e-ink-3);flex:1}
+  .page-item .url{font-family:var(--e-mono);font-size:11px;color:var(--e-gold-d);white-space:nowrap}
+
+  .sub-group{margin:12px 0 6px 24px;padding-left:16px;border-left:2px solid var(--e-gold)}
+  .sub-group .label{font-size:13px;font-weight:700;color:var(--e-ink-2);margin-bottom:8px}
+
+  .assets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .assets-card{background:var(--e-bg-2);border-radius:4px;padding:16px}
+  .assets-card h4{font-family:var(--e-mono);font-size:14px;font-weight:700;margin-bottom:6px;color:var(--e-ink)}
+  .assets-card .apath{font-family:var(--e-mono);font-size:11px;color:var(--e-ink-3);margin-bottom:8px}
+  .assets-card .note{font-size:12.5px;color:var(--e-ink-2);line-height:1.6}
+
+  footer{background:var(--e-ink);color:rgba(255,255,255,.45);padding:32px 0;text-align:center;font-size:13px;margin-top:48px}
+
+  @media (max-width:720px){
+    .page-item{flex-wrap:wrap;gap:4px}
+    .page-item .fn{min-width:auto;width:100%}
+    .page-item .desc{width:100%}
+    .toc-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>PXID <span>品向智造</span> · 网站目录</h1>
+    <div class="sub">完整的网站页面结构、文件路径与内容说明 &nbsp;|&nbsp; 更新于 2026-07-27</div>
+  </div>
+</header>
+
+<!-- 目录 -->
+<section class="toc">
+  <div class="wrap">
+    <h2>快速导航</h2>
+    <div class="toc-grid">
+      <a href="#home">首页</a>
+      <a href="#about">关于我们</a>
+      <a href="#cases">项目案例</a>
+      <a href="#advantages">核心优势</a>
+      <a href="#services">服务能力</a>
+      <a href="#news">新闻动态</a>
+      <a href="#assets">资源文件</a>
+      <a href="#src">模板源码</a>
+    </div>
+  </div>
+</section>
+
+<!-- 首页 -->
+<section class="section" id="home">
+  <div class="wrap">
+    <h2><span class="badge">首页</span><span class="count">3 个文件</span></h2>
+    <div class="path">/ 根目录</div>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">index.html</span>
+        <span class="title">首页</span>
+        <span class="desc">PXID 品向智造主站首页，包含 Hero、九步服务流程、八大制造能力、小单试产、数字化平台、竞争壁垒、质量控制、成功案例轮播、FAQ 和联系表单。</span>
+        <span class="url">/</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">index.html.bak</span>
+        <span class="title">首页备份</span>
+        <span class="desc">旧版首页备份文件。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">index.html.bak.pre-component</span>
+        <span class="title">首页备份(组件化前)</span>
+        <span class="desc">组件化重构前的首页备份。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 关于我们 -->
+<section class="section" id="about">
+  <div class="wrap">
+    <h2><span class="badge">关于我们</span><span class="count">1 个页面</span></h2>
+    <div class="path">/ 根目录</div>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">about.html</span>
+        <span class="title">关于我们</span>
+        <span class="desc">公司介绍、价值观、全球布局（淮安总部、深圳研发、印度制造）。</span>
+        <span class="url">/about.html</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 项目案例 -->
+<section class="section" id="cases">
+  <div class="wrap">
+    <h2><span class="badge">项目案例</span><span class="count">4 个页面</span></h2>
+    <div class="path">/cases/</div>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">cases.html</span>
+        <span class="title">案例列表</span>
+        <span class="desc">精选项目案例总览，支持按行业筛选（汽车交通、照明、消费电子、医疗器械、工业设备）。含 7 个案例卡片。</span>
+        <span class="url">/cases/cases.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">case-auto.html</span>
+        <span class="title">汽车注塑解决方案</span>
+        <span class="desc">特色案例。机车配件全流程注塑制造，DFM分析→模具设计→CNC精加工→EDM放电→试模量产，含优势轮播。</span>
+        <span class="url">/cases/case-auto.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">case-lighting.html</span>
+        <span class="title">车灯注塑模具解决方案</span>
+        <span class="desc">光学级精度车灯模具，透光率>90%、A级表面、百万级寿命，含随形冷却等四项核心技术亮点。</span>
+        <span class="url">/cases/case-lighting.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">case-p2-frame.html</span>
+        <span class="title">P2 一体压铸镁合金车架</span>
+        <span class="desc">3200T高压压铸镁合金车架，SIMUFACT仿真，整车减重30%+，含模具展示网格和6步工艺流程。</span>
+        <span class="url">/cases/case-p2-frame.html</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心优势 -->
+<section class="section" id="advantages">
+  <div class="wrap">
+    <h2><span class="badge">核心优势</span><span class="count">14 个页面</span></h2>
+    <div class="path">/advantages/</div>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">adv-overview.html</span>
+        <span class="title">全流程自主可控</span>
+        <span class="desc">体系总览。能力支柱网格 + 数字化智能化制造体系 + 服务承诺，暗色CTA区块。</span>
+        <span class="url">/advantages/adv-overview.html</span>
+      </div>
+      <div class="sub-group">
+        <div class="label">精密加工工艺类（6 页）</div>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-edm.html</span>
+        <span class="title">放电加工</span>
+        <span class="desc">电极放电成型 + 镜面放电，图文交替展示子工艺 + 精度指标卡。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-electrode.html</span>
+        <span class="title">电极加工</span>
+        <span class="desc">EDM电极设计原则与协同工艺，深径比>5:1深槽加工。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-rough.html</span>
+        <span class="title">粗加工</span>
+        <span class="desc">平面粗铣 + 型腔粗加工，余量精准预留，CAM反向生成加工路径。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-finish.html</span>
+        <span class="title">精加工</span>
+        <span class="desc">高频精铣 + 微型刀具精修，专用策略定距加工，顺铣优先。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-deep-hole.html</span>
+        <span class="title">深孔钻及水路加工</span>
+        <span class="desc">冷却水路深孔钻，孔径精度±0.01mm + 接头螺纹加工 + 管路清洁。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-wire-cut.html</span>
+        <span class="title">线切割</span>
+        <span class="desc">微米级精度，滑块/斜顶/镶件分型结构切割，孔壁垂直度<0.006mm。</span>
+      </div>
+      <div class="sub-group">
+        <div class="label">热处理与基础结构类（3 页）</div>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-heat-treatment.html</span>
+        <span class="title">热处理</span>
+        <span class="desc">淬火+回火 + 渗氮 + 去应力退火，含参数表格和流程步骤。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-mold-base.html</span>
+        <span class="title">模架加工</span>
+        <span class="desc">模架铣削 + 导柱导套镶装 + 顶针孔加工 + 方铁安装，精度0.01mm。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-mold-correction.html</span>
+        <span class="title">模具修正</span>
+        <span class="desc">外观/尺寸/结构功能三类修正，含斜顶与滑块调试。</span>
+      </div>
+      <div class="sub-group">
+        <div class="label">质量管控类（3 页）</div>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-inspection.html</span>
+        <span class="title">零件检测</span>
+        <span class="desc">关键尺寸 + 表面粗糙度 + 硬度 + 形位公差，指标矩阵卡片 + 验证标准表。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-assembly.html</span>
+        <span class="title">装配</span>
+        <span class="desc">模具装配流程与精度控制。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-trial-mold.html</span>
+        <span class="title">试模</span>
+        <span class="desc">T0/T1/T2三级试模体系，含核心验证指标（Cpk、外观合格率、周期时间）。</span>
+      </div>
+      <div class="sub-group">
+        <div class="label">设计类（1 页）</div>
+      </div>
+      <div class="page-item">
+        <span class="fn">adv-mold-design.html</span>
+        <span class="title">模具设计</span>
+        <span class="desc">产品DFM分析 + 模具3D/2D设计 + 模流仿真，全流程数字化设计。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务能力 -->
+<section class="section" id="services">
+  <div class="wrap">
+    <h2><span class="badge">服务能力</span><span class="count">8 个页面</span></h2>
+    <div class="path">/services/</div>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">cnc.html</span>
+        <span class="title">CNC精密加工</span>
+        <span class="desc">3/4/5轴CNC加工中心，铝合金/不锈钢/工程塑料，公差±0.01mm。</span>
+        <span class="url">/services/cnc.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">injection.html</span>
+        <span class="title">注塑成型</span>
+        <span class="desc">单色/双色/嵌件注塑，ABS/PC/PA/PP/TPU，模具自主开发。</span>
+        <span class="url">/services/injection.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">sheet-metal.html</span>
+        <span class="title">钣金加工</span>
+        <span class="desc">激光切割、数控折弯、冲压成型，不锈钢/冷轧板/铝板。</span>
+        <span class="url">/services/sheet-metal.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">3d-printing.html</span>
+        <span class="title">3D打印</span>
+        <span class="desc">SLA/SLS/FDM多种工艺，24小时快速出样。</span>
+        <span class="url">/services/3d-printing.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">die-casting.html</span>
+        <span class="title">压铸制造</span>
+        <span class="desc">铝合金/锌合金高压压铸，一模多腔高效生产。</span>
+        <span class="url">/services/die-casting.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">tooling.html</span>
+        <span class="title">模具开发</span>
+        <span class="desc">自主模具车间，进口CNC/EDM/慢走丝，模具寿命100万模次。</span>
+        <span class="url">/services/tooling.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">surface.html</span>
+        <span class="title">表面处理</span>
+        <span class="desc">喷涂/电镀/阳极氧化/镭雕/丝印/PVD镀膜，完整后加工线。</span>
+        <span class="url">/services/surface.html</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">assembly.html</span>
+        <span class="title">装配测试</span>
+        <span class="desc">半自动装配线、功能测试、老化测试、外观检验。</span>
+        <span class="url">/services/assembly.html</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 新闻动态 -->
+<section class="section" id="news">
+  <div class="wrap">
+    <h2><span class="badge">新闻动态</span><span class="count">8 个页面</span></h2>
+    <div class="path">/news/</div>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">news.html</span>
+        <span class="title">新闻列表</span>
+        <span class="desc">新闻动态首页，含头条精选 + 最新动态网格，分页浏览。</span>
+        <span class="url">/news/news.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-detail.html</span>
+        <span class="title">EUROBIKE 2026 趋势报告</span>
+        <span class="desc">行业洞察。电助力车与智能出行五大趋势分析。</span>
+        <span class="url">/news/news-detail.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-eurobike-frankfurt.html</span>
+        <span class="title">EUROBIKE 2026 法兰克福</span>
+        <span class="desc">活动展会。直击法兰克福展，电助力车、货运自行车与城市出行设备最新走向。</span>
+        <span class="url">/news/news-eurobike-frankfurt.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-india-choice.html</span>
+        <span class="title">PXID 选择印度制造</span>
+        <span class="desc">公司动态。中国研发+印度生产双引擎战略分析。</span>
+        <span class="url">/news/news-india-choice.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-india-supply.html</span>
+        <span class="title">印度制造重塑供应链</span>
+        <span class="desc">行业洞察。印度制造能力崛起对全球电助力车供应链的影响。</span>
+        <span class="url">/news/news-india-supply.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-cargo-urban.html</span>
+        <span class="title">电动货运自行车5大场景</span>
+        <span class="desc">行业洞察。从最后一公里配送到家庭出行的城市应用场景。</span>
+        <span class="url">/news/news-cargo-urban.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-freight-volatility.html</span>
+        <span class="title">2026 全球货运波动</span>
+        <span class="desc">行业洞察。CBU/SKD/CKD包装策略降低物流成本。</span>
+        <span class="url">/news/news-freight-volatility.html</span>
+      </div>
+      <div class="page-item" style="background:#fffbe6">
+        <span class="fn">news-mopeds-sea.html</span>
+        <span class="title">电动摩托东南亚崛起</span>
+        <span class="desc">行业洞察。东南亚城市出行升级，轻型电动摩托快速渗透。</span>
+        <span class="url">/news/news-mopeds-sea.html</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 资源文件 -->
+<section class="section" id="assets">
+  <div class="wrap">
+    <h2><span class="badge">资源文件</span></h2>
+    <div class="path">/assets/</div>
+    <div class="assets-grid">
+      <div class="assets-card">
+        <h4>assets/css/</h4>
+        <div class="apath">base.css</div>
+        <div class="note">全局基础样式（导航、按钮、Hero、卡片、网格、动画、响应式），所有页面共用。</div>
+      </div>
+      <div class="assets-card">
+        <h4>assets/img/news/</h4>
+        <div class="apath">~35 张图片</div>
+        <div class="note">新闻文章配图，按文章主题分组（india-choice、eurobike-*、cargo-urban、freight-volatility、mopeds-sea）。</div>
+      </div>
+      <div class="assets-card">
+        <h4>assets/pxid/</h4>
+        <div class="apath">~13 个文件</div>
+        <div class="note">PXID品牌图片（业务能力、二维码、Hero背景、案例缩略图等）。</div>
+      </div>
+      <div class="assets-card">
+        <h4>assets/pxid2/</h4>
+        <div class="apath">~40 个文件</div>
+        <div class="note">品向智造主站图片资源：案例封面、轮播图、流程步骤图、服务图标、P2车架图片、视频等。</div>
+      </div>
+      <div class="assets-card">
+        <h4>assets/templates/</h4>
+        <div class="apath">Logo、首页资源、旧版CSS</div>
+        <div class="note">遗留模板资源（Logo、旧版首页素材、respone.css 等），可能不再使用。</div>
+      </div>
+      <div class="assets-card">
+        <h4>assets/upfiles/</h4>
+        <div class="apath">多级目录，按年月分组</div>
+        <div class="note">CMS 上传文件存档（新闻、地面站、单页、参考图等），按 202501~202607 月份组织。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 模板源码 -->
+<section class="section" id="src">
+  <div class="wrap">
+    <h2><span class="badge">模板源码</span><span class="count">14 个 partial</span></h2>
+    <div class="path">/src/partials/</div>
+    <p style="font-size:14px;color:var(--e-ink-2);margin-bottom:16px;line-height:1.8">
+      通过 <code style="background:var(--e-bg-2);padding:1px 6px;border-radius:2px;font-family:var(--e-mono);font-size:12px">build.js</code> 组装生成最终 HTML 页面。模板使用 <code>href="/xxx"</code> 绝对路径。
+    </p>
+    <div class="page-list">
+      <div class="page-item">
+        <span class="fn">head.html</span>
+        <span class="title">HTML 头部</span>
+        <span class="desc">meta 标签 + base.css 引用，占位符 {{TITLE}} {{DESC}}。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">header.html</span>
+        <span class="title">全局导航</span>
+        <span class="desc">Logo + 核心服务/服务流程/新闻/关于我们 + 语言切换 + 获取报价按钮。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">footer.html</span>
+        <span class="title">全局页脚</span>
+        <span class="desc">服务/公司/联系三栏 + 版权信息。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">script.html</span>
+        <span class="title">全局脚本</span>
+        <span class="desc">滚动动画、导航交互、FAQ 折叠等通用 JS。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">home-body.html</span>
+        <span class="title">首页主体</span>
+        <span class="desc">Hero视频 → 品牌介绍 → 数据条 → 九步流程 → 八大能力 → 小单试产 → 数字化平台 → 竞争壁垒 → 质量控制 → 客户案例 → FAQ → 联系CTA。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">news-body.html</span>
+        <span class="title">新闻列表主体</span>
+        <span class="desc">头条精选 + 最新动态网格 + 分页。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">about-body.html</span>
+        <span class="title">关于我们主体</span>
+        <span class="desc">公司介绍、价值观、全球布局。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">article-body.html</span>
+        <span class="title">文章详情模板</span>
+        <span class="desc">通用文章详情页主体（用于 news-detail.html）。</span>
+      </div>
+      <div class="page-item">
+        <span class="fn">article-*.html</span>
+        <span class="title">文章详情（6篇）</span>
+        <span class="desc">india-choice、eurobike-frankfurt、cargo-urban、india-supply、freight-volatility、mopeds-sea 独立文章主体。</span>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:16px;background:var(--e-bg-2);border-radius:4px">
+      <h4 style="font-size:14px;font-weight:800;margin-bottom:6px">build.js 构建说明</h4>
+      <p style="font-size:13px;color:var(--e-ink-2);line-height:1.8">
+        执行 <code style="background:#fff;padding:1px 6px;border-radius:2px;font-family:var(--e-mono);font-size:12px">node build.js</code> 将 partials 组装为完整 HTML 文件，输出到指定路径：<br>
+        index.html → / &nbsp;|&nbsp; about.html → / &nbsp;|&nbsp; news*.html → /news/
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    PXID 品向智造 · 网站目录文档 · 更新于 2026-07-27
+  </div>
+</footer>
+
+</body>
+</html>

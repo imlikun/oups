@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PXID 品向智造 | 小件设计·打样·制造·生产一站式服务平台</title>
+<style>
+  :root{
+    --gold:#FEDB00; --gold-d:#E6C400;
+    --ink:#232626; --ink-2:#3c4141; --ink-3:#6b7171;
+    --line:rgba(35,38,38,.10); --bg:#fff; --bg-2:#f6f7f5; --bg-3:#f0f1ee;
+    --maxw:1280px;
+    --sans:'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Source Han Sans CN',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:12px;font-weight:600}
+  .eyebrow::before{content:"";width:28px;height:2px;background:var(--gold)}
+  .eyebrow .en{color:var(--gold-d);font-weight:700}
+  h2.sec{font-size:clamp(28px,3.4vw,46px);line-height:1.12;font-weight:800;letter-spacing:-.01em;margin:14px 0 14px}
+  .sec-sub{color:var(--ink-2);max-width:760px;font-size:15.5px}
+  .gold{color:var(--gold-d)}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:2px;font-weight:700;font-size:14.5px;letter-spacing:.02em;transition:.25s;cursor:pointer;border:1px solid transparent}
+  .btn-gold{background:var(--gold);color:#1b1b1b}
+  .btn-gold:hover{background:var(--gold-d)}
+  .btn-line{border-color:rgba(255,255,255,.55);color:#fff}
+  .btn-line:hover{border-color:#fff;background:rgba(255,255,255,.12)}
+  .btn-dark{border-color:var(--ink);color:var(--ink)}
+  .btn-dark:hover{background:var(--ink);color:#fff}
+
+  /* ===== Header ===== */
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:.04em}
+  .brand .mk{width:38px;height:38px;border-radius:6px;background:var(--ink);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;letter-spacing:.02em}
+  .brand small{display:block;font-size:10.5px;letter-spacing:.18em;color:var(--ink-3);font-weight:600}
+  .menu{display:flex;align-items:center;gap:30px}
+  .menu a{font-size:15px;font-weight:600;color:var(--ink);position:relative;padding:6px 0}
+  .menu a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:.25s}
+  .menu a:hover::after{width:100%}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .lang{font-size:13px;color:var(--ink-3);font-weight:600}
+  .lang b{color:var(--ink)}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;height:88vh;min-height:560px;color:#fff;display:flex;align-items:center;overflow:hidden}
+  .hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(12,14,16,.86) 0%,rgba(12,14,16,.55) 45%,rgba(12,14,16,.25) 100%)}
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero .eyebrow{color:rgba(255,255,255,.8)}
+  .hero .eyebrow::before{background:var(--gold)}
+  .hero h1{font-size:clamp(42px,6.6vw,92px);line-height:.98;font-weight:800;letter-spacing:-.02em;margin:18px 0 6px}
+  .hero .en{font-size:clamp(13px,1.4vw,17px);letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .hero p.lead{margin:22px 0 30px;max-width:620px;font-size:17px;color:rgba(255,255,255,.86);line-height:1.7}
+  .hero .acts{display:flex;gap:14px;flex-wrap:wrap}
+  .scroll{position:absolute;left:28px;bottom:26px;z-index:2;font-size:11px;letter-spacing:.3em;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px}
+  .scroll .ln{width:1px;height:42px;background:rgba(255,255,255,.5)}
+
+  /* ===== generic section ===== */
+  section{padding:88px 0}
+  .sec-head{margin-bottom:42px}
+
+  /* ===== About lead ===== */
+  .about{background:var(--bg-2)}
+  .about .lead2{font-size:clamp(22px,2.6vw,34px);font-weight:800;line-height:1.25;max-width:900px;letter-spacing:-.01em}
+  .about .lead2 .gold{color:var(--gold-d)}
+  .about p.body{margin-top:20px;max-width:820px;color:var(--ink-2);font-size:16px}
+
+  /* ===== Data strip ===== */
+  .strip{background:var(--ink);color:#fff;padding:54px 0}
+  .strip .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .strip .s{padding:8px 24px 8px 0;border-right:1px solid rgba(255,255,255,.14)}
+  .strip .s:last-child{border-right:none}
+  .strip .s b{display:block;font-size:clamp(30px,3.4vw,46px);font-weight:800;color:var(--gold);line-height:1;letter-spacing:-.02em}
+  .strip .s b .u{font-size:.5em;color:rgba(255,255,255,.7);font-weight:700;margin-left:4px}
+  .strip .s span{display:block;margin-top:10px;font-size:13px;color:rgba(255,255,255,.7);letter-spacing:.04em}
+
+  /* ===== Process steps ===== */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:.25s}
+  .step:hover{box-shadow:0 14px 34px rgba(35,38,38,.10);border-color:transparent;transform:translateY(-4px)}
+  .step .ph{height:170px;overflow:hidden;background:var(--bg-3)}
+  .step .ph img{width:100%;height:100%;object-fit:cover;transition:.5s}
+  .step:hover .ph img{transform:scale(1.05)}
+  .step .bd{padding:20px}
+  .step .bd .no{font-size:12px;letter-spacing:.2em;color:var(--gold-d);font-weight:800}
+  .step .bd h3{font-size:18px;margin:6px 0 8px;font-weight:800}
+  .step .bd p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+  /* ===== Cards (capabilities / services / barriers) ===== */
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:.28s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(35,38,38,.12);border-color:transparent}
+  .card .ph{height:190px;overflow:hidden;background:var(--bg-3)}
+  .card .ph img{width:100%;height:100%;object-fit:cover;transition:.5s}
+  .card:hover .ph img{transform:scale(1.06)}
+  .card .bd{padding:22px;flex:1;display:flex;flex-direction:column}
+  .card .bd .idx{font-size:12px;letter-spacing:.2em;color:var(--gold-d);font-weight:800}
+  .card .bd h3{font-size:21px;margin:8px 0 4px;font-weight:800}
+  .card .bd h3 small{font-size:12px;color:var(--ink-3);font-weight:600;letter-spacing:.14em;display:block;margin-top:2px}
+  .card .bd p{font-size:13.5px;color:var(--ink-2);margin:10px 0 14px}
+  .card .bd ul{list-style:none;display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+  .card .bd li{font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);padding:5px 9px;border-radius:3px;color:var(--ink-2)}
+
+  /* ===== Small-batch ===== */
+  .small .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .small .list{list-style:none;margin-top:22px;display:grid;gap:16px}
+  .small .list li{position:relative;padding-left:24px;font-size:15px;color:var(--ink-2);line-height:1.6}
+  .small .list li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;background:var(--gold);border-radius:2px}
+  .small .list li b{color:var(--ink);font-weight:800}
+  .small .ph{border-radius:4px;overflow:hidden;height:420px}
+  .small .ph img{width:100%;height:100%;object-fit:cover}
+
+  /* ===== Platform cards ===== */
+  .plat{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .pcard{border:1px solid var(--line);border-radius:4px;padding:26px;background:#fff;transition:.25s;display:flex;flex-direction:column}
+  .pcard:hover{border-color:var(--gold);background:var(--bg-2)}
+  .pcard .no{font-size:12px;letter-spacing:.2em;color:var(--gold-d);font-weight:800}
+  .pcard h3{font-size:19px;margin:8px 0 8px;font-weight:800}
+  .pcard p{font-size:13.5px;color:var(--ink-2);line-height:1.6;flex:1}
+  .pcard a.more{margin-top:14px;font-size:13px;font-weight:700;color:var(--ink)}
+  .pcard a.more:hover{color:var(--gold-d)}
+
+  /* ===== Quality dashboard ===== */
+  .quality{background:var(--bg-2)}
+  .qstats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+  .qstats .q{padding:32px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .qstats .q:nth-child(3n){border-right:none}
+  .qstats .q b{display:block;font-size:clamp(30px,3.2vw,44px);font-weight:800;color:var(--ink);line-height:1;letter-spacing:-.02em}
+  .qstats .q b .u{font-size:.45em;color:var(--ink-3);font-weight:700;margin-left:3px}
+  .qstats .q h4{font-size:15px;font-weight:800;margin:12px 0 6px}
+  .qstats .q p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+  /* ===== Partners ===== */
+  .partners .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .partners .b{border:1px solid var(--line);border-radius:4px;padding:22px 10px;text-align:center;font-weight:800;font-size:15px;color:var(--ink);background:#fff;transition:.25s}
+  .partners .b:hover{border-color:var(--gold);background:var(--bg-2);color:var(--gold-d)}
+
+  /* ===== Cases ===== */
+  .cases{background:var(--bg-2)}
+  .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .case{position:relative;border-radius:4px;overflow:hidden;height:380px;color:#fff}
+  .case img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.6s}
+  .case::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,14,16,.05) 30%,rgba(12,14,16,.9) 100%)}
+  .case:hover img{transform:scale(1.05)}
+  .case .ct{position:absolute;left:22px;right:22px;bottom:22px;z-index:2}
+  .case .ct .tag{font-size:11px;letter-spacing:.18em;color:var(--gold);font-weight:800}
+  .case .ct h3{font-size:22px;margin:8px 0 8px;font-weight:800}
+  .case .ct p{font-size:13px;color:rgba(255,255,255,.82)}
+
+  /* ===== FAQ ===== */
+  .faq .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+  .faq details{border:1px solid var(--line);border-radius:4px;padding:0 20px;background:#fff}
+  .faq details summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:800;font-size:15.5px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .faq details summary::-webkit-details-marker{display:none}
+  .faq details summary::after{content:"+";color:var(--gold-d);font-size:22px;font-weight:800}
+  .faq details[open] summary::after{content:"\2013"}
+  .faq details p{padding:0 0 18px;font-size:14px;color:var(--ink-2);line-height:1.7}
+
+  /* ===== CTA ===== */
+  .cta{background:var(--ink);color:#fff;text-align:center;padding:84px 0}
+  .cta h2{color:#fff;font-size:clamp(28px,3.6vw,46px);font-weight:800;margin-bottom:14px}
+  .cta p{max-width:620px;margin:0 auto 28px;color:rgba(255,255,255,.78);font-size:16px}
+  .cta .acts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta .btn-gold{background:var(--gold);color:#1b1b1b}
+  .cta .btn-line{border-color:rgba(255,255,255,.55);color:#fff}
+
+  /* ===== Footer ===== */
+  footer{background:#15191a;color:#fff;padding:64px 0 30px}
+  .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:36px}
+  .fbrand .mk{width:44px;height:44px;border-radius:6px;background:var(--gold);color:#15191a;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;margin-bottom:16px}
+  .fbrand b{font-size:18px;font-weight:800}
+  .fbrand p{font-size:12.5px;color:rgba(255,255,255,.55);margin-top:8px;max-width:300px;line-height:1.6}
+  .fcol h5{font-size:12px;letter-spacing:.2em;color:var(--gold);margin-bottom:16px;font-weight:800}
+  .fcol a,.fcol p{display:block;font-size:13.5px;color:rgba(255,255,255,.78);margin-bottom:9px}
+  .fcol a:hover{color:#fff}
+  .fbottom{border-top:1px solid rgba(255,255,255,.12);margin-top:46px;padding-top:22px;font-size:12px;color:rgba(255,255,255,.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:980px){
+    .cards,.case-grid,.steps,.plat,.qstats{grid-template-columns:repeat(2,1fr)}
+    .strip .grid,.partners .grid{grid-template-columns:repeat(3,1fr)}
+    .small .grid{grid-template-columns:1fr}
+    .menu{display:none}
+    .fgrid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){
+    .cards,.case-grid,.steps,.plat,.qstats{grid-template-columns:1fr}
+    .strip .grid{grid-template-columns:repeat(2,1fr)}
+    .partners .grid{grid-template-columns:repeat(2,1fr)}
+    .faq .grid{grid-template-columns:1fr}
+    .qstats .q{border-right:none}
+    .fgrid{grid-template-columns:1fr}
+    .small .ph{height:300px}
+  }
+
+  /* ===== Motion ===== */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0)*70ms)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}.hero .bg{animation:none}}
+  /* hero entrance */
+  .hero .eyebrow,.hero h1,.hero .en,.hero p.lead,.hero .acts,.hero .scroll{opacity:0;transform:translateY(30px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+  body.hero-in .hero .eyebrow{transition-delay:.05s}
+  body.hero-in .hero h1{transition-delay:.20s}
+  body.hero-in .hero .en{transition-delay:.36s}
+  body.hero-in .hero p.lead{transition-delay:.48s}
+  body.hero-in .hero .acts{transition-delay:.60s}
+  body.hero-in .hero .scroll{transition-delay:.74s}
+  body.hero-in .hero .eyebrow,body.hero-in .hero h1,body.hero-in .hero .en,body.hero-in .hero p.lead,body.hero-in .hero .acts,body.hero-in .hero .scroll{opacity:1;transform:none}
+  /* hero slow zoom */
+  @keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.14)}}
+  /* header on scroll */
+  header.scrolled{box-shadow:0 6px 22px rgba(35,38,38,.10)}
+  /* back to top */
+  .to-top{position:fixed;right:26px;bottom:26px;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,transform .3s,background .25s,color .25s;z-index:60;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+  .to-top.show{opacity:1;visibility:visible;transform:none}
+  .to-top:hover{background:var(--gold);color:#1b1b1b}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="mk">PX</span>
+      <span>PXID<small>品向智造</small></span>
+    </a>
+    <nav class="menu">
+      <a href="#services">核心服务</a>
+      <a href="#process">服务流程</a>
+      <a href="#small-batch">小单试产</a>
+      <a href="#platform">数字化平台</a>
+      <a href="#cases">成功案例</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <div class="nav-right">
+      <span class="lang"><b>中文</b> / EN</span>
+      <a class="btn btn-gold" href="#contact">获取报价</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="top">
+  <video class="bg" autoplay muted loop playsinline poster="assets/pxid2/svc-03.jpg">
+    <source src="assets/pxid2/odm-process.mp4" type="video/mp4">
+  </video>
+  <div class="wrap">
+    <div class="eyebrow">PXID · 一站式智造平台 <span class="en">| 品向智造</span></div>
+    <h1>从设计图纸<br>到 批量交付</h1>
+    <div class="en">ONE-STOP SMART MANUFACTURING PLATFORM</div>
+    <p class="lead">产品设计、快速打样、精密模具、批量生产——全流程自有工厂把控，数字化平台实时追踪，让每一个创意高效落地。</p>
+    <div class="acts">
+      <a class="btn btn-gold" href="#contact">立即获取报价 →</a>
+      <a class="btn btn-line" href="#process">了解服务流程</a>
+    </div>
+  </div>
+  <div class="scroll"><span class="ln"></span>SCROLL ↓</div>
+</section>
+
+<!-- ===== About lead ===== -->
+<section class="about">
+  <div class="wrap">
+    <div class="eyebrow">关于品向 <span class="en">/ ABOUT PXID</span></div>
+    <div class="lead2">源自 PXID，专注 <span class="gold">小件精密制造</span></div>
+    <p class="body">专注小件产品设计、快速打样、精密制造与批量生产。用数字化平台和一站式制造能力，让创新落地更简单。</p>
+  </div>
+</section>
+
+<!-- ===== Data strip ===== -->
+<section class="strip">
+  <div class="wrap grid">
+    <div class="s"><b>15<span class="u">+</span></b><span>年制造经验 YEARS</span></div>
+    <div class="s"><b>10,000<span class="u">+</span></b><span>零件制造数量 PARTS</span></div>
+    <div class="s"><b>98<span class="u">%</span></b><span>按时交付率 ON-TIME</span></div>
+    <div class="s"><b>500<span class="u">+</span></b><span>服务客户 CLIENTS</span></div>
+  </div>
+</section>
+
+<!-- ===== Process ===== -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">服务流程 <span class="en">/ PROCESS</span></div>
+      <h2 class="sec">从概念到量产 九步一站式交付</h2>
+      <p class="sec-sub">自有设计团队与制造工厂深度协同，覆盖产品全生命周期，每一步都清晰可见、可控可溯。</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-01.jpg" alt="产品概念设计"></div><div class="bd"><div class="no">01</div><h3>产品概念设计</h3><p>从手绘草图到3D渲染，将创意转化为可视化设计方案，多轮迭代直至确定最优方向。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-02.jpg" alt="结构工程设计"></div><div class="bd"><div class="no">02</div><h3>结构工程设计</h3><p>将设计方案转化为可生产的零部件结构，充分考虑材料选型、成本控制与加工工艺。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-03.jpg" alt="电控系统开发"></div><div class="bd"><div class="no">03</div><h3>电控系统开发</h3><p>电池管理、驱动控制、传感集成到智能互联功能，提供完整的电子电气解决方案。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-04.jpg" alt="快速原型打样"></div><div class="bd"><div class="no">04</div><h3>快速原型打样</h3><p>CNC加工、3D打印、硅胶复模等快速成型工艺，7-15天内交付可测试的功能样件。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-05.jpg" alt="模具设计制造"></div><div class="bd"><div class="no">05</div><h3>模具设计制造</h3><p>自主模具车间，进口高精度加工设备，从模具设计到EDM放电，全流程自主可控。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-06.jpg" alt="精密注塑成型"></div><div class="bd"><div class="no">06</div><h3>精密注塑成型</h3><p>近70台精密注塑机，涵盖单色、双色、嵌件注塑，满足小批量试产到大规模量产全阶段需求。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-07.jpg" alt="表面处理工艺"></div><div class="bd"><div class="no">07</div><h3>表面处理工艺</h3><p>喷涂、电镀、镭雕、丝印、阳极氧化等完整表面处理线，实现产品高颜值与耐用性。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-08.jpg" alt="质量检测验证"></div><div class="bd"><div class="no">08</div><h3>质量检测验证</h3><p>三坐标测量仪、X光检测等先进设备，执行20+项性能测试，确保出厂零缺陷。</p></div></div>
+      <div class="step"><div class="ph"><img src="assets/pxid2/process-09.jpg" alt="批量生产交付"></div><div class="bd"><div class="no">09</div><h3>批量生产交付</h3><p>三条半自动装配线，ISO9001质量体系认证，支持柔性生产，全球物流直达。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Services (八大制造能力) ===== -->
+<section class="about" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">核心服务 <span class="en">/ CAPABILITIES</span></div>
+      <h2 class="sec">八大制造能力 覆盖产品全链路</h2>
+      <p class="sec-sub">从一块原料到一个成品，我们拥有完整的制造生态，无需辗转多家供应商，在这里一站式搞定。</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-01.jpg" alt="CNC精密加工"></div><div class="bd"><div class="idx">PX / 01</div><h3>CNC精密加工<small>CNC MACHINING</small></h3><p>3轴/4轴/5轴CNC加工中心，铝合金、不锈钢、工程塑料等材质，公差可达±0.01mm。</p><ul><li>3/4/5轴加工</li><li>±0.01mm精度</li><li>铝合金/不锈钢</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-02.jpg" alt="注塑成型"></div><div class="bd"><div class="idx">PX / 02</div><h3>注塑成型<small>INJECTION</small></h3><p>单色/双色/嵌件注塑，覆盖ABS、PC、PA、PP、TPU等全系列工程塑料，模具自主开发。</p><ul><li>单色/双色注塑</li><li>ABS/PC/PA/PP</li><li>模具自主开发</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-03.jpg" alt="钣金加工"></div><div class="bd"><div class="idx">PX / 03</div><h3>钣金加工<small>SHEET METAL</small></h3><p>激光切割、数控折弯、冲压成型，不锈钢/冷轧板/铝板加工，支持复杂异形结构。</p><ul><li>激光切割</li><li>数控折弯</li><li>冲压成型</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-04.jpg" alt="3D打印"></div><div class="bd"><div class="idx">PX / 04</div><h3>3D打印<small>3D PRINTING</small></h3><p>SLA/SLS/FDM多种工艺，24小时快速出样，验证设计、缩短研发周期。</p><ul><li>SLA/SLS/FDM</li><li>24小时出样</li><li>快速验证</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-05.jpg" alt="压铸制造"></div><div class="bd"><div class="idx">PX / 05</div><h3>压铸制造<small>DIE CASTING</small></h3><p>铝合金/锌合金高压压铸，一模多腔高效生产，适合结构复杂的中大型金属件。</p><ul><li>铝合金/锌合金</li><li>高压压铸</li><li>一模多腔</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-06.jpg" alt="模具开发"></div><div class="bd"><div class="idx">PX / 06</div><h3>模具开发<small>TOOLING</small></h3><p>自主模具车间，进口CNC、EDM、慢走丝设备，模具寿命可达100万模次以上。</p><ul><li>进口CNC/EDM</li><li>慢走丝加工</li><li>100万模次寿命</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-07.jpg" alt="表面处理"></div><div class="bd"><div class="idx">PX / 07</div><h3>表面处理<small>SURFACE</small></h3><p>喷涂、电镀、阳极氧化、镭雕、丝印、PVD镀膜，完整后加工线，一站式交付成品。</p><ul><li>喷涂/电镀</li><li>阳极氧化</li><li>PVD镀膜</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-08.jpg" alt="装配测试"></div><div class="bd"><div class="idx">PX / 08</div><h3>装配测试<small>ASSEMBLY</small></h3><p>半自动装配线、功能测试、老化测试、外观检验，确保每个出厂产品完美无瑕。</p><ul><li>半自动装配</li><li>功能/老化测试</li><li>外观全检</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Small-batch ===== -->
+<section class="small" id="small-batch">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">小单试产 <span class="en">/ SMALL BATCH</span></div>
+      <h2 class="sec">降低试产门槛 让创新零负担启动</h2>
+      <p class="sec-sub">我们深知，每一个伟大的产品都始于第一个样品。为此，我们专门打造了小单试产通道，从1件起做，让创业者和中小企业也能享受高端制造服务。</p>
+      <ul class="list">
+        <li><b>1件起做</b> ——打破传统工厂高起订量限制，支持单件打样验证</li>
+        <li><b>7天快速出样</b> ——加急通道优先排产，压缩研发周期</li>
+        <li><b>在线DFM评审</b> ——上传3D模型，自动检测可制造性问题，减少沟通成本</li>
+        <li><b>柔性转量产</b> ——试产验证通过后，无缝切换至批量生产，模具复用</li>
+        <li><b>透明报价</b> ——在线即时估价，无隐藏费用，预算可控</li>
+      </ul>
+    </div>
+    <div class="ph"><img src="assets/pxid2/small-batch.jpg" alt="小单试产"></div>
+  </div>
+</section>
+
+<!-- ===== Platform (数字化平台) ===== -->
+<section class="about" id="platform">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">数字化平台 <span class="en">/ DIGITAL PLATFORM</span></div>
+      <h2 class="sec">用技术重新定义 制造协作体验</h2>
+      <p class="sec-sub">自主研发数字化制造平台，让订单流转、进度追踪、质量管控全程在线，信息透明，协作高效。</p>
+    </div>
+    <div class="plat">
+      <div class="pcard"><div class="no">01</div><h3>即时智能报价</h3><p>上传3D模型，AI自动分析几何特征、材料用量和加工工艺，秒级生成精准报价，告别漫长的人工询价等待。</p><a class="more" href="#contact">了解详情 →</a></div>
+      <div class="pcard"><div class="no">02</div><h3>全流程可视化</h3><p>从订单确认到生产交付，每个环节实时更新进度。车间摄像头直连，随时查看您的零件正在哪台设备上加工。</p><a class="more" href="#contact">了解详情 →</a></div>
+      <div class="pcard"><div class="no">03</div><h3>Teamspace协作</h3><p>项目团队共享工作空间，设计图纸、工艺文件、质检报告集中管理，版本自动同步，沟通零误差。</p><a class="more" href="#contact">了解详情 →</a></div>
+      <div class="pcard"><div class="no">04</div><h3>AI DFM分析</h3><p>人工智能辅助可制造性分析，提前发现壁厚不均、倒角遗漏、拔模角度不足等设计问题，降低返工成本。</p><a class="more" href="#contact">了解详情 →</a></div>
+      <div class="pcard"><div class="no">05</div><h3>质量云档案</h3><p>每批次产品生成独立质检报告，三坐标数据、材料成分、外观照片云端存档，随时调阅追溯。</p><a class="more" href="#contact">了解详情 →</a></div>
+      <div class="pcard"><div class="no">06</div><h3>智能排产系统</h3><p>基于设备状态和订单优先级自动优化排产，最大化设备利用率，确保交期准时率保持在98%以上。</p><a class="more" href="#contact">了解详情 →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Barriers (四大竞争壁垒) ===== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">核心优势 <span class="en">/ WHY PXID</span></div>
+      <h2 class="sec">四大竞争壁垒 铸就制造新标杆</h2>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="ph"><img src="assets/pxid2/barrier-1.jpg" alt="设计制造一体化"></div><div class="bd"><div class="idx">01</div><h3>设计制造一体化<small>DESIGN + MAKE</small></h3><p>不同于传统代工厂只接生产单，我们拥有50+人工业设计团队和自有制造基地，设计阶段就充分考虑工艺可行性，从源头避免"设计很美但做不出来"的困境。</p><ul><li>设计团队10年+经验</li><li>设计师常驻工厂</li><li>最快4小时响应</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-06.jpg" alt="小单快反大单稳供"></div><div class="bd"><div class="idx">02</div><h3>小单快反，大单稳供<small>FLEXIBLE</small></h3><p>柔性生产线支持1件起做的打样需求，也能承接每月百万件的批量订单。订单规模变化时，快速切换生产模式，不会因为量小被拒、量大交不了。</p><ul><li>1-100件 CNC/3D</li><li>100-1万 小批模具</li><li>1万+ 全自动化</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-01.jpg" alt="数字化透明交付"></div><div class="bd"><div class="idx">03</div><h3>数字化透明交付<small>TRANSPARENT</small></h3><p>从下单到收货，每个节点在平台实时可见。不再需要反复追问"我的货做到哪了"，打开手机即可查看当前工序、预计完成时间和质检结果。</p><ul><li>进度实时推送</li><li>工序照片/视频</li><li>质检数据云端</li></ul></div></div>
+      <div class="card"><div class="ph"><img src="assets/pxid2/svc-08.jpg" alt="品质对标国际"></div><div class="bd"><div class="idx">04</div><h3>品质对标国际<small>QUALITY</small></h3><p>ISO9001质量管理体系认证，进口检测设备，20+项出厂检测流程。产品远销欧美，品质经得起最挑剔的客户检验。</p><ul><li>ISO9001认证</li><li>三坐标/X光探伤</li><li>RoHS/REACH</li></ul></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Quality dashboard ===== -->
+<section class="quality">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">质量保障 <span class="en">/ QUALITY</span></div>
+      <h2 class="sec">质量是制造的生命线</h2>
+      <p class="sec-sub">从原材料入库到成品出货，六道质检关卡层层把关。我们相信，最好的服务是让客户 never worry about quality。</p>
+    </div>
+    <div class="qstats">
+      <div class="q"><b>100<span class="u">%</span></b><h4>来料合格率</h4><p>原材料检验：每批次原料入库前进行成分分析和物理性能测试，杜绝不合格材料流入生产线。</p></div>
+      <div class="q"><b>99.7<span class="u">%</span></b><h4>过程合格率</h4><p>过程巡检：关键工序设置在线检测点，IPQC每2小时巡回检验，及时发现并纠正过程偏差。</p></div>
+      <div class="q"><b>100<span class="u">%</span></b><h4>首件通过率</h4><p>首件确认：每批次开机首件全尺寸检测，确认合格后方可批量生产，从源头防止批量不良。</p></div>
+      <div class="q"><b>99.9<span class="u">%</span></b><h4>出货合格率</h4><p>成品全检：外观、尺寸、功能、包装四项全检，不合格品隔离标识，确保出货零缺陷。</p></div>
+      <div class="q"><b>&lt;50<span class="u">ppm</span></b><h4>客户投诉率</h4><p>可靠性测试：高低温循环、跌落测试、盐雾测试、寿命测试等，模拟真实使用场景验证产品可靠性。</p></div>
+      <div class="q"><b>100<span class="u">%</span></b><h4>追溯覆盖率</h4><p>报告归档：每批次生成完整质检报告，材料证明、检测数据、照片存档，质量全程可追溯。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Partners ===== -->
+<section class="partners">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">合作伙伴 <span class="en">/ CLIENTS</span></div>
+      <h2 class="sec">深受众多企业信赖</h2>
+      <p class="sec-sub">从初创团队到行业龙头，我们为不同规模的客户提供同等高品质的制造服务。</p>
+    </div>
+    <div class="grid">
+      <div class="b">华为</div><div class="b">小米</div><div class="b">大疆</div>
+      <div class="b">比亚迪</div><div class="b">迈瑞医疗</div><div class="b">九号公司</div>
+      <div class="b">云鲸智能</div><div class="b">石头科技</div><div class="b">追觅科技</div>
+      <div class="b">科沃斯</div><div class="b">美的</div><div class="b">海尔</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Cases ===== -->
+<section class="cases" id="cases">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">成功案例 <span class="en">/ CASES</span></div>
+      <h2 class="sec">看得见的产品 摸得着的品质</h2>
+      <p class="sec-sub">从消费电子到医疗设备，从智能家居到出行工具，我们用一个个落地项目证明实力。</p>
+    </div>
+    <div class="case-grid">
+      <div class="case"><img src="assets/pxid2/case-1.jpg" alt="全屋智能中控面板"><div class="ct"><div class="tag">智能家居 / SMART HOME</div><h3>全屋智能中控面板</h3><p>从ID设计到模具开发、注塑成型、表面喷涂、SMT贴片，全流程自主完成，月产能5万套。</p></div></div>
+      <div class="case"><img src="assets/pxid2/case-2.jpg" alt="便携式血糖仪外壳"><div class="ct"><div class="tag">医疗器械 / MEDICAL</div><h3>便携式血糖仪外壳</h3><p>医疗级ABS材料，无尘车间注塑，10万级洁净度，通过ISO13485医疗器械质量管理体系认证。</p></div></div>
+      <div class="case"><img src="assets/pxid2/case-3.jpg" alt="锂电钻外壳组件"><div class="ct"><div class="tag">电动工具 / POWER TOOL</div><h3>锂电钻外壳组件</h3><p>PA66+玻纤增强材料，耐摔抗冲击，双色注塑工艺，软胶握把与硬壳主体一体成型。</p></div></div>
+      <div class="case"><img src="assets/pxid2/case-4.jpg" alt="车载充电器外壳"><div class="ct"><div class="tag">汽车零部件 / AUTO</div><h3>车载充电器外壳</h3><p>铝合金CNC+阳极氧化，散热性能优异，公差控制在±0.05mm，通过IATF16949认证。</p></div></div>
+      <div class="case"><img src="assets/pxid2/case-5.jpg" alt="运动手环表壳"><div class="ct"><div class="tag">消费电子 / CONSUMER</div><h3>运动手环表壳</h3><p>TPU软胶+PC硬壳双色注塑，防水等级IP68，年产200万只，良率99.2%。</p></div></div>
+      <div class="case"><img src="assets/pxid2/case-6.jpg" alt="工业传感器外壳"><div class="ct"><div class="tag">工业设备 / INDUSTRIAL</div><h3>工业传感器外壳</h3><p>316不锈钢压铸+IP67防护，耐腐蚀、抗电磁干扰，适用于恶劣工业环境。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="about" id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">常见问题 <span class="en">/ FAQ</span></div>
+      <h2 class="sec">您可能想了解的</h2>
+      <p class="sec-sub">我们整理了客户最常问的问题，如果您有其他疑问，欢迎随时联系我们的项目顾问。</p>
+    </div>
+    <div class="faq"><div class="grid">
+      <details open><summary>最低起订量是多少？</summary><p>我们支持1件起做。对于3D打印和CNC加工，1件即可下单；对于注塑成型，小批量试产最低100件起，量产订单根据产品结构灵活商议。我们的目标是让不同阶段的客户都能找到合适的合作方式。</p></details>
+      <details><summary>打样周期需要多久？</summary><p>3D打印和CNC加工样件一般3-7天交付；需要开模的注塑样件，首次试模样品约15-20天。如果项目时间紧急，我们可以启动加急通道，最快可缩短30%周期，具体请咨询项目顾问。</p></details>
+      <details><summary>报价需要多长时间？</summary><p>对于3D打印和CNC加工，上传3D模型后系统可秒级生成报价；对于注塑和压铸项目，我们的工程师会在24小时内完成工艺评审并给出详细报价单。复杂项目可能需要48小时进行DFM分析和材料选型建议。</p></details>
+      <details><summary>你们接受什么格式的图纸？</summary><p>我们接受STEP、IGES、STL、OBJ等主流3D格式，以及PDF、DWG等2D工程图。推荐上传STEP格式，兼容性最佳。如果只有实物样品没有图纸，我们也提供逆向工程服务，通过三维扫描重建数字模型。</p></details>
+      <details><summary>如何保障产品质量？</summary><p>我们建立了六道质量检验体系：原材料检验、过程巡检、首件确认、成品全检、可靠性测试、报告归档。同时支持客户驻厂验货或委托第三方检测机构进行出货前检验。所有质检数据在平台云端存档，随时可追溯。</p></details>
+      <details><summary>模具归属权如何界定？</summary><p>模具所有权归客户所有。合同明确约定模具归属，客户可随时要求将模具转移至指定地点。我们承诺不利用客户模具为第三方生产同类产品，并签署保密协议保护客户知识产权。</p></details>
+    </div></div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;color:rgba(255,255,255,.7)">联系我们 <span class="en">/ GET STARTED</span></div>
+    <h2>准备好把想法 变成产品了吗？</h2>
+    <p>无论您是需要一个样品验证概念，还是准备启动批量生产，我们的团队都随时准备为您服务。</p>
+    <div class="acts">
+      <a class="btn btn-gold" href="#contact">获取即时报价</a>
+      <a class="btn btn-line" href="#contact">预约工程师沟通</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="wrap fgrid">
+    <div class="fbrand">
+      <div class="mk">PX</div>
+      <b>品向智造 PXID</b>
+      <p>源自PXID，专注小件产品设计、快速打样、精密制造与批量生产。用数字化平台和一站式制造能力，让创新落地更简单。</p>
+    </div>
+    <div class="fcol">
+      <h5>服务 / SERVICE</h5>
+      <a href="#services">CNC精密加工</a>
+      <a href="#services">注塑成型</a>
+      <a href="#services">钣金加工</a>
+      <a href="#services">3D打印</a>
+      <a href="#services">模具开发</a>
+    </div>
+    <div class="fcol">
+      <h5>公司 / COMPANY</h5>
+      <a href="#about">关于我们</a>
+      <a href="#about">工厂实力</a>
+      <a href="#cases">新闻动态</a>
+      <a href="#about">加入我们</a>
+      <a href="#contact">联系合作</a>
+    </div>
+    <div class="fcol">
+      <h5>联系 / CONTACT</h5>
+      <p>电话：400-888-0000</p>
+      <p>邮箱：hello@pxid-mfg.com</p>
+      <p>地址：深圳市宝安区</p>
+      <a href="#contact">在线客服</a>
+    </div>
+  </div>
+  <div class="wrap fbottom">
+    <span>© 2024 品向智造 PXID Manufacturing. All rights reserved.</span>
+    <span>隐私政策 · 服务条款 · 网站地图</span>
+  </div>
+</footer>
+
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<a class="to-top" href="#top" aria-label="回到顶部" title="回到顶部">↑</a>
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(function(){ document.body.classList.add('hero-in'); });
+  function addReveal(sel, stagger){
+    document.querySelectorAll(sel).forEach(function(el, i){
+      el.classList.add('reveal');
+      if(stagger) el.style.setProperty('--i', i % stagger);
+    });
+  }
+  addReveal('.steps .step', 3);
+  addReveal('.cards .card', 4);
+  addReveal('.case-grid .case', 3);
+  addReveal('.plat .pcard', 3);
+  addReveal('.qstats .q', 3);
+  addReveal('.partners .grid .b', 6);
+  addReveal('.faq details', 2);
+  addReveal('.sec-head');
+  addReveal('.about .lead2');
+  addReveal('.about p.body');
+  addReveal('.small .grid > div');
+  if(!('IntersectionObserver' in window) || reduce){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  }
+  // count-up for data strip
+  function countStrip(){
+    document.querySelectorAll('.strip .s b').forEach(function(b){
+      var html = b.innerHTML;
+      var m = html.match(/^([\d,]+)/);
+      if(!m) return;
+      var target = parseFloat(m[0].replace(/,/g,''));
+      var prefix = html.slice(0, html.indexOf(m[0]));
+      var suffix = html.slice(html.indexOf(m[0]) + m[0].length);
+      var dur = 1500, t0 = performance.now();
+      (function tick(now){
+        var p = Math.min(1, (now - t0) / dur);
+        var e = 1 - Math.pow(1 - p, 3);
+        var cur = Math.round(target * e);
+        b.innerHTML = prefix + cur.toLocaleString('en-US') + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  }
+  var strip = document.querySelector('.strip');
+  if(strip){
+    if(!('IntersectionObserver' in window) || reduce){ countStrip(); }
+    else {
+      var cio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ countStrip(); cio.disconnect(); } });
+      }, { threshold:.3 });
+      cio.observe(strip);
+    }
+  }
+  // nav scroll state + back to top
+  var header = document.querySelector('header');
+  var top = document.querySelector('.to-top');
+  function onScroll(){
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    if(header) header.classList.toggle('scrolled', y > 20);
+    if(top) top.classList.toggle('show', y > 500);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

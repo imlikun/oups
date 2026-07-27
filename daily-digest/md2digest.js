@@ -324,7 +324,7 @@ ${itemsHtml}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>每日阅读 | ${data.date} — Lkn</title>
-<meta name="description" content="${data.sections[0]?.items[0]?.title || '每日阅读'}——${data.date}阅读简报。">
+<meta name="description" content="${(data.sections[0]?.items[0]?.title || '每日阅读').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}——${data.date}阅读简报。">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/assets/fx.css">
 <script src="/assets/fx.js" defer></script>
