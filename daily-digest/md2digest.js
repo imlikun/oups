@@ -213,6 +213,24 @@ function getSourceLabel(tag) {
   return map[tag] || '来源';
 }
 
+// Prefer the parsed （来自X） tag; fall back to keyword detection on title+summary
+function resolveSource(item) {
+  let label = '', cls = 'src-other';
+  if (item.sourceTag) {
+    const raw = item.sourceTag.replace(/[（）]/g, '').replace(/来自/g, '').trim();
+    label = raw;
+    if (raw.includes('虎嗅')) cls = 'src-huxiu';
+    else if (raw.includes('36氪')) cls = 'src-36kr';
+    else if (raw.includes('钛媒体')) cls = 'src-tmtpost';
+    else if (raw.includes('极客公园')) cls = 'src-geekpark';
+  } else {
+    const st = detectSourceTag(item.title, item.summary);
+    label = getSourceLabel(st);
+    cls = st;
+  }
+  return { label, cls };
+}
+
 // ---- Color config by section type (Liquid Glass palette) ----
 const sectionConfig = {
   social:  { icon:'📰', color:'#2997ff', bg:'rgba(41,151,255,0.10)', grad:'linear-gradient(135deg,#2997ff,#5ac8fa)' },
@@ -270,9 +288,8 @@ function generateHTML(data, outputPath, allDates) {
   let heroHtml = '';
   if (heroItem) {
     const cfg = sectionConfig[heroType] || sectionConfig.social;
-    const st = detectSourceTag(heroItem.title, heroItem.summary);
-    const sl = getSourceLabel(st);
-    const srcTag = st !== 'src-other' ? `<span class="src-tag ${st}">${sl}</span>` : '';
+    const srcInfo = resolveSource(heroItem);
+    const srcTag = srcInfo.label ? `<span class="src-tag ${srcInfo.cls}">${srcInfo.label}</span>` : '';
     heroHtml = `
     <section class="hero-wrap">
       <article class="hero-card pinned-card">
@@ -282,7 +299,7 @@ function generateHTML(data, outputPath, allDates) {
         </div>
         <div class="hero-tags">
           <span class="cat-tag" style="background:${cfg.bg};color:${cfg.color}">${LABELS[heroType]||'热点'}</span>
-          ${srcTag ? `<span class="src-line">🌐 来源：${sl}</span>` : ''}
+          ${srcTag ? `<span class="src-line">🌐 来源：${srcInfo.label}</span>` : ''}
         </div>
         <h2 class="hero-title">${heroItem.title}</h2>
         ${heroItem.summary ? `<p class="hero-sum">${heroItem.summary}</p>` : ''}
@@ -330,10 +347,9 @@ function generateHTML(data, outputPath, allDates) {
 
     // News
     const items = section.items.map(item => {
-      const st = detectSourceTag(item.title, item.summary);
-      const sl = getSourceLabel(st);
-      const srcTag = st !== 'src-other' ? `<span class="src-tag ${st}">${sl}</span>` : '';
-      const linkText = st !== 'src-other' ? `🌐 来源：${sl} →` : '🌐 查看原文 →';
+      const srcInfo = resolveSource(item);
+      const srcTag = srcInfo.label ? `<span class="src-tag ${srcInfo.cls}">${srcInfo.label}</span>` : '';
+      const linkText = srcInfo.label && srcInfo.cls !== 'src-other' ? `🌐 来源：${srcInfo.label} →` : '🌐 查看原文 →';
       return `
       <article class="card news-card" style="--accent:${cfg.color}">
         <div class="news-body">
