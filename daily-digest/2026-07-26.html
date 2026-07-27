@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日阅读 | 2026-07-26 — Lkn</title>
+<meta name="description" content="携程被罚没 51.79 亿元，公布 19 项整改——2026-07-26阅读简报。">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+<style>
+:root{
+  --bg:#0F172A;--bg-elevated:#1E293B;--text:#F8FAFC;--text-secondary:#CBD5E1;--text-muted:#64748B;
+  --accent:#8B5CF6;--accent-rgb:139,92,246;--accent-light:rgba(139,92,246,0.10);
+  --border:rgba(255,255,255,0.08);--border-strong:#444;--card-bg:#1A2333;--radius:8px;--radius-sm:8px;
+  --font-mono:'JetBrains Mono','Fira Code','PingFang SC',monospace;
+  --font-sans:'PingFang SC','Microsoft YaHei',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);position:relative;z-index:1;
+  background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(30,41,59,0.75);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:860px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.nav-back{font-size:15px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.nav-back:hover{gap:10px}
+.nav-links{display:flex;gap:20px;align-items:center;font-size:13px}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+
+.article-header{max-width:860px;margin:0 auto;padding:100px 32px 40px;text-align:center}
+.article-date-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:20px;
+  background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.06em;margin-bottom:18px;font-family:var(--font-mono)}
+.article-date-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.article-header h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.25;margin-bottom:14px;color:var(--text)}
+.article-header h1 .hl{color:var(--accent)}
+.article-meta{font-size:13px;color:var(--text-muted);margin-top:12px}
+.section-tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.section-tags span{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:600}
+.tag-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+
+.article-body{max-width:860px;margin:0 auto;padding:0 32px 80px}
+.section-block{margin-bottom:36px}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700;letter-spacing:.02em}
+
+.news-item{padding:16px 18px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease;position:relative}
+.news-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.25);transform:translateX(3px);border-color:var(--accent)}
+.news-item:last-child{margin-bottom:0}
+.news-item .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-right:12px}
+.news-item .item-header{display:flex;align-items:flex-start;gap:0}
+.news-item h3{font-size:15px;font-weight:700;line-height:1.55;color:var(--text);flex:1}
+.news-item h3 strong{color:var(--text)}
+.news-source-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:4px;
+  margin-left:8px;vertical-align:middle;white-space:nowrap}
+.src-huxiu{background:rgba(255,107,129,.08);color:#d63b52}.src-36kr{background:rgba(0,194,146,.08);color:#00c292}
+.src-tmtpost{background:rgba(0,160,233,.08);color:#00a0e9}.src-geekpark{background:rgba(0,200,168,.08);color:#00c8a8}
+.src-other{background:var(--accent-light);color:var(--accent)}
+    .news-summary{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-top:8px;padding-left:34px}
+.news-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#0F172A;text-decoration:none;
+  font-weight:700;margin-top:10px;margin-left:34px;padding:6px 14px;border-radius:20px;background:var(--accent);
+  box-shadow:0 1px 2px rgba(var(--accent-rgb),.25);transition:all .2s}
+.news-link:hover{filter:brightness(1.15);gap:10px;box-shadow:0 3px 8px rgba(var(--accent-rgb),.35)}
+
+.book-item{padding:20px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--card-bg);margin-bottom:12px;transition:all .2s ease}
+.book-item:hover{box-shadow:0 4px 20px rgba(var(--accent-rgb),.10);transform:translateY(-1px);border-color:var(--accent)}
+.book-item:last-child{margin-bottom:0}
+.book-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.book-num{display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  border-radius:6px;font-size:11px;font-weight:700;color:#fff;background:var(--accent);flex-shrink:0}
+.book-info{flex:1}
+.book-info h3{font-size:15.5px;font-weight:700;line-height:1.45}
+.book-info h3 em{font-style:normal;color:var(--accent)}
+.book-author{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.book-ratings{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 8px;padding-left:36px}
+.rating-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:11.5px;font-weight:600}
+.rating-douban{background:rgba(41,151,255,.10);color:#4aa8ff}
+.rating-weread{background:var(--accent-light);color:var(--accent)}
+.rating-score{font-weight:800}
+.book-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.68;padding-left:36px}
+/* Book Highlights / 金句区 */
+.book-highlights{margin-top:14px;padding:14px 18px 14px 36px;border-left:3px solid var(--accent);background:linear-gradient(135deg,rgba(var(--accent-rgb),.04),rgba(var(--accent-rgb),.08));border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.highlights-label{font-size:11.5px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px;text-transform:uppercase}
+.highlight-quote{margin:0 0 10px;padding:0}
+.highlight-quote:last-child{margin-bottom:0}
+.highlight-text{font-size:13px;color:var(--text-secondary);line-height:1.7;font-style:italic;position:relative;padding-left:16px}
+.highlight-text::before{content:'"';position:absolute;left:0;top:-2px;font-size:20px;color:var(--accent);opacity:.5;font-family:Georgia,serif}
+.highlight-count{display:inline-block;font-size:10px;color:var(--accent);background:var(--accent-light);padding:1px 8px;border-radius:10px;margin-top:4px;font-weight:600}
+.divider{text-align:center;padding:30px 0 10px;color:var(--text-muted);font-size:11.5px;letter-spacing:.1em;opacity:.5}
+.footer-nav{max-width:860px;margin:0 auto;padding:0 32px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-nav a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;transition:gap .2s}
+.footer-nav a:hover{gap:10px}
+.footer-nav .disabled{color:var(--text-muted);pointer-events:none}
+@media(max-width:640px){
+  .nav-inner{padding:0 16px}.article-header{padding:90px 16px 28px}.article-body{padding:0 16px 60px}
+  .footer-nav{padding:0 16px 48px}.news-summary,.news-link,.book-ratings,.book-desc{padding-left:0}
+  .news-item .num{display:none}.section-tags{justify-content:flex-start}
+}
+/* ═══ THEME TOGGLE + FOOTER（终端风标准，与全站一致）═══ */
+.footer-bottom{max-width:860px;margin:0 auto;padding:24px 32px 60px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--border);font-family:var(--font-mono)}
+.footer-bottom span{color:var(--text-muted);font-size:12px}
+  background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;align-items:center;
+  justify-content:center;transition:.2s;flex-shrink:0;font-size:0;padding:0}
+@media(max-width:640px){.footer-bottom{padding:20px 16px 48px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner">
+  <a href="index.html" class="nav-back">← 返回列表</a>
+  <div class="nav-links"><a href="/">首页</a><a href="/craft/">技艺录</a></div>
+</div></nav>
+
+<header class="article-header">
+  <div class="article-date-badge"><span class="dot"></span>DAILY DIGEST · 2026-07-26 星期日</div>
+  <h1>每日阅读</h1>
+  <p class="article-meta">自动生成于 12:00<span class="sep">·</span>共 25 条</p>
+  <div class="section-tags">
+        <span class="tag-social" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#2997ff"></span> 社会商业 ×6</span>
+        <span class="tag-auto" style="background:rgba(255,159,10,0.08);color:#e08600"><span class="tag-dot" style="background:#e08600"></span> 汽车 ×5</span>
+        <span class="tag-tech" style="background:rgba(191,90,242,0.08);color:#bf5af2"><span class="tag-dot" style="background:#bf5af2"></span> 科技 ×5</span>
+        <span class="tag-elderly" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#c87a1e"></span> 养老产业 ×4</span>
+        <span class="tag-psych" style="background:rgba(41,151,255,0.08);color:#2997ff"><span class="tag-dot" style="background:#e54d66"></span> 心理学 ×2</span>
+        <span class="tag-book" style="background:rgba(90,200,120,0.08);color:#2ea043"><span class="tag-dot" style="background:#2ea043"></span> 好书 ×3</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(41,151,255,0.1);color:#2997ff;">📰</div>
+    <div class="section-title" style="color:#2997ff;">一、社会/商业热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">1</span><h3><strong>携程被罚没 51.79 亿元，公布 19 项整改</strong></h3></div>
+    <div class="news-summary">市场监管总局认定携程滥用在线酒店预订市场支配地位，罚没合计 51.79 亿元，携程回应“全盘接受、坚决服从”并公布 5 方面 19 项整改措施。</div>
+    <a href="https://www.163.com/dy/article/L2OI0F7R05119FMA.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">2</span><h3><strong>虎嗅：AI“大力出奇迹”时代还能走多久</strong><span class="news-source-tag src-huxiu">虎嗅</span></h3></div>
+    <div class="news-summary">分析 Scaling Law 收益递减现实：规模竞争对象正从参数转向系统配置与推理计算分配，下一轮比拼是把有限智能放到最需要的位置。</div>
+    <a href="http://view.inews.qq.com/a/20260726A022VQ00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">3</span><h3><strong>智能体手机热潮下的权力交接难题</strong></h3></div>
+    <div class="news-summary">WAIC2026 上阶跃、中兴、荣耀、三星等密集发布智能体手机，但存储涨价、出货萎缩与权限信任赤字成为落地拦路虎。</div>
+    <a href="http://view.inews.qq.com/a/20260726A01ZUW00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">4</span><h3><strong>三星斩获博通 2000 亿美元巨额订单</strong></h3></div>
+    <div class="news-summary">三星与博通签署五年合作备忘录，聚焦 2nm GAA 制程与下一代 HBM4 高带宽内存，总价值高达 2000 亿美元，进一步缩小与台积电差距。</div>
+    <a href="https://www.163.com/dy/article/L2OI0F7R05119FMA.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">5</span><h3><strong>全球金融科技融资同比增 23%</strong></h3></div>
+    <div class="news-summary">Crunchbase 显示 2026 上半年全球金融科技风投 286 亿美元同比增 23%，同期央行开展 5000 亿 MLF。</div>
+    <a href="https://view.inews.qq.com/a/20260726A03R8500" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#2997ff;">6</span><h3><strong>奇瑞获六项省级科技奖</strong></h3></div>
+    <div class="news-summary">奇瑞混动技术创收 400 亿、砸千亿研发，拿下六项省级科技大奖，印证车企技术投入进入兑现期。</div>
+    <a href="https://view.inews.qq.com/a/20260725V00NNS00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,159,10,0.1);color:#e08600;">🚗</div>
+    <div class="section-title" style="color:#e08600;">二、汽车行业热点</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">1</span><h3><strong>半年出口破 500 万辆、国内销量降 21.1%</strong></h3></div>
+    <div class="news-summary">2026 上半年中国汽车累计出口 509.6 万辆同比增 65.3%，6 月单月首破百万辆；但国内销量 992.1 万辆同比降 21.1%，呈现“冰火两重天”。</div>
+    <a href="https://www.toutiao.com/article/7666646478059831842/" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">2</span><h3><strong>6 月中国汽车进口 3.8 万辆同比下降 11%</strong></h3></div>
+    <div class="news-summary">崔东树称 6 月进口车 3.8 万辆同比降 11%，1-6 月进口 20 万辆降 11%，进口车回归传统燃油车为主格局，未来压力仍大。</div>
+    <a href="http://view.inews.qq.com/a/20260726A08Y4G00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">3</span><h3><strong>俄罗斯重夺中国汽车出口第一目的国</strong></h3></div>
+    <div class="news-summary">2026 年 1-6 月俄罗斯以近 45 万辆出口总量重回中国汽车出口第一目的国，巴西位列第二，市场需求正逐步企稳回升。</div>
+    <a href="http://view.inews.qq.com/a/20260726V08CA900" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">4</span><h3><strong>首批智驾数据产品上架汽车行业可信数据空间</strong></h3></div>
+    <div class="news-summary">2026 中国汽车论坛上，中汽协、众链科技、如祺出行等宣布首批规模化智驾数据产品上架，覆盖超 30 万条数据、规模超 500TB。</div>
+    <a href="https://view.inews.qq.com/a/20260726A066AL00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e08600;">5</span><h3><strong>增程车近半年批发销量同比下滑超 24%</strong></h3></div>
+    <div class="news-summary">乘联会统计近半年增程车批发销量同比下滑超 24%，新能源市场份额从 10.3% 缩水至 6.4%，约 38% 增程车主计划换车。</div>
+    <a href="http://view.inews.qq.com/a/20260726A01UFR00" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(191,90,242,0.1);color:#bf5af2;">🔬</div>
+    <div class="section-title" style="color:#bf5af2;">三、科技热点（AI / 芯片 / 机器人）</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">1</span><h3><strong>酷哇科技发布行业首个双层智能体世界模型架构 COOWAM</strong></h3></div>
+    <div class="news-summary">由 CooWAIM 交互式世界动作模型与 Urban VLM 人类社会世界模型组成，为具身智能在复杂城市环境自主决策提供新范式。</div>
+    <a href="https://www.toutiao.com/a7666823346390139428" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">2</span><h3><strong>上海建成具身智能实训场样板间，华为参与共建</strong></h3></div>
+    <div class="news-summary">国内首个面向具身智能的标准化实训基础设施启用，覆盖装配、搬运、巡检等典型工业场景，加速机器人从实验室走向产线。</div>
+    <a href="https://www.toutiao.com/a7666823346390139428" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">3</span><h3><strong>英伟达 Vera Rubin 平台测试：单位功耗 Token 吞吐提升 10 倍</strong></h3></div>
+    <div class="news-summary">CoreWeave 测试显示新一代平台单位功耗 Token 吞吐量较前代提升 10 倍，Spectrum-6 提供 102.4Tbps 带宽，压缩大模型训练推理 TCO。</div>
+    <a href="https://www.toutiao.com/a7666823346390139428" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">4</span><h3><strong>高通 9 月 1 日起全系芯片涨价，手机圈承压</strong></h3></div>
+    <div class="news-summary">高通向全球客户发调价通知，9 月 1 日起全系列芯片两位数百分比上调，联发科 6 月底已先行涨价，二季度全球智能手机出货同比下滑 11%。</div>
+    <a href="https://new.qq.com/rain/a/20260726A06PR700?refer=cp_1009" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#bf5af2;">5</span><h3><strong>日媒拆机宇树 G1：已超越“只会展示”阶段</strong></h3></div>
+    <div class="news-summary">《日经 XTECH》拆机测评称其机械设计先进、已超越展示阶段，认为日本短期难缩小差距，折射中国人形机器人研发实力提升。</div>
+    <a href="https://new.qq.com/rain/a/20260726A06PR700?refer=cp_1009" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(200,122,30,0.1);color:#c87a1e;">🏠</div>
+    <div class="section-title" style="color:#c87a1e;">四、养老产业</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">1</span><h3><strong>【养老产业】国务院部署扩大养老消费，养老升为“十五五”战略</strong></h3></div>
+    <div class="news-summary">《扩大消费“十五五”规划》提出扩大养老消费，开发适老化日用产品、养老服务机器人、健康监测设备等，并探索建立银发产品服务认证制度。</div>
+    <a href="https://www.toutiao.com/article/7662712004339089970" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">2</span><h3><strong>【养老产业】养老服务师职业资格制度落地，设初/中/高三级</strong></h3></div>
+    <div class="news-summary">民政部、人社部印发《养老服务师职业资格制度暂行规定》，国家设置水平评价类职业资格纳入《国家职业资格目录》；初级、中级实行全国统一大纲、统一命题、统一组织考试，各科目合格标准通常为满分 60%。</div>
+    <a href="https://c.m.163.com/news/a/L0TASGUI05385HGT.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">3</span><h3><strong>【养老产业】京东接入居家养老服务国补，最高 800 元/月</strong></h3></div>
+    <div class="news-summary">7 月 1 日起国家养老服务消费补贴上线京东，面向中度及以上失能老人，居家助浴、助洁、陪诊等支付立减 50%，每人每月最高 800 元。</div>
+    <a href="https://c.m.163.com/news/a/L0TASGUI05385HGT.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#c87a1e;">4</span><h3><strong>【养老产业】上海四部门推进老年助医陪诊服务</strong></h3></div>
+    <div class="news-summary">《关于全面推进老年助医陪诊服务的方案》自 2026 年 7 月 1 日实施，到 2030 年底全市老年助医陪诊服务实现充分供给、规范化发展。</div>
+    <a href="https://c.m.163.com/news/a/L0TASGUI05385HGT.html" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(255,69,89,0.1);color:#e54d66;">🧠</div>
+    <div class="section-title" style="color:#e54d66;">五、心理学</div>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">1</span><h3><strong>【心理学】出轨后选择原谅的人，都是怎么做到的？（轻心理）</strong></h3></div>
+    <div class="news-summary">微信读书评分 **6.95 分**（57 人评价）。</div>
+    <a href="https://weread.qq.com/book-detail?type=1&v=76732690813ababb9g018089" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+
+  <div class="news-item">
+    <div class="item-header"><span class="num" style="background:#e54d66;">2</span><h3><strong>【心理学】那种说不清的紧绷，可能和身体报警有关（壹心理）</strong></h3></div>
+    <div class="news-summary">从杏仁核、前额叶与皮质醇的视角拆解焦虑的生理机制，并给出“写下来、设定焦虑时间、腹式呼吸”等可操作调节入口。</div>
+    <a href="https://new.qq.com/rain/a/20260724A0BLXN00?refer=cp_1009" target="_blank" rel="noopener" class="news-link">查看原文 →</a>
+  </div>
+</section>
+
+
+<section class="section-block">
+  <div class="section-head">
+    <div class="section-icon" style="background:rgba(90,200,120,0.1);color:#2ea043;">📚</div>
+    <div class="section-title" style="color:#2ea043;">六、好书推荐</div>
+  </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">1</span>
+        <div class="book-info">
+          <h3><em>《活着》</em> — 余华</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=33332bf05cbba0333b1efb4" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0F172A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “生活是属于每个人自己的感受，不属于任何别人的看法。”"</p>
+          <span class="highlight-count">84366人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “人是为活着本身而活着的，而不是为了活着之外的任何事物所活着。”"</p>
+          <span class="highlight-count">72605人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “谁料到我一走凤霞就出事了……凤霞生下了孩子后大出血，天黑前断了气。”"</p>
+          <span class="highlight-count">44640人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">2</span>
+        <div class="book-info">
+          <h3><em>《解忧杂货店》</em> — 东野圭吾</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=6d132250813ab6e84g017ca5" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0F172A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “可是换个角度来看，正因为是一张白纸，才可以随心所欲地描绘地图。一切全在你自己。”"</p>
+          <span class="highlight-count">8295人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “很多时候，咨询的人心里已经有了答案，来咨询只是想确认自己的决定是对的。”"</p>
+          <span class="highlight-count">6035人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “敦也从信纸上抬起头，正对上其他两人的视线。他们的眼睛里都闪着光芒。”"</p>
+          <span class="highlight-count">12172人划线</span>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="book-item">
+      <div class="book-header">
+        <span class="book-num">3</span>
+        <div class="book-info">
+          <h3><em>《人类简史：从动物到上帝》</em> — 尤瓦尔·赫拉利</h3>
+          <div class="book-author"></div>
+        </div>
+      </div>
+      <div class="book-ratings">
+        
+        
+      </div>
+      
+      <div style="padding:12px 0 0 36px"><a href="https://weread.qq.com/book-detail?type=1&v=d4a322a05d0f04d4a01f0d6" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;border-radius:9px;background:var(--accent);color:#0F172A;font-size:13px;font-weight:700;text-decoration:none;">🔗 打开阅读</a></div>
+      
+      <div class="book-highlights">
+        <div class="highlights-label">✨ 读者金句</div>
+        
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “人类以为自己驯化了植物，但其实是植物驯化了智人。”"</p>
+          <span class="highlight-count">60894人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “以上这些东西，其实都只存在人类自己发明并互相讲述的故事里……这个宇宙中根本没有神、没有国家、没有钱、没有人权。”"</p>
+          <span class="highlight-count">56268人划线</span>
+        </blockquote>
+        <blockquote class="highlight-quote">
+          <p class="highlight-text">"- > “身为人类，我们不可能脱离想象所建构出的秩序。”"</p>
+          <span class="highlight-count">47310人划线</span>
+        </blockquote>
+      </div>
+    </div>
+</section>
+<div class="divider">— END OF DIGEST —</div>
+</article>
+
+<div class="footer-nav">
+  <a href="2026-07-25.html">← 上一篇（07-25）</a>
+  <a href="index.html">返回列表</a>
+  <a href="2026-07-27.html">下一篇（07-27）→</a>
+</div>
+
+<div class="footer-bottom">
+  <span>© 2026 Lkn · Appin.site · 每日阅读自动生成</span>
+    <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{document.querySelector('.nav').classList.toggle('scrolled',window.scrollY>20)},{passive:true});
+</script>
+</body>
+</html>
