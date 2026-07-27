@@ -474,6 +474,16 @@ footer{border-top:1px solid var(--border);padding:var(--s6) var(--s5);font-size:
 </head>
 <body>
 
+<!-- ═════ 双端同步停用公告（2026-07-27 永久停用） ═════ -->
+<div style="background:linear-gradient(90deg,#7F1D1D,#B91C1C);color:#fff;padding:14px 22px;font-family:'PingFang SC',system-ui,sans-serif;font-size:15px;line-height:1.75;border-bottom:2px solid #FCA5A5;">
+  <strong style="font-size:16px;">⚠️ 双端同步（wb-sync）已永久停用</strong><br>
+  macOS 端已全部删除。请 <strong>Windows 端（Kun.li）</strong> 执行以下清理：<br>
+  1. 删除目录 <code style="background:rgba(0,0,0,.28);padding:1px 6px;border-radius:4px;">C:/Users/Kun.li/wb-sync</code>（含 sync-mem.sh、HANDOFF.md、todo-hub 待办数据 T001–T018 等全部内容）<br>
+  2. 任务计划程序中删除「wb-sync」定时同步任务<br>
+  3. SSH 私钥 <code style="background:rgba(0,0,0,.28);padding:1px 6px;border-radius:4px;">id_ed25519_appin_server</code> 保留不动；ECS 中央仓库 macOS 已删，无需再 pull<br>
+  <span style="opacity:.85;">保留的唯一文档：<code style="background:rgba(0,0,0,.28);padding:1px 6px;border-radius:4px;">macOS&amp;Windows双端同步日志.md</code>（macOS 端 ~/Documents 下）</span>
+</div>
+
 <!-- ═════ NAVIGATION ═════ -->
 <nav>
   <a class="logo" href="/">Appin<span>.site</span></a>
