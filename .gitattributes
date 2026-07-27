@@ -1,0 +1,7 @@
+# 跨端同步：锁定行尾，防止 Windows CRLF 污染 git / 搞挂 shell 脚本
+* text=auto eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
