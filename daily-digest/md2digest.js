@@ -352,6 +352,7 @@ function generateHTML(data, outputPath, allDates) {
       const linkText = srcInfo.label && srcInfo.cls !== 'src-other' ? `🌐 来源：${srcInfo.label} →` : '🌐 查看原文 →';
       return `
       <article class="card news-card" style="--accent:${cfg.color}">
+        <div class="news-cover" style="background:${cfg.grad}"><span class="nc-icon">${cfg.icon}</span></div>
         <div class="news-body">
           <div class="news-top">
             <span class="cat-tag" style="background:${cfg.bg};color:${cfg.color}">${LABELS[section.typeLabel]||section.title}</span>
@@ -524,8 +525,11 @@ a{color:inherit;text-decoration:none}
 .card{position:relative;background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--glass-shadow);transition:transform .2s,box-shadow .2s,border-color .2s;overflow:hidden}
 .card:hover{transform:translateY(-2px);box-shadow:var(--glass-shadow-hover);border-color:var(--glass-border-soft)}
 .news-list,.book-list{display:flex;flex-direction:column;gap:12px}
-.news-card{border-left:3px solid var(--accent)}
-.news-body{padding:15px 18px}
+.news-card{display:flex;align-items:stretch;overflow:hidden}
+.news-cover{flex:none;width:78px;display:flex;align-items:center;justify-content:center;color:#fff}
+.news-cover .nc-icon{font-size:30px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.28))}
+.news-body{flex:1;padding:15px 18px;min-width:0}
+@media(max-width:640px){.news-card{flex-direction:column}.news-cover{width:100%;height:60px;flex-direction:row}}
 .news-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
 .news-title{font-size:15.5px;font-weight:700;line-height:1.5}
 .news-title strong{font-weight:700}
