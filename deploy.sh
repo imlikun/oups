@@ -110,6 +110,8 @@ for hf in html_files:
             continue
         if url.startswith('#') or url.startswith('mailto:') or url.startswith('javascript:'):
             continue
+        if url.startswith('/tasks/'):
+            continue  # 待办看板由 wb-sync(todo-hub) 生成、含客户项目信息；隐私原因刻意不进公开仓库，部署时由 Windows 端脚本推 ECS
         path = url.split('?', 1)[0].split('#', 1)[0]
         if path == '/':
             candidates = ['index.html']
