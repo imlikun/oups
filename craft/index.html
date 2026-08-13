@@ -1,704 +1,836 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>技艺录 — Lkn的技术探索</title>
 <meta name="description" content="从 HTML/CSS 到 AI 工具链——Lkn的技术学习与实践记录。">
-<!--SEO-->
 <link rel="icon" href="/favicon.ico">
-<link rel="canonical" href="https://www.Appin.site/craft/">
+<link rel="canonical" href="https://www.appin.site/craft/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="技艺录 — Lkn的技术探索">
 <meta property="og:description" content="从 HTML/CSS 到 AI 工具链——Lkn的技术学习与实践记录。">
-<meta property="og:url" content="https://www.Appin.site/craft/">
+<meta property="og:url" content="https://www.appin.site/craft/">
 <meta property="og:site_name" content="Appin.site">
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="技艺录 — Lkn的技术探索">
 <meta name="twitter:description" content="从 HTML/CSS 到 AI 工具链——Lkn的技术学习与实践记录。">
-<meta property="og:image" content="https://www.Appin.site/assets/og-cover.png">
-<meta name="twitter:image" content="https://www.Appin.site/assets/og-cover.png">
-
+<meta name="og:image" content="https://www.appin.site/assets/og-cover.png">
+<meta name="twitter:image" content="https://www.appin.site/assets/og-cover.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/base.css">
-    <link rel="stylesheet" href="/assets/list.css">
-<link rel="stylesheet" href="/assets/fx.css">
-<script src="/assets/fx.js" defer></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary-50:#eef0ff;--primary-100:#e0e3ff;--primary-200:#c7ccff;--primary-300:#a5acff;
+  --primary-400:#818cf8;--primary-500:#6366f1;--primary-600:#4f46e5;--primary-700:#4338ca;
+  --primary-800:#3730a3;--primary-900:#312e81;--primary-950:#1e1b4b;
+  --neutral-0:#ffffff;--neutral-50:#f8fafc;--neutral-100:#f1f5f9;--neutral-200:#e2e8f0;
+  --neutral-300:#cbd5e1;--neutral-400:#94a3b8;--neutral-500:#64748b;--neutral-600:#475569;
+  --neutral-700:#334155;--neutral-800:#1e293b;--neutral-900:#0f172a;--neutral-950:#020617;
+  --bg:var(--neutral-0);--fg:var(--neutral-900);
+  --card:rgba(255,255,255,.72);--card-fg:var(--neutral-900);
+  --muted:var(--neutral-100);--muted-fg:var(--neutral-500);
+  --border:var(--neutral-200);
+  --glass-bg:rgba(255,255,255,.6);--glass-bg-strong:rgba(255,255,255,.78);
+  --glass-border:rgba(255,255,255,.7);--glass-border-soft:rgba(99,102,241,.12);
+  --glass-shadow:0 8px 32px rgba(15,23,42,.06);
+  --glass-shadow-hover:0 12px 40px rgba(99,102,241,.12);
+  --glow-indigo:radial-gradient(circle at center,rgba(99,102,241,.35),transparent 70%);
+  --glow-violet:radial-gradient(circle at center,rgba(139,92,246,.28),transparent 70%);
+  --glow-cyan:radial-gradient(circle at center,rgba(34,211,238,.22),transparent 70%);
+  --font-sans:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono','Consolas',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:var(--font-sans);background:var(--bg);color:var(--fg);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;position:relative;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+
+/* ambient glow */
+.ambient{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
+.glow{position:absolute;border-radius:50%;filter:blur(20px);opacity:.6;}
+.glow--indigo{top:-12%;left:-10%;width:46vw;height:46vw;background:var(--glow-indigo);}
+.glow--violet{top:28%;right:-14%;width:52vw;height:52vw;background:var(--glow-violet);opacity:.5;}
+.glow--cyan{bottom:-10%;left:18%;width:40vw;height:40vw;background:var(--glow-cyan);opacity:.45;}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px) saturate(180%);
+  -webkit-backdrop-filter:blur(16px) saturate(180%);background:var(--glass-bg);
+  border-bottom:1px solid var(--glass-border-soft);}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:var(--fg);}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--primary-500),var(--primary-700));
+  color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;}
+.nav-logo b{color:var(--primary-600);font-weight:800;}
+.nav-links{display:none;gap:4px;}
+@media(min-width:768px){.nav-links{display:flex;}}
+.nav-links a{padding:8px 14px;border-radius:10px;font-size:.9rem;font-weight:500;color:var(--muted-fg);transition:.2s;}
+.nav-links a:hover{background:var(--muted);color:var(--fg);}
+.nav-links a.active{color:#1e1b4b;background:#c7ccff;font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.theme-btn{width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+  color:var(--fg);background:transparent;border:1px solid var(--glass-border-soft);cursor:pointer;transition:.2s;}
+.theme-btn:hover{background:var(--muted);}
+.menu-btn{width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+  color:var(--fg);background:transparent;border:none;cursor:pointer;}
+@media(min-width:768px){.menu-btn{display:none;}}
+.mobile-menu{display:none;flex-direction:column;padding:8px 20px 16px;gap:2px;background:var(--glass-bg-strong);
+  border-bottom:1px solid var(--glass-border-soft);}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{padding:10px 12px;border-radius:10px;color:var(--muted-fg);font-weight:500;}
+.mobile-menu a.active{color:#1e1b4b;background:#c7ccff;font-weight:600;}
+
+/* page header */
+.page-header{max-width:1100px;margin:0 auto;padding:64px 20px 26px;}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+  background:var(--primary-50);color:var(--primary-700);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--primary-500);}
+.page-header h1{margin:18px 0 0;font-size:clamp(1.9rem,4.5vw,3rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;color:var(--fg);}
+.page-header p{max-width:640px;margin:14px 0 0;font-size:1.05rem;line-height:1.7;color:var(--muted-fg);}
+
+/* filter bar */
+.filterbar{max-width:1100px;margin:0 auto;padding:0 20px 22px;display:flex;align-items:center;gap:12px;}
+.pills{display:flex;gap:8px;overflow-x:auto;flex:1;padding-bottom:2px;scrollbar-width:none;}
+.pills::-webkit-scrollbar{display:none;}
+.pill{flex:0 0 auto;white-space:nowrap;padding:8px 16px;border-radius:999px;font-size:.875rem;font-weight:500;cursor:pointer;
+  border:1px solid var(--glass-border-soft);background:var(--glass-bg);color:var(--fg);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:.2s;}
+.pill:hover{border-color:color-mix(in srgb,var(--primary) 35%,transparent);color:var(--primary);}
+.pill--active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.pill-count{opacity:.7;margin-left:4px;font-size:.8em;}
+.view-toggle{display:none;gap:4px;padding:4px;border-radius:10px;background:var(--muted);}
+@media(min-width:640px){.view-toggle{display:inline-flex;}}
+.view-toggle button{width:32px;height:32px;border-radius:8px;border:none;background:transparent;color:var(--muted-fg);
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:.2s;}
+.view-toggle button.active{background:var(--bg);color:var(--fg);box-shadow:0 1px 2px rgba(15,23,42,.08);}
+
+/* feed */
+.feed{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
+.grid-feed{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:640px){.grid-feed{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;grid-auto-flow:row dense;}}
+
+/* card */
+.craft-card{position:relative;display:flex;flex-direction:column;background:var(--glass-bg);border:1px solid var(--glass-border-soft);
+  border-radius:18px;overflow:hidden;box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(12px) saturate(160%);-webkit-backdrop-filter:blur(12px) saturate(160%);
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;grid-column:span 1;}
+.craft-card:hover{transform:translateY(-4px);box-shadow:var(--glass-shadow-hover);
+  border-color:color-mix(in srgb,var(--primary) 32%,transparent);}
+.craft-card:hover .card-title{color:var(--primary);}
+.craft-card:hover .cover-img{transform:scale(1.05);}
+.craft-card:hover .craft-arrow{opacity:1;transform:translate(2px,-2px);}
+.card--big{grid-column:1 / -1;}
+.card--horiz{grid-column:1 / -1;}
+@media(min-width:640px){.card--horiz{flex-direction:row;}}
+.cover{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--primary-400),var(--primary-800));flex-shrink:0;}
+.cover--big{aspect-ratio:21/9;}
+.cover--horiz{aspect-ratio:16/10;}
+@media(min-width:640px){.cover--horiz{width:200px;aspect-ratio:auto;height:100%;min-height:150px;}}
+.cover--compact{aspect-ratio:16/10;}
+.cover-img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.card-body{display:flex;flex-direction:column;padding:20px 22px;flex:1;min-width:0;}
+.card--horiz .card-body{padding:18px 20px;}
+.card--compact .card-body{padding:14px 16px;}
+.card-meta-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.chip{display:inline-flex;align-items:center;padding:3px 9px;border-radius:7px;font-size:.72rem;font-weight:700;white-space:nowrap;}
+.chip--ai{background:var(--primary-50);color:var(--primary-700);}
+.chip--oss{background:#ecfeff;color:#155e75;}
+.chip--tutorial{background:#fdf2f8;color:#9d174d;}
+.chip--video{background:#fff7ed;color:#b45309;}
+.chip--default{background:var(--muted);color:var(--muted-fg);}
+.date{font-family:var(--font-mono);font-size:.7rem;color:var(--muted-fg);white-space:nowrap;}
+.card-title{margin:0;color:var(--fg);font-weight:700;line-height:1.3;transition:color .3s ease;}
+.card-title--big{font-size:clamp(1.25rem,2.4vw,1.6rem);}
+.card-title--horiz{font-size:1.05rem;line-height:1.4;}
+.card-title--compact{font-size:.92rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-excerpt{margin:10px 0 0;color:var(--muted-fg);font-size:.92rem;line-height:1.65;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
+.card--compact .card-excerpt{display:none;}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;}
+.card--compact .card-foot{margin-top:12px;}
+.author{display:flex;align-items:center;gap:8px;min-width:0;}
+.avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--primary-500),var(--primary-700));
+  color:#fff;font-size:.6rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.author-name{font-size:.78rem;color:var(--muted-fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.craft-arrow{opacity:0;color:var(--primary);transition:opacity .3s ease,transform .3s ease;display:inline-flex;}
+
+/* grid view */
+.view-grid .craft-card{grid-column:span 1 !important;}
+.view-grid .card--horiz{flex-direction:column;}
+.view-grid .cover--horiz{width:auto;height:auto;aspect-ratio:16/10;min-height:0;}
+.view-grid .card-title--big,.view-grid .card-title--horiz{font-size:.95rem;}
+.view-grid .craft-card .card-excerpt{display:none;}
+
+/* load more */
+.loadmore{max-width:1100px;margin:0 auto;padding:0 20px 64px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.loadmore .count{font-family:var(--font-mono);font-size:.72rem;color:var(--muted-fg);}
+
+/* footer */
+.footer{border-top:1px solid var(--border);background:var(--muted);}
+.footer-inner{max-width:1100px;margin:0 auto;padding:48px 20px;display:grid;grid-template-columns:1fr;gap:32px;}
+@media(min-width:768px){.footer-inner{grid-template-columns:2fr 1fr 1fr;}}
+.footer .brand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--fg);margin-bottom:12px;}
+.footer p.desc{font-size:.875rem;line-height:1.7;color:var(--muted-fg);max-width:420px;margin:0;}
+.footer h4{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);margin:0 0 12px;}
+.footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.footer a{font-size:.875rem;color:var(--muted-fg);transition:.2s;}
+.footer a:hover{color:var(--primary);}
+.footer .bottom{border-top:1px solid var(--border);}
+.footer .bottom-inner{max-width:1100px;margin:0 auto;padding:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+  font-family:var(--font-mono);font-size:.7rem;color:var(--muted-fg);}
+
+/* dark mode */
+@media (prefers-color-scheme: dark){
+  :root{--bg:var(--neutral-950);--fg:var(--neutral-100);--muted:var(--neutral-900);--muted-fg:var(--neutral-400);
+    --border:var(--neutral-800);--glass-bg:rgba(30,41,59,.5);--glass-bg-strong:rgba(30,41,59,.7);
+    --glass-border:rgba(148,163,184,.18);--glass-border-soft:rgba(129,140,248,.18);
+    --glass-shadow:0 8px 32px rgba(0,0,0,.3);--glass-shadow-hover:0 12px 40px rgba(99,102,241,.2);
+    --glow-indigo:radial-gradient(circle at center,rgba(99,102,241,.25),transparent 70%);
+    --glow-violet:radial-gradient(circle at center,rgba(139,92,246,.2),transparent 70%);
+    --glow-cyan:radial-gradient(circle at center,rgba(34,211,238,.15),transparent 70%);}
+  .nav-links a.active{color:#e0e3ff;background:rgba(99,102,241,.22);box-shadow:inset 0 0 0 1px rgba(129,140,248,.32);}
+  .mobile-menu a.active{color:#e0e3ff;background:rgba(99,102,241,.22);box-shadow:inset 0 0 0 1px rgba(129,140,248,.32);}
+}
+[data-theme="dark"]{:root{--bg:var(--neutral-950);--fg:var(--neutral-100);--muted:var(--neutral-900);--muted-fg:var(--neutral-400);
+    --border:var(--neutral-800);--glass-bg:rgba(30,41,59,.5);--glass-bg-strong:rgba(30,41,59,.7);
+    --glass-border:rgba(148,163,184,.18);--glass-border-soft:rgba(129,140,248,.18);
+    --glass-shadow:0 8px 32px rgba(0,0,0,.3);--glass-shadow-hover:0 12px 40px rgba(99,102,241,.2);
+    --glow-indigo:radial-gradient(circle at center,rgba(99,102,241,.25),transparent 70%);
+    --glow-violet:radial-gradient(circle at center,rgba(139,92,246,.2),transparent 70%);
+    --glow-cyan:radial-gradient(circle at center,rgba(34,211,238,.15),transparent 70%);}
+  .nav-links a.active{color:#e0e3ff;background:rgba(99,102,241,.22);box-shadow:inset 0 0 0 1px rgba(129,140,248,.32);}
+  .mobile-menu a.active{color:#e0e3ff;background:rgba(99,102,241,.22);box-shadow:inset 0 0 0 1px rgba(129,140,248,.32);}
+}
+</style>
+<script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
 </head>
-<body class="list-craft">
-<nav class="nav"><div class="nav-inner">
-  <a href="/" class="nav-logo">Appin<span>.site</span></a>
-  <div class="nav-right">
-    <div class="nav-links">
-      <a href="/craft/">技艺录</a>
+<body class="craft-page">
+<div class="ambient" aria-hidden="true">
+  <span class="glow glow--indigo"></span>
+  <span class="glow glow--violet"></span>
+  <span class="glow glow--cyan"></span>
+</div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="logo-mark">A</span>ppin<b>.site</b></a>
+    <nav class="nav-links">
+      <a href="/">首页</a>
+      <a href="/craft/" class="active">技艺录</a>
       <a href="/notes/">随笔</a>
       <a href="/video-lab/">视频</a>
       <a href="/daily-digest/">每日阅读</a>
       <a href="/ai-radar/">AI 雷达</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="切换主题"><i data-lucide="moon"></i></button>
+      <button class="menu-btn" id="menuBtn" aria-label="打开菜单"><i data-lucide="menu"></i></button>
     </div>
-    
   </div>
-</div></nav>
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <span class="hero-badge"><span class="dot"></span>技艺录</span>
-      <h1><em>技术学习与实践记录</em></h1>
-      <p class="hero-desc">从 HTML/CSS 到 AI 工具链——把学到的东西，变成能落地的实战教程。</p>
-    </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">首页</a>
+    <a href="/craft/" class="active">技艺录</a>
+    <a href="/notes/">随笔</a>
+    <a href="/video-lab/">视频</a>
+    <a href="/daily-digest/">每日阅读</a>
+    <a href="/ai-radar/">AI 雷达</a>
+  </div>
+</header>
+
+<section class="page-header">
+  <span class="badge"><span class="dot"></span>技艺录 / CRAFT</span>
+  <h1>技术学习与实践记录</h1>
+  <p>从 HTML/CSS 到 AI 工具链——把学到的东西，变成能落地的实战教程。</p>
+</section>
+
+<section class="filterbar">
+  <div class="pills">
+    <button class="pill pill--active" data-filter="all">全部 <span class="pill-count">55</span></button>
+    <button class="pill" data-filter="ai">AI 编程</button>
+    <button class="pill" data-filter="oss">开源工具</button>
+    <button class="pill" data-filter="tutorial">教程</button>
+    <button class="pill" data-filter="video">视频制作</button>
+    <button class="pill" data-filter="api">API 接入</button>
+  </div>
+  <div class="view-toggle">
+    <button data-view="list" class="active" aria-label="列表视图"><i data-lucide="list"></i></button>
+    <button data-view="grid" aria-label="网格视图"><i data-lucide="layout-grid"></i></button>
   </div>
 </section>
-<section class="list-wrap">
-  <div class="list-header"><h2>&gt; 全部 技艺录 <span>(53)</span></h2></div>
-<a class="article-item" href="/craft/codex-cli-cn-install.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/codex-cli-cn-install-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026.07.26</span>
-    <h3>【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录</h3>
-    <p class="ai-excerpt">一份给国内开发者的 Codex CLI 踩坑实录：代理节点为什么被 403、chatgpt.com 和 api.openai.com 的风控差异、用 codex-auth-helper 导出 auth.json 实现 ChatGPT 账号免 API Key 登录。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Codex CLI</span><span class="item-tag">代理配置</span><span class="item-tag">免 API Key</span></div>
-    </div>
+
+<section class="feed">
+  <div class="grid-feed" id="feed">
+    <a class="craft-card card--big" href="/craft/codex-cli-cn-install.html" data-slug="codex-cli-cn-install" data-date="2026.07.26" data-tags="" title="【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/codex-cli-cn-install-cover.jpg" alt="【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">技术</span><span class="date">2026.07.26</span></div>
+        <h3 class="card-title card-title--big">【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录</h3>
+        <p class="card-excerpt">【WB】Codex CLI 国内安装实战：从代理风控到免 API Key 登录</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/spec-kit.html" data-slug="spec-kit" data-date="2026.07.25" data-tags="" title="【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/spec-kit-cover.jpg" alt="【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">技术</span><span class="date">2026.07.25</span></div>
+        <h3 class="card-title card-title--horiz">【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱</h3>
+        <p class="card-excerpt">【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/agency-agents-zh.html" data-slug="agency-agents-zh" data-date="2026-07-24" data-tags="ai 智能体 多智能体编排 the agency 中文开源 claude code cursor 小红书运营 跨境电商 桌面客户端 工作流自动化" title="【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/agency-agents-zh-cover.jpg" alt="【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.24</span></div>
+        <h3 class="card-title card-title--compact">【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/fish-audio-heygen-hyperframes.html" data-slug="fish-audio-heygen-hyperframes" data-date="2026-07-24" data-tags="数字人视频 fish audio heygen hyperframes ai 配音 视频后期 工作流 开源工具 口播视频 视频制作" title="【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/fish-audio-heygen-hyperframes-cover.jpg" alt="【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.24</span></div>
+        <h3 class="card-title card-title--compact">【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/baidu-unlimited-ocr.html" data-slug="baidu-unlimited-ocr" data-date="2026-07-24" data-tags="ocr 长文档解析 百度开源 mit协议 deepencoder r-swa moe 文档ai 企业rag 模型部署 免费商用 开源模型" title="【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/baidu-unlimited-ocr-cover.jpg" alt="【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.24</span></div>
+        <h3 class="card-title card-title--compact">【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/build-your-own-x.html" data-slug="build-your-own-x" data-date="2026-07-24" data-tags="编程学习 从零构建 开源教程 build-your-own-x cc0 计算机基础 数据库 操作系统 区块链 面试准备 系统设计 教程合集" title="【WB】build-your-own-x：从零造轮子的教程宝库，CC0 可商用，52万+ star">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/build-your-own-x-cover.jpg" alt="【WB】build-your-own-x：从零造轮子的教程宝库，CC0 可商用，52万+ star" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--oss">开源工具</span><span class="date">2026.07.24</span></div>
+        <h3 class="card-title card-title--big">【WB】build-your-own-x：从零造轮子的教程宝库，CC0 可商用，52万+ star</h3>
+        <p class="card-excerpt">codecrafters-io 维护的 build-your-own-x：一个 CC0 公共领域的开源教程合集，按领域汇总从零构建各类软件的动手教程，涵盖数据库、操作系统、区块链、游戏等，理念是费曼的『凡不能创造的就不能理解』。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/quark-to-aliyun-sync.html" data-slug="quark-to-aliyun-sync" data-date="2026-07-20" data-tags="夸克网盘 阿里云盘 alist alist-sync docker ecs 网盘同步 自动化" title="【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/quark-to-aliyun-sync-cover.webp" alt="【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">夸克网盘</span><span class="date">2026.07.20</span></div>
+        <h3 class="card-title card-title--horiz">【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定</h3>
+        <p class="card-excerpt">用 AList 在阿里云 ECS 上同时挂载夸克网盘与阿里云盘，再靠 alist-sync 容器每天定时把指定文件夹从夸克拷到阿里云盘。完整实操 + 踩坑，凭证全部打码。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/deeptutor.html" data-slug="deeptutor" data-date="2026-07-17" data-tags="deeptutor hkuds agent-native ai 教育 graphrag lightrag obsidian 多引擎检索 可检查记忆 cli docker 开源" title="DeepTutor：把辅导、解题、测验装进同一个 Agent 引擎的开源教育平台">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/deeptutor-cover.jpg" alt="DeepTutor：把辅导、解题、测验装进同一个 Agent 引擎的开源教育平台" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.17</span></div>
+        <h3 class="card-title card-title--compact">DeepTutor：把辅导、解题、测验装进同一个 Agent 引擎的开源教育平台</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/arya-markdown-editor.html" data-slug="arya-markdown-editor" data-date="2026-07-17" data-tags="arya markdown 编辑器 nicejade vditor vue2 流程图 甘特图 五线谱 html 转 markdown 多格式导出 mit 开源" title="Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/arya-markdown-editor-cover.jpg" alt="Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--oss">开源工具</span><span class="date">2026.07.17</span></div>
+        <h3 class="card-title card-title--compact">Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/comfyui-from-zero-to-pro.html" data-slug="comfyui-from-zero-to-pro" data-date="2026-07-17" data-tags="comfyui 节点式工作流 文生图 controlnet lora 新手教程" title="ComfyUI 从零到熟练：纯新手保姆级教程（2026）">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/comfyui-cover.jpg" alt="ComfyUI 从零到熟练：纯新手保姆级教程（2026）" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--tutorial">教程</span><span class="date">2026.07.17</span></div>
+        <h3 class="card-title card-title--compact">ComfyUI 从零到熟练：纯新手保姆级教程（2026）</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/voxcpm.html" data-slug="voxcpm" data-date="2026-07-17" data-tags="voxcpm voxcpm2 openbmb 语音合成 tts minicpm 多语言 方言 apache-2.0" title="VoxCPM 2：清华 OpenBMB 开源「无分词器」语音合成，30 语言 + 中文 9 方言">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/voxcpm-cover.jpg" alt="VoxCPM 2：清华 OpenBMB 开源「无分词器」语音合成，30 语言 + 中文 9 方言" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--oss">开源工具</span><span class="date">2026.07.17</span></div>
+        <h3 class="card-title card-title--big">VoxCPM 2：清华 OpenBMB 开源「无分词器」语音合成，30 语言 + 中文 9 方言</h3>
+        <p class="card-excerpt">VoxCPM2（OpenBMB/VoxCPM，Apache-2.0）是清华系 MiniCPM 团队打造的无分词器文本转语音（TTS）系统：端到端扩散自回归直接生成连续语音表征，支持 30 种语言与中文 9 种方言，48kHz 录音室级音质，可免费商用，内置 Voice Design 与可控/极致语音克隆。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/understand-anything.html" data-slug="understand-anything" data-date="2026-07-17" data-tags="understand anything longjun-9 代码理解 知识图谱 tree-sitter llm 语义 agent 流水线 claude code mit" title="Understand Anything：一条 /understand 把 20 万行代码库变成可交互知识图谱">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/understand-anything-cover.jpg" alt="Understand Anything：一条 /understand 把 20 万行代码库变成可交互知识图谱" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.17</span></div>
+        <h3 class="card-title card-title--horiz">Understand Anything：一条 /understand 把 20 万行代码库变成可交互知识图谱</h3>
+        <p class="card-excerpt">开源代码理解神器（longjun-9/Understand-Anything，MIT，约 71.7k Stars）：Tree-sitter 确定性解析 + LLM 语义理解双引擎，7 个 Agent 流水线并行分析，把任意代码库变成可搜索、可追问的结构/业务域/知识库三种视图图谱，支持 Claude Code / Codex / Cursor / Gemini CLI 等 15 平台，图谱 JSON 可提交 Git 共享，支持中文输出。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/video-autopilot-kit.html" data-slug="video-autopilot-kit" data-date="2026-07-16" data-tags="短视频 批量生产 ffmpeg 剪映 capcut 矩阵号 自动化 开源 视频质检" title="video-autopilot-kit：开源短视频批量生产工具，一条流水线干完矩阵号">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/video-autopilot-kit-cover.jpg" alt="video-autopilot-kit：开源短视频批量生产工具，一条流水线干完矩阵号" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--oss">开源工具</span><span class="date">2026.07.16</span></div>
+        <h3 class="card-title card-title--compact">video-autopilot-kit：开源短视频批量生产工具，一条流水线干完矩阵号</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/mediastorm-copywriter.html" data-slug="mediastorm-copywriter" data-date="2026-07-16" data-tags="mediastorm-copywriter 影视飓风 口播稿 claude code agent skill 文案 短视频脚本 mit 开源 结构化写作" title="mediastorm-copywriter：把影视飓风的「配方」做成可复用的口播稿生成技能">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/mediastorm-copywriter-cover.jpg" alt="mediastorm-copywriter：把影视飓风的「配方」做成可复用的口播稿生成技能" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.16</span></div>
+        <h3 class="card-title card-title--compact">mediastorm-copywriter：把影视飓风的「配方」做成可复用的口播稿生成技能</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/ai-job-search.html" data-slug="ai-job-search" data-date="2026-07-15" data-tags="ai job search claude code 求职工具 简历优化 求职信 ats 本地运行 开源" title="AI Job Search：把 Claude Code 变成你的本地求职流水线">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/ai-job-search-cover.jpg" alt="AI Job Search：把 Claude Code 变成你的本地求职流水线" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.15</span></div>
+        <h3 class="card-title card-title--compact">AI Job Search：把 Claude Code 变成你的本地求职流水线</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/skillopt.html" data-slug="skillopt" data-date="2026-07-15" data-tags="skillopt 微软 agent 技能 自我进化 外部权重 claude code codex 开源" title="SkillOpt：像训练神经网络一样，让 AI 技能自我进化">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/skillopt-cover.jpg" alt="SkillOpt：像训练神经网络一样，让 AI 技能自我进化" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.15</span></div>
+        <h3 class="card-title card-title--big">SkillOpt：像训练神经网络一样，让 AI 技能自我进化</h3>
+        <p class="card-excerpt">微软开源的 Agent 技能优化框架（1.1 万 Star）：把指导 Agent 行为的技能文档当作「可训练的外部权重」，用文本版训练循环让它自我进化，52 组评测全最优或并列最优，输出轻量 best_skill.md 跨模型部署。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/seedance-2.html" data-slug="seedance-2" data-date="2026-07-15" data-tags="seedance 2.0 导演 skill 提示词模板 ai 视频 分镜脚本 可灵 runway 开源" title="Seedance 2.0：把模糊想法变成完整影视脚本的开源导演 Skill">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/seedance-2-cover.jpg" alt="Seedance 2.0：把模糊想法变成完整影视脚本的开源导演 Skill" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.15</span></div>
+        <h3 class="card-title card-title--horiz">Seedance 2.0：把模糊想法变成完整影视脚本的开源导演 Skill</h3>
+        <p class="card-excerpt">开源的「导演技能训练」工具（3.8k Stars）：提供 Product I2V、Character、Drama、Action 等多类提示词模板，输入模糊想法即生成完整影视脚本，并带提问质量规则与优先问题库。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/codex-beginner-guide.html" data-slug="codex-beginner-guide" data-date="2026-07-15" data-tags="ai 编程 codex openai 工具教程 新手入门 ai 助手 自动化 定价 mcp github actions" title="Codex 小白使用教程：零基础也能让 AI 帮你写代码">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/codex-beginner-guide-cover.jpg" alt="Codex 小白使用教程：零基础也能让 AI 帮你写代码" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.15</span></div>
+        <h3 class="card-title card-title--compact">Codex 小白使用教程：零基础也能让 AI 帮你写代码</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/echo-loop.html" data-slug="echo-loop" data-date="2026-07-14" data-tags="echo loop 英语听说 ai 训练 间隔复习 flutter 开源 agpl-3.0 跟读评测 语言学习 移动端" title="Echo Loop：用 AI 把「听不懂」练成「说得出」的英语听说训练 App">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/echo-loop-cover.jpg" alt="Echo Loop：用 AI 把「听不懂」练成「说得出」的英语听说训练 App" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.14</span></div>
+        <h3 class="card-title card-title--compact">Echo Loop：用 AI 把「听不懂」练成「说得出」的英语听说训练 App</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/firecrawl.html" data-slug="firecrawl" data-date="2026-07-13" data-tags="firecrawl 网页抓取 数据提取 rag ai agent 开源 json schema 结构化数据 mendable 爬虫替代" title="Firecrawl：把任意网页变成结构化数据，14.9万 Star 的开源抓取引擎">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/firecrawl-cover.jpg" alt="Firecrawl：把任意网页变成结构化数据，14.9万 Star 的开源抓取引擎" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.13</span></div>
+        <h3 class="card-title card-title--compact">Firecrawl：把任意网页变成结构化数据，14.9万 Star 的开源抓取引擎</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/awesome-llm-apps.html" data-slug="awesome-llm-apps" data-date="2026-07-13" data-tags="awesome-llm-apps llm 应用 rag ai agent 多代理团队 语音代理 mcp 开源合集 apache-2.0 原型开发" title="awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/awesome-llm-apps-cover.jpg" alt="awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.13</span></div>
+        <h3 class="card-title card-title--big">awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集</h3>
+        <p class="card-excerpt">GitHub 顶流实战合集（Apache-2.0，10 万+ Star）：汇集 100+ 经过端到端测试的可运行 LLM 应用——多代理协作、RAG 知识库、语音交互代理一应俱全，clone 下来几条命令就能跑，是快速搭建 AI 产品原型的现成弹药库。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/glm-deepseek-workbuddy-trae.html" data-slug="glm-deepseek-workbuddy-trae" data-date="2026-07-12" data-tags="智谱 glm deepseek workbuddy trae api 接入 openai 兼容接口 国内直连 免费额度 接入教程" title="智谱 GLM + DeepSeek 接入 WorkBuddy / Trae：国内直连，免费用上大模型">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/glm-deepseek-workbuddy-trae-cover.jpg" alt="智谱 GLM + DeepSeek 接入 WorkBuddy / Trae：国内直连，免费用上大模型" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.12</span></div>
+        <h3 class="card-title card-title--horiz">智谱 GLM + DeepSeek 接入 WorkBuddy / Trae：国内直连，免费用上大模型</h3>
+        <p class="card-excerpt">两个国产大模型，都兼容 OpenAI 接口，国内直连、不用任何额外工具，免费额度够日常使用。手把手把它们接进 WorkBuddy 和 Trae，零基础也能照做。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/webnovel-writer.html" data-slug="webnovel-writer" data-date="2026-07-11" data-tags="webnovel writer claude code 网文写作 ai写作 长篇连载 story system rag检索 一致性系统 开源工具 小说创作" title="WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/webnovel-writer-cover.jpg" alt="WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.11</span></div>
+        <h3 class="card-title card-title--compact">WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/openmontage.html" data-slug="openmontage" data-date="2026-07-11" data-tags="openmontage agent视频 ai视频 视频生产 claude code remotion 开源 自动化剪辑 短视频 agpl-3.0" title="OpenMontage：把你的 AI 编程助手，变成一整间视频工作室">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/openmontage-cover.jpg" alt="OpenMontage：把你的 AI 编程助手，变成一整间视频工作室" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.11</span></div>
+        <h3 class="card-title card-title--compact">OpenMontage：把你的 AI 编程助手，变成一整间视频工作室</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/gemini-api-newbie-guide.html" data-slug="gemini-api-newbie-guide" data-date="2026-07-11" data-tags="gemini google ai api配置 免费ai 小白教程 代理设置 ai客户端 国内可用" title="国内免费用上 Gemini：4 步配置小白教程">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/gemini-api-newbie-cover.jpg" alt="国内免费用上 Gemini：4 步配置小白教程" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.11</span></div>
+        <h3 class="card-title card-title--compact">国内免费用上 Gemini：4 步配置小白教程</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/trae-advanced-guide.html" data-slug="trae-advanced-guide" data-date="2026-07-10" data-tags="trae 免费api 大模型 ai编程 记忆功能 开发效率 教程" title="Trae 进阶实战：免费 API 接入 + 记忆体系全攻略">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/trae-advanced-guide-cover.jpg" alt="Trae 进阶实战：免费 API 接入 + 记忆体系全攻略" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.10</span></div>
+        <h3 class="card-title card-title--big">Trae 进阶实战：免费 API 接入 + 记忆体系全攻略</h3>
+        <p class="card-excerpt">把 somerice 博客园三篇实战笔记整合为一——Agnes AI 三模态永久免费 API 怎么接进 Trae Work、Skill 怎么封装生图生视频、以及 Trae 三类记忆（全局/项目/会话）怎么管理，附 5 款免费 API 横向测评与报错排查。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/ai-free-credits-guide-2026-07.html" data-slug="ai-free-credits-guide-2026-07" data-date="2026-07-10" data-tags="ai 免费额度 大模型 优惠攻略 省钱技巧 开发工具 2026" title="AI 平台免费额度与优惠攻略（2026年7月版）">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/ai-free-credits-guide-cover.jpg" alt="AI 平台免费额度与优惠攻略（2026年7月版）" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.10</span></div>
+        <h3 class="card-title card-title--horiz">AI 平台免费额度与优惠攻略（2026年7月版）</h3>
+        <p class="card-excerpt">汇总 30+ 国内外主流 AI 平台的免费 token、新用户福利、订阅价格与省钱技巧，零成本玩转 AI。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/aiworkskills-wechat-ai-ops.html" data-slug="aiworkskills-wechat-ai-ops" data-date="2026-07-10" data-tags="aiworkskills 公众号运营 ai工具 开源 技能模块 业务资料库 运营自动化 内容创作" title="aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/aiworkskills-wechat-ai-ops-cover.jpg" alt="aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.10</span></div>
+        <h3 class="card-title card-title--compact">aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/money-printer-turbo.html" data-slug="money-printer-turbo" data-date="2026-07-10" data-tags="moneyprinterturbo 短视频 开源工具 ai视频 自动化 内容创作 批量生成 短视频运营" title="MoneyPrinterTurbo：输入关键词，全自动生成短视频">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/money-printer-turbo-cover.jpg" alt="MoneyPrinterTurbo：输入关键词，全自动生成短视频" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.10</span></div>
+        <h3 class="card-title card-title--compact">MoneyPrinterTurbo：输入关键词，全自动生成短视频</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/gemini-api-workbuddy-trae.html" data-slug="gemini-api-workbuddy-trae" data-date="2026-07-10" data-tags="gemini api workbuddy trae api 接入 openai 兼容接口" title="把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/gemini-api-workbuddy-trae-cover.jpg" alt="把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.10</span></div>
+        <h3 class="card-title card-title--compact">把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/omniget.html" data-slug="omniget" data-date="2026-07-10" data-tags="omniget 媒体下载 开源工具 桌面应用 学习工具 课程下载 电子书 笔记" title="OmniGet：把 1,800+ 网站内容「下载 + 学习」揽进一个桌面">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/omniget-cover.jpg" alt="OmniGet：把 1,800+ 网站内容「下载 + 学习」揽进一个桌面" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--oss">开源工具</span><span class="date">2026.07.10</span></div>
+        <h3 class="card-title card-title--big">OmniGet：把 1,800+ 网站内容「下载 + 学习」揽进一个桌面</h3>
+        <p class="card-excerpt">免费开源桌面应用（Rust+Tauri，GPL-3.0）：从 1,800+ 站点下载课程/视频/音频/电子书，内置播放器、PDF/EPUB 阅读器、笔记与间隔重复，下载完直接学。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/agent-reach.html" data-slug="agent-reach" data-date="2026-07-07" data-tags="agent reach ai agent 开源 互联网访问 mit python claude code openclaw github" title="Agent Reach：给 AI Agent 一键装上互联网能力，15个平台零API费用">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/agent-reach-cover.jpg" alt="Agent Reach：给 AI Agent 一键装上互联网能力，15个平台零API费用" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.07</span></div>
+        <h3 class="card-title card-title--horiz">Agent Reach：给 AI Agent 一键装上互联网能力，15个平台零API费用</h3>
+        <p class="card-excerpt">一个开源的能力层工具，把 Twitter、YouTube、B站、小红书等 15 个平台的接入能力整合成一个 CLI。零 API 费用，MIT 协议，兼容 Claude Code / OpenClaw / Cursor。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/yt-dlp-downloader.html" data-slug="yt-dlp-downloader" data-date="2026-07-03" data-tags="yt-dlp 开源 视频下载 命令行 python ffmpeg github" title="yt-dlp：120K+ Stars 的开源音视频下载神器，1800+ 网站全覆盖">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/yt-dlp-cover.jpg" alt="yt-dlp：120K+ Stars 的开源音视频下载神器，1800+ 网站全覆盖" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.03</span></div>
+        <h3 class="card-title card-title--compact">yt-dlp：120K+ Stars 的开源音视频下载神器，1800+ 网站全覆盖</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/chatwoot.html" data-slug="chatwoot" data-date="2026-07-03" data-tags="chatwoot 开源 客服系统 自托管 ruby vue github" title="Chatwoot：31K+ Stars 的开源客服系统，Zendesk/Intercom 的免费替代方案">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/chatwoot-cover.jpg" alt="Chatwoot：31K+ Stars 的开源客服系统，Zendesk/Intercom 的免费替代方案" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.03</span></div>
+        <h3 class="card-title card-title--compact">Chatwoot：31K+ Stars 的开源客服系统，Zendesk/Intercom 的免费替代方案</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/nomifun-ai-workstation.html" data-slug="nomifun-ai-workstation" data-date="2026-07-01" data-tags="nomifun ai 开源 桌宠 自动化 知识库 github" title="NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/nomifun-cover.jpg" alt="NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.01</span></div>
+        <h3 class="card-title card-title--compact">NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/book-to-skill.html" data-slug="book-to-skill" data-date="2026-07-01" data-tags="ai 知识库 开源 书籍 工具 skill github" title="book-to-skill：把技术书一键变成 AI 专属知识库">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/book-to-skill-cover.jpg" alt="book-to-skill：把技术书一键变成 AI 专属知识库" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.07.01</span></div>
+        <h3 class="card-title card-title--big">book-to-skill：把技术书一键变成 AI 专属知识库</h3>
+        <p class="card-excerpt">不是让 AI「读」书，而是让 AI「学会」这本书——把 PDF/EPUB/DOCX 等技术书编译成结构化的 AI Skill 包，Token 成本直降 51 倍，MIT 开源。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/ai-news-radar-guide.html" data-slug="ai-news-radar-guide" data-date="2026-06-26" data-tags="ai工具 自动化 前端开发 api集成 定时任务 实战教程" title="零代码搭建自动更新的 AI 资讯站：选模板、配API、设自动化全教程">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/ai-news-radar-cover.jpg" alt="零代码搭建自动更新的 AI 资讯站：选模板、配API、设自动化全教程" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.26</span></div>
+        <h3 class="card-title card-title--horiz">零代码搭建自动更新的 AI 资讯站：选模板、配API、设自动化全教程</h3>
+        <p class="card-excerpt">纯前端 + 外部API + 定时脚本注入 + CDN托管，四步搭建一个每天自动刷新的 AI 新闻站点。全程零后端、零数据库、零服务器运维。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/ai-news-radar.html" data-slug="ai-news-radar" data-date="2026-06-25" data-tags="ai资讯 开源工具 rss 信息过滤 github actions" title="伯乐News雷达：AI资讯过滤神器，告别信息过载">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/bolenews-cover.jpg" alt="伯乐News雷达：AI资讯过滤神器，告别信息过载" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.25</span></div>
+        <h3 class="card-title card-title--compact">伯乐News雷达：AI资讯过滤神器，告别信息过载</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/aimoneyhunter.html" data-slug="aimoneyhunter" data-date="2026-06-25" data-tags="ai副业 自媒体 赚钱方法论 开源项目 创业思维" title="AI 副业赚钱完全指南：这些方法让你用 AI 增加第二份收入">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/aimoneyhunter-cover.jpg" alt="AI 副业赚钱完全指南：这些方法让你用 AI 增加第二份收入" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.25</span></div>
+        <h3 class="card-title card-title--compact">AI 副业赚钱完全指南：这些方法让你用 AI 增加第二份收入</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/ai-design-tools.html" data-slug="ai-design-tools" data-date="2026-06-25" data-tags="ai设计 前端开发 ui/ux 设计工具 开源" title="5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/ai-design-tools-cover.jpg" alt="5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.25</span></div>
+        <h3 class="card-title card-title--compact">5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/multipost.html" data-slug="multipost" data-date="2026-06-25" data-tags="浏览器扩展 多平台发布 社交媒体 效率工具 开源" title="多平台内容分发实操教程：一次编辑同步发布到微信公众号、知乎、B站等10+平台">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/multipost-cover.jpg" alt="多平台内容分发实操教程：一次编辑同步发布到微信公众号、知乎、B站等10+平台" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--oss">开源工具</span><span class="date">2026.06.25</span></div>
+        <h3 class="card-title card-title--big">多平台内容分发实操教程：一次编辑同步发布到微信公众号、知乎、B站等10+平台</h3>
+        <p class="card-excerpt">一个开源免费的浏览器扩展，支持 27+ 个平台处理器。写一次内容，一键发布到所有社交平台。免费开源，无需登录。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/gpt-image-2-prompts.html" data-slug="gpt-image-2-prompts" data-date="2026-06-22" data-tags="gpt image 2 ai 绘图 prompt 工程 图像生成 openai 提示词模板 开源" title="GPT Image 2 开源提示词库：900+模板直接复制出图">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/gpt-image-2-cover.jpg" alt="GPT Image 2 开源提示词库：900+模板直接复制出图" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.22</span></div>
+        <h3 class="card-title card-title--horiz">GPT Image 2 开源提示词库：900+模板直接复制出图</h3>
+        <p class="card-excerpt">GPT Image 2 + awesome-gpt-image-2-prompts 开源提示词案例库，收录 900+ 高质量 Prompt 模板，覆盖 7 大场景，CC0 协议完全开放。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/longcat-video-avatar-1.5.html" data-slug="longcat-video-avatar-1.5" data-date="2026-06-18" data-tags="数字人 ai视频 美团 开源 longcat 唇形同步" title="数字人视频制作教程：美团 LongCat，一张照片+音频自动生成对口型视频">
+      <div class="cover cover--compact"><img class="cover-img" src="/craft/longcat-hero.png" alt="数字人视频制作教程：美团 LongCat，一张照片+音频自动生成对口型视频" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.18</span></div>
+        <h3 class="card-title card-title--compact">数字人视频制作教程：美团 LongCat，一张照片+音频自动生成对口型视频</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/deep-live-cam.html" data-slug="deep-live-cam" data-date="2026-06-17" data-tags="ai换脸 开源 github deep-live-cam 虚拟主播 影视特效 工具" title="AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/deep-live-cam-cover.jpg" alt="AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.17</span></div>
+        <h3 class="card-title card-title--compact">AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/xpeng-gx-2698.html" data-slug="xpeng-gx-2698" data-date="2026-06-17" data-tags="小鹏 新能源 车市 诚意定价 价值战 行业分析" title="26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/xpeng-gx-2698-cover.jpg" alt="26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">小鹏</span><span class="date">2026.06.17</span></div>
+        <h3 class="card-title card-title--compact">26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/ian-xiaohei-illustrations.html" data-slug="ian-xiaohei-illustrations" data-date="2026-06-16" data-tags="ai 工具 codex skill 插图 github" title="AI 文章自动配图教程：让小黑插图帮你的内容一键生成手绘风格图解">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/ian-xiaohei-cover.jpg" alt="AI 文章自动配图教程：让小黑插图帮你的内容一键生成手绘风格图解" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.16</span></div>
+        <h3 class="card-title card-title--big">AI 文章自动配图教程：让小黑插图帮你的内容一键生成手绘风格图解</h3>
+        <p class="card-excerpt">一个 Codex Skill，教 AI 给中文文章生成配图——不是随便配一张好看的图，而是把文章里的关键判断、流程、状态或隐喻，画成一张有记忆点的 16:9 手绘解释图。作者 Ian，GitHub 4.6k+ stars。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/trendradar-ai-hot-push.html" data-slug="trendradar-ai-hot-push" data-date="2026-06-12" data-tags="ai 舆情监控 开源 自动化 github 工具" title="AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/trendradar-header.webp" alt="AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.06.12</span></div>
+        <h3 class="card-title card-title--horiz">AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信</h3>
+        <p class="card-excerpt">TrendRadar 就像一个「AI 私人编辑」——每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到微信/钉钉/飞书上。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/react-hooks-learning.html" data-slug="react-hooks-learning" data-date="2026-06-03" data-tags="react hooks 学习笔记 javascript" title="React 学习笔记：从 Class 组件到 Hooks 的思维转变">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/react-hooks-learning-header.webp" alt="React 学习笔记：从 Class 组件到 Hooks 的思维转变" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">React</span><span class="date">2026.06.03</span></div>
+        <h3 class="card-title card-title--compact">React 学习笔记：从 Class 组件到 Hooks 的思维转变</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/apple-resume-page.html" data-slug="apple-resume-page" data-date="2026-06-01" data-tags="html css javascript canvas 个人项目" title="我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/apple-resume-page-header.webp" alt="我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">HTML</span><span class="date">2026.06.01</span></div>
+        <h3 class="card-title card-title--compact">我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/css-grid-bento-layout.html" data-slug="css-grid-bento-layout" data-date="2026-05-25" data-tags="css grid 布局 设计" title="CSS Grid 实战：用 Bento Grid 做不规则卡片布局">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/css-grid-bento-layout-header.webp" alt="CSS Grid 实战：用 Bento Grid 做不规则卡片布局" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">CSS</span><span class="date">2026.05.25</span></div>
+        <h3 class="card-title card-title--compact">CSS Grid 实战：用 Bento Grid 做不规则卡片布局</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--big" href="/craft/js-async-await-guide.html" data-slug="js-async-await-guide" data-date="2026-05-18" data-tags="javascript 异步 promise async/await" title="JavaScript 异步编程：从回调地狱到 async/await">
+      <div class="cover cover--big"><img class="cover-img" src="/uploads/js-async-await-guide-header.webp" alt="JavaScript 异步编程：从回调地狱到 async/await" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--ai">AI 编程</span><span class="date">2026.05.18</span></div>
+        <h3 class="card-title card-title--big">JavaScript 异步编程：从回调地狱到 async/await</h3>
+        <p class="card-excerpt">回调用嵌套、Promise 链式调用、async/await 语法糖——JavaScript 异步编程的演进过程，以及每种写法的适用场景。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--horiz" href="/craft/typescript-intro.html" data-slug="typescript-intro" data-date="2026-05-10" data-tags="typescript javascript 类型安全 学习笔记" title="TypeScript 入门：给 JavaScript 项目加上类型安全">
+      <div class="cover cover--horiz"><img class="cover-img" src="/uploads/typescript-intro-header.webp" alt="TypeScript 入门：给 JavaScript 项目加上类型安全" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">TypeScript</span><span class="date">2026.05.10</span></div>
+        <h3 class="card-title card-title--horiz">TypeScript 入门：给 JavaScript 项目加上类型安全</h3>
+        <p class="card-excerpt">从 JavaScript 切换到 TypeScript 最大的障碍不是语法，而是思维方式的转变。分享一下我是如何克服初期挫折感的。</p>
+        <div class="card-foot"><div class="author"><span class="avatar">LK</span><span class="author-name">Li Kun</span></div><span class="craft-arrow"><i data-lucide="arrow-up-right"></i></span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/canvas-api-ripple-particles.html" data-slug="canvas-api-ripple-particles" data-date="2026-04-28" data-tags="canvas 动画 javascript 粒子系统" title="Canvas API 深入：从涟漪动画到粒子系统的完整实现">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/canvas-api-ripple-particles-header.webp" alt="Canvas API 深入：从涟漪动画到粒子系统的完整实现" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">Canvas</span><span class="date">2026.04.28</span></div>
+        <h3 class="card-title card-title--compact">Canvas API 深入：从涟漪动画到粒子系统的完整实现</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
+    <a class="craft-card card--compact" href="/craft/nodejs-express-blog-api.html" data-slug="nodejs-express-blog-api" data-date="2026-04-15" data-tags="node.js express api 后端" title="Node.js 实战：用 Express 搭建一个个人博客 API">
+      <div class="cover cover--compact"><img class="cover-img" src="/uploads/nodejs-express-blog-api-header.webp" alt="Node.js 实战：用 Express 搭建一个个人博客 API" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <div class="card-meta-top"><span class="chip chip--default">Node.js</span><span class="date">2026.04.15</span></div>
+        <h3 class="card-title card-title--compact">Node.js 实战：用 Express 搭建一个个人博客 API</h3>
+        <div class="card-foot"><span class="author-name">Li Kun</span></div>
+      </div>
+    </a>
   </div>
-</a>
-<a class="article-item" href="/craft/spec-kit.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/spec-kit-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026.07.25</span>
-    <h3>【WB】GitHub Spec Kit：用「规范驱动」终结 vibe coding 的混乱</h3>
-    <p class="ai-excerpt">GitHub 官方开源的 Spec Kit，把规范驱动开发（SDD）做成可落地的 AI 编程工作流：先写清要建什么，再让 Agent 实现，告别凭感觉写代码。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">规范驱动</span><span class="item-tag">AI 编程</span><span class="item-tag">GitHub 官方</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/build-your-own-x.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/build-your-own-x-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-24</span>
-    <h3>【WB】build-your-own-x：从零造轮子的教程宝库，CC0 可商用，52万+ star</h3>
-    <p class="ai-excerpt">codecrafters-io 维护的 build-your-own-x：一个 CC0 公共领域的开源教程合集，按领域汇总从零构建各类软件的动手教程，涵盖数据库、操作系统、区块链、游戏等，理念是费曼的"凡不能创造的就不能理解"。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">编程学习</span><span class="item-tag">从零构建</span><span class="item-tag">CC0</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/baidu-unlimited-ocr.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/baidu-unlimited-ocr-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-24</span>
-    <h3>【WB】百度 Unlimited-OCR：一次性解析整本长文档的开源 OCR，MIT 可商用</h3>
-    <p class="ai-excerpt">百度开源的端到端长文档 OCR 模型 Unlimited-OCR：基于 DeepEncoder + R-SWA + MoE，单次前向传播解析数十页文档，KV 缓存恒定不爆炸，OmniDocBench v1.6 达 93.92%，MIT 协议可商用。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">OCR</span><span class="item-tag">长文档解析</span><span class="item-tag">百度开源</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/fish-audio-heygen-hyperframes.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/fish-audio-heygen-hyperframes-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-24</span>
-    <h3>【WB】一条流水线做数字人视频：Fish Audio 配音 → HeyGen V 数字人 → HyperFrames 包装</h3>
-    <p class="ai-excerpt">视频里的一条 AI 数字人视频生产线：Fish Audio 生成配音，HeyGen V 生成数字人视频，HyperFrames 负责字幕 / 转场 / 特效后期包装。三款工具串起来，几分钟产出成片。含合规提醒（肖像权 / 商用许可）。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">数字人视频</span><span class="item-tag">Fish Audio</span><span class="item-tag">HyperFrames</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/agency-agents-zh.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/agency-agents-zh-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-24</span>
-    <h3>【WB】266 个 AI 专家任你调遣：agency-agents-zh 把 The Agency 汉化 + 本土化</h3>
-    <p class="ai-excerpt">agency-agents-zh 是 The Agency 的中文增强版，把 AI 专家角色从 144 扩展到 266 个，新增 50 个中国市场专属智能体，一句话即可调度多专家协作。覆盖 20 个部门、18 种工具，配套编排器一句话调度多专家 DAG 协作。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">agency-agents-zh</span><span class="item-tag">AI 智能体</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/quark-to-aliyun-sync.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/quark-to-aliyun-sync-cover.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-20</span>
-    <h3>【WB】把夸克网盘定时同步到阿里云盘：一台 ECS + Docker 帮我搞定</h3>
-    <p class="ai-excerpt">用 AList 在阿里云 ECS 上同时挂载夸克网盘与阿里云盘，再靠 alist-sync 容器每天定时把指定文件夹从夸克拷到阿里云盘。完整实操 + 踩坑，凭证全部打码，小白能照着做。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">夸克网盘</span><span class="item-tag">AList</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/deeptutor.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/deeptutor-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-17</span>
-    <h3>DeepTutor：把辅导、解题、测验装进同一个 Agent 引擎的开源教育平台</h3>
-    <p class="ai-excerpt">香港大学 HKUDS 实验室开发的开源 AI 教育平台（deep-tutor/deep-tutor，25.8k Stars，Apache 2.0）：Agent-Native 架构整合辅导、解题、测验、研究等六大能力于统一引擎，支持 GraphRAG/LightRAG/Obsidian 多引擎检索，三层可检查记忆（L1-L3），CLI + Docker 一键部署，适配飞书/Telegram/Slack。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">DeepTutor</span><span class="item-tag">HKUDS</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/arya-markdown-editor.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/arya-markdown-editor-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-17</span>
-    <h3>Arya：浏览器打开即用的开源 Markdown 编辑器，3.8k Stars</h3>
-    <p class="ai-excerpt">开发者 nicejade 创建的开源 Markdown 编辑器（nicejade/markdown-online-editor，MIT，v3.8.0.0）：浏览器打开即用，支持 Markdown/流程图/甘特图/五线谱编辑，HTML 自动转 Markdown，PDF/PNG/JPEG/Word 多格式导出。基于 Vue2 + Vditor，本地存储、实时预览、快捷键。在线体验 niceshare.site。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Arya</span><span class="item-tag">Markdown 编辑器</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/comfyui-from-zero-to-pro.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/comfyui-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-17</span>
-    <h3>ComfyUI 从零到熟练：纯新手保姆级教程（2026）</h3>
-    <p class="ai-excerpt">ComfyUI 节点式 AI 图像生成工具纯新手保姆级教程：从硬件认知、三种安装方式、界面概念，到文生图/图生图/重绘/放大/ControlNet/LoRA 工作流实操，含模型管理与排错手册，照着做即可从零到熟练。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">ComfyUI</span><span class="item-tag">节点式工作流</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/voxcpm.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/voxcpm-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-17</span>
-    <h3>VoxCPM 2：清华 OpenBMB 开源「无分词器」语音合成，30 语言 + 中文 9 方言</h3>
-    <p class="ai-excerpt">VoxCPM2（OpenBMB/VoxCPM，Apache-2.0）是清华系 MiniCPM 团队打造的无分词器文本转语音（TTS）系统：端到端扩散自回归直接生成连续语音表征，支持 30 种语言与中文 9 种方言，48kHz 录音室级音质，可免费商用，内置 Voice Design 与可控/极致语音克隆。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">VoxCPM</span><span class="item-tag">VoxCPM2</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/understand-anything.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/understand-anything-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-17</span>
-    <h3>Understand Anything：一条 /understand 把 20 万行代码库变成可交互知识图谱</h3>
-    <p class="ai-excerpt">开源代码理解神器（longjun-9/Understand-Anything，MIT，约 71.7k Stars）：Tree-sitter 确定性解析 + LLM 语义理解双引擎，7 个 Agent 流水线并行分析，把任意代码库变成可搜索、可追问的结构/业务域/知识库三种视图图谱，支持 Claude Code / Codex / Cursor / Gemini CLI 等 15 平台，图谱 JSON 可提交 Git 共享，支持中文输出。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Understand Anything</span><span class="item-tag">longjun-9</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/video-autopilot-kit.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/video-autopilot-kit-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-16</span>
-    <h3>video-autopilot-kit：开源短视频批量生产工具，一条流水线干完矩阵号</h3>
-    <p class="ai-excerpt">开源短视频批量生产工具（Hao0321/video-autopilot-kit，v0.8.0，721 Star）：同时提供「程序化（Python+ffmpeg 跨平台、交付前自动质检）」与「剪映辅助（CapCut 草稿 + 桌面自动化）」两条路线，用填空式问卷把筛素材、剪视频、加特效、质检交付编排成流水线，专为矩阵号和小团队设计。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">短视频</span><span class="item-tag">批量生产</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/mediastorm-copywriter.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/mediastorm-copywriter-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-16</span>
-    <h3>mediastorm-copywriter：把影视飓风的「配方」做成可复用的口播稿生成技能</h3>
-    <p class="ai-excerpt">生成「影视飓风(Mediastorm)」风格中文口播稿的 Claude Code / Agent Skill（imfangli/mediastorm-copywriter，MIT）：基于 19 条视频口播字幕的结构化分析，提炼开头钩子、黄金七段式骨架、节奏转场、数据换算与金句 CTA 规律，让 AI 按同样配方产出成稿。仅生成稿子，不碰画面。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">mediastorm-copywriter</span><span class="item-tag">影视飓风</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/ai-job-search.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/ai-job-search-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-15</span>
-    <h3>AI Job Search：把 Claude Code 变成你的本地求职流水线</h3>
-    <p class="ai-excerpt">基于 Claude Code 的开源求职工作流：自动筛岗、算匹配度、按 JD 定制 CV 与求职信、再做复核、PDF / ATS 检查与面试准备，把求职变成一条可编程、可审计的本地流水线。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI Job Search</span><span class="item-tag">Claude Code</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/skillopt.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/skillopt-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-15</span>
-    <h3>SkillOpt：像训练神经网络一样，让 AI 技能自我进化</h3>
-    <p class="ai-excerpt">微软开源的 Agent 技能优化框架（1.1 万 Star）：把指导 Agent 行为的技能文档当作「可训练的外部权重」，用文本版训练循环让它自我进化，52 组评测全最优或并列最优，输出轻量 best_skill.md 跨模型部署。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">SkillOpt</span><span class="item-tag">微软</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/seedance-2.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/seedance-2-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-15</span>
-    <h3>Seedance 2.0：把模糊想法变成完整影视脚本的开源导演 Skill</h3>
-    <p class="ai-excerpt">开源的「导演技能训练」工具（3.8k Stars）：提供 Product I2V、Character、Drama、Action 等多类提示词模板，输入模糊想法即生成完整影视脚本，并带提问质量规则与优先问题库。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Seedance 2.0</span><span class="item-tag">导演 Skill</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/codex-beginner-guide.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/codex-beginner-guide-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-15</span>
-    <h3>Codex 小白使用教程：零基础也能让 AI 帮你写代码</h3>
-    <p class="ai-excerpt">一份给没写过多少代码的人的 Codex（OpenAI AI 程序员）上手教程：4 种入口、3 步开始、价格与用量、下指令技巧、审批模式安全、插件/MCP/子Agent 扩展、与 WorkBuddy 的组合拳，以及 30 分钟上手路线。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI 编程</span><span class="item-tag">Codex</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/echo-loop.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/echo-loop-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-14</span>
-    <h3>Echo Loop：用 AI 把「听不懂」练成「说得出」的英语听说训练 App</h3>
-    <p class="ai-excerpt">开源 AI 英语听说训练应用（AGPL-3.0，Flutter 跨平台）：盲听、精听、跟读、复述、间隔复习自动驱动学习节奏，长难句意群划分、跟读 AI 评测、语境化闪卡、导入本地音频 + AI 字幕，把每段音频真正练到会说。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Echo Loop</span><span class="item-tag">英语听说</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/firecrawl.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/firecrawl-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-13</span>
-    <h3>Firecrawl：把任意网页变成结构化数据，14.9万 Star 的开源抓取引擎</h3>
-    <p class="ai-excerpt">GitHub 14.9 万 Star 的开源网页抓取与转换引擎：输入 URL 即输出干净 Markdown/JSON，支持自定义 JSON Schema 批量提取商品数据（准确率 96%），还带 AI Agent 实时搜索——专为 RAG 与 AI Agent 开发设计，无需写爬虫。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Firecrawl</span><span class="item-tag">网页抓取</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/awesome-llm-apps.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/awesome-llm-apps-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-13</span>
-    <h3>awesome-llm-apps：100+ 个能直接跑起来的 LLM 应用源码合集</h3>
-    <p class="ai-excerpt">GitHub 顶流实战合集（Apache-2.0，10 万+ Star）：汇集 100+ 经过端到端测试的可运行 LLM 应用——多代理协作、RAG 知识库、语音交互代理一应俱全，clone 下来几条命令就能跑，是快速搭建 AI 产品原型的现成弹药库。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">awesome-llm-apps</span><span class="item-tag">LLM 应用</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/glm-deepseek-workbuddy-trae.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/glm-deepseek-workbuddy-trae-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-12</span>
-    <h3>智谱 GLM + DeepSeek 接入 WorkBuddy / Trae：国内直连，免费用上大模型</h3>
-    <p class="ai-excerpt">两个国产大模型，都兼容 OpenAI 接口，国内直连、不用任何额外工具，免费额度够日常使用。手把手把它们接进 WorkBuddy 和 Trae，零基础也能照做。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">智谱 GLM</span><span class="item-tag">DeepSeek</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/webnovel-writer.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/webnovel-writer-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-11</span>
-    <h3>WebNovel Writer：让 Claude Code 写出不崩人设的 200 万字长篇</h3>
-    <p class="ai-excerpt">跑在 Claude Code 上的长篇网文创作插件，用 Story System（合同+章节提交+事件审计）解决 AI 写作的遗忘与幻觉，支持 200 万字连载，内置 8 个 Skill 命令与 37 个中文题材模板。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">WebNovel Writer</span><span class="item-tag">Claude Code</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/openmontage.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/openmontage-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-11</span>
-    <h3>OpenMontage：把你的 AI 编程助手，变成一整间视频工作室</h3>
-    <p class="ai-excerpt">世界首个开源 Agent 视频生产系统（AGPL-3.0，7k+ stars）：12 条生产管线、52 个工具、500+ 智能体技能，把 Claude Code/Cursor/Copilot 变成涵盖调研、脚本、素材、剪辑、渲染的完整视频工作室，零 API Key 也能出片。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">OpenMontage</span><span class="item-tag">Agent视频</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/gemini-api-newbie-guide.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/gemini-api-newbie-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-11</span>
-    <h3>国内免费用上 Gemini：4 步配置小白教程</h3>
-    <p class="ai-excerpt">纯小白向教程：不用懂代码，照着填 4 个框就能在国内免费用上 Google Gemini。含 Key 获取、网络排查、报错对照表与模型名避坑。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Gemini</span><span class="item-tag">Google AI</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/trae-advanced-guide.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/trae-advanced-guide-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-10</span>
-    <h3>Trae 进阶实战：免费 API 接入 + 记忆体系全攻略</h3>
-    <p class="ai-excerpt">把 somerice 博客园三篇实战笔记整合为一——Agnes AI 三模态永久免费 API 怎么接进 Trae Work、Skill 怎么封装生图生视频、以及 Trae 三类记忆（全局/项目/会话）怎么管理，附 5 款免费 API 横向测评与报错排查。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Trae</span><span class="item-tag">免费API</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/ai-free-credits-guide-2026-07.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/ai-free-credits-guide-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-10</span>
-    <h3>AI 平台免费额度与优惠攻略（2026年7月版）</h3>
-    <p class="ai-excerpt">汇总 30+ 国内外主流 AI 平台的免费 token、新用户福利、订阅价格与省钱技巧，零成本玩转 AI。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI</span><span class="item-tag">免费额度</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/aiworkskills-wechat-ai-ops.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/aiworkskills-wechat-ai-ops-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-10</span>
-    <h3>aiworkskills：把公众号运营拆成 9 个技能，一句话跑完全流程</h3>
-    <p class="ai-excerpt">一款开源的公众号 AI 运营工具，把选题、写作、审稿、排版、配图、直发拆成可复用技能模块，内置业务资料库，支持 13+ 模型与可视化编排。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">aiworkskills</span><span class="item-tag">公众号运营</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/money-printer-turbo.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/money-printer-turbo-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-10</span>
-    <h3>MoneyPrinterTurbo：输入关键词，全自动生成短视频</h3>
-    <p class="ai-excerpt">GitHub 94.1k stars 的开源短视频生成工具：输入关键词即自动生成文案、匹配无版权素材、加字幕配乐，输出竖屏/横屏短视频并批量发布。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">MoneyPrinterTurbo</span><span class="item-tag">短视频</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/gemini-api-workbuddy-trae.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/gemini-api-workbuddy-trae-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-10</span>
-    <h3>把 Google Gemini 接入 WorkBuddy 和 Trae：一份不用写代码的小白教程</h3>
-    <p class="ai-excerpt">手把手从零开始，利用 Gemini 官方 OpenAI 兼容接口，把 gemini-2.5-flash / pro 接进 WorkBuddy 和 Trae，全程不用写代码。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Gemini API</span><span class="item-tag">WorkBuddy</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/omniget.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/omniget-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-10</span>
-    <h3>OmniGet：把 1,800+ 网站内容「下载 + 学习」揽进一个桌面</h3>
-    <p class="ai-excerpt">免费开源桌面应用（Rust+Tauri，GPL-3.0）：从 1,800+ 站点下载课程/视频/音频/电子书，内置播放器、PDF/EPUB 阅读器、笔记与间隔重复，下载完直接学。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">OmniGet</span><span class="item-tag">媒体下载</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/agent-reach.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/agent-reach-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-07</span>
-    <h3>Agent Reach：给 AI Agent 一键装上互联网能力，15个平台零API费用</h3>
-    <p class="ai-excerpt">一个开源的能力层工具，把 Twitter、YouTube、B站、小红书等 15 个平台的接入能力整合成一个 CLI。零 API 费用，MIT 协议，兼容 Claude Code / OpenClaw / Cursor。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Agent Reach</span><span class="item-tag">AI Agent</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/yt-dlp-downloader.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/yt-dlp-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-03</span>
-    <h3>yt-dlp：120K+ Stars 的开源音视频下载神器，1800+ 网站全覆盖</h3>
-    <p class="ai-excerpt">不是替代浏览器下载，而是替代一整套商业下载软件。1800+ 网站全覆盖，一行命令搞定视频下载，支持 8K/HDR/SponsorBlock。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">yt-dlp</span><span class="item-tag">开源</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/chatwoot.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/chatwoot-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-03</span>
-    <h3>Chatwoot：31K+ Stars 的开源客服系统，Zendesk/Intercom 的免费替代方案</h3>
-    <p class="ai-excerpt">不是更便宜，而是更可控。MIT 协议开源客服系统，全渠道统一收口，自托管数据自己掌控，AI Agent 原生集成。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Chatwoot</span><span class="item-tag">开源</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/nomifun-ai-workstation.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/nomifun-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-01</span>
-    <h3>NomiFun：永久免费的AI全能工作站，开源桌宠+办公外挂合体</h3>
-    <p class="ai-excerpt">不是玩具桌宠，是真正能干活的开源 AI 工作站——桌面 AI 伙伴、无人值守 Agent、企业级知识库、11 个 IM 渠道、Rust 自研原生工具引擎，永久免费。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">NomiFun</span><span class="item-tag">AI</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/book-to-skill.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/book-to-skill-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-07-01</span>
-    <h3>book-to-skill：把技术书一键变成 AI 专属知识库</h3>
-    <p class="ai-excerpt">不是让 AI「读」书，而是让 AI「学会」这本书——把 PDF/EPUB/DOCX 等技术书编译成结构化的 AI Skill 包，Token 成本直降 51 倍，MIT 开源。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI</span><span class="item-tag">知识库</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/ai-news-radar-guide.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/ai-news-radar-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-26</span>
-    <h3>零代码搭建自动更新的 AI 资讯站：选模板、配API、设自动化全教程</h3>
-    <p class="ai-excerpt">纯前端 + 外部API + 定时脚本注入 + CDN托管，四步搭建一个每天自动刷新的 AI 新闻站点。全程零后端、零数据库、零服务器运维。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI工具</span><span class="item-tag">自动化</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/ai-news-radar.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/bolenews-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-25</span>
-    <h3>伯乐News雷达：AI资讯过滤神器，告别信息过载</h3>
-    <p class="ai-excerpt">伯乐News雷达是由 LearnPrompt 团队开源的 AI 资讯智能筛选系统。22个默认信源，7天观察期+65%差异过滤，零服务器部署。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI资讯</span><span class="item-tag">开源工具</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/aimoneyhunter.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/aimoneyhunter-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-25</span>
-    <h3>AI 副业赚钱完全指南：这些方法让你用 AI 增加第二份收入</h3>
-    <p class="ai-excerpt">aimoneyhunter 15,000+ Stars，专门收集整理利用 AI 做副业赚钱的方法。不是教你用 AI，而是教你怎么用 AI 赚钱。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI副业</span><span class="item-tag">自媒体</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/ai-design-tools.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/ai-design-tools-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-25</span>
-    <h3>5 款 AI 设计工具/资源库：让 AI 写出专业级界面代码</h3>
-    <p class="ai-excerpt">盘点 Impeccable、UI/UX Pro Max Skill、Open Design、Awesome DESIGN.md 等5款工具——覆盖从学规范到完稿质检的完整链条。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI设计</span><span class="item-tag">前端开发</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/multipost.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/multipost-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-25</span>
-    <h3>多平台内容分发实操教程：一次编辑同步发布到微信公众号、知乎、B站等10+平台</h3>
-    <p class="ai-excerpt">一个开源免费的浏览器扩展，支持 27+ 个平台处理器。写一次内容，一键发布到所有社交平台。免费开源，无需登录。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">浏览器扩展</span><span class="item-tag">多平台发布</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/gpt-image-2-prompts.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/gpt-image-2-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-22</span>
-    <h3>GPT Image 2 开源提示词库：900+模板直接复制出图</h3>
-    <p class="ai-excerpt">GPT Image 2 + awesome-gpt-image-2-prompts 开源提示词案例库，收录 900+ 高质量 Prompt 模板，覆盖 7 大场景，CC0 协议完全开放。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">GPT Image 2</span><span class="item-tag">AI 绘图</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/longcat-video-avatar-1.5.html">
-  <div class="article-thumb"><img class="thumb-img" src="/craft/longcat-hero.png" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-18</span>
-    <h3>数字人视频制作教程：美团 LongCat，一张照片+音频自动生成对口型视频</h3>
-    <p class="ai-excerpt">美团开源的商业级数字人视频生成模型——上传照片+音频，约1分钟生成对口型说话视频，MIT协议可商用，甚至赢了部分闭源商业产品。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">数字人</span><span class="item-tag">AI视频</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/deep-live-cam.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/deep-live-cam-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-17</span>
-    <h3>AI 实时换脸零基础教程：用 Deep-Live-Cam 一张照片变身虚拟主播</h3>
-    <p class="ai-excerpt">一张照片就能实现实时 AI 换脸——虚拟主播、影视特效、视频二创，开源免费，普通电脑就能跑。3 种安装方式 + 3 大使用场景 + 完整合规指南。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI换脸</span><span class="item-tag">开源</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/xpeng-gx-2698.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/xpeng-gx-2698-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-17</span>
-    <h3>26.98万的诚意：小鹏GX如何用价值战撕开车市最后的遮羞布</h3>
-    <p class="ai-excerpt">2026年车市淘汰赛——日系从30%跌到12%、燃油车暴跌37%、全行业利润率仅3.2%。26.98万的小鹏GX用「直降13万+800V平台+XNGP全场景智驾」的组合拳，揭开低质高价最后的遮羞布。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">小鹏</span><span class="item-tag">新能源</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/ian-xiaohei-illustrations.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/ian-xiaohei-cover.jpg" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-16</span>
-    <h3>AI 文章自动配图教程：让小黑插图帮你的内容一键生成手绘风格图解</h3>
-    <p class="ai-excerpt">一个 Codex Skill，教 AI 给中文文章生成配图——不是随便配一张好看的图，而是把文章里的关键判断、流程、状态或隐喻，画成一张有记忆点的 16:9 手绘解释图。作者 Ian，GitHub 4.6k+ stars。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI</span><span class="item-tag">工具</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/trendradar-ai-hot-push.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/trendradar-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-12</span>
-    <h3>AI 舆情监控搭建教程：一键配置，每天自动把全网热点推送到微信</h3>
-    <p class="ai-excerpt">TrendRadar 就像一个「AI 私人编辑」——每天帮你盯着微博、抖音、知乎等 35+ 个平台的热搜，只把你关心的内容筛选出来，一键推到微信/钉钉/飞书上。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">AI</span><span class="item-tag">舆情监控</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/react-hooks-learning.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/react-hooks-learning-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-03</span>
-    <h3>React 学习笔记：从 Class 组件到 Hooks 的思维转变</h3>
-    <p class="ai-excerpt">刚开始学 React 时最困惑的就是函数式组件和 Hooks 的设计哲学。整理一下自己踩过的坑和最终理解。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">React</span><span class="item-tag">Hooks</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/apple-resume-page.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/apple-resume-page-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-06-01</span>
-    <h3>我用 HTML/CSS/JS 复刻了 Apple 发布会风格的个人简历页</h3>
-    <p class="ai-excerpt">从零开始，用纯前端技术搭建一个具有液态玻璃视觉效果和 Canvas 粒子动画的交互式简历页面，分享一下技术选型和踩坑经验。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">HTML</span><span class="item-tag">CSS</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/css-grid-bento-layout.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/css-grid-bento-layout-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-05-25</span>
-    <h3>CSS Grid 实战：用 Bento Grid 做不规则卡片布局</h3>
-    <p class="ai-excerpt">Bento Grid 是近年来非常流行的 UI 布局风格，源自 Apple 的 Keynote 设计。用纯 CSS Grid 实现一个灵活的 Bento 栅格系统。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">CSS</span><span class="item-tag">Grid</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/js-async-await-guide.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/js-async-await-guide-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-05-18</span>
-    <h3>JavaScript 异步编程：从回调地狱到 async/await</h3>
-    <p class="ai-excerpt">回调用嵌套、Promise 链式调用、async/await 语法糖——JavaScript 异步编程的演进过程，以及每种写法的适用场景。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">JavaScript</span><span class="item-tag">异步</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/typescript-intro.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/typescript-intro-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-05-10</span>
-    <h3>TypeScript 入门：给 JavaScript 项目加上类型安全</h3>
-    <p class="ai-excerpt">从 JavaScript 切换到 TypeScript 最大的障碍不是语法，而是思维方式的转变。分享一下我是如何克服初期挫折感的。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">TypeScript</span><span class="item-tag">JavaScript</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/canvas-api-ripple-particles.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/canvas-api-ripple-particles-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-04-28</span>
-    <h3>Canvas API 深入：从涟漪动画到粒子系统的完整实现</h3>
-    <p class="ai-excerpt">Canvas 是浏览器原生的 2D 绘图 API，功能非常强大。以我的简历页 Hero 动效为例，深入讲解涟漪扩散和粒子系统的实现原理。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Canvas</span><span class="item-tag">动画</span></div>
-    </div>
-  </div>
-</a>
-<a class="article-item" href="/craft/nodejs-express-blog-api.html">
-  <div class="article-thumb"><img class="thumb-img" src="/uploads/nodejs-express-blog-api-header.webp" alt="" loading="lazy"></div>
-  <div class="article-info">
-    <span class="ai-date">2026-04-15</span>
-    <h3>Node.js 实战：用 Express 搭建一个个人博客 API</h3>
-    <p class="ai-excerpt">前端工程师学后端，Express 是最平滑的切入点。从零搭建一个支持文章 CRUD 的 REST API，包括路由设计、中间件、数据持久化。</p>
-    <div class="ai-meta">
-      <div class="ai-tags"><span class="item-tag">Node.js</span><span class="item-tag">Express</span></div>
-    </div>
-  </div>
-</a>
 </section>
+
+<section class="loadmore">
+  <span class="count">共 55 篇技艺录 · 大图 → 横向 → 三并列，5 篇一循环</span>
+</section>
+
 <footer class="footer">
-  <p>© 2026 Lkn · <a href="/">Appin.site</a> · <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">苏ICP备2024060242号-1</a></p>
-  
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><span class="logo-mark">A</span>Appin.site</div>
+      <p class="desc">独立开发者 Li Kun 的个人站点——记录技术学习、AI 工具链实践与产品构建过程，把学到的东西变成能落地的实战教程。</p>
+    </div>
+    <div>
+      <h4>导航</h4>
+      <ul>
+        <li><a href="/">返回首页</a></li>
+        <li><a href="/craft/">技艺录</a></li>
+        <li><a href="/daily-digest/">每日阅读</a></li>
+        <li><a href="/ai-radar/">AI 雷达</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>资源</h4>
+      <ul>
+        <li><a href="/notes/">随笔</a></li>
+        <li><a href="/video-lab/">视频</a></li>
+        <li><a href="/lab/">实验室</a></li>
+        <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="bottom-inner">
+      <span>© 2026 appin.site · 由 Li Kun 用液态玻璃与代码搭建</span>
+      <span>苏ICP备2024060242号-1</span>
+    </div>
+  </div>
 </footer>
 <script>
-
-// Fix: remove lazy loading & add error fallback for list thumbnails
 (function(){
-  document.querySelectorAll('.article-thumb img').forEach(function(img){
-    img.removeAttribute('loading');
-    img.onerror = function(){
-      this.style.display = 'none';
-      var p = this.parentElement;
-      p.classList.add('fallback');
-      p.innerHTML = '<span>⚒</span>';
-    };
-  });
+  var root=document.documentElement;
+  try{var saved=localStorage.getItem('theme');}catch(e){}
+  if(saved==='dark'){root.setAttribute('data-theme','dark');}
+  var btn=document.getElementById('themeToggle');
+  if(btn){btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark';
+    if(dark){root.setAttribute('data-theme','light');try{localStorage.setItem('theme','light');}catch(e){}}
+    else{root.setAttribute('data-theme','dark');try{localStorage.setItem('theme','dark');}catch(e){}}
+    if(typeof lucide!=='undefined'){lucide.createIcons();}
+  });}
+  var mb=document.getElementById('menuBtn'),mm=document.getElementById('mobileMenu');
+  if(mb&&mm){mb.addEventListener('click',function(){mm.classList.toggle('open');});}
 })();
-</script>
-<script>
-/* 置顶文章：读 content.json 的 pinned 字段，置顶项浮到列表顶部并加「置顶」徽标；同时按发布时间倒序。JS 失效时静态顺序不受影响（已是倒序）。 */
 (function(){
-  function slugFrom(href){var m=href&&href.match(/\/([\w-]+)\.html/);return m?m[1]:'';}
-  function dateOf(el){var d=el.querySelector('.ai-date');return d?d.textContent.trim():'';}
-  function applyPin(wrap){
-    if(!wrap)return;
-    var items=Array.prototype.slice.call(wrap.querySelectorAll('.article-item'));
-    if(!items.length)return;
-    fetch('/content.json').then(function(r){return r.json();}).then(function(d){
-      var pinned=new Set((d.articles||[]).filter(function(a){return a.pinned;}).map(function(a){return a.slug;}));
-      items.sort(function(x,y){
-        var px=pinned.has(slugFrom(x.getAttribute('href')))?1:0;
-        var py=pinned.has(slugFrom(y.getAttribute('href')))?1:0;
-        if(px!==py)return py-px;
-        return dateOf(y).localeCompare(dateOf(x));
-      });
-      items.forEach(function(el){
-        wrap.appendChild(el);
-        var href=el.getAttribute('href');
-        if(pinned.has(slugFrom(href))){
-          el.classList.add('pinned');
-          var info=el.querySelector('.article-info');
-          if(info && !info.querySelector('.pin-badge')){
-            var b=document.createElement('span');b.className='pin-badge';b.textContent='置顶';
-            info.insertBefore(b,info.firstChild);
-          }
-        }
-      });
-    }).catch(function(){});
+  var feed=document.getElementById('feed');
+  if(!feed)return;
+  var cards=Array.prototype.slice.call(feed.querySelectorAll('.craft-card'));
+  var FILTER_RE={
+    ai:/ai|codex|claude|github|gpt|gemini|llm|agent|trae|workbuddy/i,
+    oss:/开源|mit|open/i,
+    tutorial:/教程|tutorial|入门|指南|guide|实战|上手|保姆/i,
+    video:/视频|video|数字人|短视频/i,
+    api:/api/i
+  };
+  function layoutFor(i){var m=i%5;return m===0?'card--big':(m===1?'card--horiz':'card--compact');}
+  function applyFilter(key){
+    cards.forEach(function(c){
+      if(key==='all'){c.style.display='';return;}
+      var re=FILTER_RE[key];var tags=c.getAttribute('data-tags')||'';
+      c.style.display=(re&&re.test(tags))?'':'none';
+    });
   }
-  applyPin(document.querySelector('.list-wrap'));
+  document.querySelectorAll('.pill').forEach(function(p){
+    p.addEventListener('click',function(){
+      document.querySelectorAll('.pill').forEach(function(x){x.classList.remove('pill--active');});
+      p.classList.add('pill--active');
+      applyFilter(p.getAttribute('data-filter'));
+    });
+  });
+  document.querySelectorAll('.pill[data-filter]:not([data-filter="all"])').forEach(function(p){
+    var key=p.getAttribute('data-filter');var re=FILTER_RE[key];
+    var n=cards.filter(function(c){return re.test(c.getAttribute('data-tags')||'');}).length;
+    if(n===0)p.style.display='none';
+  });
+  var vt=document.querySelectorAll('.view-toggle button');
+  vt.forEach(function(b){
+    b.addEventListener('click',function(){
+      vt.forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active');
+      if(b.getAttribute('data-view')==='grid')feed.classList.add('view-grid');
+      else feed.classList.remove('view-grid');
+    });
+  });
+  fetch('/content.json').then(function(r){return r.json();}).then(function(d){
+    var pinned=new Set((d.articles||[]).filter(function(a){return a.pinned;}).map(function(a){return a.slug;}));
+    if(!pinned.size)return;
+    cards.sort(function(x,y){
+      var px=pinned.has(x.getAttribute('data-slug'))?1:0;
+      var py=pinned.has(y.getAttribute('data-slug'))?1:0;
+      if(px!==py)return py-px;
+      return (y.getAttribute('data-date')||'').localeCompare(x.getAttribute('data-date')||'');
+    });
+    cards.forEach(function(c,i){
+      feed.appendChild(c);
+      c.classList.remove('card--big','card--horiz','card--compact');
+      c.classList.add(layoutFor(i));
+    });
+    var act=document.querySelector('.pill--active');
+    if(act)applyFilter(act.getAttribute('data-filter'));
+  }).catch(function(){});
 })();
+if(typeof lucide!=='undefined'){lucide.createIcons();}
 </script>
 </body>
 </html>

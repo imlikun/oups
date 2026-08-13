@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【WB】GPT Image2 Skill：把 gpt-image-2 包成 CLI + 162 案例的开源技能包</title>
+<meta name="description" content="开源（MIT）的 gpt-image-2 技能包，162 条精选生图案例 + 命令行工具 + Claude Code/Codex 集成，终端一句命令出图、改图、蒙版重绘。">
+<!--SEO-->
+<link rel="icon" href="/favicon.ico">
+<link rel="canonical" href="https://www.appin.site/craft/gpt-image2-skill.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="【WB】GPT Image2 Skill：把 gpt-image-2 包成 CLI + 162 案例的开源技能包">
+<meta property="og:description" content="开源（MIT）的 gpt-image-2 技能包，162 条精选生图案例 + 命令行工具 + Claude Code/Codex 集成，终端一句命令出图、改图、蒙版重绘。">
+<meta property="og:url" content="https://www.appin.site/craft/gpt-image2-skill.html">
+<meta property="og:site_name" content="Appin.site">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="【WB】GPT Image2 Skill：把 gpt-image-2 包成 CLI + 162 案例的开源技能包">
+<meta name="twitter:description" content="开源（MIT）的 gpt-image-2 技能包，162 条精选生图案例 + 命令行工具 + Claude Code/Codex 集成，终端一句命令出图、改图、蒙版重绘。">
+<meta property="og:image" content="https://www.appin.site/uploads/gpt-image2-skill-cover.jpg">
+<meta name="twitter:image" content="https://www.appin.site/uploads/gpt-image2-skill-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/base.css">
+    <link rel="stylesheet" href="/assets/article.css">
+<link rel="stylesheet" href="/assets/fx.css">
+<script src="/assets/fx.js" defer></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Appin.site <span>技艺录</span></a>
+    <ul class="nav-links">
+      <li><a href="/craft/">技艺录</a></li>
+      <li><a href="/notes/">随笔</a></li>
+      <li><a href="/ai-radar/">AI 雷达</a></li>
+      <li><a href="/daily-digest/">每日阅读</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源技能包 · 生图 CLI</div>
+  <h1>GPT Image2 Skill：<strong>把 gpt-image-2 包成 CLI 的开源技能包</strong></h1>
+  <p class="hero-desc">开源（MIT）的 gpt-image-2 技能包，162 条精选生图案例 + 命令行工具 + Claude Code/Codex 集成，终端一句命令出图、改图、蒙版重绘。</p>
+  <div class="hero-meta">
+    <span>开源 MIT</span><span class="dot"></span><span>162 案例</span><span class="dot"></span><span>CLI 工具</span><span class="dot"></span><span>需 OpenAI Key</span>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<div class="hero-cover">
+  <img src="/uploads/gpt-image2-skill-cover.jpg" alt="GPT Image2 Skill 封面">
+  <aside class="toc-overlay">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list">
+      <li><a href="#s1">一、为什么需要它</a></li>
+      <li><a href="#s2">二、它是什么</a></li>
+      <li><a href="#s3">三、核心能力</a></li>
+      <li><a href="#s4">四、动手跑通</a></li>
+      <li><a href="#s5">五、适合谁 & 怎么挑</a></li>
+      <li><a href="#s6">六、小结与提醒</a></li>
+    </ul>
+  </aside>
+</div>
+
+<div class="page">
+  <article class="article-body">
+
+    <h2 id="s1">一、为什么需要它</h2>
+    <p>直接调 OpenAI 的 gpt-image-2 出一张图，要自己拼 API、管参数、写脚本存文件——零散且不好复用。而很多人真正要的，是「<span class="key">一句命令出图、改图、局部重绘</span>」，最好还能在 Claude Code / Codex 里让 Agent 自动帮你生图。GPT Image2 Skill 就是把这套流程包好的开源技能包。</p>
+    <div class="info-box">
+      <p><strong>本文交付物</strong></p>
+      <p class="mc-desc">讲清这个技能包到底包含什么（案例库 + CLI + Agent 集成）、怎么装、怎么跑，以及它和本栏目另一篇「900+ 模板提示词库」的关系与区别。</p>
+    </div>
+
+    <h2 id="s2">二、它是什么</h2>
+    <p>GPT Image2 Skill 是面向 OpenAI <code>gpt-image-2</code> 模型的「提示词画廊 + 命令行 + Agent 集成」三件套，本质是一层<span class="key">好用的封装</span>，不是新的生图模型。它把零散的 API 调用收敛成可复用的提示词与一条脚本化的 CLI。</p>
+    <div class="section-img">
+      <svg viewBox="0 0 680 160" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="技能包结构示意图">
+        <defs>
+          <marker id="arw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#1a8a3e"></path>
+          </marker>
+          <style>
+            .bx{fill:#ffffff;stroke:#cfd6dd;stroke-width:1.5}
+            .bxg{fill:#eafaf0;stroke:#1a8a3e;stroke-width:1.5}
+            .t{font-family:'PingFang SC',sans-serif;font-size:14px;fill:#1a2b22;font-weight:600}
+            .ts{font-family:'PingFang SC',sans-serif;font-size:11px;fill:#5b6b62}
+            .ln{stroke:#1a8a3e;stroke-width:2;fill:none;marker-end:url(#arw)}
+          </style>
+        </defs>
+        <rect class="bx" x="14" y="34" width="150" height="92" rx="10"></rect>
+        <text class="t" x="89" y="68" text-anchor="middle">162 条案例</text>
+        <text class="ts" x="89" y="90" text-anchor="middle">提示词画廊</text>
+        <text class="ts" x="89" y="110" text-anchor="middle">科研/UI/动漫…</text>
+        <path class="ln" d="M164,80 L226,80"></path>
+        <rect class="bxg" x="230" y="20" width="220" height="120" rx="12"></rect>
+        <text class="t" x="340" y="52" text-anchor="middle">CLI / Agent 技能</text>
+        <text class="ts" x="340" y="74" text-anchor="middle">gpt-image 命令</text>
+        <text class="ts" x="340" y="92" text-anchor="middle">尺寸/画质/批量</text>
+        <text class="ts" x="340" y="110" text-anchor="middle">图生图 / 蒙版重绘</text>
+        <path class="ln" d="M450,80 L512,80"></path>
+        <rect class="bx" x="516" y="34" width="150" height="92" rx="10"></rect>
+        <text class="t" x="591" y="66" text-anchor="middle">OpenAI</text>
+        <text class="t" x="591" y="86" text-anchor="middle">gpt-image-2</text>
+        <text class="ts" x="591" y="108" text-anchor="middle">需 API Key</text>
+      </svg>
+      <div class="caption">图 1：案例库 → CLI/技能 → OpenAI 接口的调用链路。</div>
+    </div>
+    <div class="info-box">
+      <p><strong>和「900+ 模板提示词库」不是同一个东西</strong></p>
+      <p class="mc-desc">本栏目此前发过 <a href="/craft/gpt-image-2-prompts.html">GPT Image 2 开源提示词库（900+ 模板）</a>，那是另一个仓库的纯提示词集合；本文是 <code>wuyoscar/gpt_image_2_skill</code>——一个带 CLI 与 Agent 集成的工具包。两者互补：词库负责「有什么好提示词」，技能包负责「怎么一键跑起来」。</p>
+    </div>
+
+    <h2 id="s3">三、核心能力</h2>
+    <p>三块能力，对应三种使用姿势：</p>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">1</span><span class="mc-title">162 条精选案例</span></div>
+      <p class="mc-desc">覆盖科研配图、UI 原型、字体排版、摄影、动漫、地图、产品图等类别，直接复制即用，省去自己凑提示词。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">2</span><span class="mc-title">脚本化 CLI</span></div>
+      <p class="mc-desc">支持尺寸/画质预设、批量出图（-n）、指定输出文件（-f）、参考图编辑（-i）与蒙版重绘（-m），可写进流水线批量生成。</p>
+    </div>
+    <div class="mod-card">
+      <div class="mc-head"><span class="mc-num">3</span><span class="mc-title">Agent 集成</span></div>
+      <p class="mc-desc">提供 Claude Code 插件、Codex 安装、以及手动 agent-skill 软链三种方式，让 coding Agent 在任务里直接调它生图。</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>参数</th><th>取值</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td><code>-p, --prompt</code></td><td>文本</td><td>提示词（必填）</td></tr>
+          <tr><td><code>-f, --file</code></td><td>路径</td><td>输出文件名（默认时间戳）</td></tr>
+          <tr><td><code>-i, --image</code></td><td>路径（可多次）</td><td>参考图，触发 /v1/images/edits；多张可合成</td></tr>
+          <tr><td><code>-m, --mask</code></td><td>PNG（含 alpha）</td><td>蒙版：透明=重绘区域，需配合 -i</td></tr>
+          <tr><td><code>--size</code></td><td>1k/2k/4k/portrait/landscape/square…</td><td>尺寸预设，自定义须 16 倍数、最长边 ≤3840</td></tr>
+          <tr><td><code>--quality</code></td><td>auto/low/medium/high</td><td>画质预算档：low 草稿、high 终稿</td></tr>
+          <tr><td><code>-n, --n</code></td><td>整数</td><td>批量生成数量</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="s4">四、动手跑通</h2>
+    <p>配置只需一行：把 OpenAI Key 放进环境变量或 <code>~/.env</code>。无需其他设置。</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 配置密钥（必填，且是付费 Key）</span>
+<span class="c-key">export</span> OPENAI_API_KEY="sk-..."</pre>
+    </div>
+    <p>三种装法，按使用频率选：</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 方式 A：临时跑，不安装（最快）</span>
+<span class="c-key">uvx</span> --from git+https://github.com/wuyoscar/gpt_image_2_skill gpt-image -p "a cat astronaut"
+
+<span class="c-com"># 方式 B：永久装到 PATH</span>
+<span class="c-key">uv tool install</span> git+https://github.com/wuyoscar/gpt_image_2_skill
+<span class="c-key">gpt-image</span> -p "a cat astronaut"
+
+<span class="c-com"># 方式 C：接 Claude Code</span>
+/plugin marketplace add wuyoscar/gpt_image_2_skill
+/plugin install gpt-image@wuyoscar-skills</pre>
+    </div>
+    <p>三种生图姿势的实战示例：</p>
+    <div class="code-block">
+      <pre><span class="c-com"># 1) 文生图：带尺寸与画质</span>
+<span class="c-key">gpt-image</span> -p "neon-lit Tokyo alley at midnight" --size portrait --quality high -f tokyo.png
+
+<span class="c-com"># 2) 参考图改图（可多张合成）</span>
+<span class="c-key">gpt-image</span> -p "put the dog next to the woman, match lighting" -i woman.png -i dog.png --quality medium -f out.png
+
+<span class="c-com"># 3) 蒙版重绘：透明区=重绘</span>
+<span class="c-key">gpt-image</span> -p "replace sky with aurora" -i photo.jpg -m sky_mask.png -f aurora.png</pre>
+    </div>
+    <div class="info-box">
+      <p><strong>坑：本期未在本机实跑</strong></p>
+      <p class="mc-desc">本环境访问 github.com 直连超时（需代理），上述步骤来自官方 SKILL.md 文档整理，<span class="key">未在我机器实际克隆运行</span>。你本地装 uv 后照抄即可；若 clone 卡住，是网络需代理，与工具本身无关。</p>
+    </div>
+
+    <h2 id="s5">五、适合谁 & 怎么挑</h2>
+    <p>三类人最划算：设计师/开发者要快速出 UI 与产品图原型、科研党要画示意配图、自动化工程师要把生图塞进 Agent 流水线。如果你只是想要「好提示词抄」，那篇 900+ 词库更轻；<span class="key">想要「一键跑、还能接 Agent」才选这个技能包</span>。</p>
+    <div class="info-box">
+      <p><strong>成本提醒（务必看清）</strong></p>
+      <p class="mc-desc">它只是封装，底层调用 OpenAI gpt-image-2 <span class="key">按张计费</span>——<code>--quality high</code> 比 <code>low</code> 贵。自己准备并付费 OpenAI API Key，不是「装了就免费出图」。批量（-n）前先用 low 草稿验证提示词。</p>
+    </div>
+
+    <h2 id="s6">六、小结与提醒</h2>
+    <p>一句话：它是 gpt-image-2 的「开箱即用外壳」——案例库解决「写什么」、CLI 解决「怎么跑」、Agent 集成解决「让 AI 帮我跑」。下面几条提醒请带着看：</p>
+    <div class="info-box">
+      <p><strong>三点纠正与存疑（别被二手信息带偏）</strong></p>
+      <p class="mc-desc">
+        ① <strong>仓库地址</strong>：你给的 <code>github.com/wuyoscar/GPT-Image2-Skill</code> 拼法不对，真实路径是 <code>github.com/wuyoscar/gpt_image_2_skill</code>（下划线）。<br>
+        ② <strong>Star 数存疑</strong>：你写 3.7K，但抓到的技能市场页显示量级约 16。本环境无法直连 GitHub 核实，<span class="key">以仓库实时显示为准</span>，本文未把 3.7K 当定论。<br>
+        ③ <strong>协议</strong>：你标注 MIT；开源协议以仓库 LICENSE 文件为准，使用前请自行核对（尤其商用场景）。
+      </p>
+    </div>
+    <p>获取渠道：GitHub 仓库 <a href="https://github.com/wuyoscar/gpt_image_2_skill">github.com/wuyoscar/gpt_image_2_skill</a>（文档站与中文版以仓库 README 为准）。想直接上手，从 SKILL.md 的 Quick Start 抄一条 <code>uvx</code> 命令开始即可。</p>
+
+    <div class="tag-cloud">
+      <a href="/craft/">GPT Image 2</a><a href="/craft/">生图 CLI</a><a href="/craft/">提示词库</a><a href="/craft/">Claude Code</a><a href="/craft/">Codex</a><a href="/craft/">Agent 技能</a><a href="/craft/">OpenAI</a><a href="/craft/">图像编辑</a><a href="/craft/">蒙版重绘</a><a href="/craft/">开源工具</a><a href="/craft/">AI 绘画</a><a href="/craft/">WorkBuddy</a>
+    </div>
+    <a href="/craft/" class="back-link">返回技艺录</a>
+  </article>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <span>© 2026.08.13 Appin.site · 技艺录 &nbsp;|&nbsp; 本文由八戒整理；如含账号凭证、IP、密码、Cookie、Token，均已打码。</span>
+      <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc-list a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(!sections.length) return;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id = '#' + e.target.id;
+        links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===id));
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  sections.forEach(s=>obs.observe(s));
+})();
+</script>
+<script>
+(function(){
+  try{ if(localStorage.getItem('theme')==='light') document.body.classList.add('light'); }catch(e){}
+})();
+</script>
+</body>
+</html>

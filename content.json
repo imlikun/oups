@@ -1854,6 +1854,34 @@
       "videoUrl": "",
       "featured": false,
       "image": "uploads/codex-cli-cn-install-cover.jpg"
+    },
+    {
+      "id": "article-86",
+      "slug": "gpt-image2-skill",
+      "title": "【WB】GPT Image2 Skill：把 gpt-image-2 包成 CLI + 162 案例的开源技能包",
+      "category": "craft",
+      "date": "2026.08.13",
+      "status": "published",
+      "link": "/craft/gpt-image2-skill.html",
+      "template": "DP",
+      "videoUrl": "",
+      "featured": true,
+      "image": "uploads/gpt-image2-skill-cover.jpg",
+      "excerpt": "开源（MIT）的 gpt-image-2 技能包，162 条精选生图案例 + 命令行工具 + Claude Code/Codex 集成，终端一句命令出图、改图、蒙版重绘。",
+      "content": "详见独立文章页：/craft/gpt-image2-skill.html",
+      "tags": [
+        "GPT Image 2",
+        "生图 CLI",
+        "提示词库",
+        "Claude Code",
+        "Codex",
+        "Agent 技能",
+        "OpenAI",
+        "图像编辑",
+        "蒙版重绘",
+        "开源工具",
+        "AI 绘画"
+      ]
     }
   ],
   "projects": [
