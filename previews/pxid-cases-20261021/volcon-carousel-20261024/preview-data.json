@@ -1,0 +1,261 @@
+[
+  {
+    "id": "structural",
+    "title": "Structural Optimization & Lightweight Engineering",
+    "default": "split",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-34667887965b.jpg",
+        "title": "Structural analysis",
+        "copy": "Review the frame geometry and load-bearing connections in the FEA visual.",
+        "fit": "contain",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-33b8347009c8.jpg",
+        "title": "From geometry to a physical frame",
+        "copy": "The unpainted frame shows the joints, mounting points and overall structure.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-9ba0d6544e2c.jpg",
+        "title": "Frame fabrication",
+        "copy": "See the metalworking process behind the physical frame.",
+        "fit": "cover",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "electrical",
+    "title": "Integrated Electrical System for Stable Performance",
+    "default": "rail",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-69af27e417e5.jpg",
+        "title": "Controller Optimization for Smooth Power Delivery",
+        "copy": "PXID configured the controller to ensure stable power output and efficient energy management. The optimized control logic improved riding smoothness and production consistency.",
+        "fit": "contain",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-480443cb61fa.jpg",
+        "title": "Motor Matching for Balanced Performance",
+        "copy": "PXID selected and tuned the motor to balance torque, efficiency and durability. The motor configuration ensured reliable performance across different riding conditions.",
+        "fit": "contain",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-d5ab2ee86dc6.jpg",
+        "title": "Battery Integration for Range and Safety",
+        "copy": "PXID integrated the battery system with protection and thermal management. The solution improved riding range while ensuring safety and long-term reliability.",
+        "fit": "contain",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "validation",
+    "title": "Prototype Validation and Engineering Iteration",
+    "default": "focus",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-981289b8fc3c.jpg",
+        "title": "Engineering sample",
+        "copy": "Review component fit and assembly access on the physical bike.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-07494bf00a47.jpg",
+        "title": "Electrical integration",
+        "copy": "Bring the electrical components and their connections together before completing the build.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-9160071a9121.jpg",
+        "title": "Assembly review",
+        "copy": "Inspect the bike and its component interfaces during prototype assembly.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-8b33b51d2d83.jpg",
+        "title": "Frame validation",
+        "copy": "Mechanical loading equipment checks the physical frame against the design requirements.",
+        "fit": "cover",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "tooling",
+    "title": "In-House Tooling for Faster Development",
+    "default": "rail",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-231115baced8.jpg",
+        "title": "In-house machining",
+        "copy": "A view of the workshop and its machining equipment.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-67246d70b8d5.jpg",
+        "title": "Tooling detail",
+        "copy": "Machined tooling and the working surfaces of the mold.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-99df8a5cebbe.jpg",
+        "title": "CNC processing",
+        "copy": "A close view of a metal component during machining.",
+        "fit": "cover",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "frame-manufacturing",
+    "title": "Precision Frame Manufacturing",
+    "default": "split",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-6eea28bfa285.jpg",
+        "title": "Frame production",
+        "copy": "Frames move through the workshop in organized batches.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-875bb85cdf31.jpg",
+        "title": "Machining capability",
+        "copy": "Production equipment supports the manufacture of frame components.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-33b8347009c8.jpg",
+        "title": "Frame structure",
+        "copy": "An unpainted Volcon frame before the finishing stage.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-9ba0d6544e2c.jpg",
+        "title": "Fabrication detail",
+        "copy": "Review a close view of the metalworking process.",
+        "fit": "cover",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "finishing",
+    "title": "Heat Treatment and Multi-Color Coating Capability",
+    "default": "focus",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-0af2edb3fe5a.jpg",
+        "title": "Treatment facilities",
+        "copy": "A wide view of the treatment equipment and workshop.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-1f8758faa334.jpg",
+        "title": "Surface finish",
+        "copy": "Finished frames are arranged on a production rack.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-e4eff6f6437c.jpg",
+        "title": "Color, material and finish",
+        "copy": "The design visual shows how the finish works with the complete bike.",
+        "fit": "contain",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "assembly",
+    "title": "Scalable Assembly Lines",
+    "default": "rail",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-0d1e01f65567.jpg",
+        "title": "Assembly work",
+        "copy": "An operator works on a bike during the assembly process.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-9160071a9121.jpg",
+        "title": "Component installation",
+        "copy": "Check the fit of the bike and its components during assembly.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-07494bf00a47.jpg",
+        "title": "Components prepared for the build",
+        "copy": "Electrical components are brought together on the workbench.",
+        "fit": "cover",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "production",
+    "title": "MES-Driven Production Control",
+    "default": "split",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-807ba4372b4a.jpg",
+        "title": "Bikes prepared for delivery",
+        "copy": "Finished Volcon bikes are arranged in the factory.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-0d1e01f65567.jpg",
+        "title": "The production floor",
+        "copy": "A closer view of the assembly work behind the finished bikes.",
+        "fit": "cover",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-6eea28bfa285.jpg",
+        "title": "From frames to complete bikes",
+        "copy": "Batch production continues from frame preparation through assembly.",
+        "fit": "cover",
+        "position": "center"
+      }
+    ]
+  },
+  {
+    "id": "wheel-building",
+    "title": "Precision Wheel Building Capability",
+    "default": "split",
+    "images": [
+      {
+        "src": "pxid-case-release-20261021/assets/odm-b43905c4513c.jpg",
+        "title": "Wheel-building equipment",
+        "copy": "A wheel is installed in the production equipment for assembly and adjustment.",
+        "fit": "contain",
+        "position": "center"
+      },
+      {
+        "src": "pxid-case-release-20261021/assets/odm-480443cb61fa.jpg",
+        "title": "Wheel and hub interface",
+        "copy": "A close view of the rear wheel, hub motor and drivetrain on the bike.",
+        "fit": "contain",
+        "position": "center"
+      }
+    ]
+  }
+]
