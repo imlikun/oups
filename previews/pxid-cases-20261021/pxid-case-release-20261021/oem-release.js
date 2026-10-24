@@ -20,6 +20,37 @@
  ['battery','motor'].forEach(key=>all('[data-'+key+']').forEach(button=>button.addEventListener('click',()=>{
   state[key]=button.dataset[key];all('[data-'+key+']').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));selection();
  })));
+ const specDialog=$('#configuration-spec-dialog'),specTrigger=$('#view-configuration-specs'),specClose=specDialog.querySelector('.configuration-dialog-close');
+ let specReturnFocus=null;
+ specTrigger.addEventListener('click',()=>{
+  specReturnFocus=document.activeElement;
+  $('#configuration-dialog-finish').textContent=colours[state.colour].name;
+  $('#configuration-dialog-battery').textContent='48V '+state.battery+'Ah';
+  $('#configuration-dialog-motor').textContent=state.motor+'W';
+  const image=$('#colour-image'),dialogImage=$('#configuration-dialog-image');
+  dialogImage.src=image.src;dialogImage.alt=image.alt;
+  const table=$('#specifications table').cloneNode(true);
+  table.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+  table.querySelectorAll('tr').forEach(row=>row.lastElementChild.remove());
+  table.querySelector('thead th:last-child').textContent='Selected specification';
+  table.querySelector('caption').textContent='Specifications for your selected MANTIS P6 configuration';
+  $('#configuration-dialog-table').replaceChildren(table);
+  specDialog.querySelector('.configuration-dialog-body').scrollTop=0;
+  specDialog.showModal();specClose.focus({preventScroll:true});
+ });
+ specClose.addEventListener('click',()=>specDialog.close());
+ specDialog.addEventListener('click',event=>{
+  if(event.target!==specDialog)return;
+  const box=specDialog.getBoundingClientRect();
+  if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)specDialog.close();
+ });
+ specDialog.addEventListener('keydown',event=>{
+  if(event.key!=='Tab')return;
+  const body=specDialog.querySelector('.configuration-dialog-body');
+  if(event.shiftKey&&document.activeElement===specClose){event.preventDefault();body.focus({preventScroll:true});}
+  else if(!event.shiftKey&&document.activeElement===body){event.preventDefault();specClose.focus({preventScroll:true});}
+ });
+ specDialog.addEventListener('close',()=>{if(specReturnFocus&&specReturnFocus.isConnected)specReturnFocus.focus({preventScroll:true});});
  all('.stage-gallery').forEach(gallery=>{
   const article=gallery.closest('.process-stage'),main=article.querySelector('.stage-photo img'),mainButton=article.querySelector('.stage-photo'),error=article.querySelector('.gallery-error');
   let requestNumber=0;
