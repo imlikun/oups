@@ -2,7 +2,7 @@
   {
     "id": "structural",
     "title": "Structural Optimization & Lightweight Engineering",
-    "default": "split",
+    "default": "left",
     "images": [
       {
         "src": "pxid-case-release-20261021/assets/odm-34667887965b.jpg",
@@ -30,7 +30,7 @@
   {
     "id": "electrical",
     "title": "Integrated Electrical System for Stable Performance",
-    "default": "rail",
+    "default": "mosaic",
     "images": [
       {
         "src": "pxid-case-release-20261021/assets/odm-69af27e417e5.jpg",
@@ -93,7 +93,7 @@
   {
     "id": "tooling",
     "title": "In-House Tooling for Faster Development",
-    "default": "rail",
+    "default": "accordion",
     "images": [
       {
         "src": "pxid-case-release-20261021/assets/odm-231115baced8.jpg",
@@ -121,7 +121,7 @@
   {
     "id": "frame-manufacturing",
     "title": "Precision Frame Manufacturing",
-    "default": "split",
+    "default": "stepper",
     "images": [
       {
         "src": "pxid-case-release-20261021/assets/odm-6eea28bfa285.jpg",
@@ -156,7 +156,7 @@
   {
     "id": "finishing",
     "title": "Heat Treatment and Multi-Color Coating Capability",
-    "default": "focus",
+    "default": "right",
     "images": [
       {
         "src": "pxid-case-release-20261021/assets/odm-0af2edb3fe5a.jpg",
@@ -212,7 +212,7 @@
   {
     "id": "production",
     "title": "MES-Driven Production Control",
-    "default": "split",
+    "default": "stack",
     "images": [
       {
         "src": "pxid-case-release-20261021/assets/odm-807ba4372b4a.jpg",
