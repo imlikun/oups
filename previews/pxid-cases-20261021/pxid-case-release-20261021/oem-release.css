@@ -28,6 +28,9 @@ body.release-view .process-expanded .stage-photo img{position:absolute;inset:0;w
 .stage-details{align-self:center;padding:16px 12px 16px 0;min-width:0}
 .stage-details h3{margin:0;color:var(--red);font-size:clamp(32px,2.15vw,42px);font-weight:400;line-height:1.2;letter-spacing:-.025em;text-wrap:balance}
 .stage-details>p{color:#d6d6d6;font-size:22px;line-height:1.6;margin:26px 0 0;max-width:43ch}
+.stage-image-story{margin-top:24px}.stage-image-count{font-size:12px;line-height:1.4;letter-spacing:.1em;color:#939393;margin:0 0 12px}
+.stage-image-title{font-size:clamp(24px,1.65vw,32px);font-weight:400;line-height:1.2;letter-spacing:-.02em;color:#fff;margin:0}
+.stage-image-description{color:#ccc;font-size:clamp(17px,1.1vw,21px);line-height:1.6;max-width:43ch;margin:16px 0 0}
 .stage-work{display:grid;gap:18px;padding:0;margin:34px 0 0}
 .stage-work>div{display:grid;grid-template-columns:94px minmax(0,1fr);gap:16px;padding:0;margin:0;border:0}
 .stage-work dt{font-size:16px;line-height:1.6;color:#aaa;margin:0}
@@ -62,6 +65,7 @@ table{font-size:20px}thead{background:#f3f3f3}thead th{font-size:17px}tbody tr{b
 }
 @media(min-width:761px) and (max-height:740px){
  .stage-details{padding-block:8px}.stage-details>p{margin-top:20px}.stage-work{margin-top:24px;gap:14px}
+ .stage-image-story{margin-top:18px}.stage-image-title{font-size:23px}.stage-image-description{font-size:16px;line-height:1.5;margin-top:12px}.stage-image-count{margin-bottom:9px}
 }
 @media(max-width:760px){
  .site-header{min-height:64px}.site-header .contact-nav{margin-left:auto;font-size:16px;padding:12px 16px}.hero{height:calc(92svh - 64px);min-height:520px}
@@ -83,6 +87,7 @@ table{font-size:20px}thead{background:#f3f3f3}thead th{font-size:17px}tbody tr{b
  body.release-view .process-expanded .stage-photo{grid-row:1;height:auto;aspect-ratio:4/3}
  body.release-view .process-expanded .stage-photo img{position:absolute;min-height:0;height:100%}
  .stage-details{grid-row:3;padding:30px 2px 28px}.stage-details h3{font-size:33px}.stage-details>p{font-size:18px;line-height:1.8;margin-top:22px}
+ .stage-image-story{margin-top:24px}.stage-image-title{font-size:27px}.stage-image-description{font-size:18px;line-height:1.7;margin-top:14px}
  .stage-work{margin-top:24px;gap:18px}.stage-work>div{grid-template-columns:88px minmax(0,1fr);gap:16px}.stage-work dt{font-size:16px}.stage-work dd{font-size:18px}
  .stage-gallery{grid-row:2;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:8px}
  .stage-gallery button{height:64px;min-height:64px}.download{padding:24px;gap:16px}.download strong{font-size:23px}

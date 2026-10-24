@@ -57,7 +57,7 @@
   gallery.querySelectorAll('button').forEach(button=>{
    button.addEventListener('click',()=>{
     const serial=++requestNumber,preload=new Image();mainButton.setAttribute('aria-busy','true');error.hidden=true;
-    preload.onload=()=>{if(serial!==requestNumber)return;main.classList.remove('image-enter');main.src=button.dataset.full;main.alt=button.dataset.caption;mainButton.setAttribute('aria-label','Enlarge '+button.dataset.caption.toLowerCase());mainButton.removeAttribute('aria-busy');requestAnimationFrame(()=>main.classList.add('image-enter'));gallery.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));};
+    preload.onload=()=>{if(serial!==requestNumber)return;main.classList.remove('image-enter');main.src=button.dataset.full;main.alt=button.dataset.caption;article.querySelector('.stage-image-title').textContent=button.dataset.detailTitle;article.querySelector('.stage-image-description').textContent=button.dataset.detailCopy;article.querySelector('.stage-image-count').textContent='IMAGE '+button.dataset.imageIndex;mainButton.setAttribute('aria-label','Enlarge '+button.dataset.caption.toLowerCase());mainButton.removeAttribute('aria-busy');requestAnimationFrame(()=>main.classList.add('image-enter'));gallery.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));};
     preload.onerror=()=>{if(serial!==requestNumber)return;error.hidden=false;mainButton.removeAttribute('aria-busy');};
     preload.src=button.dataset.full;
    });
