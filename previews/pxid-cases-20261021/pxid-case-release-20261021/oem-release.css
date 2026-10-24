@@ -93,3 +93,36 @@ table{font-size:20px}thead{background:#f3f3f3}thead th{font-size:17px}tbody tr{b
  .stage-gallery button{height:64px;min-height:64px}.download{padding:24px;gap:16px}.download strong{font-size:23px}
  .spec-note,.download-explain{font-size:17px}
 }
+
+/* OEM closing: a clear invitation followed by one full-width documentation row. */
+#resources{padding:88px 0 64px;background:#f3f3f3}
+#resources>.wrap{width:92%;max-width:1820px;margin-inline:auto}
+.resource-closing-top{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:7%;align-items:end}
+.resource-closing-heading .eyebrow{font-size:13px;line-height:1.4;letter-spacing:.1em;margin:0 0 24px}
+#resources h2{font-size:clamp(64px,6.4vw,118px);line-height:1.02;letter-spacing:-.055em;font-weight:400;margin:0;text-wrap:initial}
+#resources h2 span{color:var(--red)}
+.resource-closing-action{padding-bottom:6px}
+#resources .resource-intro{font-size:clamp(19px,1.4vw,24px);line-height:1.6;margin:0;max-width:29ch;color:#656565}
+.resource-closing-action .button{margin-top:28px;min-height:60px;min-width:236px;padding:0 24px;font-size:18px;gap:38px;white-space:nowrap}
+.resource-closing-action .button>span{font-size:26px;font-weight:400;line-height:1}
+.resource-manual{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:48px;margin-top:64px;padding:30px 0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;color:#171717;transition:color .25s ease}
+.resource-manual-title{display:block;min-width:0}.resource-manual-title .download-label{display:block;font-size:12px;line-height:1.4;letter-spacing:.07em;color:#777;margin-bottom:9px}
+.resource-manual-title strong{display:block;font-size:clamp(25px,2.1vw,36px);line-height:1.2;font-weight:400;letter-spacing:-.025em}
+.resource-manual-size{font-size:16px;line-height:1.5;color:#777;white-space:nowrap}.resource-manual-size>span{margin-inline:6px}
+.resource-manual-action{display:flex;align-items:center;gap:22px;font-size:18px;white-space:nowrap}
+.resource-manual-arrow{display:grid;place-items:center;width:52px;height:52px;border:1px solid #bdbdbd;border-radius:50%;font-size:27px;line-height:1;transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease}
+.resource-manual:hover,.resource-manual:focus-visible{color:var(--red)}.resource-manual:hover .resource-manual-arrow,.resource-manual:focus-visible .resource-manual-arrow{background:var(--red);border-color:var(--red);color:#fff;transform:translateY(3px)}
+@media(min-width:761px) and (max-width:1100px){
+ .resource-closing-top{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:6%}#resources h2{font-size:clamp(58px,6.4vw,72px)}
+ .resource-manual{gap:28px}.resource-manual-action{gap:16px;font-size:17px}.resource-manual-size{font-size:15px}
+}
+@media(max-width:760px){
+ #resources{padding:56px 0 40px}#resources>.wrap{width:auto;margin-inline:22px}
+ .resource-closing-top{display:block}.resource-closing-heading .eyebrow{font-size:12px;margin-bottom:20px}#resources h2{font-size:clamp(44px,12vw,70px);line-height:1.06;letter-spacing:-.045em}
+ .resource-closing-action{padding:0;margin-top:28px}#resources .resource-intro{font-size:18px;line-height:1.6;max-width:30ch}
+ .resource-closing-action .button{min-height:56px;min-width:230px;margin-top:24px;font-size:18px}
+ .resource-manual{grid-template-columns:minmax(0,1fr) 46px;gap:12px 16px;margin-top:40px;padding:25px 0}
+ .resource-manual-title{grid-column:1;grid-row:1}.resource-manual-title .download-label{font-size:11px;letter-spacing:.04em;margin-bottom:10px}.resource-manual-title strong{font-size:25px}
+ .resource-manual-size{grid-column:1;grid-row:2;font-size:14px}.resource-manual-action{grid-column:2;grid-row:1/3}.resource-manual-action-label{display:none}.resource-manual-arrow{width:46px;height:46px;font-size:25px}
+}
+@media(prefers-reduced-motion:reduce){.resource-manual,.resource-manual-arrow{transition:none}.resource-manual:hover .resource-manual-arrow,.resource-manual:focus-visible .resource-manual-arrow{transform:none}}
